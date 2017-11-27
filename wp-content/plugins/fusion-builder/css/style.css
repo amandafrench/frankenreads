@@ -1827,7 +1827,7 @@ input[type="range"].fusion-range-option::-ms-thumb {
 .fusion-table-remove-row {
   cursor: pointer;
 }
-.fusion-builer-table-featured {
+.fusion-builder-table-featured {
   background: #f5f5f5;
   float: left;
   margin-bottom: 8px;

@@ -327,12 +327,16 @@ class Fusion_Builder_Demos_Importer {
 			'construction',
 			'creative',
 			'daycare',
+			'dentist',
 			'fashion',
+			'finance',
 			'forum',
+			'freelancer',
 			'gym',
 			'health',
 			'hosting',
 			'hotel',
+			'information_technology',
 			'landing_product',
 			'law',
 			'lifestyle',
@@ -346,6 +350,7 @@ class Fusion_Builder_Demos_Importer {
 			'technology',
 			'veterinarian',
 			'wedding',
+			'university'
 		);
 
 		return $demos;

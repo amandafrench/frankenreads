@@ -1,11 +1,13 @@
-( function( $ ) {
+/* global WooShortcodeHanlder, FusionPageBuilderApp */
+( function() {
 
-	$( document ).ready( function() {
+	jQuery( document ).ready( function() {
+
 		// Woo shortcodes handler
-		WooShortcodeHanlder = $( '#fusion_woo_shortcode' );
+		WooShortcodeHanlder = jQuery( '#fusion_woo_shortcode' ); // jshint ignore:line
 
 		// WooCommerce shortocodes handler
-		WooShortcodeHanlder.live( 'change', function( e ) {
+		WooShortcodeHanlder.live( 'change', function() {
 			var shortoCodes = new Array(
 				' ',
 				'[woocommerce_order_tracking]',
@@ -18,13 +20,13 @@
 				'[featured_products limit="12" columns="4" orderby="date" order="desc"]',
 				'[shop_messages]'
 			),
-			selected = $( this ).val();
+			selected = jQuery( this ).val();
 
 			// Update content
 			if ( true === FusionPageBuilderApp.shortcodeGenerator ) {
-				$( '#generator_element_content' ).val( shortoCodes[selected] );
+				jQuery( '#generator_element_content' ).val( shortoCodes[selected] );
 			} else {
-				$( '#element_content' ).val( shortoCodes[selected] );
+				jQuery( '#element_content' ).val( shortoCodes[selected] );
 			}
 
 		} );

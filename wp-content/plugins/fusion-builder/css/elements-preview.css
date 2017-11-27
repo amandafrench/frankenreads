@@ -2662,10 +2662,6 @@ button.fusion-button.button-3d:active {
 .fusion-carousel-border img {
   border: 1px solid #e9eaee;
 }
-.no-rgba .fusion-carousel .fusion-carousel-nav .fusion-nav-next,
-.no-rgba .fusion-carousel .fusion-carousel-nav .fusion-nav-prev {
-  background-color: #3e3e3e;
-}
 .fusion-image-carousel-fixed .fusion-carousel .fusion-carousel-wrapper {
   height: 115px !important;
 }
@@ -3227,6 +3223,7 @@ button.fusion-button.button-3d:active {
 }
 .fusion-separator.sep-single {
   border-top-width: 1px;
+  border-bottom: none !important;
 }
 .fusion-separator.sep-dashed {
   border-bottom-style: dashed;

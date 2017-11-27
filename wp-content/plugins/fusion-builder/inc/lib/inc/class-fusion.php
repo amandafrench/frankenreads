@@ -139,13 +139,20 @@ class Fusion {
 
 		$c_page_id = get_queried_object_id();
 
-		// The woocommerce shop page.
-		if ( ! is_admin() && class_exists( 'WooCommerce' ) && ( is_shop() || is_tax( 'product_cat' ) || is_tax( 'product_tag' ) ) ) {
+		// The WooCommerce shop page.
+		if ( ! is_admin() && class_exists( 'WooCommerce' ) && is_shop() ) {
 			return get_option( 'woocommerce_shop_page_id' );
+		}
+		// The WooCommerce product_cat taxonomy page.
+		if ( ! is_admin() && class_exists( 'WooCommerce' ) && ( ! is_shop() && ( is_tax( 'product_cat' ) || is_tax( 'product_tag' ) ) ) ) {
+			return $c_page_id . '-archive'; // So that other POs do not apply to arhives if post ID matches.
 		}
 		// The homepage.
 		if ( 'posts' === get_option( 'show_on_front' ) && is_home() ) {
 			return $c_page_id;
+		}
+		if ( ! is_singular() && is_archive() ) {
+			return $c_page_id . '-archive'; // So that other POs do not apply to arhives if post ID matches.
 		}
 		if ( ! is_singular() ) {
 			return false;

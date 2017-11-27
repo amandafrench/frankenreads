@@ -4738,16 +4738,17 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$content_min_media_query = '@media only screen and (min-width: ' . ( intval( $side_header_width ) + intval( Avada()->settings->get( 'content_break_point' ) ) ) . 'px)';
 
 		// # Layout
-		if ( Avada()->settings->get( 'smooth_scrolling' ) ) {
+    if ( Avada()->settings->get( 'smooth_scrolling' ) ) {
 			$css[ $content_min_media_query ]['.no-overflow-y body']['padding-right'] = '9px !important';
 			$css[ $content_min_media_query ]['.no-overflow-y .modal']['overflow-y'] = 'hidden';
 
 			$elements = array(
 				'.no-overflow-y .fusion-sliding-bar-position-top',
-				'.no-overflow-y .fusion-sliding-bar-position-right',
 				'.no-overflow-y .fusion-sliding-bar-position-bottom',
 			);
 			$css[ $content_min_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['right'] = '9px';
+
+			$css[ $content_min_media_query ]['.no-overflow-y .fusion-sliding-bar-position-right:not(.open)']['right'] = '-291px';
 		}
 
 		if ( ! Avada()->settings->get( 'breadcrumb_mobile' ) ) {
@@ -7383,9 +7384,11 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$header_bg_opacity = 1;
 	if ( '' != get_post_meta( $c_page_id, 'pyre_header_bg_opacity', true ) ) {
 		$header_bg_opacity = get_post_meta( $c_page_id, 'pyre_header_bg_opacity', true );
-	} elseif ( is_archive() || Avada_Helper::bbp_is_topic_tag() ) {
+	} elseif ( ( is_archive() || Avada_Helper::bbp_is_topic_tag() ) ) {
 		if ( Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'header_bg_color' ) ) {
 			$header_bg_opacity = Fusion_Color::new_color( Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'header_bg_color' ) )->alpha;
+		} else if ( 'Top' !== Avada()->settings->get( 'header_position' ) ) {
+			$header_bg_opacity = Fusion_Color::new_color( Avada()->settings->get( 'header_bg_color' ) )->alpha;
 		}
 	} else if ( 1 > Fusion_Color::new_color( Avada()->settings->get( 'header_bg_color' ) )->alpha ) {
 		$header_bg_opacity = Fusion_Color::new_color( Avada()->settings->get( 'header_bg_color' ) )->alpha;
