@@ -11,7 +11,30 @@ msgstr ""
 "Language: bg\n"
 "Project-Id-Version: Community Events\n"
 
-#: src/views/community/modules/taxonomy.php:93
+#: src/views/community/modules/taxonomy.php:94
+msgctxt "taxonomy selector ajax search placeholder"
+msgid "Searching…"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:27
+msgid "Edit Venue"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:25
+msgid "Edit Organizer"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:403
+msgctxt "field label for post tags"
+msgid "Tag"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:400
+msgctxt "field label for event categories"
+msgid "%s Category"
+msgstr ""
+
+#: src/views/community/modules/taxonomy.php:95
 msgid "Search from existing %s"
 msgstr ""
 
@@ -51,15 +74,15 @@ msgstr ""
 msgid "Choose a .jpg, .png, or .gif file under %1$s in size."
 msgstr ""
 
-#: src/views/community/modules/header-links.php:33
+#: src/views/community/modules/header-links.php:39
 msgid "View Your Submitted Events"
 msgstr ""
 
-#: src/views/community/modules/header-links.php:23
+#: src/views/community/modules/header-links.php:29
 msgid "Add New Event"
 msgstr ""
 
-#: src/views/community/modules/header-links.php:21
+#: src/views/community/modules/header-links.php:23
 msgid "Edit Event"
 msgstr ""
 
@@ -104,7 +127,7 @@ msgstr ""
 msgid "Event Image"
 msgstr ""
 
-#: src/views/community/modules/datepickers.php:160
+#: src/views/community/modules/datepickers.php:167
 msgid "All Day Event"
 msgstr "Целодневно събитие"
 
@@ -184,27 +207,27 @@ msgstr ""
 msgid "Redirect for users who attempt to access the admin without permissions<br>Enter a full url to a post or page on your site<br>Leave blank for homepage"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:437
+#: src/Tribe/Submission_Handler.php:453
 msgid "URL"
 msgstr "URL"
 
-#: src/Tribe/Submission_Handler.php:433
+#: src/Tribe/Submission_Handler.php:449
 msgid "Zip"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:429
+#: src/Tribe/Submission_Handler.php:445
 msgid "State"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:425
+#: src/Tribe/Submission_Handler.php:441
 msgid "Province"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:413 src/Tribe/Submission_Handler.php:445
+#: src/Tribe/Submission_Handler.php:429 src/Tribe/Submission_Handler.php:461
 msgid "Name"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:366
+#: src/Tribe/Submission_Handler.php:376
 msgid "%s %s is required"
 msgstr ""
 
@@ -225,7 +248,7 @@ msgstr "Премахва държавата, щата/областта и час
 msgid "Single geography mode"
 msgstr "Режим с опростена география"
 
-#: src/Tribe/Submission_Handler.php:520
+#: src/Tribe/Submission_Handler.php:536
 msgid "Invalid URL provided for %s"
 msgstr "Въведеният URL за %s е невалиден"
 
@@ -271,7 +294,7 @@ msgctxt "Currency symbol position"
 msgid "Before cost"
 msgstr "Преди цената"
 
-#: src/Tribe/Main.php:1606
+#: src/Tribe/Main.php:1611
 msgid "The file you attempted to upload exceeded the maximum file size of %1$s."
 msgstr "Файлът, който се опитвате да качите, надвишава максимално допустимия размер от %1$s."
 
@@ -343,12 +366,12 @@ msgstr "Щат или област"
 msgid "Country"
 msgstr "Страна"
 
-#: src/Tribe/Submission_Handler.php:421
+#: src/Tribe/Submission_Handler.php:437
 #: src/views/community/modules/venue-fields.php:52
 msgid "City"
 msgstr "Град"
 
-#: src/Tribe/Submission_Handler.php:417
+#: src/Tribe/Submission_Handler.php:433
 #: src/views/community/modules/venue-fields.php:37
 msgid "Address"
 msgstr "Адрес"
@@ -357,18 +380,18 @@ msgstr "Адрес"
 msgid "None"
 msgstr "Няма"
 
-#: src/Tribe/Submission_Handler.php:453
+#: src/Tribe/Submission_Handler.php:469
 #: src/views/community/modules/organizer-fields.php:75
 msgid "Email"
 msgstr "Email"
 
-#: src/Tribe/Submission_Handler.php:449
+#: src/Tribe/Submission_Handler.php:465
 #: src/views/community/modules/organizer-fields.php:70
 #: src/views/community/modules/venue-fields.php:143
 msgid "Website"
 msgstr "Уеб сайт"
 
-#: src/Tribe/Submission_Handler.php:441
+#: src/Tribe/Submission_Handler.php:457
 #: src/views/community/modules/organizer-fields.php:64
 #: src/views/community/modules/venue-fields.php:128
 msgid "Phone"
@@ -656,31 +679,31 @@ msgstr "Изтрити завинаги"
 msgid "Placed in the Trash"
 msgstr "Преместени в кошчето"
 
-#: src/Tribe/Submission_Handler.php:551
+#: src/Tribe/Submission_Handler.php:567
 msgid "The uploaded image could not be processed"
 msgstr "Качената картинка не може да бъде обработена"
 
-#: src/Tribe/Submission_Handler.php:547
+#: src/Tribe/Submission_Handler.php:563
 msgid "The image failed to upload successfully"
 msgstr "Неуспешно качване на картинката"
 
-#: src/Tribe/Submission_Handler.php:542
+#: src/Tribe/Submission_Handler.php:558
 msgid "Image exceeded the allowed file size"
 msgstr "Картинката превишава максимално допустимия размер"
 
-#: src/Tribe/Submission_Handler.php:500
+#: src/Tribe/Submission_Handler.php:516
 msgid "Images must be png, jpg, or gif"
 msgstr "Картинките трябва да са png, jpg или gif"
 
-#: src/Tribe/Submission_Handler.php:489
+#: src/Tribe/Submission_Handler.php:505
 msgid "Invalid value for %s"
 msgstr "Невалидна стойност за %s"
 
-#: src/Tribe/Submission_Handler.php:381
+#: src/Tribe/Submission_Handler.php:391
 msgid "%s Description"
 msgstr "%s Описание"
 
-#: src/Tribe/Submission_Handler.php:378
+#: src/Tribe/Submission_Handler.php:388
 msgid "%s Title"
 msgstr "%s Заглавие"
 
@@ -708,31 +731,31 @@ msgstr "Изпращане на ново %s"
 msgid "%s updated. "
 msgstr ""
 
-#: src/Tribe/Main.php:2833
+#: src/Tribe/Main.php:2855
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/Tribe/Main.php:2817 src/Tribe/Templates.php:47
+#: src/Tribe/Main.php:2839 src/Tribe/Templates.php:47
 msgid "Community Events"
 msgstr "Community Events"
 
-#: src/Tribe/Main.php:2808
+#: src/Tribe/Main.php:2830
 msgid "Community: My %s"
 msgstr "Общност: Моите %s"
 
-#: src/Tribe/Main.php:2800
+#: src/Tribe/Main.php:2822
 msgid "Community: Submit %s"
 msgstr "Общност: Изпращане на %s"
 
-#: src/Tribe/Main.php:2586
+#: src/Tribe/Main.php:2591
 msgid "This template is also used for Community Events."
 msgstr "Този шаблон се използва и за Community Events."
 
-#: src/Tribe/Main.php:2569
+#: src/Tribe/Main.php:2574
 msgid "Community"
 msgstr "Общност"
 
-#: src/Tribe/Main.php:2330
+#: src/Tribe/Main.php:2335
 msgid "The requested page number was not found."
 msgstr "Търсения номер на страница не е открит."
 
@@ -740,83 +763,83 @@ msgstr "Търсения номер на страница не е открит."
 msgid "Fake Title"
 msgstr "Фалшиво заглавие"
 
-#: src/Tribe/Main.php:2107
+#: src/Tribe/Main.php:2112
 msgid "Please log in to view your events"
 msgstr "Моля, впишете се, за да видите събитията си"
 
-#: src/Tribe/Main.php:2024
+#: src/Tribe/Main.php:2029
 msgid "There was a problem updating this organizer, please try again."
 msgstr "Възникна проблем при обновяването на Организатора, моля опитайте отново."
 
-#: src/Tribe/Main.php:2020
+#: src/Tribe/Main.php:2025
 msgid "Organizer name cannot be blank."
 msgstr "Името на Организатора не може да остане празно."
 
-#: src/Tribe/Main.php:2009
+#: src/Tribe/Main.php:2014
 msgid "Organizer updated."
 msgstr "Организатора е обновен."
 
-#: src/Tribe/Main.php:1987
+#: src/Tribe/Main.php:1992
 msgid "You do not have permission to edit this organizer."
 msgstr "Нямате права да редактирате този Организатор."
 
-#: src/Tribe/Main.php:1983
+#: src/Tribe/Main.php:1988
 msgid "Please log in to edit this organizer"
 msgstr "Моля, впишете се, за да редактирате този организатор."
 
-#: src/Tribe/Main.php:1979
+#: src/Tribe/Main.php:1984
 msgid "Organizer not found."
 msgstr "Организатора не е намерен."
 
-#: src/Tribe/Main.php:1942
+#: src/Tribe/Main.php:1947
 msgid "There was a problem updating your venue, please try again."
 msgstr "Възникна проблем при обновяването на това Място, моля опитайте отново."
 
-#: src/Tribe/Main.php:1938
+#: src/Tribe/Main.php:1943
 msgid "Venue name cannot be blank."
 msgstr "Името на Мястото не може да остане празно."
 
-#: src/Tribe/Main.php:1928
+#: src/Tribe/Main.php:1933
 msgid "Venue updated."
 msgstr "Мястото е обновено."
 
-#: src/Tribe/Main.php:1905
+#: src/Tribe/Main.php:1910
 msgid "You do not have permission to edit this venue."
 msgstr "Нямате права да редактирате това Място."
 
-#: src/Tribe/Main.php:1901
+#: src/Tribe/Main.php:1906
 msgid "Please log in to edit this venue"
 msgstr "Моля, впишете се, за да видите това Място"
 
-#: src/Tribe/Main.php:1896
+#: src/Tribe/Main.php:1901
 msgid "Venue not found."
 msgstr "Мястото не е намерено."
 
-#: src/Tribe/Main.php:1765 src/views/community/columns/title.php:41
+#: src/Tribe/Main.php:1770 src/views/community/columns/title.php:41
 msgid "Edit"
 msgstr "Редакция"
 
-#: src/Tribe/Main.php:1759 src/views/community/columns/title.php:35
+#: src/Tribe/Main.php:1764 src/views/community/columns/title.php:35
 msgid "View"
 msgstr "Преглед"
 
-#: src/Tribe/Main.php:1600
+#: src/Tribe/Main.php:1605
 msgid "You do not have permission to edit this %s."
 msgstr "Нямате права да редактирате този %s."
 
-#: src/Tribe/Main.php:1594
+#: src/Tribe/Main.php:1599
 msgid "Please log in first."
 msgstr "Моля, първо се впишете."
 
-#: src/Tribe/Main.php:1586
+#: src/Tribe/Main.php:1591
 msgid "%s not found."
 msgstr "%s не е намерен."
 
-#: src/Tribe/Main.php:1577
+#: src/Tribe/Main.php:1582
 msgid "%sWarning:%s You are editing a recurring %s. All changes will be applied to the entire series."
 msgstr "%sВнимание:%s Редактирате повтарящо се %s. Промените ще бъдат приложени на всички събития от серията."
 
-#: src/Tribe/Main.php:1532
+#: src/Tribe/Main.php:1537
 msgctxt "As in \"go back to previous page\""
 msgid "Back"
 msgstr "Назад"
@@ -915,31 +938,31 @@ msgstr "Редакция на Организатор"
 msgid "Edit a Venue"
 msgstr "Редакция на Място"
 
-#: src/Tribe/Main.php:2877
+#: src/Tribe/Main.php:2899
 msgid "event"
 msgstr "event"
 
-#: src/Tribe/Main.php:2876
+#: src/Tribe/Main.php:2898
 msgid "organizer"
 msgstr "organizer"
 
-#: src/Tribe/Main.php:2875
+#: src/Tribe/Main.php:2897
 msgid "venue"
 msgstr "venue"
 
-#: src/Tribe/Main.php:2873 src/admin-views/community-options-template.php:359
+#: src/Tribe/Main.php:2895 src/admin-views/community-options-template.php:359
 msgid "list"
 msgstr "list"
 
-#: src/Tribe/Main.php:2872
+#: src/Tribe/Main.php:2894
 msgid "delete"
 msgstr "delete"
 
-#: src/Tribe/Main.php:2871 src/admin-views/community-options-template.php:357
+#: src/Tribe/Main.php:2893 src/admin-views/community-options-template.php:357
 msgid "add"
 msgstr "add"
 
-#: src/Tribe/Main.php:2870
+#: src/Tribe/Main.php:2892
 msgid "edit"
 msgstr "edit"
 

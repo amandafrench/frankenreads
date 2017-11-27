@@ -72,6 +72,7 @@ class Tribe__Events__Community__Event_Form {
 		add_action( 'tribe_community_events_field_has_error', array( $this, 'indicate_field_errors' ), 10, 2 );
 
 		add_filter( 'tribe_display_event_linked_post_dropdown_id', array( $this, 'filter_linked_post_id' ), 10, 2 );
+		add_filter( 'get_edit_post_link', array( $this, 'filter_edit_post_url' ), 10, 3 );
 
 		if ( ! empty( $_POST ) ) {
 			add_filter( 'tribe_get_event_website_url', array( $this, 'filter_website_url_value' ), 10, 2 );
@@ -298,6 +299,30 @@ class Tribe__Events__Community__Event_Form {
 		} else {
 			return 0;
 		}
+	}
+
+	/**
+	 * Filters the Community Linked Post Edit URLs.
+	 *
+	 * @see `get_edit_post_link` filter
+	 *
+	 * @param string $link    The edit link.
+	 * @param int    $post_id Post ID.
+	 * @param string $context The link context. If set to 'display' then ampersands
+	 *                        are encoded.
+	 *
+	 * @return string
+	 */
+	public function filter_edit_post_url( $link, $post_id, $context ) {
+		// When empty the user does not have permission to edit.
+		$can_edit = ! empty( $link );
+		$community_edit_url = tribe( 'community.main' )->getUrl( 'edit', $post_id, null, get_post_type( $post_id ) );
+
+		if ( ! empty( $community_edit_url ) && $can_edit ) {
+			$link = $community_edit_url;
+		}
+
+		return $link;
 	}
 
 	public function filter_organizer_value( $name ) {

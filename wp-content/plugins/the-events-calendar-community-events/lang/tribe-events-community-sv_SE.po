@@ -11,7 +11,30 @@ msgstr ""
 "Language: sv_SE\n"
 "Project-Id-Version: Community Events\n"
 
-#: src/views/community/modules/taxonomy.php:93
+#: src/views/community/modules/taxonomy.php:94
+msgctxt "taxonomy selector ajax search placeholder"
+msgid "Searching…"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:27
+msgid "Edit Venue"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:25
+msgid "Edit Organizer"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:403
+msgctxt "field label for post tags"
+msgid "Tag"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:400
+msgctxt "field label for event categories"
+msgid "%s Category"
+msgstr ""
+
+#: src/views/community/modules/taxonomy.php:95
 msgid "Search from existing %s"
 msgstr ""
 
@@ -51,15 +74,15 @@ msgstr "Uppladdat:"
 msgid "Choose a .jpg, .png, or .gif file under %1$s in size."
 msgstr "Välj en .jpg, .png, eller.gif fil med storlek under %1$s."
 
-#: src/views/community/modules/header-links.php:33
+#: src/views/community/modules/header-links.php:39
 msgid "View Your Submitted Events"
 msgstr "Visa dina inskickade evenemang"
 
-#: src/views/community/modules/header-links.php:23
+#: src/views/community/modules/header-links.php:29
 msgid "Add New Event"
 msgstr "Lägg till nytt evenemang"
 
-#: src/views/community/modules/header-links.php:21
+#: src/views/community/modules/header-links.php:23
 msgid "Edit Event"
 msgstr "Redigera evenemang"
 
@@ -104,7 +127,7 @@ msgstr "Ladda upp fil"
 msgid "Event Image"
 msgstr "Evenemangsbild"
 
-#: src/views/community/modules/datepickers.php:160
+#: src/views/community/modules/datepickers.php:167
 msgid "All Day Event"
 msgstr "Heldagsevenemang"
 
@@ -184,27 +207,27 @@ msgstr "reCAPTCHA verifikationen misslyckades"
 msgid "Redirect for users who attempt to access the admin without permissions<br>Enter a full url to a post or page on your site<br>Leave blank for homepage"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:437
+#: src/Tribe/Submission_Handler.php:453
 msgid "URL"
 msgstr "URL"
 
-#: src/Tribe/Submission_Handler.php:433
+#: src/Tribe/Submission_Handler.php:449
 msgid "Zip"
 msgstr "Postnummer"
 
-#: src/Tribe/Submission_Handler.php:429
+#: src/Tribe/Submission_Handler.php:445
 msgid "State"
 msgstr "Stat"
 
-#: src/Tribe/Submission_Handler.php:425
+#: src/Tribe/Submission_Handler.php:441
 msgid "Province"
 msgstr "Län"
 
-#: src/Tribe/Submission_Handler.php:413 src/Tribe/Submission_Handler.php:445
+#: src/Tribe/Submission_Handler.php:429 src/Tribe/Submission_Handler.php:461
 msgid "Name"
 msgstr "Namn"
 
-#: src/Tribe/Submission_Handler.php:366
+#: src/Tribe/Submission_Handler.php:376
 msgid "%s %s is required"
 msgstr "%s %s krävs"
 
@@ -225,7 +248,7 @@ msgstr "Tar bort landet, staten/länet och tidzonväljarna från formuläret"
 msgid "Single geography mode"
 msgstr "Enskild geografi läge"
 
-#: src/Tribe/Submission_Handler.php:520
+#: src/Tribe/Submission_Handler.php:536
 msgid "Invalid URL provided for %s"
 msgstr "Ogiltig URL angiven för %s"
 
@@ -271,7 +294,7 @@ msgctxt "Currency symbol position"
 msgid "Before cost"
 msgstr "Före kostnad"
 
-#: src/Tribe/Main.php:1606
+#: src/Tribe/Main.php:1611
 msgid "The file you attempted to upload exceeded the maximum file size of %1$s."
 msgstr "Filen du försökte ladda upp överskrider den maximala filstorleken ( %1$s )."
 
@@ -343,12 +366,12 @@ msgstr "Län"
 msgid "Country"
 msgstr "Land"
 
-#: src/Tribe/Submission_Handler.php:421
+#: src/Tribe/Submission_Handler.php:437
 #: src/views/community/modules/venue-fields.php:52
 msgid "City"
 msgstr "Stad"
 
-#: src/Tribe/Submission_Handler.php:417
+#: src/Tribe/Submission_Handler.php:433
 #: src/views/community/modules/venue-fields.php:37
 msgid "Address"
 msgstr "Adress"
@@ -357,18 +380,18 @@ msgstr "Adress"
 msgid "None"
 msgstr "Ingen"
 
-#: src/Tribe/Submission_Handler.php:453
+#: src/Tribe/Submission_Handler.php:469
 #: src/views/community/modules/organizer-fields.php:75
 msgid "Email"
 msgstr "Email"
 
-#: src/Tribe/Submission_Handler.php:449
+#: src/Tribe/Submission_Handler.php:465
 #: src/views/community/modules/organizer-fields.php:70
 #: src/views/community/modules/venue-fields.php:143
 msgid "Website"
 msgstr "Hemsida"
 
-#: src/Tribe/Submission_Handler.php:441
+#: src/Tribe/Submission_Handler.php:457
 #: src/views/community/modules/organizer-fields.php:64
 #: src/views/community/modules/venue-fields.php:128
 msgid "Phone"
@@ -656,31 +679,31 @@ msgstr "Raderas permanent"
 msgid "Placed in the Trash"
 msgstr "Kastas i papperskorgen"
 
-#: src/Tribe/Submission_Handler.php:551
+#: src/Tribe/Submission_Handler.php:567
 msgid "The uploaded image could not be processed"
 msgstr "Den uppladdade bilden kunde inte behandlas"
 
-#: src/Tribe/Submission_Handler.php:547
+#: src/Tribe/Submission_Handler.php:563
 msgid "The image failed to upload successfully"
 msgstr "Det gick inte att ladda upp bilden"
 
-#: src/Tribe/Submission_Handler.php:542
+#: src/Tribe/Submission_Handler.php:558
 msgid "Image exceeded the allowed file size"
 msgstr "Bilden överskrider den tillåtna filstorleken"
 
-#: src/Tribe/Submission_Handler.php:500
+#: src/Tribe/Submission_Handler.php:516
 msgid "Images must be png, jpg, or gif"
 msgstr "Bilder måste vara i png, jpg eller gif format"
 
-#: src/Tribe/Submission_Handler.php:489
+#: src/Tribe/Submission_Handler.php:505
 msgid "Invalid value for %s"
 msgstr "Ogiltigt värde för %s"
 
-#: src/Tribe/Submission_Handler.php:381
+#: src/Tribe/Submission_Handler.php:391
 msgid "%s Description"
 msgstr "%s beskrivning"
 
-#: src/Tribe/Submission_Handler.php:378
+#: src/Tribe/Submission_Handler.php:388
 msgid "%s Title"
 msgstr "%s titel"
 
@@ -708,31 +731,31 @@ msgstr "Skicka ett till %s"
 msgid "%s updated. "
 msgstr ""
 
-#: src/Tribe/Main.php:2833
+#: src/Tribe/Main.php:2855
 msgid "Settings"
 msgstr "Inställningar"
 
-#: src/Tribe/Main.php:2817 src/Tribe/Templates.php:47
+#: src/Tribe/Main.php:2839 src/Tribe/Templates.php:47
 msgid "Community Events"
 msgstr "Community Events"
 
-#: src/Tribe/Main.php:2808
+#: src/Tribe/Main.php:2830
 msgid "Community: My %s"
 msgstr "Community: Mina %s"
 
-#: src/Tribe/Main.php:2800
+#: src/Tribe/Main.php:2822
 msgid "Community: Submit %s"
 msgstr "Community: Skicka %s"
 
-#: src/Tribe/Main.php:2586
+#: src/Tribe/Main.php:2591
 msgid "This template is also used for Community Events."
 msgstr "Denna mall används även för Community Events."
 
-#: src/Tribe/Main.php:2569
+#: src/Tribe/Main.php:2574
 msgid "Community"
 msgstr "Community"
 
-#: src/Tribe/Main.php:2330
+#: src/Tribe/Main.php:2335
 msgid "The requested page number was not found."
 msgstr "Det begärda sidnumret hittades inte."
 
@@ -740,83 +763,83 @@ msgstr "Det begärda sidnumret hittades inte."
 msgid "Fake Title"
 msgstr "Låtsastitel"
 
-#: src/Tribe/Main.php:2107
+#: src/Tribe/Main.php:2112
 msgid "Please log in to view your events"
 msgstr "Logga in för att visa dina evenemang"
 
-#: src/Tribe/Main.php:2024
+#: src/Tribe/Main.php:2029
 msgid "There was a problem updating this organizer, please try again."
 msgstr "Arrangören kunde inte uppdateras, försök igen."
 
-#: src/Tribe/Main.php:2020
+#: src/Tribe/Main.php:2025
 msgid "Organizer name cannot be blank."
 msgstr "Arrangörens namn kan ej vara tomt."
 
-#: src/Tribe/Main.php:2009
+#: src/Tribe/Main.php:2014
 msgid "Organizer updated."
 msgstr "Arrangören uppdaterad."
 
-#: src/Tribe/Main.php:1987
+#: src/Tribe/Main.php:1992
 msgid "You do not have permission to edit this organizer."
 msgstr "Du har inte rättigheter att redigera denna arrangör."
 
-#: src/Tribe/Main.php:1983
+#: src/Tribe/Main.php:1988
 msgid "Please log in to edit this organizer"
 msgstr "Logga in för att redigera denna arrangör"
 
-#: src/Tribe/Main.php:1979
+#: src/Tribe/Main.php:1984
 msgid "Organizer not found."
 msgstr "Arrangören kunde inte hittas."
 
-#: src/Tribe/Main.php:1942
+#: src/Tribe/Main.php:1947
 msgid "There was a problem updating your venue, please try again."
 msgstr "Platsen kunde inte uppdateras, försök igen."
 
-#: src/Tribe/Main.php:1938
+#: src/Tribe/Main.php:1943
 msgid "Venue name cannot be blank."
 msgstr "Platsens namn kan ej vara tomt."
 
-#: src/Tribe/Main.php:1928
+#: src/Tribe/Main.php:1933
 msgid "Venue updated."
 msgstr "Plats uppdaterad."
 
-#: src/Tribe/Main.php:1905
+#: src/Tribe/Main.php:1910
 msgid "You do not have permission to edit this venue."
 msgstr "Du har inte rättigheter att redigera denna plats."
 
-#: src/Tribe/Main.php:1901
+#: src/Tribe/Main.php:1906
 msgid "Please log in to edit this venue"
 msgstr "Logga in för att redigera denna plats"
 
-#: src/Tribe/Main.php:1896
+#: src/Tribe/Main.php:1901
 msgid "Venue not found."
 msgstr "Platsen kunde inte hittas."
 
-#: src/Tribe/Main.php:1765 src/views/community/columns/title.php:41
+#: src/Tribe/Main.php:1770 src/views/community/columns/title.php:41
 msgid "Edit"
 msgstr "Redigera"
 
-#: src/Tribe/Main.php:1759 src/views/community/columns/title.php:35
+#: src/Tribe/Main.php:1764 src/views/community/columns/title.php:35
 msgid "View"
 msgstr "Visa"
 
-#: src/Tribe/Main.php:1600
+#: src/Tribe/Main.php:1605
 msgid "You do not have permission to edit this %s."
 msgstr "Du har inte behörighet att redigera detta %s."
 
-#: src/Tribe/Main.php:1594
+#: src/Tribe/Main.php:1599
 msgid "Please log in first."
 msgstr "Logga in först."
 
-#: src/Tribe/Main.php:1586
+#: src/Tribe/Main.php:1591
 msgid "%s not found."
 msgstr "%s hittades inte."
 
-#: src/Tribe/Main.php:1577
+#: src/Tribe/Main.php:1582
 msgid "%sWarning:%s You are editing a recurring %s. All changes will be applied to the entire series."
 msgstr "%sVarning:%s Du redigerar ett återkommande %s. Alla förändringar kommer appliceras på hela serien."
 
-#: src/Tribe/Main.php:1532
+#: src/Tribe/Main.php:1537
 msgctxt "As in \"go back to previous page\""
 msgid "Back"
 msgstr "Tillbaka"
@@ -915,31 +938,31 @@ msgstr "Redigera en arrangör"
 msgid "Edit a Venue"
 msgstr "Redigera en plats"
 
-#: src/Tribe/Main.php:2877
+#: src/Tribe/Main.php:2899
 msgid "event"
 msgstr "evenemang"
 
-#: src/Tribe/Main.php:2876
+#: src/Tribe/Main.php:2898
 msgid "organizer"
 msgstr "arrangör"
 
-#: src/Tribe/Main.php:2875
+#: src/Tribe/Main.php:2897
 msgid "venue"
 msgstr "plats"
 
-#: src/Tribe/Main.php:2873 src/admin-views/community-options-template.php:359
+#: src/Tribe/Main.php:2895 src/admin-views/community-options-template.php:359
 msgid "list"
 msgstr "lista"
 
-#: src/Tribe/Main.php:2872
+#: src/Tribe/Main.php:2894
 msgid "delete"
 msgstr "radera"
 
-#: src/Tribe/Main.php:2871 src/admin-views/community-options-template.php:357
+#: src/Tribe/Main.php:2893 src/admin-views/community-options-template.php:357
 msgid "add"
 msgstr "lägg till"
 
-#: src/Tribe/Main.php:2870
+#: src/Tribe/Main.php:2892
 msgid "edit"
 msgstr "redigera"
 

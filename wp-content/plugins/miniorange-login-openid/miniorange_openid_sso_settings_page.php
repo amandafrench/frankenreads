@@ -30,7 +30,7 @@ function mo_register_openid() {
 <div id="tab">
 	<h2 class="nav-tab-wrapper">
 		<?php if(!mo_openid_is_customer_registered()) { ?>
-		<a class="nav-tab <?php echo $active_tab == 'register' ? 'nav-tab-active' : ''; ?>" href="<?php echo add_query_arg( array('tab' => 'register'), $_SERVER['REQUEST_URI'] ); ?>">Account Setup</a>
+			<a class="nav-tab <?php echo $active_tab == 'register' ? 'nav-tab-active' : ''; ?>" href="<?php echo add_query_arg( array('tab' => 'register'), $_SERVER['REQUEST_URI'] ); ?>">Account Setup</a>
 		<?php } ?>
 		<a class="nav-tab <?php echo $active_tab == 'login' ? 'nav-tab-active' : ''; ?>" href="<?php echo add_query_arg( array('tab' => 'login'), $_SERVER['REQUEST_URI'] ); ?>">Social Login</a>
 		<a class="nav-tab <?php echo $active_tab == 'share' ? 'nav-tab-active' : ''; ?>" href="<?php echo add_query_arg( array('tab' => 'share'), $_SERVER['REQUEST_URI'] ); ?>">Social Sharing</a>
@@ -292,18 +292,15 @@ function mo_openid_apps_config() {
 												<?php checked( get_option('mo_openid_google_enable') == 1 );?> /><strong>Google</strong>
 												</td>
 												<td>
-												<input type="checkbox"
-												id="vkontakte_enable" class="app_enable" name="mo_openid_vkontakte_enable" value="1" onchange="previewLoginIcons();"
+												<input type="checkbox" id="vkontakte_enable" class="app_enable" name="mo_openid_vkontakte_enable" value="1" onchange="previewLoginIcons();"
 												<?php checked( get_option('mo_openid_vkontakte_enable') == 1 );?> /><strong>Vkontakte</strong>
 												</td>
 												<td>
-												<input type="checkbox"
-												id="twitter_enable" class="app_enable" name="mo_openid_twitter_enable" value="1" onchange="previewLoginIcons();"
+												<input type="checkbox" id="twitter_enable" class="app_enable" name="mo_openid_twitter_enable" value="1" onchange="previewLoginIcons();"
 												<?php checked( get_option('mo_openid_twitter_enable') == 1 );?> /><strong>Twitter</strong>
 												</td>
 												<td>
-												<input type="checkbox"
-												id="instagram_enable" class="app_enable" name="mo_openid_instagram_enable" value="1" onchange="previewLoginIcons();"
+												<input type="checkbox" id="instagram_enable" class="app_enable" name="mo_openid_instagram_enable" value="1" onchange="previewLoginIcons();"
 												<?php checked( get_option('mo_openid_instagram_enable') == 1 );?> /><strong>Instagram</strong>
 												</td>
 											</tr>
@@ -313,18 +310,15 @@ function mo_openid_apps_config() {
 												<?php checked( get_option('mo_openid_linkedin_enable') == 1 );?> /><strong>LinkedIn</strong>
 												</td>
 												<td>
-												<input type="checkbox"
-												id="amazon_enable" class="app_enable" name="mo_openid_amazon_enable" value="1" onchange="previewLoginIcons();"
+												<input type="checkbox" id="amazon_enable" class="app_enable" name="mo_openid_amazon_enable" value="1" onchange="previewLoginIcons();"
 												<?php checked( get_option('mo_openid_amazon_enable') == 1 );?> /><strong>Amazon</strong>
 												</td>
 												<td>
-												<input type="checkbox"
-												id="salesforce_enable" class="app_enable" name="mo_openid_salesforce_enable" value="1" onchange="previewLoginIcons();"
+												<input type="checkbox" id="salesforce_enable" class="app_enable" name="mo_openid_salesforce_enable" value="1" onchange="previewLoginIcons();"
 												<?php checked( get_option('mo_openid_salesforce_enable') == 1 );?> /><strong>Salesforce</strong>
 												</td>
 												<td>
-												<input type="checkbox"
-												id="windowslive_enable" class="app_enable" name="mo_openid_windowslive_enable" value="1" onchange="previewLoginIcons();"
+												<input type="checkbox" id="windowslive_enable" class="app_enable" name="mo_openid_windowslive_enable" value="1" onchange="previewLoginIcons();"
 												<?php checked( get_option('mo_openid_windowslive_enable') == 1 );?> /><strong>Windows Live</strong>
 												</td>
 											</tr>
@@ -1048,7 +1042,7 @@ function mo_openid_apps_config() {
 		<td>
 		<br/>
 		<div style=" padding: 10px;padding-top: 5px;padding-left: 10px;background-color:rgba(1, 145, 191, 0.117647);color: black;">
-		<span style=" color: black;font-weight: bold;float: right;font-size: 22px;font-family: Arial;"></span><h3><input type="checkbox" name="mo_openid_enable_profile_completion" value="1" <?php checked( get_option('mo_openid_enable_profile_completion') == '1' );?>>Profile Completion <p style="color:red">(Disabling this is not recommended)</p></h3>This is a new feature that requires SMTP to be setup.<br>In the case of unavailability of username or email from the social media application, user is asked to input the missing details.</div>				
+		<span style=" color: black;font-weight: bold;float: right;font-size: 22px;font-family: Arial;"></span><h3><input type="checkbox" name="mo_openid_enable_profile_completion" value="1" <?php checked( get_option('mo_openid_enable_profile_completion') == '1' );?>>Profile Completion <p style="color:#da7587;font-weight:bold;">(Disabling profile completion is not recommended. This feature requires SMTP to be setup.)</p></h3>In case of unavailability of username or email from the social media application, user is prompted to input the same.</div>				
 		</td>
 		</tr>
 		
@@ -2303,7 +2297,8 @@ function mo_openid_pricing_info(){ ?>
 				<p class="mo_openid_pricing_text">Social Sharing (Free Forever)<br/>
 					Social Comments (Free Forever)<br/>
 					Social Login
-					(Free for 30 days)<br/></p>
+					(Free for 30 days)<br/>
+					<span style="color:pink">Profile Completion</span>**<br/></p>
 					<p><br/><br/></p>
 					<p><br/></p><br/></p>
 				<hr/>
@@ -2328,7 +2323,8 @@ function mo_openid_pricing_info(){ ?>
 				<p class="mo_openid_pricing_text">
 					Social Sharing<br/>
 					Social Comments<br/>
-					Social Login</p>
+					Social Login<br/>
+					<span style="color:pink">Profile Completion</span>**<br/> 
 					<p><br/><br/><br/></p>
 					<p><br/><br/></p>
 				<hr/>
@@ -2352,6 +2348,7 @@ function mo_openid_pricing_info(){ ?>
 					Social Sharing<br/>
 					Social Comments<br/>
 					Social Login<br/>
+					<span style="color:pink">Profile Completion</span>**<br/> 
 					Extended Profile Data<br/>
 					Social Analytics Dashboard Access<br/>
 					Custom Apps***<br/></p>
@@ -2377,6 +2374,7 @@ function mo_openid_pricing_info(){ ?>
 					Social Sharing<br/>
 					Social Comments<br/>
 					Social Login<br/>
+					<span style="color:pink">Profile Completion</span>**<br/> 
 					Extended Profile Data<br/>
 					Social Analytics Dashboard Access<br/>
 					Custom Apps***<br/>
@@ -2411,6 +2409,7 @@ function mo_openid_pricing_info(){ ?>
 		</script>
 		<p><span style="color:rgba(255, 0, 0, 0.76);font-weight:bold;">* Free for 30 days</span> - The plugin uses miniOrange service for Social Login. This keeps the plugin light and delegates login to miniOrange servers thereby reducing the load on your website.</p>
 		<p><span style="color:#da7587;font-weight:bold;">* Extended Profile Data</span> - Extended profile data feature requires additional configuration. You need to have your own social media app and permissions from social media providers to collect extended user data.</p>
+		<p><span style="color:#da7587;font-weight:bold;">** Profile Completion</span> - This is a new feature that requires SMTP to be setup. In case of unavailability of username or email from the social media application, user is prompted to input the same. Disabling this feature auto creates user data. Disabling this is not recommended.</p>
 		<p>*** Configuring applications for Social Media is cumbersome due to which miniOrange takes care of configuring these apps. If you still wish you use your own applications for Social Login apps, custom apps can be configured for each Social Media in Best Value and Premium plans.</p>
 
 		<h3>Steps to upgrade to premium plugin -</h3>

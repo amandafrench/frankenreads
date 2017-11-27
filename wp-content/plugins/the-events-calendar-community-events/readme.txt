@@ -4,8 +4,8 @@ Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tr
 Tags: widget, events, simple, tooltips, grid, month, list, calendar, event, venue, community, registration, api, dates, date, plugin, posts, sidebar, template, theme, time, google maps, google, maps, conference, workshop, concert, meeting, seminar, summit, forum, shortcode, The Events Calendar, The Events Calendar PRO
 Donate link: http://m.tri.be/29
 Requires at least: 4.5
-Tested up to: 4.8.2
-Stable tag: 4.5.6
+Tested up to: 4.9
+Stable tag: 4.5.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -152,9 +152,25 @@ Our Premium Plugins:
 
 == Changelog ==
 
+= [4.5.8] 2017-11-21 =
+
+* Tweak - Only display admin links in Community Tickets if user is able to access the admin [79565]
+* Language - 0 new strings added, 11 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.5.7] 2017-11-16 =
+
+* Fix - Improved translatability of the taxonomy dropdowns ("Searching..." placeholder can now be translated - our thanks to Oliver for flagging this!) [84926]
+* Fix - Changed the attendee and other links exposed to event owners so that they stay in the frontend environment where possible (our thanks to Gurdeep Sandhu for flagging this problem) [89015]
+* Fix - Added logic to prevent an event end time earlier than the event start time being set [89825]
+* Fix - Enhanced ease of marking nested fields as required (our thanks to dsb cloud services GmbH & Co. KG for flagging the need for this) [86299]
+* Fix - Ensure the correct wording is used for the Edit Venue and Edit Organizer pages [90154]
+* Tweak - The options presented by the timezone picker are now filterable (when used alongside an up-to-date version of The Events Calendar) [92909]
+* Language - 5 new strings added, 59 updated, 0 fuzzied, and 0 obsoleted
+
 = [4.5.6] 2017-10-04 =
 
 * Fix - Fixed issues with the jQuery Timepicker vendor script conflicting with other plugins' similar scripts (props: @hcny et al.) [74644]
+* Fix - Fixed the creation of the "back" (to the events list) URL, so that translated slugs are used (our thanks to dezemberundjuli for flagging this) [85607]
 
 = [4.5.5] 2017-08-24 =
 

@@ -18,12 +18,12 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		/**
 		 * The current version of Community Events
 		 */
-		const VERSION = '4.5.6';
+		const VERSION = '4.5.8';
 
 		/**
 		 * required The Events Calendar Version
 		 */
-		const REQUIRED_TEC_VERSION = '4.6.1';
+		const REQUIRED_TEC_VERSION = '4.6.6';
 
 		/**
 		 * Singleton instance variable
@@ -988,7 +988,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 
 				return add_query_arg( $args, get_permalink( $this->get_community_page_id() ) );
 			} else {
-				if ( $id ) {
+				if ( ! empty ( $id ) ) {
 					if ( $post_type ) {
 						if ( $post_type == Tribe__Events__Main::POSTTYPE )
 							return home_url() . '/' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs[ $action ] . '/' . $this->rewriteSlugs['event'] . '/' . $id . '/';
@@ -1528,7 +1528,12 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 			include Tribe__Events__Templates::getTemplateHierarchy( 'community/modules/delete' );
 			$output .= ob_get_clean();
 
-			$back_url = apply_filters( 'tribe_events_community_deleted_event_back_url', home_url( $this->getCommunityRewriteSlug() . '/list' ) );
+			/**
+			 * Sets the URL normally used to take users back to the main Community Events list view.
+			 *
+			 * @param string $back_url
+			 */
+			$back_url = apply_filters( 'tribe_events_community_deleted_event_back_url', tribe( 'community.main' )->getUrl( 'list' ) );
 			$output .= '<a href="' . esc_url( $back_url ) . '">&laquo; ' . _x( 'Back', 'As in "go back to previous page"', 'tribe-events-community' ) . '</a>';
 
 			$output .= '</div>';
@@ -2738,6 +2743,23 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 			// Redirect user to appropriate location
 			wp_safe_redirect( wp_validate_redirect( trailingslashit( $this->blockRolesRedirect ), home_url() ) );
 			exit;
+		}
+
+		/**
+		 * Get determination if the user has a role that allows access to the admin
+		 *
+		 * @since TBD
+		 *
+		 * @param int $user_id
+		 *
+		 * @return bool
+		 */
+		public function get_user_can_access_admin( $user_id = 0 ) {
+			if ( $this->user_can_access_admin( $user_id ) ) {
+				return true;
+			}
+
+			return false;
 		}
 
 		/**

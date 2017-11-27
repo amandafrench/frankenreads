@@ -340,8 +340,18 @@ class Tribe__Events__Community__Submission_Handler {
 				return ! empty( $attachment['name'] );
 
 			default:
+				// Support dot separated paths such as "tax_input.tribe_events_cat"
+				// to make it easier to require fields that are part of an array
+				foreach ( explode( '.', $key ) as $key_part ) {
+					if ( ! empty( $submission[ $key_part ] ) ) {
+						$submission = $submission[ $key_part ];
+						$match = true;
+					} else {
+						$match = false;
+					}
+				}
 
-				return ! empty( $submission[ $key ] );
+				return ! empty( $match );
 
 		}
 	}
@@ -385,6 +395,12 @@ class Tribe__Events__Community__Submission_Handler {
 				break;
 			case 'organizer':
 				$label = tribe_get_organizer_label_singular();
+				break;
+			case 'tax_input.tribe_events_cat':
+				$label = sprintf( _x( '%s Category', 'field label for event categories', 'tribe-events-community' ), tribe_get_event_label_singular() );
+				break;
+			case 'tax_input.post_tag':
+				$label = _x( 'Tag', 'field label for post tags', 'tribe-events-community' );
 				break;
 			default:
 				if ( strpos( $field, '_ecp_custom_' ) === 0 ) {

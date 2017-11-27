@@ -229,7 +229,7 @@ class SEED_CSP4_ADMIN
         $layout = $this->get_page_layout();
         ?>
         <div class="wrap columns-2 seed-csp4">
-        <?php screen_icon(); ?>
+        
             <h2><?php echo $this->plugin_name; ?> <span class="seed_csp4-version"> <?php echo SEED_CSP4_VERSION; ?></span></h2>
             <?php //settings_errors() ?>
             <?php $this->plugin_options_tabs(); ?>

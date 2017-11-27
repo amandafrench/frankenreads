@@ -3,12 +3,12 @@ Contributors: miniOrange
 Donate link: http://miniorange.com
 Tags: social login, social, facebook, twitter, login
 Requires at least: 2.0.2
-Tested up to: 4.8
-Stable tag: 5.1.8
+Tested up to: 4.9
+Stable tag: 5.1.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Social Login implements social login, sharing, comment using any social media like Twitter, Google, Facebook.EASIEST to configure.
+Social Login implements social login, sharing, comment using any social media like Twitter, Google, Facebook. EASIEST to configure.
 
 == Description ==
 Social Login is the easiest to configure and conviniently allows you to setup and start using the plugin very quickly.
@@ -34,6 +34,7 @@ Allow users to comment on your website using supported social media commenting a
 
 = Features - =
 
+*	<b>Profile Completion</b> - If username or email is not returned from a social app, user is prompted to input the same. 
 *	Clean and easy to use WordPress admin UI
 *	**NO SETUP required for any social login or social sharing application**
 *	Support for SHORTCODE for both social login and social sharing(horizontal & vertical)
@@ -143,6 +144,12 @@ Please email us at info@miniorange.com. You can also submit your query from the 
 
 
 == Changelog ==
+= 5.1.10 =
+*	Compatibility with 4.9
+
+= 5.1.9 =
+*	Bug Fix in Profile Completion Feature
+
 = 5.1.8 =
 *	Minor Bug Fix
 
@@ -382,6 +389,12 @@ Please email us at info@miniorange.com. You can also submit your query from the 
 * First version of Social Login, Social Sharing plugin.
 
 == Upgrade Notice ==
+= 5.1.10 =
+*	Compatibility with 4.9
+
+= 5.1.9 =
+*	Bug Fix in Profile Completion Feature
+
 = 5.1.8 =
 *	Minor Bug Fix
 

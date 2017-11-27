@@ -262,6 +262,17 @@ var tribe_community_events = tribe_community_events || {};
 		$('.tribe-dropdown').trigger('change');
 	};
 
+	/**
+	 * Reuses the same logic used by TEC in the admin environment to prevent
+	 * situations such as an event end time earlier than the event start time
+	 * being set.
+	 */
+	obj.datetime_selectors = function() {
+		if ( 'object' === typeof tribe_dynamic_helper_text ) {
+			tribe_dynamic_helper_text.event_date_change();
+		}
+	};
+
 	// Configure all function to run when Doc Ready
 	$( document )
 		.ready( obj.init_mobile_datetime_input )
@@ -270,6 +281,8 @@ var tribe_community_events = tribe_community_events || {};
 		.ready( obj.init_local_storage )
 		.ready( obj.init_linked_posts_handle )
 		.ready( obj.remove_no_js_class )
-		.ready( obj.setup_dropdowns );
+		.ready( obj.remove_no_js_class )
+		.ready( obj.setup_dropdowns )
+		.ready( obj.datetime_selectors );
 
 })( window, jQuery, tribe_community_events );

@@ -423,7 +423,7 @@ function seed_csp4_get_options(){
         "type" => "textarea",
         "id" => "html",
         "label" => __( "Custom HTML", 'coming-soon' ),
-        "desc" => __("The will replace the plugin's entire template with your custom html. Make sure to include the html, head and body tags when replacing the html.", 'coming-soon'),
+        "desc" => __("This will replace the plugin's entire template with your custom html. Make sure to include the html, head and body tags when replacing the html.", 'coming-soon'),
         "class" => "large-text"
     );
 
@@ -431,7 +431,7 @@ function seed_csp4_get_options(){
         "type" => "textarea",
         "id" => "append_html",
         "label" => __( "Append HTML", 'coming-soon' ),
-        "desc" => __("The will append html to the bottom of the template using the current styles.", 'coming-soon'),
+        "desc" => __("This will append html to the bottom of the template using the current styles.", 'coming-soon'),
         "class" => "large-text"
     );
 

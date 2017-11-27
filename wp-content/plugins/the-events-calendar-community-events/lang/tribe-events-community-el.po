@@ -11,7 +11,30 @@ msgstr ""
 "Language: el_GR\n"
 "Project-Id-Version: Community Events\n"
 
-#: src/views/community/modules/taxonomy.php:93
+#: src/views/community/modules/taxonomy.php:94
+msgctxt "taxonomy selector ajax search placeholder"
+msgid "Searching…"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:27
+msgid "Edit Venue"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:25
+msgid "Edit Organizer"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:403
+msgctxt "field label for post tags"
+msgid "Tag"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:400
+msgctxt "field label for event categories"
+msgid "%s Category"
+msgstr ""
+
+#: src/views/community/modules/taxonomy.php:95
 msgid "Search from existing %s"
 msgstr ""
 
@@ -51,15 +74,15 @@ msgstr ""
 msgid "Choose a .jpg, .png, or .gif file under %1$s in size."
 msgstr ""
 
-#: src/views/community/modules/header-links.php:33
+#: src/views/community/modules/header-links.php:39
 msgid "View Your Submitted Events"
 msgstr ""
 
-#: src/views/community/modules/header-links.php:23
+#: src/views/community/modules/header-links.php:29
 msgid "Add New Event"
 msgstr ""
 
-#: src/views/community/modules/header-links.php:21
+#: src/views/community/modules/header-links.php:23
 msgid "Edit Event"
 msgstr ""
 
@@ -104,7 +127,7 @@ msgstr ""
 msgid "Event Image"
 msgstr ""
 
-#: src/views/community/modules/datepickers.php:160
+#: src/views/community/modules/datepickers.php:167
 msgid "All Day Event"
 msgstr "Ολοήμερη Εκδήλωση"
 
@@ -184,27 +207,27 @@ msgstr ""
 msgid "Redirect for users who attempt to access the admin without permissions<br>Enter a full url to a post or page on your site<br>Leave blank for homepage"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:437
+#: src/Tribe/Submission_Handler.php:453
 msgid "URL"
 msgstr "URL"
 
-#: src/Tribe/Submission_Handler.php:433
+#: src/Tribe/Submission_Handler.php:449
 msgid "Zip"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:429
+#: src/Tribe/Submission_Handler.php:445
 msgid "State"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:425
+#: src/Tribe/Submission_Handler.php:441
 msgid "Province"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:413 src/Tribe/Submission_Handler.php:445
+#: src/Tribe/Submission_Handler.php:429 src/Tribe/Submission_Handler.php:461
 msgid "Name"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:366
+#: src/Tribe/Submission_Handler.php:376
 msgid "%s %s is required"
 msgstr ""
 
@@ -225,7 +248,7 @@ msgstr ""
 msgid "Single geography mode"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:520
+#: src/Tribe/Submission_Handler.php:536
 msgid "Invalid URL provided for %s"
 msgstr ""
 
@@ -271,7 +294,7 @@ msgctxt "Currency symbol position"
 msgid "Before cost"
 msgstr "Πριν την τιμή"
 
-#: src/Tribe/Main.php:1606
+#: src/Tribe/Main.php:1611
 msgid "The file you attempted to upload exceeded the maximum file size of %1$s."
 msgstr "Το αρχείο που προσπαθείτε να ανεβάσετε υπερβαίνει το μέγιστο μέγεθος αρχείου %1$s"
 
@@ -343,12 +366,12 @@ msgstr "Νομός"
 msgid "Country"
 msgstr "Χώρα"
 
-#: src/Tribe/Submission_Handler.php:421
+#: src/Tribe/Submission_Handler.php:437
 #: src/views/community/modules/venue-fields.php:52
 msgid "City"
 msgstr "Πόλη"
 
-#: src/Tribe/Submission_Handler.php:417
+#: src/Tribe/Submission_Handler.php:433
 #: src/views/community/modules/venue-fields.php:37
 msgid "Address"
 msgstr "Διεύθυνση"
@@ -357,18 +380,18 @@ msgstr "Διεύθυνση"
 msgid "None"
 msgstr "Καμία"
 
-#: src/Tribe/Submission_Handler.php:453
+#: src/Tribe/Submission_Handler.php:469
 #: src/views/community/modules/organizer-fields.php:75
 msgid "Email"
 msgstr "Email"
 
-#: src/Tribe/Submission_Handler.php:449
+#: src/Tribe/Submission_Handler.php:465
 #: src/views/community/modules/organizer-fields.php:70
 #: src/views/community/modules/venue-fields.php:143
 msgid "Website"
 msgstr "Ιστοσελίδα"
 
-#: src/Tribe/Submission_Handler.php:441
+#: src/Tribe/Submission_Handler.php:457
 #: src/views/community/modules/organizer-fields.php:64
 #: src/views/community/modules/venue-fields.php:128
 msgid "Phone"
@@ -656,31 +679,31 @@ msgstr "Διαγράφηκε οριστικά"
 msgid "Placed in the Trash"
 msgstr "Μετακίνηση στον κάδο Ανακύκλωσης"
 
-#: src/Tribe/Submission_Handler.php:551
+#: src/Tribe/Submission_Handler.php:567
 msgid "The uploaded image could not be processed"
 msgstr "Η εικόνα που ανεβάσατε δεν μπορεί να επεξεργασθεί"
 
-#: src/Tribe/Submission_Handler.php:547
+#: src/Tribe/Submission_Handler.php:563
 msgid "The image failed to upload successfully"
 msgstr "Η εικόνα δεν κατάφερε να ανέβει επιτυχώς"
 
-#: src/Tribe/Submission_Handler.php:542
+#: src/Tribe/Submission_Handler.php:558
 msgid "Image exceeded the allowed file size"
 msgstr "Η εικόνα υπερβαίνει το επιτρεπόμενο μέγεθος αρχείου"
 
-#: src/Tribe/Submission_Handler.php:500
+#: src/Tribe/Submission_Handler.php:516
 msgid "Images must be png, jpg, or gif"
 msgstr "Οι εικόνες πρέπει να είναι png, jpg, ή gif"
 
-#: src/Tribe/Submission_Handler.php:489
+#: src/Tribe/Submission_Handler.php:505
 msgid "Invalid value for %s"
 msgstr "Μη έγκυρη τιμή για το %s."
 
-#: src/Tribe/Submission_Handler.php:381
+#: src/Tribe/Submission_Handler.php:391
 msgid "%s Description"
 msgstr "Περιγραφή %sς"
 
-#: src/Tribe/Submission_Handler.php:378
+#: src/Tribe/Submission_Handler.php:388
 msgid "%s Title"
 msgstr "Τίτλος %sς"
 
@@ -708,31 +731,31 @@ msgstr "Υποβολή νέας %sς"
 msgid "%s updated. "
 msgstr ""
 
-#: src/Tribe/Main.php:2833
+#: src/Tribe/Main.php:2855
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-#: src/Tribe/Main.php:2817 src/Tribe/Templates.php:47
+#: src/Tribe/Main.php:2839 src/Tribe/Templates.php:47
 msgid "Community Events"
 msgstr "Κοινότητα Καταχώρησης Εκδηλώσεων"
 
-#: src/Tribe/Main.php:2808
+#: src/Tribe/Main.php:2830
 msgid "Community: My %s"
 msgstr "Καταχώρηση Εκδηλώσεων: Οι %s μου"
 
-#: src/Tribe/Main.php:2800
+#: src/Tribe/Main.php:2822
 msgid "Community: Submit %s"
 msgstr "Καταχώρηση Εκδηλώσεων: Υποβολή %sς"
 
-#: src/Tribe/Main.php:2586
+#: src/Tribe/Main.php:2591
 msgid "This template is also used for Community Events."
 msgstr "Αυτό το πρότυπο χρησιμοποιείται επίσης για την Κοινότητα Καταχώρησης Εκδηλώσεων."
 
-#: src/Tribe/Main.php:2569
+#: src/Tribe/Main.php:2574
 msgid "Community"
 msgstr "Κοινότητα"
 
-#: src/Tribe/Main.php:2330
+#: src/Tribe/Main.php:2335
 msgid "The requested page number was not found."
 msgstr "Ο ζητούμενος αριθμός σελίδας δεν βρέθηκε."
 
@@ -740,83 +763,83 @@ msgstr "Ο ζητούμενος αριθμός σελίδας δεν βρέθη�
 msgid "Fake Title"
 msgstr "Πλαστός Τίτλος"
 
-#: src/Tribe/Main.php:2107
+#: src/Tribe/Main.php:2112
 msgid "Please log in to view your events"
 msgstr "Παρακαλούμε συνδεθείτε για να δείτε τις εκδηλώσεις σας"
 
-#: src/Tribe/Main.php:2024
+#: src/Tribe/Main.php:2029
 msgid "There was a problem updating this organizer, please try again."
 msgstr "Υπήρξε ένα πρόβλημα κατά την ενημέρωση αυτού του Διοργανωτή, παρακαλώ προσπαθήστε ξανά."
 
-#: src/Tribe/Main.php:2020
+#: src/Tribe/Main.php:2025
 msgid "Organizer name cannot be blank."
 msgstr "Το όνομά Διοργανωτή δεν μπορεί να είναι κενό."
 
-#: src/Tribe/Main.php:2009
+#: src/Tribe/Main.php:2014
 msgid "Organizer updated."
 msgstr "Ο Διοργανωτής ενημερώθηκε"
 
-#: src/Tribe/Main.php:1987
+#: src/Tribe/Main.php:1992
 msgid "You do not have permission to edit this organizer."
 msgstr "Δεν έχετε άδεια για να τροποποιήσετε αυτό τον Διοργανωτή."
 
-#: src/Tribe/Main.php:1983
+#: src/Tribe/Main.php:1988
 msgid "Please log in to edit this organizer"
 msgstr "Παρακαλούμε συνδεθείτε για να επεξεργαστείτε αυτό το Διοργανωτή"
 
-#: src/Tribe/Main.php:1979
+#: src/Tribe/Main.php:1984
 msgid "Organizer not found."
 msgstr "Δεν βρέθηκε ο Διοργανωτής."
 
-#: src/Tribe/Main.php:1942
+#: src/Tribe/Main.php:1947
 msgid "There was a problem updating your venue, please try again."
 msgstr "Υπήρξε ένα πρόβλημα κατά την ενημέρωση του Χώρου Διεξαγωγής, παρακαλώ προσπαθήστε ξανά."
 
-#: src/Tribe/Main.php:1938
+#: src/Tribe/Main.php:1943
 msgid "Venue name cannot be blank."
 msgstr "Το όνομα του Χώρου Διεξαγωγής μπορεί να είναι κενό."
 
-#: src/Tribe/Main.php:1928
+#: src/Tribe/Main.php:1933
 msgid "Venue updated."
 msgstr "Ο Χώρος Διεξαγωγής ενημερώθηκε"
 
-#: src/Tribe/Main.php:1905
+#: src/Tribe/Main.php:1910
 msgid "You do not have permission to edit this venue."
 msgstr "Δεν έχετε άδεια για να τροποποιήσετε αυτόν τον Χώρο Διεξαγωγής."
 
-#: src/Tribe/Main.php:1901
+#: src/Tribe/Main.php:1906
 msgid "Please log in to edit this venue"
 msgstr "Παρακαλούμε συνδεθείτε για να επεξεργαστείτε αυτό τον Χώρο Διεξαγωγής"
 
-#: src/Tribe/Main.php:1896
+#: src/Tribe/Main.php:1901
 msgid "Venue not found."
 msgstr "Δεν βρέθηκε ο Χώρος Διεξαγωγής"
 
-#: src/Tribe/Main.php:1765 src/views/community/columns/title.php:41
+#: src/Tribe/Main.php:1770 src/views/community/columns/title.php:41
 msgid "Edit"
 msgstr "Επεξεργασία"
 
-#: src/Tribe/Main.php:1759 src/views/community/columns/title.php:35
+#: src/Tribe/Main.php:1764 src/views/community/columns/title.php:35
 msgid "View"
 msgstr "Προβολή"
 
-#: src/Tribe/Main.php:1600
+#: src/Tribe/Main.php:1605
 msgid "You do not have permission to edit this %s."
 msgstr "Δεν έχετε άδεια για να τροποποιήσετε αυτή τη% s."
 
-#: src/Tribe/Main.php:1594
+#: src/Tribe/Main.php:1599
 msgid "Please log in first."
 msgstr "Παρακαλώ συνδεθείτε πρώτα."
 
-#: src/Tribe/Main.php:1586
+#: src/Tribe/Main.php:1591
 msgid "%s not found."
 msgstr "%s δεν βρέθηκε."
 
-#: src/Tribe/Main.php:1577
+#: src/Tribe/Main.php:1582
 msgid "%sWarning:%s You are editing a recurring %s. All changes will be applied to the entire series."
 msgstr "%sΠροσοχή:%s Επεξεργάζεστε μια επαναλαμβανόμενη %s. Όλες οι αλλαγές θα εφαρμοστούν σε όλη τη σειρά."
 
-#: src/Tribe/Main.php:1532
+#: src/Tribe/Main.php:1537
 msgctxt "As in \"go back to previous page\""
 msgid "Back"
 msgstr "Πίσω"
@@ -915,31 +938,31 @@ msgstr "Επεξεργασία διοργανωτή"
 msgid "Edit a Venue"
 msgstr "Επεξεργασία χώρου διεξαγωγής"
 
-#: src/Tribe/Main.php:2877
+#: src/Tribe/Main.php:2899
 msgid "event"
 msgstr "Εκδήλωση"
 
-#: src/Tribe/Main.php:2876
+#: src/Tribe/Main.php:2898
 msgid "organizer"
 msgstr "Διοργανωτής"
 
-#: src/Tribe/Main.php:2875
+#: src/Tribe/Main.php:2897
 msgid "venue"
 msgstr "Τόπος Δειξαγωγής"
 
-#: src/Tribe/Main.php:2873 src/admin-views/community-options-template.php:359
+#: src/Tribe/Main.php:2895 src/admin-views/community-options-template.php:359
 msgid "list"
 msgstr "list"
 
-#: src/Tribe/Main.php:2872
+#: src/Tribe/Main.php:2894
 msgid "delete"
 msgstr "διαγραφή"
 
-#: src/Tribe/Main.php:2871 src/admin-views/community-options-template.php:357
+#: src/Tribe/Main.php:2893 src/admin-views/community-options-template.php:357
 msgid "add"
 msgstr "add"
 
-#: src/Tribe/Main.php:2870
+#: src/Tribe/Main.php:2892
 msgid "edit"
 msgstr "επεξεργασία"
 

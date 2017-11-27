@@ -11,7 +11,30 @@ msgstr ""
 "Language: cs_CZ\n"
 "Project-Id-Version: Community Events\n"
 
-#: src/views/community/modules/taxonomy.php:93
+#: src/views/community/modules/taxonomy.php:94
+msgctxt "taxonomy selector ajax search placeholder"
+msgid "Searching…"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:27
+msgid "Edit Venue"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:25
+msgid "Edit Organizer"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:403
+msgctxt "field label for post tags"
+msgid "Tag"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:400
+msgctxt "field label for event categories"
+msgid "%s Category"
+msgstr ""
+
+#: src/views/community/modules/taxonomy.php:95
 msgid "Search from existing %s"
 msgstr "Hledat existující %s"
 
@@ -51,15 +74,15 @@ msgstr "Nahráno:"
 msgid "Choose a .jpg, .png, or .gif file under %1$s in size."
 msgstr "Vyberte soubor .jpg, .png, or .gif menší než %1$s."
 
-#: src/views/community/modules/header-links.php:33
+#: src/views/community/modules/header-links.php:39
 msgid "View Your Submitted Events"
 msgstr "Zobrazit odeslané akce"
 
-#: src/views/community/modules/header-links.php:23
+#: src/views/community/modules/header-links.php:29
 msgid "Add New Event"
 msgstr "Přidat akci"
 
-#: src/views/community/modules/header-links.php:21
+#: src/views/community/modules/header-links.php:23
 msgid "Edit Event"
 msgstr "Upravit akci"
 
@@ -104,7 +127,7 @@ msgstr "Nahrát soubor"
 msgid "Event Image"
 msgstr "Obrázek akce"
 
-#: src/views/community/modules/datepickers.php:160
+#: src/views/community/modules/datepickers.php:167
 msgid "All Day Event"
 msgstr "Celodenní akce"
 
@@ -184,27 +207,27 @@ msgstr "Ověření reCAPTCHA se nezdařilo"
 msgid "Redirect for users who attempt to access the admin without permissions<br>Enter a full url to a post or page on your site<br>Leave blank for homepage"
 msgstr "Přesměrování uživatelů, kteří se pokusí o přístup do administrace bez oprávnění.<br>Zadejte celou URL adresu příspěvku nebo stránky na vašem webu.<br>Pokud nic nezadáte, použije se úvodní stránka."
 
-#: src/Tribe/Submission_Handler.php:437
+#: src/Tribe/Submission_Handler.php:453
 msgid "URL"
 msgstr "URL adresa"
 
-#: src/Tribe/Submission_Handler.php:433
+#: src/Tribe/Submission_Handler.php:449
 msgid "Zip"
 msgstr "PSČ"
 
-#: src/Tribe/Submission_Handler.php:429
+#: src/Tribe/Submission_Handler.php:445
 msgid "State"
 msgstr "Stát"
 
-#: src/Tribe/Submission_Handler.php:425
+#: src/Tribe/Submission_Handler.php:441
 msgid "Province"
 msgstr "Kraj"
 
-#: src/Tribe/Submission_Handler.php:413 src/Tribe/Submission_Handler.php:445
+#: src/Tribe/Submission_Handler.php:429 src/Tribe/Submission_Handler.php:461
 msgid "Name"
 msgstr "Jméno"
 
-#: src/Tribe/Submission_Handler.php:366
+#: src/Tribe/Submission_Handler.php:376
 msgid "%s %s is required"
 msgstr "%s %s je vyžadován"
 
@@ -225,7 +248,7 @@ msgstr "Odstraní z formuláře možnost výběru země, kraje a časového pás
 msgid "Single geography mode"
 msgstr "Jednoduchý zeměpisný režim"
 
-#: src/Tribe/Submission_Handler.php:520
+#: src/Tribe/Submission_Handler.php:536
 msgid "Invalid URL provided for %s"
 msgstr "URL adresa pro %s nebyla zadána."
 
@@ -271,7 +294,7 @@ msgctxt "Currency symbol position"
 msgid "Before cost"
 msgstr "Před cenou"
 
-#: src/Tribe/Main.php:1606
+#: src/Tribe/Main.php:1611
 msgid "The file you attempted to upload exceeded the maximum file size of %1$s."
 msgstr "Velikost nahrávaného souboru překročila maximální povolenou hodnotu %1$s."
 
@@ -343,12 +366,12 @@ msgstr "Kraj"
 msgid "Country"
 msgstr "Země"
 
-#: src/Tribe/Submission_Handler.php:421
+#: src/Tribe/Submission_Handler.php:437
 #: src/views/community/modules/venue-fields.php:52
 msgid "City"
 msgstr "Město"
 
-#: src/Tribe/Submission_Handler.php:417
+#: src/Tribe/Submission_Handler.php:433
 #: src/views/community/modules/venue-fields.php:37
 msgid "Address"
 msgstr "Adresa"
@@ -357,18 +380,18 @@ msgstr "Adresa"
 msgid "None"
 msgstr "Žádné"
 
-#: src/Tribe/Submission_Handler.php:453
+#: src/Tribe/Submission_Handler.php:469
 #: src/views/community/modules/organizer-fields.php:75
 msgid "Email"
 msgstr "Email"
 
-#: src/Tribe/Submission_Handler.php:449
+#: src/Tribe/Submission_Handler.php:465
 #: src/views/community/modules/organizer-fields.php:70
 #: src/views/community/modules/venue-fields.php:143
 msgid "Website"
 msgstr "Webová stránka"
 
-#: src/Tribe/Submission_Handler.php:441
+#: src/Tribe/Submission_Handler.php:457
 #: src/views/community/modules/organizer-fields.php:64
 #: src/views/community/modules/venue-fields.php:128
 msgid "Phone"
@@ -656,31 +679,31 @@ msgstr "Nenávratně smazány"
 msgid "Placed in the Trash"
 msgstr "Přesunuty do koše"
 
-#: src/Tribe/Submission_Handler.php:551
+#: src/Tribe/Submission_Handler.php:567
 msgid "The uploaded image could not be processed"
 msgstr "Nahraný obrázek se nepodařilo zpracovat"
 
-#: src/Tribe/Submission_Handler.php:547
+#: src/Tribe/Submission_Handler.php:563
 msgid "The image failed to upload successfully"
 msgstr "Obrázek se nepodařilo nahrát"
 
-#: src/Tribe/Submission_Handler.php:542
+#: src/Tribe/Submission_Handler.php:558
 msgid "Image exceeded the allowed file size"
 msgstr "Velikost nahrávaného obrázku překročila povolenou hodnotu"
 
-#: src/Tribe/Submission_Handler.php:500
+#: src/Tribe/Submission_Handler.php:516
 msgid "Images must be png, jpg, or gif"
 msgstr "Obrázky musí být ve formátu png, jpg nebo gif"
 
-#: src/Tribe/Submission_Handler.php:489
+#: src/Tribe/Submission_Handler.php:505
 msgid "Invalid value for %s"
 msgstr "Neplatná hodnota pro %s"
 
-#: src/Tribe/Submission_Handler.php:381
+#: src/Tribe/Submission_Handler.php:391
 msgid "%s Description"
 msgstr "Popis akce"
 
-#: src/Tribe/Submission_Handler.php:378
+#: src/Tribe/Submission_Handler.php:388
 msgid "%s Title"
 msgstr "Název akce"
 
@@ -708,31 +731,31 @@ msgstr "Přidat další akci"
 msgid "%s updated. "
 msgstr "%s byla aktualizována."
 
-#: src/Tribe/Main.php:2833
+#: src/Tribe/Main.php:2855
 msgid "Settings"
 msgstr "Nastavení"
 
-#: src/Tribe/Main.php:2817 src/Tribe/Templates.php:47
+#: src/Tribe/Main.php:2839 src/Tribe/Templates.php:47
 msgid "Community Events"
 msgstr "Komunitní akce"
 
-#: src/Tribe/Main.php:2808
+#: src/Tribe/Main.php:2830
 msgid "Community: My %s"
 msgstr "Komunita: Moje akce"
 
-#: src/Tribe/Main.php:2800
+#: src/Tribe/Main.php:2822
 msgid "Community: Submit %s"
 msgstr "Komunita: Přidat akci"
 
-#: src/Tribe/Main.php:2586
+#: src/Tribe/Main.php:2591
 msgid "This template is also used for Community Events."
 msgstr "Tato šablona se používá také pro Komunitní akce."
 
-#: src/Tribe/Main.php:2569
+#: src/Tribe/Main.php:2574
 msgid "Community"
 msgstr "Komunita"
 
-#: src/Tribe/Main.php:2330
+#: src/Tribe/Main.php:2335
 msgid "The requested page number was not found."
 msgstr "Stránka s požadovaným číslem nebyla nalezena."
 
@@ -740,83 +763,83 @@ msgstr "Stránka s požadovaným číslem nebyla nalezena."
 msgid "Fake Title"
 msgstr "Fiktivní název"
 
-#: src/Tribe/Main.php:2107
+#: src/Tribe/Main.php:2112
 msgid "Please log in to view your events"
 msgstr "Pro zobrazení svých akcí se musíte přihlásit"
 
-#: src/Tribe/Main.php:2024
+#: src/Tribe/Main.php:2029
 msgid "There was a problem updating this organizer, please try again."
 msgstr "Nastal problém při aktualizaci tohoto pořadatele. Zkuste to prosím znovu."
 
-#: src/Tribe/Main.php:2020
+#: src/Tribe/Main.php:2025
 msgid "Organizer name cannot be blank."
 msgstr "Jméno pořadatele nemůže být prázdné."
 
-#: src/Tribe/Main.php:2009
+#: src/Tribe/Main.php:2014
 msgid "Organizer updated."
 msgstr "Pořadatel byl aktualizován."
 
-#: src/Tribe/Main.php:1987
+#: src/Tribe/Main.php:1992
 msgid "You do not have permission to edit this organizer."
 msgstr "Nemáte dostatečné oprávnění pro úpravy tohoto pořadatele."
 
-#: src/Tribe/Main.php:1983
+#: src/Tribe/Main.php:1988
 msgid "Please log in to edit this organizer"
 msgstr "Pro upravení tohoto pořadatele se musíte přihlásit"
 
-#: src/Tribe/Main.php:1979
+#: src/Tribe/Main.php:1984
 msgid "Organizer not found."
 msgstr "Pořadatel nebyl nalezen."
 
-#: src/Tribe/Main.php:1942
+#: src/Tribe/Main.php:1947
 msgid "There was a problem updating your venue, please try again."
 msgstr "Nastal problém při aktualizaci vašeho místa konání. Zkuste to prosím znovu."
 
-#: src/Tribe/Main.php:1938
+#: src/Tribe/Main.php:1943
 msgid "Venue name cannot be blank."
 msgstr "Místo konání nemůže být prázdné."
 
-#: src/Tribe/Main.php:1928
+#: src/Tribe/Main.php:1933
 msgid "Venue updated."
 msgstr "Místo konání bylo aktualizováno."
 
-#: src/Tribe/Main.php:1905
+#: src/Tribe/Main.php:1910
 msgid "You do not have permission to edit this venue."
 msgstr "Nemáte dostatečné oprávnění pro úpravy tohoto místa konání."
 
-#: src/Tribe/Main.php:1901
+#: src/Tribe/Main.php:1906
 msgid "Please log in to edit this venue"
 msgstr "Pro upravení tohoto místa konání se musíte přihlásit"
 
-#: src/Tribe/Main.php:1896
+#: src/Tribe/Main.php:1901
 msgid "Venue not found."
 msgstr "Místo konání nebylo nalezeno."
 
-#: src/Tribe/Main.php:1765 src/views/community/columns/title.php:41
+#: src/Tribe/Main.php:1770 src/views/community/columns/title.php:41
 msgid "Edit"
 msgstr "Upravit"
 
-#: src/Tribe/Main.php:1759 src/views/community/columns/title.php:35
+#: src/Tribe/Main.php:1764 src/views/community/columns/title.php:35
 msgid "View"
 msgstr "Zobrazit"
 
-#: src/Tribe/Main.php:1600
+#: src/Tribe/Main.php:1605
 msgid "You do not have permission to edit this %s."
 msgstr "Nemáte dostatečné oprávnění pro úpravy této akce."
 
-#: src/Tribe/Main.php:1594
+#: src/Tribe/Main.php:1599
 msgid "Please log in first."
 msgstr "Nejprve se prosím přihlaste."
 
-#: src/Tribe/Main.php:1586
+#: src/Tribe/Main.php:1591
 msgid "%s not found."
 msgstr "Akce nebyla nalezena."
 
-#: src/Tribe/Main.php:1577
+#: src/Tribe/Main.php:1582
 msgid "%sWarning:%s You are editing a recurring %s. All changes will be applied to the entire series."
 msgstr "%sUpozornění:%s Upravujete opakující se akci. Všechny změny budou aplikovány na celou sérii."
 
-#: src/Tribe/Main.php:1532
+#: src/Tribe/Main.php:1537
 msgctxt "As in \"go back to previous page\""
 msgid "Back"
 msgstr "Zpět"
@@ -915,31 +938,31 @@ msgstr "Upravit pořadatele"
 msgid "Edit a Venue"
 msgstr "Upravit místo konání"
 
-#: src/Tribe/Main.php:2877
+#: src/Tribe/Main.php:2899
 msgid "event"
 msgstr "akce"
 
-#: src/Tribe/Main.php:2876
+#: src/Tribe/Main.php:2898
 msgid "organizer"
 msgstr "pořadatel"
 
-#: src/Tribe/Main.php:2875
+#: src/Tribe/Main.php:2897
 msgid "venue"
 msgstr "místo konání"
 
-#: src/Tribe/Main.php:2873 src/admin-views/community-options-template.php:359
+#: src/Tribe/Main.php:2895 src/admin-views/community-options-template.php:359
 msgid "list"
 msgstr "seznam"
 
-#: src/Tribe/Main.php:2872
+#: src/Tribe/Main.php:2894
 msgid "delete"
 msgstr "smazat"
 
-#: src/Tribe/Main.php:2871 src/admin-views/community-options-template.php:357
+#: src/Tribe/Main.php:2893 src/admin-views/community-options-template.php:357
 msgid "add"
 msgstr "přidat"
 
-#: src/Tribe/Main.php:2870
+#: src/Tribe/Main.php:2892
 msgid "edit"
 msgstr "upravit"
 

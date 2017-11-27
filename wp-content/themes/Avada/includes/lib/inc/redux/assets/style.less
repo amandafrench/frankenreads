@@ -116,7 +116,7 @@
         }
       }
 
-       > h2,
+      > h2,
       .fusion_theme_options-fusionredux_import_export > h2,
       .fusionredux-field-info {
         margin: 3em 0 2em;
@@ -247,7 +247,7 @@
       }
 
       .fusionredux-group-menu li.fusion-builder-no-addon-elements.hasSubSections.fusion-section-hover {
-         > a:after,
+        > a:after,
         .subsection {
           display: none !important;
         }
@@ -630,7 +630,6 @@
               label {
                 width: 100%;
                 padding-right: 3px;
-                margin-top: 0 !important;
               }
 
               input[type="text"] {
@@ -646,6 +645,23 @@
 
           .iris-picker {
             width: 100% !important;
+
+            .iris-palette,
+            .iris-slider,
+            .iris-square,
+            .iris-square-inner {
+              box-shadow: none;
+            }
+
+            .iris-palette,
+            .iris-slider,
+            .iris-square {
+              border: 1px solid #ddd;
+            }
+
+            .iris-square-inner {
+              border-radius: 0;
+            }
 
             .iris-picker-inner {
               display: flex;
@@ -1591,7 +1607,7 @@
   display: inline !important;
 }
 /* Media Queries */
-@media only screen and ( max-width: 1285px ) {
+@media only screen and (max-width: 1285px) {
   .fusionredux-container {
     #fusionredux-form-wrapper .fusionredux-main .fusion-support-links {
       margin-right: 0;
@@ -1621,7 +1637,7 @@
     float: right;
   }
 }
-@media only screen and ( max-width: 1200px ) {
+@media only screen and (max-width: 1200px) {
   .fusionredux-container #fusionredux-form-wrapper .form-table td,
   .fusionredux-container #fusionredux-form-wrapper .form-table th,
   .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-field[data-id="header_layout"] .fusionredux_field_th {
@@ -1639,7 +1655,7 @@
     max-width: 85%;
   }
 }
-@media only screen and ( min-width: 1200px ) and ( max-width: 1290px ) {
+@media only screen and (min-width: 1200px) and (max-width: 1290px) {
   .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color_alpha {
     .iris-picker {
       width: 310px !important;
@@ -1661,7 +1677,7 @@
     }
   }
 }
-@media only screen and ( max-width: 1030px ) {
+@media only screen and (max-width: 1030px) {
   .fusionredux-container {
     .fusionredux-action_bar {
       .spinner {
@@ -1674,7 +1690,7 @@
     }
   }
 }
-@media only screen and ( max-width: 782px ) {
+@media only screen and (max-width: 782px) {
   .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-spacing .field-spacing-input {
     width: 100%;
   }
@@ -1687,7 +1703,7 @@
     height: 43px;
   }
 }
-@media only screen and ( max-width: 720px ) {
+@media only screen and (max-width: 720px) {
   .fusionredux-container #fusionredux-form-wrapper .fusionredux-main input#fusionredux_save {
     margin-right: 4px;
   }
@@ -1696,7 +1712,7 @@
     display: none;
   }
 }
-@media only screen and ( max-width: 600px ) {
+@media only screen and (max-width: 600px) {
   .fusionredux-container #fusionredux-form-wrapper {
     .fusionredux-main {
       margin-left: 43px;
@@ -1895,7 +1911,7 @@
 
       .fusionredux-sidebar {
         .fusionredux-group-menu {
-           > li.active > a:after,
+          > li.active > a:after,
           > li.fusion-section-hover > a:after,
           li.activeChild > a:after {
             left: 0;
@@ -2012,6 +2028,7 @@
             .wp-picker-input-wrap {
               label {
                 padding-right: 15px;
+                margin-top: 0 !important;
               }
             }
           }

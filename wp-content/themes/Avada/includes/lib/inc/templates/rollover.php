@@ -36,7 +36,7 @@ $portfolio_link_icon_target = apply_filters( 'fusion_builder_portfolio_link_icon
 $post_permalink = ( ! $post_permalink ) ? get_permalink( $post_id ) : $post_permalink;
 
 // Check if theme options are used as base or if there is an override for post categories.
-if ( 'default' == $display_post_categories ) {
+if ( 'default' === $display_post_categories ) {
 	$display_post_categories = fusion_library()->get_option( 'cats_image_rollover' );
 } elseif ( 'enable' === $display_post_categories ) {
 	$display_post_categories = true;

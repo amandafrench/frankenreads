@@ -10,7 +10,7 @@ defined( 'WPINC' ) or die;
  * [your-theme]/tribe-events/community/modules/taxonomy.php
  *
  * @since  3.1
- * @version 4.5
+ * @version 4.5.7
  *
  */
 
@@ -69,6 +69,7 @@ if ( ! empty( $taxonomy_label ) ) {
 <div class="tribe-section tribe-section-taxonomy">
 	<div class="tribe-section-header">
 		<h3><?php echo esc_html( $taxonomy_label ); ?></h3>
+		<?php echo tribe_community_required_field_marker( "tax_input.$taxonomy" ); ?>
 	</div>
 
 	<?php
@@ -90,6 +91,7 @@ if ( ! empty( $taxonomy_label ) ) {
 				multiple
 				data-dropdown-css-width="false"
 				data-allow-html
+				data-searching-placeholder="<?php echo esc_attr_x( 'Searching…', 'taxonomy selector ajax search placeholder', 'tribe-events-community' ); ?>"
 				placeholder="<?php echo esc_attr( sprintf( __( 'Search from existing %s', 'tribe-events-community' ), $taxonomy_placeholder ) ); ?>"
 				type="hidden"
 				value="<?php echo esc_attr( $value ); ?>"

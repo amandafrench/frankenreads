@@ -9,16 +9,22 @@ defined( 'WPINC' ) or die;
  * [your-theme]/tribe-events/community/modules/header-links.php
  *
  * @since  3.1
- * @version 4.5
+ * @version 4.5.7
  *
  */
+
+$post_id = get_the_ID();
 ?>
 
 <header class="my-events-header">
 	<h2 class="my-events">
 		<?php
-		if ( get_the_ID() ) {
+		if ( $post_id && tribe_is_event( $post_id ) ) {
 			esc_html_e( 'Edit Event', 'tribe-events-community' );
+		} elseif ( $post_id && tribe_is_organizer( $post_id ) ) {
+			esc_html_e( 'Edit Organizer', 'tribe-events-community' );
+		} elseif ( $post_id && tribe_is_venue( $post_id ) ) {
+			esc_html_e( 'Edit Venue', 'tribe-events-community' );
 		} else {
 			esc_html_e( 'Add New Event', 'tribe-events-community' );
 		}

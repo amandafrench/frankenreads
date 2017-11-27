@@ -25,13 +25,6 @@ function mo_openid_share_shortcode( $atts = '', $title = '', $excerpt = '' ) {
 		}else
 			$fontColor;
 	}	
-		
-
-
-	
-	
-
-
 
 	$email_subject = get_option('mo_openid_share_email_subject');
 	$email_body = get_option('mo_openid_share_email_body');

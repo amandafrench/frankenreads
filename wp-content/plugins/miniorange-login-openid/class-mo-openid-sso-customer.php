@@ -59,7 +59,7 @@ class CustomerOpenID {
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_AUTOREFERER, true );
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );    # required for https urls
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
 		curl_setopt( $ch, CURLOPT_MAXREDIRS, 10 );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json', 'charset: UTF - 8', 'Authorization: Basic' ) );
 		curl_setopt( $ch, CURLOPT_POST, true );
@@ -99,7 +99,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_AUTOREFERER, true );
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );    # required for https urls
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
 		curl_setopt( $ch, CURLOPT_MAXREDIRS, 10 );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json', 'charset: UTF - 8', 'Authorization: Basic' ) );
 		curl_setopt( $ch, CURLOPT_POST, true);
@@ -135,7 +135,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_AUTOREFERER, true );
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );    # required for https urls
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
 		curl_setopt( $ch, CURLOPT_MAXREDIRS, 10 );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json', 'charset: UTF - 8', 'Authorization: Basic' ) );
 		curl_setopt( $ch, CURLOPT_POST, true);
@@ -172,7 +172,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		$hashValue = hash("sha512", $stringToHash);
 
 		$customerKeyHeader = "Customer-Key: " . $customerKey;
-		$timestampHeader = "Timestamp: " . $currentTimeInMillis;
+		$timestampHeader = "Timestamp: " .number_format($currentTimeInMillis, 0, '', '');
 		$authorizationHeader = "Authorization: " . $hashValue;
 		if($authType == 'EMAIL') {
 			$fields = array(
@@ -196,7 +196,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_AUTOREFERER, true );
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );    # required for https urls
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
 		curl_setopt( $ch, CURLOPT_MAXREDIRS, 10 );
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", $customerKeyHeader,
 											$timestampHeader, $authorizationHeader));
@@ -234,7 +234,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		$hashValue = hash("sha512", $stringToHash);
 
 		$customerKeyHeader = "Customer-Key: " . $customerKey;
-		$timestampHeader = "Timestamp: " . $currentTimeInMillis;
+		$timestampHeader = "Timestamp: " .number_format($currentTimeInMillis, 0, '', '');
 		$authorizationHeader = "Authorization: " . $hashValue;
 		$fields = array(
 					   'customerId' => $customerKey,
@@ -247,7 +247,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_AUTOREFERER, true );
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );    # required for https urls
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
 		curl_setopt( $ch, CURLOPT_MAXREDIRS, 10 );
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", $customerKeyHeader,
 											$timestampHeader, $authorizationHeader));
@@ -286,7 +286,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		$hashValue = hash("sha512", $stringToHash);
 
 		$customerKeyHeader = "Customer-Key: " . $customerKey;
-		$timestampHeader = "Timestamp: " . $currentTimeInMillis;
+		$timestampHeader = "Timestamp: " . number_format($currentTimeInMillis, 0, '', '');
 		$authorizationHeader = "Authorization: " . $hashValue;
 
 		$fields = '';
@@ -304,7 +304,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_AUTOREFERER, true );
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );    # required for https urls
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
 		curl_setopt( $ch, CURLOPT_MAXREDIRS, 10 );
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", $customerKeyHeader,
 											$timestampHeader, $authorizationHeader));
@@ -351,7 +351,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_AUTOREFERER, true );
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );    # required for https urls
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
 		curl_setopt( $ch, CURLOPT_MAXREDIRS, 10 );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json', 'charset: UTF-8', 'Authorization: Basic' ) );
 		curl_setopt( $ch, CURLOPT_POST, true);
@@ -394,7 +394,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		$hashValue = hash("sha512", $stringToHash);
 	
 		$customerKeyHeader = "Customer-Key: " . $customerKey;
-		$timestampHeader = "Timestamp: " . $currentTimeInMillis;
+		$timestampHeader = "Timestamp: " .number_format($currentTimeInMillis, 0, '', '');
 		$authorizationHeader = "Authorization: " . $hashValue;
 		
 		$fields = '';
@@ -411,7 +411,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_AUTOREFERER, true );
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );    # required for https urls
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+		
 		curl_setopt( $ch, CURLOPT_MAXREDIRS, 10 );
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", $customerKeyHeader, 
 											$timestampHeader, $authorizationHeader));

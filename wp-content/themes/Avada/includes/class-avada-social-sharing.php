@@ -165,7 +165,7 @@ class Avada_Social_Sharing extends Avada_Social_Icon {
 
 		if ( Avada()->settings->get( 'sharing_email' ) ) {
 			$social_links_array['email'] = array(
-				'url'        => 'mailto:?subject=' . $args['title'] . '&body=' . $args['link'],
+				'url'        => 'mailto:?subject=' . rawurlencode( $args['title'] ) . '&body=' . $args['link'],
 			);
 		}
 

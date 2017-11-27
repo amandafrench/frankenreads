@@ -11,7 +11,7 @@ defined( 'WPINC' ) or die;
  * [your-theme]/tribe-events/community/modules/datepickers.php
  *
  * @since  3.1
- * @version 4.5
+ * @version 4.5.7
  *
  */
 
@@ -146,7 +146,14 @@ $events_label_plural_lowercase = tribe_get_event_label_plural_lowercase();
 						data-timezone-label="<?php esc_attr_e( 'Timezone:', 'tribe-events-community' ) ?>"
 						data-timezone-value="<?php echo esc_attr( Tribe__Events__Timezones::get_event_timezone_string() ) ?>"
 					>
-						<?php echo wp_timezone_choice( Tribe__Events__Timezones::get_event_timezone_string() ); ?>
+						<?php
+						// Use the Tribe-specific wrapper function (the output of which is filterable) if available
+						if ( function_exists( 'tribe_events_timezone_choice' ) ) {
+							echo tribe_events_timezone_choice( Tribe__Events__Timezones::get_event_timezone_string() );
+						} else {
+							echo wp_timezone_choice( Tribe__Events__Timezones::get_event_timezone_string() );
+						}
+						?>
 					</select>
 
 				<?php endif ?>
