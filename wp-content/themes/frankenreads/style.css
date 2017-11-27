@@ -1,0 +1,74 @@
+/*
+Theme Name: Avada Child
+Description: Child theme for Avada theme
+Author: ThemeFusion
+Author URI: https://theme-fusion.com
+Template: Avada
+Version: 1.0.0
+Text Domain:  Avada
+*/
+
+.fusion-header-v4 .fusion-logo .fusion-header-content-3-wrapper { max-width: 60%; margin-top: auto; }
+.fusion-header-v4 .fusion-header { padding-top: 0px !important; }
+.fusion-secondary-header { background-image: url(//frankenreads.org/wp-content/uploads/2017/05/debut_light.png); }
+.fusion-header-v4 .fusion-logo .fusion-header-content-3-wrapper .fusion-header-tagline { margin-bottom: -6px; }
+.fusion-header .fusion-logo { margin-top: -20px; }
+
+.fusion-page-load-link + img { display: none; }
+
+.buddypress.register #main #content { width: 100%; float:none; }
+.buddypress.register #main #sidebar { display: none; }
+.bp_register .entry-title { text-align:center; font-family: Montserrat,Arial,Helvetica,sans-serif; color: #ffffff; font-size: 30px; font-weight: 500;/*font-size:45px; line-height: 1.2; margin-bottom: 0.37em; margin-top:0;*/ }
+
+#buddypress .comment-reply-link, #buddypress .generic-button a, 
+#buddypress .standard-form button, #buddypress a.button, 
+#buddypress input[type="button"], #buddypress input[type="reset"], 
+#buddypress input[type="submit"], #buddypress ul.button-nav li a, a.bp-title-button { 
+    border: 1px solid transparent; background: rgb(240, 240, 240); font-weight: 700; letter-spacing: 1px;
+    padding: 13px 29px; line-height: 17px; font-size: 14px; text-transform:uppercase;
+}
+/* REGISTER PAGE */
+.bp_register #buddypress .standard-form .submit input { margin-right: 0px; }
+.bp_register .standard-form p { text-align: center; color: #ffffff; }
+.bp_register .register-section { background: #f2f2f2; padding: 25px;}
+#wrapper .bp_register .post-content .register-section h2 { font-size: 30px; }
+#buddypress #signup_form.standard-form input[type="text"],
+#buddypress .standard-form #basic-details-section input[type="password"], 
+#buddypress .standard-form #blog-details-section input#signup_blog_url { 
+    color: #aaa9a9; background-color: #fff; border: 1px solid #d2d2d2; font-size: 13px;
+    padding: 8px 15px; margin-right: 1%; width: 100%; vertical-align: middle;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#buddypress .field-visibility-settings legend, #buddypress .field-visibility-settings-toggle { font-style: normal; text-align: left;}
+#buddypress .current-visibility-level { font-weight: normal;}
+#buddypress .standard-form button.field-visibility-settings-close { border: 1px solid #999; padding: 12px 20px; font-size: 12px; }
+#buddypress .standard-form button.visibility-toggle-link { border: none; padding: 0; background: transparent; font-weight: normal; text-transform: none; font-size:8px; }
+#buddypress .standard-form button.visibility-toggle-link:before { content: "\f040"; font:normal normal normal 14px/1 FontAwesome;}
+body.register #buddypress div.page .radio { padding-left: 0; margin-bottom: 20px; margin-top: 0; }
+.bp_register #buddypress .standard-form .field-visibility-settings legend { margin-top: 0; }
+
+/* OTHER */
+#buddypress .dir-search { width:50%; text-align: right;}
+#buddypress .dir-search input[type=text], #buddypress .groups-members-search input[type=text] { width: inherit; }
+#buddypress .dir-search input[type="submit"] { padding: 12px 20px; font-size: 12px; line-height:14px; }
+
+/* EVENTS */
+#tribe-events .tribe-events-list .tribe-events-event-meta .author>div { display: grid; border-right-width: 0px; }
+#tribe-events .tribe-events-list .tribe-events-event-meta .author .tribe-events-venue-details { border-bottom: 0; }
+#tribe-events .tribe-events-list .tribe-events-event-meta .author .fusion-tribe-events-venue-details-map { padding-top: 0; }
+.tribe-events-list .tribe-events-loop .tribe-event-featured, 
+.tribe-events-list #tribe-events-day.tribe-events-loop .tribe-event-featured, 
+.type-tribe_events.tribe-events-photo-event.tribe-event-featured .tribe-events-photo-event-wrap, 
+.type-tribe_events.tribe-events-photo-event.tribe-event-featured .tribe-events-photo-event-wrap:hover { background-color: #ffffff; }
+.tribe-events-list .tribe-events-loop .tribe-event-featured { background: #fff; }
+.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-meta,
+.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-content { color: #707070; font-weight: normal; }
+.tribe-events-list .tribe-events-loop .tribe-event-featured a { color: #414042; }
+.tribe-events-list .tribe-events-loop .tribe-event-featured a:active, 
+.tribe-events-list .tribe-events-loop .tribe-event-featured a:hover { color: #76851c; }
+
+/* BUDDYPRESS */
+
+#registration-groups-section.register-section p.reg_groups_description, #basic-details-section.register-section p label { color: #414042; }
+
+

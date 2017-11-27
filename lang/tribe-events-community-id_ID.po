@@ -1,0 +1,943 @@
+# Translation of Community Events in Indonesian
+# This file is distributed under the same license as the Community Events package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2017-01-27 16:24:37+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/1.0-alpha-1100\n"
+"Project-Id-Version: Community Events\n"
+
+#: src/Tribe/Main.php:1093 src/views/community/modules/image.php:83
+msgid "Remove image"
+msgstr ""
+
+#: src/functions/template-tags.php:614
+msgid "Upcoming events"
+msgstr ""
+
+#: src/functions/template-tags.php:620
+msgid "Past events"
+msgstr ""
+
+#: src/views/community/event-list.php:50
+msgid "Search Event Titles"
+msgstr ""
+
+#: src/views/community/event-list.php:66
+msgid "Display Option"
+msgstr ""
+
+#: src/views/community/event-list.php:155
+msgid "You have no past %s"
+msgstr ""
+
+#: src/views/community/event-list.php:157
+msgid "You have no upcoming %s"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:21
+msgid "Edit Event"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:23
+msgid "Add New Event"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:33
+msgid "View Your Submitted Events"
+msgstr ""
+
+#: src/views/community/modules/image.php:43
+msgid "Choose a .jpg, .png, or .gif file under %1$s in size."
+msgstr ""
+
+#: src/views/community/modules/image.php:52
+msgid "Uploaded:"
+msgstr ""
+
+#: src/views/community/modules/image.php:64
+msgid "Selected:"
+msgstr ""
+
+#: src/views/community/modules/image.php:73
+msgid "Choose Image"
+msgstr ""
+
+#: src/views/community/modules/taxonomy.php:82
+msgid "Search from existing categories"
+msgstr ""
+
+#: src/views/community/modules/website.php:45
+msgid "External Link:"
+msgstr ""
+
+#: src/views/community/modules/website.php:48
+msgid "Enter URL for event information"
+msgstr ""
+
+#: src/Tribe/Event_Form.php:30
+msgctxt "Tribe Community Events fallback post title"
+msgid "Auto Draft"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:103
+msgid "Users cannot create new Venues"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:104
+msgid "Users will be limited to choosing from existing venues."
+msgstr ""
+
+#: src/admin-views/community-options-template.php:112
+msgid "Users cannot create new Organizers"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:113
+msgid "Users will be limited to choosing from existing organizers."
+msgstr ""
+
+#: src/admin-views/community-options-template.php:121
+msgid "Spam Prevention"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:123
+msgid "To enable spam prevention for anonymous submissions, enter your reCAPTCHA API keys under <a href=\"%1$s\">%2$s</a>"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:128
+msgctxt "Click path in The Events Calendar settings to get to the API settings section separated by right arrows (HTML \"&rarr;\")"
+msgid "Events &rarr; Settings &rarr; APIs"
+msgstr ""
+
+#: src/views/community/modules/cost.php:80
+msgid "Events Currency Position"
+msgstr ""
+
+#: src/views/community/modules/datepickers.php:70
+msgid "Start/End:"
+msgstr ""
+
+#: src/views/community/modules/datepickers.php:75
+msgid "Event Start Date"
+msgstr "Tanggal Mulai Event"
+
+#: src/views/community/modules/datepickers.php:89
+msgid "Event Start Time"
+msgstr "Waktu Mulai Event"
+
+#: src/views/community/modules/datepickers.php:103
+#: src/views/community/modules/datepickers.php:122
+msgid "HH:MM"
+msgstr ""
+
+#: src/views/community/modules/datepickers.php:104
+msgctxt "Start Date Time \"to\" End Date Time"
+msgid "to"
+msgstr ""
+
+#: src/views/community/modules/datepickers.php:108
+msgid "Event End Time"
+msgstr "Akhir Waktu Event"
+
+#: src/views/community/modules/datepickers.php:126
+msgid "Event End Date"
+msgstr "Tanggal Event Berakhir"
+
+#: src/views/community/modules/datepickers.php:143
+msgid "Timezone"
+msgstr ""
+
+#: src/views/community/modules/datepickers.php:160
+msgid "All Day Event"
+msgstr "Event Sepanjang Hari"
+
+#: src/views/community/modules/image.php:70
+msgid "Event Image"
+msgstr ""
+
+#: src/views/community/modules/image.php:76
+msgid "Upload File"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha_V2.php:139
+msgctxt "failed recaptcha response validation"
+msgid "reCAPTCHA verification failed"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:278
+msgid "Redirect for users who attempt to access the admin without permissions<br>Enter a full url to a post or page on your site<br>Leave blank for homepage"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:247 src/Tribe/Captcha/Recaptcha_V2.php:125
+msgctxt "failed recaptcha response"
+msgid "reCAPTCHA failed unexpectedly"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:353
+msgid "%s %s is required"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:400 src/Tribe/Submission_Handler.php:432
+msgid "Name"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:412
+msgid "Province"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:416
+msgid "State"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:420
+msgid "Zip"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:424
+msgid "URL"
+msgstr "URL"
+
+#: src/admin-views/community-options-template.php:78
+msgid "<p>Community Events enables users to submit events through a form on your site. Whether soliciting contributions from anonymous users or registered members, you have complete editorial control over what makes it onto the calendar.</p><p>Check out our <a href=\"%s\">Community Events New User Primer</a> for information on configuring and using the plugin."
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:167 src/Tribe/Submission_Handler.php:181
+msgid "The file is not an Image"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:184
+msgid "The image size is invalid"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:187
+msgid "The file is not a valid image"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:507
+msgid "Invalid URL provided for %s"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:316
+msgid "Single geography mode"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:317
+msgid "Removes the country, state/province and timezone selectors from the submission form"
+msgstr ""
+
+#: src/Tribe/Main.php:1592
+msgid "The file you attempted to upload exceeded the maximum file size of %1$s."
+msgstr ""
+
+#: src/views/community/modules/cost.php:82
+msgctxt "Currency symbol position"
+msgid "Before cost"
+msgstr ""
+
+#: src/views/community/modules/cost.php:83
+msgctxt "Currency symbol position"
+msgid "After cost"
+msgstr ""
+
+#: src/views/community/modules/datepickers.php:146
+msgid "Timezone:"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "The Events Calendar: Community Events"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Community Events is an add-on providing additional functionality to the open source plugin The Events Calendar. Empower users to submit and manage their events on your website. <a href=\"http://tri.be/shop/wordpress-community-events/?utm_campaign=in-app&utm_source=docblock&utm_medium=plugin-community\">Check out the full feature list</a>. Need more features? Peruse our selection of <a href=\"http://tri.be/products/?utm_campaign=in-app&utm_source=docblock&utm_medium=plugin-community\" target=\"_blank\">plugins</a>."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Modern Tribe, Inc."
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://m.tri.be/21"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:404
+msgid "Address"
+msgstr "Alamat"
+
+#: src/Tribe/Submission_Handler.php:408
+msgid "City"
+msgstr "Kota"
+
+#: src/views/community/modules/website.php:27
+msgid "%s Website"
+msgstr ""
+
+#: tribe-community-events.php:88
+msgid "The Events Calendar"
+msgstr "The Events Calendar"
+
+#: tribe-community-events.php:89
+msgid "To begin using The Events Calendar: Community Events, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
+msgstr "Untuk mulai menggunakan The Events Calendar: Community Events, silahkan install versi terbaru dari <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
+
+#: vendor/wp-router/WP_Route.class.php:36
+msgid "Missing %s"
+msgstr "Hilang %s"
+
+#: vendor/wp-router/WP_Route.class.php:63
+msgid "Property not found: %s."
+msgstr "Properti tidak ditemukan: %s ."
+
+#: vendor/wp-router/WP_Route.class.php:77
+msgid "Invalid value for %s. Value may not be empty."
+msgstr "Nilai tidak valid untuk %s . Nilai tidak boleh kosong."
+
+#: vendor/wp-router/WP_Route.class.php:80
+msgid "Invalid value for %1$s: %2$s. Value must be an array."
+msgstr "Nilai tidak valid untuk %1$s: %2$s . Nilai harus array."
+
+#: vendor/wp-router/WP_Route.class.php:250
+msgid "You are not authorized to access this page"
+msgstr "Anda tidak memiliki izin untuk mengakses halaman ini"
+
+#: vendor/wp-router/WP_Route.class.php:251
+msgid "Access Denied"
+msgstr "Akses Ditolak"
+
+#: vendor/wp-router/WP_Router_Page.class.php:74
+msgid "WP Router Placeholder Page"
+msgstr "Halaman WP Router Placeholder"
+
+#: vendor/wp-router/WP_Router_Utility.class.php:49
+msgid "%1$s requires WordPress %2$s or higher and PHP %3$s or higher."
+msgstr "%1$s membutuhkan WordPress %2$s atau lebih tinggi dan PHP %3$s atau lebih tinggi."
+
+#: src/Tribe/Captcha/Abstract_Captcha.php:152
+msgid "Invalid value for the Anti-Spam Check"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:20
+msgid "reCAPTCHA API Keys"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:24
+msgid "Provide reCAPTCHA API keys for both fields to enable reCAPTCHA on your Community Events form."
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:24
+msgid "Note: reCAPTCHA only appears for users who are not logged in."
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:28
+msgid "Site Key"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:29
+msgid "Get your Site Key at %s"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:38
+msgid "Secret Key"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:39
+msgid "Get your Secret Key at %s"
+msgstr ""
+
+#: src/Tribe/Main.php:2829
+msgid "edit"
+msgstr "edit"
+
+#: src/Tribe/Main.php:2830 src/admin-views/community-options-template.php:338
+msgid "add"
+msgstr "tambah"
+
+#: src/Tribe/Main.php:2831
+msgid "delete"
+msgstr "hapus"
+
+#: src/Tribe/Main.php:2832 src/admin-views/community-options-template.php:340
+msgid "list"
+msgstr "daftar"
+
+#: src/Tribe/Main.php:2834
+msgid "venue"
+msgstr "venue"
+
+#: src/Tribe/Main.php:2835
+msgid "organizer"
+msgstr "penyelenggara"
+
+#: src/Tribe/Main.php:2836
+msgid "event"
+msgstr "event"
+
+#: src/Tribe/Main.php:604 src/Tribe/Main.php:1115
+msgid "Edit a Venue"
+msgstr "Edit Venue"
+
+#: src/Tribe/Main.php:623 src/Tribe/Main.php:1116
+msgid "Edit an Organizer"
+msgstr "Edit Penyelenggara"
+
+#: src/Tribe/Main.php:641 src/Tribe/Main.php:1114
+msgid "Edit an Event"
+msgstr "Edit Event"
+
+#: src/Tribe/Main.php:659
+msgid "Redirect"
+msgstr "Redirect"
+
+#: src/Tribe/Main.php:674 src/Tribe/Main.php:1225
+msgid "Submit an Event"
+msgstr "Submit Event"
+
+#: src/Tribe/Main.php:700 src/Tribe/Main.php:1107
+msgid "Remove an Event"
+msgstr "Hapus Event"
+
+#: src/Tribe/Main.php:716 src/Tribe/Main.php:1203
+#: src/admin-views/community-options-template.php:230
+#: src/views/community/event-list.php:30
+msgid "My Events"
+msgstr "Event Saya"
+
+#: src/Tribe/Main.php:800
+msgid "Not found."
+msgstr "Tidak ditemukan."
+
+#: src/Tribe/Main.php:946
+msgid "Community Events requires non-default (pretty) permalinks to be enabled or the [tribe_community_events] shortcode to exist on a page."
+msgstr "Community Events membutuhkan non-default (pretty) permalinks diaktifkan atau [tribe_community_events] shortcode ada pada halaman."
+
+#: src/Tribe/Main.php:1030
+msgid "Delete"
+msgstr "Hapus"
+
+#: src/Tribe/Main.php:1031
+msgid "Are you sure?"
+msgstr "Apa Anda yakin?"
+
+#: src/Tribe/Main.php:1034
+msgid "Delete All"
+msgstr ""
+
+#: src/Tribe/Main.php:1035
+msgid "Are you sure you want to permanently delete all instances of this recurring event?"
+msgstr ""
+
+#: src/Tribe/Main.php:1037
+msgid "Are you sure you want to permanently delete this instance of a recurring event?"
+msgstr "Apakah Anda yakin ingin menghapus secara permanen instance event berulang ini?"
+
+#: src/Tribe/Main.php:1108
+msgid "Remove a Venue"
+msgstr "Hapus Venue"
+
+#: src/Tribe/Main.php:1109
+msgid "Remove an Organizer"
+msgstr "Hapus Penyelenggara"
+
+#: src/Tribe/Main.php:1110 src/Tribe/Main.php:1117
+msgid "Unknown Post Type"
+msgstr "Tipe Post Tidak Diketahui"
+
+#: src/Tribe/Main.php:1263
+msgid "This shortcode can only be used in pages."
+msgstr "Shortcode ini hanya dapat digunakan dalam halaman."
+
+#: src/Tribe/Main.php:1416
+msgid "Community Events Submission"
+msgstr "Kiriman Community Events"
+
+#: src/Tribe/Main.php:1508
+msgid "Trashed Event #"
+msgstr "Trashed Event #"
+
+#: src/Tribe/Main.php:1511
+msgid "Deleted Event #"
+msgstr "Event terhapus #"
+
+#: src/Tribe/Main.php:1514
+msgid "This event (#%s) does not appear to exist."
+msgstr "Event ini (# %s) tampaknya tidak ada."
+
+#: src/Tribe/Main.php:1517
+msgid "You do not have permission to delete this event."
+msgstr "Anda tidak memiliki izin untuk menghapus event ini."
+
+#: src/Tribe/Main.php:1528
+msgctxt "As in \"go back to previous page\""
+msgid "Back"
+msgstr ""
+
+#: src/Tribe/Main.php:1563
+msgid "%sWarning:%s You are editing a recurring %s. All changes will be applied to the entire series."
+msgstr ""
+
+#: src/Tribe/Main.php:1572
+msgid "%s not found."
+msgstr ""
+
+#: src/Tribe/Main.php:1580
+msgid "Please log in first."
+msgstr "Silahkan login terlebih dahulu."
+
+#: src/Tribe/Main.php:1586
+msgid "You do not have permission to edit this %s."
+msgstr ""
+
+#: src/Tribe/Main.php:1722 src/views/community/columns/title.php:35
+msgid "View"
+msgstr "Lihat"
+
+#: src/Tribe/Main.php:1728 src/views/community/columns/title.php:41
+msgid "Edit"
+msgstr ""
+
+#: src/Tribe/Main.php:1859
+msgid "Venue not found."
+msgstr "Venue tidak ditemukan."
+
+#: src/Tribe/Main.php:1864
+msgid "Please log in to edit this venue"
+msgstr "Silakan login untuk mengedit venue ini"
+
+#: src/Tribe/Main.php:1868
+msgid "You do not have permission to edit this venue."
+msgstr "Anda tidak memiliki izin untuk mengedit venue ini."
+
+#: src/Tribe/Main.php:1891
+msgid "Venue updated."
+msgstr "Venue diperbarui."
+
+#: src/Tribe/Main.php:1901
+msgid "Venue name cannot be blank."
+msgstr "Nama venue tidak boleh kosong."
+
+#: src/Tribe/Main.php:1905
+msgid "There was a problem updating your venue, please try again."
+msgstr "Terjadi masalah memperbarui venue Anda, silakan coba lagi."
+
+#: src/Tribe/Main.php:1942
+msgid "Organizer not found."
+msgstr "Penyelenggara tidak ditemukan."
+
+#: src/Tribe/Main.php:1946
+msgid "Please log in to edit this organizer"
+msgstr "Silakan login untuk mengedit penyelenggara ini"
+
+#: src/Tribe/Main.php:1950
+msgid "You do not have permission to edit this organizer."
+msgstr "Anda tidak memiliki izin untuk mengedit penyelenggara ini."
+
+#: src/Tribe/Main.php:1972
+msgid "Organizer updated."
+msgstr "Penyelenggara diperbarui."
+
+#: src/Tribe/Main.php:1983
+msgid "Organizer name cannot be blank."
+msgstr "Nama Penyelenggara tidak boleh kosong."
+
+#: src/Tribe/Main.php:1987
+msgid "There was a problem updating this organizer, please try again."
+msgstr "Terjadi masalah memperbarui penyelenggara ini, silakan coba lagi."
+
+#: src/Tribe/Main.php:2070
+msgid "Please log in to view your events"
+msgstr "Silahkan log in untuk melihat event Anda"
+
+#: src/views/community/modules/spam-control.php:32
+msgid "Fake Title"
+msgstr "Judul Palsu"
+
+#: src/Tribe/Main.php:2293
+msgid "The requested page number was not found."
+msgstr "Nomor halaman yang diminta tidak ditemukan."
+
+#: src/Tribe/Main.php:2532
+msgid "Community"
+msgstr "Community"
+
+#: src/Tribe/Main.php:2549
+msgid "This template is also used for Community Events."
+msgstr "Template ini juga digunakan untuk  Community Events."
+
+#: src/Tribe/Main.php:2763
+msgid "Community: Submit %s"
+msgstr ""
+
+#: src/Tribe/Main.php:2771
+msgid "Community: My %s"
+msgstr ""
+
+#: src/Tribe/Main.php:2780 src/Tribe/Templates.php:47
+msgid "Community Events"
+msgstr "Community Events"
+
+#: src/Tribe/Main.php:2796
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: src/Tribe/Submission_Handler.php:72
+msgid "%s updated. "
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:73 src/Tribe/Submission_Handler.php:92
+msgid "Submit another %s"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:76
+msgid "There was a problem saving your %s, please try again."
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:91
+msgid "%s submitted."
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:95
+msgid "There was a problem submitting your %s, please try again."
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:212
+msgid "%s is required"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:365
+msgid "%s Title"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:368
+msgid "%s Description"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:476
+msgid "Invalid value for %s"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:487
+msgid "Images must be png, jpg, or gif"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:529
+msgid "Image exceeded the allowed file size"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:534
+msgid "The image failed to upload successfully"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:538
+msgid "The uploaded image could not be processed"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:42
+msgid "Placed in the Trash"
+msgstr "Ditaruh di Sampah"
+
+#: src/admin-views/community-options-template.php:43
+msgid "Permanently Deleted"
+msgstr "Dihapus Permanen"
+
+#: src/admin-views/community-options-template.php:50
+msgid "No Default"
+msgstr "Tidak ada default"
+
+#: src/admin-views/community-options-template.php:58
+msgid "Use New Venue/No Default"
+msgstr "Gunakan Venue Baru/Tanpa default"
+
+#: src/admin-views/community-options-template.php:73
+msgid "Community Events Settings"
+msgstr "Pengaturan Community Events"
+
+#: src/admin-views/community-options-template.php:88
+msgid "General"
+msgstr "Umum "
+
+#: src/admin-views/community-options-template.php:94
+msgid "Allow anonymous submissions"
+msgstr "Memungkinkan pengiriman anonim"
+
+#: src/admin-views/community-options-template.php:95
+msgid "Check this box to allow users to submit events without having a WordPress account"
+msgstr "Centang kotak ini untuk memungkinkan pengguna untuk mengirimkan peristiwa tanpa account WordPress"
+
+#: src/admin-views/community-options-template.php:138
+msgid "Use visual editor for event descriptions"
+msgstr "Gunakan editor visual untuk deskripsi event"
+
+#: src/admin-views/community-options-template.php:146
+msgid "Default status for submitted events"
+msgstr "Status standar untuk event disampaikan"
+
+#: src/admin-views/community-options-template.php:156
+msgid "Community rewrite slug"
+msgstr "Rewrite komunitas slug"
+
+#: src/admin-views/community-options-template.php:160
+msgid "The slug used for building the community events URL - it is appended to the main events slug. Your current community events URLs are"
+msgstr "Slug yang digunakan untuk membangun event komunitas URL - itu ditambahkan ke event utama slug. Saat event omunitas URL Anda"
+
+#: src/admin-views/community-options-template.php:173
+msgid "Alerts"
+msgstr "Alerts"
+
+#: src/admin-views/community-options-template.php:178
+msgid "Send an email alert when a new event is submitted"
+msgstr "Kirim email peringatan ketika peristiwa baru diajukan"
+
+#: src/admin-views/community-options-template.php:186
+msgid "Email addresses to be notified"
+msgstr "Alamat email untuk diberitahu"
+
+#: src/admin-views/community-options-template.php:189
+msgid "One address per line"
+msgstr "Satu alamat per baris"
+
+#: src/admin-views/community-options-template.php:195
+msgid "Members"
+msgstr "Anggota"
+
+#: src/admin-views/community-options-template.php:200
+msgid "Control the permissions for your logged in users. Allow them to:"
+msgstr "Mengontrol izin untuk pengguna yang sudah login. Memungkinkan mereka untuk:"
+
+#: src/admin-views/community-options-template.php:205
+msgid "Edit their submissions"
+msgstr "Edit kiriman mereka"
+
+#: src/admin-views/community-options-template.php:213
+msgid "Remove their submissions"
+msgstr "Hapus kiriman mereka"
+
+#: src/admin-views/community-options-template.php:221
+msgid "Deleted events should be:"
+msgstr "Event yang dihapus harus:"
+
+#: src/admin-views/community-options-template.php:235
+msgid "Events per page"
+msgstr "Event per halaman"
+
+#: src/admin-views/community-options-template.php:236
+msgid "This is the number of events displayed per page"
+msgstr "Ini adalah jumlah event yang ditampilkan per halaman"
+
+#: src/admin-views/community-options-template.php:244
+msgid "Date/time format"
+msgstr "Format tanggal/waktu"
+
+#: src/admin-views/community-options-template.php:245
+msgid "Help with date &amp; time formatting"
+msgstr "Bantuan dengan format tanggal &amp; waktu"
+
+#: src/admin-views/community-options-template.php:253
+msgid "Access Control"
+msgstr "Kontrol Akses"
+
+#: src/admin-views/community-options-template.php:258
+msgid "Block access to WordPress dashboard"
+msgstr "Memblokir akses ke dasbor WordPress"
+
+#: src/admin-views/community-options-template.php:259
+msgid "Also disables the admin bar"
+msgstr "Juga menonaktifkan bar admin"
+
+#: src/admin-views/community-options-template.php:267
+msgid "Roles to block"
+msgstr "Roles yang diblokir"
+
+#: src/admin-views/community-options-template.php:277
+msgid "Redirect URL"
+msgstr "URLRedirect"
+
+#: src/admin-views/community-options-template.php:288
+msgid "Form Defaults"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:294
+msgid "Default venue for submitted events"
+msgstr "Standar venue untuk event yang disampaikan"
+
+#: src/admin-views/community-options-template.php:305
+msgid "Default organizer for submitted events"
+msgstr "Penyelenggara efault untuk event yang disampaikan"
+
+#: src/functions/template-tags.php:497
+#: src/views/community/edit-organizer.php:31
+#: src/views/community/edit-venue.php:31
+msgid "(required)"
+msgstr "(harus diisi)"
+
+#: src/views/community/modules/title.php:28
+msgid "%s Title:"
+msgstr ""
+
+#: src/views/community/edit-organizer.php:41
+#: src/views/community/edit-venue.php:41
+#: src/views/community/modules/description.php:28
+msgid "%s Description:"
+msgstr ""
+
+#: src/views/community/edit-organizer.php:67
+#: src/views/community/edit-venue.php:67
+#: src/views/community/modules/submit.php:21
+msgid "Update %s"
+msgstr ""
+
+#: src/views/community/edit-organizer.php:67
+#: src/views/community/edit-venue.php:67
+#: src/views/community/modules/submit.php:23
+msgid "Submit %s"
+msgstr ""
+
+#: src/views/community/edit-organizer.php:30
+#: src/views/community/edit-venue.php:30
+msgid "%s Name:"
+msgstr ""
+
+#: src/views/community/email-template.php:29
+msgid "%s Organizer"
+msgstr ""
+
+#: src/views/community/email-template.php:32
+msgid "%s Venue"
+msgstr ""
+
+#: src/views/community/email-template.php:35
+msgid "Description"
+msgstr "Deskripsi"
+
+#: src/views/community/email-template.php:46
+msgid "Review %s"
+msgstr ""
+
+#: src/views/community/email-template.php:48
+msgid "View %s"
+msgstr ""
+
+#: src/views/community/event-list.php:35
+#: src/views/community/modules/delete.php:20
+msgid "Add New"
+msgstr "Tambah Baru"
+
+#: src/views/community/modules/delete.php:28
+msgid "Not"
+msgstr "Tidak"
+
+#: src/views/community/modules/delete.php:29
+msgid "Log Out"
+msgstr "Log Out"
+
+#: src/functions/template-tags.php:567
+msgid "Status"
+msgstr "Status"
+
+#: src/functions/template-tags.php:568
+msgid "Title"
+msgstr "Judul"
+
+#: src/functions/template-tags.php:571
+msgid "Category"
+msgstr "Kategori"
+
+#: src/functions/template-tags.php:575
+msgid "Recurring?"
+msgstr "Berulang?"
+
+#: src/functions/template-tags.php:578
+msgid "Start Date"
+msgstr "Tanggal Mulai"
+
+#: src/functions/template-tags.php:579
+msgid "End Date"
+msgstr "Tanggal Berakhir"
+
+#: src/views/community/columns/recurring.php:20
+msgid "Yes"
+msgstr "Ya"
+
+#: src/views/community/columns/recurring.php:22
+msgid "No"
+msgstr "Tidak"
+
+#: src/views/community/modules/captcha.php:31
+msgid "Anti-Spam Check"
+msgstr ""
+
+#: src/views/community/modules/cost.php:45
+msgid "%s Cost"
+msgstr ""
+
+#: src/views/community/modules/cost.php:63
+msgid "Currency Symbol:"
+msgstr "Simbol Mata Uang:"
+
+#: src/views/community/modules/cost.php:90
+msgid "Cost:"
+msgstr "Biaya:"
+
+#: src/views/community/modules/cost.php:95
+msgid "Leave blank to hide the field. Enter a 0 for %s that are free."
+msgstr ""
+
+#: src/views/community/modules/custom.php:32
+msgid "Additional Fields"
+msgstr "Field Tambahan"
+
+#: src/views/community/modules/custom.php:88
+msgctxt "custom field label"
+msgid "%s:"
+msgstr ""
+
+#: src/views/community/modules/datepickers.php:46
+msgid "%s Time &amp; Date"
+msgstr ""
+
+#: src/views/community/modules/datepickers.php:64
+msgid "You have changed the recurrence rules of this %1$s. Saving the %1$s will update all future %2$s.  If you did not mean to change all %2$s, then please refresh the page."
+msgstr ""
+
+#: src/views/community/modules/datepickers.php:85
+#: src/views/community/modules/datepickers.php:136
+msgid "YYYY-MM-DD"
+msgstr "YYYY-MM-DD"
+
+#: src/views/community/modules/delete.php:24
+msgid "My %s"
+msgstr ""
+
+#: src/views/community/modules/image.php:19
+msgid "%s Image"
+msgstr ""
+
+#: src/views/community/modules/organizer-fields.php:44
+#: src/views/community/modules/organizer.php:32
+#: src/views/community/modules/venue.php:37
+msgid "%s Details"
+msgstr ""
+
+#: src/views/community/modules/organizer-fields.php:56
+msgid "%s Name"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:428
+#: src/views/community/modules/organizer-fields.php:64
+msgid "Phone"
+msgstr "Telepon"
+
+#: src/Tribe/Submission_Handler.php:436
+#: src/views/community/modules/organizer-fields.php:70
+msgid "Website"
+msgstr "Situs Web"
+
+#: src/Tribe/Submission_Handler.php:440
+#: src/views/community/modules/organizer-fields.php:75
+msgid "Email"
+msgstr "Email"
+
+#: src/views/community/modules/custom.php:75
+msgid "None"
+msgstr "Tidak"

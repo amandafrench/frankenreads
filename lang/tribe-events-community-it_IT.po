@@ -1,0 +1,943 @@
+# Translation of Community Events in Italian
+# This file is distributed under the same license as the Community Events package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2017-03-22 23:58:53+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/1.0-alpha-1100\n"
+"Project-Id-Version: Community Events\n"
+
+#: src/Tribe/Main.php:1093 src/views/community/modules/image.php:83
+msgid "Remove image"
+msgstr ""
+
+#: src/functions/template-tags.php:614
+msgid "Upcoming events"
+msgstr ""
+
+#: src/functions/template-tags.php:620
+msgid "Past events"
+msgstr ""
+
+#: src/views/community/event-list.php:50
+msgid "Search Event Titles"
+msgstr ""
+
+#: src/views/community/event-list.php:66
+msgid "Display Option"
+msgstr ""
+
+#: src/views/community/event-list.php:155
+msgid "You have no past %s"
+msgstr ""
+
+#: src/views/community/event-list.php:157
+msgid "You have no upcoming %s"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:21
+msgid "Edit Event"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:23
+msgid "Add New Event"
+msgstr ""
+
+#: src/views/community/modules/header-links.php:33
+msgid "View Your Submitted Events"
+msgstr ""
+
+#: src/views/community/modules/image.php:43
+msgid "Choose a .jpg, .png, or .gif file under %1$s in size."
+msgstr ""
+
+#: src/views/community/modules/image.php:52
+msgid "Uploaded:"
+msgstr ""
+
+#: src/views/community/modules/image.php:64
+msgid "Selected:"
+msgstr ""
+
+#: src/views/community/modules/image.php:73
+msgid "Choose Image"
+msgstr ""
+
+#: src/views/community/modules/taxonomy.php:82
+msgid "Search from existing categories"
+msgstr ""
+
+#: src/views/community/modules/website.php:45
+msgid "External Link:"
+msgstr ""
+
+#: src/views/community/modules/website.php:48
+msgid "Enter URL for event information"
+msgstr ""
+
+#: src/Tribe/Event_Form.php:30
+msgctxt "Tribe Community Events fallback post title"
+msgid "Auto Draft"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:103
+msgid "Users cannot create new Venues"
+msgstr "gli utenti non posso creare nuove località"
+
+#: src/admin-views/community-options-template.php:104
+msgid "Users will be limited to choosing from existing venues."
+msgstr "Gli utenti potranno scegliere solo tra località esistenti"
+
+#: src/admin-views/community-options-template.php:112
+msgid "Users cannot create new Organizers"
+msgstr "Gli utenti non possono creare nuovi organizzatori"
+
+#: src/admin-views/community-options-template.php:113
+msgid "Users will be limited to choosing from existing organizers."
+msgstr "Gli utenti potranno scegliere solo tra li organizzatori esistenti"
+
+#: src/admin-views/community-options-template.php:121
+msgid "Spam Prevention"
+msgstr "Prevenzione Spam"
+
+#: src/admin-views/community-options-template.php:123
+msgid "To enable spam prevention for anonymous submissions, enter your reCAPTCHA API keys under <a href=\"%1$s\">%2$s</a>"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:128
+msgctxt "Click path in The Events Calendar settings to get to the API settings section separated by right arrows (HTML \"&rarr;\")"
+msgid "Events &rarr; Settings &rarr; APIs"
+msgstr ""
+
+#: src/views/community/modules/cost.php:80
+msgid "Events Currency Position"
+msgstr "Posizione della valuta"
+
+#: src/views/community/modules/datepickers.php:70
+msgid "Start/End:"
+msgstr "Inizio/Fine:"
+
+#: src/views/community/modules/datepickers.php:75
+msgid "Event Start Date"
+msgstr "Data Inizio Evento"
+
+#: src/views/community/modules/datepickers.php:89
+msgid "Event Start Time"
+msgstr "Ora Inizio Evento"
+
+#: src/views/community/modules/datepickers.php:103
+#: src/views/community/modules/datepickers.php:122
+msgid "HH:MM"
+msgstr ""
+
+#: src/views/community/modules/datepickers.php:104
+msgctxt "Start Date Time \"to\" End Date Time"
+msgid "to"
+msgstr "da [Data di inizio \"a\" Data di Fine]"
+
+#: src/views/community/modules/datepickers.php:108
+msgid "Event End Time"
+msgstr "Ora Fine Evento"
+
+#: src/views/community/modules/datepickers.php:126
+msgid "Event End Date"
+msgstr "Data Fine Evento"
+
+#: src/views/community/modules/datepickers.php:143
+msgid "Timezone"
+msgstr "Fuso orario"
+
+#: src/views/community/modules/datepickers.php:160
+msgid "All Day Event"
+msgstr "Evento giornaliero"
+
+#: src/views/community/modules/image.php:70
+msgid "Event Image"
+msgstr "Immagine dell'evento"
+
+#: src/views/community/modules/image.php:76
+msgid "Upload File"
+msgstr "Carica file"
+
+#: src/Tribe/Captcha/Recaptcha_V2.php:139
+msgctxt "failed recaptcha response validation"
+msgid "reCAPTCHA verification failed"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:278
+msgid "Redirect for users who attempt to access the admin without permissions<br>Enter a full url to a post or page on your site<br>Leave blank for homepage"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:247 src/Tribe/Captcha/Recaptcha_V2.php:125
+msgctxt "failed recaptcha response"
+msgid "reCAPTCHA failed unexpectedly"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:353
+msgid "%s %s is required"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:400 src/Tribe/Submission_Handler.php:432
+msgid "Name"
+msgstr "Nome"
+
+#: src/Tribe/Submission_Handler.php:412
+msgid "Province"
+msgstr "Provincia"
+
+#: src/Tribe/Submission_Handler.php:416
+msgid "State"
+msgstr "Regione"
+
+#: src/Tribe/Submission_Handler.php:420
+msgid "Zip"
+msgstr "CAP"
+
+#: src/Tribe/Submission_Handler.php:424
+msgid "URL"
+msgstr "URL"
+
+#: src/admin-views/community-options-template.php:78
+msgid "<p>Community Events enables users to submit events through a form on your site. Whether soliciting contributions from anonymous users or registered members, you have complete editorial control over what makes it onto the calendar.</p><p>Check out our <a href=\"%s\">Community Events New User Primer</a> for information on configuring and using the plugin."
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:167 src/Tribe/Submission_Handler.php:181
+msgid "The file is not an Image"
+msgstr "Questo file non è una immagine"
+
+#: src/Tribe/Submission_Handler.php:184
+msgid "The image size is invalid"
+msgstr "Le dimensioni di questa immagine non sono valide"
+
+#: src/Tribe/Submission_Handler.php:187
+msgid "The file is not a valid image"
+msgstr "Questo file non una immagine valide"
+
+#: src/Tribe/Submission_Handler.php:507
+msgid "Invalid URL provided for %s"
+msgstr "L'URL inserito per l'evento non è valido"
+
+#: src/admin-views/community-options-template.php:316
+msgid "Single geography mode"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:317
+msgid "Removes the country, state/province and timezone selectors from the submission form"
+msgstr "Rimuove i selettori della nazione, la regione/provincia, il fuso orario dal form di inserimento"
+
+#: src/Tribe/Main.php:1592
+msgid "The file you attempted to upload exceeded the maximum file size of %1$s."
+msgstr "Il file che stai provando a caricare eccede la dimensione massima consentita di %1$s."
+
+#: src/views/community/modules/cost.php:82
+msgctxt "Currency symbol position"
+msgid "Before cost"
+msgstr "Prima del prezzo"
+
+#: src/views/community/modules/cost.php:83
+msgctxt "Currency symbol position"
+msgid "After cost"
+msgstr "Dopo il prezzo"
+
+#: src/views/community/modules/datepickers.php:146
+msgid "Timezone:"
+msgstr "Fuso orario:"
+
+#. Plugin Name of the plugin/theme
+msgid "The Events Calendar: Community Events"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Community Events is an add-on providing additional functionality to the open source plugin The Events Calendar. Empower users to submit and manage their events on your website. <a href=\"http://tri.be/shop/wordpress-community-events/?utm_campaign=in-app&utm_source=docblock&utm_medium=plugin-community\">Check out the full feature list</a>. Need more features? Peruse our selection of <a href=\"http://tri.be/products/?utm_campaign=in-app&utm_source=docblock&utm_medium=plugin-community\" target=\"_blank\">plugins</a>."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Modern Tribe, Inc."
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://m.tri.be/21"
+msgstr ""
+
+#: src/Tribe/Submission_Handler.php:404
+msgid "Address"
+msgstr "Indirizzo"
+
+#: src/Tribe/Submission_Handler.php:408
+msgid "City"
+msgstr "Città"
+
+#: src/views/community/modules/website.php:27
+msgid "%s Website"
+msgstr "Sito dell'%s"
+
+#: tribe-community-events.php:88
+msgid "The Events Calendar"
+msgstr "The Events Calendar"
+
+#: tribe-community-events.php:89
+msgid "To begin using The Events Calendar: Community Events, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
+msgstr "Per iniziare ad utilizzare The Events Calendar: Community Events, installa l'ultima versione di <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
+
+#: vendor/wp-router/WP_Route.class.php:36
+msgid "Missing %s"
+msgstr "%s mancante"
+
+#: vendor/wp-router/WP_Route.class.php:63
+msgid "Property not found: %s."
+msgstr "Proprietà non trovata: %s."
+
+#: vendor/wp-router/WP_Route.class.php:77
+msgid "Invalid value for %s. Value may not be empty."
+msgstr "Valore non valido per %s. Il valore non deve essere vuoto."
+
+#: vendor/wp-router/WP_Route.class.php:80
+msgid "Invalid value for %1$s: %2$s. Value must be an array."
+msgstr "Valore non valido per %1$s: %2$s. Il valore deve essere un array."
+
+#: vendor/wp-router/WP_Route.class.php:250
+msgid "You are not authorized to access this page"
+msgstr "Non sei autorizzato ad accedere a questa pagina."
+
+#: vendor/wp-router/WP_Route.class.php:251
+msgid "Access Denied"
+msgstr "Acceso negato"
+
+#: vendor/wp-router/WP_Router_Page.class.php:74
+msgid "WP Router Placeholder Page"
+msgstr "Pagina segnaposto per WP Router"
+
+#: vendor/wp-router/WP_Router_Utility.class.php:49
+msgid "%1$s requires WordPress %2$s or higher and PHP %3$s or higher."
+msgstr "%1$s richiede WordPress %2$s o superiore e PHP %3$s o superiore."
+
+#: src/Tribe/Captcha/Abstract_Captcha.php:152
+msgid "Invalid value for the Anti-Spam Check"
+msgstr "Valore per controllo anti-spam non valido"
+
+#: src/Tribe/Captcha/Recaptcha.php:20
+msgid "reCAPTCHA API Keys"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:24
+msgid "Provide reCAPTCHA API keys for both fields to enable reCAPTCHA on your Community Events form."
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:24
+msgid "Note: reCAPTCHA only appears for users who are not logged in."
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:28
+msgid "Site Key"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:29
+msgid "Get your Site Key at %s"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:38
+msgid "Secret Key"
+msgstr ""
+
+#: src/Tribe/Captcha/Recaptcha.php:39
+msgid "Get your Secret Key at %s"
+msgstr ""
+
+#: src/Tribe/Main.php:2829
+msgid "edit"
+msgstr "modifica"
+
+#: src/Tribe/Main.php:2830 src/admin-views/community-options-template.php:338
+msgid "add"
+msgstr "aggiungi"
+
+#: src/Tribe/Main.php:2831
+msgid "delete"
+msgstr "cancella"
+
+#: src/Tribe/Main.php:2832 src/admin-views/community-options-template.php:340
+msgid "list"
+msgstr "elenca"
+
+#: src/Tribe/Main.php:2834
+msgid "venue"
+msgstr "località"
+
+#: src/Tribe/Main.php:2835
+msgid "organizer"
+msgstr "organizzatore"
+
+#: src/Tribe/Main.php:2836
+msgid "event"
+msgstr "evento"
+
+#: src/Tribe/Main.php:604 src/Tribe/Main.php:1115
+msgid "Edit a Venue"
+msgstr "Modifica una località"
+
+#: src/Tribe/Main.php:623 src/Tribe/Main.php:1116
+msgid "Edit an Organizer"
+msgstr "Modifica un Organizzatore"
+
+#: src/Tribe/Main.php:641 src/Tribe/Main.php:1114
+msgid "Edit an Event"
+msgstr "Modifica un Evento"
+
+#: src/Tribe/Main.php:659
+msgid "Redirect"
+msgstr "Redireziona"
+
+#: src/Tribe/Main.php:674 src/Tribe/Main.php:1225
+msgid "Submit an Event"
+msgstr "Crea un Evento"
+
+#: src/Tribe/Main.php:700 src/Tribe/Main.php:1107
+msgid "Remove an Event"
+msgstr "Cancella un Evento"
+
+#: src/Tribe/Main.php:716 src/Tribe/Main.php:1203
+#: src/admin-views/community-options-template.php:230
+#: src/views/community/event-list.php:30
+msgid "My Events"
+msgstr "I miei eventi"
+
+#: src/Tribe/Main.php:800
+msgid "Not found."
+msgstr "Non trovato."
+
+#: src/Tribe/Main.php:946
+msgid "Community Events requires non-default (pretty) permalinks to be enabled or the [tribe_community_events] shortcode to exist on a page."
+msgstr "Community Events richiede che i \"Pretty Permalinks\" (non i permalinks di default) siano abilitati oppure di inserire lo shortcode [tribe_community_events] nel contenuto della pagina."
+
+#: src/Tribe/Main.php:1030
+msgid "Delete"
+msgstr "Cancella"
+
+#: src/Tribe/Main.php:1031
+msgid "Are you sure?"
+msgstr "Sei sicuro?"
+
+#: src/Tribe/Main.php:1034
+msgid "Delete All"
+msgstr "Cancella tutto"
+
+#: src/Tribe/Main.php:1035
+msgid "Are you sure you want to permanently delete all instances of this recurring event?"
+msgstr "Sei sicuro di voler cancellare definitivamente tutte le istanze di questo evento ricorrente?"
+
+#: src/Tribe/Main.php:1037
+msgid "Are you sure you want to permanently delete this instance of a recurring event?"
+msgstr "Sei sicuro di voler eliminare definitivamente questa istanza di un evento ricorrente?"
+
+#: src/Tribe/Main.php:1108
+msgid "Remove a Venue"
+msgstr "Elimina una Località"
+
+#: src/Tribe/Main.php:1109
+msgid "Remove an Organizer"
+msgstr "Elimina un Organizzatore"
+
+#: src/Tribe/Main.php:1110 src/Tribe/Main.php:1117
+msgid "Unknown Post Type"
+msgstr "Post Type sconosciuto"
+
+#: src/Tribe/Main.php:1263
+msgid "This shortcode can only be used in pages."
+msgstr "Questo shortcode può essere utilizzato solamente nelle pagine."
+
+#: src/Tribe/Main.php:1416
+msgid "Community Events Submission"
+msgstr "Invio Community Events"
+
+#: src/Tribe/Main.php:1508
+msgid "Trashed Event #"
+msgstr "Evento cestinato #"
+
+#: src/Tribe/Main.php:1511
+msgid "Deleted Event #"
+msgstr "Evento Cancellato #"
+
+#: src/Tribe/Main.php:1514
+msgid "This event (#%s) does not appear to exist."
+msgstr "Questo Evento (#%s) non sembra esistere."
+
+#: src/Tribe/Main.php:1517
+msgid "You do not have permission to delete this event."
+msgstr "Non hai il permesso per cancellare questo evento."
+
+#: src/Tribe/Main.php:1528
+msgctxt "As in \"go back to previous page\""
+msgid "Back"
+msgstr "Indietro"
+
+#: src/Tribe/Main.php:1563
+msgid "%sWarning:%s You are editing a recurring %s. All changes will be applied to the entire series."
+msgstr ""
+
+#: src/Tribe/Main.php:1572
+msgid "%s not found."
+msgstr "%s non trovato."
+
+#: src/Tribe/Main.php:1580
+msgid "Please log in first."
+msgstr "Per favore, effettua prima il login."
+
+#: src/Tribe/Main.php:1586
+msgid "You do not have permission to edit this %s."
+msgstr "Non hai i permessi necessari per modificare questo %s."
+
+#: src/Tribe/Main.php:1722 src/views/community/columns/title.php:35
+msgid "View"
+msgstr "Visualizza"
+
+#: src/Tribe/Main.php:1728 src/views/community/columns/title.php:41
+msgid "Edit"
+msgstr "Modifica"
+
+#: src/Tribe/Main.php:1859
+msgid "Venue not found."
+msgstr "Località non trovata."
+
+#: src/Tribe/Main.php:1864
+msgid "Please log in to edit this venue"
+msgstr "Per favore effettua l'accesso per modificare questa località."
+
+#: src/Tribe/Main.php:1868
+msgid "You do not have permission to edit this venue."
+msgstr "Non hai i permessi necessari per modificare questa località."
+
+#: src/Tribe/Main.php:1891
+msgid "Venue updated."
+msgstr "Località aggiornata."
+
+#: src/Tribe/Main.php:1901
+msgid "Venue name cannot be blank."
+msgstr "Il nome della località non può rimanere in bianco."
+
+#: src/Tribe/Main.php:1905
+msgid "There was a problem updating your venue, please try again."
+msgstr "C'è stato un errore nell'aggiornare la località. Prova ancora, grazie."
+
+#: src/Tribe/Main.php:1942
+msgid "Organizer not found."
+msgstr "Organizzatore non trovato."
+
+#: src/Tribe/Main.php:1946
+msgid "Please log in to edit this organizer"
+msgstr "Per favore, effettua l'accesso per modificare questo organizzatore."
+
+#: src/Tribe/Main.php:1950
+msgid "You do not have permission to edit this organizer."
+msgstr "Non hai i permessi necessari per modificare questo organizzatore."
+
+#: src/Tribe/Main.php:1972
+msgid "Organizer updated."
+msgstr "Organizzatore aggiornato."
+
+#: src/Tribe/Main.php:1983
+msgid "Organizer name cannot be blank."
+msgstr "Il nome dell'organizzatore non può rimanere in bianco."
+
+#: src/Tribe/Main.php:1987
+msgid "There was a problem updating this organizer, please try again."
+msgstr "C'è stato un problema nell'aggiornare questo organizzatore. Prova ancora, grazie."
+
+#: src/Tribe/Main.php:2070
+msgid "Please log in to view your events"
+msgstr "Per favore, effettua l'accesso per visualizzare i tuoi eventi."
+
+#: src/views/community/modules/spam-control.php:32
+msgid "Fake Title"
+msgstr "Titolo invalido"
+
+#: src/Tribe/Main.php:2293
+msgid "The requested page number was not found."
+msgstr "Il numero di pagina richiesto non è stato trovato"
+
+#: src/Tribe/Main.php:2532
+msgid "Community"
+msgstr "Comunità"
+
+#: src/Tribe/Main.php:2549
+msgid "This template is also used for Community Events."
+msgstr "Questo template è usato anche per  Community Events."
+
+#: src/Tribe/Main.php:2763
+msgid "Community: Submit %s"
+msgstr ""
+
+#: src/Tribe/Main.php:2771
+msgid "Community: My %s"
+msgstr ""
+
+#: src/Tribe/Main.php:2780 src/Tribe/Templates.php:47
+msgid "Community Events"
+msgstr "Community Events"
+
+#: src/Tribe/Main.php:2796
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: src/Tribe/Submission_Handler.php:72
+msgid "%s updated. "
+msgstr "%s aggiornato."
+
+#: src/Tribe/Submission_Handler.php:73 src/Tribe/Submission_Handler.php:92
+msgid "Submit another %s"
+msgstr "Inserisci un'altro evento"
+
+#: src/Tribe/Submission_Handler.php:76
+msgid "There was a problem saving your %s, please try again."
+msgstr "Ci è stato un problema nel salvare il tuo %s perfavore ritenta."
+
+#: src/Tribe/Submission_Handler.php:91
+msgid "%s submitted."
+msgstr "%s inserito."
+
+#: src/Tribe/Submission_Handler.php:95
+msgid "There was a problem submitting your %s, please try again."
+msgstr "Ci è stato un problema nel inserire il tuo evento perfavore ritenta"
+
+#: src/Tribe/Submission_Handler.php:212
+msgid "%s is required"
+msgstr "%s (richiesto)"
+
+#: src/Tribe/Submission_Handler.php:365
+msgid "%s Title"
+msgstr "Titolo dell'%s"
+
+#: src/Tribe/Submission_Handler.php:368
+msgid "%s Description"
+msgstr "Descrizione dell'%s"
+
+#: src/Tribe/Submission_Handler.php:476
+msgid "Invalid value for %s"
+msgstr "Valore non valido per %s. Il valore non deve essere vuoto."
+
+#: src/Tribe/Submission_Handler.php:487
+msgid "Images must be png, jpg, or gif"
+msgstr "Le immagini devono essere in formato .png, .jpg o .gif"
+
+#: src/Tribe/Submission_Handler.php:529
+msgid "Image exceeded the allowed file size"
+msgstr "L'immagine supera le dimensioni consentite"
+
+#: src/Tribe/Submission_Handler.php:534
+msgid "The image failed to upload successfully"
+msgstr "L'immagine non è stata caricata correttamente "
+
+#: src/Tribe/Submission_Handler.php:538
+msgid "The uploaded image could not be processed"
+msgstr "Non è stato possibile processare l'immagine caricata"
+
+#: src/admin-views/community-options-template.php:42
+msgid "Placed in the Trash"
+msgstr "Posizionato in cestino"
+
+#: src/admin-views/community-options-template.php:43
+msgid "Permanently Deleted"
+msgstr "Rimosso permanentemente"
+
+#: src/admin-views/community-options-template.php:50
+msgid "No Default"
+msgstr "Manca un valore di default"
+
+#: src/admin-views/community-options-template.php:58
+msgid "Use New Venue/No Default"
+msgstr "Utilizza una nuova località"
+
+#: src/admin-views/community-options-template.php:73
+msgid "Community Events Settings"
+msgstr "Impostazioni Community Events"
+
+#: src/admin-views/community-options-template.php:88
+msgid "General"
+msgstr "Generale"
+
+#: src/admin-views/community-options-template.php:94
+msgid "Allow anonymous submissions"
+msgstr "Permetti la creazione anonima di eventi"
+
+#: src/admin-views/community-options-template.php:95
+msgid "Check this box to allow users to submit events without having a WordPress account"
+msgstr "Selezioaa questo box per consentire agli utenti di inviare gli eventi senza avere un account WordPress."
+
+#: src/admin-views/community-options-template.php:138
+msgid "Use visual editor for event descriptions"
+msgstr "Utilizza l'editor visuale per le descrizioni degli eventi"
+
+#: src/admin-views/community-options-template.php:146
+msgid "Default status for submitted events"
+msgstr "Stato di default assegnato ai nuovi eventi"
+
+#: src/admin-views/community-options-template.php:156
+msgid "Community rewrite slug"
+msgstr "Slug da utilizzare per gli eventi Community"
+
+#: src/admin-views/community-options-template.php:160
+msgid "The slug used for building the community events URL - it is appended to the main events slug. Your current community events URLs are"
+msgstr "Lo slug utilizzato per costruire l'URL dei community events - è allegato allo slug principale degli eventi."
+
+#: src/admin-views/community-options-template.php:173
+msgid "Alerts"
+msgstr "Avvisi"
+
+#: src/admin-views/community-options-template.php:178
+msgid "Send an email alert when a new event is submitted"
+msgstr "Manda una email di avviso quando un nuovo evento viene creato"
+
+#: src/admin-views/community-options-template.php:186
+msgid "Email addresses to be notified"
+msgstr "Indirizzo email a cui notificare gli avvisi"
+
+#: src/admin-views/community-options-template.php:189
+msgid "One address per line"
+msgstr "Un indirizzo per ogni riga, grazie"
+
+#: src/admin-views/community-options-template.php:195
+msgid "Members"
+msgstr "Membri"
+
+#: src/admin-views/community-options-template.php:200
+msgid "Control the permissions for your logged in users. Allow them to:"
+msgstr "Controlla le autorizzazioni per il gli utenti registrati. Consentire loro di:"
+
+#: src/admin-views/community-options-template.php:205
+msgid "Edit their submissions"
+msgstr "Modificare le loro segnalazioni"
+
+#: src/admin-views/community-options-template.php:213
+msgid "Remove their submissions"
+msgstr "Rimuovere le loro segnalazioni"
+
+#: src/admin-views/community-options-template.php:221
+msgid "Deleted events should be:"
+msgstr "Gli eventi rimossi dovrebbero:"
+
+#: src/admin-views/community-options-template.php:235
+msgid "Events per page"
+msgstr "Numero di eventi per pagina"
+
+#: src/admin-views/community-options-template.php:236
+msgid "This is the number of events displayed per page"
+msgstr "Questo è il numero di eventi mostrati in una pagina"
+
+#: src/admin-views/community-options-template.php:244
+msgid "Date/time format"
+msgstr "Formato data/ora"
+
+#: src/admin-views/community-options-template.php:245
+msgid "Help with date &amp; time formatting"
+msgstr "Aiuto nella formattazione di data &amp; ora"
+
+#: src/admin-views/community-options-template.php:253
+msgid "Access Control"
+msgstr "Controllo degli accessi"
+
+#: src/admin-views/community-options-template.php:258
+msgid "Block access to WordPress dashboard"
+msgstr "Nega l'accesso all'Amministratore di WordPress"
+
+#: src/admin-views/community-options-template.php:259
+msgid "Also disables the admin bar"
+msgstr "Disabilita anche la admin bar"
+
+#: src/admin-views/community-options-template.php:267
+msgid "Roles to block"
+msgstr "Ruoli utente a cui viene vietato l'accesso"
+
+#: src/admin-views/community-options-template.php:277
+msgid "Redirect URL"
+msgstr "URL di reindirizzamento"
+
+#: src/admin-views/community-options-template.php:288
+msgid "Form Defaults"
+msgstr ""
+
+#: src/admin-views/community-options-template.php:294
+msgid "Default venue for submitted events"
+msgstr "Località di default per la creazione di un evento"
+
+#: src/admin-views/community-options-template.php:305
+msgid "Default organizer for submitted events"
+msgstr "Organizzatore di default per la creazione di un evento"
+
+#: src/functions/template-tags.php:497
+#: src/views/community/edit-organizer.php:31
+#: src/views/community/edit-venue.php:31
+msgid "(required)"
+msgstr "(richiesto)"
+
+#: src/views/community/modules/title.php:28
+msgid "%s Title:"
+msgstr "Titolo dell'%s:"
+
+#: src/views/community/edit-organizer.php:41
+#: src/views/community/edit-venue.php:41
+#: src/views/community/modules/description.php:28
+msgid "%s Description:"
+msgstr "%s Descrizione"
+
+#: src/views/community/edit-organizer.php:67
+#: src/views/community/edit-venue.php:67
+#: src/views/community/modules/submit.php:21
+msgid "Update %s"
+msgstr "Aggiorna %s"
+
+#: src/views/community/edit-organizer.php:67
+#: src/views/community/edit-venue.php:67
+#: src/views/community/modules/submit.php:23
+msgid "Submit %s"
+msgstr "Salva %s"
+
+#: src/views/community/edit-organizer.php:30
+#: src/views/community/edit-venue.php:30
+msgid "%s Name:"
+msgstr "Nome %s:"
+
+#: src/views/community/email-template.php:29
+msgid "%s Organizer"
+msgstr "Organizzatore dell'%s"
+
+#: src/views/community/email-template.php:32
+msgid "%s Venue"
+msgstr "Location dell'%s"
+
+#: src/views/community/email-template.php:35
+msgid "Description"
+msgstr "Descrizione"
+
+#: src/views/community/email-template.php:46
+msgid "Review %s"
+msgstr "Recensioni dell'%s"
+
+#: src/views/community/email-template.php:48
+msgid "View %s"
+msgstr "Vista dell'%s"
+
+#: src/views/community/event-list.php:35
+#: src/views/community/modules/delete.php:20
+msgid "Add New"
+msgstr "Aggiungi Nuovo"
+
+#: src/views/community/modules/delete.php:28
+msgid "Not"
+msgstr "No"
+
+#: src/views/community/modules/delete.php:29
+msgid "Log Out"
+msgstr "Log Out"
+
+#: src/functions/template-tags.php:567
+msgid "Status"
+msgstr "Stato"
+
+#: src/functions/template-tags.php:568
+msgid "Title"
+msgstr "Titolo"
+
+#: src/functions/template-tags.php:571
+msgid "Category"
+msgstr "Categoria"
+
+#: src/functions/template-tags.php:575
+msgid "Recurring?"
+msgstr "Ricorrente?"
+
+#: src/functions/template-tags.php:578
+msgid "Start Date"
+msgstr "Data d'inizio"
+
+#: src/functions/template-tags.php:579
+msgid "End Date"
+msgstr "Data di conclusione"
+
+#: src/views/community/columns/recurring.php:20
+msgid "Yes"
+msgstr "Si"
+
+#: src/views/community/columns/recurring.php:22
+msgid "No"
+msgstr "No"
+
+#: src/views/community/modules/captcha.php:31
+msgid "Anti-Spam Check"
+msgstr "Controllo Anti-Spam"
+
+#: src/views/community/modules/cost.php:45
+msgid "%s Cost"
+msgstr "Costo dell'%s"
+
+#: src/views/community/modules/cost.php:63
+msgid "Currency Symbol:"
+msgstr "Simbolo valuta:"
+
+#: src/views/community/modules/cost.php:90
+msgid "Cost:"
+msgstr "Costo:"
+
+#: src/views/community/modules/cost.php:95
+msgid "Leave blank to hide the field. Enter a 0 for %s that are free."
+msgstr "Lascia vuoto per nascondere il campo. Inserisci 0 se l'%s è gratuito."
+
+#: src/views/community/modules/custom.php:32
+msgid "Additional Fields"
+msgstr "Campi aggiuntivi"
+
+#: src/views/community/modules/custom.php:88
+msgctxt "custom field label"
+msgid "%s:"
+msgstr "%s:"
+
+#: src/views/community/modules/datepickers.php:46
+msgid "%s Time &amp; Date"
+msgstr "%s Data &amp; Ora"
+
+#: src/views/community/modules/datepickers.php:64
+msgid "You have changed the recurrence rules of this %1$s. Saving the %1$s will update all future %2$s.  If you did not mean to change all %2$s, then please refresh the page."
+msgstr ""
+
+#: src/views/community/modules/datepickers.php:85
+#: src/views/community/modules/datepickers.php:136
+msgid "YYYY-MM-DD"
+msgstr "AAAA-MM-DD"
+
+#: src/views/community/modules/delete.php:24
+msgid "My %s"
+msgstr "I Miei %s"
+
+#: src/views/community/modules/image.php:19
+msgid "%s Image"
+msgstr "Immagine dell'%s"
+
+#: src/views/community/modules/organizer-fields.php:44
+#: src/views/community/modules/organizer.php:32
+#: src/views/community/modules/venue.php:37
+msgid "%s Details"
+msgstr "Dettagli %s:"
+
+#: src/views/community/modules/organizer-fields.php:56
+msgid "%s Name"
+msgstr "Nome %s"
+
+#: src/Tribe/Submission_Handler.php:428
+#: src/views/community/modules/organizer-fields.php:64
+msgid "Phone"
+msgstr "Telefono"
+
+#: src/Tribe/Submission_Handler.php:436
+#: src/views/community/modules/organizer-fields.php:70
+msgid "Website"
+msgstr "Sito Web"
+
+#: src/Tribe/Submission_Handler.php:440
+#: src/views/community/modules/organizer-fields.php:75
+msgid "Email"
+msgstr "Email"
+
+#: src/views/community/modules/custom.php:75
+msgid "None"
+msgstr "Nessuno"

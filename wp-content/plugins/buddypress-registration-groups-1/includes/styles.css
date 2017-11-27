@@ -1,0 +1,47 @@
+/**
+* plugin styles
+*/
+
+#registration-groups-section {
+	float: right;
+	width: 48%;
+}
+
+.reg_groups_group_checkbox {
+	margin: 0 5px 0 0;
+}
+
+#buddypress .standard-form label.reg_groups_group_label,
+.reg_groups_group_label {
+	display: inline;
+	font-weight: normal;
+}
+
+@media only screen and (max-width: 480px) {
+	#registration-groups-section {
+		float: none;
+		width: 100%;
+	}
+}
+
+.reg_groups_item {
+	list-style: none;
+}
+
+.reg_groups_none {
+	font-style: italic;
+	color: gray;
+}
+
+/**
+ * Styling the for the 'multiselect' version of the
+ * checkboxes. Matches the default BuddyPress form fields
+ * look. Override to match your theme.
+ */
+.reg_groups_list_multiselect {
+    height: 8em;
+		border: 1px solid #ccc;
+		background: #fafafa;
+		padding: 6px;
+    overflow: auto;
+}
