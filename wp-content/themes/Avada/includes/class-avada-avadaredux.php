@@ -49,12 +49,13 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 		add_filter( 'fusion_options_font_size_dimension_fields', array( $this, 'fusion_options_font_size_dimension_fields' ) );
 		add_filter( 'fusion_options_sliders_not_in_pixels', array( $this, 'fusion_options_sliders_not_in_pixels' ) );
 		add_filter( 'fusion_options_page_soft_dependencies', array( $this, 'fusion_options_page_soft_dependencies' ) );
+
 		if ( class_exists( 'Fusion_Builder_Redux' ) ) {
 			// Split to multiple lines for PHP 5.2 compatibility.
 			$fusion_builder = FusionBuilder();
 			$fusion_builder_options_panel = $fusion_builder->get_fusion_builder_options_panel();
 			$fusion_builder_redux = $fusion_builder_options_panel->get_fusion_builder_redux();
-			add_filter( 'fusion_options_page_soft_dependencies', array( $fusion_builder_redux, 'fusion_options_builder_soft_dependencies' ) );
+			add_filter( 'fusion_options_builder_soft_dependencies', array( $fusion_builder_redux, 'fusion_options_builder_soft_dependencies' ) );
 		}
 		parent::init_fusionredux();
 

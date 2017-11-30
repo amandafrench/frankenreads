@@ -30,7 +30,7 @@ $displayed_menu = get_post_meta( $c_page_id, 'pyre_displayed_menu', true );
 
 		<?php if ( 'menu' === Avada()->settings->get( 'slidingbar_toggle_style' ) && Avada()->settings->get( 'mobile_slidingbar_widgets' ) ) : ?>
 			<?php $sliding_bar_label = esc_attr__( 'Toggle Sliding Bar', 'Avada' ); ?>
-			<a href="#" class="fusion-icon fusion-icon-sliding-bar" aria-label="<?php echo $sliding_bar_label; ?>"></a>
+			<a href="#" class="fusion-icon fusion-icon-sliding-bar" aria-label="<?php echo esc_attr( $sliding_bar_label ); ?>"></a>
 		<?php endif; ?>
 
 		<?php if ( class_exists( 'WooCommerce' ) && Avada()->settings->get( 'woocommerce_cart_link_main_nav' ) ) : ?>

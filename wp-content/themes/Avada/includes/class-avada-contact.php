@@ -209,8 +209,8 @@ class Avada_Contact {
 	 */
 	private function send_email() {
 		$options = get_option( Avada::get_option_name() );
-		$name    = wp_filter_kses( $this->name );
-		$email   = wp_filter_kses( $this->email );
+		$name    = esc_html( $this->name );
+		$email   = sanitize_email( $this->email );
 		$subject = wp_filter_kses( $this->subject );
 		$message = wp_filter_kses( $this->message );
 
@@ -219,11 +219,13 @@ class Avada_Contact {
 			$message = stripslashes( $message );
 		}
 
+		$message = html_entity_decode( $message );
+
 		$email_to = $options['email_address'];
-		$body  = esc_html__( 'Name:', 'Avada' ) . " $name \n\n";
-		$body .= esc_html__( 'Email:', 'Avada' ) . " $email \n\n";
-		$body .= esc_html__( 'Subject:', 'Avada' ) . " $subject \n\n";
-		$body .= esc_html__( 'Comments:', 'Avada' ) . "\n $message";
+		$body  = sprintf( esc_attr__( 'Name: %s', 'Avada' ), " $name \n\n" );
+		$body .= sprintf( esc_attr__( 'Email: %s', 'Avada' ), " $email \n\n" );
+		$body .= sprintf( esc_attr__( 'Subject: %s', 'Avada' ), " $subject \n\n" );
+		$body .= sprintf( esc_attr__( 'Comments: %s', 'Avada' ), "\n $message" );
 
 		$headers = 'Reply-To: ' . $name . ' <' . $email . '>' . "\r\n";
 

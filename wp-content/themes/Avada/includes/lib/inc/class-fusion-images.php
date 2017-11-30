@@ -321,6 +321,7 @@ class Fusion_Images {
 	 * @param null|int    $post_thumbnail_id Attachment ID.
 	 * @param null|string $layout            The layout.
 	 * @param null|int    $columns           Number of columns.
+	 * @param string      $match_basis       Use 'get_closest' or 'get_closest_ceil'.
 	 * @return string Image size name.
 	 */
 	public function get_grid_image_base_size( $post_thumbnail_id = null, $layout = null, $columns = null, $match_basis = 'get_closest' ) {
@@ -355,10 +356,8 @@ class Fusion_Images {
 
 		ksort( $sizes );
 
-
 		$image_size = null;
 		$size_name = null;
-
 
 		// Find the best match.
 		foreach ( $sizes as $size => $name ) {

@@ -12,7 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <!DOCTYPE html>
-<?php global $woocommerce; ?>
 <html class="<?php echo ( Avada()->settings->get( 'smooth_scrolling' ) ) ? 'no-overflow-y' : ''; ?>" <?php language_attributes(); ?>>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -159,7 +158,7 @@ if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 		$row_css    = '';
 		$main_class = '';
 
-		if ( Avada()->layout->is_hundred_percent_template() ) {
+		if ( apply_filters( 'fusion_is_hundred_percent_template', $c_page_id, false ) ) {
 			$main_css = 'padding-left:0px;padding-right:0px;';
 			$hundredp_padding = get_post_meta( $c_page_id, 'pyre_hundredp_padding', true );
 			if ( Avada()->settings->get( 'hundredp_padding' ) && ! $hundredp_padding ) {

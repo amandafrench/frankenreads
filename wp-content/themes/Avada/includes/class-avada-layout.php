@@ -807,6 +807,7 @@ class Avada_Layout {
 			( '100-width.php' === $page_template && $page_id ) ||
 			( ( '1' === fusion_get_option( 'portfolio_width_100', 'portfolio_width_100', $page_id ) || 'yes' === fusion_get_option( 'portfolio_width_100', 'portfolio_width_100', $page_id ) ) && is_singular( 'avada_portfolio' ) ) ||
 			( ( '1' === fusion_get_option( 'blog_width_100', 'portfolio_width_100', $page_id ) || 'yes' === fusion_get_option( 'blog_width_100', 'portfolio_width_100', $page_id ) ) && is_singular( 'post' ) ) ||
+			( ( '1' === fusion_get_option( 'product_width_100', 'portfolio_width_100', $page_id ) || 'yes' === fusion_get_option( 'product_width_100', 'portfolio_width_100', $page_id ) ) && is_singular( 'product' ) ) ||
 			( 'yes' === fusion_get_page_option( 'portfolio_width_100', $page_id ) && ! is_singular( array( 'post', 'avada_portfolio' ) ) )
 		) {
 			return true;

@@ -304,7 +304,7 @@ class Avada_Widget_Style {
 						}
 					}
 
-					if ( '' !==  $widget_opt[ $widget_num ][ $option['key'] ] ) {
+					if ( '' !== $widget_opt[ $widget_num ][ $option['key'] ] ) {
 						$alignment = ( '' === $widget_opt[ $widget_num ][ $option['key'] ] ) ? 'default' : $widget_opt[ $widget_num ][ $option['key'] ];
 						$css_class = ( 'fusion_align' === $option['key'] ? 'fusion-widget-align-' : 'fusion-widget-mobile-align-' ) . $alignment;
 

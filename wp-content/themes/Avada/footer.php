@@ -68,16 +68,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<a class="fusion-one-page-text-link fusion-page-load-link"></a>
 
 		<?php wp_footer(); ?>
-
-		<?php
-		/**
-		 * Echo the scripts added to the "before </body>" field in Theme Options.
-		 * The 'space_body' setting is not sanitized.
-		 * In order to be able to take advantage of this,
-		 * a user would have to gain access to the database
-		 * in which case this is the least on your worries.
-		 */
-		echo Avada()->settings->get( 'space_body' ); // WPCS: XSS ok.
-		?>
 	</body>
 </html>

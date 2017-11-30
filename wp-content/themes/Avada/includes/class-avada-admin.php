@@ -451,6 +451,11 @@ class Avada_Admin {
 							delete_transient( '_wc_activation_redirect' );
 						}
 
+						// Make sure bbpress welcome screen won't run after this.
+						if ( 'bbpress' == $_GET['plugin'] ) {
+							delete_transient( '_bbp_activation_redirect' );
+						}
+
 						if ( ! is_wp_error( $result ) ) {
 							$response['message'] = 'plugin activated';
 							$response['error']  = false;
@@ -1288,7 +1293,7 @@ class Avada_Admin {
 			'currently_processing'  => esc_attr__( 'Currently Processing: %s', 'Avada' ),
 			'currently_removing'    => esc_attr__( 'Currently Removing: %s', 'Avada' ),
 			'file_does_not_exist'   => esc_attr__( 'The file does not exist', 'Avada' ),
-			'error_timeout'         => wp_kses_post( sprintf( __( 'Demo server couldn\'t be reached. Please check for wp_remote_get on the <a href="%s" target="_blank">System Status</a> page.', 'Avada' ), admin_url( 'admin.php?page=avada-demos' ) ) ),
+			'error_timeout'         => wp_kses_post( sprintf( __( 'Demo server couldn\'t be reached. Please check for wp_remote_get on the <a href="%s" target="_blank">System Status</a> page.', 'Avada' ), admin_url( 'admin.php?page=avada-system-status' ) ) ),
 			'error_php_limits'      => wp_kses_post( sprintf( __( 'Demo import failed. Please check for PHP limits in red on the <a href="%s" target="_blank">System Status</a> page. Change those to the recommended value and try again.', 'Avada' ), admin_url( 'admin.php?page=avada-demos' ) ) ),
 			'remove_demo'           => esc_attr__( 'Removing demo content will remove ALL previously imported demo content from this demo and restore your site to the previous state it was in before this demo content was imported.', 'Avada' ),
 			'update_fc'             => __( 'ERROR:\n\nFusion Builder Plugin can only be installed and activated if Fusion Core plugin is at version 3.0 or higher. Your version of Fusion Core is %s. Please update Fusion Core first.', 'Avada' ),
@@ -1305,10 +1310,10 @@ class Avada_Admin {
 	 * @since 3.1.1
 	 * @return void
 	 */
-	function avada_taxonomy_meta() {
+	public function avada_taxonomy_meta() {
 		global $fusion_settings, $pagenow;
 
-		if ( ! ( 'term.php' === $pagenow || 'edit-tags.php' === $pagenow || ( wp_doing_ajax() && ! empty( $_REQUEST['action'] ) && 'add-tag' === $_REQUEST['action'] ) ) ) {
+		if ( ! ( 'term.php' === $pagenow || 'edit-tags.php' === $pagenow || ( fusion_doing_ajax() && ! empty( $_REQUEST['action'] ) && 'add-tag' === $_REQUEST['action'] ) ) ) {
 			return;
 		}
 

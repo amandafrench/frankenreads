@@ -82,7 +82,9 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 
 		echo $style; // WPCS: XSS ok.
 
-		$nav_type = $instance['nav_type'];
+		$nav_type            = $instance['nav_type'];
+		$widget_border_class = ( '' === $instance['border_color'] ? 'no-border' : '' );
+
 		if ( 'custom_menu' === $nav_type ) {
 			// Get menu.
 			$nav_menu = ! empty( $instance['nav_menu'] ) ? wp_get_nav_menu_object( $instance['nav_menu'] ) : false;
@@ -90,8 +92,6 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 			if ( ! $nav_menu ) {
 				return;
 			}
-
-			$widget_border_class = ( '' === $instance['border_color'] ? 'no-border' : '' );
 
 			$nav_menu_args = array(
 				'fallback_cb'     => '',

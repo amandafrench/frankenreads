@@ -336,7 +336,12 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 							<?php $instance[ $name ] = 'mailto:' . antispambot( $instance[ $name ] ); ?>
 						<?php endif; ?>
 						<?php if ( isset( $instance[ $name ] ) ) : ?>
-							<a class="fusion-social-network-icon fusion-tooltip fusion-<?php echo esc_attr( $value ); ?> fusion-icon-<?php echo esc_attr( $value ); ?>" href="<?php echo esc_url_raw( $instance[ $name ] ); ?>" <?php echo $tooltip_params; // WPCS: XSS ok. ?> title="<?php echo esc_attr( $tooltip ); ?>" aria-label="<?php echo esc_attr( ucwords( $tooltip ) ); ?>" rel="<?php echo esc_attr( $nofollow ); ?>" target="<?php echo esc_attr( $instance['linktarget'] ); ?>" style="<?php echo esc_attr( $style . $icon_style . $box_style ); ?>"></a>
+							<?php if ( 'skype' === $value ) : ?>
+								<?php $social_link = esc_attr( $instance[ $name ] ); ?>
+							<?php else : ?>
+								<?php $social_link = esc_url( $instance[ $name ] ); ?>
+							<?php endif; ?>
+							<a class="fusion-social-network-icon fusion-tooltip fusion-<?php echo esc_attr( $value ); ?> fusion-icon-<?php echo esc_attr( $value ); ?>" href="<?php echo $social_link; // WPCS: XSS ok. ?>" <?php echo $tooltip_params; // WPCS: XSS ok. ?> title="<?php echo esc_attr( $tooltip ); ?>" aria-label="<?php echo esc_attr( ucwords( $tooltip ) ); ?>" rel="<?php echo esc_attr( $nofollow ); ?>" target="<?php echo esc_attr( $instance['linktarget'] ); ?>" style="<?php echo esc_attr( $style . $icon_style . $box_style ); ?>"></a>
 						<?php endif; ?>
 					<?php else : ?>
 						<?php if ( 'mail' === $value ) : ?>

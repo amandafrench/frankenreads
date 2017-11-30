@@ -98,8 +98,8 @@
 		    addImgLink   = metaBox.find( '.avada-tax-image-upload' ),
 		    delImgLink   = metaBox.find( '.avada-tax-image-upload-clear' ),
 		    imgContainer = metaBox.find( '.avada-tax-image-preview' ),
-		    imgIdInput   = metaBox.find( '.avada-tax-image-url' );
-			pContainer   = '';
+		    imgIdInput   = metaBox.find( '.avada-tax-image-url' ),
+		    pContainer   = '';
 
 		// On image link click.
 		addImgLink.on( 'click', function( event ) {

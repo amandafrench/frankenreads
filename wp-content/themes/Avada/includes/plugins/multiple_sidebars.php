@@ -433,7 +433,7 @@ class Sidebar_Generator {
 			<div class="pyre_field">
 
 				<select name="sidebar_generator[<?php echo esc_attr( $i ); ?>]" style="display: none !important; width:100%" class="hidden-sidebar" data-fusion_id="sbg_selected_sidebar">
-					<option value="0"<?php echo ( '' == $selected_sidebar[ $i ] ) ? ' selected' : ''; ?>><?php echo esc_html( 'WP Default Sidebar', 'Avada' ); ?></option>
+					<option value="0"<?php echo ( '' === $selected_sidebar[ $i ] ) ? ' selected' : ''; ?>><?php echo esc_html( 'WP Default Sidebar', 'Avada' ); ?></option>
 					<?php $sidebars = $wp_registered_sidebars; ?>
 					<?php if ( is_array( $sidebars ) && ! empty( $sidebars ) ) : ?>
 						<?php foreach ( $sidebars as $sidebar ) : ?>
@@ -457,7 +457,7 @@ class Sidebar_Generator {
 					<?php if ( ! empty( $post_type_options ) ) : ?>
 						<option value="default_sidebar" <?php echo $default_selected ? 'selected="selected"' : '' ?>><?php esc_html_e( 'Default', 'Avada' ); ?> (<?php echo esc_attr( Avada()->settings->get( $post_type_options['sidebar'] ) ); ?>)</option>
 					<?php endif; ?>
-					<option value="" <?php echo ( '' == $selected_sidebar_replacement[ $i ] && 'post' != $screen->post_type ) ? ' selected' : ''; ?>><?php esc_html_e( 'No Sidebar', 'Avada' ); ?></option>
+					<option value="" <?php echo ( '' === $selected_sidebar_replacement[ $i ] ) ? ' selected' : ''; ?>><?php esc_html_e( 'No Sidebar', 'Avada' ); ?></option>
 					<?php $sidebar_replacements = $wp_registered_sidebars; ?>
 					<?php if ( is_array( $sidebar_replacements ) && ! empty( $sidebar_replacements ) ) : ?>
 						<?php foreach ( $sidebar_replacements as $sidebar ) : ?>

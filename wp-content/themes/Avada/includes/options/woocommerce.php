@@ -317,6 +317,13 @@ function avada_options_section_woocommerce( $sections ) {
 							'clean'   => esc_html__( 'Clean', 'Avada' ),
 						),
 					),
+					'product_width_100' => array(
+						'label'       => esc_html__( '100% Width Page', 'Avada' ),
+						'description' => esc_html__( 'Turn on to display product posts at 100% browser width according to the window size. Turn off to follow site width.', 'Avada' ),
+						'id'          => 'product_width_100',
+						'default'     => '0',
+						'type'        => 'switch',
+					),
 					'woocommerce_equal_heights' => array(
 						'label'       => esc_html__( 'Equal Heights', 'Avada' ),
 						'description' => esc_html__( 'Turn on to display grid boxes with equal heights per row.', 'Avada' ),

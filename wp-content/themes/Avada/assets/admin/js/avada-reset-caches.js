@@ -11,7 +11,7 @@ function fusionResetCaches( e ) { // jshint ignore:line
 		jQuery( '.spinner.fusion-spinner' ).addClass( 'is-active' );
 		jQuery.post( avadaReduxResetCaches.ajaxurl, data, function() {
 			jQuery( '.spinner.fusion-spinner' ).removeClass( 'is-active' );
-			window.confirm( avadaReduxResetCaches.success );
+			alert( avadaReduxResetCaches.success ); // jshint ignore: line
 		} );
 	}
 }

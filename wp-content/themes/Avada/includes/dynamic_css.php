@@ -543,7 +543,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global'][ $footer_headings_typography_elements ]['font-size']      = Fusion_Sanitize::size( Avada()->settings->get( 'footer_headings_typography', 'font-size' ) );
 	$css['global'][ $footer_headings_typography_elements ]['font-weight']    = intval( Avada()->settings->get( 'footer_headings_typography', 'font-weight' ) );
 	$css['global'][ $footer_headings_typography_elements ]['line-height']    = Fusion_Sanitize::size( Avada()->settings->get( 'footer_headings_typography', 'line-height' ) );
-	$css['global'][ $footer_headings_typography_elements ]['letter-spacing'] = round( Avada()->settings->get( 'footer_headings_typography', 'letter-spacing' ) ) . 'px';
+	$css['global'][ $footer_headings_typography_elements ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'footer_headings_typography', 'letter-spacing' ), 'px' );
 
 	$font_style = Avada()->settings->get( 'footer_headings_typography', 'font-style' );
 	if ( ! empty( $font_style ) ) {
@@ -582,7 +582,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	if ( isset( $body_typography_elements['family'] ) ) {
 		$css['global'][ $dynamic_css_helpers->implode( $body_typography_elements['family'] ) ]['font-family']    = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'body_typography' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $body_typography_elements['family'] ) ]['font-weight']    = intval( Avada()->settings->get( 'body_typography', 'font-weight' ) );
-		$css['global'][ $dynamic_css_helpers->implode( $body_typography_elements['family'] ) ]['letter-spacing'] = round( Avada()->settings->get( 'body_typography', 'letter-spacing' ) ) . 'px';
+		$css['global'][ $dynamic_css_helpers->implode( $body_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'body_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'body_typography', 'font-style' );
 		if ( ! empty( $font_style ) ) {
@@ -617,7 +617,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['font-family'] = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'nav_typography' ) );
 	$css['global'][ $nav_typography_elements ]['font-size']      = Fusion_Sanitize::size( Avada()->settings->get( 'nav_typography', 'font-size' ) );
 	$css['global'][ $nav_typography_elements ]['font-weight']    = intval( Avada()->settings->get( 'nav_typography', 'font-weight' ) );
-	$css['global'][ $nav_typography_elements ]['letter-spacing'] = round( Avada()->settings->get( 'nav_typography', 'letter-spacing' ) ) . 'px';
+	$css['global'][ $nav_typography_elements ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'nav_typography', 'letter-spacing' ), 'px' );
 
 	$css['global']['.fusion-menu-highlight-label']['border-radius'] = Fusion_Sanitize::size( Avada()->settings->get( 'main_nav_highlight_radius' ) );
 
@@ -777,8 +777,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 	// Needed because the font size on the main pagination container is set to 0.
 	if ( class_exists( 'WooCommerce' ) ) {
-		$css['global'][ '.fusion-show-pagination-text .woocommerce-pagination' ]['margin-left'] = Fusion_Sanitize::size( Avada()->settings->get( 'pagination_font_size' ) );
-		$css['global'][ '.fusion-show-pagination-text .woocommerce-pagination' ]['margin-right'] = Fusion_Sanitize::size( Avada()->settings->get( 'pagination_font_size' ) );
+		$css['global']['.fusion-show-pagination-text .woocommerce-pagination']['margin-left']  = Fusion_Sanitize::size( Avada()->settings->get( 'pagination_font_size' ) );
+		$css['global']['.fusion-show-pagination-text .woocommerce-pagination']['margin-right'] = Fusion_Sanitize::size( Avada()->settings->get( 'pagination_font_size' ) );
 	}
 
 	$elements = array( '.fusion-page-title-bar h1', '.fusion-page-title-bar h3' );
@@ -2020,7 +2020,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h1_typography_elements['family'] ) ]['font-family']    = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'h1_typography' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h1_typography_elements['family'] ) ]['font-weight']    = intval( Avada()->settings->get( 'h1_typography', 'font-weight' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h1_typography_elements['family'] ) ]['line-height']    = Fusion_Sanitize::size( Avada()->settings->get( 'h1_typography', 'line-height' ) );
-		$css['global'][ $dynamic_css_helpers->implode( $h1_typography_elements['family'] ) ]['letter-spacing'] = round( Avada()->settings->get( 'h1_typography', 'letter-spacing' ) ) . 'px';
+		$css['global'][ $dynamic_css_helpers->implode( $h1_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h1_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h1_typography', 'font-style' );
 		if ( ! empty( $font_style ) ) {
@@ -2039,7 +2039,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h2_typography_elements['family'] ) ]['font-family']    = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'h2_typography' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h2_typography_elements['family'] ) ]['font-weight']    = intval( Avada()->settings->get( 'h2_typography', 'font-weight' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h2_typography_elements['family'] ) ]['line-height']    = Fusion_Sanitize::size( Avada()->settings->get( 'h2_typography', 'line-height' ) );
-		$css['global'][ $dynamic_css_helpers->implode( $h2_typography_elements['family'] ) ]['letter-spacing'] = round( Avada()->settings->get( 'h2_typography', 'letter-spacing' ) ) . 'px';
+		$css['global'][ $dynamic_css_helpers->implode( $h2_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h2_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h2_typography', 'font-style' );
 		if ( ! empty( $font_style ) ) {
@@ -2058,7 +2058,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h3_typography_elements['family'] ) ]['font-family']    = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'h3_typography' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h3_typography_elements['family'] ) ]['font-weight']    = intval( Avada()->settings->get( 'h3_typography', 'font-weight' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h3_typography_elements['family'] ) ]['line-height']    = Fusion_Sanitize::size( Avada()->settings->get( 'h3_typography', 'line-height' ) );
-		$css['global'][ $dynamic_css_helpers->implode( $h3_typography_elements['family'] ) ]['letter-spacing'] = round( Avada()->settings->get( 'h3_typography', 'letter-spacing' ) ) . 'px';
+		$css['global'][ $dynamic_css_helpers->implode( $h3_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h3_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h3_typography', 'font-style' );
 		if ( ! empty( $font_style ) ) {
@@ -2077,7 +2077,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h4_typography_elements['family'] ) ]['font-family']    = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'h4_typography' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h4_typography_elements['family'] ) ]['font-weight']    = intval( Avada()->settings->get( 'h4_typography', 'font-weight' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h4_typography_elements['family'] ) ]['line-height']    = Fusion_Sanitize::size( Avada()->settings->get( 'h4_typography', 'line-height' ) );
-		$css['global'][ $dynamic_css_helpers->implode( $h4_typography_elements['family'] ) ]['letter-spacing'] = round( Avada()->settings->get( 'h4_typography', 'letter-spacing' ) ) . 'px';
+		$css['global'][ $dynamic_css_helpers->implode( $h4_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h4_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h4_typography', 'font-style' );
 		if ( ! empty( $font_style ) ) {
@@ -2099,7 +2099,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h5_typography_elements['family'] ) ]['font-family']    = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'h5_typography' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h5_typography_elements['family'] ) ]['font-weight']    = intval( Avada()->settings->get( 'h5_typography', 'font-weight' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h5_typography_elements['family'] ) ]['line-height']    = Fusion_Sanitize::size( Avada()->settings->get( 'h5_typography', 'line-height' ) );
-		$css['global'][ $dynamic_css_helpers->implode( $h5_typography_elements['family'] ) ]['letter-spacing'] = round( Avada()->settings->get( 'h5_typography', 'letter-spacing' ) ) . 'px';
+		$css['global'][ $dynamic_css_helpers->implode( $h5_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h5_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h5_typography', 'font-style' );
 		if ( ! empty( $font_style ) ) {
@@ -2118,7 +2118,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h6_typography_elements['family'] ) ]['font-family']    = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'h6_typography' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h6_typography_elements['family'] ) ]['font-weight']    = intval( Avada()->settings->get( 'h6_typography', 'font-weight' ) );
 		$css['global'][ $dynamic_css_helpers->implode( $h6_typography_elements['family'] ) ]['line-height']    = Fusion_Sanitize::size( Avada()->settings->get( 'h6_typography', 'line-height' ) );
-		$css['global'][ $dynamic_css_helpers->implode( $h6_typography_elements['family'] ) ]['letter-spacing'] = round( Avada()->settings->get( 'h6_typography', 'letter-spacing' ) ) . 'px';
+		$css['global'][ $dynamic_css_helpers->implode( $h6_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h6_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h6_typography', 'font-style' );
 		if ( ! empty( $font_style ) ) {
@@ -2409,7 +2409,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global']['.fusion-main-menu > ul > li > a .fusion-menu-description']['font-size'] = $description_font_size ;
 	$css['global']['.fusion-main-menu > ul > li > a .fusion-menu-description']['font-family'] = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'body_typography' ) );
 	$css['global']['.fusion-main-menu > ul > li > a .fusion-menu-description']['font-weight'] = intval( Avada()->settings->get( 'body_typography', 'font-weight' ) );
-	$css['global']['.fusion-main-menu > ul > li > a .fusion-menu-description']['letter-spacing'] = round( Avada()->settings->get( 'body_typography', 'letter-spacing' ) ) . 'px';
+	$css['global']['.fusion-main-menu > ul > li > a .fusion-menu-description']['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'body_typography', 'letter-spacing' ), 'px' );
 
 	$text_color = Fusion_Color::new_color( Fusion_Sanitize::color( Avada()->settings->get( 'nav_typography', 'color' ) ) )->get_new( 'alpha', '0.65' )->to_css( 'rgba' );
 
@@ -3179,7 +3179,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$elements = array(
 		'.fusion-megamenu-wrapper .fusion-megamenu-submenu',
 		'.rtl .fusion-megamenu-wrapper .fusion-megamenu-submenu:last-child',
-		'.fusion-megamenu-wrapper .fusion-megamenu-border'
+		'.fusion-megamenu-wrapper .fusion-megamenu-border',
 	);
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'menu_sub_sep_color' ) );
 
@@ -3232,8 +3232,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.fusion-is-sticky .fusion-main-menu .fusion-main-menu-icon:after',
 		'.fusion-is-sticky .fusion-main-menu .fusion-widget-cart-counter > a:before',
 		'.fusion-is-sticky .fusion-main-menu > ul > li > a',
-		'.fusion-is-sticky .fusion-main-menu > ul > li > a .fusion-menu-description'
-
+		'.fusion-is-sticky .fusion-main-menu > ul > li > a .fusion-menu-description',
 	);
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'header_sticky_menu_color' ) );
 
@@ -3308,7 +3307,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global']['.fusion-mobile-nav-item.fusion-main-menu-sliding-bar a:after']['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_typography', 'color' ) );
 
 	$css['global']['.fusion-mobile-nav-item a, .fusion-mobile-nav-holder > ul > li.fusion-mobile-nav-item > a']['font-size']       = Fusion_Sanitize::size( Avada()->settings->get( 'mobile_menu_typography', 'font-size' ) );
-	$css['global']['.fusion-mobile-nav-item a, .fusion-mobile-nav-holder > ul > li.fusion-mobile-nav-item > a']['letter-spacing']  = round( Avada()->settings->get( 'mobile_menu_typography', 'letter-spacing' ) ) . 'px';
+	$css['global']['.fusion-mobile-nav-item a, .fusion-mobile-nav-holder > ul > li.fusion-mobile-nav-item > a']['letter-spacing']  = Fusion_Sanitize::size( Avada()->settings->get( 'mobile_menu_typography', 'letter-spacing' ), 'px' );
 
 	$css['global']['.fusion-mobile-nav-item a:before']['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_typography', 'color' ) );
 
@@ -3318,7 +3317,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$elements = array(
 		'.fusion-mobile-menu-icons a',
 		'.fusion-mobile-menu-icons a:before',
-		'.fusion-mobile-menu-icons a:after'
+		'.fusion-mobile-menu-icons a:after',
 	);
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_toggle_color' ) );
 
@@ -4629,6 +4628,12 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'.fusion-mobile-menu-design-modern.fusion-header-v4 .fusion-mobile-sticky-nav-holder',
 			'.fusion-mobile-menu-design-modern.fusion-header-v5 .fusion-mobile-sticky-nav-holder',
 			'.fusion-mobile-menu-design-modern.fusion-header-v7 .fusion-mobile-sticky-nav-holder',
+			'.fusion-mobile-menu-design-flyout.fusion-header-v1 .fusion-mobile-sticky-nav-holder',
+			'.fusion-mobile-menu-design-flyout.fusion-header-v2 .fusion-mobile-sticky-nav-holder',
+			'.fusion-mobile-menu-design-flyout.fusion-header-v3 .fusion-mobile-sticky-nav-holder',
+			'.fusion-mobile-menu-design-flyout.fusion-header-v4 .fusion-mobile-sticky-nav-holder',
+			'.fusion-mobile-menu-design-flyout.fusion-header-v5 .fusion-mobile-sticky-nav-holder',
+			'.fusion-mobile-menu-design-flyout.fusion-header-v7 .fusion-mobile-sticky-nav-holder',
 		);
 		$css[ $mobile_menu_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['display'] = 'none';
 
@@ -4645,6 +4650,12 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'.fusion-is-sticky .fusion-mobile-menu-design-modern.fusion-header-v4.fusion-sticky-menu-1 .fusion-mobile-nav-holder',
 			'.fusion-is-sticky .fusion-mobile-menu-design-modern.fusion-header-v5.fusion-sticky-menu-1 .fusion-mobile-nav-holder',
 			'.fusion-is-sticky .fusion-mobile-menu-design-modern.fusion-header-v7.fusion-sticky-menu-1 .fusion-mobile-nav-holder',
+			'.fusion-is-sticky .fusion-mobile-menu-design-flyout.fusion-header-v1.fusion-sticky-menu-1 .fusion-mobile-nav-holder',
+			'.fusion-is-sticky .fusion-mobile-menu-design-flyout.fusion-header-v2.fusion-sticky-menu-1 .fusion-mobile-nav-holder',
+			'.fusion-is-sticky .fusion-mobile-menu-design-flyout.fusion-header-v3.fusion-sticky-menu-1 .fusion-mobile-nav-holder',
+			'.fusion-is-sticky .fusion-mobile-menu-design-flyout.fusion-header-v4.fusion-sticky-menu-1 .fusion-mobile-nav-holder',
+			'.fusion-is-sticky .fusion-mobile-menu-design-flyout.fusion-header-v5.fusion-sticky-menu-1 .fusion-mobile-nav-holder',
+			'.fusion-is-sticky .fusion-mobile-menu-design-flyout.fusion-header-v7.fusion-sticky-menu-1 .fusion-mobile-nav-holder',
 		);
 		$css[ $mobile_menu_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['display'] = 'none';
 
@@ -4654,6 +4665,11 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'.fusion-is-sticky .fusion-mobile-menu-design-classic.fusion-header-v3.fusion-sticky-menu-1 .fusion-mobile-sticky-nav-holder',
 			'.fusion-is-sticky .fusion-mobile-menu-design-classic.fusion-header-v4.fusion-sticky-menu-1 .fusion-mobile-sticky-nav-holder',
 			'.fusion-is-sticky .fusion-mobile-menu-design-classic.fusion-header-v5.fusion-sticky-menu-1 .fusion-mobile-sticky-nav-holder',
+			'.fusion-is-sticky .fusion-mobile-menu-design-flyout.fusion-header-v1.fusion-sticky-menu-1 .fusion-mobile-sticky-nav-holder',
+			'.fusion-is-sticky .fusion-mobile-menu-design-flyout.fusion-header-v2.fusion-sticky-menu-1 .fusion-mobile-sticky-nav-holder',
+			'.fusion-is-sticky .fusion-mobile-menu-design-flyout.fusion-header-v3.fusion-sticky-menu-1 .fusion-mobile-sticky-nav-holder',
+			'.fusion-is-sticky .fusion-mobile-menu-design-flyout.fusion-header-v4.fusion-sticky-menu-1 .fusion-mobile-sticky-nav-holder',
+			'.fusion-is-sticky .fusion-mobile-menu-design-flyout.fusion-header-v5.fusion-sticky-menu-1 .fusion-mobile-sticky-nav-holder',
 		);
 		$css[ $mobile_menu_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['display'] = 'block';
 
@@ -4738,7 +4754,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$content_min_media_query = '@media only screen and (min-width: ' . ( intval( $side_header_width ) + intval( Avada()->settings->get( 'content_break_point' ) ) ) . 'px)';
 
 		// # Layout
-    if ( Avada()->settings->get( 'smooth_scrolling' ) ) {
+		if ( Avada()->settings->get( 'smooth_scrolling' ) ) {
 			$css[ $content_min_media_query ]['.no-overflow-y body']['padding-right'] = '9px !important';
 			$css[ $content_min_media_query ]['.no-overflow-y .modal']['overflow-y'] = 'hidden';
 
@@ -4750,6 +4766,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 			$css[ $content_min_media_query ]['.no-overflow-y .fusion-sliding-bar-position-right:not(.open)']['right'] = '-291px';
 		}
+
+		$css[ $content_min_media_query ]['.ilightbox-holder.supportTouch div.ilightbox-container']['overflow'] = 'visible';
 
 		if ( ! Avada()->settings->get( 'breadcrumb_mobile' ) ) {
 			$css[ $content_media_query ]['.fusion-body .fusion-page-title-bar .fusion-breadcrumbs']['display'] = 'none';
@@ -7880,7 +7898,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			$css['global']['body.side-header-left #side-header']['margin-left'] = '-' . intval( Avada()->settings->get( 'side_header_width' ) ) . 'px';
 
 			if ( is_rtl() ) {
-				$css['global']['.rtl.side-header-left #boxed-wrapper #side-header']['margin-left'] = '-' . ( intval( Avada()->settings->get( 'side_header_width' ) ) / 2)  . 'px';
+				$css['global']['.rtl.side-header-left #boxed-wrapper #side-header']['margin-left'] = '-' . ( intval( Avada()->settings->get( 'side_header_width' ) ) / 2) . 'px';
 			}
 
 			$css['global']['.side-header-left .fusion-footer-parallax']['margin'] = '0 auto';

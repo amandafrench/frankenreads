@@ -316,11 +316,27 @@ function avada_options_section_header( $sections ) {
 							'language' => 'html',
 							'theme'    => 'chrome',
 						),
+						'class'       => 'fusion-gutter-and-or-and',
 						'required'    => array(
 							array(
 								'setting'  => 'header_v4_content',
 								'operator' => '=',
 								'value'    => 'Banner',
+							),
+							array(
+								'setting'  => 'header_layout',
+								'operator' => '=',
+								'value'    => 'v4',
+							),
+							array(
+								'setting'  => 'header_v4_content',
+								'operator' => '=',
+								'value'    => 'Banner',
+							),
+							array(
+								'setting'  => 'header_position',
+								'operator' => '!=',
+								'value'    => 'Top',
 							),
 						),
 					),

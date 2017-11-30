@@ -192,6 +192,7 @@ function fusion_fs_importer_replace_url( $matches ) {
 		foreach ( $matches as $key => $match ) {
 			if ( false !== strpos( $match, 'wp-content/uploads/sites/' ) ) {
 
+				// @codingStandardsIgnoreLine Squiz.PHP.DisallowMultipleAssignments.Found
 				if ( false !== $meta_arr = @unserialize( $match ) ) {
 					foreach ( $meta_arr as $k => $v ) {
 						if ( false !== strpos( $v, 'wp-content/uploads/sites/' ) ) {

@@ -697,14 +697,14 @@ if ( ! function_exists( 'avada_add_search_to_main_nav' ) ) {
 					$search_label = esc_attr__( 'Search', 'Avada' );
 
 					$items .= '<li class="fusion-custom-menu-item fusion-main-menu-search">';
-						$highlight_class = '';
-						if ( 'bar' === Avada()->settings->get( 'menu_highlight_style' ) ) {
-							$highlight_class = ' fusion-bar-highlight';
-						}
-						$items .= '<a class="fusion-main-menu-icon' . $highlight_class . '" href="#" aria-hidden="true" aria-label="' . $search_label . '" data-title="' . $search_label . '" title="' . $search_label . '"></a>';
-						$items .= '<div class="fusion-custom-menu-item-contents">';
-							$items .= get_search_form( false );
-						$items .= '</div>';
+					$highlight_class = '';
+					if ( 'bar' === Avada()->settings->get( 'menu_highlight_style' ) ) {
+						$highlight_class = ' fusion-bar-highlight';
+					}
+					$items .= '<a class="fusion-main-menu-icon' . $highlight_class . '" href="#" aria-hidden="true" aria-label="' . $search_label . '" data-title="' . $search_label . '" title="' . $search_label . '"></a>';
+					$items .= '<div class="fusion-custom-menu-item-contents">';
+					$items .= get_search_form( false );
+					$items .= '</div>';
 					$items .= '</li>';
 				}
 			}

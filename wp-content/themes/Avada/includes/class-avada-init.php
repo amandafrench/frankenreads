@@ -73,6 +73,8 @@ class Avada_Init {
 		if ( false !== get_option( 'scheduled_avada_fusionbuilder_migration_cleanups', false ) ) {
 			add_action( 'init', array( 'Fusion_Builder_Migrate', 'cleanup_backups' ) );
 		}
+
+		add_action( 'wp_footer', array( $this, 'add_wp_footer_scripts' ), 9999 );
 	}
 
 	/**
@@ -469,6 +471,24 @@ class Avada_Init {
 			}
 		}
 		return $query;
+	}
+
+	/**
+	 * Add scripts to the wp_footer action hook.
+	 *
+	 * @since 5.3.1
+	 * @access public
+	 * @return void.
+	 */
+	public function add_wp_footer_scripts() {
+		/**
+		 * Echo the scripts added to the "before </body>" field in Theme Options.
+		 * The 'space_body' setting is not sanitized.
+		 * In order to be able to take advantage of this,
+		 * a user would have to gain access to the database
+		 * in which case this is the least on your worries.
+		 */
+		echo Avada()->settings->get( 'space_body' ); // WPCS: XSS ok.
 	}
 }
 

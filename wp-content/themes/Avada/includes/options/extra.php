@@ -516,7 +516,7 @@ function avada_options_section_extra( $sections ) {
 					),
 					'grid_separator_style_type' => array(
 						'label'       => esc_html__( 'Grid Separator Style', 'Avada' ),
-						'description' => esc_html__( 'Controls the line style of grid separators.', 'Avada' ),
+						'description' => __( 'Controls the line style of grid separators. <strong>Note:</strong> For blog and portfolio grids at least one meta data field must be enabled and excerpt or full content must be shown in order that the separator will be displayed.', 'Avada' ),
 						'id'          => 'grid_separator_style_type',
 						'default'     => 'double|solid',
 						'type'        => 'select',
