@@ -63,7 +63,7 @@
 	fusionHistoryManager.turnOnTracking = function( ) {
 		window.tracking = 'on';
 
-		if ( "undefined" !== typeof FusionPageBuilderApp && FusionPageBuilderApp.pauseBuilder ) {
+		if ( 'undefined' !== typeof FusionPageBuilderApp && FusionPageBuilderApp.pauseBuilder ) {
 			fusionHistoryManager.turnOffTracking();
 		}
 	};

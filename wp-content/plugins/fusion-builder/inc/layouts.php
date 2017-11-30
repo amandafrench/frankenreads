@@ -254,10 +254,12 @@ function fusion_builder_display_library_content() {
 					<div class="fusion-builder-layouts-header-fields fusion-builder-layouts-header-element-fields"></div>
 					<div class="fusion-builder-layouts-header-info">
 						<h2><?php esc_attr_e( 'Saved Containers', 'fusion-builder' ); ?></h2>
+						<?php // @codingStandardsIgnoreStart ?>
 						<span class="fusion-builder-layout-info"><?php
 						/* translators: The "Fusion Documentation" link. */
 						printf( __( 'Manage your saved containers. Containers cannot be inserted from the library window. The globe icon indicates the element is a <a href="%s" target="_blank">global element</a>.', 'fusion-builder' ), 'https://theme-fusion.com/fb-doc/fusion-builder-global-elements/' );
 						?></span>
+						<?php // @codingStandardsIgnoreEnd ?>
 					</div>
 				</div>
 
@@ -328,10 +330,12 @@ function fusion_builder_display_library_content() {
 					<div class="fusion-builder-layouts-header-fields fusion-builder-layouts-header-element-fields"></div>
 					<div class="fusion-builder-layouts-header-info">
 						<h2><?php esc_attr_e( 'Saved Columns', 'fusion-builder' ); ?></h2>
+						<?php // @codingStandardsIgnoreStart ?>
 						<span class="fusion-builder-layout-info"><?php
 						/* translators: The "Fusion Documentation" link. */
 						printf( __( 'Manage your saved columns. Columns cannot be inserted from the library window and they must always go inside a container. The globe icon indicates the element is a <a href="%s" target="_blank">global element</a>.', 'fusion-builder' ), 'https://theme-fusion.com/fb-doc/fusion-builder-global-elements/' );
 						?></span>
+						<?php // @codingStandardsIgnoreEnd ?>
 					</div>
 				</div>
 
@@ -402,10 +406,12 @@ function fusion_builder_display_library_content() {
 					<div class="fusion-builder-layouts-header-fields fusion-builder-layouts-header-element-fields"></div>
 					<div class="fusion-builder-layouts-header-info">
 						<h2><?php esc_attr_e( 'Saved Elements', 'fusion-builder' ); ?></h2>
+						<?php // @codingStandardsIgnoreStart ?>
 						<span class="fusion-builder-layout-info"><?php
 						/* translators: The "Fusion Documentation" link. */
 						printf( __( 'Manage your saved elements. Elements cannot be inserted from the library window and they must always go inside a column. The globe icon indicates the element is a <a href="%s" target="_blank">global element</a>.', 'fusion-builder' ), 'https://theme-fusion.com/fb-doc/fusion-builder-global-elements/' );
 						?></span>
+						<?php // @codingStandardsIgnoreEnd ?>
 					</div>
 				</div>
 
@@ -841,8 +847,11 @@ function fusion_builder_update_layout() {
 
 	if ( isset( $_POST['fusion_layout_id'] ) && '' !== $_POST['fusion_layout_id'] ) {
 
-		$layout_id = $_POST['fusion_layout_id'];
-		$content   = isset( $_POST['fusion_layout_content'] ) ? $_POST['fusion_layout_content'] : '';
+		$layout_id  = $_POST['fusion_layout_id'];
+		$content    = isset( $_POST['fusion_layout_content'] ) ? $_POST['fusion_layout_content'] : '';
+
+		$to_replace = addslashes( ' fusion_global="' . $layout_id . '"' );
+		$content    = str_replace( $to_replace, '', $content );
 
 		// Filter nested globals.
 		$content   = apply_filters( 'content_save_pre', $content, $content, $layout_id );

@@ -67,8 +67,12 @@ function fusion_element_options_loop( $params ) {
 			<# }; #>
 
 			<# if ( param.type == 'raw_textarea' ) {
-				if ( FusionPageBuilderApp.base64Encode( FusionPageBuilderApp.base64Decode( option_value ) ) === option_value ) {
-					option_value = FusionPageBuilderApp.base64Decode( option_value );
+				try {
+					if ( FusionPageBuilderApp.base64Encode( FusionPageBuilderApp.base64Decode( option_value ) ) === option_value ) {
+						option_value = FusionPageBuilderApp.base64Decode( option_value );
+					}
+				} catch(e) {
+					console.warn( 'Something went wrong! Error triggered - ' + e );
 				}
 			} #>
 

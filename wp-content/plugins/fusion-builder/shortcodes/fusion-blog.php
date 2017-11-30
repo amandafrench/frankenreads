@@ -1222,40 +1222,29 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					$attr['style'] = 'background-color:' . $color_css . ';';
 
 					$element_color = Fusion_Color::new_color( $this->args['grid_element_color'] );
-					if ( 0 === $element_color->alpha || 'transparent' === $this->args['grid_element_color']  ) {
+					if ( 0 === $element_color->alpha || 'transparent' === $this->args['grid_element_color'] ) {
 						$attr['class'] .= ' fusion-masonary-is-transparent ';
 						$attr['style'] .= 'border:none;';
 					} else {
 						$attr['style'] .= 'border:1px solid ' . $this->args['grid_element_color'] . ';border-bottom-width:3px;';
 					}
-
-					if ( ! $this->args['meta_info_combined'] && $this->args['is_zero_excerpt'] && ! $this->args['show_title'] ) {
-						$attr['style'] .= ' display:none;';
-					}
-
 				} else if ( 'grid' === $this->args['layout'] ) {
 					$color = Fusion_Color::new_color( $this->args['grid_box_color'] );
 					$color_css = $color->to_css( 'rgba' );
 					$attr['style'] = 'background-color:' . $color_css . ';';
 
 					$element_color = Fusion_Color::new_color( $this->args['grid_element_color'] );
-					if ( 0 === $element_color->alpha || 'transparent' === $this->args['grid_element_color']  ) {
+					if ( 0 === $element_color->alpha || 'transparent' === $this->args['grid_element_color'] ) {
 						$attr['style'] .= 'border:none;';
 					} else {
 						$attr['style'] .= 'border:1px solid ' . $this->args['grid_element_color'] . ';border-bottom-width:3px;';
-					}
-
-					if ( ! $this->args['meta_info_combined'] && $this->args['is_zero_excerpt'] && ! $this->args['show_title'] ) {
-						$attr['style'] .= ' display:none;';
 					}
 				} else if ( 'timeline' === $this->args['layout'] ) {
 					$color = Fusion_Color::new_color( $this->args['grid_box_color'] );
 					$color_css = $color->to_css( 'rgba' );
 					$attr['style'] = 'background-color:' . $color_css . ';';
 				}
-
 				return $attr;
-
 			}
 
 			/**
@@ -2616,7 +2605,7 @@ function fusion_element_blog() {
 				array(
 					'type'        => 'select',
 					'heading'     => esc_attr__( 'Grid Separator Style', 'fusion-builder' ),
-					'description' => esc_attr__( 'Controls the line style of grid separators.', 'fusion-builder' ),
+					'description' => __( 'Controls the line style of grid separators. <strong>Note:</strong> At least one meta data field must be enabled and excerpt or full content must be shown in order that the separator will be displayed.', 'fusion-builder' ),
 					'param_name'  => 'grid_separator_style_type',
 					'value'       => array(
 						''              => esc_attr__( 'Default', 'fusion-builder' ),

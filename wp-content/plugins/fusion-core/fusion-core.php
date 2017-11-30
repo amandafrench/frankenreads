@@ -3,7 +3,7 @@
  * Plugin Name: Fusion Core
  * Plugin URI: http://theme-fusion.com
  * Description: ThemeFusion Core Plugin for ThemeFusion Themes
- * Version: 3.3.0
+ * Version: 3.3.1
  * Author: ThemeFusion
  * Author URI: http://theme-fusion.com
  *
@@ -33,7 +33,7 @@ if ( ! class_exists( 'FusionCore_Plugin' ) ) {
 		 * @since   1.0.0
 		 * @var  string
 		 */
-		const VERSION = '3.3.0';
+		const VERSION = '3.3.1';
 
 		/**
 		 * Instance of the class.
@@ -182,7 +182,7 @@ if ( ! class_exists( 'FusionCore_Plugin' ) ) {
 		 *
 		 * @access public
 		 * @since 3.1.6
-		 * @param string $select_slider_label Sets a "Add Slider" label at the beginning of the array.
+		 * @param string $add_select_slider_label Sets a "Add Slider" label at the beginning of the array.
 		 * @return array
 		 */
 		public static function get_fusion_sliders( $add_select_slider_label = '' ) {

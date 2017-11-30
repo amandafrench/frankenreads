@@ -380,7 +380,7 @@ if ( fusion_is_element_enabled( 'fusion_button' ) ) {
 				}
 
 				$this->args['link_attributes']  = ( isset( $this->args['link_attributes'] ) ) ? $this->args['link_attributes'] : '';
-				
+
 				// Add additional, custom link attributes correctly formatted to the anchor.
 				if ( $this->args['link_attributes'] ) {
 					$link_attributs = explode( ' ', $this->args['link_attributes'] );

@@ -1991,6 +1991,11 @@ function fusion_element_portfolio() {
 							'operator' => '!=',
 						),
 						array(
+							'element'  => 'text_layout',
+							'value'    => 'no_text',
+							'operator' => '!=',
+						),
+						array(
 							'element'  => 'content_length',
 							'value'    => 'no_text',
 							'operator' => '!=',
@@ -2017,6 +2022,11 @@ function fusion_element_portfolio() {
 						array(
 							'element'  => 'layout',
 							'value'    => 'carousel',
+							'operator' => '!=',
+						),
+						array(
+							'element'  => 'text_layout',
+							'value'    => 'no_text',
 							'operator' => '!=',
 						),
 						array(

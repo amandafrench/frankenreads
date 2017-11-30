@@ -199,9 +199,10 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 				}
 
 				$class = fusion_builder_visibility_atts( $hide_on_mobile, $class );
+				$class = ( $class ) ? ' ' . $class : '';
 
 				$html  = $style_tag;
-				$html .= '<div class="fusion-faq-shortcode ' . $class . '">';
+				$html .= '<div class="fusion-faq-shortcode' . $class . '">';
 
 				// Setup the filters.
 				$faq_terms = get_terms( 'faq_category' );
@@ -353,18 +354,6 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 			}
 
 			/**
-			 * Gets the query arguments.
-			 *
-			 * @access private
-			 * @since 1.0
-			 * @param array $term_slugs       The term slugs.
-			 * @param array $terms_to_exclude The terms we wish to exclude.
-			 */
-			private function get_query_args( $term_slugs, $terms_to_exclude ) {
-
-			}
-
-			/**
 			 * Adds settings to element options panel.
 			 *
 			 * @access public
@@ -502,20 +491,6 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 									),
 								),
 							),
-							'faq_accordian_inactive_color' => array(
-								'label'       => esc_html__( 'FAQ Item Inactive Box Color', 'fusion-builder' ),
-								'description' => esc_html__( 'Controls the color of the inactive FAQ box.', 'fusion-builder' ),
-								'id'          => 'faq_accordian_inactive_color',
-								'default'     => '#333333',
-								'type'        => 'color-alpha',
-							),
-							'faq_accordian_active_color' => array(
-								'label'       => esc_html__( 'FAQ Item Active Box Color', 'fusion-builder' ),
-								'description' => esc_html__( 'Controls the color of the active FAQ box.', 'fusion-builder' ),
-								'id'          => 'faq_accordian_active_color',
-								'default'     => $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) ),
-								'type'        => 'color-alpha',
-							),
 							'faq_accordion_icon_size' => array(
 								'label'       => esc_html__( 'FAQ Item Icon Size', 'fusion-builder' ),
 								'description' => esc_html__( 'Set the size of the icon.', 'fusion-builder' ),
@@ -539,6 +514,20 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 								'id'          => 'faq_accordion_icon_boxed',
 								'default'     => '1',
 								'type'        => 'switch',
+							),
+							'faq_accordian_inactive_color' => array(
+								'label'       => esc_html__( 'FAQ Item Icon Inactive Box Color', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the color of the inactive FAQ box.', 'fusion-builder' ),
+								'id'          => 'faq_accordian_inactive_color',
+								'default'     => '#333333',
+								'type'        => 'color-alpha',
+							),
+							'faq_accordian_active_color' => array(
+								'label'       => esc_html__( 'FAQ Item Icon Active Box Color', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the color of the active FAQ box.', 'fusion-builder' ),
+								'id'          => 'faq_accordian_active_color',
+								'default'     => $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) ),
+								'type'        => 'color-alpha',
 							),
 							'faq_accordion_icon_align' => array(
 								'label'       => esc_html__( 'FAQ Item Icon Alignment', 'fusion-builder' ),
@@ -564,10 +553,24 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 			 * @return array
 			 */
 			public function add_styling() {
-				global $wp_version, $content_media_query, $six_fourty_media_query, $three_twenty_six_fourty_media_query, $ipad_portrait_media_query, $fusion_settings, $fusion_library;
+				global $content_media_query, $fusion_settings, $fusion_library, $dynamic_css_helpers;
 
-				$css['global']['.fusion-filters .fusion-filter.fusion-active a']['color'] = $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) );
-				$css['global']['.fusion-filters .fusion-filter.fusion-active a']['border-color'] = $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) );
+				$faq_accordian_active_color = $fusion_library->sanitize->color( $fusion_settings->get( 'faq_accordian_active_color' ) );
+				$primary_color = $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) );
+
+				$css['global']['.fusion-faq-shortcode .fusion-accordian .panel-title a .fa-fusion-box']['background-color'] = $fusion_library->sanitize->color( $fusion_settings->get( 'faq_accordian_inactive_color' ) );
+				$css['global']['.fusion-faq-shortcode .fusion-accordian .panel-title .active .fa-fusion-box']['background-color'] = $faq_accordian_active_color;
+				$css['global']['.fusion-faq-shortcode .fusion-accordian .panel-title a:hover .fa-fusion-box']['background-color'] = $faq_accordian_active_color . ' !important';
+
+				$elements = array(
+					'.fusion-faq-shortcode .fusion-accordian .panel-title a:hover',
+					'.fusion-faq-shortcode .fusion-accordian .fusion-toggle-boxed-mode:hover .panel-title a',
+				);
+
+				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = $faq_accordian_active_color;
+
+				$css['global']['.fusion-filters .fusion-filter.fusion-active a']['color'] = $primary_color;
+				$css['global']['.fusion-filters .fusion-filter.fusion-active a']['border-color'] = $primary_color;
 
 				$css[ $content_media_query ]['.fusion-filters']['border-bottom'] = '0';
 				$css[ $content_media_query ]['.fusion-filter']['float']          = 'none';

@@ -191,6 +191,7 @@
 				$(wrap).on( 'click', '.insert-media', function( event ) {
 					var elem = $( event.currentTarget ),
 						editor = elem.data('editor'),
+						isTextBlock = elem.parents( '.fusion_text' ).length,
 						options = {
 							frame:	'post',
 							state:	'insert',
@@ -208,8 +209,14 @@
 					}
 
 					wp.media.editor.open( editor, options );
-					//hide insert from URL
-					$('.media-menu a:contains(Insert from URL)').remove();
+
+					// Hide insert from URL.
+					$('.media-menu a:contains(Insert from URL)').hide();
+					$( '.media-menu a:first-child' ).click();
+
+					if ( isTextBlock ) {
+						$('.media-menu a:contains(Insert from URL)').show();
+					}
 				});
 			}
 

@@ -351,6 +351,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 
 					$html .= '<input type="hidden" name="redirect_to" value="' . esc_url( $redirection_link ) . '" />';
 					$html .= '<input type="hidden" name="fusion_login_box" value="true" />';
+					$html .= wp_referer_field( false );
 
 				}
 				// Prevent hijacking of the form.

@@ -831,7 +831,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 					}
 				});
 
-				templateContent  = fusionBuilderGetContent( 'content' ); // jshint ignore:line
+				templateContent  = fusionBuilderGetContent( 'content', true ); // jshint ignore:line
 				templateName     = $( '#new_template_name' ).val();
 				layoutsContainer = $( '#fusion-builder-layouts-templates .fusion-page-layouts' );
 				currentPostID    = $( '#fusion_builder_main_container' ).data( 'post-id' );
@@ -1940,12 +1940,13 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 				// Loop through all global elements.
 				$( 'div[class^="fusion-global-"],div[class*=" fusion-global-"]' ).each( function() {
+					var globalLayoutID = $( this ).attr( 'fusion-global-layout' );
 
 					// Check if multiple instances exist.
-					if ( 1 < $mainContainer.find( '[fusion-global-layout="' + $( this ).attr( 'fusion-global-layout' ) + '"]' ).length ) {
+					if ( 1 < $mainContainer.find( '[fusion-global-layout="' + globalLayoutID + '"]' ).length ) {
 
 						// Loop through all multiple instances.
-						$( '[fusion-global-layout="' + $( this ).attr( 'fusion-global-layout' ) + '"]' ).each( function() {
+						$( '[fusion-global-layout="' + globalLayoutID + '"]' ).each( function() {
 							childChanged = false;
 
 							// Check for child element changes.
@@ -1963,11 +1964,11 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 								return model.get( 'cid' ) === elementCID;
 							} );
 
-							if ( ( 0 < _.keys( element.changed ).length || true === childChanged ) &&  -1 === $.inArray( element.cid, updated ) ) {
+							if ( ( 0 < _.keys( element.changed ).length || true === childChanged ) &&  -1 === $.inArray( globalLayoutID, updated ) ) {
 
 								// Sync models / Update layout template.
-								FusionPageBuilderApp.updateGlobalLayouts( this, element, $( this ).attr( 'fusion-global-layout' ) );
-								updated.push( element.cid );
+								FusionPageBuilderApp.updateGlobalLayouts( this, element, globalLayoutID );
+								updated.push( globalLayoutID );
 							}
 						} );
 					}
@@ -2220,15 +2221,15 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 							columnCID   = $thisColumn.data( 'cid' ),
 							columnView  = FusionPageBuilderViewManager.getView( columnCID );
 
-						shortcode += columnView.getColumnContent( $thisColumn );
+							shortcode += columnView.getColumnContent( $thisColumn );
 
-		        } );
+						} );
 
-		        shortcode += '[/fusion_builder_row]';
+						shortcode += '[/fusion_builder_row]';
 
-		      } );
+					} );
 
-		      shortcode += '[/fusion_builder_container]';
+					shortcode += '[/fusion_builder_container]';
 				}
 
 				// Update layout in DB.

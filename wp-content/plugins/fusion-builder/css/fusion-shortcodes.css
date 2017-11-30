@@ -4875,6 +4875,7 @@ ul.fusion-checklist .circle-yes {
 }
 .fusion-counters-box .fusion-counter-box-icon-top .counter-box-icon {
   display: block;
+  float: none;
   margin: 0;
 }
 .fusion-dropcap {
@@ -5494,8 +5495,10 @@ html[xmlns] .flexslider .slides {
   text-align: center;
 }
 .fusion-fa-align-center .fontawesome-icon {
-  float: none;
   margin: 0;
+}
+.fusion-body .fusion-fa-align-center .fontawesome-icon {
+  float: none;
 }
 .fusion-login-box .fusion-login-caption {
   margin-bottom: 20px;

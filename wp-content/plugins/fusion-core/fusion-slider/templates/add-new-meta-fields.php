@@ -96,7 +96,7 @@
 <div class="form-field">
   <label for="term_meta[orderby]"><?php esc_attr_e( 'Order By', 'fusion-core' ); ?></label>
   <select name="term_meta[orderby]" id="term_meta[orderby]">
-  		<option value="date"><?php esc_attr_e( 'Date', 'fusion-core' ); ?></option>
+		<option value="date"><?php esc_attr_e( 'Date', 'fusion-core' ); ?></option>
 		<option value="ID"><?php esc_attr_e( 'ID', 'fusion-core' ); ?></option>
 		<option value="title"><?php esc_attr_e( 'Title', 'fusion-core' ); ?></option>
 		<option value="modified"><?php esc_attr_e( 'Modified', 'fusion-core' ); ?></option>

@@ -347,7 +347,7 @@ if ( 'no_text' !== $portfolio_text_layout ) {
 									?>
 									<?php if ( 'one' === $portfolio_columns && 'grid' === $portfolio_layout_setting ) : ?>
 										<?php $button_span_class = ( 'yes' === $fusion_settings->get( 'button_span' ) ) ? ' fusion-portfolio-buttons-full' : ''; ?>
-										<div class="fusion-portfolio-buttons<?php echo $button_span_class; ?>">
+										<div class="fusion-portfolio-buttons<?php echo esc_attr( $button_span_class ); ?>">
 											<?php
 											/**
 											 * Render "Learn More" button.

@@ -495,7 +495,7 @@ function fusion_element_google_map() {
 				array(
 					'type'        => 'radio_button_set',
 					'heading'     => esc_attr__( 'Scrollwheel on Map', 'fusion-builder' ),
-					'description' => esc_attr__( "Enable zooming using a mouse's scroll wheel.", 'fusion-builder' ),
+					'description' => esc_attr__( "Enable zooming using a mouse's scroll wheel. Use Cmd/Ctrl key + scroll to zoom.", 'fusion-builder' ),
 					'param_name'  => 'scrollwheel',
 					'value'       => array(
 						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),

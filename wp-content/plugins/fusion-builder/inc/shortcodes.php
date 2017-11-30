@@ -28,6 +28,7 @@ $fusion_builder_multi_elements = array();
  * @param array $module The element we're loading.
  */
 function fusion_builder_map( $module ) {
+
 	global $fusion_builder_elements, $fusion_builder_enabled_elements, $fusion_builder_multi_elements, $all_fusion_builder_elements, $fusion_settings;
 	if ( ! $fusion_settings ) {
 		$fusion_settings = Fusion_Settings::get_instance();
@@ -36,7 +37,8 @@ function fusion_builder_map( $module ) {
 	$shortcode    = $module['shortcode'];
 	$ignored_atts = array();
 
-	if ( isset( $module['params'] ) ) {
+	// Should only ever be run on backend, for performance reasons.
+	if ( is_admin() && isset( $module['params'] ) ) {
 
 		// Create an array of descriptions.
 		foreach ( $module['params'] as $key => $param ) {

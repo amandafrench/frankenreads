@@ -639,8 +639,8 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 			$is_sticky_header_transparent = 0;
 			$c_page_id = $fusion_library->get_page_id();
 			if ( 1 > Fusion_Color::new_color( $fusion_settings->get( 'header_sticky_bg_color' ) )->alpha ) {
-				 $is_sticky_header_transparent = 1;
-			 }
+				$is_sticky_header_transparent = 1;
+			}
 
 			Fusion_Dynamic_JS::enqueue_script(
 				'fusion-container',
@@ -656,7 +656,7 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 				array(
 					'content_break_point' => intval( $fusion_settings->get( 'content_break_point' ) ),
 					'container_hundred_percent_height_mobile' => intval( $fusion_settings->get( 'container_hundred_percent_height_mobile' ) ),
-					'is_sticky_header_transparent' => $is_sticky_header_transparent
+					'is_sticky_header_transparent' => $is_sticky_header_transparent,
 				)
 			);
 		}
@@ -703,7 +703,7 @@ function fusion_builder_add_section() {
 				array(
 					'type'        => 'radio_button_set',
 					'heading'     => esc_attr__( '100% Height', 'fusion-builder' ),
-					'description' => sprintf( __( 'Select if the container should be fixed to 100%% height of the viewport. Larger content that is taller than the screen height will be cut off, this option works best with minimal content. <strong>Important:</strong> Mobile devices are even shorter in height so this option can be disabled on mobile in <a href="%s" target="_blank" rel="noopener noreferrer">theme options</a> while still being active on desktop. When this option is used, the mobile visibility settings are disabled.', 'fusion-builder' ), $fusion_settings->get_setting_link( 'container_hundred_percent_height_mobile' ) ),
+					'description' => sprintf( __( 'Select if the container should be fixed to 100%% height of the viewport. Larger content that is taller than the screen height will be cut off, this option works best with minimal content. <strong>Important:</strong> Mobile devices are even shorter in height so this option can be disabled on mobile in <a href="%s" target="_blank" rel="noopener noreferrer">theme options</a> while still being active on desktop.', 'fusion-builder' ), $fusion_settings->get_setting_link( 'container_hundred_percent_height_mobile' ) ),
 					'param_name'  => 'hundred_percent_height',
 					'value'       => array(
 						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
@@ -715,7 +715,7 @@ function fusion_builder_add_section() {
 				array(
 					'type'        => 'radio_button_set',
 					'heading'     => esc_attr__( 'Enable 100% Height Scroll', 'fusion-builder' ),
-					'description' => esc_attr__( 'Select to add this container to a collection of 100% height containers that share scrolling navigation.', 'fusion-builder' ),
+					'description' => __( 'Select to add this container to a collection of 100% height containers that share scrolling navigation. <strong>Important:</strong> When this option is used, the mobile visibility settings are disabled.', 'fusion-builder' ),
 					'param_name'  => 'hundred_percent_height_scroll',
 					'value'       => array(
 						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
@@ -777,7 +777,13 @@ function fusion_builder_add_section() {
 					'value'       => fusion_builder_visibility_options( 'full' ),
 					'default'     => fusion_builder_default_visibility( 'array' ),
 					'description' => esc_attr__( 'Choose to show or hide the section on small, medium or large screens. You can choose more than one at a time.', 'fusion-builder' ),
+					'or'          => true,
 					'dependency'  => array(
+						array(
+							'element'  => 'hundred_percent_height',
+							'value'    => 'yes',
+							'operator' => '!=',
+						),
 						array(
 							'element'  => 'hundred_percent_height_scroll',
 							'value'    => 'yes',

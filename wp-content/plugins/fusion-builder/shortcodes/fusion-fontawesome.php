@@ -81,7 +81,7 @@ if ( fusion_is_element_enabled( 'fusion_fontawesome' ) ) {
 
 				// Check if an old icon shortcode is used, where no margin option is present, or if all margins were left empty.
 				$defaults['legacy_icon'] = false;
-				if ( ! isset( $args['margin_left' ] ) || ( '' === $margin_top && '' === $margin_right && '' === $margin_bottom && '' === $margin_left ) ) {
+				if ( ! isset( $args['margin_left'] ) || ( '' === $margin_top && '' === $margin_right && '' === $margin_bottom && '' === $margin_left ) ) {
 					$defaults['legacy_icon'] = true;
 				}
 
@@ -133,12 +133,12 @@ if ( fusion_is_element_enabled( 'fusion_fontawesome' ) ) {
 				}
 
 				// Legacy icon, where no margin option was present: use the old default ,argin calcs.
-				if (  $this->args['legacy_icon'] ) {
+				if ( $this->args['legacy_icon'] ) {
 					$icon_margin  = $this->args['font_size'] * 0.5;
 
-					if ( 'left'=== $this->args['alignment'] ) {
+					if ( 'left' === $this->args['alignment'] ) {
 						$icon_margin_position = 'right';
-					} else if ( 'right'=== $this->args['alignment'] ) {
+					} elseif ( 'right' === $this->args['alignment'] ) {
 						$icon_margin_position = 'left';
 					} else {
 						$icon_margin_position = ( is_rtl() ) ? 'left' : 'right';
@@ -147,7 +147,6 @@ if ( fusion_is_element_enabled( 'fusion_fontawesome' ) ) {
 					if ( 'center' !== $this->args['alignment'] ) {
 						$attr['style'] .= 'margin-' . $icon_margin_position . ':' . $icon_margin . 'px;';
 					}
-
 				} else {
 
 					// New icon with dedicated margin option.
@@ -378,7 +377,7 @@ function fusion_element_font_awesome() {
 						'margin_bottom' => '',
 						'margin_left'   => '',
 					),
-				),				
+				),
 				array(
 					'type'        => 'radio_button_set',
 					'heading'     => esc_attr__( 'Icon in Circle', 'fusion-builder' ),

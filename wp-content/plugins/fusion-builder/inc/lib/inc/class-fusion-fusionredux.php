@@ -716,7 +716,7 @@ class Fusion_FusionRedux {
 
 			$option_type = esc_attr__( 'Page', 'fusion-builder' );
 			// @codingStandardsIgnoreLine
-			if ( in_array( $field['id'], $builder_soft_dependencies ) ) {
+			if ( array_key_exists( $field['id'], $builder_soft_dependencies ) ) {
 				$option_type = esc_attr__( 'Builder', 'fusion-builder' );
 			}
 
