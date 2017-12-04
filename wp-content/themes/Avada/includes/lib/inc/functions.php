@@ -801,8 +801,6 @@ if ( ! function_exists( 'fusion_pagination' ) ) {
 	function fusion_pagination( $pages = '', $range = 2, $current_query = '', $infinite_scroll = false ) {
 		global $paged, $wp_query;
 
-		$showitems = ( $range * 2 ) + 1;
-
 		if ( '' === $current_query ) {
 			$paged = ( empty( $paged ) ) ? 1 : $paged;
 		} else {
@@ -819,7 +817,6 @@ if ( ! function_exists( 'fusion_pagination' ) ) {
 		}
 		$pages    = intval( $pages );
 		$paged    = intval( $paged );
-		$page_max = min( $pages, $showitems );
 		$output   = '';
 
 		if ( 1 !== $pages ) {
@@ -837,13 +834,29 @@ if ( ! function_exists( 'fusion_pagination' ) ) {
 				$output .= '</a>';
 			}
 
-			for ( $i = 1; $i <= $page_max; $i++ ) {
-				if ( 1 != $pages && ( ! ( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
-					if ( $paged === $i ) {
-						$output .= '<span class="current">' . absint( $i ) . '</span>';
-					} else {
-						$output .= '<a href="' . esc_url( get_pagenum_link( $i ) ) . '" class="inactive">' . absint( $i ) . '</a>';
-					}
+			$start = $paged - 1;
+			$end = $paged + 1;
+			if ( 0 === $paged - 1 ) {
+				$start = 1;
+
+				if ( $pages >= $paged + 2 ) {
+					$end = $paged + 2;
+				}
+			}
+
+			if ( $pages < $paged + 1 ) {
+				$end = $pages;
+
+				if ( 0 < $paged - 2 ) {
+					$start = $paged - 2;
+				}
+			}
+
+			for ( $i = $start; $i <= $end; $i++ ) {
+				if ( $paged === $i ) {
+					$output .= '<span class="current">' . absint( $i ) . '</span>';
+				} else {
+					$output .= '<a href="' . esc_url( get_pagenum_link( $i ) ) . '" class="inactive">' . absint( $i ) . '</a>';
 				}
 			}
 

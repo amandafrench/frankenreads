@@ -68,7 +68,9 @@ class Avada_Importer_Data {
 			return;
 		}
 
-		mb_internal_encoding( 'UTF-8' );
+		if ( function_exists( 'mb_internal_encoding' ) ) {
+			mb_internal_encoding( 'UTF-8' );
+		}
 
 		// Set the demo's $demo property.
 		$this->demo = $demo;

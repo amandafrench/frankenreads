@@ -530,8 +530,6 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 			 * @param object $current_query The query.
 			 */
 			public function pagination( $pages = '', $range = 2, $current_query = '' ) {
-
-				$showitems = ( $range * 2 ) + 1;
 				$output    = '';
 
 				if ( '' == $current_query ) {
@@ -570,17 +568,32 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 						$output .= '<span class="page-text">' . esc_html__( 'Previous', 'fusion-builder' ) . '</span>';
 						$output .= '</a>';
 					}
-					$for_max = min( $pages, $showitems );
 
-					for ( $i = 1; $i <= $for_max; $i++ ) {
-						if ( 1 != $pages && ( ! ( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
-							if ( $paged === $i ) {
-								$output .= '<span class="current">' . $i . '</span>';
-							} else {
-								$output .= '<a href="' . get_pagenum_link( $i ) . '" class="inactive">' . $i . '</a>';
-							}
-						}
-					}
+					$start = $paged - 1;
+		 			$end = $paged + 1;
+		 			if ( 0 === $paged - 1 ) {
+		 				$start = 1;
+
+		 				if ( $pages >= $paged + 2 ) {
+		 					$end = $paged + 2;
+		 				}
+		 			}
+
+		 			if ( $pages < $paged + 1 ) {
+		 				$end = $pages;
+
+		 				if ( 0 < $paged - 2 ) {
+		 					$start = $paged - 2;
+		 				}
+		 			}
+
+		 			for ( $i = $start; $i <= $end; $i++ ) {
+		 				if ( $paged === $i ) {
+		 					$output .= '<span class="current">' . absint( $i ) . '</span>';
+		 				} else {
+		 					$output .= '<a href="' . esc_url( get_pagenum_link( $i ) ) . '" class="inactive">' . absint( $i ) . '</a>';
+		 				}
+		 			}
 
 					if ( $paged < $pages ) {
 						$output .= '<a class="pagination-next" href="' . get_pagenum_link( $paged + 1 ) . '">';
