@@ -2633,7 +2633,7 @@ function miniorange_openid_support(){
 	<div class="mo_openid_support_layout">
 
 			<h3>Support</h3>
-			<p>Need any help? Just send us a query so we can help you.</p>
+			<p>Need any help? Use this support form to send us a genuine query. We will reach out to you.</p>
 			<form method="post" action="">
 				<input type="hidden" name="option" value="mo_openid_contact_us_query_option" />
 				<table class="mo_openid_settings_table">

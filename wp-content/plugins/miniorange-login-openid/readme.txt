@@ -4,7 +4,7 @@ Donate link: http://miniorange.com
 Tags: social login, social, facebook, twitter, login
 Requires at least: 2.0.2
 Tested up to: 4.9
-Stable tag: 5.1.10
+Stable tag: 5.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -144,6 +144,12 @@ Please email us at info@miniorange.com. You can also submit your query from the 
 
 
 == Changelog ==
+= 5.2.1 =
+*	Fixed Issue related to Custom User Role with Admin capabilities
+
+= 5.2 =
+*	Minor Change
+
 = 5.1.10 =
 *	Compatibility with 4.9
 
@@ -389,6 +395,12 @@ Please email us at info@miniorange.com. You can also submit your query from the 
 * First version of Social Login, Social Sharing plugin.
 
 == Upgrade Notice ==
+= 5.2.1 =
+*	Fixed Issue related to Custom User Role with Admin capabilities
+
+= 5.2 =
+*	Minor Change
+
 = 5.1.10 =
 *	Compatibility with 4.9
 

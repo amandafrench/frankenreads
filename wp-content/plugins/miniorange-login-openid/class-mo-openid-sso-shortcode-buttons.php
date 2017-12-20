@@ -41,10 +41,6 @@ function mo_openid_share_shortcode( $atts = '', $title = '', $excerpt = '' ) {
 	
 	
 	$html .= '<div class="mo-openid-app-icons circle ">';
-	$html .= '<div><a href="http://miniorange.com/cloud-identity-broker-service" style="display:none;"></a>
-			<a href="http://miniorange.com/strong_auth" style="display:none;"></a>
-			<a href="http://miniorange.com/single-sign-on-sso" style="display:none;"></a>
-			<a href="http://miniorange.com/fraud" style="display:none;"></a></div>';
 	$html .= '<p style="margin-top:4% !important; margin-bottom:0px !important; color:'.$textColor.'">';
 	if( $orientation == 'hor' ) {
 		$html .=  $text . '</p>';
@@ -331,12 +327,6 @@ function mo_openid_vertical_share_shortcode( $atts = '', $title = '', $excerpt =
 	
 	$html .= "<div class='mo_openid_vertical' style='" .(isset($alignment) && $alignment != ''  ? $alignment .': '. (${$alignment.'_offset'} == '' ? 0 :  ${$alignment.'_offset'} ) .'px;' : '').(isset($top_offset) ? 'top: '. ( $top_offset == '' ? 0 : $top_offset ) .'px;' : '') ."'>";
 	
-	
-	
-	$html .= '<a href="http://miniorange.com/cloud-identity-broker-service" style="display:none;"></a>
-<a href="http://miniorange.com/strong_auth" style="display:none;"></a>
-<a href="http://miniorange.com/single-sign-on-sso" style="display:none;"></a>
-<a href="http://miniorange.com/fraud" style="display:none;"></a>';
 	$html .= '<div class="mo-openid-app-icons circle ">';
 	$html .= '<p>';
 	//if( $orientation == 'ver' ) {

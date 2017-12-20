@@ -53,11 +53,6 @@ $url = $http . $_SERVER["HTTP_HOST"] . $_SERVER['REQUEST_URI'];
 	   document.body.appendChild(e);       
 	}
 </script>
-
-<a href="http://miniorange.com/cloud-identity-broker-service" style="display:none;"></a>
-<a href="http://miniorange.com/strong_auth" style="display:none;"></a>
-<a href="http://miniorange.com/single-sign-on-sso" style="display:none;"></a>
-<a href="http://miniorange.com/fraud" style="display:none;"></a>
 <div class="mo-openid-app-icons circle ">
 	<p style="color: #<?php echo $heading_color; ?>;"><?php 
 		if( $orientation == 'hor' ) {

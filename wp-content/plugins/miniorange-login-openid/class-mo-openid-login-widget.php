@@ -56,13 +56,7 @@ class mo_openid_login_wid extends WP_Widget {
 
 			if( $appsConfigured ) {
 				$this->mo_openid_load_login_script();
-			?>
-			
-				<a href="http://miniorange.com/cloud-identity-broker-service" style="display:none;"></a>
-				<a href="http://miniorange.com/strong_auth" style="display:none;"></a>
-				<a href="http://miniorange.com/single-sign-on-sso" style="display:none;"></a>
-				<a href="http://miniorange.com/fraud" style="display:none;"></a>
-			
+			?>			
 				 <div class="mo-openid-app-icons">
 
 				 <p style="color:#<?php echo $customTextColor ?>"><?php   echo $customText ?>
@@ -345,12 +339,7 @@ class mo_openid_login_wid extends WP_Widget {
 
 			if( $appsConfigured ) {
 				$this->mo_openid_load_login_script();
-			$html .= "<a href='http://miniorange.com/cloud-identity-broker-service' style='display:none;'></a>
-				<a href='http://miniorange.com/strong_auth' style='display:none;'></a>
-				<a href='http://miniorange.com/single-sign-on-sso' style='display:none;'></a>
-				<a href='http://miniorange.com/fraud' style='display:none;'></a>
-			
-				 <div class='mo-openid-app-icons'>
+			$html .= "<div class='mo-openid-app-icons'>
 
 				 
 				 <p style='color:#".$customTextColor."'> $customText</p>";
