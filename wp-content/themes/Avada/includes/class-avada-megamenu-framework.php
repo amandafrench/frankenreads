@@ -61,11 +61,11 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 
 			// Add the mega menu custom fields to the menu fields.
 			if ( Avada()->settings->get( 'disable_megamenu' ) ) {
-				add_filter( 'avada_menu_options',  array( $this, 'add_megamenu_fields' ), 20, 4 );
+				add_filter( 'avada_menu_options', array( $this, 'add_megamenu_fields' ), 20, 4 );
 			}
 
 			// Add the menu arrow highlights.
-			add_filter( 'avada_menu_arrow_hightlight',  array( $this, 'add_menu_arrow_highlight' ), 10, 2 );
+			add_filter( 'avada_menu_arrow_hightlight', array( $this, 'add_menu_arrow_highlight' ), 10, 2 );
 		}
 
 		/**

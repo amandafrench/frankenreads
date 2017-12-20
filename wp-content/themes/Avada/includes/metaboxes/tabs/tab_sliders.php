@@ -69,7 +69,7 @@ if ( method_exists( 'FusionCore_Plugin', 'get_fusion_sliders' ) ) {
 
 	$this->select(
 		'wooslider',
-		esc_attr__( 'Select Fusion Slider', 'Avada' ) ,
+		esc_attr__( 'Select Fusion Slider', 'Avada' ),
 		$slides_array,
 		esc_html__( 'Select the unique name of the slider.', 'Avada' ),
 		array(

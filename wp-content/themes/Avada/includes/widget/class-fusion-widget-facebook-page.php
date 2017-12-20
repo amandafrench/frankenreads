@@ -99,7 +99,7 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 						$container_width = <?php echo esc_attr( $widget_width ); ?>;
 					}
 
-					if ( $container_width != jQuery('.<?php echo esc_attr( $args['widget_id'] ); ?> .fb-page' ).data( 'width' ) ) {
+					if ( $container_width != jQuery('.<?php echo esc_attr( $args['widget_id'] ); ?> .fb-page' ).data( 'width' ) && $container_width != jQuery('.<?php echo esc_attr( $args['widget_id'] ); ?> .fb-page' ).data( 'original-width' ) ) {
 						jQuery('.<?php echo esc_attr( $args['widget_id'] ); ?> .fb-page' ).attr( 'data-width', $container_width );
 						if ( 'undefined' !== typeof FB ) {
 							FB.XFBML.parse();
@@ -118,7 +118,7 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 			</script>
 
 			<div class="fb-like-box-container <?php echo esc_attr( $args['widget_id'] ); ?>" id="fb-root">
-				<div class="fb-page" data-href="<?php echo esc_url_raw( $page_url ); ?>" data-width="<?php echo esc_attr( $widget_width ); ?>" data-adapt-container-width="true" data-small-header="<?php echo esc_attr( $small_header ); ?>" data-height="<?php echo esc_attr( $height ); ?>" data-hide-cover="<?php echo esc_attr( $show_header ); ?>" data-show-facepile="<?php echo esc_attr( $show_faces ); ?>" data-tabs="<?php echo esc_attr( $tabs ); ?>"></div>
+				<div class="fb-page" data-href="<?php echo esc_url_raw( $page_url ); ?>" data-original-width="<?php echo esc_attr( $widget_width ); ?>" data-width="<?php echo esc_attr( $widget_width ); ?>" data-adapt-container-width="true" data-small-header="<?php echo esc_attr( $small_header ); ?>" data-height="<?php echo esc_attr( $height ); ?>" data-hide-cover="<?php echo esc_attr( $show_header ); ?>" data-show-facepile="<?php echo esc_attr( $show_faces ); ?>" data-tabs="<?php echo esc_attr( $tabs ); ?>"></div>
 			</div>
 		<?php
 		endif;

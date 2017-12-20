@@ -42,9 +42,11 @@ class PyreThemeFrameworkMetaboxes {
 	}
 
 	/**
-	 * Load backend scripts
+	 * Load backend scripts.
+	 *
+	 * @access public
 	 */
-	function admin_script_loader() {
+	public function admin_script_loader() {
 
 		$screen = get_current_screen();
 		if ( isset( $screen->post_type ) && in_array( $screen->post_type, apply_filters( 'avada_hide_page_options', array() ) ) ) {
@@ -519,7 +521,7 @@ class PyreThemeFrameworkMetaboxes {
 			$default = key( $options_reset );
 		}
 
-		$value = ( '' == get_post_meta( $post->ID, 'pyre_' . $id, true )  ) ? $default : get_post_meta( $post->ID, 'pyre_' . $id, true );
+		$value = ( '' == get_post_meta( $post->ID, 'pyre_' . $id, true ) ) ? $default : get_post_meta( $post->ID, 'pyre_' . $id, true );
 		?>
 
 		<div class="pyre_metabox_field">

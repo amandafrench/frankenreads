@@ -95,8 +95,11 @@ class Avada_Social_Icon {
 
 		if ( 'custom' === substr( $icon_options['social_network'], 0, 7 ) ) {
 			$icon_options['class'] .= 'custom ';
-			$tooltip = str_replace( 'custom', '', $args['custom_title'] );
-			// $icon_options['social_network'] = strtolower( $tooltip );
+			$tooltip = 'Custom';
+
+			if ( isset( $args['custom_title'] ) ) {
+				$tooltip = str_replace( 'custom', '', $args['custom_title'] );
+			}
 		} else {
 			$tooltip = ucfirst( $icon_options['social_network'] );
 		}

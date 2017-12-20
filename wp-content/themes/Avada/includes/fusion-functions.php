@@ -166,7 +166,7 @@ if ( ! function_exists( 'fusion_strip_unit' ) ) {
 		$unit_length = strlen( $unit_to_strip );
 
 		if ( $value_length > $unit_length &&
-			 substr_compare( $value, $unit_to_strip, $unit_length * (-1), $unit_length ) === 0
+			 substr_compare( $value, $unit_to_strip, $unit_length * ( -1 ), $unit_length ) === 0
 		) {
 			return substr( $value, 0, $value_length - $unit_length );
 		} else {
@@ -316,7 +316,7 @@ if ( ! function_exists( 'fusion_color_luminance' ) ) {
 		for ( $i = 0; $i < 3; $i++ ) {
 			$dec = hexdec( substr( $hex, $i * 2, 2 ) );
 			$dec = min( max( 0, $dec + $dec * $percent ), 255 );
-			$new_hex .= str_pad( dechex( $dec ) , 2, 0, STR_PAD_LEFT );
+			$new_hex .= str_pad( dechex( $dec ), 2, 0, STR_PAD_LEFT );
 		}
 
 		return $new_hex;
@@ -373,7 +373,7 @@ if ( ! function_exists( 'fusion_rgb2hsl' ) ) {
 
 		$red         = round( ( hexdec( substr( $hex_color, 0, $add ) ) * $add_on + $aa ) / 255, 6 );
 		$green     = round( ( hexdec( substr( $hex_color, $add, $add ) ) * $add_on + $aa ) / 255, 6 );
-		$blue       = round( ( hexdec( substr( $hex_color, ( $add + $add ) , $add ) ) * $add_on + $aa ) / 255, 6 );
+		$blue       = round( ( hexdec( substr( $hex_color, ( $add + $add ), $add ) ) * $add_on + $aa ) / 255, 6 );
 
 		$hsl_color  = array(
 			'hue' => 0,
@@ -447,7 +447,7 @@ if ( ! function_exists( 'fusion_get_attachment_data_by_url' ) ) {
 	function fusion_get_attachment_data_by_url( $image_url, $logo_field = '' ) {
 		global $wpdb;
 
-		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url ) );
+		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid=%s;", $image_url ) );
 
 		if ( $attachment ) {
 			return wp_get_attachment_metadata( $attachment[0] );

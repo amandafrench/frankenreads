@@ -16,7 +16,7 @@ global $wpdb;
 $ls_table_name = $wpdb->prefix . 'layerslider';
 
 if ( $wpdb->get_var( "SHOW TABLES LIKE '$ls_table_name'" ) === $ls_table_name ) {
-	$ls_slider     = $wpdb->get_row( "SELECT * FROM $ls_table_name WHERE id = " . (int) $id . ' ORDER BY date_c DESC LIMIT 1' , ARRAY_A );
+	$ls_slider     = $wpdb->get_row( "SELECT * FROM $ls_table_name WHERE id = " . (int) $id . ' ORDER BY date_c DESC LIMIT 1', ARRAY_A );
 	$ls_slider     = json_decode( $ls_slider['data'], true );
 	?>
 	<style type="text/css">

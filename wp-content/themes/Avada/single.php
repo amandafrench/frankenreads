@@ -123,6 +123,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php if ( '' === Avada()->settings->get( 'blog_post_meta_position' ) || 'below_article' === Avada()->settings->get( 'blog_post_meta_position' ) ) : ?>
 					<?php echo avada_render_post_metadata( 'single' ); // WPCS: XSS ok. ?>
 				<?php endif; ?>
+				<?php do_action( 'avada_before_additional_post_content' ); ?>
 				<?php avada_render_social_sharing(); ?>
 				<?php $author_info = get_post_meta( $post->ID, 'pyre_author_info', true ); ?>
 				<?php if ( ( Avada()->settings->get( 'author_info' ) && 'no' !== $author_info ) || ( ! Avada()->settings->get( 'author_info' ) && 'yes' === $author_info ) ) : ?>
@@ -149,6 +150,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php wp_reset_postdata(); ?>
 					<?php comments_template(); ?>
 				<?php endif; ?>
+				<?php do_action( 'avada_after_additional_post_content' ); ?>
 			<?php endif; ?>
 		</article>
 	<?php endwhile; ?>

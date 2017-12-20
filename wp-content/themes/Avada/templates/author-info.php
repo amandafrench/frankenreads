@@ -36,7 +36,7 @@ if ( empty( $author_description ) ) {
 		<?php echo $author_avatar; // WPCS: XSS ok. ?>
 	</div>
 	<div class="fusion-author-info">
-		<h3 class="fusion-author-title<?php echo ( Avada()->settings->get( 'disable_date_rich_snippet_pages' ) && Avada()->settings->get( 'disable_rich_snippet_author' )  ) ? ' vcard' : ''; ?>">
+		<h3 class="fusion-author-title<?php echo ( Avada()->settings->get( 'disable_date_rich_snippet_pages' ) && Avada()->settings->get( 'disable_rich_snippet_author' ) ) ? ' vcard' : ''; ?>">
 			<?php
 			printf(
 				esc_html__( 'About %s', 'Avada' ),

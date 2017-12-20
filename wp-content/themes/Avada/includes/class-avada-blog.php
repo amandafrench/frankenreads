@@ -141,7 +141,7 @@ class Avada_Blog {
 			array_pop( $content );
 		}
 
-		$content = implode( ' ',$content );
+		$content = implode( ' ', $content );
 		$content = preg_replace( '~(?:\[/?)[^/\]]+/?\]~s', '', $content ); // Strip shortcodes and keep the content.
 		$content = str_replace( ']]>', ']]&gt;', $content );
 		$content = strip_tags( $content );
@@ -219,13 +219,13 @@ class Avada_Blog {
 				if ( $limit < count( $content ) ) {
 
 					array_pop( $content );
-					$content = implode( ' ',$content );
+					$content = implode( ' ', $content );
 					if ( Avada()->settings->get( 'disable_excerpts' ) ) {
 						$content .= ( 0 != $limit ) ? $readmore : '';
 					}
 				} else {
 
-					$content = implode( ' ',$content );
+					$content = implode( ' ', $content );
 
 				}
 			}

@@ -460,7 +460,7 @@ class Avada_Template {
 				<div class="comment-box">
 					<div class="comment-author meta">
 						<strong><?php echo get_comment_author_link(); ?></strong>
-						<?php printf( esc_attr__( '%1$s at %2$s', 'Avada' ), get_comment_date(),  get_comment_time() ); ?><?php edit_comment_link( __( ' - Edit', 'Avada' ),'  ','' ); ?>
+						<?php printf( esc_attr__( '%1$s at %2$s', 'Avada' ), get_comment_date(), get_comment_time() ); ?><?php edit_comment_link( __( ' - Edit', 'Avada' ), '  ', '' ); ?>
 										<?php
 										comment_reply_link(
 											array_merge(

@@ -454,6 +454,7 @@ class Fusion_Product_Registration {
 							<p style="width:100%;max-width:100%;">
 								<?php
 								printf(
+									/* translators: The product name and whether it's a theme or plugin. */
 									esc_attr__( 'The %1$s %2$s is bundled in %3$s and no registration is required for it. Updates will be provided from %3$s. If however you have purchased %1$s separately and wish to enter a registration token for it in order to receive %2$s updates regardless of %3$s, please check this checkbox.', 'Avada' ),
 									esc_attr( $this->args['name'] ),
 									esc_attr( $this->args['type'] ),
@@ -502,6 +503,7 @@ class Fusion_Product_Registration {
 						<?php if ( 36 === strlen( $token ) && 4 === substr_count( $token, '-' ) ) : ?>
 							<?php esc_attr_e( 'Registration could not be completed because the value entered above is a purchase code. A token key is needed to register. Please read the directions below to find out how to create a token key to complete registration.', 'Avada' ); ?>
 						<?php else : ?>
+							<?php /* translators: The product name for the license. */ ?>
 							<?php printf( esc_attr__( 'Invalid token, or corresponding Envato account does not have %s purchased.', 'Avada' ), esc_attr( $this->args['name'] ) ); ?>
 						<?php endif; ?>
 					</p>

@@ -55,6 +55,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$nav_typography_elements = array(
 		'.side-nav li a',
 		'.fusion-main-menu > ul > li > a',
+		'.fusion-vertical-menu-widget ul.menu li a',
 	);
 	$nav_typography_elements = $dynamic_css_helpers->implode( $nav_typography_elements );
 
@@ -236,15 +237,10 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
 
 	$elements = array(
-		'#slidingbar-area ul li a:hover',
-		'#slidingbar-area .widget li.recentcomments:hover:before',
-		'#slidingbar-area .fusion-accordian .panel-title a:hover',
 		'.project-content .project-info .project-info-box a:hover',
 		'#main .post h2 a:hover',
 		'#main .about-author .title a:hover',
 		'.fusion-footer-widget-area a:hover',
-		'.slidingbar-area a:hover',
-		'.slidingbar-area .widget li a:hover:before',
 		'.fusion-copyright-notice a:hover',
 		'.fusion-content-widget-area .widget_categories li a:hover',
 		'.fusion-content-widget-area .widget li a:hover',
@@ -271,7 +267,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.star-rating span:before',
 		'#wrapper .fusion-widget-area .current_page_item > a',
 		'#wrapper .fusion-widget-area .current-menu-item > a',
-		'#wrapper .fusion-vertical-menu-widget .menu li.current_page_item > a',
+		'#wrapper .fusion-vertical-menu-widget .menu li.current_page_ancestor > a',
 		'#wrapper .fusion-vertical-menu-widget .menu li.current-menu-item > a',
 		'#wrapper .fusion-widget-area .current_page_item > a:before',
 		'#wrapper .fusion-widget-area .current-menu-item > a:before',
@@ -451,6 +447,33 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		if ( 'bottom' === Avada()->settings->get( 'slidingbar_position' ) && ! Avada()->settings->get( 'slidingbar_sticky' ) ) {
 			$css['global']['body']['position']   = 'relative';
 		}
+
+		$elements = array(
+			'.slidingbar-area a:hover',
+			'#slidingbar-area ul li a:hover',
+			'#slidingbar-area .widget li.recentcomments:hover:before',
+			'#slidingbar-area .fusion-accordian .panel-title a:hover',
+			'.slidingbar-area .widget li a:hover:before',
+			'#slidingbar-area .jtwt .jtwt_tweet a:hover',
+			'#slidingbar-area .widget_nav_menu .current-menu-item > a',
+			'#slidingbar-area .widget_nav_menu .current-menu-item > a:before',
+		);
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_link_color_hover' ) );
+
+		$elements = array(
+			'.slidingbar-area .tagcloud a:hover',
+			'#slidingbar-area .search-table .search-button input[type="submit"]:hover',
+		);
+
+		if ( class_exists( 'WooCommerce' ) ) {
+			$elements[] = '.slidingbar-area .price_slider_wrapper .ui-slider .ui-slider-range';
+			$elements[] = '.slidingbar-area .price_slider_wrapper .price_slider_amount button';
+			$elements[] = '.slidingbar-area .price_slider_wrapper .price_slider_amount button:hover';
+		}
+
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_link_color_hover' ) );
+
+		$css['global']['#slidingbar-area .fusion-tabs-widget .tab-holder .tabs li.active a']['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_link_color_hover' ) );
 	}
 
 	$elements = array(
@@ -996,16 +1019,18 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = $text_color;
 
 	// Portfolio element load more button.
-	$css['global']['.fusion-load-more-button.fusion-portfolio-button']['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'portfolio_load_more_posts_button_bg_color' ) );
-	$css['global']['.fusion-load-more-button.fusion-portfolio-button:hover']['background-color'] = Fusion_Color::new_color( Avada()->settings->get( 'portfolio_load_more_posts_button_bg_color' ) )->get_new( 'alpha', '0.8' )->to_css( 'rgba' );
+	if ( class_exists( 'FusionSC_Portfolio' ) ) {
+		$css['global']['.fusion-load-more-button.fusion-portfolio-button']['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'portfolio_load_more_posts_button_bg_color' ) );
+		$css['global']['.fusion-load-more-button.fusion-portfolio-button:hover']['background-color'] = Fusion_Color::new_color( Avada()->settings->get( 'portfolio_load_more_posts_button_bg_color' ) )->get_new( 'alpha', '0.8' )->to_css( 'rgba' );
 
-	$button_brightness = fusion_calc_color_brightness( Fusion_Sanitize::color( Avada()->settings->get( 'portfolio_load_more_posts_button_bg_color' ) ) );
-	$text_color        = ( 140 < $button_brightness ) ? '#333' : '#fff';
-	$elements = array(
-		'.fusion-load-more-button.fusion-portfolio-button',
-		'.fusion-load-more-button.fusion-portfolio-button:hover',
-	);
-	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = $text_color;
+		$button_brightness = fusion_calc_color_brightness( Fusion_Sanitize::color( Avada()->settings->get( 'portfolio_load_more_posts_button_bg_color' ) ) );
+		$text_color        = ( 140 < $button_brightness ) ? '#333' : '#fff';
+		$elements = array(
+			'.fusion-load-more-button.fusion-portfolio-button',
+			'.fusion-load-more-button.fusion-portfolio-button:hover',
+		);
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = $text_color;
+	}
 
 	// Portfolio Archive load more button.
 	$css['global']['.fusion-portfolio-archive .fusion-load-more-button.fusion-portfolio-button']['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'portfolio_archive_load_more_posts_button_bg_color' ) );
@@ -1046,6 +1071,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'#slidingbar-area .widget_layered_nav li',
 			'#slidingbar-area .widget_product_categories li',
 			'#slidingbar-area .product_list_widget li',
+			'#slidingbar-area .price_slider_wrapper',
 		);
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-bottom-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_divider_color' ) );
 
@@ -2406,7 +2432,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$menu_font_size = Fusion_Sanitize::size( Avada()->settings->get( 'nav_typography', 'font-size' ) );
 	$unit = preg_replace( '/\d+/u', '', $menu_font_size );
 	$description_font_size = ( intval( $menu_font_size ) * 0.8 ) . $unit;
-	$css['global']['.fusion-main-menu > ul > li > a .fusion-menu-description']['font-size'] = $description_font_size ;
+	$css['global']['.fusion-main-menu > ul > li > a .fusion-menu-description']['font-size'] = $description_font_size;
 	$css['global']['.fusion-main-menu > ul > li > a .fusion-menu-description']['font-family'] = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'body_typography' ) );
 	$css['global']['.fusion-main-menu > ul > li > a .fusion-menu-description']['font-weight'] = intval( Avada()->settings->get( 'body_typography', 'font-weight' ) );
 	$css['global']['.fusion-main-menu > ul > li > a .fusion-menu-description']['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'body_typography', 'letter-spacing' ), 'px' );
@@ -2920,9 +2946,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.fusion-header-has-flyout-menu .fusion-flyout-menu-icons .fusion-flyout-search-toggle',
 		'.fusion-header-has-flyout-menu .fusion-flyout-menu-icons .fusion-flyout-menu-toggle',
 	);
-	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['padding'] = sprintf( '0 %spx',  round( Avada()->settings->get( 'flyout_nav_icons_padding' ) / 2 ) );
+	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['padding'] = sprintf( '0 %spx', round( Avada()->settings->get( 'flyout_nav_icons_padding' ) / 2 ) );
 
-	$css['global']['.fusion-header-has-flyout-menu .fusion-flyout-menu-icons']['margin'] = sprintf( '0 -%spx',  Avada()->settings->get( 'nav_padding' ) / 2 );
+	$css['global']['.fusion-header-has-flyout-menu .fusion-flyout-menu-icons']['margin'] = sprintf( '0 -%spx', Avada()->settings->get( 'nav_padding' ) / 2 );
 
 	$css['global']['.fusion-header-has-flyout-menu .fusion-flyout-menu-icons .fusion-icon:before']['color'] = Avada()->settings->get( 'flyout_menu_icon_color' );
 	$css['global']['.fusion-header-has-flyout-menu .fusion-flyout-menu-icons .fusion-icon:hover:before']['color'] = Avada()->settings->get( 'flyout_menu_icon_hover_color' );
@@ -3964,7 +3990,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			}
 		}
 
-		$css[ $side_header_min_media_query ]['.fusion-icon-only-link .menu-text']['display'] = 'none';
+		$css[ $side_header_min_media_query ]['.fusion-icon-only-link .menu-title']['display'] = 'none';
 		$css[ $side_header_min_media_query ]['.fusion-main-menu > ul > li > a.fusion-icon-only-link > .fusion-megamenu-icon']['padding'] = '0px';
 
 		if ( 'Top' !== Avada()->settings->get( 'header_position' ) && Avada()->settings->get( 'logo_background' ) ) {
@@ -4078,10 +4104,6 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css[ $side_header_media_query ]['#side-header.fusion-mobile-menu-design-modern .fusion-main-menu-container .fusion-mobile-nav-holder > ul']['border-right']  = '0';
 		$css[ $side_header_media_query ]['#side-header.fusion-mobile-menu-design-modern .fusion-main-menu-container .fusion-mobile-nav-holder > ul']['border-left']   = '0';
 		$css[ $side_header_media_query ]['#side-header.fusion-mobile-menu-design-modern .fusion-main-menu-container .fusion-mobile-nav-holder > ul']['border-bottom'] = '0';
-
-		$css[ $side_header_media_query ]['#side-header.fusion-is-sticky.fusion-sticky-menu-1 .fusion-mobile-nav-holder']['display'] = 'none';
-
-		$css[ $side_header_media_query ]['#side-header.fusion-is-sticky.fusion-sticky-menu-1 .fusion-mobile-sticky-nav-holder']['display'] = 'none';
 
 		$css[ $side_header_min_media_query ]['body.layout-boxed-mode.side-header-right #side-header']['position'] = 'absolute';
 		$css[ $side_header_min_media_query ]['body.layout-boxed-mode.side-header-right #side-header']['top']      = '0';
@@ -4209,7 +4231,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 				|| ( '' != get_post_meta( $c_page_id, 'pyre_header_bg_opacity', true ) && 1 > get_post_meta( $c_page_id, 'pyre_header_bg_opacity', true ) )
 				|| ( ( is_archive() || Avada_Helper::bbp_is_topic_tag() ) && Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'header_bg_color' ) && 1 > Fusion_Color::new_color( Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'header_bg_color' ) )->alpha )
 			)
-			&& ( ( ( Avada_Helper::bbp_is_topic_tag() || is_archive() ) && '' !== Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'header_bg_color' ) ) || ( ( class_exists( 'WooCommerce' ) && is_shop() ) || ( ( is_tax( array( 'product_cat', 'product_tag', 'portfolio_skills' ) ) && '' !== Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'header_bg_color' )  ) || ( ! is_archive() && ! Avada_Helper::bbp_is_topic_tag() ) ) ) )
+			&& ( ( ( Avada_Helper::bbp_is_topic_tag() || is_archive() ) && '' !== Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'header_bg_color' ) ) || ( ( class_exists( 'WooCommerce' ) && is_shop() ) || ( ( is_tax( array( 'product_cat', 'product_tag', 'portfolio_skills' ) ) && '' !== Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'header_bg_color' ) ) || ( ! is_archive() && ! Avada_Helper::bbp_is_topic_tag() ) ) ) )
 			&& ( ! is_search() && ! is_404() && ! is_author() )
 		) {
 
@@ -7122,7 +7144,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['max-width'] = Fusion_Sanitize::size( Avada()->settings->get( 'site_width' ) );
 		}
 
-		$css['global']['.wrapper_blank']['display'] = 'block';
+		$css['global']['.fusion-body #wrapper.wrapper_blank']['display'] = 'block';
 
 		if ( Avada()->settings->get( 'responsive' ) && $site_width_percent ) {
 
@@ -7303,7 +7325,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['margin']    = '0 auto';
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['max-width'] = '100%';
 
-		$css['global']['.wrapper_blank']['display'] = 'block';
+		$css['global']['.fusion-body #wrapper.wrapper_blank']['display'] = 'block';
 
 	} // End if().
 
@@ -7898,7 +7920,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			$css['global']['body.side-header-left #side-header']['margin-left'] = '-' . intval( Avada()->settings->get( 'side_header_width' ) ) . 'px';
 
 			if ( is_rtl() ) {
-				$css['global']['.rtl.side-header-left #boxed-wrapper #side-header']['margin-left'] = '-' . ( intval( Avada()->settings->get( 'side_header_width' ) ) / 2) . 'px';
+				$css['global']['.rtl.side-header-left #boxed-wrapper #side-header']['margin-left'] = '-' . ( intval( Avada()->settings->get( 'side_header_width' ) ) / 2 ) . 'px';
 			}
 
 			$css['global']['.side-header-left .fusion-footer-parallax']['margin'] = '0 auto';

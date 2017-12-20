@@ -78,8 +78,10 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 	 * @access public
 	 */
 	public function custom_option_import_code() {
+		$option_name = Fusion_Settings::get_option_name();
+		$nonce_name  = 'fusionredux_ajax_nonce' . $option_name;
 		// @codingStandardsIgnoreLine WordPress.VIP.ValidatedSanitizedInput.InputNotSanitized
-		if ( ! isset( $_REQUEST['security'] ) || ! wp_verify_nonce( wp_unslash( $_REQUEST['security'] ), 'fusionredux_ajax_noncefusion_options' ) ) {
+		if ( ! isset( $_REQUEST['security'] ) || ! wp_verify_nonce( wp_unslash( $_REQUEST['security'] ), $nonce_name ) ) {
 			echo json_encode(
 				array(
 					'status' => 'failed',
@@ -92,11 +94,11 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 		// @codingStandardsIgnoreLine
 		if ( ! empty( $_POST['data'] ) ) {
 			$values        = array();
-			$fusionredux   = FusionReduxFrameworkInstances::get_instance( 'fusion_options' );
+			$fusionredux   = FusionReduxFrameworkInstances::get_instance( $option_name );
 
 			$values = $fusionredux->fields;
 			$values = wp_parse_args(
-				get_option( Fusion_Settings::get_option_name() ),
+				get_option( $option_name ),
 				$values
 			);
 

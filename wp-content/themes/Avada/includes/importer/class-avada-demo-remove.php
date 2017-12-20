@@ -376,7 +376,7 @@ class Avada_Demo_Remove {
 		}
 
 		if ( $this->content_tracker->get( 'show_on_front' ) ) {
-			update_option( 'show_on_front',  $this->content_tracker->get( 'show_on_front' ) );
+			update_option( 'show_on_front', $this->content_tracker->get( 'show_on_front' ) );
 		}
 
 		if ( $this->content_tracker->get( 'nav_menu_locations' ) ) {

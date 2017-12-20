@@ -90,7 +90,7 @@ if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 					$slider_page_id = $object_id;
 					avada_slider( $slider_page_id, true );
 				}
-				if ( ( 'publish' === get_post_status( $slider_page_id ) && ! post_password_required() && ! is_archive() && ! Avada_Helper::bbp_is_topic_tag() ) || ( 'publish' === get_post_status( $slider_page_id ) && ! post_password_required() && ( class_exists( 'WooCommerce' ) && is_shop() ) ) || ( current_user_can( 'read_private_pages' ) && in_array( get_post_status( $slider_page_id ), array( 'private', 'draft', 'pending' ) ) ) ) {
+				if ( ( 'publish' === get_post_status( $slider_page_id ) && ! post_password_required() && ! is_archive() && ! Avada_Helper::bbp_is_topic_tag() ) || ( 'publish' === get_post_status( $slider_page_id ) && ! post_password_required() && ( class_exists( 'WooCommerce' ) && is_shop() ) ) || ( current_user_can( 'read_private_pages' ) && in_array( get_post_status( $slider_page_id ), array( 'private', 'draft', 'pending', 'future' ) ) ) ) {
 					avada_slider( $slider_page_id, ( is_archive() || Avada_Helper::bbp_is_topic_tag() ) && ! ( class_exists( 'WooCommerce' ) && is_shop() ) );
 				}
 			}
@@ -126,8 +126,8 @@ if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 			$address_pin_animation = ( Avada()->settings->get( 'gmap_pin_animation' ) ) ? 'yes' : 'no';
 			?>
 			<div id="fusion-gmap-container">
-				<?php // @codingStandardsIgnoreLine
-				echo Avada()->google_map->render_map(
+				<?php
+				echo Avada()->google_map->render_map( // WPCS: XSS ok.
 					array(
 						'address'                  => esc_html( Avada()->settings->get( 'gmap_address' ) ),
 						'type'                     => esc_attr( Avada()->settings->get( 'gmap_type' ) ),

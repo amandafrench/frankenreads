@@ -577,12 +577,12 @@ if ( ! function_exists( 'fusion_add_woo_cart_to_widget_html' ) ) {
 	 */
 	function fusion_add_woo_cart_to_widget_html() {
 		$items               = '';
-		$cart_contents_count = WC()->cart->get_cart_contents_count();
 
-		if ( class_exists( 'WooCommerce' ) ) {
-			$counter = '';
-			$class   = '';
-			$items   = '';
+		if ( class_exists( 'WooCommerce' ) && ! is_admin() ) {
+			$counter             = '';
+			$class               = '';
+			$items               = '';
+			$cart_contents_count = WC()->cart->get_cart_contents_count();
 
 			if ( Avada()->settings->get( 'woocommerce_cart_counter' ) ) {
 				$counter = '<span class="fusion-widget-cart-number">' . $cart_contents_count . '</span>';
@@ -1301,6 +1301,18 @@ if ( ! function_exists( 'avada_main_menu' ) ) {
 
 			$main_menu = wp_nav_menu( $main_menu_args );
 
+			if ( has_nav_menu( 'sticky_navigation' ) ) {
+				$sticky_menu_args = array(
+					'theme_location' => 'sticky_navigation',
+					'menu_id'        => 'menu-main-menu-1',
+					'items_wrap'     => '<ul role="menubar" id="%1$s" class="%2$s">%3$s</ul>',
+					'walker'         => new Avada_Nav_Walker(),
+					'item_spacing'   => 'discard',
+				);
+				$sticky_menu_args = wp_parse_args( $sticky_menu_args, $main_menu_args );
+				$main_menu       .= wp_nav_menu( $sticky_menu_args );
+			}
+
 			return $main_menu;
 
 		} else {
@@ -1552,7 +1564,7 @@ if ( ! function_exists( 'avada_get_available_sliders_array' ) ) {
 			$table_name = $wpdb->prefix . 'layerslider';
 
 			// Get sliders.
-			$sliders = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `$table_name` WHERE flag_hidden = '%d' AND flag_deleted = '%d' ORDER BY date_c ASC", '0', '0' ) ); // No cache ok; WPCS: unprepared SQL OK.
+			$sliders = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `$table_name` WHERE flag_hidden = %d AND flag_deleted = %d ORDER BY date_c ASC", '0', '0' ) ); // No cache ok; WPCS: unprepared SQL OK.
 
 			if ( ! empty( $sliders ) ) {
 				foreach ( $sliders as $key => $item ) {

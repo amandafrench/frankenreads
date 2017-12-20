@@ -24,7 +24,7 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 	 *
 	 * @access public
 	 */
-	function __construct() {
+	public function __construct() {
 
 		$widget_ops  = array(
 			'classname'   => 'avada_vertical_menu',
@@ -47,7 +47,7 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 	 *                        'before_widget', and 'after_widget'.
 	 * @param array $instance The settings for the particular instance of the widget.
 	 */
-	function widget( $args, $instance ) {
+	public function widget( $args, $instance ) {
 
 		extract( $args );
 
@@ -116,9 +116,24 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 			$html    .= '<ul class="menu">';
 			$html    .= ( is_page( $parent_page ) ) ? '<li class="current_page_item">' : '<li>';
 			$html    .= '<a href="' . get_permalink( $parent_page ) . '" title="' . esc_html__( 'Back to Parent Page', 'Avada' ) . '">' . get_the_title( $parent_page ) . '</a></li>';
-			$html    .= wp_list_pages( 'title_li=&child_of=' . $parent_page . '&echo=0' );
 
-			$html    .= '</nav></ul>';
+			$link_before = '<span class="arrow"></span><span class="link-text">';
+			$link_after = '</span>';
+
+			if ( ( 'left' === $instance['layout'] && ! is_rtl() ) || ( 'right' === $instance['layout'] && is_rtl() ) ) {
+				$link_before = '<span class="link-text">';
+				$link_after = '</span><span class="arrow"></span>';
+			}
+
+			$html    .= wp_list_pages( array(
+				'title_li'    => '',
+				'child_of'    => $parent_page,
+				'link_before' => $link_before,
+				'link_after' => $link_after,
+				'echo'        => 0,
+			));
+
+			$html    .= '</ul></nav>';
 
 			echo $html; // WPCS: XSS ok.
 
@@ -141,7 +156,7 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 	 * @param array $old_instance Old settings for this instance.
 	 * @return array Settings to save or bool false to cancel saving.
 	 */
-	function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ) {
 
 		$instance = $old_instance;
 
@@ -164,7 +179,7 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 	 * @access public
 	 * @return array Array of all pages which have got chidlren.
 	 */
-	function get_pages_with_children() {
+	public function get_pages_with_children() {
 		$args = array(
 			'parent'      => -1,
 			'post_type'   => 'page',
@@ -191,7 +206,7 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 	 * @param array $element Current array element.
 	 * @return bool whether got parent or not.
 	 */
-	function exclude_parents( $element ) {
+	public function exclude_parents( $element ) {
 		 return isset( $element->post_parent ) && 0 !== $element->post_parent;
 	}
 
@@ -201,7 +216,7 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 	 * @access public
 	 * @return void
 	 */
-	function enqueue_script() {
+	public function enqueue_script() {
 
 		$js_folder_suffix = '/assets/min/js';
 		$js_folder_url    = Avada::$template_dir_url . $js_folder_suffix;
@@ -224,7 +239,7 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 	 * @access public
 	 * @param array $instance Current settings.
 	 */
-	function form( $instance ) {
+	public function form( $instance ) {
 
 		$defaults = array(
 			'title'         => '',

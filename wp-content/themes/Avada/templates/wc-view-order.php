@@ -82,7 +82,7 @@ $show_purchase_note = $order->has_status( apply_filters( 'woocommerce_purchase_n
 								}
 
 								if ( $product && ! $is_visible ) {
-									echo apply_filters( 'woocommerce_order_item_name', $product_name, $item,  $is_visible ); // WPCS: XSS ok.
+									echo apply_filters( 'woocommerce_order_item_name', $product_name, $item, $is_visible ); // WPCS: XSS ok.
 								} else {
 									echo apply_filters( 'woocommerce_order_item_name', sprintf( '<a href="%s">%s</a>', $product_permalink, $product_name ), $item, $is_visible ); // WPCS: XSS ok.
 								}

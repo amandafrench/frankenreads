@@ -411,7 +411,6 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 					if ( $thumbnail_data ) {
 						$this->menu_megamenu_thumbnail  = '<img src="' . $thumbnail_data['url'] . '" alt="' . $thumbnail_data['alt'] . '" title="' . $thumbnail_data['title'] . '">';
 					} else {
-
 						$this->menu_megamenu_thumbnail  = '<img src="' . $avada_meta['thumbnail'] . '">';
 					}
 				} else {
@@ -624,6 +623,8 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 					$title = '<span class="fusion-button-text-left">' . $title . '</span>';
 				} elseif ( false !== strpos( $icon, 'button-icon-divider-right' ) ) {
 					$title = '<span class="fusion-button-text-right">' . $title . '</span>';
+				} else if ( 'icononly' === $this->menu_title_only && 0 === $depth ) {
+					$title = '<span class="menu-title">' . $title . '</span>';
 				}
 
 				// SVG creation for menu item hover/active.
@@ -728,7 +729,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 		 * @param int    $depth Depth of page. Not Used.
 		 * @param  array  $args Not used.
 		 */
-		function end_el( &$output, $item, $depth = 0, $args = array() ) {
+		public function end_el( &$output, $item, $depth = 0, $args = array() ) {
 			$output .= '</li>';
 
 			if ( null === $item->menu_item_parent ) {

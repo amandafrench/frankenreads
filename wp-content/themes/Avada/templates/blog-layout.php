@@ -388,7 +388,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 	</div>
 	<?php endif; ?>
 <?php // Get the pagination. ?>
-<?php echo fusion_pagination( '', 2 ); // WPCS: XSS ok. ?>
+<?php echo fusion_pagination( '', apply_filters( 'fusion_pagination_size', 1 ) ); // WPCS: XSS ok. ?>
 </div>
 <?php
 

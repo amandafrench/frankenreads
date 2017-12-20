@@ -359,10 +359,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 						if ( null === $php_version ) {
 							$message = esc_attr__( 'PHP Version could not be detected.', 'Avada' );
 						} else {
-							if ( version_compare( $php_version, '7.0.0' ) >= 0 ) {
+							if ( version_compare( $php_version, '7.2' ) >= 0 ) {
 								$message = $php_version;
 							} else {
-								$message = sprintf( esc_attr__( '%1$s. WordPress recomendation: 7.0.0 or above. See %2$s for details.', 'Avada' ), $php_version, '<a href="https://wordpress.org/about/requirements/" target="_blank">WordPress Requirements</a>' );
+								$message = sprintf( esc_attr__( '%1$s. WordPress recomendation: 7.2 or above. See %2$s for details.', 'Avada' ), $php_version, '<a href="https://wordpress.org/about/requirements/" target="_blank">WordPress Requirements</a>' );
 							}
 						}
 						echo $message; // WPCS: XSS ok.
@@ -618,7 +618,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						// Link the plugin name to the plugin url if available.
 						if ( ! empty( $plugin_data['PluginURI'] ) ) {
-							$plugin_name = '<a href="' . esc_url( $plugin_data['PluginURI'] ) . '" title="' . __( 'Visit plugin homepage' , 'Avada' ) . '">' . esc_html( $plugin_data['Name'] ) . '</a>';
+							$plugin_name = '<a href="' . esc_url( $plugin_data['PluginURI'] ) . '" title="' . __( 'Visit plugin homepage', 'Avada' ) . '">' . esc_html( $plugin_data['Name'] ) . '</a>';
 						} else {
 							$plugin_name = esc_html( $plugin_data['Name'] );
 						}
@@ -640,7 +640,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</table>
 	</div>
 	<div class="avada-thanks">
-		<hr />
 		<p class="description"><?php esc_attr_e( 'Thank you for choosing Avada. We are honored and are fully dedicated to making your experience perfect.', 'Avada' ); ?></p>
 	</div>
 </div>

@@ -66,8 +66,7 @@ $avada_contact = new Avada_Contact();
 			<form action="" method="post" class="avada-contact-form">
 				<?php if ( 'above' == Avada()->settings->get( 'contact_comment_position' ) ) : ?>
 					<div id="comment-textarea">
-						<?php // @codingStandardsIgnoreLine ?>
-						<textarea name="msg" id="comment" cols="39" rows="4" tabindex="4" class="textarea-comment" placeholder="<?php esc_html_e( 'Message', 'Avada' ); ?>" aria-label="<?php esc_html_e( 'Message', 'Avada' ); ?>"><?php echo ( isset( $_POST['msg'] ) && ! empty( $_POST['msg'] ) ) ? esc_textarea( sanitize_text_field( wp_unslash( $_POST['msg'] ) ) ) : ''; ?></textarea>
+						<textarea name="msg" id="comment" cols="39" rows="4" tabindex="4" class="textarea-comment" placeholder="<?php esc_html_e( 'Message', 'Avada' ); ?>" aria-label="<?php esc_html_e( 'Message', 'Avada' ); ?>"><?php echo ( isset( $_POST['msg'] ) && ! empty( $_POST['msg'] ) ) ? esc_textarea( sanitize_text_field( wp_unslash( $_POST['msg'] ) ) ) : ''; // WPCS: CSRF ok. ?></textarea>
 					</div>
 				<?php endif; ?>
 
@@ -79,8 +78,7 @@ $avada_contact = new Avada_Contact();
 
 				<?php if ( 'above' != Avada()->settings->get( 'contact_comment_position' ) ) : ?>
 					<div id="comment-textarea" class="fusion-contact-comment-below">
-						<?php // @codingStandardsIgnoreLine ?>
-						<textarea name="msg" id="comment" cols="39" rows="4" class="textarea-comment" placeholder="<?php esc_html_e( 'Message', 'Avada' ); ?>" aria-label="<?php esc_html_e( 'Message', 'Avada' ); ?>"><?php echo ( isset( $_POST['msg'] ) && ! empty( $_POST['msg'] ) ) ? esc_textarea( sanitize_text_field( wp_unslash( $_POST['msg'] ) ) ) : ''; ?></textarea>
+						<textarea name="msg" id="comment" cols="39" rows="4" class="textarea-comment" placeholder="<?php esc_html_e( 'Message', 'Avada' ); ?>" aria-label="<?php esc_html_e( 'Message', 'Avada' ); ?>"><?php echo ( isset( $_POST['msg'] ) && ! empty( $_POST['msg'] ) ) ? esc_textarea( sanitize_text_field( wp_unslash( $_POST['msg'] ) ) ) : ''; // WPCS: CSRF ok. ?></textarea>
 					</div>
 				<?php endif; ?>
 

@@ -148,7 +148,7 @@ if ( ! isset( $post_type_options['global'] ) || ( isset( $post_type_options['glo
 } else {
 
 	$message = isset( $post_type_options['global'] )
-			 ? sprintf( __( '<strong>IMPORTANT NOTE:</strong> The <a href="%s" target="_blank">Activate Global Sidebars</a> option is turned on which removes the ability to choose individual sidebars. Turn off that option to assign unique sidebars.', 'Avada' ),  Avada()->settings->get_setting_link( $post_type_options['global'] ) )
+			 ? sprintf( __( '<strong>IMPORTANT NOTE:</strong> The <a href="%s" target="_blank">Activate Global Sidebars</a> option is turned on which removes the ability to choose individual sidebars. Turn off that option to assign unique sidebars.', 'Avada' ), Avada()->settings->get_setting_link( $post_type_options['global'] ) )
 			 : __( '<strong>IMPORTANT NOTE:</strong> The Activate Global Sidebars option is turned on which removes the ability to choose individual sidebars. Turn off that option to assign unique sidebars.', 'Avada' );
 
 	$this->raw(

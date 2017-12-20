@@ -282,6 +282,20 @@ function avada_options_section_sliding_bar( $sections ) {
 					),
 				),
 			),
+			'slidingbar_link_color_hover' => array(
+				'label'       => esc_html__( 'Sliding Bar Link Hover Color', 'Avada' ),
+				'description' => esc_html__( 'Controls the text hover color of the sliding bar link font.', 'Avada' ),
+				'id'          => 'slidingbar_link_color_hover',
+				'default'     => '#a0ce4e',
+				'type'        => 'color',
+				'required'    => array(
+					array(
+						'setting'  => 'slidingbar_widgets',
+						'operator' => '==',
+						'value'    => '1',
+					),
+				),
+			),
 			'slidingbar_border' => array(
 				'label'       => esc_html__( 'Border on Sliding Bar', 'Avada' ),
 				'description' => esc_html__( 'Turn on to display a border line on the sliding bar which makes it stand out more.', 'Avada' ),

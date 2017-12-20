@@ -95,7 +95,8 @@ jQuery( document ).ready( function() {
 						'width': imageWidth,
 						'height': imageHeight,
 						'srcset': '',
-						'sizes': ''
+						'sizes': '',
+						'style': ''
 					});
 					jQuery( window.avadaUploadfield ).val( imageId ).trigger( 'change' );
 
@@ -125,7 +126,8 @@ jQuery( document ).ready( function() {
 			'width': '',
 			'height': '',
 			'srcset': '',
-			'sizes': ''
+			'sizes': '',
+			'style': 'display:none;'
 		});
 
 		featuredImageWrapper.find( '.upload_field' ).val( '' );

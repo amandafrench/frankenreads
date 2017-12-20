@@ -90,7 +90,7 @@ class Fusion_Images {
 		$title = get_post_field( 'post_title', $attachment_id );
 		$caption = get_post_field( 'post_excerpt', $attachment_id );
 
-		$content = preg_replace( '/<a/', '<a data-rel="iLightbox[postimages]" data-title="' . $title . '" data-caption="' . $caption . '"' , $content, 1 );
+		$content = preg_replace( '/<a/', '<a data-rel="iLightbox[postimages]" data-title="' . $title . '" data-caption="' . $caption . '"', $content, 1 );
 
 		return $content;
 	}

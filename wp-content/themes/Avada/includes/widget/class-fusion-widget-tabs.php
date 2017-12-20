@@ -24,7 +24,7 @@ class Fusion_Widget_Tabs extends WP_Widget {
 	 *
 	 * @access public
 	 */
-	function __construct() {
+	public function __construct() {
 
 		$widget_ops  = array(
 			'classname' => 'fusion-tabs-widget pyre_tabs',
@@ -46,7 +46,7 @@ class Fusion_Widget_Tabs extends WP_Widget {
 	 *                        'before_widget', and 'after_widget'.
 	 * @param array $instance The settings for the particular instance of the widget.
 	 */
-	function widget( $args, $instance ) {
+	public function widget( $args, $instance ) {
 
 		global $post;
 
@@ -59,12 +59,12 @@ class Fusion_Widget_Tabs extends WP_Widget {
 		$show_recent_posts  = isset( $instance['show_recent_posts'] ) ? true : false;
 		$show_comments      = isset( $instance['show_comments'] ) ? true : false;
 
-		$count_tabs = (int) $show_popular_posts + (int) $show_recent_posts + (int) $show_comments ;
+		$count_tabs = (int) $show_popular_posts + (int) $show_recent_posts + (int) $show_comments;
 
 		if ( isset( $instance['orderby'] ) ) {
 			$orderby = $instance['orderby'];
 		} else {
-			$orderby = 'Highest Comments';
+			$orderby = 'comment_count';
 		}
 
 		echo $before_widget; // WPCS: XSS ok.
@@ -95,7 +95,7 @@ class Fusion_Widget_Tabs extends WP_Widget {
 
 						<div id="tab-popular" class="tab tab_content" style="display: none;">
 							<?php
-							if ( 'Highest Comments' == $orderby ) {
+							if ( 'Highest Comments' === $orderby || 'comment_count' === $orderby ) {
 								$order_string = '&orderby=comment_count';
 							} else {
 								$order_string = '&meta_key=avada_post_views_count&orderby=meta_value_num';
@@ -220,7 +220,7 @@ class Fusion_Widget_Tabs extends WP_Widget {
 	 * @param array $old_instance Old settings for this instance.
 	 * @return array Settings to save or bool false to cancel saving.
 	 */
-	function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ) {
 
 		$instance = $old_instance;
 
@@ -242,7 +242,7 @@ class Fusion_Widget_Tabs extends WP_Widget {
 	 * @access public
 	 * @param array $instance Current settings.
 	 */
-	function form( $instance ) {
+	public function form( $instance ) {
 
 		$defaults = array(
 			'posts'              => 3,
@@ -251,17 +251,22 @@ class Fusion_Widget_Tabs extends WP_Widget {
 			'show_popular_posts' => 'on',
 			'show_recent_posts'  => 'on',
 			'show_comments'      => 'on',
-			'orderby'            => esc_attr__( 'Highest Comments', 'Avada' ),
+			'orderby'            => 'comments_count',
 		);
 
 		$instance = wp_parse_args( (array) $instance, $defaults );
-		?>
 
+		if ( 'Highest Comments' === $instance['orderby'] || 'comment_count' === $instance['orderby'] ) {
+				$instance['orderby'] = 'comment_count';
+		} else {
+			$instance['orderby'] = 'view_count';
+		}
+		?>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'orderby' ) ); ?>"><?php esc_attr_e( 'Popular Posts Order By:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'orderby' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'orderby' ) ); ?>" class="widefat" style="width:100%;">
-				<option <?php echo ( esc_attr__( 'Highest Comments', 'Avada' ) == $instance['orderby'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Highest Comments', 'Avada' ); ?></option>
-				<option <?php echo ( esc_attr__( 'Highest Views', 'Avada' ) == $instance['orderby'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Highest Views', 'Avada' ); ?></option>
+				<option value="comment_count" <?php echo ( 'comment_count' === $instance['orderby'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Highest Comments', 'Avada' ); ?></option>
+				<option value="view_count" <?php echo ( 'view_count' === $instance['orderby'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Highest Views', 'Avada' ); ?></option>
 			</select>
 		</p>
 		<p>

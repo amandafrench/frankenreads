@@ -1073,7 +1073,7 @@ class Fusion_Builder_Migrate {
 	 */
 	private function get_migration_page_welcome_message() {
 		if ( ! self::$revert ) {
-			printf( esc_html__( 'Avada 5.0 is an amazing update with new features, improvements and our brand new Fusion Builder. To enjoy Avada 5.0, conversion steps need to be performed. Please see below. Thank you for choosing Avada!', 'Avada' ),  esc_attr( Avada()->get_theme_version() ) );
+			printf( esc_html__( 'Avada 5.0 is an amazing update with new features, improvements and our brand new Fusion Builder. To enjoy Avada 5.0, conversion steps need to be performed. Please see below. Thank you for choosing Avada!', 'Avada' ), esc_attr( Avada()->get_theme_version() ) );
 		} else {
 			esc_html_e( 'This is the reversion process. Please see below for further information.', 'Avada' );
 		}
@@ -1290,15 +1290,15 @@ class Fusion_Builder_Migrate {
 			?>
 			<ul class="tasks-list">
 				<?php if ( ! self::$revert ) : ?>
-					<li class="<?php echo esc_attr( $posts_li_class ); ?>"><span class="content"><?php esc_html_e( 'Converting posts.' ,'Avada' ); ?></span></li>
-					<li class="<?php echo esc_attr( $slides_li_class ); ?>"><span class="content"><?php esc_html_e( 'Converting slides.' ,'Avada' ); ?></span></li>
-					<li class="<?php echo esc_attr( $widgets_li_class ); ?>"><span class="content"><?php esc_html_e( 'Converting widgets.' ,'Avada' ); ?></span></li>
-					<li class="<?php echo esc_attr( $theme_options_li_class ); ?>"><span class="content"><?php esc_html_e( 'Converting theme options.' ,'Avada' ); ?></span></li>
+					<li class="<?php echo esc_attr( $posts_li_class ); ?>"><span class="content"><?php esc_html_e( 'Converting posts.', 'Avada' ); ?></span></li>
+					<li class="<?php echo esc_attr( $slides_li_class ); ?>"><span class="content"><?php esc_html_e( 'Converting slides.', 'Avada' ); ?></span></li>
+					<li class="<?php echo esc_attr( $widgets_li_class ); ?>"><span class="content"><?php esc_html_e( 'Converting widgets.', 'Avada' ); ?></span></li>
+					<li class="<?php echo esc_attr( $theme_options_li_class ); ?>"><span class="content"><?php esc_html_e( 'Converting theme options.', 'Avada' ); ?></span></li>
 				<?php else : ?>
-					<li class="<?php echo esc_attr( $posts_li_class ); ?>"><span class="content"><?php esc_html_e( 'Reverting posts.' ,'Avada' ); ?></span></li>
-					<li class="<?php echo esc_attr( $slides_li_class ); ?>"><span class="content"><?php esc_html_e( 'Reverting slides.' ,'Avada' ); ?></span></li>
-					<li class="<?php echo esc_attr( $widgets_li_class ); ?>"><span class="content"><?php esc_html_e( 'Reverting widgets.' ,'Avada' ); ?></span></li>
-					<li class="<?php echo esc_attr( $theme_options_li_class ); ?>"><span class="content"><?php esc_html_e( 'Reverting theme options.' ,'Avada' ); ?></span></li>
+					<li class="<?php echo esc_attr( $posts_li_class ); ?>"><span class="content"><?php esc_html_e( 'Reverting posts.', 'Avada' ); ?></span></li>
+					<li class="<?php echo esc_attr( $slides_li_class ); ?>"><span class="content"><?php esc_html_e( 'Reverting slides.', 'Avada' ); ?></span></li>
+					<li class="<?php echo esc_attr( $widgets_li_class ); ?>"><span class="content"><?php esc_html_e( 'Reverting widgets.', 'Avada' ); ?></span></li>
+					<li class="<?php echo esc_attr( $theme_options_li_class ); ?>"><span class="content"><?php esc_html_e( 'Reverting theme options.', 'Avada' ); ?></span></li>
 				<?php endif; ?>
 			</ul>
 		<?php
@@ -2137,19 +2137,19 @@ class Fusion_Builder_Migrate {
 						if ( isset( $top_margin[2] ) ) {
 							$section_top_margin = self::validate_shortcode_attr_value( $top_margin[2], 'px' );
 
-							$separator_tag = str_replace( $top_margin[0], '',  $separator_tag );
+							$separator_tag = str_replace( $top_margin[0], '', $separator_tag );
 						}
 
 						if ( isset( $bottom_margin[2] ) ) {
 							$section_bottom_margin = self::validate_shortcode_attr_value( $bottom_margin[2], 'px' );
 
-							$separator_tag = str_replace( $bottom_margin[0], '',  $separator_tag );
+							$separator_tag = str_replace( $bottom_margin[0], '', $separator_tag );
 						}
 
 						if ( isset( $top[2] ) ) {
 							$section_top_margin = $top[2];
 
-							$separator_tag = str_replace( $top[0], '',  $separator_tag );
+							$separator_tag = str_replace( $top[0], '', $separator_tag );
 
 							if ( ! isset( $bottom[2] ) && isset( $stlye[2] ) && 'none' !== $style[2] ) {
 								$section_bottom_margin = self::validate_shortcode_attr_value( $top_[2], 'px' );
@@ -2159,7 +2159,7 @@ class Fusion_Builder_Migrate {
 						if ( isset( $bottom[2] ) ) {
 							$section_bottom_margin = self::validate_shortcode_attr_value( $bottom[2], 'px' );
 
-							$separator_tag = str_replace( $bottom[0], '',  $separator_tag );
+							$separator_tag = str_replace( $bottom[0], '', $separator_tag );
 						}
 
 						$section_top_margin = ' margin_top="' . $section_top_margin . '"';
@@ -2170,7 +2170,7 @@ class Fusion_Builder_Migrate {
 						$wrapped_shortcode .= $separator_tag;
 						$wrapped_shortcode .= '[/fusion_builder_row][/fusion_builder_container]';
 
-						$content = substr_replace( $content, '', $element_position + $element_position_change  , $separator_tag_length );
+						$content = substr_replace( $content, '', $element_position + $element_position_change, $separator_tag_length );
 
 						$content = substr_replace( $content, $wrapped_shortcode, $element_position + $element_position_change, 0 );
 
@@ -2694,8 +2694,8 @@ class Fusion_Builder_Migrate {
 								// Check if opening or closing and if row is open yet.
 								$tag_type = ( '[/' === substr( $widget_content, $position - 2, 2 ) ) ? 'closing' : 'opening';
 								$column_next = strpos( substr( $widget_content, $position + 20, 30 ), '[fusion_builder_column' );
-								$existing_row = strpos( substr( $widget_content, $position - 30 , 30 ), '[fusion_builder_row]' );
-								$existing_row_closed = strpos( substr( $widget_content, $position + 20 , 30 ), '[/fusion_builder_row]' );
+								$existing_row = strpos( substr( $widget_content, $position - 30, 30 ), '[fusion_builder_row]' );
+								$existing_row_closed = strpos( substr( $widget_content, $position + 20, 30 ), '[/fusion_builder_row]' );
 
 								if ( $existing_row ) {
 									$row_open = true;

@@ -87,9 +87,9 @@ class Avada_Taxonomy_Meta {
 		// Loop through array and init hooks.
 		foreach ( $this->fusion_meta_box['screens'] as $screen ) {
 			// add fields to edit form.
-			add_action( $screen . '_edit_form',array( $this, 'render_edit_form' ) );
+			add_action( $screen . '_edit_form', array( $this, 'render_edit_form' ) );
 			// add fields to add new form.
-			add_action( $screen . '_add_form_fields',array( $this, 'render_new_form' ) );
+			add_action( $screen . '_add_form_fields', array( $this, 'render_new_form' ) );
 			// this saves the edit fields.
 			add_action( 'edited_' . $screen, array( $this, 'save_data' ), 10, 2 );
 			// this saves the add fields.
@@ -220,7 +220,7 @@ class Avada_Taxonomy_Meta {
 			$name     = $field['id'];
 			// Field value.
 			$meta     = isset( $options[ $name ] ) ? $options[ $name ] : '';
-			$meta     = ( '' !== $meta ) ? $meta : ( ( isset( $field['default'] ) && 'color' !== $field['type'] ) ? $field['default'] : '');
+			$meta     = ( '' !== $meta ) ? $meta : ( ( isset( $field['default'] ) && 'color' !== $field['type'] ) ? $field['default'] : '' );
 
 			if ( 'image' !== $field['type'] ) {
 				$meta = is_array( $meta ) ? array_map( 'esc_attr', $meta ) : esc_attr( $meta );
@@ -662,13 +662,13 @@ class Avada_Taxonomy_Meta {
 
 		if ( isset( $field['desc'] ) && '' !== $field['desc'] && 'new' === $this->form_type ) {
 		?>
-			<p class='description'><?php echo $field['desc'] ; // // WPCS: XSS ok.?>
+			<p class='description'><?php echo $field['desc']; // WPCS: XSS ok.?>
 		<?php
 		}
 
 		if ( isset( $field['desc'] ) && '' !== $field['desc'] && 'edit' === $this->form_type ) {
 		?>
-			<p class='description'><?php echo $field['desc'] ; // // WPCS: XSS ok.?>
+			<p class='description'><?php echo $field['desc']; // WPCS: XSS ok.?>
 		<?php
 		}
 

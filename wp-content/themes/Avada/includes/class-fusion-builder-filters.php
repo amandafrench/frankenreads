@@ -160,7 +160,7 @@ class Fusion_Builder_Filters {
 	 * @param  string $title The message to output.
 	 * @return string
 	 */
-	function add_builder_import_title( $title ) {
+	public function add_builder_import_title( $title ) {
 		// Check registration.
 		if ( ! Avada()->registration->is_registered() ) {
 			return sprintf( esc_attr__( 'Your product must be registered to receive Avada demo pages. Go to the %s tab to complete registration.', 'Avada' ), '<a href="' . admin_url( 'admin.php?page=avada-registration' ) . '">' . esc_attr__( 'Product Registration', 'Avada' ) . '</a>' );
@@ -183,7 +183,7 @@ class Fusion_Builder_Filters {
 	 * @param  string $message The message to output.
 	 * @return string
 	 */
-	function add_builder_import_message( $message ) {
+	public function add_builder_import_message( $message ) {
 		// Check registration.
 		if ( ! Avada()->registration->is_registered() ) {
 			return esc_attr__( 'Once you register your Avada theme purchase, you will be able to select any Avada demo, view each page it contains and import any of them individually.', 'Avada' );

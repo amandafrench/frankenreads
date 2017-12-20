@@ -91,7 +91,7 @@ class Fusion_Dynamic_JS_Compiler {
 
 			if ( 'enqueue' === $script['action'] ) {
 				if ( 'cssua' === $script['handle'] || 'modernizr' === $script['handle'] ) {
-					$path = $script['path'] ;
+					$path = $script['path'];
 
 					// Skip if the path is empty or file doesn't exist.
 					if ( ! $path || ! file_exists( $path ) ) {
@@ -142,7 +142,7 @@ class Fusion_Dynamic_JS_Compiler {
 				$content .= "var {$l10n_script['name']}={$value};";
 			}
 
-			$path = $script['path'] ;
+			$path = $script['path'];
 			// Skip if the path is empty or file doesn't exist.
 			if ( ! $path || ! file_exists( $path ) ) {
 				continue;

@@ -66,7 +66,7 @@ if ( 'tribe_events' === $screen->post_type ) {
 			'yes'     => esc_attr__( 'Show', 'Avada' ),
 			'no'      => esc_attr__( 'Hide', 'Avada' ),
 		),
-		sprintf( esc_html__( 'Choose to show or hide the social share box. %s', 'Avada' ), Avada()->settings->get_default_description( 'events_social_sharing_box' , '', 'showhide' ) )
+		sprintf( esc_html__( 'Choose to show or hide the social share box. %s', 'Avada' ), Avada()->settings->get_default_description( 'events_social_sharing_box', '', 'showhide' ) )
 	);
 }
 

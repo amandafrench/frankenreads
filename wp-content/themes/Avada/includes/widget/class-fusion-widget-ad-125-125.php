@@ -24,7 +24,7 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 	 *
 	 * @access public
 	 */
-	function __construct() {
+	public function __construct() {
 
 		$widget_ops = array(
 			'classname' => 'fusion-ad-125-125 ad_125_125',
@@ -45,7 +45,7 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 	 *                        'before_widget', and 'after_widget'.
 	 * @param array $instance The settings for the particular instance of the widget.
 	 */
-	function widget( $args, $instance ) {
+	public function widget( $args, $instance ) {
 
 		extract( $args );
 
@@ -82,7 +82,7 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 	 * @param array $old_instance Old settings for this instance.
 	 * @return array Settings to save or bool false to cancel saving.
 	 */
-	function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ) {
 
 		$instance = $old_instance;
 
@@ -105,7 +105,7 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 	 * @access public
 	 * @param array $instance Current settings.
 	 */
-	function form( $instance ) {
+	public function form( $instance ) {
 
 		$defaults = array(
 			'ad_125_img_1'  => '',

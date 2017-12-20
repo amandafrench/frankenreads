@@ -55,7 +55,7 @@ class Avada_Gravity_Forms_Tags_Merger {
 		$this->_args = wp_parse_args(
 			$args, array(
 				'auto_append_eid' => true, // Boolean or array of form IDs.
-			'encrypt_eid'     => true,
+				'encrypt_eid'     => true,
 			)
 		);
 

@@ -126,11 +126,12 @@ class Avada_GoogleMap {
 	/**
 	 * Render the shortcode.
 	 *
+	 * @access public
 	 * @param  array  $args    Shortcode parameters.
 	 * @param  string $content Content between shortcode.
 	 * @return string          HTML output.
 	 */
-	function render_map( $args, $content = '' ) {
+	public function render_map( $args, $content = '' ) {
 
 		if ( ! Avada()->settings->get( 'status_gmap' ) ) {
 			return '';
@@ -169,7 +170,7 @@ class Avada_GoogleMap {
 
 		if ( $address ) {
 			$addresses       = explode( '|', $address );
-			$infobox_content = ( ! in_array( $map_style, array( 'default', 'theme' ) ) ) ? html_entity_decode( $infobox_content ) : '' ;
+			$infobox_content = ( ! in_array( $map_style, array( 'default', 'theme' ) ) ) ? html_entity_decode( $infobox_content ) : '';
 
 			$infobox_content_array = ( $infobox_content ) ? explode( '|', $infobox_content ) : '';
 			$icon_array            = ( $icon && 'default' !== $infobox ) ? explode( '|', $icon ) : '';
@@ -305,8 +306,7 @@ class Avada_GoogleMap {
 				var fusionMapNonce = '<?php echo wp_create_nonce( 'avada_admin_ajax' ); // WPCS: XSS ok. ?>';
 				function fusion_run_map_<?php echo esc_attr( $map_id ); ?>() {
 					jQuery('#<?php echo esc_attr( $map_id ); ?>').fusion_maps({
-						<?php // @codingStandardsIgnoreLine ?>
-						addresses: <?php echo $json_addresses; ?>,
+						addresses: <?php echo $json_addresses; // WPCS: XSS ok. ?>,
 						address_pin: <?php echo ( 'yes' == $address_pin ) ? 'true' : 'false'; ?>,
 						animations: <?php echo ( 'yes' == $animation ) ? 'true' : 'false'; ?>,
 						infobox_background_color: '<?php echo esc_attr( $infobox_background_color ); ?>',

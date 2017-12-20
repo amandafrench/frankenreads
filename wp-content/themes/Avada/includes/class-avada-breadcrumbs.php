@@ -244,7 +244,7 @@ class Avada_Breadcrumbs {
 				global $wp_locale;
 				$year = esc_html( get_query_var( 'year' ) );
 				if ( ! $year ) {
-					$year = substr( esc_html( get_query_var( 'm' ) ) , 0, 4 );
+					$year = substr( esc_html( get_query_var( 'm' ) ), 0, 4 );
 				}
 
 				// Year Archive, only is a leaf.
@@ -260,7 +260,7 @@ class Avada_Breadcrumbs {
 
 					$month = get_query_var( 'monthnum' );
 					if ( ! $month ) {
-						$month = substr( esc_html( get_query_var( 'm' ) ) , 4, 2 );
+						$month = substr( esc_html( get_query_var( 'm' ) ), 4, 2 );
 					}
 
 					$month_name = $wp_locale->get_month( $month );
@@ -643,21 +643,21 @@ class Avada_Breadcrumbs {
 			case 'year':
 				$year = esc_html( get_query_var( 'year', 0 ) );
 				if ( ! $year ) {
-					$year = substr( esc_html( get_query_var( 'm' ) ) , 0, 4 );
+					$year = substr( esc_html( get_query_var( 'm' ) ), 0, 4 );
 				}
 				$title = $year;
 				break;
 			case 'month':
 				$monthnum = get_query_var( 'monthnum', 0 );
 				if ( ! $monthnum ) {
-					$monthnum = substr( esc_html( get_query_var( 'm' ) ) , 4, 2 );
+					$monthnum = substr( esc_html( get_query_var( 'm' ) ), 4, 2 );
 				}
 				$title = $wp_locale->get_month( $monthnum );
 				break;
 			case 'day':
 				$day = get_query_var( 'day' );
 				if ( ! $day ) {
-					$day = substr( esc_html( get_query_var( 'm' ) ) , 6, 2 );
+					$day = substr( esc_html( get_query_var( 'm' ) ), 6, 2 );
 				}
 				$title = $day;
 				break;

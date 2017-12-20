@@ -17,15 +17,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	/**
 	 * Resize images for use as related posts.
 	 */
-	$image = Fusion_Image_Resizer::image_resize(
-		array(
-			'width'  => '500',
-			'height' => '383',
-			'url'    => wp_get_attachment_url( get_post_thumbnail_id( $post_id ) ),
-			'path'   => get_attached_file( get_post_thumbnail_id( $post_id ) ),
-		)
+	$image_args = array(
+		'width'  => '500',
+		'height' => '383',
+		'url'    => wp_get_attachment_url( get_post_thumbnail_id( $post_id ) ),
+		'path'   => get_attached_file( get_post_thumbnail_id( $post_id ) ),
+		'retina' => false,
 	);
-	$scrset = ( isset( $image['retina_url'] ) && $image['retina_url'] ) ? ' srcset="' . $image['url'] . ' 1x, ' . $image['retina_url'] . ' 2x"' : '';
+	$image = Fusion_Image_Resizer::image_resize( $image_args );
+	$image_retina_args = $image_args;
+	$image_retina_args['retina'] = true;
+	$image_retina = Fusion_Image_Resizer::image_resize( $image_retina_args );
+	$scrset = ( isset( $image_retina['url'] ) && $image_retina['url'] ) ? ' srcset="' . $image['url'] . ' 1x, ' . $image_retina['url'] . ' 2x"' : '';
 	?>
 	<img src="<?php echo esc_url_raw( $image['url'] ); ?>"<?php echo $scrset; // WPCS: XSS ok. ?> width="<?php echo absint( $image['width'] ); ?>" height="<?php echo absint( $image['height'] ); ?>" alt="<?php the_title_attribute( 'post=' . $post_id ); ?>" />
 

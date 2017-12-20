@@ -121,7 +121,7 @@ function fusion_parse_import_data( $import_array ) {
 					}
 					$current_multiwidget = isset( $current_widget_data['_multiwidget'] ) ? $current_widget_data['_multiwidget'] : false;
 					$new_multiwidget = isset( $widget_data[ $title ]['_multiwidget'] ) ? $widget_data[ $title ]['_multiwidget'] : false;
-					$multiwidget = ( $current_multiwidget != $new_multiwidget) ? $current_multiwidget : 1;
+					$multiwidget = ( $current_multiwidget != $new_multiwidget ) ? $current_multiwidget : 1;
 					unset( $current_widget_data['_multiwidget'] );
 					$current_widget_data['_multiwidget'] = $multiwidget;
 					$new_widgets[ $title ] = $current_widget_data;

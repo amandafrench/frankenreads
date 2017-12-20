@@ -156,12 +156,12 @@ class Avada_Upgrade_530 extends Avada_Upgrade_Abstract {
 
 			$page_options = array(
 				'fusion_tax_heading'       => '',
-				'slider_type'              => get_post_meta( $shop_page_id, 'pyre_slider_type', true ),
-				'fusion_tax_slider'        => get_post_meta( $shop_page_id, 'pyre_slider', true ),
-				'fusion_tax_wooslider'     => get_post_meta( $shop_page_id, 'pyre_wooslider', true ),
-				'fusion_tax_revslider'     => get_post_meta( $shop_page_id, 'pyre_revslider', true ),
-				'fusion_tax_elasticslider' => get_post_meta( $shop_page_id, 'pyre_revslider', true ),
-				'slider_position'          => get_post_meta( $shop_page_id, 'pyre_slider_position', true ),
+				'slider_type'              => '',
+				'fusion_tax_slider'        => '',
+				'fusion_tax_wooslider'     => '',
+				'fusion_tax_revslider'     => '',
+				'fusion_tax_elasticslider' => '',
+				'slider_position'          => '',
 				'main_padding_top'         => get_post_meta( $shop_page_id, 'pyre_main_top_padding', true ),
 				'main_padding_bottom'      => get_post_meta( $shop_page_id, 'pyre_main_bottom_padding', true ),
 				'header_bg_color'          => $header_bg_color,
@@ -172,7 +172,10 @@ class Avada_Upgrade_530 extends Avada_Upgrade_Abstract {
 			);
 
 			$args = array(
-				'taxonomy'   => 'product_cat',
+				'taxonomy'   => array(
+					'product_cat',
+					'product_tag',
+				),
 				'number'     => 0,
 				'hide_empty' => false,
 			);

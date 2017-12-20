@@ -490,6 +490,52 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 
 		$instance = wp_parse_args( (array) $instance, $defaults );
 		?>
+		<script type="text/javascript">
+			jQuery( document ).ready( function() {
+				jQuery.fn.checkBoxedIcons = function() {
+					var color_type = jQuery( this ).val();
+					var boxed_icon = jQuery( this ).parents( 'form' ).find( '.fusion-social-icons-boxed' ).val();
+
+					if ( boxed_icon === 'No' ) {
+						jQuery( this ).parents( 'form' ).find('.avada-widget-boxed-icon-option-child').hide();
+						jQuery( this ).parents( 'form' ).find('.avada-widget-boxed-icon-background').hide();
+					} else {
+						jQuery( this ).parents( 'form' ).find('.avada-widget-boxed-icon-option-child').show();
+
+						if ( color_type === 'custom' ) {
+							jQuery( this ).parents( 'form' ).find('.avada-widget-boxed-icon-background').show();
+						}
+					}
+				};
+
+				jQuery.fn.checkColorType = function() {
+					var boxed_icon = jQuery( this ).val();
+					var color_type = jQuery( this ).parents( 'form' ).find( '.fusion-social-color-type' ).val();
+
+					if ( color_type === 'brand' ) {
+						jQuery( this ).parents( 'form' ).find('.avada-widget-color-type-option-child').hide();
+					} else {
+						jQuery( this ).parents( 'form' ).find('.avada-widget-color-type-option-child').show();
+
+						if ( boxed_icon === 'No' ) {
+							jQuery( this ).parents( 'form' ).find('.avada-widget-boxed-icon-background').hide();
+						}
+					}
+				};
+
+				jQuery( '.fusion-social-color-type' ).checkColorType();
+				jQuery( '.fusion-social-color-type' ).checkBoxedIcons();
+
+				jQuery( '.fusion-social-color-type' ).on( 'change', function() {
+					jQuery( this ).checkColorType();
+				});
+
+				jQuery( '.fusion-social-icons-boxed' ).on( 'change', function() {
+					jQuery( this ).checkBoxedIcons();
+				});
+
+			});
+		</script>
 
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'Avada' ); ?></label>
@@ -508,7 +554,7 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'color_type' ) ); ?>"><?php esc_attr_e( 'Icons Color Type:', 'Avada' ); ?></label>
-			<select id="<?php echo esc_attr( $this->get_field_id( 'color_type' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'color_type' ) ); ?>" class="widefat" style="width:100%;">
+			<select id="<?php echo esc_attr( $this->get_field_id( 'color_type' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'color_type' ) ); ?>" class="widefat fusion-social-color-type" style="width:100%;">
 				<option value="custom" <?php echo ( 'custom' == $instance['color_type'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Custom Color', 'Avada' ); ?></option>
 				<option value="brand" <?php echo ( 'brand' == $instance['color_type'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Brand Colors', 'Avada' ); ?></option>
 			</select>
@@ -521,7 +567,7 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'boxed_icon' ) ); ?>"><?php esc_attr_e( 'Icons Boxed:', 'Avada' ); ?></label>
-			<select id="<?php echo esc_attr( $this->get_field_id( 'boxed_icon' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'boxed_icon' ) ); ?>" class="widefat" style="width:100%;">
+			<select id="<?php echo esc_attr( $this->get_field_id( 'boxed_icon' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'boxed_icon' ) ); ?>" class="widefat fusion-social-icons-boxed" style="width:100%;">
 				<option value="No" <?php echo ( 'No' == $instance['boxed_icon'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'No', 'Avada' ); ?></option>
 				<option value="Yes" <?php echo ( 'Yes' == $instance['boxed_icon'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Yes', 'Avada' ); ?></option>
 			</select>
@@ -589,59 +635,6 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 			echo '</p>';
 
 		}
-
-		$color_type_id  = $this->get_field_id( 'color_type' );
-		$boxed_icon_id = $this->get_field_id( 'boxed_icon' );
-		?>
-		<script type="text/javascript">
-			jQuery(document).ready(function($){
-				var $color_type_field = $("#<?php echo esc_attr( $color_type_id ); ?>");
-				var $boxed_icon_field = $("#<?php echo esc_attr( $boxed_icon_id ); ?>");
-
-				function checkBoxedIcons() {
-					var color_type = $color_type_field.val();
-					var boxed_icon = $boxed_icon_field.val();
-
-					if ( boxed_icon === 'No' ) {
-						$boxed_icon_field.parent().parent().find('.avada-widget-boxed-icon-option-child').hide();
-						$boxed_icon_field.parent().parent().find('.avada-widget-boxed-icon-background').hide();
-					} else {
-						$boxed_icon_field.parent().parent().find('.avada-widget-boxed-icon-option-child').show();
-
-						if ( color_type === 'custom' ) {
-							$boxed_icon_field.parent().parent().find('.avada-widget-boxed-icon-background').show();
-						}
-					}
-				}
-
-				function checkColorType() {
-					var color_type = $color_type_field.val();
-					var boxed_icon = $boxed_icon_field.val();
-
-					if ( color_type === 'brand' ) {
-						$color_type_field.parent().parent().find('.avada-widget-color-type-option-child').hide();
-					} else {
-						$color_type_field.parent().parent().find('.avada-widget-color-type-option-child').show();
-
-						if ( boxed_icon === 'No' ) {
-							$boxed_icon_field.parent().parent().find('.avada-widget-boxed-icon-background').hide();
-						}
-					}
-				}
-
-				checkColorType();
-				checkBoxedIcons();
-
-				$color_type_field.on('change', function() {
-					checkColorType();
-				});
-				$boxed_icon_field.on('change', function() {
-					checkBoxedIcons();
-				});
-
-			});
-		</script>
-		<?php
 	}
 }
 

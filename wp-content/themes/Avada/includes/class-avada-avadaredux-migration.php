@@ -803,7 +803,7 @@ class Avada_AvadaRedux_Migration extends Avada_Migrate {
 		$options = get_option( $this->avada_option_name, array() );
 
 		// Try to get the image from the media library.
-		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid='%s';", $options[ $field['id'] ] ) );
+		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid=%s;", $options[ $field['id'] ] ) );
 		// Attachment was not found in the media library.
 		// We'll have to create it ourselves.
 		if ( empty( $attachment ) ) {
@@ -816,7 +816,7 @@ class Avada_AvadaRedux_Migration extends Avada_Migrate {
 				$new_image  = media_sideload_image( $options[ $field['id'] ], 0, '', 'src' );
 				// Check that media_sideload_image did not return a WP_Error object.
 				if ( ! is_wp_error( $new_image ) ) {
-					$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid='%s';", $new_image ) );
+					$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid=%s;", $new_image ) );
 				}
 			}
 		}
@@ -1155,10 +1155,10 @@ class Avada_AvadaRedux_Migration extends Avada_Migrate {
 		$custom_font_svg  = ( is_array( $options['custom_font_svg'] ) && isset( $options['custom_font_svg']['url'] ) ) ? $options['custom_font_svg']['url'] : $options['custom_font_svg'];
 		$custom_font_eot  = ( is_array( $options['custom_font_eot'] ) && isset( $options['custom_font_eot']['url'] ) ) ? $options['custom_font_eot']['url'] : $options['custom_font_eot'];
 		// Get the attachment IDs.
-		$attachment_woff = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid='%s';", $custom_font_woff ) );
-		$attachment_ttf  = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid='%s';", $custom_font_ttf ) );
-		$attachment_svg  = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid='%s';", $custom_font_svg ) );
-		$attachment_eot  = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid='%s';", $custom_font_eot ) );
+		$attachment_woff = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid=%s;", $custom_font_woff ) );
+		$attachment_ttf  = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid=%s;", $custom_font_ttf ) );
+		$attachment_svg  = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid=%s;", $custom_font_svg ) );
+		$attachment_eot  = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid=%s;", $custom_font_eot ) );
 		// Get the font name from the filename.
 		$custom_font_name = 'custom-font';
 		if ( is_array( $attachment_woff ) && isset( $attachment_woff[0] ) ) {

@@ -46,8 +46,8 @@ class Avada_Woocommerce {
 		add_action( 'woocommerce_shop_loop_item_title', array( $this, 'product_title' ), 10 );
 		add_action( 'woocommerce_after_shop_loop_item_title', array( $this, 'add_product_wrappers_close' ), 20 );
 
-		add_action( 'avada_woocommerce_buttons_on_rollover',  array( $this, 'template_loop_add_to_cart' ), 10 );
-		add_action( 'avada_woocommerce_buttons_on_rollover',  array( $this, 'rollover_buttons_linebreak' ), 15 );
+		add_action( 'avada_woocommerce_buttons_on_rollover', array( $this, 'template_loop_add_to_cart' ), 10 );
+		add_action( 'avada_woocommerce_buttons_on_rollover', array( $this, 'rollover_buttons_linebreak' ), 15 );
 		add_action( 'avada_woocommerce_buttons_on_rollover', array( $this, 'show_details_button' ), 20 );
 
 		if ( 'clean' === Avada()->settings->get( 'woocommerce_product_box_design' ) ) {
@@ -75,7 +75,7 @@ class Avada_Woocommerce {
 		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10 );
 		add_action( 'woocommerce_single_product_summary', array( $this, 'add_product_border' ), 19 );
 		add_action( 'woocommerce_single_product_summary', array( $this, 'template_single_title' ), 5 );
-		add_action( 'woocommerce_single_product_summary',  array( $this, 'stock_html' ), 10 );
+		add_action( 'woocommerce_single_product_summary', array( $this, 'stock_html' ), 10 );
 		add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 11 );
 
 		// Add product-title class to the cart item name link.
@@ -301,18 +301,22 @@ class Avada_Woocommerce {
 
 				$defaults = array(
 					'quantity' => 1,
-					'class'    => implode( ' ', array_filter( array(
-						'button',
-						'product_type_' . $product_type,
-						$product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
-						$product->supports( 'ajax_add_to_cart' ) ? 'ajax_add_to_cart' : '',
-					) ) ),
+					'class'    => implode(
+						' ', array_filter(
+							array(
+								'button',
+								'product_type_' . $product_type,
+								$product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
+								$product->supports( 'ajax_add_to_cart' ) ? 'ajax_add_to_cart' : '',
+							)
+						)
+					),
 				);
 
 				$args = apply_filters( 'woocommerce_loop_add_to_cart_args', wp_parse_args( $args, $defaults ), $product );
 			}
 
-			wc_get_template( 'loop/add-to-cart.php' , $args );
+			wc_get_template( 'loop/add-to-cart.php', $args );
 		}
 	}
 
@@ -351,7 +355,7 @@ class Avada_Woocommerce {
 	 *
 	 * @access public
 	 */
-	function add_product_border() {
+	public function add_product_border() {
 		get_template_part( 'templates/wc-add-product-border' );
 	}
 
@@ -729,7 +733,7 @@ class Avada_Woocommerce {
 	 * @param string $form The HTML of the form.
 	 * @return string      Modified HTML of the form.
 	 */
-	function product_search_form( $form ) {
+	public function product_search_form( $form ) {
 		ob_start();
 		get_template_part( 'templates/wc-product-search-form' );
 		return ob_get_clean();
@@ -741,7 +745,7 @@ class Avada_Woocommerce {
 	 * @access public
 	 * @since 5.1.0
 	 */
-	function checkout_after_order_review() {
+	public function checkout_after_order_review() {
 		echo ( Avada()->settings->get( 'woocommerce_one_page_checkout' ) ) ? '</div>' : '';
 	}
 
@@ -837,7 +841,7 @@ class Avada_Woocommerce {
 	 * @param array $args The arguments.
 	 * @return array
 	 */
-	function get_catalog_ordering_args( $args ) {
+	public function get_catalog_ordering_args( $args ) {
 		global $woocommerce;
 		$woo_default_catalog_orderby = get_option( 'woocommerce_default_catalog_orderby' );
 
@@ -1151,7 +1155,7 @@ class Avada_Woocommerce {
 	 * @since 5.1.0
 	 * @param array $args Not used here.
 	 */
-	function after_cart_table( $args ) {
+	public function after_cart_table( $args ) {
 		echo '</div>';
 	}
 
@@ -1172,7 +1176,7 @@ class Avada_Woocommerce {
 	 * @access public
 	 * @since 5.1.0
 	 */
-	function cross_sell_display() {
+	public function cross_sell_display() {
 		global $product, $woocommerce_loop, $post;
 
 		$crosssells = WC()->cart->get_cross_sells();

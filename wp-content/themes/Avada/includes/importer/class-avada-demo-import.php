@@ -718,7 +718,7 @@ class Avada_Demo_Import {
 	 */
 	private function assign_menus_to_locations() {
 
-		// Set imported menus to registered theme locations
+		// Set imported menus to registered theme locations.
 		$locations = maybe_unserialize( get_theme_mod( 'nav_menu_locations' ) ); // Registered menu locations in theme.
 		$menus     = wp_get_nav_menus(); // Registered menus.
 

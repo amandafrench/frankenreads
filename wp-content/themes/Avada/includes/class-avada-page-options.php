@@ -296,7 +296,7 @@ class Avada_Page_Options {
 
 		if ( empty( $options_title ) ) {
 			$posts_no = wp_count_posts( 'avada_page_options' );
-			$options_title = sprintf( __( 'Custom page options %d ', 'Avada' ), ($posts_no->publish + 1) );
+			$options_title = sprintf( __( 'Custom page options %d ', 'Avada' ), ( $posts_no->publish + 1 ) );
 		}
 
 		$post_id = wp_insert_post(

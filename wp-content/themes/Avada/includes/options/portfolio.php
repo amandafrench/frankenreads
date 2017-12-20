@@ -52,7 +52,7 @@ function avada_options_section_portfolio( $sections ) {
 						'label'       => esc_html__( 'Portfolio Archive Featured Image Size', 'Avada' ),
 						'description' => __( 'Controls if the featured image size is fixed (cropped) or auto (full image ratio) for portfolio archive pages. <strong>IMPORTANT:</strong> Fixed works best with a standard 940px site width. Auto works best with larger site widths.', 'Avada' ),
 						'id'          => 'portfolio_archive_featured_image_size',
-						'default'     => 'cropped',
+						'default'     => 'full',
 						'type'        => 'radio-buttonset',
 						'choices'     => array(
 							'cropped' => esc_html__( 'Fixed', 'Avada' ),

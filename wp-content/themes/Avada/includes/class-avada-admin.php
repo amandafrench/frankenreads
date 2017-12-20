@@ -245,10 +245,12 @@ class Avada_Admin {
 			$patches = $avada_patcher->get_patcher_checker()->get_cache();
 			$avada_updates_styles = 'display:inline-block;background-color:#d54e21;color:#fff;font-size:9px;line-height:17px;font-weight:600;border-radius:10px;padding:0 6px;';
 
-			$avada_parent_menu_title = '<span class="ab-icon"></span><span class="ab-label">Avada</span>';
+			// Done for white label plugin.
+			$avada_parent_menu_name = __( 'Avada', 'Avada' );
+			$avada_parent_menu_title = '<span class="ab-icon"></span><span class="ab-label">' . esc_html( $avada_parent_menu_name ) . '</span>';
 			if ( isset( $patches['avada'] ) && 1 <= $patches['avada'] ) {
 				$patches_label = '<span style="' . $avada_updates_styles . '">' . $patches['avada'] . '</span>';
-				$avada_parent_menu_title = '<span class="ab-icon"></span><span class="ab-label">Avada ' . $patches_label . '</span>';
+				$avada_parent_menu_title = '<span class="ab-icon"></span><span class="ab-label">' . esc_html( $avada_parent_menu_name ) . ' ' . $patches_label . '</span>';
 			}
 
 			if ( ! is_admin() ) {
@@ -639,7 +641,7 @@ class Avada_Admin {
 	 */
 	public function get_admin_screens_header( $screen = 'welcome' ) {
 		?>
-		<h1><?php esc_attr_e( 'Welcome to Avada!', 'Avada' ); ?></h1>
+		<h1><?php echo esc_html( apply_filters( 'avada_admin_welcome_title', __( 'Welcome to Avada!', 'Avada' ) ) ); ?></h1>
 
 		<?php if ( 'demos' === $screen ) : ?>
 			<div class="updated error importer-notice importer-notice-1" style="display: none;">
@@ -670,10 +672,12 @@ class Avada_Admin {
 		<?php endif; ?>
 		<div class="about-text">
 			<?php if ( ! defined( 'ENVATO_HOSTED_SITE' ) ) : ?>
-				<?php printf( __( 'Avada is now installed and ready to use! Get ready to build something beautiful. Please <a href="%1$s" target="%2$s">register your purchase</a> to get automatic theme updates, import Avada demos and install premium plugins. Check out the <a href="%3$s">Support tab</a> to learn how to receive product support. We hope you enjoy it!', 'Avada' ), esc_url( admin_url( 'admin.php?page=avada-registration' ) ), '_blank', esc_url( admin_url( 'admin.php?page=avada-support' ) ) ); // WPCS: XSS ok. ?>
+				<?php $welcome_text = sprintf( __( 'Avada is now installed and ready to use! Get ready to build something beautiful. Please <a href="%1$s" target="%2$s">register your purchase</a> to get automatic theme updates, import Avada demos and install premium plugins. Check out the <a href="%3$s">Support tab</a> to learn how to receive product support. We hope you enjoy it!', 'Avada' ), esc_url( admin_url( 'admin.php?page=avada-registration' ) ), '_blank', esc_url( admin_url( 'admin.php?page=avada-support' ) ) ); // WPCS: XSS ok. ?>
 			<?php else : ?>
-				<?php printf( __( 'Avada is now installed and ready to use! Get ready to build something beautiful. Through your registration on the Envato hosted platform, you can now get automatic theme updates, import Avada demos and install premium plugins. Check out the <a href="%s" target="_blank">Envato Hosted Support Policy</a> to learn how to receive support through the Envato hosted support team. We hope you enjoy it!', 'Avada' ), esc_url( 'https://envatohosted.zendesk.com/hc/en-us/articles/115001666945-Envato-Hosted-Support-Policy' ) ); // WPCS: XSS ok. ?>
+				<?php $welcome_text = sprintf( __( 'Avada is now installed and ready to use! Get ready to build something beautiful. Through your registration on the Envato hosted platform, you can now get automatic theme updates, import Avada demos and install premium plugins. Check out the <a href="%s" target="_blank">Envato Hosted Support Policy</a> to learn how to receive support through the Envato hosted support team. We hope you enjoy it!', 'Avada' ), esc_url( 'https://envatohosted.zendesk.com/hc/en-us/articles/115001666945-Envato-Hosted-Support-Policy' ) ); // WPCS: XSS ok. ?>
 			<?php endif; ?>
+
+			<?php echo apply_filters( 'avada_admin_welcome_text', $welcome_text ); // WPCS: XSS ok. ?>
 		</div>
 		<div class="avada-logo"><span class="avada-version"><?php esc_attr_e( 'Version', 'Avada' ); ?> <?php echo esc_attr( $this->theme_version ); ?></span></div>
 		<h2 class="nav-tab-wrapper">
@@ -728,6 +732,7 @@ class Avada_Admin {
 				}
 
 				.avada-install-plugins .theme .update-message { display: block !important; cursor: default; }
+				.cp-rebranding-warning { display: none; }
 			</style>
 
 			<?php
@@ -972,7 +977,7 @@ class Avada_Admin {
 			);
 
 			$actions = array(
-				'activate' => '<a href="' . $url . '" class="button button-primary"' . $data_version . ' title="' . sprintf( esc_attr__( 'Activate %s', 'Avada' ), $item['sanitized_plugin'] ) . '">' . esc_attr__( 'Activate' , 'Avada' ) . '</a>',
+				'activate' => '<a href="' . $url . '" class="button button-primary"' . $data_version . ' title="' . sprintf( esc_attr__( 'Activate %s', 'Avada' ), $item['sanitized_plugin'] ) . '">' . esc_attr__( 'Activate', 'Avada' ) . '</a>',
 			);
 		} elseif ( version_compare( $installed_plugins[ $item['file_path'] ]['Version'], $item['version'], '<' ) ) {
 			$disable_class = '';
@@ -1335,7 +1340,7 @@ class Avada_Admin {
 		$avada_meta->header(
 			'fusion_tax_heading',
 			array(
-				'value' => __( 'Fusion Taxonomy Options','Avada' ),
+				'value' => __( 'Fusion Taxonomy Options', 'Avada' ),
 				'class' => 'avada-tax-heading avada-tax-heading-edit',
 			)
 		);
@@ -1343,14 +1348,14 @@ class Avada_Admin {
 		$avada_meta->select(
 			'slider_type',
 			array(
-				'no'      => __( 'No Slider','Avada' ),
-				'layer'   => __( 'LayerSlider','Avada' ),
-				'flex'    => __( 'Fusion Slider','Avada' ),
-				'rev'     => __( 'Slider Revolution','Avada' ),
-				'elastic' => __( 'Elastic Slider','Avada' ),
+				'no'      => __( 'No Slider', 'Avada' ),
+				'layer'   => __( 'LayerSlider', 'Avada' ),
+				'flex'    => __( 'Fusion Slider', 'Avada' ),
+				'rev'     => __( 'Slider Revolution', 'Avada' ),
+				'elastic' => __( 'Elastic Slider', 'Avada' ),
 			),
 			array(
-				'name'    => __( 'Slider Type ','Avada' ),
+				'name'    => __( 'Slider Type ', 'Avada' ),
 				'default' => 'no',
 				'class'   => 'avada-sliders-selection',
 				'desc'    => __( 'Select the type of slider that displays.', 'Avada' ),
@@ -1361,7 +1366,7 @@ class Avada_Admin {
 			'fusion_tax_slider',
 			$sliders_array['layer_sliders'],
 			array(
-				'name'       => __( 'Select LayerSlider ','Avada' ),
+				'name'       => __( 'Select LayerSlider ', 'Avada' ),
 				'default'    => 0,
 				'class'      => 'avada-sliders-group avada-layer-slider',
 				'desc'       => __( 'Select the unique name of the slider.', 'Avada' ),
@@ -1379,7 +1384,7 @@ class Avada_Admin {
 			'fusion_tax_wooslider',
 			$sliders_array['fusion_sliders'],
 			array(
-				'name'       => __( 'Select Fusion Slider ','Avada' ),
+				'name'       => __( 'Select Fusion Slider ', 'Avada' ),
 				'default'    => 0,
 				'class'      => 'avada-sliders-group avada-flex-slider',
 				'desc'       => __( 'Select the unique name of the slider.', 'Avada' ),
@@ -1397,7 +1402,7 @@ class Avada_Admin {
 			'fusion_tax_revslider',
 			$sliders_array['rev_sliders'],
 			array(
-				'name'       => __( 'Select Slider Revolution Slider','Avada' ),
+				'name'       => __( 'Select Slider Revolution Slider', 'Avada' ),
 				'default'    => 0,
 				'class'      => 'avada-sliders-group avada-rev-slider',
 				'desc'       => __( 'Select the unique name of the slider.', 'Avada' ),
@@ -1415,7 +1420,7 @@ class Avada_Admin {
 			'fusion_tax_elasticslider',
 			$sliders_array['elastic_sliders'],
 			array(
-				'name'       => __( 'Select Elastic Slider','Avada' ),
+				'name'       => __( 'Select Elastic Slider', 'Avada' ),
 				'default'    => 0,
 				'class'      => 'avada-sliders-group avada-elastic-slider',
 				'desc'       => __( 'Select the unique name of the slider.', 'Avada' ),
@@ -1437,7 +1442,7 @@ class Avada_Admin {
 				'above'   => __( 'Above', 'Avada' ),
 			),
 			array(
-				'name'       => __( 'Slider Position','Avada' ),
+				'name'       => __( 'Slider Position', 'Avada' ),
 				'default'    => 'default',
 				'class'      => 'avada-sliders-group avada-slider-buttonset',
 				/* translators: The "Fusion Theme Options" link. */
@@ -1455,7 +1460,7 @@ class Avada_Admin {
 		$avada_meta->text(
 			'main_padding_top',
 			array(
-				'name' => __( 'Page Content Top Padding','Avada' ),
+				'name' => __( 'Page Content Top Padding', 'Avada' ),
 				/* translators: The "Fusion Theme Options" link. */
 				'desc' => sprintf( esc_attr__( 'In pixels ex: 20px. %s', 'Avada' ), Avada()->settings->get_default_description( 'main_padding', 'top' ) ),
 			)
@@ -1464,7 +1469,7 @@ class Avada_Admin {
 		$avada_meta->text(
 			'main_padding_bottom',
 			array(
-				'name' => __( 'Page Content Bottom Padding','Avada' ),
+				'name' => __( 'Page Content Bottom Padding', 'Avada' ),
 				/* translators: The "Fusion Theme Options" link. */
 				'desc' => sprintf( esc_attr__( 'In pixels ex: 20px. %s', 'Avada' ), Avada()->settings->get_default_description( 'main_padding', 'bottom' ) ),
 			)
@@ -1473,7 +1478,7 @@ class Avada_Admin {
 		$avada_meta->colorpicker(
 			'header_bg_color',
 			array(
-				'name'    => __( 'Header Background Color','Avada' ),
+				'name'    => __( 'Header Background Color', 'Avada' ),
 				'default' => Avada()->settings->get( 'header_bg_color' ),
 				/* translators: The "Fusion Theme Options" link. */
 				'desc'    => sprintf( esc_attr__( 'Controls the background color for the header. Hex code or rgba value, ex: #000. %s', 'Avada' ), Avada()->settings->get_default_description( 'header_bg_color' ) ),
@@ -1483,7 +1488,7 @@ class Avada_Admin {
 		$avada_meta->image(
 			'page_title_bg',
 			array(
-				'name' => __( 'Page Title Bar Background','Avada' ),
+				'name' => __( 'Page Title Bar Background', 'Avada' ),
 				/* translators: The "Fusion Theme Options" link. */
 				'desc' => sprintf( esc_attr__( 'Select an image to use for the page title bar background. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_bg', 'url' ) ),
 			)
@@ -1492,7 +1497,7 @@ class Avada_Admin {
 		$avada_meta->image(
 			'page_title_bg_retina',
 			array(
-				'name'       => __( 'Page Title Bar Background Retina','Avada' ),
+				'name'       => __( 'Page Title Bar Background Retina', 'Avada' ),
 				/* translators: The "Fusion Theme Options" link. */
 				'desc'       => sprintf( esc_attr__( 'Select an image to use for retina devices. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_bg_retina', 'url' ) ),
 				'dependency' => array(
@@ -1508,7 +1513,7 @@ class Avada_Admin {
 		$avada_meta->text(
 			'page_title_height',
 			array(
-				'name' => __( 'Page Title Bar Height','Avada' ),
+				'name' => __( 'Page Title Bar Height', 'Avada' ),
 				/* translators: The "Fusion Theme Options" link. */
 				'desc' => sprintf( esc_attr__( 'Set the height of the page title bar. In pixels ex: 100px. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_height' ) ),
 			)
@@ -1517,7 +1522,7 @@ class Avada_Admin {
 		$avada_meta->text(
 			'page_title_mobile_height',
 			array(
-				'name' => __( 'Page Title Bar Mobile Height','Avada' ),
+				'name' => __( 'Page Title Bar Mobile Height', 'Avada' ),
 				/* translators: The "Fusion Theme Options" link. */
 				'desc' => sprintf( esc_attr__( 'Set the height of the page title bar on mobile. In pixels ex: 100px. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_mobile_height' ) ),
 			)

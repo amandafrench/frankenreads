@@ -17,6 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $plugins           = Avada_TGM_Plugin_Activation::$instance->plugins;
 $installed_plugins = get_plugins();
 $wp_api_plugins    = get_site_transient( 'fusion_wordpress_org_plugins' );
+$plugins_info      = avada_get_premium_plugins_info();
 
 if ( ! function_exists( 'plugins_api' ) ) {
 	include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' ); // For plugins_api.
@@ -96,6 +97,7 @@ if ( ! $wp_api_plugins ) {
 					$class .= ' update';
 				}
 
+				$required_premium = '';
 				?>
 				<div class="fusion-admin-box">
 					<div class="theme <?php echo esc_attr( $class ); ?>">
@@ -142,8 +144,14 @@ if ( ! $wp_api_plugins ) {
 								<?php endforeach; ?>
 							</div>
 							<?php if ( isset( $plugin['required'] ) && $plugin['required'] ) : ?>
+								<?php $required_premium = ' plugin-required-premium'; ?>
 								<div class="plugin-required">
 									<?php esc_html_e( 'Required', 'Avada' ); ?>
+								</div>
+							<?php endif; ?>
+							<?php if ( isset( $plugins_info[ $plugin['name'] ] ) && isset( $plugins_info[ $plugin['name'] ]['premium'] ) && $plugins_info[ $plugin['name'] ]['premium'] ) : ?>
+								<div class="plugin-premium<?php echo esc_attr( $required_premium ); ?>">
+									<?php esc_html_e( 'Premium', 'Avada' ); ?>
 								</div>
 							<?php endif; ?>
 						</div>

@@ -7,6 +7,60 @@ This is why we highly recommend to stay up to date with each new theme version a
 
 
 -----------------------------------------------------------------------------------------
+Version 5.4 - December 19th, 2017
+-----------------------------------------------------------------------------------------
+
+
+- NEW: 3 New Professionally Designed Demos
+- NEW: Added Advanced Custom Fields Pro plugin to our set of bundled premium plugins
+- NEW: Added Fusion White Label Branding plugin to our set of bundled premium plugins
+- NEW: Added Convert Plus plugin to our set of bundled premium plugins
+- NEW: Added a Fusion Builder element for Convert Plus plugin
+- NEW: Updated Layer Slider Plugin To Latest Version As of Release Date
+- NEW: Updated Slider Revolution Plugin To Latest Version As of Release Date
+- NEW: Added sliding bar link hover color setting to Theme Options
+- IMPROVEMENT: Related posts with fixed image size mode now make full use of responsive image setup
+- IMPROVEMENT: Updated a few database queries that were not following WP coding standards
+- IMPROVEMENT: Added new option to Fusion Slider to choose scroll down arrow or nav bullets, to avoid overlapping
+- IMPROVEMENT: Fusion Slider now also showing in preview mode of scheduled posts
+- IMPROVEMENT: Updated multiple featured image class to make meta box appearance the same across browsers if no image is yet chosen
+- IMPROVEMENT: Updated links on Fusion Builder add-ons page to SSL
+- IMPROVEMENT: Gallery pre-selection is now available on already created gallery elements
+- IMPROVEMENT: Updated several descriptions to improve option explanations
+- FIXED: 100% height scrolling sections being cut off on mobile, even if the 100% height option is disabled
+- FIXED: Blog pagination not being able to go beyond 5 pages
+- FIXED: Sliding bar icon on header v6 being visible, even if sliding bar was disabled
+- FIXED: Compatibility issues with plugins adding custom fields to checkout page
+- FIXED: Demo import only working for primary language when using WPML
+- FIXED: Demo import failing when mbstring PHP extension is not loaded
+- FIXED: Link selector in different Fusion Builder elements not working correctly in Firefox
+- FIXED: Backend compatibility issue with Yoast SEO when horizontal menu widget is used in page contents
+- FIXED: Arrow highlight indicator not working, when main menu item consists of an icon only
+- FIXED: Dedicated sticky header menu not working for header v6
+- FIXED: Vimeo video not pausing when moving to next frame in lightbox
+- FIXED: Fusion Taxonomy Options for WooCommerce product archives not working correctly
+- FIXED: A few styling issues in the vertical menu widget
+- FIXED: Javascript error and rendering issue, when using elements with lightbox option where a sub element misses image
+- FIXED: Styling issues on RTL setups for the tab element
+- FIXED: Icon / heading alignment issue in content boxes element when using vertical timeline layout
+- FIXED: Drop shadow not correctly working with zoom in/ zoom out image hover effects
+- FIXED: Bottom shadow not correctly displayed on person element if image lift up hover type is chosen
+- FIXED: Blog element padding setting from Theme Options not applied as default value for blog elements
+- FIXED: Equal heights setting in containers causing height issue when using the Events Calendar element
+- FIXED: Anchor scrolling on mobile not working correctly when triggered through sub-menu items
+- FIXED: Facebook widget no correctly resizing with the available space in wrapping container
+- FIXED: Fusion Taxonomy Options slider setting incorrectly copied to category pages from main shop page (upgrade fix only)
+- FIXED: Popularity setting in tabs widget not working correctly for non English languages
+- FIXED: Stored padding values for a few elements not being correctly read into the Fusion Builder settings popup
+- FIXED: Social icons widget conditional options only working after widget was saved for the first time
+- FIXED: PHP notice in social icon class if no title was set for custom icons
+- FIXED: Blank page template alignment issue when using side header and sticky footer
+- FIXED: Smooth anchor scrolling not respecting mobile sticky header when used on side header desktop layouts
+- FIXED: Theme Option remote media warning notice showing on all admin pages
+- FIXED: Overlay issue under certain circumstances when switching between shortcode generator and Fusion Builder
+
+
+-----------------------------------------------------------------------------------------
 Version 5.3.1 - November 29th, 2017
 -----------------------------------------------------------------------------------------
 

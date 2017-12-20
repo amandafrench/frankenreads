@@ -33,7 +33,7 @@ if ( ! class_exists( 'Avada_Nav_Walker_Megamenu' ) ) {
 		 * @param int    $depth  Depth of menu item. Used for padding.
 		 * @param array  $args   Not used.
 		 */
-		function start_lvl( &$output, $depth = 0, $args = array() ) {}
+		public function start_lvl( &$output, $depth = 0, $args = array() ) {}
 
 		/**
 		 * Ends the list of after the elements are added.
@@ -46,7 +46,7 @@ if ( ! class_exists( 'Avada_Nav_Walker_Megamenu' ) ) {
 		 * @param int    $depth  Depth of menu item. Used for padding.
 		 * @param array  $args   Not used.
 		 */
-		function end_lvl( &$output, $depth = 0, $args = array() ) {}
+		public function end_lvl( &$output, $depth = 0, $args = array() ) {}
 
 		/**
 		 * Start the element output.
@@ -60,7 +60,7 @@ if ( ! class_exists( 'Avada_Nav_Walker_Megamenu' ) ) {
 		 * @param array  $args   Not used.
 		 * @param int    $id     Not used.
 		 */
-		function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+		public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 			global $_wp_nav_menu_max_depth, $wp_registered_sidebars;
 			$_wp_nav_menu_max_depth = $depth > $_wp_nav_menu_max_depth ? $depth : $_wp_nav_menu_max_depth;
 
@@ -115,7 +115,7 @@ if ( ! class_exists( 'Avada_Nav_Walker_Megamenu' ) ) {
 			<li id="menu-item-<?php echo esc_attr( $item_id ); ?>" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 				<dl class="menu-item-bar">
 					<dt class="menu-item-handle">
-						<span class="item-title"><span class="menu-item-title"><?php echo esc_html( $title ); ?></span> <span class="is-submenu" <?php echo $submenu_text; // WPCS: XSS ok. ?>><?php esc_attr_e( 'sub item' , 'Avada' ); ?></span></span>
+						<span class="item-title"><span class="menu-item-title"><?php echo esc_html( $title ); ?></span> <span class="is-submenu" <?php echo $submenu_text; // WPCS: XSS ok. ?>><?php esc_attr_e( 'sub item', 'Avada' ); ?></span></span>
 						<span class="item-controls">
 							<span class="item-type"><?php echo esc_html( $item->type_label ); ?></span>
 							<span class="item-order hide-if-js">

@@ -274,14 +274,14 @@ class Avada_Init {
 	public function theme_activation() {
 
 		update_option(
-			'shop_catalog_image_size',   array(
+			'shop_catalog_image_size', array(
 				'width' => 500,
 				'height' => '',
 				0,
 			)
 		);
 		update_option(
-			'shop_single_image_size',    array(
+			'shop_single_image_size', array(
 				'width' => 700,
 				'height' => '',
 				0,
@@ -445,10 +445,11 @@ class Avada_Init {
 	/**
 	 * Modifies the search filter.
 	 *
+	 * @access public
 	 * @param object $query The search query.
 	 * @return object $query The modified search query.
 	 */
-	function modify_search_filter( $query ) {
+	public function modify_search_filter( $query ) {
 		if ( is_search() && $query->is_search ) {
 			if ( isset( $_GET ) && ( 2 < count( $_GET ) || ( 2 == count( $_GET ) && ! isset( $_GET['lang'] ) ) ) ) {
 				return $query;

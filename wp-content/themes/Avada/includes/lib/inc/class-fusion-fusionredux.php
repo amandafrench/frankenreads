@@ -109,8 +109,8 @@ class Fusion_FusionRedux {
 	 * @param array $changed_values The changed values to save.
 	 * @return void
 	 */
-	function bc_action_on_save( $data, $changed_values ) {
-		do_action( 'fusion_options_save' , $data, $changed_values );
+	public function bc_action_on_save( $data, $changed_values ) {
+		do_action( 'fusion_options_save', $data, $changed_values );
 	}
 
 	/**
@@ -441,15 +441,19 @@ class Fusion_FusionRedux {
 
 				if ( in_array( $field['id'], $font_size_dimension_fields, true ) ) {
 					$args['validate_callback'] = 'fusion_fusionredux_validate_font_size';
+					/* translators: The description subtitle and an example value. */
 					$args['subtitle'] = sprintf( esc_attr__( '%1$s Enter value including CSS unit (px, em, rem), ex: %2$s.', 'Avada' ), $args['subtitle'], $field['default'] );
 				} else {
+					/* translators: The description subtitle and an example value. */
 					$args['subtitle'] = sprintf( esc_attr__( '%1$s Enter value including any valid CSS unit, ex: %2$s.', 'Avada' ), $args['subtitle'], $field['default'] );
 				}
 				break;
 			case 'dimensions':
 				if ( 'lightbox_video_dimensions' === $field['id'] || 'menu_arrow_size' === $field['id'] ) {
+					/* translators: The description subtitle and an example value. */
 					$args['subtitle'] = sprintf( esc_attr__( '%1$s In pixels, ex: %2$s.', 'Avada' ), $args['subtitle'], implode( ', ', $field['default'] ) );
 				} else {
+					/* translators: The description subtitle and an example value. */
 					$args['subtitle'] = sprintf( esc_attr__( '%1$s Enter values including any valid CSS unit, ex: %2$s.', 'Avada' ), $args['subtitle'], implode( ', ', $field['default'] ) );
 				}
 				$args['validate_callback'] = 'fusion_fusionredux_validate_dimensions';
@@ -461,6 +465,7 @@ class Fusion_FusionRedux {
 				$args['right']  = ( isset( $field['choices'] ) && isset( $field['choices']['right'] ) ) ? true : false;
 				$args['validate_callback'] = 'fusion_fusionredux_validate_dimensions';
 				$default = is_array( $field['default'] ) ? implode( ', ', $field['default'] ) : $field['default'];
+				/* translators: The description subtitle and an example value. */
 				$args['subtitle'] = sprintf( esc_attr__( '%1$s Enter values including any valid CSS unit, ex: %2$s.', 'Avada' ), $args['subtitle'], $default );
 				break;
 			case 'number':
@@ -720,6 +725,7 @@ class Fusion_FusionRedux {
 				$option_type = esc_attr__( 'Builder', 'Avada' );
 			}
 
+			/* translators: The option type. */
 			$correlation_link = '  <span class="fusion-hover-description"><a href="https://theme-fusion.com/avada-doc/options/how-options-work/" target="_blank" rel="noopener noreferrer">' . sprintf( __( 'This is a dependent option that always stays visible because other %s Options can utilize it.', 'Avada' ), $option_type ) . '</a></span>';
 
 			$args['subtitle'] .= $correlation_link;
@@ -1033,7 +1039,7 @@ class Fusion_FusionRedux {
 	 */
 	public function add_config() {
 
-		$args = array(
+		$args = apply_filters( 'fusion_fusionredux_args', array(
 			'opt_name'             => $this->key,
 			'display_name'         => $this->args['display_name'],
 			'display_version'      => $this->ver,
@@ -1059,7 +1065,7 @@ class Fusion_FusionRedux {
 			'footer_credit'        => ' ',
 			'allow_tracking'       => false,
 			'ajax_save'            => FUSION_AJAX_SAVE,
-		);
+		) );
 		if ( class_exists( 'FusionRedux' ) ) {
 			FusionRedux::setArgs( $this->key, $args );
 		}

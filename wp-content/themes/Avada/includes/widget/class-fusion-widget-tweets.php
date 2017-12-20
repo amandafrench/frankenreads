@@ -364,8 +364,9 @@ class Fusion_Widget_Tweets extends WP_Widget {
 			<?php else : ?>
 				<a class="twitter-timeline" data-dnt="true" href="<?php echo esc_url_raw( 'https://twitter.com/' . $twitter_id ); ?>" data-widget-id="<?php echo esc_attr( $widget_id ); ?>"><?php printf( esc_attr__( 'Tweets by %s', 'Avada' ), esc_attr( $twitter_id ) ); ?></a>
 			<?php endif; ?>
-			<?php // @codingStandardsIgnoreLine ?>
+			<?php // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 			<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+			<?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 		</div>
 		<?php
 	}

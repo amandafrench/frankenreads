@@ -598,7 +598,7 @@ class Avada_Scripts {
 				'avada-woocommerce',
 				'avadaWooCommerceVars',
 				array(
-					'order_actions'                   => __( 'Details' , 'Avada' ),
+					'order_actions'                   => __( 'Details', 'Avada' ),
 					'title_style_type'                => Avada()->settings->get( 'title_style_type' ),
 					'woocommerce_shop_page_columns'   => Avada()->settings->get( 'woocommerce_shop_page_columns' ),
 					'woocommerce_checkout_error'      => esc_attr__( 'Not all fields have been filled in correctly.', 'Avada' ),

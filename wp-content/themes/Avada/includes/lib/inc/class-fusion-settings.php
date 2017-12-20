@@ -430,6 +430,7 @@ class Fusion_Settings {
 					$setting_value = ucwords( str_replace( '_', '', $setting_value ) );
 				}
 				$setting_link = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
+				/* translators: The value. */
 				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
 				break;
 
@@ -437,6 +438,7 @@ class Fusion_Settings {
 				// @codingStandardsIgnoreLine
 				$setting_value = ( 1 == $setting_value ) ? esc_attr__( 'Show', 'Avada' ) : esc_attr__( 'Hide', 'Avada' );
 				$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
+				/* translators: The value. */
 				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
 				break;
 
@@ -444,15 +446,15 @@ class Fusion_Settings {
 				// @codingStandardsIgnoreLine
 				$setting_value = ( 1 == $setting_value ) ? esc_attr__( 'Yes', 'Avada' ) : esc_attr__( 'No', 'Avada' );
 				$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
-				$setting_description = 'status_lightbox' === $setting
-					? sprintf( esc_attr__( '  Current value set to %s.', 'Avada' ), $setting_link )
-					: sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
+				/* translators: The value. */
+				$setting_description = 'status_lightbox' === $setting ? sprintf( esc_attr__( '  Current value set to %s.', 'Avada' ), $setting_link ) : sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
 
 				break;
 
 			case 'reverseyesno':
 				$setting_value = ( 1 === $setting_value || '1' === $setting_value || true === $setting_value ) ? esc_attr__( 'No', 'Avada' ) : esc_attr__( 'Yes', 'Avada' );
 				$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
+				/* translators: The value. */
 				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
 				break;
 
@@ -465,27 +467,33 @@ class Fusion_Settings {
 				$setting_value = ( false !== $menu ) ? $menu->name : esc_attr__( 'none', 'Avada' );
 				$setting_link  = '<a href="' . admin_url( 'nav-menus.php?action=locations' ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
 
+				/* translators: The value. */
 				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
 				break;
 
 			case 'sidebar':
 				$setting_value = ucwords( str_replace( '_', '', $setting_value ) );
 				$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
+				/* translators: The value. */
 				$setting_description = sprintf( esc_attr__( '  Global sidebar is currently active and will override selection with %s.', 'Avada' ), $setting_link );
 				break;
 
 			case 'range':
+				/* translators: The default value. */
 				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
 				break;
 
 			case 'child':
-				$setting_description = sprintf( esc_attr__( '  Leave empty for value set in parent options.  If that is also empty, the %1$s value of %2$s will be used.', 'Avada' ), apply_filters( 'fusion_options_label', esc_attr__( 'Element Options', 'Avada' ) ), $setting_link );
+				/* translators: The element and its value. */
+				$setting_description = sprintf( esc_attr__( '  Leave empty for value set in parent options. If that is also empty, the %1$s value of %2$s will be used.', 'Avada' ), apply_filters( 'fusion_options_label', esc_attr__( 'Element Options', 'Avada' ) ), $setting_link );
 				break;
 
 			default:
 				if ( '' !== $setting_value ) {
+					/* translators: The default value. */
 					$setting_description = sprintf( esc_attr__( '  Leave empty for default value of %s.', 'Avada' ), $setting_link );
 				} else {
+					/* translators: %1$s is the link. %2$s is the link text. */
 					$setting_description = sprintf( __( '  Currently no default selected. Can be set globally from the <a %1$s>%2$s</a>.', 'Avada' ), 'href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer"', apply_filters( 'fusion_options_label', esc_attr__( 'Element Options', 'Avada' ) ) );
 				}
 				break;

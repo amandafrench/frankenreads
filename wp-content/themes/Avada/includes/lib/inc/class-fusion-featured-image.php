@@ -140,7 +140,7 @@ class Fusion_Featured_Image {
 			);
 			$remove_image_css = '';
 		} else {
-			$preview_image = '<img class="fusion-preview-image" src="">';
+			$preview_image = '<img class="fusion-preview-image" src="" style="display:none;">';
 			$preview_image_css = '';
 		}
 

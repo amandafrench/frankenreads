@@ -302,10 +302,8 @@ class Sidebar_Generator {
 							<?php $alt = ( 0 == $cnt % 2 ) ? 'alternate' : ''; ?>
 							<tr class="<?php echo esc_attr( $alt ); ?>">
 								<td><?php echo esc_html( $sidebar ); ?></td>
-								<?php // @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
-								<td><?php echo 'fusion-' . strtolower( Sidebar_Generator::name_to_class( $sidebar ) ); ?></td>
-								<?php // @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
-								<td><a href="javascript:void(0);" onclick="return remove_sidebar_link('<?php echo Sidebar_Generator::name_to_class( $sidebar ); ?>',<?php echo $cnt + 1; ?>);" title="<?php esc_attr_e( 'Remove this Widget Section', 'Avada' ); ?>"><?php esc_html_e( 'remove', 'Avada' ); ?></a></td>
+								<td><?php echo 'fusion-' . strtolower( Sidebar_Generator::name_to_class( $sidebar ) ); // WPCS: XSS ok. ?></td>
+								<td><a href="javascript:void(0);" onclick="return remove_sidebar_link('<?php echo Sidebar_Generator::name_to_class( $sidebar ); // WPCS: XSS ok. ?>',<?php echo $cnt + 1; // WPCS: XSS ok. ?>);" title="<?php esc_attr_e( 'Remove this Widget Section', 'Avada' ); ?>"><?php esc_html_e( 'remove', 'Avada' ); ?></a></td>
 							</tr>
 							<?php $cnt++; ?>
 						<?php endforeach; ?>

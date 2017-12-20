@@ -162,17 +162,32 @@ class Avada {
 		'fusion_core' => array(
 			'slug'    => 'fusion-core',
 			'name'    => 'Fusion Core',
-			'version' => '3.3.1',
+			'version' => '3.4',
 		),
 		'fusion_builder' => array(
 			'slug'    => 'fusion-builder',
 			'name'    => 'Fusion Builder',
-			'version' => '1.3.1',
+			'version' => '1.4',
+		),
+		'fusion_white_label_branding' => array(
+			'slug'    => 'fusion-white-label-branding',
+			'name'    => 'Fusion White Label Branding',
+			'version' => '1.0',
+		),
+		'convert_plus' => array(
+			'slug'    => 'convertplug',
+			'name'    => 'Convert Plus',
+			'version' => '3.1.2',
+		),
+		'acf_pro' => array(
+			'slug'    => 'advanced-custom-fields-pro',
+			'name'    => 'Advanced Custom Fields PRO',
+			'version' => '5.6.7',
 		),
 		'layer_slider' => array(
 			'slug'    => 'LayerSlider',
 			'name'    => 'LayerSlider WP',
-			'version' => '6.6.4',
+			'version' => '6.6.5',
 		),
 		'slider_revolution' => array(
 			'slug'    => 'revslider',
