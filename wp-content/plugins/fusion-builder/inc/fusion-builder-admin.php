@@ -56,10 +56,10 @@ class Fusion_Builder_Admin {
 	 *
 	 * @access public
 	 */
-	function admin_menu() {
+	public function admin_menu() {
 		global $submenu;
 
-		$whatsnew = add_menu_page( esc_attr__( 'Fusion Builder', 'fusion-builder' ) , esc_attr__( 'Fusion Builder', 'fusion-builder' ), 'manage_options', 'fusion-builder-options', array( $this, 'whatsnew' ), 'dashicons-fusiona-logo', '2.222222' );
+		$whatsnew = add_menu_page( esc_attr__( 'Fusion Builder', 'fusion-builder' ), esc_attr__( 'Fusion Builder', 'fusion-builder' ), 'manage_options', 'fusion-builder-options', array( $this, 'whatsnew' ), 'dashicons-fusiona-logo', '2.222222' );
 		$addons   = add_submenu_page( 'fusion-builder-options', esc_attr__( 'Add-ons', 'fusion-builder' ), esc_attr__( 'Add-ons', 'fusion-builder' ), 'manage_options', 'fusion-builder-addons', array( $this, 'addons' ) );
 
 		if ( current_user_can( 'edit_theme_options' ) ) {
@@ -201,7 +201,7 @@ class Fusion_Builder_Admin {
 	 */
 	public static function header() {
 		?>
-		<h1><?php esc_html_e( 'Welcome to Fusion Builder!', 'fusion-builder' ); ?></h1>
+		<h1><?php echo esc_html( apply_filters( 'fusion_builder_admin_welcome_title', __( 'Welcome to Fusion Builder!', 'fusion-builder' ) ) ); ?></h1>
 		<div class="updated registration-notice-1" style="display: none;">
 			<p><strong><?php esc_attr_e( 'Thanks for registering your purchase. You will now receive the automatic updates.', 'fusion-builder' ); ?></strong></p>
 		</div>
@@ -218,10 +218,12 @@ class Fusion_Builder_Admin {
 		<?php else : ?>
 			<div class="about-text">
 				<?php if ( ! defined( 'ENVATO_HOSTED_SITE' ) ) : ?>
-					<?php printf( __( 'Fusion Builder is now installed and ready to use! Get ready to build something beautiful. Please <a href="%1$s" target="%2$s">register your purchase</a> to receive automatic updates and single page Fusion Builder Demo imports. We hope you enjoy it!', 'fusion-builder' ), admin_url( 'admin.php?page=avada-registration' ), '_blank' ); // WPCS: XSS ok. ?>
+					<?php $welcome_text = sprintf( __( 'Fusion Builder is now installed and ready to use! Get ready to build something beautiful. Please <a href="%1$s" target="%2$s">register your purchase</a> to receive automatic updates and single page Fusion Builder Demo imports. We hope you enjoy it!', 'fusion-builder' ), admin_url( 'admin.php?page=avada-registration' ), '_blank' ); // WPCS: XSS ok. ?>
 				<?php else : ?>
-					<?php printf( __( 'Fusion Builder is now installed and ready to use! Get ready to build something beautiful. Through your registration on the Envato hosted platform, you can now get automatic updates and single page Fusion Builder Demo imports. Check out the <a href="%s" target="_blank">Envato Hosted Support Policy</a> to learn how to receive support through the Envato hosted support team. We hope you enjoy it!', 'Avada' ), esc_url( 'https://envatohosted.zendesk.com/hc/en-us/articles/115001666945-Envato-Hosted-Support-Policy' ) ); // WPCS: XSS ok. ?>
+					<?php $welcome_text = sprintf( __( 'Fusion Builder is now installed and ready to use! Get ready to build something beautiful. Through your registration on the Envato hosted platform, you can now get automatic updates and single page Fusion Builder Demo imports. Check out the <a href="%s" target="_blank">Envato Hosted Support Policy</a> to learn how to receive support through the Envato hosted support team. We hope you enjoy it!', 'Avada' ), esc_url( 'https://envatohosted.zendesk.com/hc/en-us/articles/115001666945-Envato-Hosted-Support-Policy' ) ); // WPCS: XSS ok. ?>
 				<?php endif; ?>
+
+				<?php echo apply_filters( 'fusion_builder_admin_welcome_text', $welcome_text ); // WPCS: XSS ok. ?>
 			</div>
 		<?php endif; ?>
 		<div class="fusion-builder-logo">

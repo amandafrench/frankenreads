@@ -406,7 +406,7 @@ if ( 'no_text' !== $portfolio_text_layout ) {
 	 * Render the pagination.
 	 */
 	?>
-	<?php echo fusion_pagination( '', 2 ); // WPCS: XSS ok. ?>
+	<?php echo fusion_pagination( '', apply_filters( 'fusion_pagination_size', 1 ) ); // WPCS: XSS ok. ?>
 	<?php
 	/**
 	 * If infinite scroll with "load more" button is used.

@@ -1967,14 +1967,14 @@ h4.fusion_module_title span.fusion-global-tooltip {
   height: 16px;
   top: 0;
 }
-.fusion-tabs ul.fusion-builder-all-modules li:nth-child( 3n+0 ) .fusion-global-tooltip {
+.fusion-tabs ul.fusion-builder-all-modules li:nth-child(3n+0) .fusion-global-tooltip {
   -webkit-transform: none;
       -ms-transform: none;
           transform: none;
   left: auto;
   right: -40px;
 }
-.fusion-tabs ul.fusion-builder-all-modules li:nth-child( 3n+0 ) .fusion-global-tooltip:before {
+.fusion-tabs ul.fusion-builder-all-modules li:nth-child(3n+0) .fusion-global-tooltip:before {
   right: 40px;
   left: auto;
   text-align: right;
@@ -4308,4 +4308,8 @@ tr:hover .fusion-builder-table-delete-row {
 }
 .fusion-colorpicker-legacy > .mce-floatpanel {
   z-index: 99999 !important;
+}
+.fusion-module-icon.fusiona-convertplus:before {
+  content: "\e600" !important;
+  font-family: ConvertPlug !important;
 }

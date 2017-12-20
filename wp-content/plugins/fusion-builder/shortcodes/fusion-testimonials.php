@@ -449,7 +449,7 @@ if ( fusion_is_element_enabled( 'fusion_testimonials' ) ) {
 				if ( 'image' === $this->child_args['avatar'] ) {
 					$attr['style'] = sprintf(
 						'-webkit-border-radius: %s;-moz-border-radius: %s;border-radius: %s;',
-						$this->child_args['image_border_radius'], $this->child_args['image_border_radius'],  $this->child_args['image_border_radius']
+						$this->child_args['image_border_radius'], $this->child_args['image_border_radius'], $this->child_args['image_border_radius']
 					);
 				}
 

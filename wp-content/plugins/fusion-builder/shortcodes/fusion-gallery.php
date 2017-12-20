@@ -134,8 +134,8 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 						$this->args['pic_link'] = wp_get_attachment_url( $image_id );
 						$this->image_data = $fusion_library->images->get_attachment_data_from_url( $image_url );
 
-						$image_alt = isset( $this->image_data['alt'] ) ? $this->image_data['alt'] : '' ;
-						$image_title = isset( $this->image_data['title'] ) ? $this->image_data['title'] : '' ;
+						$image_alt = isset( $this->image_data['alt'] ) ? $this->image_data['alt'] : '';
+						$image_title = isset( $this->image_data['title'] ) ? $this->image_data['title'] : '';
 
 						$image_html = '<img src="' . $image_url . '" alt="' . $image_alt . '" title="' . $image_title . '" aria-label="' . $image_title . '" class="img-responsive wp-image-' . $image_id . '" />';
 

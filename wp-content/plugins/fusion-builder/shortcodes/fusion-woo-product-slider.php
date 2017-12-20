@@ -163,7 +163,13 @@ if ( fusion_is_element_enabled( 'fusion_products_slider' ) ) {
 							$image   = $price_tag = $terms = '';
 
 							if ( class_exists( 'Avada' ) && property_exists( Avada(), 'images' ) && 'auto' === $picture_size ) {
-								Avada()->images->set_grid_image_meta( array( 'layout' => 'grid', 'columns' => $columns, 'gutter_width' => $column_spacing ) );
+								Avada()->images->set_grid_image_meta(
+									array(
+										'layout' => 'grid',
+										'columns' => $columns,
+										'gutter_width' => $column_spacing,
+									)
+								);
 							}
 
 							// Title on rollover layout.

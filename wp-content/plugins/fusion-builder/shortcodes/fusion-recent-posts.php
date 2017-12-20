@@ -116,7 +116,7 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 				if ( 'tag' !== $defaults['pull_by'] ) {
 					// Check for cats to exclude; needs to be checked via exclude_cats param
 					// and '-' prefixed cats on cats param, exclution via exclude_cats param.
-					$cats_to_exclude = explode( ',' , $defaults['exclude_cats'] );
+					$cats_to_exclude = explode( ',', $defaults['exclude_cats'] );
 					if ( $cats_to_exclude ) {
 						foreach ( $cats_to_exclude as $cat_to_exclude ) {
 							$id_obj = get_category_by_slug( $cat_to_exclude );
@@ -131,7 +131,7 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 
 					// Setting up cats to be used and exclution using '-' prefix on cats param; transform slugs to ids.
 					$cat_ids = '';
-					$categories = explode( ',' , $defaults['cat_slug'] );
+					$categories = explode( ',', $defaults['cat_slug'] );
 					if ( isset( $categories ) && $categories ) {
 						foreach ( $categories as $category ) {
 							if ( $category ) {
@@ -152,7 +152,7 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 				} else {
 					// Check for tags to exclude; needs to be checked via exclude_tags param
 					// and '-' prefixed tags on tags param exclusion via exclude_tags param.
-					$tags_to_exclude = explode( ',' , $defaults['exclude_tags'] );
+					$tags_to_exclude = explode( ',', $defaults['exclude_tags'] );
 					$tags_id_to_exclude = array();
 					if ( $tags_to_exclude ) {
 						foreach ( $tags_to_exclude as $tag_to_exclude ) {
@@ -170,7 +170,7 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 					// Setting up tags to be used.
 					$tag_ids = '';
 					if ( '' !== $defaults['tag_slug'] ) {
-						$tags = explode( ',' , $defaults['tag_slug'] );
+						$tags = explode( ',', $defaults['tag_slug'] );
 						if ( isset( $tags ) && $tags ) {
 							foreach ( $tags as $tag ) {
 								// @codingStandardsIgnoreLine

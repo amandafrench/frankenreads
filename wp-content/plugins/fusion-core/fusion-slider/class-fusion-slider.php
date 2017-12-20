@@ -34,7 +34,7 @@ if ( ! class_exists( 'Fusion_Slider' ) ) {
 			add_action( 'create_slide-page', array( $this, 'slider_save_taxonomy_custom_meta' ), 10, 2 );
 			// Clone slide.
 			add_action( 'admin_action_save_as_new_slide', array( $this, 'save_as_new_slide' ) );
-			add_filter( 'post_row_actions',  array( $this, 'admin_clone_slide_button' ), 10, 2 );
+			add_filter( 'post_row_actions', array( $this, 'admin_clone_slide_button' ), 10, 2 );
 			add_action( 'edit_form_after_title', array( $this, 'admin_clone_slide_button_after_title' ) );
 			// Clone slider.
 			add_filter( 'slide-page_row_actions', array( $this, 'admin_clone_slider_button' ), 10, 2 );
@@ -205,9 +205,10 @@ if ( ! class_exists( 'Fusion_Slider' ) ) {
 		/**
 		 * Enqueue Scripts and Styles
 		 *
-		 * @return    void
+		 * @access public
+		 * @return void
 		 */
-		function admin_init() {
+		public function admin_init() {
 			global $pagenow;
 
 			$post_type = '';
@@ -277,8 +278,12 @@ if ( ! class_exists( 'Fusion_Slider' ) ) {
 			// Retrieve the existing value(s) for this meta field. This returns an array.
 			$term_meta = get_option( "taxonomy_$t_id" );
 
-			if ( ! array_key_exists( 'scroll_down_indicator', $term_meta ) ) {
-				$term_meta['scroll_down_indicator'] = '0';
+			if ( ! array_key_exists( 'slider_indicator', $term_meta ) ) {
+				$term_meta['slider_indicator'] = '';
+			}
+
+			if ( ! array_key_exists( 'slider_indicator_color', $term_meta ) ) {
+				$term_meta['slider_indicator_color'] = '';
 			}
 
 			if ( ! array_key_exists( 'typo_sensitivity', $term_meta ) ) {
@@ -998,6 +1003,14 @@ if ( ! class_exists( 'Fusion_Slider' ) ) {
 				$nav_box_height_half = '0';
 				if ( $slider_settings['nav_box_height'] ) {
 					$nav_box_height_half = intval( $slider_settings['nav_box_height'] ) / 2;
+				}
+
+				if ( ! isset( $slider_settings['slider_indicator'] ) ) {
+					$slider_settings['slider_indicator'] = '';
+				}
+
+				if ( ! isset( $slider_settings['slider_indicator_color'] ) || '' === $slider_settings['slider_indicator_color'] ) {
+					$slider_settings['slider_indicator_color'] = '#ffffff';
 				}
 
 				$slider_data = '';

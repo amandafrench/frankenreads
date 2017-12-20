@@ -844,6 +844,30 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 
 				if ( $this->child_args['icon'] || $this->child_args['image'] ) {
 					$attr['class'] .= ' heading-with-icon';
+
+					if ( 'timeline-vertical' === $this->parent_args['layout'] ) {
+
+						// Image is used.
+						if ( $this->child_args['image'] && $this->child_args['image_width'] && $this->child_args['image_height'] ) {
+
+							$image_height = $this->child_args['image_height'];
+							if ( $image_height > $this->parent_args['title_size'] && $image_height - $this->parent_args['title_size'] - 15 > 0 ) {
+								$attr['style'] .= 'margin-top:' . ( $image_height - $this->parent_args['title_size'] ) . 'px;';
+							}
+						} elseif ( $this->child_args['icon'] ) {
+
+							// Icon is used.
+							if ( 'yes' === $this->parent_args['icon_circle'] ) {
+								$full_icon_size = ( intval( $this->parent_args['icon_size'] ) + intval( $this->child_args['circlebordersize'] ) + intval( $this->child_args['outercirclebordersize'] ) ) * 2;
+							} else {
+								$full_icon_size = intval( $this->parent_args['icon_size'] );
+							}
+
+							if ( $full_icon_size > intval( $this->parent_args['title_size'] ) && $full_icon_size - intval( $this->parent_args['title_size'] ) - 15 > 0 ) {
+								$attr['style'] .= 'margin-top:' . ( ( intval( $full_icon_size ) - intval( $this->parent_args['title_size'] ) ) / 2 ) . 'px;';
+							}
+						}
+					}
 				}
 
 				if ( $this->parent_args['icon_align'] ) {
@@ -873,6 +897,32 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 
 				if ( 'timeline-vertical' === $this->parent_args['layout'] && 'right' === $this->parent_args['icon_align'] && ( ! $this->child_args['outercirclebordercolor'] || ! $this->child_args['circlebordersize'] ) ) {
 					$attr['style'] .= 'padding-left:20px;';
+				}
+
+				if ( 'timeline-vertical' === $this->parent_args['layout'] ) {
+
+					// Image is used.
+					if ( $this->child_args['image'] && $this->child_args['image_width'] && $this->child_args['image_height'] ) {
+
+						$image_height = $this->child_args['image_height'];
+						if ( $image_height > $this->parent_args['title_size'] && $image_height - $this->parent_args['title_size'] - 15 > 0 ) {
+							$attr['style'] .= 'margin-top:-' . ( $image_height - $this->parent_args['title_size'] ) . 'px;';
+							$attr['style'] .= 'margin-bottom:-' . ( $image_height - $this->parent_args['title_size'] ) . 'px;';
+						}
+					} elseif ( $this->child_args['icon'] ) {
+
+						// Icon is used.
+						if ( 'yes' === $this->parent_args['icon_circle'] ) {
+							$full_icon_size = ( intval( $this->parent_args['icon_size'] ) + intval( $this->child_args['circlebordersize'] ) + intval( $this->child_args['outercirclebordersize'] ) ) * 2;
+						} else {
+							$full_icon_size = intval( $this->parent_args['icon_size'] );
+						}
+
+						if ( $full_icon_size > intval( $this->parent_args['title_size'] ) && $full_icon_size - intval( $this->parent_args['title_size'] ) - 15 > 0 ) {
+							$attr['style'] .= 'margin-top:-' . ( ( intval( $full_icon_size ) - intval( $this->parent_args['title_size'] ) ) / 2 ) . 'px;';
+							$attr['style'] .= 'margin-bottom:-' . ( ( intval( $full_icon_size ) - intval( $this->parent_args['title_size'] ) ) / 2 ) . 'px;';
+						}
+					}
 				}
 
 				if ( $this->parent_args['animation_delay'] ) {
@@ -1076,13 +1126,6 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 							$attr['style'] .= 'padding-left:' . ( $this->child_args['image_width'] + 20 ) . 'px;';
 						}
 					}
-
-					if ( 'timeline-vertical' === $this->parent_args['layout'] ) {
-						$image_height = $this->child_args['image_height'];
-						if ( $image_height > $this->parent_args['title_size'] && $image_height - $this->parent_args['title_size'] - 15 > 0 ) {
-							$attr['style'] .= 'margin-top:-' . ( $image_height - $this->parent_args['title_size'] ) . 'px;';
-						}
-					}
 				} elseif ( in_array( $this->parent_args['layout'], array( 'icon-on-side', 'timeline-vertical', 'clean-horizontal' ), true ) && $this->child_args['icon'] ) {
 					if ( 'yes' === $this->parent_args['icon_circle'] ) {
 						$full_icon_size = ( intval( $this->parent_args['icon_size'] ) + intval( $this->child_args['circlebordersize'] ) + intval( $this->child_args['outercirclebordersize'] ) ) * 2;
@@ -1097,16 +1140,6 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 							$attr['style'] .= 'padding-right:' . ( intval( $full_icon_size ) + 20 ) . 'px;';
 						} else {
 							$attr['style'] .= 'padding-left:' . ( intval( $full_icon_size ) + 20 ) . 'px;';
-						}
-					}
-
-					if ( 'timeline-vertical' === $this->parent_args['layout'] ) {
-						if ( $full_icon_size > intval( $this->parent_args['title_size'] ) && $full_icon_size - intval( $this->parent_args['title_size'] ) - 15 > 0 ) {
-							if ( 'timeline-vertical' === $this->parent_args['layout'] ) {
-								$attr['style'] .= 'margin-top:-' . ( ( intval( $full_icon_size ) - intval( $this->parent_args['title_size'] ) ) / 2 ) . 'px;';
-							} else {
-								$attr['style'] .= 'margin-top:-' . ( intval( $full_icon_size ) - intval( $this->parent_args['title_size'] ) ) . 'px;';
-							}
 						}
 					}
 				}
@@ -1139,7 +1172,9 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 					$attr['style'] = '';
 
 					$border_color = '';
-					if ( 'yes' === $this->parent_args['icon_circle'] ) {
+					if ( $this->child_args['image'] && $this->child_args['image_width'] && $this->child_args['image_height'] ) {
+						$full_icon_size = $this->child_args['image_height'];
+					} elseif ( 'yes' === $this->parent_args['icon_circle'] ) {
 						if ( intval( $this->child_args['outercirclebordersize'] ) ) {
 							$full_icon_size = ( intval( $this->parent_args['icon_size'] ) + intval( $this->child_args['circlebordersize'] ) + intval( $this->child_args['outercirclebordersize'] ) ) * 2;
 						} else {
@@ -1180,7 +1215,9 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 
 					$border_color = '';
 
-					if ( 'yes' === $this->parent_args['icon_circle'] ) {
+					if ( $this->child_args['image'] && $this->child_args['image_width'] && $this->child_args['image_height'] ) {
+						$full_icon_size = $this->child_args['image_height'];
+					} elseif ( 'yes' === $this->parent_args['icon_circle'] ) {
 						if ( intval( $this->child_args['outercirclebordersize'] ) ) {
 							$full_icon_size = ( intval( $this->parent_args['icon_size'] ) + intval( $this->child_args['circlebordersize'] ) + intval( $this->child_args['outercirclebordersize'] ) ) * 2;
 						} else {
@@ -1190,8 +1227,12 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 						$full_icon_size = intval( $this->parent_args['icon_size'] );
 					}
 
-					$position_top        = $full_icon_size;
+					$position_top = $full_icon_size / 2;
+					if ( intval( $this->parent_args['title_size'] ) > $full_icon_size ) {
+						$position_top = intval( $this->parent_args['title_size'] ) / 2;
+					}
 					$position_horizontal = $full_icon_size / 2 + 15;
+
 					if ( $this->child_args['backgroundcolor'] && 'transparent' !== $this->child_args['backgroundcolor'] && '0' != Fusion_Color::new_color( $this->child_args['backgroundcolor'] )->alpha ) {
 						$position_top        += 35;
 						$position_horizontal += 35;

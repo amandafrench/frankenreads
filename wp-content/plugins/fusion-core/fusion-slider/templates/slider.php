@@ -25,6 +25,23 @@
 			echo 'font-size:' . esc_attr( $slider_settings['nav_arrow_size'] ) . ';';
 		}
 		echo '}';
+
+		if ( 'pagination_circles' === $slider_settings['slider_indicator'] ) {
+
+			if ( '' === $slider_settings['slider_indicator_color'] ) {
+				$slider_settings['slider_indicator_color'] = '#ffffff';
+			}
+
+			$slider_indicator_color = Fusion_Color::new_color( $slider_settings['slider_indicator_color'], 'hex' );
+
+			echo '#fusion-slider-' . esc_attr( $term_details->term_id ) . ' .flex-control-paging li a {';
+			echo 'background: rgba(' . esc_attr( $slider_indicator_color->red ) . ', ' . esc_attr( $slider_indicator_color->green ) . ', ' . esc_attr( $slider_indicator_color->blue ) . ', 0.6);';
+			echo '}';
+
+			echo '#fusion-slider-' . esc_attr( $term_details->term_id ) . ' .flex-control-paging li a.flex-active {';
+			echo 'background: rgba(' . esc_attr( $slider_indicator_color->red ) . ', ' . esc_attr( $slider_indicator_color->green ) . ', ' . esc_attr( $slider_indicator_color->blue ) . ', 1);';
+			echo '}';
+		}
 		?>
 	</style>
 	<div class="fusion-slider-loading"><?php esc_attr_e( 'Loading...', 'fusion-core' ); ?></div>
@@ -189,8 +206,8 @@
 					}
 				}
 
-				if ( ! isset( $metadata['scroll_down_indicator_color'][0] ) ) {
-					$metadata['scroll_down_indicator_color'][0] = '#ffffff';
+				if ( ! isset( $metadata['slider_indicator_color'][0] ) ) {
+					$metadata['slider_indicator_color'][0] = '#ffffff';
 				}
 
 				$data_display = 'cover';
@@ -227,8 +244,8 @@
 							<?php endif; ?>
 						</div>
 					</div>
-					<?php if ( isset( $slider_settings['scroll_down_indicator'] ) && $slider_settings['scroll_down_indicator'] ) : ?>
-						<a class="tfs-scroll-down-indicator fusion-one-page-text-link" href="#main" style="opacity:0;color:<?php echo esc_attr( $slider_settings['scroll_down_indicator_color'] ); ?>;"></a>
+					<?php if ( isset( $slider_settings['slider_indicator'] ) && 'scroll_down_indicator' === $slider_settings['slider_indicator'] ) : ?>
+						<a class="tfs-scroll-down-indicator fusion-one-page-text-link" href="#main" style="opacity:0;color:<?php echo esc_attr( $slider_settings['slider_indicator_color'] ); ?>;"></a>
 					<?php endif; ?>
 					<?php if ( isset( $metadata['pyre_link_type'][0] ) && 'full' === $metadata['pyre_link_type'][0] && isset( $metadata['pyre_slide_link'][0] ) && $metadata['pyre_slide_link'][0] ) : ?>
 						<a href="<?php echo esc_url_raw( $metadata['pyre_slide_link'][0] ); ?>" class="overlay-link" <?php echo ( isset( $metadata['pyre_slide_target'][0] ) && 'yes' === $metadata['pyre_slide_target'][0] ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?> aria-label="<?php the_title(); ?>"></a>

@@ -79,23 +79,25 @@ if ( ! class_exists( 'FusionSC_Global' ) ) {
 		 * replaces [fusion_global id="10"] with content.
 		 *
 		 * @since 1.2.2
+		 * @access public
 		 * @param string $content Content of the current post/page.
 		 * @param int    $post_id     ID of the current post/page.
 		 * @return string
 		 */
-		function add_global_elements( $content, $post_id ) {
-			 return $this->recursively_add_global_elements( $content, '' );
+		public function add_global_elements( $content, $post_id ) {
+			return $this->recursively_add_global_elements( $content, '' );
 		}
 
 		/**
 		 * Recursively travese through content and add global elements to content.
 		 *
 		 * @since 1.2.2
+		 * @access public
 		 * @param string $content       Content of the current post/page.
 		 * @param string $base_content  Base content for recursive method.
 		 * @return string
 		 */
-		function recursively_add_global_elements( $content, $base_content = '' ) {
+		public function recursively_add_global_elements( $content, $base_content = '' ) {
 			// early return if not global.
 			$position = strpos( $content, 'fusion_global' );
 
@@ -144,10 +146,11 @@ if ( ! class_exists( 'FusionSC_Global' ) ) {
 		 * replaces fusion_global="10" with short-code.
 		 *
 		 * @since 1.2.2
+		 * @access public
 		 * @param string $content Content of the current post/page.
 		 * @return string
 		 */
-		function update_global_elements( $content ) {
+		public function update_global_elements( $content ) {
 			// Early return if not global.
 			$position = strpos( $content, 'fusion_global' );
 
@@ -185,11 +188,11 @@ if ( ! class_exists( 'FusionSC_Global' ) ) {
 				// search and replace in nested elements.
 				for ( $i = 0; $i < $count; $i++ ) {
 					if ( false !== strpos( $this->global_elements[ $i ]['content'], $this->global_elements[ $x ]['content'] ) && $this->global_elements[ $i ]['content'] !== $this->global_elements[ $x ]['content'] ) {
-						$this->global_elements[ $i ]['content'] = str_replace( $this->global_elements[ $x ]['content'], $to_replace , $this->global_elements[ $i ]['content'] );
+						$this->global_elements[ $i ]['content'] = str_replace( $this->global_elements[ $x ]['content'], $to_replace, $this->global_elements[ $i ]['content'] );
 					}
 				}
 				// Remove fusion_global from short-code attributes.
-				$post_content = str_replace( addslashes( 'fusion_global="' . $this->global_elements[ $x ]['id'] . '"' ), '',$this->global_elements[ $x ]['content'] );
+				$post_content = str_replace( addslashes( 'fusion_global="' . $this->global_elements[ $x ]['id'] . '"' ), '', $this->global_elements[ $x ]['content'] );
 				$post = array(
 					'ID'           => $this->global_elements[ $x ]['id'],
 					'post_content' => $post_content,
@@ -214,10 +217,11 @@ if ( ! class_exists( 'FusionSC_Global' ) ) {
 		 * Find all global elements from short-codes array.
 		 *
 		 * @since 1.2.2
+		 * @access public
 		 * @param array $shortcodes array of all shortcodes in content.
 		 * @return string
 		 */
-		function recursively_extract_globals_from_shortcodes( $shortcodes ) {
+		public function recursively_extract_globals_from_shortcodes( $shortcodes ) {
 
 			if ( is_array( $shortcodes ) && ! empty( $shortcodes ) ) {
 
@@ -231,7 +235,7 @@ if ( ! class_exists( 'FusionSC_Global' ) ) {
 					// if short-code has got attributes.
 					if ( is_array( $shortcodes[ $i ]['atts'] ) ) {
 						// Check whether fusion_global param exists in short-code.
-						 $got_global = preg_grep( '/^fusion_global.*/' , $shortcodes[ $i ]['atts'] );
+						 $got_global = preg_grep( '/^fusion_global.*/', $shortcodes[ $i ]['atts'] );
 						if ( is_array( $got_global ) && 1 === count( $got_global ) ) {
 
 							 $global_elements_data            = array();
@@ -251,12 +255,13 @@ if ( ! class_exists( 'FusionSC_Global' ) ) {
 		 * Recursive function to extract all shortcodes from content.
 		 *
 		 * @since 1.2.2
+		 * @access public
 		 * @param array  $arr_shortcodes data of all shortcodes in content.
 		 * @param string $content Content string.
 		 * @param bool   $is_child flag for child elements.
 		 * @return array
 		 */
-		function recurvisely_extract_shortcodes_from_content( $arr_shortcodes, $content, $is_child = false ) {
+		public function recurvisely_extract_shortcodes_from_content( $arr_shortcodes, $content, $is_child = false ) {
 			// get all registered short-code matches.
 			$matches = $this->get_shortcode_matches( $content );
 			if ( ! empty( $matches ) ) {
@@ -276,17 +281,18 @@ if ( ! class_exists( 'FusionSC_Global' ) ) {
 				}
 			}
 
-			return  array_filter( $arr_shortcodes );
+			return array_filter( $arr_shortcodes );
 		}
 
 		/**
 		 * Get all shortcode matches in content.
 		 *
 		 * @since 1.2.2
+		 * @access public
 		 * @param string $content Content of the current post/page.
 		 * @return array
 		 */
-		function get_shortcode_matches( $content ) {
+		public function get_shortcode_matches( $content ) {
 			$pattern = get_shortcode_regex();
 			preg_match_all( "/$pattern/s", $content, $matches );
 			return $matches;

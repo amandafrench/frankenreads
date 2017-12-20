@@ -294,7 +294,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				if ( 'tag' !== $defaults['pull_by'] ) {
 					// Check for cats to exclude; needs to be checked via exclude_cats param
 					// and '-' prefixed cats on cats param exclusion via exclude_cats param.
-					$cats_to_exclude = explode( ',' , $defaults['exclude_cats'] );
+					$cats_to_exclude = explode( ',', $defaults['exclude_cats'] );
 					$cats_id_to_exclude = array();
 					if ( $cats_to_exclude ) {
 						foreach ( $cats_to_exclude as $cat_to_exclude ) {
@@ -311,7 +311,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					// Setting up cats to be used and exclusion using '-' prefix on cats param; transform slugs to ids.
 					$cat_ids = '';
 					if ( '' !== $defaults['cat_slug'] ) {
-						$categories = explode( ',' , $defaults['cat_slug'] );
+						$categories = explode( ',', $defaults['cat_slug'] );
 						if ( isset( $categories ) && $categories ) {
 							foreach ( $categories as $category ) {
 
@@ -328,7 +328,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				} else {
 					// Check for tags to exclude; needs to be checked via exclude_tags param
 					// and '-' prefixed tags on tags param exclusion via exclude_tags param.
-					$tags_to_exclude = explode( ',' , $defaults['exclude_tags'] );
+					$tags_to_exclude = explode( ',', $defaults['exclude_tags'] );
 					$tags_id_to_exclude = array();
 					if ( $tags_to_exclude ) {
 						foreach ( $tags_to_exclude as $tag_to_exclude ) {
@@ -346,7 +346,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					// Setting up tags to be used.
 					$tag_ids = array();
 					if ( '' !== $defaults['tag_slug'] ) {
-						$tags = explode( ',' , $defaults['tag_slug'] );
+						$tags = explode( ',', $defaults['tag_slug'] );
 						if ( isset( $tags ) && $tags ) {
 							foreach ( $tags as $tag ) {
 								// @codingStandardsIgnoreLine WordPress.VIP.RestrictedFunctions.get_term_by_get_term_by
@@ -500,7 +500,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				$html .= '</div>';
 
 				if ( 'no' !== $this->args['scrolling'] ) {
-					$pagination = $this->pagination( $this->query->max_num_pages, $range = 2, $this->query );
+					$pagination = $this->pagination( $this->query->max_num_pages, apply_filters( 'fusion_pagination_size', 1 ), $this->query );
 
 					$html .= $pagination;
 				}
@@ -526,10 +526,10 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 			 * @access public
 			 * @since 1.0
 			 * @param int    $pages         Max number of pages.
-			 * @param int    $range         Pagination range.
+			 * @param int    $range         How many page numbers to display to either side of the current page.
 			 * @param object $current_query The query.
 			 */
-			public function pagination( $pages = '', $range = 2, $current_query = '' ) {
+			public function pagination( $pages = '', $range = 1, $current_query = '' ) {
 				$output    = '';
 
 				if ( '' == $current_query ) {
@@ -569,31 +569,23 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 						$output .= '</a>';
 					}
 
-					$start = $paged - 1;
-		 			$end = $paged + 1;
-		 			if ( 0 === $paged - 1 ) {
-		 				$start = 1;
+					$start = $paged - $range;
+					$end = $paged + $range;
+					if ( 0 >= $paged - $range ) {
+							$start = ( 0 < $paged - 1 ) ? $paged - 1 : 1;
+					}
 
-		 				if ( $pages >= $paged + 2 ) {
-		 					$end = $paged + 2;
-		 				}
-		 			}
+					if ( $pages < $paged + $range ) {
+						$end = $pages;
+					}
 
-		 			if ( $pages < $paged + 1 ) {
-		 				$end = $pages;
-
-		 				if ( 0 < $paged - 2 ) {
-		 					$start = $paged - 2;
-		 				}
-		 			}
-
-		 			for ( $i = $start; $i <= $end; $i++ ) {
-		 				if ( $paged === $i ) {
-		 					$output .= '<span class="current">' . absint( $i ) . '</span>';
-		 				} else {
-		 					$output .= '<a href="' . esc_url( get_pagenum_link( $i ) ) . '" class="inactive">' . absint( $i ) . '</a>';
-		 				}
-		 			}
+					for ( $i = $start; $i <= $end; $i++ ) {
+						if ( $paged === $i ) {
+							$output .= '<span class="current">' . absint( $i ) . '</span>';
+						} else {
+							$output .= '<a href="' . esc_url( get_pagenum_link( $i ) ) . '" class="inactive">' . absint( $i ) . '</a>';
+						}
+					}
 
 					if ( $paged < $pages ) {
 						$output .= '<a class="pagination-next" href="' . get_pagenum_link( $paged + 1 ) . '">';
@@ -1000,7 +992,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				if ( ! post_password_required( $this->post_id ) ) {
 
 					$slideshow = array(
-						'images' => $this->get_post_thumbnails( $this->post_id , $fusion_settings->get( 'posts_slideshow_number' ) ),
+						'images' => $this->get_post_thumbnails( $this->post_id, $fusion_settings->get( 'posts_slideshow_number' ) ),
 					);
 
 					$post_video = apply_filters( 'fusion_builder_post_video', '', $this->post_id );
@@ -1194,8 +1186,8 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				);
 
 				if ( 'grid' === $this->args['layout'] || 'timeline' === $this->args['layout'] || 'masonry' === $this->args['layout'] ) {
-					$padding = ( is_array( $this->args['blog_grid_padding'] ) ) ? implode( ' ', $this->args['blog_grid_padding'] ) : $this->args['blog_grid_padding'] ;
-					$attr['style'] = 'padding: ' . $padding . ';';
+					$padding = ( is_array( $this->args['blog_grid_padding'] ) ) ? implode( ' ', $this->args['blog_grid_padding'] ) : $this->args['blog_grid_padding'];
+					$attr['style'] = 'padding:' . $padding . ';';
 
 					if ( 'masonry' === $this->args['layout'] ) {
 						$color = Fusion_Color::new_color( $this->args['grid_box_color'] );
@@ -1203,7 +1195,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 						if ( 0 === $color->alpha ) {
 							$color_css = $color->to_css( 'rgb' );
 						}
-						$attr['style'] = 'background-color:' . $color_css . ';';
+						$attr['style'] .= 'background-color:' . $color_css . ';';
 					}
 
 					if ( ! $this->args['meta_info_combined'] && ( $this->args['is_zero_excerpt'] || 'hide' === $this->args['excerpt'] ) && ! $this->args['show_title'] ) {

@@ -395,7 +395,10 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 			$classes .= ( 'yes' === $hundred_percent ) ? ' hundred-percent-fullwidth' : ' nonhundred-percent-fullwidth';
 			$fusion_fwc_type['content'] = ( 'yes' === $hundred_percent ) ? 'fullwidth' : 'contained';
 			$fusion_fwc_type['width_100_percent'] = $width_100;
-			$fusion_fwc_type['padding'] = array( 'left' => $padding_left, 'right' => $padding_right );
+			$fusion_fwc_type['padding'] = array(
+				'left' => $padding_left,
+				'right' => $padding_right,
+			);
 
 			// Hundred percent height.
 			$scroll_section_container = $data_attr = $active_class = $css_id = '';

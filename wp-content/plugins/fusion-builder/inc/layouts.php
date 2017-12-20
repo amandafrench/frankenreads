@@ -442,7 +442,7 @@ function fusion_builder_display_library_content() {
 						<?php
 						while ( $query->have_posts() ) :
 							$query->the_post();
-							$is_global = ( 'yes' === get_post_meta( get_the_ID(), '_fusion_is_global', true ) ? 'fusion-global' : ''  );
+							$is_global = ( 'yes' === get_post_meta( get_the_ID(), '_fusion_is_global', true ) ? 'fusion-global' : '' );
 							global $post;
 							$element_type = esc_attr( get_post_meta( $post->ID, '_fusion_element_type', true ) );
 							?>

@@ -285,8 +285,8 @@ if ( fusion_is_element_enabled( 'fusion_separator' ) ) {
 					$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['height'] = '1px';
 					$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-top'] = 'none';
 					$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-bottom'] = 'none';
-					$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background'] = sprintf( '-webkit-radial-gradient(ellipse at 50%% -50%% , %s 0px, rgba(255, 255, 255, 0) 80%%) repeat scroll 0 0 rgba(0, 0, 0, 0)',  $fusion_settings->get( 'sep_color' ) );
-					$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background'] = sprintf( 'radial-gradient(ellipse at 50%% -50%% , %s 0px, rgba(255, 255, 255, 0) 80%%) repeat scroll 0 0 rgba(0, 0, 0, 0)',  $fusion_settings->get( 'sep_color' ) );
+					$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background'] = sprintf( '-webkit-radial-gradient(ellipse at 50%% -50%% , %s 0px, rgba(255, 255, 255, 0) 80%%) repeat scroll 0 0 rgba(0, 0, 0, 0)', $fusion_settings->get( 'sep_color' ) );
+					$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background'] = sprintf( 'radial-gradient(ellipse at 50%% -50%% , %s 0px, rgba(255, 255, 255, 0) 80%%) repeat scroll 0 0 rgba(0, 0, 0, 0)', $fusion_settings->get( 'sep_color' ) );
 
 					$elements = $dynamic_css_helpers->map_selector( $elements, ':after' );
 					$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['display'] = 'block';

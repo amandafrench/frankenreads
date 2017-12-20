@@ -4,7 +4,7 @@
 Plugin Name: Fusion Builder
 Plugin URI: http://www.theme-fusion.com
 Description: ThemeFusion Page Builder Plugin
-Version: 1.3.1
+Version: 1.4
 Author: ThemeFusion
 Author URI: http://www.theme-fusion.com
 */
@@ -21,7 +21,7 @@ if ( ! defined( 'FUSION_BUILDER_DEV_MODE' ) ) {
 
 // Plugin version.
 if ( ! defined( 'FUSION_BUILDER_VERSION' ) ) {
-	define( 'FUSION_BUILDER_VERSION', '1.3.1' );
+	define( 'FUSION_BUILDER_VERSION', '1.4' );
 }
 // Plugin Folder Path.
 if ( ! defined( 'FUSION_BUILDER_PLUGIN_DIR' ) ) {
@@ -297,7 +297,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 		 * @since 1.1.0
 		 * @param mixed $p Posts.
 		 */
-		function next_page_helper( $p ) {
+		private function next_page_helper( $p ) {
 
 			if ( false !== strpos( $p->post_content, '[fusion_builder_next_page]' ) ) {
 				$p->post_content = str_replace( '[fusion_builder_next_page]', '<!--nextpage-->', $p->post_content );
@@ -390,6 +390,9 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 			require_once FUSION_BUILDER_PLUGIN_DIR . 'inc/helpers.php';
 			if ( function_exists( 'fusion_builder_auto_activate_element' ) ) {
 				fusion_builder_auto_activate_element( 'fusion_gallery' );
+				if ( class_exists( 'Convert_Plug' ) ) {
+					fusion_builder_auto_activate_element( 'fusion_convert_plus' );
+				}
 			}
 
 			$fusion_cache = new Fusion_Cache();
@@ -733,7 +736,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 					$element_position_change = 0;
 					$last_column_was_full = false;
 
-					while ( ( $row_last_pos = strpos( $row_content,  $needle['column_opening'], $row_last_pos + 1 ) ) !== false ) {
+					while ( ( $row_last_pos = strpos( $row_content, $needle['column_opening'], $row_last_pos + 1 ) ) !== false ) {
 						$element_positions[] = $row_last_pos;
 					}
 
@@ -1811,7 +1814,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 			$value_length = strlen( $value );
 			$unit_length = strlen( $unit_to_strip );
 
-			if ( $value_length > $unit_length && 0 === substr_compare( $value, $unit_to_strip, $unit_length * (-1), $unit_length ) ) {
+			if ( $value_length > $unit_length && 0 === substr_compare( $value, $unit_to_strip, $unit_length * ( -1 ), $unit_length ) ) {
 				return substr( $value, 0, $value_length - $unit_length );
 			} else {
 				return $value;

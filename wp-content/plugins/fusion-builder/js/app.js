@@ -7,7 +7,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 ( function( $ ) {
 
 	var FusionIconPickHandler,
-		FusionDelay;
+	    FusionDelay;
 
 	$.fn.outerHTML = function() {
 		return ( ! this.length ) ? this : ( this[0].outerHTML || ( function( el ) {
@@ -335,9 +335,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 						string += String.fromCharCode( ( ( c & 15 ) << 12 ) | ( ( c2 & 63 ) << 6 ) | ( c3 & 63 ) );
 						i += 3;
 					}
-
 				}
-
 				return string;
 			},
 
@@ -385,7 +383,6 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 									$( thisEl.parent().find( '.icon_select_container .icon-' + name ) ).hide();
 								}
 							} );
-
 						} else {
 							$( '.icon_select_container .icon_preview' ).show();
 						}
@@ -447,6 +444,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 					    defaultParam,
 					    multiImageContainer,
 					    multiImageInput,
+					    multiVal,
 					    multiUpload    = false,
 					    multiImages    = false,
 					    multiImageHtml = '',
@@ -487,23 +485,16 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 					// Set the media dialog box state as 'gallery' if the element is gallery.
 					if ( multiImages && 'fusion_gallery' === $thisEl.data( 'element' ) ) {
-						ids         = multiImageInput.val().split( ',' );
+						multiVal    = multiImageInput.val();
+						ids         = 'string' === typeof multiVal ? multiVal.split( ',' ) : '';
 						attachments = [];
 						attachment  = '';
-
-						jQuery.each( ids, function( index, id ) {
-							if ( '' !== id && 'NaN' !== id ) {
-								attachment = wp.media.attachment( id );
-								attachment.fetch();
-								attachments.push( attachment );
-							}
-						} );
 
 						wp.media._galleryDefaults.link  = 'none';
 						wp.media._galleryDefaults.size  = 'thumbnail';
 						fileFrame.options.syncSelection = true;
 
-						if ( attachments.length ) {
+						if ( 'undefined' !== typeof multiVal && '' !== multiVal ) {
 							fileFrame.options.state = 'gallery-edit';
 						} else {
 							fileFrame.options.state = 'gallery';
@@ -515,14 +506,45 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 						var selection = fileFrame.state().get( 'selection' ),
 						    library   = fileFrame.state().get( 'library' ),
 						    attachment,
-						    id;
+						    id,
+						    fetchIds = [];
 
 						if ( multiImages ) {
 							if ( 'fusion_gallery' !== $thisEl.data( 'element' ) || 'gallery-edit' !== fileFrame.options.state ) {
 								$( '.fusion-builder-media-dialog' ).addClass( 'hide-menu' );
 							}
-							selection.add( attachments );
-							library.add( attachments );
+
+							jQuery.each( ids, function( index, id ) {
+								if ( '' !== id && 'NaN' !== id ) {
+
+									// Check if attachment exists.
+									if ( 'undefined' !== typeof wp.media.attachment( id ).get( 'url' ) ) {
+
+										// Exists, add it to selection.
+										selection.add( wp.media.attachment( id ) );
+										library.add( wp.media.attachment( id ) );
+
+									} else {
+
+										// Doesn't exist we need to fetch.
+										fetchIds.push( id );
+									}
+								}
+							});
+
+							// If still some attachments needing fetched, fetch them in a single query.
+							if ( 0 < fetchIds.length ) {
+								wp.media.query({ post__in: fetchIds }).more().then( function( response ) { // jshint ignore:line
+									jQuery.each( ids, function( index, id ) {
+										if ( '' !== id && 'NaN' !== id ) {
+
+											// Add fetched attachment to selection.
+											selection.add( wp.media.attachment( id ) );
+											library.add( wp.media.attachment( id ) );
+										}
+									});
+								});
+							}
 						} else {
 							id = $thisEl.parents( '.fusion-builder-module-settings' ).find( '#image_id' ).val();
 							attachment = wp.media.attachment( id );
@@ -567,11 +589,11 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 					fileFrame.on( 'select insert', function() {
 
 						var imageURL,
-							imageID,
-							imageIDs,
-							state = fileFrame.state(),
-							firstElementNode,
-							firstElement;
+						    imageID,
+						    imageIDs,
+						    state = fileFrame.state(),
+						    firstElementNode,
+						    firstElement;
 
 						if ( 'undefined' === typeof state.get( 'selection' ) ) {
 							imageURL = jQuery( fileFrame.$el ).find( '#embed-url-field' ).val();
@@ -600,8 +622,8 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 							}
 
 							state.get( 'selection' ).map( function( attachment ) {
-								var element = attachment.toJSON();
-								var display = state.display( attachment ).toJSON();
+								var element = attachment.toJSON(),
+								    display = state.display( attachment ).toJSON();
 
 								imageID = element.id;
 								if ( element.sizes && element.sizes[display.size] && element.sizes[display.size].url ) {
@@ -656,8 +678,9 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 				jQuery( 'body' ).on( 'click', '.fusion-multi-image-remove', function() {
 					var input = jQuery( this ).parents( '.fusion-multiple-upload-images' ).find( '.fusion-multi-image-input' ),
 					    imageIDs,
-							imageID,
-							imageIndex;
+					    imageID,
+					    imageIndex;
+
 					imageID = jQuery( this ).parent( '.fusion-multi-image' ).data( 'image-id' );
 					imageIDs = input.val().split( ',' ).map( function( v ) {
 						return parseInt( v, 10 );
@@ -673,19 +696,19 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 			},
 
 			fusionBuilderActivateLinkSelector: function( $linkButton ) {
-				var $linkSubmit = jQuery( '#wp-link-submit' ),
-					$linkTitle = jQuery( '.wp-link-text-field' ),
-					$linkTarget = jQuery( '.link-target' ),
-					$fusionLinkSubmit = jQuery( '<input type="button" name="fusion-link-submit" id="fusion-link-submit" class="button-primary" value="Set Link">' ),
-					$input,
-					$linkDialog = window.wpLink,
-					$url,
-					wpLinkL10n = window.wpLinkL10n;
+				var $linkSubmit       = jQuery( '#wp-link-submit' ),
+				    $linkTitle        = jQuery( '.wp-link-text-field' ),
+				    $linkTarget       = jQuery( '.link-target' ),
+				    $fusionLinkSubmit = jQuery( '<input type="button" name="fusion-link-submit" id="fusion-link-submit" class="button-primary" value="Set Link">' ),
+				    $linkDialog       = window.wpLink,
+				    wpLinkL10n        = window.wpLinkL10n,
+				    $input,
+				    $url;
 
 				jQuery( $linkButton ).click( function( e ) {
 					$fusionLinkSubmit.insertBefore( $linkSubmit );
 					$input = jQuery( e.target ).prev( '.fusion-builder-link-field' );
-					$url = $input.val();
+					$url   = $input.val();
 					$linkSubmit.hide();
 					$linkTitle.hide();
 					$linkTarget.hide();
@@ -718,9 +741,10 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 						$fusionLinkSubmit.remove();
 						jQuery( '#wp-link-cancel' ).unbind( 'click' );
 						$linkDialog.close();
-						window.wpLink.textarea = '';
 					};
-					$linkDialog.open( 'content' );
+
+					//  Using custom CSS field here as dummy text area, as it is always available.
+					$linkDialog.open( 'fusion-custom-css-field' );
 					jQuery( '#wp-link-url' ).val( $url );
 				});
 
@@ -836,8 +860,8 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 				layoutsContainer = $( '#fusion-builder-layouts-templates .fusion-page-layouts' );
 				currentPostID    = $( '#fusion_builder_main_container' ).data( 'post-id' );
 				emptyMessage     = $( '#fusion-builder-layouts-templates .fusion-page-layouts .fusion-empty-library-message' );
-				customCSS = $( '#fusion-custom-css-field' ).val();
-				pageTemplate = $( '#page_template' ).val();
+				customCSS        = $( '#fusion-custom-css-field' ).val();
+				pageTemplate     = $( '#page_template' ).val();
 
 				if ( '' !== templateName ) {
 
@@ -1006,7 +1030,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 				pageName = $( event.currentTarget ).data( 'page-name' );
 				demoName = $( event.currentTarget ).data( 'demo-name' );
-				postId = $( event.currentTarget ).data( 'post-id' );
+				postId   = $( event.currentTarget ).data( 'post-id' );
 
 				$.ajax( {
 					type: 'POST',
@@ -1065,7 +1089,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 				var $layout,
 				    r,
-						isGlobal = false;
+				    isGlobal = false;
 
 				if ( event ) {
 					event.preventDefault();
@@ -1099,11 +1123,9 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 						fusion_layout_id: $layout.data( 'layout_id' )
 					},
 					success: function() {
-						var $containerSuffix;
+						var $containerSuffix = 'elements';
 						if ( $layout.parents( '#fusion-builder-layouts-templates' ).length ) {
 							$containerSuffix = 'templates';
-						} else {
-							$containerSuffix = 'elements';
 						}
 
 						$layout.remove();
@@ -1233,10 +1255,10 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 			},
 
 			validateContent: function( content ) {
-				var contentIsEmpty      = '' === content,
-				    textNodes           = '',
-				    columns             = [],
-				    containers          = [],
+				var contentIsEmpty = '' === content,
+				    textNodes      = '',
+				    columns        = [],
+				    containers     = [],
 				    shortcodeTags,
 				    columnwrapped,
 				    insertionFlag;
@@ -1355,9 +1377,8 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 				// Remove blank page layout
 				this.$el.find( '.fusion-builder-blank-page-content' ).each( function() {
-					var
-					$that = $( this ),
-					thisView = FusionPageBuilderViewManager.getView( $that.data( 'cid' ) );
+					var $that = $( this ),
+					    thisView = FusionPageBuilderViewManager.getView( $that.data( 'cid' ) );
 
 					if ( 'undefined' !== typeof thisView ) {
 						thisView.removeBlankPageHelper();
@@ -1366,9 +1387,8 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 				// Remove all containers
 				this.$el.find( '.fusion-builder-section-content' ).each( function() {
-					var
-					$that = $( this ),
-					thisView = FusionPageBuilderViewManager.getView( $that.data( 'cid' ) );
+					var $that = $( this ),
+					    thisView = FusionPageBuilderViewManager.getView( $that.data( 'cid' ) );
 
 					if ( 'undefined' !== typeof thisView ) {
 						thisView.removeContainer();
@@ -1421,7 +1441,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 					    shortcodeName       = shortcodeElement[2],
 					    shortcodeAttributes = '' !== shortcodeElement[3] ? window.wp.shortcode.attrs( shortcodeElement[3] ) : '',
 					    shortcodeContent    = shortcodeElement[5],
-					    elementCID           = FusionPageBuilderViewManager.generateCid(),
+					    elementCID          = FusionPageBuilderViewManager.generateCid(),
 					    prefixedAttributes  = { params: ({}) },
 					    elementSettings,
 					    key,
@@ -1431,12 +1451,13 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 					    elementContent,
 					    alpha,
 					    paging,
+					    values,
 
-						// Check for shortcodes inside shortcode content
-						shortcodesInContent = 'undefined' !== typeof shortcodeContent && '' !== shortcodeContent && shortcodeContent.match( regExp ),
+					    // Check for shortcodes inside shortcode content
+					    shortcodesInContent = 'undefined' !== typeof shortcodeContent && '' !== shortcodeContent && shortcodeContent.match( regExp ),
 
-						// Check if shortcode allows generator
-						allowGenerator = 'undefined' !== typeof fusionAllElements[ shortcodeName ].allow_generator ? fusionAllElements[ shortcodeName ].allow_generator : '';
+					    // Check if shortcode allows generator
+					    allowGenerator = 'undefined' !== typeof fusionAllElements[ shortcodeName ].allow_generator ? fusionAllElements[ shortcodeName ].allow_generator : '';
 
 					elementSettings = {
 						type: shortcodeName,
@@ -1539,8 +1560,40 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 								}
 							}
 
-						}
+							if ( 'padding' === key && ( 'fusion_widget_area' === shortcodeName || 'fusion_builder_column' === shortcodeName || 'fusion_builder_column_inner' === shortcodeName ) ) {
+								values = shortcodeAttributes.named[ key ].split( ' ' );
 
+								if ( 1 === values.length ) {
+									prefixedAttributes.params.padding_top = values[0];
+									prefixedAttributes.params.padding_right = values[0];
+									prefixedAttributes.params.padding_bottom = values[0];
+									prefixedAttributes.params.padding_left = values[0];
+								}
+
+								if ( 2 === values.length ) {
+									prefixedAttributes.params.padding_top = values[0];
+									prefixedAttributes.params.padding_right = values[1];
+									prefixedAttributes.params.padding_bottom = values[0];
+									prefixedAttributes.params.padding_left = values[1];
+								}
+
+								if ( 3 === values.length ) {
+									prefixedAttributes.params.padding_top = values[0];
+									prefixedAttributes.params.padding_right = values[1];
+									prefixedAttributes.params.padding_bottom = values[2];
+									prefixedAttributes.params.padding_left = values[1];
+								}
+
+								if ( 4 === values.length ) {
+									prefixedAttributes.params.padding_top = values[0];
+									prefixedAttributes.params.padding_right = values[1];
+									prefixedAttributes.params.padding_bottom = values[2];
+									prefixedAttributes.params.padding_left = values[3];
+								}
+
+								delete prefixedAttributes.params[ key ];
+							}
+						}
 						elementSettings = _.extend( elementSettings, prefixedAttributes );
 					}
 
@@ -1558,7 +1611,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 						dependencyOption      = fusionAllElements[ shortcodeName ].option_dependency;
 						dependencyOptionValue = prefixedAttributes.params[ dependencyOption ];
-						elementContent         = prefixedAttributes.params.element_content;
+						elementContent        = prefixedAttributes.params.element_content;
 						prefixedAttributes.params[ dependencyOptionValue ] = elementContent;
 					}
 
@@ -1576,7 +1629,6 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 							thisEl.shortcodesToBuilder( shortcodeContent, elementCID );
 						}
 					}
-
 				} );
 			},
 
@@ -1895,17 +1947,13 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 							shortcode += '[fusion_builder_row]';
 
 							$thisRow.find( '.fusion-builder-column-outer' ).each( function() {
-								var
-								$thisColumn = $( this ),
-								columnCID   = $thisColumn.data( 'cid' ),
-								columnView  = FusionPageBuilderViewManager.getView( columnCID );
+								var $thisColumn = $( this ),
+								    columnCID   = $thisColumn.data( 'cid' ),
+								    columnView  = FusionPageBuilderViewManager.getView( columnCID );
 
 								shortcode += columnView.getColumnContent( $thisColumn );
-
 							} );
-
 							shortcode += '[/fusion_builder_row]';
-
 						} );
 
 						shortcode += '[/fusion_builder_container]';
@@ -1972,7 +2020,6 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 							}
 						} );
 					}
-
 				} );
 			},
 
@@ -1981,16 +2028,16 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 				// TO DO :: Check for clone and delete too.
 				var isChanged = false,
 				    $thisColumn,
-						columnCID,
-						column;
+				    columnCID,
+				    column;
 
 				if ( 'container' === section ) {
 
 					// Parse rows.
 					currentElement.find( '.fusion-builder-row-content:not(.fusion_builder_row_inner .fusion-builder-row-content)' ).each( function() {
 
-						var thisRow     = $( this ),
-						    rowCID      = thisRow.data( 'cid' ),
+						var thisRow = $( this ),
+						    rowCID  = thisRow.data( 'cid' ),
 						    row;
 
 						// Get model from collection by cid.
@@ -2033,7 +2080,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 								if ( $( this ).hasClass( 'fusion_module_block' ) ) {
 
 									thisElement = $( this );
-									elementCID = thisElement.data( 'cid' );
+									elementCID  = thisElement.data( 'cid' );
 
 									// Get model from collection by cid.
 									element = FusionPageBuilderElements.find( function( model ) {
@@ -2089,7 +2136,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 						// Standard element.
 						if ( $( this ).hasClass( 'fusion_module_block' ) ) {
 							$thisModule = $( this );
-							moduleCID = 'undefined' === typeof $thisModule.data( 'cid' ) ? $thisModule.find( '.fusion-builder-data-cid' ).data( 'cid' ) : $thisModule.data( 'cid' );
+							moduleCID   = 'undefined' === typeof $thisModule.data( 'cid' ) ? $thisModule.find( '.fusion-builder-data-cid' ).data( 'cid' ) : $thisModule.data( 'cid' );
 
 							// Get model from collection by cid.
 							module = FusionPageBuilderElements.find( function( model ) {
@@ -2104,9 +2151,8 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 						// Inner row/nested element.
 						} else if ( $( this ).hasClass( 'fusion_builder_row_inner' ) ) {
 							$thisInnerRow = $( this );
-							innerRowCID = 'undefined' === typeof $thisInnerRow.data( 'cid' ) ? $thisInnerRow.find( '.fusion-builder-data-cid' ).data( 'cid' ) : $thisInnerRow.data( 'cid' );
-
-							innerRowView = FusionPageBuilderViewManager.getView( innerRowCID );
+							innerRowCID   = 'undefined' === typeof $thisInnerRow.data( 'cid' ) ? $thisInnerRow.find( '.fusion-builder-data-cid' ).data( 'cid' ) : $thisInnerRow.data( 'cid' );
+							innerRowView  = FusionPageBuilderViewManager.getView( innerRowCID );
 
 							// Clone inner row.
 							if ( 'undefined' !== typeof innerRowView ) {
@@ -2140,10 +2186,10 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 					    columnInnerCID    = $thisColumnInner.data( 'cid' ),
 					    innerColumnModule = FusionPageBuilderElements.findWhere( { cid: columnInnerCID } );
 
-							if ( 0 < _.keys( innerColumnModule.changed ).length ) {
-								isChanged = true;
-								return false;
-							}
+					if ( 0 < _.keys( innerColumnModule.changed ).length ) {
+						isChanged = true;
+						return false;
+					}
 
 					// Parse elements inside inner col.
 					$thisColumnInner.find( '.fusion_module_block' ).each( function() {
@@ -2196,10 +2242,10 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 			updateGlobalLayouts: function( html, element, layoutID ) {
 				var $thisContainer = $( html ),
 				    shortcode      = '',
-						columnCID,
-						columnView,
-						innerRowCID,
-						innerRowView;
+				    columnCID,
+				    columnView,
+				    innerRowCID,
+				    innerRowView;
 
 				if ( $( html ).hasClass( 'fusion_builder_column_element' ) && ! $( html ).hasClass( 'fusion_builder_row_inner' ) ) {
 					shortcode += FusionPageBuilderApp.generateElementShortcode( $( html ), false );
@@ -2218,17 +2264,14 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 						shortcode += '[fusion_builder_row]';
 						$thisRow.find( '.fusion-builder-column-outer' ).each( function() {
 							var $thisColumn = $( this ),
-							columnCID   = $thisColumn.data( 'cid' ),
-							columnView  = FusionPageBuilderViewManager.getView( columnCID );
+							    columnCID   = $thisColumn.data( 'cid' ),
+							    columnView  = FusionPageBuilderViewManager.getView( columnCID );
 
 							shortcode += columnView.getColumnContent( $thisColumn );
 
 						} );
-
 						shortcode += '[/fusion_builder_row]';
-
 					} );
-
 					shortcode += '[/fusion_builder_container]';
 				}
 
@@ -2302,7 +2345,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 				elementType     = 'undefined' !== typeof element ? element.get( 'element_type' ) : 'undefined';
 				elementSettings = '';
-				shortcode      = '';
+				shortcode       = '';
 				elementSettings = element.attributes;
 
 				// Ignored shortcode attributes
@@ -2383,7 +2426,6 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 								if ( $.inArray( param, ignoredAtts ) > -1 || ignored === param ) {
 
 									// This attribute should be ignored from the shortcode
-
 								} else {
 
 									optionValue = 'undefined' !== typeof settingValue[ param ] ? settingValue[ param ] : '';
@@ -2430,8 +2472,8 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 			toggleAllContainers: function( event ) {
 
 				var toggleButton,
-					containerCID,
-					that = this;
+				    containerCID,
+				    that = this;
 
 				if ( event ) {
 					event.preventDefault();
@@ -2476,6 +2518,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 				var data = jQuery( '#fusion-builder-layouts-' + elementType ).find( '.fusion-page-layouts' ).clone(),
 				    postId;
+
 				data.find( 'li' ).each( function() {
 					postId = jQuery( this ).find( '.fusion-builder-demo-button-load' ).attr( 'data-post-id' );
 					jQuery( this ).find( '.fusion-layout-buttons' ).remove();
@@ -2515,16 +2558,15 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 			},
 
 			checkOptionDependency: function( view, thisEl, parentValues ) {
-				var
-					$dependencies = {},
-					$currentVal,
-					$dependencyIds = '',
-					$currentId,
-					$optionId,
-					$passedArray,
-					dividerType,
-					upAndDown,
-					centerOption;
+				var $dependencies = {},
+				    $currentVal,
+				    $dependencyIds = '',
+				    $currentId,
+				    $optionId,
+				    $passedArray,
+				    dividerType,
+				    upAndDown,
+				    centerOption;
 
 				function doesTestPass( current, comparison, operator ) {
 					if ( '==' === operator && current == comparison ) { // jshint ignore:line
@@ -2544,8 +2586,8 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 				// Special check for section separator.
 				if ( 'undefined' !== typeof view.shortcode && 'fusion_section_separator' === view.shortcode ) {
-					dividerType = thisEl.find( '#divider_type' );
-					upAndDown = dividerType.parents( 'ul' ).find( 'li[data-option-id="divider_candy"]' ).find( '.divider_candy' ).find( '.ui-button[data-value="bottom,top"]' );
+					dividerType  = thisEl.find( '#divider_type' );
+					upAndDown    = dividerType.parents( 'ul' ).find( 'li[data-option-id="divider_candy"]' ).find( '.divider_candy' ).find( '.ui-button[data-value="bottom,top"]' );
 					centerOption = dividerType.parents( 'ul' ).find( 'li[data-option-id="divider_position"]' ).find( '.divider_position' ).find( '.ui-button[data-value="center"]' );
 
 					if ( 'triangle' !== dividerType.val() ) {
@@ -2583,7 +2625,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 				// Initial checks and create helper objects.
 				jQuery.each( view.params, function( index, value ) {
 					if ( 'undefined' !== typeof value.dependency ) {
-						$optionId = index;
+						$optionId    = index;
 						$passedArray = [];
 
 						// Check each dependency for this option
@@ -2596,9 +2638,9 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 							// If option has dependency add to check array.
 							if ( 'undefined' === typeof $dependencies[dependency.element] ) {
-								$dependencies[dependency.element] = [ { option: $optionId, or: value.or } ];
+								$dependencies[ dependency.element ] = [ { option: $optionId, or: value.or } ];
 							} else {
-								$dependencies[dependency.element].push( { option: $optionId, or: value.or } );
+								$dependencies[ dependency.element ].push( { option: $optionId, or: value.or } );
 							}
 
 							// If parentValues is an object and this is a parent dependency, then we should take value from there.
@@ -2632,7 +2674,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 				// Listen for changes to options which other are dependent on.
 				if ( $dependencyIds.length ) {
 					thisEl.on( 'change paste keyup', $dependencyIds.substring( 2 ), function() {
-						$currentId    = jQuery( this ).attr( 'id' );
+						$currentId = jQuery( this ).attr( 'id' );
 
 						// Loop through each option id that is dependent on this option.
 						jQuery.each( $dependencies[ $currentId ], function( index, value ) {
@@ -2762,6 +2804,8 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 			// Clear layout
 			$( '#fusion_builder_container' ).html( '' );
+
+			FusionPageBuilderApp.shortcodeGenerator = false;
 		}
 
 		function fusionBuilderDeactivate() {

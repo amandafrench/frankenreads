@@ -164,7 +164,9 @@ class Fusion_Patcher_Admin_Screen {
 			$theme_options_entry = $submenu['avada'][7];
 			$patcher_entry = $submenu['avada'][8];
 
+			// @codingStandardsIgnoreLine ordPress.Variables.GlobalVariables.OverrideProhibited
 			$submenu['avada'][7] = $patcher_entry;
+			// @codingStandardsIgnoreLine ordPress.Variables.GlobalVariables.OverrideProhibited
 			$submenu['avada'][8] = $theme_options_entry;
 		}
 	}
@@ -286,8 +288,10 @@ class Fusion_Patcher_Admin_Screen {
 				<div class="fusion-patcher-heading">
 					<p class="description">
 						<?php if ( empty( $available_patches ) ) : ?>
+							<?php /* translators: The product name and its version. */ ?>
 							<?php printf( esc_attr__( 'Fusion Patcher: Currently there are no patches available for %1$s version %2$s', 'fusion-builder' ), esc_attr( $this->patcher->get_args( 'name' ) ), esc_attr( $this->patcher->get_args( 'version' ) ) ); ?>
 						<?php else : ?>
+							<?php /* translators: The product name and its version. */ ?>
 							<?php printf( esc_attr__( 'Fusion Patcher: The following patches are available for %1$s version %2$s', 'fusion-builder' ), esc_attr( $this->patcher->get_args( 'name' ) ), esc_attr( $this->patcher->get_args( 'version' ) ) ); ?>
 						<?php endif; ?>
 						<span class="fusion-auto-patcher learn-more"><a href="https://theme-fusion.com/avada-doc/avada-patcher/" target="_blank" rel="noopener noreferrer"><?php esc_attr_e( 'Learn More', 'fusion-builder' ); ?></a></span>
@@ -412,6 +416,7 @@ class Fusion_Patcher_Admin_Screen {
 										<?php else : ?>
 											<span class="button disabled button-small">
 												<?php if ( isset( $available_patches[ $key - 1 ] ) ) : ?>
+													<?php /* translators: The patch-ID. */ ?>
 													<?php printf( esc_attr__( 'Please apply patch #%s first.', 'fusion-builder' ), intval( $available_patches[ $key - 1 ] ) ); ?>
 												<?php else : ?>
 													<?php esc_attr_e( 'Patch cannot be currently aplied.', 'fusion-builder' ); ?>

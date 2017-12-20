@@ -34,7 +34,7 @@ class Fusion_Sanitize {
 
 		// Return empty if there are no numbers in the value.
 		// Prevents some CSS errors.
-		if ( ! preg_match( '#[0-9]#' , $value ) ) {
+		if ( ! preg_match( '#[0-9]#', $value ) ) {
 			return '';
 		}
 
@@ -103,7 +103,7 @@ class Fusion_Sanitize {
 
 		// Return empty if there are no numbers in the value.
 		// Prevents some CSS errors.
-		if ( ! preg_match( '#[0-9]#' , $value ) ) {
+		if ( ! preg_match( '#[0-9]#', $value ) ) {
 			return;
 		}
 

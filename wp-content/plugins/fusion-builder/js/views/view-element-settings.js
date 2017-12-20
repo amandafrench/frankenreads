@@ -78,7 +78,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				    fixSettingsLvl = false,
 				    parentAtts,
 				    $linkButton,
-				    $dateTimePicker;
+				    $dateTimePicker,
+				    $multipleImages,
+				    fetchIds = [];
 
 				thisModel = this.model;
 
@@ -108,6 +110,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				$codeBlock         = this.$el.find( '.fusion-builder-code-block' );
 				$linkButton        = this.$el.find( '.fusion-builder-link-button' );
 				$dateTimePicker    = this.$el.find( '.fusion-datetime' );
+				$multipleImages    = this.$el.find( '.fusion-multiple-image-container' );
 
 				if ( $textField.length ) {
 					$textField.on( 'focus', function( event ) {
@@ -163,6 +166,41 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					} );
 				}
 
+				if ( $multipleImages.length ) {
+					$multipleImages.each( function() {
+						var $multipleImageContainer = jQuery( this ),
+						    ids;
+
+						$multipleImageContainer.html( '' );
+
+						if ( 'string' !== typeof $multipleImageContainer.parent().find( '#image_ids' ).val() ) {
+							return;
+						}
+
+						// Set the media dialog box state as 'gallery' if the element is gallery.
+						ids = $multipleImageContainer.parent().find( '#image_ids' ).val().split( ',' );
+
+						// Check which attachments exist.
+						jQuery.each( ids, function( index, id ) {
+							if ( '' !== id && 'NaN' !== id ) {
+
+								// Doesn't exist need to fetch.
+								if ( 'undefined' === typeof wp.media.attachment( id ).get( 'url' ) ) {
+									fetchIds.push( id );
+								}
+							}
+						});
+
+						// Fetch attachments if neccessary.
+						if ( 0 < fetchIds.length ) {
+							wp.media.query({ post__in: fetchIds }).more().then( function( response ) { // jshint ignore:line
+								that.renderAttachments( ids, $multipleImageContainer );
+							});
+						} else {
+							that.renderAttachments( ids, $multipleImageContainer );
+						}
+					});
+				}
 				if ( $codeBlock.length ) {
 					$codeBlock.each( function() {
 						codeBlockId = $( this ).attr( 'id' );
@@ -516,6 +554,24 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					self.change();
 					self.val( '' );
 					self.parent().parent().find( '.wp-color-result' ).css( 'background-color', defaultColor );
+				}
+			},
+
+			renderAttachments: function( ids, $multipleImageContainer ) {
+				var $imageHTML,
+				    attachment;
+
+				if ( 0 < ids.length ) {
+					jQuery.each( ids, function( index, id ) {
+						if ( '' !== id && 'NaN' !== id ) {
+							attachment  = wp.media.attachment( id );
+							$imageHTML = '<div class="fusion-multi-image" data-image-id="' + attachment.get( 'id' ) + '">';
+							$imageHTML += '<img src="' + attachment.get( 'url' ) + '"/>';
+							$imageHTML += '<span class="fusion-multi-image-remove dashicons dashicons-no-alt"></span>';
+							$imageHTML += '</div>';
+							$multipleImageContainer.append( $imageHTML );
+						}
+					});
 				}
 			}
 		} );

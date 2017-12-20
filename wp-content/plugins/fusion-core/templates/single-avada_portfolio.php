@@ -168,6 +168,7 @@ if ( ! class_exists( 'Avada' ) ) {
 
 				<?php if ( ! post_password_required( $post->ID ) && $project_details ) : ?>
 					<div class="project-info">
+						<?php do_action( 'fusion_before_portfolio_side_content' ); ?>
 						<?php
 						$project_details_title = esc_html__( 'Project Details', 'fusion-core' );
 						$project_details_tag = 'h3';
@@ -257,12 +258,14 @@ if ( ! class_exists( 'Avada' ) ) {
 								<span<?php echo ( Avada()->settings->get( 'disable_date_rich_snippet_pages' ) && Avada()->settings->get( 'disable_rich_snippet_author' ) ) ? ' class="fn"' : ''; ?>><?php the_author_posts_link(); ?></span>
 							</div>
 						<?php endif; ?>
+						<?php do_action( 'fusion_after_portfolio_side_content' ); ?>
 					</div>
 				<?php endif; ?>
 			</div>
 
 			<div class="portfolio-sep"></div>
 			<?php if ( ! post_password_required( $post->ID ) ) : ?>
+				<?php do_action( 'fusion_before_additional_portfolio_content' ); ?>
 				<?php avada_render_social_sharing( 'portfolio' ); ?>
 				<?php echo avada_render_related_posts( 'avada_portfolio' ); // WPCS: XSS ok. Render Related Posts. ?>
 
@@ -270,6 +273,7 @@ if ( ! class_exists( 'Avada' ) ) {
 					<?php wp_reset_postdata(); ?>
 					<?php comments_template(); ?>
 				<?php endif; ?>
+				<?php do_action( 'fusion_after_additional_portfolio_content' ); ?>
 			<?php endif; ?>
 		</article>
 	<?php endif; ?>

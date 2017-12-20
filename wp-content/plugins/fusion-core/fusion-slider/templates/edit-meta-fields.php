@@ -38,19 +38,22 @@
 	</td>
 </tr>
 <tr class="form-field form-field-checkbox">
-	<th scope="row" valign="top"><label for="term_meta[scroll_down_indicator]"><?php esc_attr_e( 'Scroll Down Indicator', 'fusion-core' ); ?></label></th>
+	<th scope="row" valign="top"><label for="term_meta[slider_indicator]"><?php esc_attr_e( 'Slider Indicator', 'fusion-core' ); ?></label></th>
 	<td>
-		<input type="hidden" name="term_meta[scroll_down_indicator]" id="term_meta[scroll_down_indicator]" value="0">
-		<input type="checkbox" name="term_meta[scroll_down_indicator]" id="scroll_down_indicator" value="1" <?php echo esc_attr( $term_meta['scroll_down_indicator'] ) ? 'checked="checked"' : ''; ?>>
-		<p class="description"><?php esc_attr_e( 'Check this option to display a scroll down indicator icon at the bottom of the slider.', 'fusion-core' ); ?></p>
+		<select name="term_meta[slider_indicator]" id="term_meta[slider_indicator]">
+			<option value=""><?php esc_attr_e( 'None', 'fusion-core' ); ?></option>
+			<option value="scroll_down_indicator" <?php echo ( isset( $term_meta['slider_indicator'] ) && 'scroll_down_indicator' === esc_attr( $term_meta['slider_indicator'] ) ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Scroll Down Indicator', 'fusion-core' ); ?></option>
+			<option value="pagination_circles" <?php echo ( isset( $term_meta['slider_indicator'] ) && 'pagination_circles' === esc_attr( $term_meta['slider_indicator'] ) ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Pagination Circles', 'fusion-core' ); ?></option>
+	  </select>
+		<p class="description"><?php esc_attr_e( 'Choose do you want to display paginatin circler or scroll down indicator.', 'fusion-core' ); ?></p>
 	</td>
 </tr>
 <tr class="form-field">
-	<th scope="row" valign="top"><label for="term_meta[scroll_down_indicator_color]"><?php esc_attr_e( 'Scroll Down Indicator Color', 'fusion-core' ); ?></label></th>
+	<th scope="row" valign="top"><label for="term_meta[slider_indicator_color]"><?php esc_attr_e( 'Slider Indicator Color', 'fusion-core' ); ?></label></th>
 	<td>
-		<input type="text" name="term_meta[scroll_down_indicator_color]" id="scroll_down_indicator_color" value="<?php echo ( isset( $term_meta['scroll_down_indicator_color'] ) && esc_attr( $term_meta['scroll_down_indicator_color'] ) ) ? esc_attr( $term_meta['scroll_down_indicator_color'] ) : ''; ?>">
+		<input type="text" name="term_meta[slider_indicator_color]" id="slider_indicator_color" value="<?php echo ( isset( $term_meta['slider_indicator_color'] ) && esc_attr( $term_meta['slider_indicator_color'] ) ) ? esc_attr( $term_meta['slider_indicator_color'] ) : ''; ?>">
 		<?php $default = sprintf( esc_html__( 'Default: %s', 'fusion-core' ), '#fff' ); ?>
-		<p class="description"><?php printf( esc_html__( 'Select a color for the scroll down indicator icon. Hex color code, ex: #fff. %s', 'fusion-core' ), '<strong>' . esc_attr( $default ) . '</strong>' ); ?></p>
+		<p class="description"><?php printf( esc_html__( 'Select a color for the slider indicator icon. Hex color code, ex: #fff. %s', 'fusion-core' ), '<strong>' . esc_attr( $default ) . '</strong>' ); ?></p>
 	</td>
 </tr>
 <tr class="form-field form-field-checkbox">
@@ -88,14 +91,6 @@
 	<td>
 		<input type="text" name="term_meta[nav_arrow_size]" id="term_meta[nav_arrow_size]" value="<?php echo ( isset( $term_meta['nav_arrow_size'] ) && esc_attr( $term_meta['nav_arrow_size'] ) ) ? esc_attr( $term_meta['nav_arrow_size'] ) : ''; ?>">
 		<p class="description"><?php esc_attr_e( 'Enter a pixel value for the arrow size, ex: 14px', 'fusion-core' ); ?></p>
-	</td>
-</tr>
-<tr class="form-field form-field-checkbox">
-	<th scope="row" valign="top"><label for="term_meta[pagination_circles]"><?php esc_attr_e( 'Display Pagination Circles', 'fusion-core' ); ?></label></th>
-	<td>
-		<input type="hidden" name="term_meta[pagination_circles]" id="term_meta[pagination_circles]" value="0">
-		<input type="checkbox" name="term_meta[pagination_circles]" id="term_meta[pagination_circles]" value="1" <?php echo esc_attr( $term_meta['pagination_circles'] ) ? 'checked="checked"' : ''; ?>>
-		<p class="description"><?php esc_attr_e( 'Check this box to display the pagination circles.', 'fusion-core' ); ?></p>
 	</td>
 </tr>
 <tr class="form-field form-field-checkbox">

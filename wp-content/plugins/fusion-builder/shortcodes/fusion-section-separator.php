@@ -307,7 +307,7 @@ if ( fusion_is_element_enabled( 'fusion_section_separator' ) ) {
 								$main_padding_unit = str_replace( $main_padding_unitless, '', $fusion_settings->get( 'hundredp_padding' ) );
 
 								$margin_left_negative  = 'calc( ( 100% - ' . ( 2 * $main_padding_unitless ) . $main_padding_unit . ' ) * ' . ( -1 / 100 ) * $margin_left_unitless_scaled . ' )';
-								$margin_right_negative = 'calc( ( 100% - ' . ( 2 * $main_padding_unitless ) . $main_padding_unit . ' ) * ' . ( -1 / 100) * $margin_right_unitless_scaled . ' )';
+								$margin_right_negative = 'calc( ( 100% - ' . ( 2 * $main_padding_unitless ) . $main_padding_unit . ' ) * ' . ( -1 / 100 ) * $margin_right_unitless_scaled . ' )';
 							} else {
 								$margin_unit = 'vw';
 								$margin_sum  = ' - ' . ( $margin_left_unitless + $margin_right_unitless ) . $margin_unit;

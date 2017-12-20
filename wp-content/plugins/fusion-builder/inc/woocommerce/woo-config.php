@@ -29,9 +29,9 @@ if ( ! class_exists( 'Avada_Woocommerce' ) && ! class_exists( 'FusionBuilder_Woo
 		/**
 		 * Constructor.
 		 */
-		function __construct() {
-			add_action( 'avada_woocommerce_buttons_on_rollover',  array( $this, 'template_loop_add_to_cart' ), 10 );
-			add_action( 'avada_woocommerce_buttons_on_rollover',  array( $this, 'rollover_buttons_linebreak' ), 15 );
+		public function __construct() {
+			add_action( 'avada_woocommerce_buttons_on_rollover', array( $this, 'template_loop_add_to_cart' ), 10 );
+			add_action( 'avada_woocommerce_buttons_on_rollover', array( $this, 'rollover_buttons_linebreak' ), 15 );
 			add_action( 'avada_woocommerce_buttons_on_rollover', array( $this, 'show_details_button' ), 20 );
 			add_action( 'wp_enqueue_scripts', array( $this, 'woocommerce_scripts' ) );
 			add_filter( 'fusion_dynamic_css_final', array( $this, 'woocommerce_styles_dynamic_css' ) );
@@ -53,7 +53,7 @@ if ( ! class_exists( 'Avada_Woocommerce' ) && ! class_exists( 'FusionBuilder_Woo
 		 * @access public
 		 * @param array $args The arguments.
 		 */
-		function template_loop_add_to_cart( $args = array() ) {
+		public function template_loop_add_to_cart( $args = array() ) {
 			global $product;
 
 			if ( $product && ( ( $product->is_purchasable() && $product->is_in_stock() ) || $product->is_type( 'external' ) ) ) {
@@ -77,7 +77,7 @@ if ( ! class_exists( 'Avada_Woocommerce' ) && ! class_exists( 'FusionBuilder_Woo
 					$args = apply_filters( 'woocommerce_loop_add_to_cart_args', wp_parse_args( $args, $defaults ), $product );
 				}
 
-				wc_get_template( 'loop/add-to-cart.php' , $args );
+				wc_get_template( 'loop/add-to-cart.php', $args );
 			}
 		}
 

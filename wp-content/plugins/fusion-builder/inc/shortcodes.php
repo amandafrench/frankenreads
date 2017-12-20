@@ -52,7 +52,7 @@ function fusion_builder_map( $module ) {
 					$subset = ( isset( $builder_map['subset'] ) && '' !== $builder_map['subset'] ) ? $builder_map['subset'] : '';
 					$type = ( isset( $builder_map['type'] ) && '' !== $builder_map['type'] ) ? $builder_map['type'] : '';
 					$reset = ( ( isset( $builder_map['reset'] ) || 'range' === $type ) && '' !== $param['default'] ) ? $param['param_name'] : '';
-					$dynamic_description = $fusion_settings->get_default_description( $setting, $subset, $type , $reset, $param );
+					$dynamic_description = $fusion_settings->get_default_description( $setting, $subset, $type, $reset, $param );
 					$dynamic_description = apply_filters( 'fusion_builder_option_dynamic_description', $dynamic_description, $shortcode, $param['param_name'] );
 				}
 				if ( 'hide_on_mobile' === $param['param_name'] ) {

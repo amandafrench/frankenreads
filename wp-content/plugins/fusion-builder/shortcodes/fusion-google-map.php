@@ -116,7 +116,7 @@ if ( fusion_is_element_enabled( 'fusion_map' ) ) {
 					}
 
 					$infobox_content_array = array();
-					$infobox_content_array = ( ! in_array( $map_style, array( 'default', 'theme' ) ) ) ? explode( '|', $infobox_content ) : array() ;
+					$infobox_content_array = ( ! in_array( $map_style, array( 'default', 'theme' ) ) ) ? explode( '|', $infobox_content ) : array();
 
 					$icon_array = array();
 					if ( $icon ) {
@@ -255,7 +255,7 @@ if ( fusion_is_element_enabled( 'fusion_map' ) ) {
 							<?php self::$nonce_added = true; ?>
 							var fusionMapNonce = '<?php echo wp_create_nonce( 'avada_admin_ajax' ); // WPCS: XSS ok. ?>';
 						<?php endif; ?>
-						function fusion_run_map_<?php echo $map_id ; // WPCS: XSS ok. ?>() {
+						function fusion_run_map_<?php echo $map_id; // WPCS: XSS ok. ?>() {
 							jQuery('#<?php echo $map_id; // WPCS: XSS ok. ?>').fusion_maps({
 								addresses: <?php echo $json_addresses; // WPCS: XSS ok. ?>,
 								animations: <?php echo ( 'yes' == $animation ) ? 'true' : 'false'; ?>,
@@ -337,9 +337,15 @@ if ( fusion_is_element_enabled( 'fusion_map' ) ) {
 
 				if ( $force_refresh || false === $coordinates ) {
 
-					$args = array( 'address' => rawurlencode( $address ), 'sensor' => 'false' );
+					$args = array(
+						'address' => rawurlencode( $address ),
+						'sensor' => 'false',
+					);
 					if ( 0 === strpos( $address, 'latlng=' ) ) {
-						$args = array( 'latlng' => rawurlencode( substr( $address, 7 ) ), 'sensor' => 'false' );
+						$args = array(
+							'latlng' => rawurlencode( substr( $address, 7 ) ),
+							'sensor' => 'false',
+						);
 					}
 
 					$url = 'http://maps.googleapis.com/maps/api/geocode/json';

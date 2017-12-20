@@ -69,8 +69,8 @@ $post_video = fusion_get_page_option( 'video', get_the_ID() );
 
 <?php if ( has_post_thumbnail() || $post_video ) : ?>
 	<?php $thumbnail_id = get_post_thumbnail_id(); ?>
-	<?php $border_style = ( 'grid' === $atts['layout'] || 'masonry' === $atts['layout'] || 'timeline' === $atts['layout'] ) ? ' style="border-color:'. $atts['grid_element_color'] . '"': ''; ?>
-	<div class="fusion-flexslider flexslider fusion-flexslider-loading fusion-post-slideshow"<?php echo $border_style; ?>>
+	<?php $border_style = ( 'grid' === $atts['layout'] || 'masonry' === $atts['layout'] || 'timeline' === $atts['layout'] ) ? ' style="border-color:' . $atts['grid_element_color'] . '"' : ''; ?>
+	<div class="fusion-flexslider flexslider fusion-flexslider-loading fusion-post-slideshow"<?php echo esc_attr( $border_style ); ?>>
 		<ul class="slides">
 			<?php if ( $post_video ) : ?>
 				<li>
@@ -89,9 +89,19 @@ $post_video = fusion_get_page_option( 'video', get_the_ID() );
 					)
 				);
 			} elseif ( 'timeline' === $atts['layout'] ) {
-				$fusion_library->images->set_grid_image_meta( array( 'layout' => $atts['layout'], 'columns' => '2' ) );
+				$fusion_library->images->set_grid_image_meta(
+					array(
+						'layout' => $atts['layout'],
+						'columns' => '2',
+					)
+				);
 			} elseif ( false !== strpos( $atts['layout'], 'large' ) && 'full' == $size ) {
-				$fusion_library->images->set_grid_image_meta( array( 'layout' => $atts['layout'], 'columns' => '1' ) );
+				$fusion_library->images->set_grid_image_meta(
+					array(
+						'layout' => $atts['layout'],
+						'columns' => '1',
+					)
+				);
 			}
 			?>
 			<?php if ( has_post_thumbnail() ) : ?>

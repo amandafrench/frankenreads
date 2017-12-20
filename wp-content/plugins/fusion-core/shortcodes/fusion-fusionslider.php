@@ -55,11 +55,12 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 			/**
 			 * Render the parent shortcode
 			 *
+			 * @access public
 			 * @param  array  $args    Shortcode paramters.
 			 * @param  string $content Content between shortcode.
 			 * @return string          HTML output.
 			 */
-			function render_parent( $args, $content = '' ) {
+			public function render_parent( $args, $content = '' ) {
 				global $fusion_library;
 
 				$defaults = FusionBuilder::set_shortcode_defaults(
@@ -110,6 +111,14 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 					$content_max_width = 'max-width:' . $slider_settings['slider_content_width'];
 				}
 
+				if ( ! isset( $slider_settings['slider_indicator'] ) ) {
+					$slider_settings['slider_indicator'] = '';
+				}
+
+				if ( ! isset( $slider_settings['slider_indicator_color'] ) || '' === $slider_settings['slider_indicator_color'] ) {
+					$slider_settings['slider_indicator_color'] = '#ffffff';
+				}
+
 				$orderby = ( isset( $slider_settings['orderby'] ) ) ? $slider_settings['orderby'] : 'date';
 				$order   = ( isset( $slider_settings['order'] ) ) ? $slider_settings['order'] : 'DESC';
 				$args = array(
@@ -143,6 +152,18 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 							}
 							?>
 						}
+
+						<?php if ( 'pagination_circles' === $slider_settings['slider_indicator'] ) : ?>
+							<?php $slider_indicator_color = Fusion_Color::new_color( $slider_settings['slider_indicator_color'], 'hex' ); ?>
+
+							.fusion-slider-<?php echo esc_attr( $term_details->term_id ); ?> .flex-control-paging li a {
+								background: rgba(<?php echo esc_attr( $slider_indicator_color->red ) . ', ' . esc_attr( $slider_indicator_color->green ) . ', ' . esc_attr( $slider_indicator_color->blue ); ?>, 0.6);
+							}
+
+							.fusion-slider-<?php echo esc_attr( $term_details->term_id ); ?> .flex-control-paging li a.flex-active {
+								background: rgba(<?php echo esc_attr( $slider_indicator_color->red ) . ', ' . esc_attr( $slider_indicator_color->green ) . ', ' . esc_attr( $slider_indicator_color->blue ); ?>, 1);
+							}
+						<?php endif; ?>
 						</style>
 						<div class="fusion-slider-loading"><?php esc_html_e( 'Loading...', 'fusion-core' ); ?></div>
 						<div <?php echo FusionBuilder::attributes( 'fusion-slider-container' ); // WPCS: XSS ok. ?>>

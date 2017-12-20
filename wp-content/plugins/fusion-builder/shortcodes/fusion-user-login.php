@@ -244,7 +244,12 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 					if ( ! $redirection_link ) {
 						$redirection_link = $this->get_redirection_link();
 					}
-					$html .= $this->render_hidden_login_inputs( $redirection_link,  array( 'action' => 'register', 'success' => '1' ) );
+					$html .= $this->render_hidden_login_inputs(
+						$redirection_link, array(
+							'action' => 'register',
+							'success' => '1',
+						)
+					);
 
 					$html .= '</div>';
 
@@ -305,7 +310,12 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 					if ( ! $redirection_link ) {
 						$redirection_link = $this->get_redirection_link();
 					}
-					$html .= $this->render_hidden_login_inputs( $redirection_link, array( 'action' => 'lostpassword', 'success' => '1' ) );
+					$html .= $this->render_hidden_login_inputs(
+						$redirection_link, array(
+							'action' => 'lostpassword',
+							'success' => '1',
+						)
+					);
 
 					$html .= '</div>';
 					$html .= '</' . $main_container . '>';
@@ -482,7 +492,14 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 					}
 
 					// Redirect to the page with the login box with error code.
-					wp_redirect( add_query_arg( array( 'action' => 'login', 'success' => '0' ), $this->get_redirection_link( true ) ) );
+					wp_redirect(
+						add_query_arg(
+							array(
+								'action' => 'login',
+								'success' => '0',
+							), $this->get_redirection_link( true )
+						)
+					);
 					exit;
 				}
 				return $redirect_to;
@@ -506,14 +523,26 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 
 					// Redirect spammers directly to success page.
 					if ( ! isset( $_POST['confirm_email'] ) || '' !== $_POST['confirm_email'] ) {
-						wp_redirect( add_query_arg( array( 'action' => 'register', 'success' => '1' ), $redirection_link ) );
+						wp_redirect(
+							add_query_arg(
+								array(
+									'action' => 'register',
+									'success' => '1',
+								), $redirection_link
+							)
+						);
 						exit;
 					}
 
 					// Error - prepare query strings for front end notice output.
 					if ( ! empty( $errors->errors ) ) {
 						$redirection_link = $this->get_redirection_link( true );
-						$redirection_link = add_query_arg( array( 'action' => 'register', 'success' => '0' ), $redirection_link );
+						$redirection_link = add_query_arg(
+							array(
+								'action' => 'register',
+								'success' => '0',
+							), $redirection_link
+						);
 
 						// Empty username.
 						if ( isset( $errors->errors['empty_username'] ) ) {
@@ -551,7 +580,12 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 				// Make sure we come from the login box.
 				if ( isset( $_POST['fusion_login_box'] ) ) {
 					check_admin_referer( 'fusion-login' );
-					$redirection_link = add_query_arg( array( 'action' => 'lostpassword', 'success' => '0' ), $this->get_redirection_link( true ) );
+					$redirection_link = add_query_arg(
+						array(
+							'action' => 'lostpassword',
+							'success' => '0',
+						), $this->get_redirection_link( true )
+					);
 					$user_data = '';
 
 					// Error - empty input.

@@ -107,7 +107,7 @@
 								$checked = '';
 								$class = ( isset( $module['class'] ) && '' !== $module['class'] ) ? $module['class'] : '';
 
-								if ( ( isset( $existing_settings['fusion_elements'] ) && is_array( $existing_settings['fusion_elements'] ) && in_array( $module['shortcode'],  $existing_settings['fusion_elements'] ) ) || ( ! isset( $existing_settings['fusion_elements'] ) || ! is_array( $existing_settings['fusion_elements'] ) ) ) {
+								if ( ( isset( $existing_settings['fusion_elements'] ) && is_array( $existing_settings['fusion_elements'] ) && in_array( $module['shortcode'], $existing_settings['fusion_elements'] ) ) || ( ! isset( $existing_settings['fusion_elements'] ) || ! is_array( $existing_settings['fusion_elements'] ) ) ) {
 									$checked = 'checked';
 								}
 								echo '<li class="' . esc_attr( $class ) . '">';
@@ -150,7 +150,7 @@
 							$post_type_obj = get_post_type_object( $post_type );
 							// Either selected in options saved, or in array of default post types.
 							$checked = (
-								( isset( $existing_settings['post_types'] ) && is_array( $existing_settings['post_types'] ) && in_array( $post_type,  $existing_settings['post_types'] ) ) ||
+								( isset( $existing_settings['post_types'] ) && is_array( $existing_settings['post_types'] ) && in_array( $post_type, $existing_settings['post_types'] ) ) ||
 								( ! isset( $existing_settings['post_types'] ) && in_array( $post_type, $defaults ) ) )
 								? 'checked' : '';
 							echo '<li>';

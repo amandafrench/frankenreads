@@ -475,7 +475,11 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 						$unique_id = 'tab-' . substr( md5( get_the_ID() . '-' . $this->tabs_counter . '-' . $this->tab_counter . '-' . $sanitized_title ), 13 );
 
 						// Create array for every single tab shortcode.
-						$this->tabs[] = array( 'title' => $title, 'icon' => $icon, 'unique_id' => $unique_id );
+						$this->tabs[] = array(
+							'title' => $title,
+							'icon' => $icon,
+							'unique_id' => $unique_id,
+						);
 
 						$this->tab_counter++;
 					}
@@ -548,12 +552,20 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li .tab-link']['margin-bottom'] = '1px';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li .tab-link']['padding'] = '10px 35px';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li .tab-link']['white-space'] = 'nowrap';
-				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li .tab-link']['border-left'] = '3px transparent solid';
+
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li .tab-link']['border-top'] = 'none';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li .tab-link']['text-align'] = 'left';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li:last-child .tab-link']['margin-bottom'] = '0';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li.active > .tab-link']['border-bottom'] = 'none';
-				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li.active > .tab-link']['border-left'] = '3px solid ' . $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) );
+
+				if ( is_rtl() ) {
+					$css[ $content_min_media_query ]['.rtl .fusion-tabs.vertical-tabs .nav-tabs > li .tab-link']['border-right'] = '3px transparent solid';
+					$css[ $content_min_media_query ]['.rtl .fusion-tabs.vertical-tabs .nav-tabs > li.active > .tab-link']['border-right'] = '3px solid ' . $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) );
+				} else {
+					$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li .tab-link']['border-left'] = '3px transparent solid';
+					$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li.active > .tab-link']['border-left'] = '3px solid ' . $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) );
+				}
+
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li.active > .tab-link']['border-top'] = 'none';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav-tabs > li.active > .tab-link']['cursor'] = 'pointer';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs .nav']['width'] = 'auto';
@@ -565,11 +577,17 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs.clean .nav-tabs li .tab-link']['margin'] = '0';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs.clean .nav-tabs li .tab-link']['padding'] = '10px 35px';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs.clean .nav-tabs li .tab-link']['white-space'] = 'nowrap';
-				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs.clean .nav-tabs li .tab-link']['border'] = '1px solid';
+				$css[ $content_min_media_query ]['.fusion-body .fusion-tabs.vertical-tabs.clean .nav-tabs li .tab-link']['border'] = '1px solid';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs.clean .nav']['width'] = 'auto';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs.clean .tab-content']['margin'] = '0';
-				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs.clean .tab-content']['padding-left'] = '40px';
 				$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs.clean .tab-content']['width'] = '75%';
+
+				if ( is_rtl() ) {
+					$css[ $content_min_media_query ]['.rtl .fusion-tabs.vertical-tabs.clean .tab-content']['padding-right'] = '40px';
+					$css[ $content_min_media_query ]['.rtl .fusion-tabs.vertical-tabs .nav-tabs li .tab-link']['text-align'] = 'right';
+				} else {
+					$css[ $content_min_media_query ]['.fusion-tabs.vertical-tabs.clean .tab-content']['padding-left'] = '40px';
+				}
 
 				return $css;
 			}

@@ -204,13 +204,18 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 
 				// Add custom and responsive class and the needed styles to the img tag.
 				if ( ! empty( $classes ) ) {
-					$content = str_replace( $classes[0], $img_classes . $img_styles , $content );
+					$content = str_replace( $classes[0], $img_classes . $img_styles, $content );
 				} else {
 					$content = str_replace( '/>', $img_classes . $img_styles . '/>', $content );
 				}
 
 				if ( class_exists( 'Avada' ) && property_exists( Avada(), 'images' ) ) {
-					Avada()->images->set_grid_image_meta( array( 'layout' => 'large', 'columns' => '1' ) );
+					Avada()->images->set_grid_image_meta(
+						array(
+							'layout' => 'large',
+							'columns' => '1',
+						)
+					);
 				}
 
 				if ( function_exists( 'wp_make_content_images_responsive' ) ) {
@@ -234,22 +239,33 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 
 				$html = '<span ' . FusionBuilder::attributes( 'image-shortcode' ) . '>' . $output . '</span>';
 
-				if ( 'liftup' === $hover_type ) {
-					$liftup_classes = 'imageframe-liftup';
-					$liftup_styles  = '';
+				if ( 'liftup' === $hover_type || ( 'bottomshadow' === $style && ( 'zoomin' === $hover_type || 'zoomout' === $hover_type ) ) ) {
+					if ( 'liftup' === $hover_type ) {
+						$wrapper_classes = 'imageframe-liftup';
+						$element_styles  = '';
 
-					if ( 'left' === $align ) {
-						$liftup_classes .= ' fusion-imageframe-liftup-left';
-					} elseif ( 'right' === $align ) {
-						$liftup_classes .= ' fusion-imageframe-liftup-right';
+						if ( 'left' === $align ) {
+							$wrapper_classes .= ' fusion-imageframe-liftup-left';
+						} elseif ( 'right' === $align ) {
+							$wrapper_classes .= ' fusion-imageframe-liftup-right';
+						}
+
+						if ( $border_radius ) {
+							$element_styles   = '<style scoped="scoped">.imageframe-liftup.imageframe-' . $this->imageframe_counter . ':before{' . $border_radius . '}</style>';
+							$wrapper_classes .= ' imageframe-' . $this->imageframe_counter;
+						}
+					} else {
+						$wrapper_classes = 'element-bottomshadow image-frame-shadow-' . $this->imageframe_counter;
+						$element_styles  = '';
+						$element_styles  = '<style scoped="scoped">.element-bottomshadow.image-frame-shadow-' . $this->imageframe_counter . '{';
+						if ( 'left' === $align ) {
+							$element_styles .= 'margin-right:25px;float:left;';
+						} elseif ( 'right' === $align ) {
+							$element_styles  .= 'margin-left:25px;float:right;';
+						}
+						$element_styles  .= 'display:inline-block}</style>';
 					}
-
-					if ( $border_radius ) {
-						$liftup_styles = '<style scoped="scoped">.imageframe-liftup.imageframe-' . $this->imageframe_counter . ':before{' . $border_radius . '}</style>';
-						$liftup_classes .= ' imageframe-' . $this->imageframe_counter;
-					}
-
-					$html = '<div ' . FusionBuilder::attributes( $liftup_classes ) . '>' . $liftup_styles . $html . '</div>';
+					$html = '<div ' . FusionBuilder::attributes( $wrapper_classes ) . '>' . $element_styles . $html . '</div>';
 				}
 
 				if ( 'center' === $align ) {
@@ -323,13 +339,15 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 					$attr['class'] .= ' element-bottomshadow';
 				}
 
-				if ( 'liftup' !== $this->args['hover_type'] ) {
+				if ( 'liftup' !== $this->args['hover_type'] && ( 'bottomshadow' !== $this->args['style'] && ( 'zoomin' !== $this->args['hover_type'] || 'zoomout' !== $this->args['hover_type'] ) ) ) {
 					if ( 'left' === $this->args['align'] ) {
 						$attr['style'] .= 'margin-right:25px;float:left;';
 					} elseif ( 'right' === $this->args['align'] ) {
 						$attr['style'] .= 'margin-left:25px;float:right;';
 					}
+				}
 
+				if ( 'liftup' !== $this->args['hover_type'] ) {
 					$attr['class'] .= ' hover-type-' . $this->args['hover_type'];
 				}
 

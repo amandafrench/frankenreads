@@ -351,10 +351,6 @@ class Fusion_Dynamic_CSS {
 		if ( $fusion_library->get_page_id() ) {
 			$page_id = $fusion_library->get_page_id();
 
-			// If WooCommerce is active and we are on archive, use global CSS not shop page, which is return by get_page_id.
-			if ( class_exists( 'WooCommerce' ) && ( is_tax( 'product_cat' ) || is_tax( 'product_tag' ) ) ) {
-				$page_id = 'global';
-			}
 		}
 
 		// If the current page ID exists in the array of pages defined in the 'fusion_dynamic_css_posts' option

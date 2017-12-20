@@ -301,7 +301,7 @@ if ( fusion_is_element_enabled( 'fusion_pricing_table' ) ) {
 				if ( isset( $price ) && ( ! empty( $price ) || ( '0' == $price ) ) ) {
 
 					$pricing_class = $pricing = '';
-					$price = explode( '.' , $price );
+					$price = explode( '.', $price );
 					if ( array_key_exists( '1', $price ) ) {
 						$pricing_class = 'price-with-decimal';
 					}

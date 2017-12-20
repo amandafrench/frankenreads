@@ -53,7 +53,7 @@ if ( fusion_is_element_enabled( 'fusion_menu_anchor' ) ) {
 
 				extract( $defaults );
 
-				$this->args = $defaults ;
+				$this->args = $defaults;
 
 				return '<div ' . FusionBuilder::attributes( 'menu-anchor-shortcode' ) . '></div>';
 

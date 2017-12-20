@@ -283,7 +283,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 				if ( 'tag' !== $defaults['pull_by'] ) {
 					if ( self::$args['exclude_cats'] ) {
 						$cats_to_exclude = preg_replace( '/\s+/', '', self::$args['exclude_cats'] );
-						$cats_to_exclude = explode( ',' , self::$args['exclude_cats'] );
+						$cats_to_exclude = explode( ',', self::$args['exclude_cats'] );
 					}
 				}
 
@@ -292,7 +292,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 				if ( 'category' !== $defaults['pull_by'] ) {
 					if ( self::$args['exclude_tags'] ) {
 						$tags_to_exclude = preg_replace( '/\s+/', '', self::$args['exclude_tags'] );
-						$tags_to_exclude = explode( ',' , self::$args['exclude_tags'] );
+						$tags_to_exclude = explode( ',', self::$args['exclude_tags'] );
 					}
 				}
 
@@ -832,7 +832,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 							$infinite_pagination = true;
 						}
 
-						$pagination .= fusion_pagination( $portfolio_query->max_num_pages, 2, $portfolio_query, $infinite_pagination );
+						$pagination .= fusion_pagination( $portfolio_query->max_num_pages, apply_filters( 'fusion_pagination_size', 1 ), $portfolio_query, $infinite_pagination );
 					}
 
 					if ( 'masonry' === $layout ) {
@@ -1232,7 +1232,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 								'label'       => esc_attr__( 'Portfolio Featured Image Size', 'fusion-core' ),
 								'description' => esc_attr__( 'Controls if the featured image size is fixed (cropped) or auto (full image ratio) for portfolio elements. IMPORTANT: Fixed works best with a standard 940px site width. Auto works best with larger site widths.', 'fusion-core' ),
 								'id'          => 'portfolio_featured_image_size',
-								'default'     => 'cropped',
+								'default'     => 'full',
 								'type'        => 'radio-buttonset',
 								'choices'     => array(
 									'cropped' => esc_attr__( 'Fixed', 'fusion-core' ),

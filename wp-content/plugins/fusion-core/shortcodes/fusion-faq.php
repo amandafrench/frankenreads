@@ -148,7 +148,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 				// Transform $cats_to_exclude to array.
 				if ( $exclude_cats ) {
 					$cats_to_exclude = preg_replace( '/\s+/', '', $exclude_cats );
-					$cats_to_exclude = explode( ',' , $cats_to_exclude );
+					$cats_to_exclude = explode( ',', $cats_to_exclude );
 				} else {
 					$cats_to_exclude = array();
 				}

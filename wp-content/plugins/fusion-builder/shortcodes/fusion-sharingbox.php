@@ -82,7 +82,7 @@ if ( fusion_is_element_enabled( 'fusion_sharing' ) ) {
 				$this->args = $defaults;
 
 				$use_brand_colors = false;
-				if ( 'brand' == $color_type || ( '' == $color_type && 'brand' === $fusion_settings->get( 'sharing_social_links_color_type' ) ) ) {
+				if ( 'brand' === $color_type || ( '' === $color_type && 'brand' === $fusion_settings->get( 'sharing_social_links_color_type' ) ) ) {
 					$use_brand_colors = true;
 					// Get a list of all the available social networks.
 					$social_icon_boxed_colors = Fusion_Data::fusion_social_icons( false, true );
@@ -94,35 +94,27 @@ if ( fusion_is_element_enabled( 'fusion_sharing' ) ) {
 						'label' => esc_attr__( 'Email Address', 'fusion-builder' ),
 						'color' => '#000000',
 					);
-
-				} elseif ( '' == $color_type && 'custom' === $fusion_settings->get( 'social_links_color_type' ) ) {
+				} else if ( '' === $color_type && 'custom' === $fusion_settings->get( 'social_links_color_type' ) ) {
 					// Custom social icon colors from theme options.
-					$icon_colors = explode( '|', strtolower( $fusion_settings->get( 'sharing_social_links_icon_color' ) ) );
-					$box_colors  = explode( '|', strtolower( $fusion_settings->get( 'sharing_social_links_box_color' ) ) );
-				} else {
-					$icon_colors = explode( '|', $icon_colors );
-					$box_colors  = explode( '|', $box_colors );
+					$icon_colors = strtolower( $fusion_settings->get( 'sharing_social_links_icon_color' ) );
+					$box_colors  = strtolower( $fusion_settings->get( 'sharing_social_links_box_color' ) );
 				}
 
-				$num_of_icon_colors = count( $icon_colors );
-				$num_of_box_colors  = count( $box_colors );
-				$social_networks    = explode( '|', $social_networks );
-
 				$icons = '';
+				$icon_colors = explode( '|', $icon_colors );
+				$box_colors = explode( '|', $box_colors );
+				$social_networks = explode( '|', $social_networks );
 
+				$num_of_icon_colors = count( $icon_colors );
+				$num_of_box_colors = count( $box_colors );
 				$social_networks_count = count( $social_networks );
+
 				for ( $i = 0; $i < $social_networks_count; $i++ ) {
 					if ( 1 == $num_of_icon_colors ) {
-						if ( ! is_array( $icon_colors ) ) {
-							$icon_colors = array( $icon_colors );
-						}
 						$icon_colors[ $i ] = $icon_colors[0];
 					}
 
 					if ( 1 == $num_of_box_colors ) {
-						if ( ! is_array( $box_colors ) ) {
-							$box_colors = array( $box_colors );
-						}
 						$box_colors[ $i ] = $box_colors[0];
 					}
 
