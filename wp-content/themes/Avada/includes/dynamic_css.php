@@ -140,7 +140,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$link_color_elements[] = '.widget_layered_nav_filters li.chosen a:before';
 	}
 	if ( class_exists( 'Tribe__Events__Main' ) ) {
+		$link_color_elements[] = '#tribe-events .tribe-events-list .tribe-event-featured a';
 		$link_color_elements[] = '#tribe-events-content .tribe-events-sub-nav li a';
+		$link_color_elements[] = '.tribe-event-featured .recurringinfo .event-is-recurring';
 		$link_color_elements[] = '.event-is-recurring';
 	}
 	$link_color_elements = $dynamic_css_helpers->implode( $link_color_elements );
@@ -230,11 +232,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global']['.width-100 .fusion-fullwidth']['margin-left']  = $hundredplr_padding_negative_margin;
 	$css['global']['.width-100 .fusion-fullwidth']['margin-right'] = $hundredplr_padding_negative_margin;
 
-	$elements = array(
-		'a:hover',
-		'.event-is-recurring:hover',
-	);
-	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
+	$css['global']['a:hover']['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
 
 	$elements = array(
 		'.project-content .project-info .project-info-box a:hover',
@@ -329,6 +327,10 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$elements[] = '.widget_shopping_cart_content a:hover:before';
 	}
 	if ( class_exists( 'Tribe__Events__Main' ) ) {
+		$elements[] = '.event-is-recurring:hover';
+		$elements[] = '.tribe-event-featured .recurringinfo .event-is-recurring:hover';
+		$elements[] = '#tribe-events .tribe-events-list .tribe-event-featured a:hover';
+		$elements[] = '#tribe-events .tribe-events-list .tribe-event-featured a:active';
 		$elements[] = '.tribe-events-gmap:hover:before';
 		$elements[] = '.tribe-events-gmap:hover:after';
 		$elements[] = '.tribe-events-nav-previous a:hover:before, .tribe-events-nav-previous a:hover:after';
@@ -406,14 +408,35 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$elements[] = '.tribe-events-calendar thead th';
 		$elements[] = 'body #wrapper .tribe-events-calendar td.tribe-events-present div[id*=tribe-events-daynum-]';
 		$elements[] = 'body #wrapper .tribe-events-calendar td.tribe-events-present div[id*=tribe-events-daynum-]>a';
+		$elements[] = '#tribe-events-content table.tribe-events-calendar .type-tribe_events.tribe-event-featured';
 		$elements[] = 'body #wrapper #tribe-events-content .tribe-events-calendar td.tribe-events-present.mobile-active:hover';
 		$elements[] = 'body #wrapper #tribe-events-content .tribe-events-calendar .mobile-active:hover';
 		$elements[] = 'body #wrapper .tribe-events-calendar .mobile-active div[id*=tribe-events-daynum-]';
 		$elements[] = '#tribe-events-content .tribe-events-tooltip h4';
 		$elements[] = '.tribe-events-list-separator-month';
 		$elements[] = '.tribe-mini-calendar-event .list-date';
+		$elements[] = '.tribe-grid-allday .tribe-event-featured.tribe-events-week-allday-single';
+		$elements[] = '.tribe-grid-allday .tribe-event-featured.tribe-events-week-hourly-single';
+		$elements[] = '.tribe-grid-body .tribe-event-featured.tribe-events-week-allday-single';
+		$elements[] = '.tribe-grid-body .tribe-event-featured.tribe-events-week-hourly-single';
+		$elements[] = '.tribe-grid-allday .tribe-event-featured.tribe-events-week-allday-single:hover';
+		$elements[] = '.tribe-grid-allday .tribe-event-featured.tribe-events-week-hourly-single:hover';
+		$elements[] = '.tribe-grid-body .tribe-event-featured.tribe-events-week-allday-single:hover';
+		$elements[] = '.tribe-grid-body .tribe-event-featured.tribe-events-week-hourly-single:hover';
 	}
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
+
+	if ( class_exists( 'Tribe__Events__Main' ) ) {
+		$elements = array(
+			'.tribe-grid-allday .tribe-event-featured.tribe-events-week-allday-single',
+			'.tribe-grid-allday .tribe-event-featured.tribe-events-week-hourly-single',
+			'.tribe-grid-body .tribe-event-featured.tribe-events-week-allday-single',
+			'.tribe-grid-body .tribe-event-featured.tribe-events-week-hourly-single',
+		);
+
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
+	}
+
 
 	if ( Avada()->settings->get( 'slidingbar_widgets' ) ) {
 
@@ -3514,8 +3537,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'.tribe-events-calendar td.tribe-events-past div[id*=tribe-events-daynum-]>a',
 			'#tribe-events-content .tribe-events-tooltip h4',
 			'.tribe-events-list-separator-month',
-			'.fusion-tribe-primary-info .tribe-events-list-event-title',
-			'.fusion-tribe-primary-info .tribe-events-list-event-title a',
+			'.fusion-body #tribe-events .fusion-tribe-primary-info .tribe-events-list-event-title',
+			'.fusion-body #tribe-events .fusion-tribe-primary-info .tribe-events-list-event-title a',
 			'.tribe-events-list .tribe-events-event-cost',
 			'#tribe-events .fusion-tribe-events-headline h3',
 			'#tribe-events .fusion-tribe-events-headline h3 a',

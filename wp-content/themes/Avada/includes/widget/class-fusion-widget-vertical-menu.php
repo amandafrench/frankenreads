@@ -93,6 +93,14 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 				return;
 			}
 
+			$link_before = '<span class="arrow"></span><span class="link-text">';
+			$link_after = '</span>';
+
+			if ( ( 'left' === $instance['layout'] && ! is_rtl() ) || ( 'right' === $instance['layout'] && is_rtl() ) ) {
+				$link_before = '<span class="link-text">';
+				$link_after = '</span><span class="arrow"></span>';
+			}
+
 			$nav_menu_args = array(
 				'fallback_cb'     => '',
 				'menu'            => $nav_menu,
@@ -100,6 +108,8 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 				'container_id'    => 'fusion-' . esc_attr( $this->id ),
 				'container'       => 'nav',
 				'item_spacing'    => 'discard',
+				'link_before'     => $link_before,
+				'link_after'      => $link_after,				
 			);
 
 			wp_nav_menu( $nav_menu_args );
@@ -129,7 +139,7 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 				'title_li'    => '',
 				'child_of'    => $parent_page,
 				'link_before' => $link_before,
-				'link_after' => $link_after,
+				'link_after'  => $link_after,
 				'echo'        => 0,
 			));
 

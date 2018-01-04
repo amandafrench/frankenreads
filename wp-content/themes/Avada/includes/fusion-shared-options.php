@@ -593,13 +593,15 @@ function avada_add_fb_styling( $css ) {
 			$elements[] = '.fusion-body .avada-myaccount-user';
 			$elements[] = '.fusion-body .avada-myaccount-user .avada-myaccount-user-column';
 			$elements[] = '.woocommerce-pagination .page-numbers';
-			$elements[] = '.woo-tabs-horizontal .woocommerce-tabs > .tabs li';
+			$elements[] = '.woo-tabs-horizontal .woocommerce-tabs > .tabs .active';
 			$elements[] = '.woo-tabs-horizontal .woocommerce-tabs > .tabs';
 			$elements[] = '.woo-tabs-horizontal .woocommerce-tabs > .wc-tab';
 			$elements[] = '.fusion-body .woocommerce-side-nav li a';
 			$elements[] = '.fusion-body .woocommerce-content-box';
 			$elements[] = '.fusion-body .woocommerce-content-box h2';
 			$elements[] = '.fusion-body .woocommerce .address h4';
+			$elements[] = '.woo-tabs-horizontal .woocommerce-MyAccount-navigation';
+			$elements[] = '.woo-tabs-horizontal .woocommerce .woocommerce-MyAccount-navigation > ul .is-active';
 			$elements[] = '.fusion-body .woocommerce-MyAccount-navigation ul li a';
 			$elements[] = '.fusion-body .woocommerce-MyAccount-content';
 			$elements[] = '.fusion-body .woocommerce-MyAccount-content h2';
