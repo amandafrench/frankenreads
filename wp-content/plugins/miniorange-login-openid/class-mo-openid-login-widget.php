@@ -738,6 +738,18 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 			session_destroy();
 		}
 	}
+	
+	function encrypt_data($data, $key) {
+		
+		return base64_encode(openssl_encrypt($data, 'aes-128-ecb', $key, OPENSSL_RAW_DATA));
+	
+	}	
+
+	function decrypt_data($data, $key) {
+
+		return openssl_decrypt( base64_decode($data), 'aes-128-ecb', $key, OPENSSL_RAW_DATA);
+
+	}	
 
 	function mo_openid_login_validate()
 	{		
@@ -748,12 +760,8 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 			$token = $client_name . ':' . number_format($timestamp, 0, '', ''). ':' . $api_key;
 
 			$customer_token = get_option('mo_openid_customer_token');
-			$blocksize = 16;
-			$pad = $blocksize - ( strlen( $token ) % $blocksize );
-			$token =  $token . str_repeat( chr( $pad ), $pad );
-			$token_params_encrypt = mcrypt_encrypt( MCRYPT_RIJNDAEL_128, $customer_token, $token, MCRYPT_MODE_ECB );
-			$token_params_encode = base64_encode( $token_params_encrypt );
-			$token_params = urlencode( $token_params_encode );
+			$encrypted_token = encrypt_data($token,$customer_token);
+			$encoded_token = urlencode( $encrypted_token );
 			$userdata = get_option('moopenid_user_attributes')?'true':'false';
 			
 			$http = isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? "https://" : "http://";
@@ -766,7 +774,7 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 
 			$return_url = strpos($base_return_url, '?') !== false ? urlencode( $base_return_url . '&option=moopenid' ): urlencode( $base_return_url . '?option=moopenid' );
 
-			$url = get_option('mo_openid_host_name') . '/moas/openid-connect/client-app/authenticate?token=' . $token_params . '&userdata=' . $userdata. '&id=' . get_option('mo_openid_admin_customer_key') . '&encrypted=true&app=' . $_REQUEST['app_name'] . '_oauth&returnurl=' . $return_url . '&encrypt_response=true';
+			$url = get_option('mo_openid_host_name') . '/moas/openid-connect/client-app/authenticate?token=' . $encoded_token . '&userdata=' . $userdata. '&id=' . get_option('mo_openid_admin_customer_key') . '&encrypted=true&app=' . $_REQUEST['app_name'] . '_oauth&returnurl=' . $return_url . '&encrypt_response=true';
 			wp_redirect( $url );
 			exit;
 		}
@@ -1432,13 +1440,11 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 	function mo_openid_decrypt_sanitize($param) {
 		if(strcmp($param,'null')!=0 && strcmp($param,'')!=0){
 			$customer_token = get_option('mo_openid_customer_token');
-			$base64decoded = base64_decode($param);
-			$token_params_decrypt = mcrypt_decrypt( MCRYPT_RIJNDAEL_128, $customer_token, $base64decoded, MCRYPT_MODE_ECB );
+			$decrypted_token = decrypt_data($param,$customer_token);
 			// removes control characters and some blank characters 
-			$token_params_decrypt_sanitise = preg_replace('/[\x00-\x1F\x7F\x81\x8D\x8F\x90\x9D\xA0\xAD]/', '', $token_params_decrypt); 
+			$decrypted_token_sanitise = preg_replace('/[\x00-\x1F\x7F\x81\x8D\x8F\x90\x9D\xA0\xAD]/', '', $decrypted_token); 
 			//strips space,tab,newline,carriage return,NUL-byte,vertical tab.
-			$token_params_decrypt_sanitise= trim($token_params_decrypt_sanitise); 			
-            return $token_params_decrypt_sanitise;
+			return trim($decrypted_token_sanitise); 			
 		}else{
 			return '';
 		}

@@ -15,18 +15,6 @@ function mo_register_openid() {
 		<p style="color:red;">(Warning: <a href="http://php.net/manual/en/curl.installation.php" target="_blank">PHP CURL extension</a> is not installed or disabled) Please go to Troubleshooting for steps to enable curl.</p>
 	<?php
 	}?>
-	<?php
-	if(!mo_openid_is_extension_installed('mcrypt')) { ?>
-		<div id="help_openid_mcrypt_title" class="mo_openid_title_panel">
-			<div style="color:red;" class="mo_openid_help_title">(Warning: PHP mcrypt extension is not installed or disabled) (Why we need it?)</div>
-		</div>
-		<div id="help_openid_mcrypt" class="mo_openid_help_desc" hidden>
-			PHP Mcrypt extension is required to Encrypt Social Login in such a way as to make it unreadable by anyone except those possessing special knowledge (usually referred to as a "key") that allows them to change the information back to its original, readable form.
-			<br/>
-			Encryption is important because it allows you to securely protect your users Social Login details that you don't want anyone else to have access to.
-		</div>
-	<?php
-	}?>
 <div id="tab">
 	<h2 class="nav-tab-wrapper">
 		<?php if(!mo_openid_is_customer_registered()) { ?>
@@ -1419,7 +1407,6 @@ function mo_openid_other_settings(){
 							<strong>Whatsapp</strong>
 						</td>
 					</tr>
-					<tr><td>(Only visible on Mobile Phones)</td></tr>
 				</table>
 			</td>
 		</tr>

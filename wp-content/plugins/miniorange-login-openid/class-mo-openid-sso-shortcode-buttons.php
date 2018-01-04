@@ -116,7 +116,15 @@ function mo_openid_share_shortcode( $atts = '', $title = '', $excerpt = '' ) {
 				$html .= "<a rel='nofollow' title='Print this page' onclick='javascript:window.print();' class='mo-openid-share-link' style='margin-left : " .($spaceBetweenIcons) . "px !important'><i class='mo-custom-share-icon " .$selected_theme. " fa fa-print' style='padding-top:8px;text-align:center;color:#ffffff;font-size:" .($sharingSize-16). "px !important;background-color:#" .$custom_color. ";height:" .$sharingSize. "px !important;width:" .$sharingSize. "px !important;'></i></a>";
 			}
 			if( get_option('mo_openid_whatsapp_share_enable') ) {
-				$html .= '<a rel="nofollow" id="mobileshow" title="Whatsapp" href="whatsapp://send?text=' . $url .'" class="mo-openid-share-link" style="margin-left :  '.($spaceBetweenIcons) . 'px !important;border-bottom:0px !important;"><i class="mo-custom-share-icon ' .$selected_theme. ' fa fa-whatsapp" style="padding-top:8px;text-align:center;color:#ffffff;font-size: '.($sharingSize-16). 'px !important;background-color:#' .$custom_color. ';height: '.$sharingSize. 'px !important;width:' .$sharingSize. 'px !important;"></i></a>';
+				
+				if(!wp_is_mobile()){
+				$html .= '<a rel="nofollow"  title="Whatsapp" href="https://web.whatsapp.com/send?text=' . $url .'" class="mo-openid-share-link" style="margin-left :  '.($spaceBetweenIcons) . 'px !important;border-bottom:0px !important;"><i class="mo-custom-share-icon ' .$selected_theme. ' fa fa-whatsapp" style="padding-top:8px;text-align:center;color:#ffffff;font-size: '.($sharingSize-16). 'px !important;background-color:#' .$custom_color. ';height: '.$sharingSize. 'px !important;width:' .$sharingSize. 'px !important;"></i></a>';
+				}
+				else{
+				$html .= '<a rel="nofollow" title="Whatsapp" href="whatsapp://send?text=' . $url .'" class="mo-openid-share-link" style="margin-left :  '.($spaceBetweenIcons) . 'px !important;border-bottom:0px !important;"><i class="mo-custom-share-icon ' .$selected_theme. ' fa fa-whatsapp" style="padding-top:8px;text-align:center;color:#ffffff;font-size: '.($sharingSize-16). 'px !important;background-color:#' .$custom_color. ';height: '.$sharingSize. 'px !important;width:' .$sharingSize. 'px !important;"></i></a>';					
+					
+				}
+			
 			}
 			
 		}
@@ -124,6 +132,7 @@ function mo_openid_share_shortcode( $atts = '', $title = '', $excerpt = '' ) {
 		else if($custom_theme == 'customFont') {
 			
 			if( get_option('mo_openid_facebook_share_enable') ) {
+		
 				$link = 'https://www.facebook.com/dialog/share?app_id=766555246789034&amp;display=popup&amp;href='.$url;
 				$html .= "<a rel='nofollow' title='Facebook' onclick='popupCenter(". '"' . $link . '"' . ", 800, 500);' class='mo-openid-share-link' style='margin-left : " .($spaceBetweenIcons-6) . "px !important'><i class=' " .$selected_theme. " fa fa-facebook' style='padding-top:4px;text-align:center;color:" . $fontColor . ";font-size:" .$sharingSize. "px !important;height:" .$sharingSize. "px !important;width:" .$sharingSize. "px !important;'></i></a>";
 			}
@@ -185,7 +194,13 @@ function mo_openid_share_shortcode( $atts = '', $title = '', $excerpt = '' ) {
 				$html .= "<a rel='nofollow' title='Print this page' onclick='javascript:window.print();' class='mo-openid-share-link' style='margin-left : " .($spaceBetweenIcons) . "px !important'><i class=' " .$selected_theme. " fa fa-print' style='padding-top:4px;text-align:center;color:" .$fontColor . ";font-size:" .$sharingSize. "px !important;height:" .$sharingSize. "px !important;width:" .$sharingSize. "px !important;'></i></a>";
 			}
 			if( get_option('mo_openid_whatsapp_share_enable') ) {
-				$html .= '<a rel="nofollow" id="mobileshow" title="Whatsapp" href="whatsapp://send?text=' . $url . '" class="mo-openid-share-link" style="margin-left :  '.($spaceBetweenIcons-6) . 'px !important;border-bottom:0px !important;"><i class=" '.$selected_theme. ' fa fa-whatsapp" style="padding-top:4px;text-align:center;color:'.$fontColor . ';font-size:' .$sharingSize. 'px !important;height:' .$sharingSize. 'px !important;width:' .$sharingSize. 'px !important;"></i></a>';
+				
+				if(wp_is_mobile()){
+				$html .= '<a rel="nofollow"  title="Whatsapp" href="whatsapp://send?text=' . $url . '" class="mo-openid-share-link" style="margin-left :  '.($spaceBetweenIcons-6) . 'px !important;border-bottom:0px !important;"><i class=" '.$selected_theme. ' fa fa-whatsapp" style="padding-top:4px;text-align:center;color:'.$fontColor . ';font-size:' .$sharingSize. 'px !important;height:' .$sharingSize. 'px !important;width:' .$sharingSize. 'px !important;"></i></a>';
+				}
+				else{
+				$html .= '<a rel="nofollow" title="Whatsapp" href="https://web.whatsapp.com/send?text=' . $url . '" class="mo-openid-share-link" style="margin-left :  '.($spaceBetweenIcons-6) . 'px !important;border-bottom:0px !important;"><i class=" '.$selected_theme. ' fa fa-whatsapp" style="padding-top:4px;text-align:center;color:'.$fontColor . ';font-size:' .$sharingSize. 'px !important;height:' .$sharingSize. 'px !important;width:' .$sharingSize. 'px !important;"></i></a>';	
+				}
 			}
 			
 							
@@ -194,6 +209,7 @@ function mo_openid_share_shortcode( $atts = '', $title = '', $excerpt = '' ) {
 		else {
 
 			if( get_option('mo_openid_facebook_share_enable') ) {
+				
 				$link = 'https://www.facebook.com/dialog/share?app_id=766555246789034&amp;display=popup&amp;href='.$url;
 				$html .= "<a rel='nofollow' title='Facebook' onclick='popupCenter(" . '"' . $link . '"' . ", 800, 400);' class='mo-openid-share-link' style='margin-left : " . ($spaceBetweenIcons) . "px !important'><img alt='Facebook' style= 'height: " . $sharingSize . "px !important;width: " . $sharingSize . "px !important;' src='" . plugins_url( 'includes/images/icons/facebook.png', __FILE__ ) . "' class='mo-openid-app-share-icons " . $selected_theme . "' ></a>";
 			}
@@ -256,9 +272,18 @@ function mo_openid_share_shortcode( $atts = '', $title = '', $excerpt = '' ) {
 				$html .= "<a rel='nofollow' title='Print this page' onclick='javascript:window.print();' class='mo-openid-share-link' style='margin-left : " .($spaceBetweenIcons) . "px !important'><img alt='Print this page' style= 'height: " . $sharingSize . "px !important;width: " . $sharingSize . "px !important;' src='"  . plugins_url( 'includes/images/icons/print.png', __FILE__ ) . "' class='mo-openid-app-share-icons " . $selected_theme . "' ></a>";
 			}
 			if( get_option('mo_openid_whatsapp_share_enable') ) {
-				$html .= '<a rel="nofollow" id="mobileshow" title="Whatsapp" href="whatsapp://send?text=' . $url . '" class="mo-openid-share-link" style="margin-left :  '. ($spaceBetweenIcons) . 'px !important; border-bottom:0px !important;">
+				
+				if (wp_is_mobile()){ 
+				$html .= '<a rel="nofollow"  title="Whatsapp" href="whatsapp://send?text=' . $url . '" class="mo-openid-share-link" style="margin-left :  '. ($spaceBetweenIcons) . 'px !important; border-bottom:0px !important;">
 				<img alt="Whatsapp" style= "height:  '. $sharingSize . 'px !important;width:  '. $sharingSize . 'px !important;" src=" '. plugins_url( "includes/images/icons/whatsapp.png", __FILE__ ) . '" class="mo-openid-app-share-icons  '. $selected_theme . '" ></a>';
+				}
+				else{
+				$html .= '<a rel="nofollow"  title="Whatsapp" href="https://web.whatsapp.com/send?text=' . $url . '" class="mo-openid-share-link" style="margin-left :  '. ($spaceBetweenIcons) . 'px !important; border-bottom:0px !important;">
+				<img alt="Whatsapp" style= "height:  '. $sharingSize . 'px !important;width:  '. $sharingSize . 'px !important;" src=" '. plugins_url( "includes/images/icons/whatsapp.png", __FILE__ ) . '" class="mo-openid-app-share-icons  '. $selected_theme . '" ></a>';	
+				}
+			
 			}
+
 			
 			
 		}
@@ -404,7 +429,13 @@ function mo_openid_vertical_share_shortcode( $atts = '', $title = '', $excerpt =
 				$html .= "<a rel='nofollow' title='Print this page' onclick='javascript:window.print();' class='mo-openid-share-link' ><i class='mo-custom-share-icon " .$selected_theme. " fa fa-print' style='margin-bottom : " . ($spaceBetweenIcons-4) . "px !important;padding-top:8px;text-align:center;color:#ffffff;font-size:" .($sharingSize-16). "px !important;background-color:#" .$custom_color. ";height:" .$sharingSize. "px !important;width:" .$sharingSize. "px !important;'></i></a>";
 			}
 			if( get_option('mo_openid_whatsapp_share_enable') ) {
-				$html .= '<a rel="nofollow" id="mobileshow" title="Whatsapp" href="whatsapp://send?text=' . $url ."\" class='mo-openid-share-link' ><i class='mo-custom-share-icon " .$selected_theme. " fa fa-whatsapp' style='margin-bottom : " . ($spaceBetweenIcons-4) . "px !important;padding-top:8px;text-align:center;color:#ffffff;font-size:" .($sharingSize-16). "px !important;background-color:#" .$custom_color. ";height:" .$sharingSize. "px !important;width:" .$sharingSize. "px !important;'></i></a>";
+				
+				if(wp_is_mobile()){
+				$html .= '<a rel="nofollow" title="Whatsapp" href="whatsapp://send?text=' . $url ."\" class='mo-openid-share-link' ><i class='mo-custom-share-icon " .$selected_theme. " fa fa-whatsapp' style='margin-bottom : " . ($spaceBetweenIcons-4) . "px !important;padding-top:8px;text-align:center;color:#ffffff;font-size:" .($sharingSize-16). "px !important;background-color:#" .$custom_color. ";height:" .$sharingSize. "px !important;width:" .$sharingSize. "px !important;'></i></a>";
+				}
+				else{
+				$html .= '<a rel="nofollow" title="Whatsapp" href="https://web.whatsapp.com/send?text=' . $url ."\" class='mo-openid-share-link' ><i class='mo-custom-share-icon " .$selected_theme. " fa fa-whatsapp' style='margin-bottom : " . ($spaceBetweenIcons-4) . "px !important;padding-top:8px;text-align:center;color:#ffffff;font-size:" .($sharingSize-16). "px !important;background-color:#" .$custom_color. ";height:" .$sharingSize. "px !important;width:" .$sharingSize. "px !important;'></i></a>";
+				}
 			}
 			
 							
@@ -474,7 +505,13 @@ function mo_openid_vertical_share_shortcode( $atts = '', $title = '', $excerpt =
 				$html .= "<a rel='nofollow' title='Print this page' onclick='javascript:window.print();' class='mo-openid-share-link' ><i class='fa fa-print' style='margin-bottom : " . ($spaceBetweenIcons-4) . "px !important;padding-top:4px;text-align:center;color:" .$fontColor . ";font-size:" .$sharingSize. "px !important;height:" .$sharingSize. "px !important;width:" .$sharingSize. "px !important;'></i></a>";
 			}
 			if( get_option('mo_openid_whatsapp_share_enable') ) {
-				$html .= '<a rel="nofollow" id="mobileshow" title="Whatsapp" href="whatsapp://send?text=' . $url ."\" class='mo-openid-share-link' ><i class='fa fa-whatsapp' style='margin-bottom : " . ($spaceBetweenIcons-4) . "px !important;padding-top:4px;text-align:center;color:" .$fontColor . ";font-size:" .$sharingSize. "px !important;height:" .$sharingSize. "px !important;width:" .$sharingSize. "px !important;'></i></a>";
+				
+				if(wp_is_mobile()){
+				$html .= '<a rel="nofollow" title="Whatsapp" href="whatsapp://send?text=' . $url ."\" class='mo-openid-share-link' ><i class='fa fa-whatsapp' style='margin-bottom : " . ($spaceBetweenIcons-4) . "px !important;padding-top:4px;text-align:center;color:" .$fontColor . ";font-size:" .$sharingSize. "px !important;height:" .$sharingSize. "px !important;width:" .$sharingSize. "px !important;'></i></a>";
+				}
+				else{
+				$html .= '<a rel="nofollow" title="Whatsapp" href="https://web.whatsapp.com/send?text=' . $url ."\" class='mo-openid-share-link' ><i class='fa fa-whatsapp' style='margin-bottom : " . ($spaceBetweenIcons-4) . "px !important;padding-top:4px;text-align:center;color:" .$fontColor . ";font-size:" .$sharingSize. "px !important;height:" .$sharingSize. "px !important;width:" .$sharingSize. "px !important;'></i></a>";
+				}
 			}
 			
 							
@@ -543,7 +580,12 @@ function mo_openid_vertical_share_shortcode( $atts = '', $title = '', $excerpt =
 				$html .= "<a rel='nofollow' title='Print this page' onclick='javascript:window.print();' class='mo-openid-share-link'><img alt='Print this page' style= 'margin-bottom : " . ($spaceBetweenIcons-6) . "px !important; height: " . $sharingSize . "px !important;width: " . $sharingSize . "px !important;' src='" . plugins_url( 'includes/images/icons/print.png', __FILE__ ) . "' class='mo-openid-app-share-icons " . $selected_theme . "' ></a>";
 			}
 			if( get_option('mo_openid_whatsapp_share_enable') ) {
-				$html .= '<a rel="nofollow" id="mobileshow" title="Whatsapp" href="whatsapp://send?text=' . $url ."\" class='mo-openid-share-link'><img alt='Whatsapp' style= 'margin-bottom : " . ($spaceBetweenIcons-6) . "px !important;height: " . $sharingSize . "px !important;width: " . $sharingSize . "px !important;' src='" . plugins_url( 'includes/images/icons/whatsapp.png', __FILE__ ) . "' class='mo-openid-app-share-icons " . $selected_theme . "' ></a>";
+				if(wp_is_mobile()){
+				$html .= '<a rel="nofollow" title="Whatsapp" href="whatsapp://send?text=' . $url ."\" class='mo-openid-share-link'><img alt='Whatsapp' style= 'margin-bottom : " . ($spaceBetweenIcons-6) . "px !important;height: " . $sharingSize . "px !important;width: " . $sharingSize . "px !important;' src='" . plugins_url( 'includes/images/icons/whatsapp.png', __FILE__ ) . "' class='mo-openid-app-share-icons " . $selected_theme . "' ></a>";
+				}
+				else{
+				$html .= '<a rel="nofollow" title="Whatsapp" href="https://web.whatsapp.com/send?text=' . $url ."\" class='mo-openid-share-link'><img alt='Whatsapp' style= 'margin-bottom : " . ($spaceBetweenIcons-6) . "px !important;height: " . $sharingSize . "px !important;width: " . $sharingSize . "px !important;' src='" . plugins_url( 'includes/images/icons/whatsapp.png', __FILE__ ) . "' class='mo-openid-app-share-icons " . $selected_theme . "' ></a>";					
+				}
 			}
 			
 		}

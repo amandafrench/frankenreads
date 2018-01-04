@@ -162,12 +162,20 @@ $url = $http . $_SERVER["HTTP_HOST"] . $_SERVER['REQUEST_URI'];
 						<i class="mo-custom-share-icon <?php echo $selected_theme; ?> fa fa-print" style="padding-top:8px;text-align:center;color:#ffffff;font-size:<?php echo ($sharingSize-16); ?>px !important;background-color:#<?php echo $custom_color?>;height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
 						<?php
 					}
-					if( get_option('mo_openid_whatsapp_share_enable') ) {
+					if( get_option('mo_openid_whatsapp_share_enable') && wp_is_mobile()) {
+						
 						?>
-						<a rel='nofollow'  id="mobileshow" title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link" style="margin-left : <?php echo $spaceBetweenIcons?>px !important">
+						<a rel='nofollow'  title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link" style="margin-left : <?php echo $spaceBetweenIcons?>px !important">
 						<i class="mo-custom-share-icon <?php echo $selected_theme; ?> fa fa-whatsapp" style="padding-top:8px;text-align:center;color:#ffffff;font-size:<?php echo ($sharingSize-16); ?>px !important;background-color:#<?php echo $custom_color?>;height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
 						<?php
 					}		
+					else if( get_option('mo_openid_whatsapp_share_enable') ) {
+						
+						?>
+						<a rel='nofollow' title="Whatsapp" href='https://web.whatsapp.com/send?text=<?php echo $url?>'  class="mo-openid-share-link" style="margin-left : <?php echo $spaceBetweenIcons?>px !important">
+						<i class="mo-custom-share-icon <?php echo $selected_theme; ?> fa fa-whatsapp" style="padding-top:8px;text-align:center;color:#ffffff;font-size:<?php echo ($sharingSize-16); ?>px !important;background-color:#<?php echo $custom_color?>;height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
+						<?php
+					}							
 				}
 						
 				else if($custom_theme == 'customFont'){
@@ -271,12 +279,20 @@ $url = $http . $_SERVER["HTTP_HOST"] . $_SERVER['REQUEST_URI'];
 						<i class=" <?php echo $selected_theme; ?> fa fa-print" style="padding-top:4px;text-align:center;color:#<?php echo $fontColor ?> !important;font-size:<?php echo $sharingSize; ?>px !important;height:<?php echo $sharingSize-4; ?>px !important;width:<?php echo $sharingSize; ?>px !important;height:<?php echo $sharingSize-4; ?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
 						<?php
 					}
-					if( get_option('mo_openid_whatsapp_share_enable') ) {
+					if( get_option('mo_openid_whatsapp_share_enable')&& wp_is_mobile() ) {
+						
 						?>
-						<a rel='nofollow' id="mobileshow" title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link" style="margin-left : <?php echo $spaceBetweenIcons?>px !important">
+						<a rel='nofollow'  title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link" style="margin-left : <?php echo $spaceBetweenIcons?>px !important">
 						<i class=" <?php echo $selected_theme; ?> fa fa-whatsapp" style="padding-top:4px;text-align:center;color:#<?php echo $fontColor ?> !important;font-size:<?php echo $sharingSize; ?>px !important;height:<?php echo $sharingSize-4; ?>px !important;width:<?php echo $sharingSize; ?>px !important;height:<?php echo $sharingSize-4; ?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
 						<?php
 					}
+					else if( get_option('mo_openid_whatsapp_share_enable') ) {
+						
+						?>
+						<a rel='nofollow' title="Whatsapp" href='https://web.whatsapp.com/send?text=<?php echo $url?>'  class="mo-openid-share-link" style="margin-left : <?php echo $spaceBetweenIcons?>px !important">
+						<i class=" <?php echo $selected_theme; ?> fa fa-whatsapp" style="padding-top:4px;text-align:center;color:#<?php echo $fontColor ?> !important;font-size:<?php echo $sharingSize; ?>px !important;height:<?php echo $sharingSize-4; ?>px !important;width:<?php echo $sharingSize; ?>px !important;height:<?php echo $sharingSize-4; ?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
+						<?php
+					}					
 				}
 						
 				else{
@@ -380,12 +396,20 @@ $url = $http . $_SERVER["HTTP_HOST"] . $_SERVER['REQUEST_URI'];
 						</a>
 						<?php
 					}
-					if( get_option('mo_openid_whatsapp_share_enable') ) {
+					if( get_option('mo_openid_whatsapp_share_enable') && wp_is_mobile()) {
+						
 						?>
-						<a rel='nofollow' id="mobileshow" title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link" style="margin-left : <?php echo $spaceBetweenIcons?>px !important">
+						<a rel='nofollow'  title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link" style="margin-left : <?php echo $spaceBetweenIcons?>px !important">
 						<img alt='Whatsapp' style= 'height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important;' src="<?php echo plugins_url( 'includes/images/icons/whatsapp.png', __FILE__ )?>" class="mo-openid-app-share-icons <?php echo $selected_theme; ?>"  data-action="share/whatsapp/share"></a>
 						<?php
 					}
+					else if( get_option('mo_openid_whatsapp_share_enable') ) {
+						
+						?>
+						<a rel='nofollow'title="Whatsapp" href='https://web.whatsapp.com/send?text=<?php echo $url?>'  class="mo-openid-share-link" style="margin-left : <?php echo $spaceBetweenIcons?>px !important">
+						<img alt='Whatsapp' style= 'height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important;' src="<?php echo plugins_url( 'includes/images/icons/whatsapp.png', __FILE__ )?>" class="mo-openid-app-share-icons <?php echo $selected_theme; ?>"  data-action="share/whatsapp/share"></a>
+						<?php
+					}					
 				}
 			?></p>
 		</div>
@@ -496,12 +520,20 @@ $url = $http . $_SERVER["HTTP_HOST"] . $_SERVER['REQUEST_URI'];
 					<i class="mo-custom-share-icon <?php echo $selected_theme; ?> fa fa-print" style="margin-bottom:<?php echo $space_icons-4?>px!important;padding-top:8px;text-align:center;color:#ffffff;font-size:<?php echo ($sharingSize-16); ?>px !important;background-color:#<?php echo $custom_color?>;height:<?php echo $sharingSize?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
 					<?php
 					}
-				if( get_option('mo_openid_whatsapp_share_enable') ) {
+				if( get_option('mo_openid_whatsapp_share_enable')&& wp_is_mobile() ) {
+					
 					?>
-					<a rel='nofollow' id="mobileshow" title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link">
+					<a rel='nofollow' title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link">
 					<i class="mo-custom-share-icon <?php echo $selected_theme; ?> fa fa-whatsapp" style="margin-bottom:<?php echo $space_icons-4?>px!important;padding-top:8px;text-align:center;color:#ffffff;font-size:<?php echo ($sharingSize-16); ?>px !important;background-color:#<?php echo $custom_color?>;height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
 					<?php
 					}
+				else if( get_option('mo_openid_whatsapp_share_enable') ) {
+					
+					?>
+					<a rel='nofollow' title="Whatsapp" href='https://web.whatsapp.com/send?text=<?php echo $url?>'  class="mo-openid-share-link">
+					<i class="mo-custom-share-icon <?php echo $selected_theme; ?> fa fa-whatsapp" style="margin-bottom:<?php echo $space_icons-4?>px!important;padding-top:8px;text-align:center;color:#ffffff;font-size:<?php echo ($sharingSize-16); ?>px !important;background-color:#<?php echo $custom_color?>;height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
+					<?php
+					}					
 			}
 			else if($custom_theme == 'customFont'){
 				if( get_option('mo_openid_facebook_share_enable') ) {
@@ -605,12 +637,20 @@ $url = $http . $_SERVER["HTTP_HOST"] . $_SERVER['REQUEST_URI'];
 					<i class=" <?php echo $selected_theme; ?> fa fa-print" style="margin-bottom:<?php echo $space_icons-4?>px !important;padding-top:4px;text-align:center;color:#<?php echo $fontColor ?> !important;font-size:<?php echo $sharingSize; ?>px !important;height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
 					<?php
 					}
-				if( get_option('mo_openid_whatsapp_share_enable') ) {
+				if( get_option('mo_openid_whatsapp_share_enable') && wp_is_mobile()) {
+					
 					?>
-					<a rel='nofollow' id="mobileshow" title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link">
+					<a rel='nofollow'title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link">
 					<i class=" <?php echo $selected_theme; ?> fa fa-whatsapp" style="margin-bottom:<?php echo $space_icons-4?>px !important;padding-top:4px;text-align:center;color:#<?php echo $fontColor ?> !important;font-size:<?php echo $sharingSize; ?>px !important;height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
 					<?php
 					}
+				else if( get_option('mo_openid_whatsapp_share_enable') ) {
+					
+					?>
+					<a rel='nofollow' title="Whatsapp" href='https://web.whatsapp.com/send?text=<?php echo $url?>'  class="mo-openid-share-link">
+					<i class=" <?php echo $selected_theme; ?> fa fa-whatsapp" style="margin-bottom:<?php echo $space_icons-4?>px !important;padding-top:4px;text-align:center;color:#<?php echo $fontColor ?> !important;font-size:<?php echo $sharingSize; ?>px !important;height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important"></i></a>
+					<?php
+					}					
 			}
 			else{
 				if( get_option('mo_openid_facebook_share_enable') ) {
@@ -715,12 +755,19 @@ $url = $http . $_SERVER["HTTP_HOST"] . $_SERVER['REQUEST_URI'];
 					<img  alt='Print this page' style= 'margin-bottom:<?php echo $space_icons-6?>px !important;height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important;' src="<?php echo plugins_url( 'includes/images/icons/print.png', __FILE__ )?>" class="mo-openid-app-share-icons <?php echo $selected_theme; ?>"></a>
 					<?php
 				}
-				if( get_option('mo_openid_whatsapp_share_enable') ) {
+				if( get_option('mo_openid_whatsapp_share_enable') && wp_is_mobile()) {
+					
 					?>
-					<a rel='nofollow' id="mobileshow" title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link">
+					<a rel='nofollow' title="Whatsapp" href='whatsapp://send?text=<?php echo $url?>'  class="mo-openid-share-link">
 					<img  alt='Whatsapp' style= 'margin-bottom:<?php echo $space_icons-6?>px !important;height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important;' src="<?php echo plugins_url( 'includes/images/icons/whatsapp.png', __FILE__ )?>" class="mo-openid-app-share-icons <?php echo $selected_theme; ?>"></a>
 					<?php
 				}
+				else if( get_option('mo_openid_whatsapp_share_enable')) {
+					?>
+					<a rel='nofollow' title="Whatsapp" href='https://web.whatsapp.com/send?text=<?php echo $url?>'  class="mo-openid-share-link">
+					<img  alt='Whatsapp' style= 'margin-bottom:<?php echo $space_icons-6?>px !important;height:<?php echo $sharingSize; ?>px !important;width:<?php echo $sharingSize; ?>px !important;' src="<?php echo plugins_url( 'includes/images/icons/whatsapp.png', __FILE__ )?>" class="mo-openid-app-share-icons <?php echo $selected_theme; ?>"></a>
+					<?php
+				}				
 			}
 		?></p>
 	</div>
