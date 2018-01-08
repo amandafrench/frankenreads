@@ -320,9 +320,9 @@ class WPDB_Admin
                 </div><?php } ?>
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3><a href="http://www.wpseeds.com/documentation/docs/wp-database-backup" target="blank"><img
+                    <h3><a href="http://www.wpseeds.com/documentation/docs/wp-database-backup/" target="blank"><img
                                 src="<?php echo WPDB_PLUGIN_URL . '/assets/images/wp-database-backup.png'; ?>"></a>Database
-                        Backup Settings <a href="http://www.wpseeds.com/product/wp-all-backup/" target="_blank"><span
+                        Backup Settings <a href="http://www.wpallbackup.com" target="_blank"><span
                                 style='float:right'
                                 class="label label-success">Get Pro 'WP All Backup' Plugin</span></a>
                     </h3>
@@ -397,10 +397,10 @@ class WPDB_Admin
                     }
                     echo "<div class='alert alert-success' role='alert'><h4>$coupon</h4></div>";
                     echo '<p>If you like this plugin then Give <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/wp-database-backup" title="Rating" sl-processed="1"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="glyphicon glyphicon-star" aria-hidden="true"></span> rating </a>
-                                        <a target="_blank" class="text-right" href="http://www.wpseeds.com/support/"><button style="float:right" type="button" class="btn btn-default">Support</button></a>
-                                        <a target="_blank" href="http://www.wpseeds.com/documentation/docs/wp-database-backup"><button style="float:right" type="button" class="btn btn-default">Documentation</button></a>
-                                        <a target="_blank" href="http://www.wpseeds.com/product/wp-all-backup/"><button style="float:right" type="button" class="btn btn-default">Premium</button></a>
-                                        <a target="_blank" href="http://www.wpseeds.com/shop/"><button style="float:right" type="button" class="btn btn-default">More plugins</button></a></p>
+                                        <a target="_blank" class="text-right" href="http://www.wpallbackup.com/support/"><button style="float:right" type="button" class="btn btn-default">Support</button></a>
+                                        <a target="_blank" href="http://www.wpseeds.com/documentation/docs/wp-database-backup/"><button style="float:right" type="button" class="btn btn-default">Documentation</button></a>
+                                        <a target="_blank" href="http://www.wpallbackup.com/"><button style="float:right" type="button" class="btn btn-default">Premium</button></a>
+                                        <a target="_blank" href="http://www.wpseeds.com"><button style="float:right" type="button" class="btn btn-default">More plugins</button></a></p>
 	 ';
                     echo '</div>';
 
@@ -606,7 +606,7 @@ class WPDB_Admin
                                     <div id="collapseThree" class="panel-collapse collapse in">
                                         <div class="panel-body">
                                             <button type="button" class="btn btn-default"><a
-                                                    href='http://www.wpseeds.com/support/'>Support</a></button>
+                                                    href='http://www.wpallbackup.com/support/'>Support</a></button>
                                             <button type="button" class="btn btn-default"><a
                                                     href='http://www.wpseeds.com/documentation/docs/wp-database-backup'>Documentation</a>
                                             </button>
@@ -1185,7 +1185,7 @@ class WPDB_Admin
                     </div>
 
 
-                    <a href="http://www.wpseeds.com/product/wp-all-backup/" target="_blank"><h4><span
+                    <a href="http://www.wpallbackup.com/" target="_blank"><h4><span
                                 class="label label-success">Get Pro 'WP All Backup' Plugin</span></h4></a>
                 </div>
                 <div class="tab-pane" id="db_setting">

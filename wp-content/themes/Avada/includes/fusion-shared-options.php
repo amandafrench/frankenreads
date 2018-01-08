@@ -615,6 +615,7 @@ function avada_add_fb_styling( $css ) {
 			$elements[] = '.fusion-body .woocommerce-message';
 			$elements[] = '.fusion-body .woocommerce .checkout #customer_details .col-1';
 			$elements[] = '.fusion-body .woocommerce .checkout #customer_details .col-2';
+			$elements[] = '.woo-tabs-horizontal .woocommerce .woocommerce-checkout-nav .is-active';
 			$elements[] = '.fusion-body .woocommerce .checkout h3';
 			$elements[] = '.fusion-body .woocommerce .cross-sells h2';
 			$elements[] = '.fusion-body .woocommerce .addresses .title';

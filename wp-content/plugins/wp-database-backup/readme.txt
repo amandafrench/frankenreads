@@ -5,7 +5,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: Database backup,db backup, backup,database, WordPress Database Backup, WP db backup,wp database backup,wp backup,wordpress backup, mysql backup,automatically database backup,website backup,website database backup,restore database backup,Store database backup on dropbox,backup on google drive,backup on amazon s3,ftp,email notification.
 Requires at least: 3.1+
-Tested up to: 4.8
+Tested up to: 4.9.1
 Stable tag: trunk
 
 Create & Restore Database Backup easily on single click. Manual or automated backups (backup to Dropbox,Google drive,Amazon s3,FTP,Email).
@@ -13,7 +13,7 @@ Create & Restore Database Backup easily on single click. Manual or automated bac
 == Description ==
 
 = Pro Version =
-<a target="_blank" href="http://www.wpseeds.com/product/wp-all-backup">http://www.wpseeds.com/product/wp-all-backup/</a>
+<a target="_blank" href="http://www.wpallbackup.com">http://wpallbackup.com/</a>
 
 WP Database Backup plugin helps you to create Database Backup and Restore Database Backup easily on single click.Manual or Automated Database Backups And also store database backup on safe place- Dropbox,FTP,Email,Google drive, Amazon S3
 
@@ -58,7 +58,7 @@ WP Database Backup plugin helps you to Restore Database Backup easily on single 
 </ul>
 
 = Get Pro 'WP All Backup' Plugin =
-* http://www.wpseeds.com/product/wp-all-backup/
+* http://wpallbackup.com/
 
 <p>WP All Backup will backup and restore your entire site at will, complete with FTP &amp; S3 integration</p>
 <h2><strong>Pro Features</strong></h2>
@@ -104,16 +104,13 @@ WP Database Backup plugin helps you to Restore Database Backup easily on single 
 </ul>
 
 = Pro Version =
-* <a target="_blank" href="http://www.wpseeds.com/product/wp-all-backup">http://www.wpseeds.com/product/wp-all-backup/</a>
+* <a target="_blank" href="http://wpallbackup.com/">http://wpallbackup.com/</a>
 
 = Documentation =
-* <a target="_blank" href="http://www.wpseeds.com/documentation/docs/wp-database-backup">www.wpseeds.com/documentation/docs/wp-database-backup</a>
-
-= Screenshots =
-* <a target="_blank" href="http://www.wpseeds.com/documentation/docs/wp-database-backup/screenshots">http://www.wpseeds.com/documentation/docs/wp-database-backup/screenshots/</a>
+* <a target="_blank" href="http://wpallbackup.com/documentation">http://wpallbackup.com/documentation</a>
 
 = Support =
-* <a target="_blank" href="http://www.wpseeds.com/support">http://www.wpseeds.com/support/</a>
+* <a target="_blank" href="http://wpallbackup.com/support">http://wpallbackup.com/support/</a>
 
 == Installation ==
 1. Download the plugin file, unzip and place it in your wp-content/plugins/ folder. You can alternatively upload it via the WordPress plugin backend.
@@ -122,7 +119,9 @@ WP Database Backup plugin helps you to Restore Database Backup easily on single 
 
 = Refer bellow link for more information =
 
-* http://www.wpseeds.com/documentation/docs/wp-database-backup
+* http://wpallbackup.com/documentation
+
+[youtube https://www.youtube.com/watch?v=st8L90lTDwU]
 
 == Screenshots ==
 
@@ -311,6 +310,14 @@ WP Database Backup plugin helps you to Restore Database Backup easily on single 
 * 26-10-2017
 * Changed : Email(Destination) subject for identify domains.
 
+= 4.5.3 =
+* 08-01-2018
+* Changed documentation/help url
+
+= 4.5.4 =
+* 08-01-2018
+* Fixed uergent bug ticket #2680
+
 == Frequently Asked Questions ==
 
  Q-How to  create database Backup?
@@ -319,10 +326,10 @@ WP Database Backup plugin helps you to Restore Database Backup easily on single 
  <br>Create Backup:
   <br>1) Click on Create New Database Backup
   <br>2) Download Database Backup file.
-  
+
  Q-How to restore database backup?
   <br>Restore Backup:
-  <br>Click on Restore Database Backup   
+  <br>Click on Restore Database Backup
   <br>OR
   <br>1)Login to phpMyAdmin
   <br>2)Click Databases and select the database that you will be importing your data into.
@@ -333,7 +340,7 @@ WP Database Backup plugin helps you to Restore Database Backup easily on single 
 
  Q-Always get an empty (0 bits) backup file?
  <br>Ans-This is generally caused by an access denied problem.
- <br>You don't have permission to write in the wp-content/uploads. 
+ <br>You don't have permission to write in the wp-content/uploads.
  <br>Please check if you have the read write permission on the folder.
 
 Q.On Click Create New Database Backup it goes to blank page.
@@ -347,21 +354,22 @@ php.ini
 max_execution_time = 180 ;
 
 Also Please make sure that you have write permission to Backup folder and also check your log file.
- 
+
  Q.want more features?
  <br>If you want more feature then
  Drop Mail :walke.prashant28@gmail.com
- Pro Features : http://www.wpseeds.com/product/wp-all-backup/     
+ Pro Features : http://wpallbackup.com/
 
-* http://www.wpseeds.com/documentation/docs/wp-database-backup/faq/    
-  
+* http://wpallbackup.com/documentation
+
 == Upgrade Notice ==
-* Changed : Email(Destination) subject for identify domains.
+* Fixed uergent bug
 
 == Official Site ==
 * http://www.wpseeds.com/documentation/docs/wp-database-backup
 * http://www.wpseeds.com/wp-database-backup/
 * http://www.wpseeds.com/product/wp-all-backup/
+* http://wpallbackup.com/
 * http://walkeprashant.wordpress.com/wp-database-backup/
 * http://walkeprashant.in
 * walke.prashant28@gmail.com

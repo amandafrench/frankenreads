@@ -6,7 +6,7 @@ $changelogMsg='';
 
 @$changeMessage="<strong><a href='http://www.wpseeds.com/product/wp-all-backup/' target='_blank'>WP All Backup Plugin.</a></strong> will backup and restore your entire site at will,
                         complete with FTP & S3 integration";
-$coupon="Use Coupon code <strong>'WPDB30'</strong> and Get Flat 30% off on <strong><a href='http://www.wpseeds.com/product/wp-all-backup/' target='_blank'>WP All Backup Plugin.</a></strong>";
+$coupon="Use Coupon code <strong>'WPDB30'</strong> and Get Flat 30% off on <strong><a href='http://wpallbackup.com/' target='_blank'>WP All Backup Plugin.</a></strong>";
 if (function_exists('curl_init')) { // if cURL is available, use it...
     $ch = curl_init($notifier_file_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -42,7 +42,7 @@ if (!empty($xml)) {
         $changelog = '';
         
     } else {
-        @$alert = '<strong><a href="http://www.wpseeds.com/blog/category/update/" title="Change Log" target="_blank">Plugin Updates</a></strong><br/>             
+        @$alert = '<strong><a href="http://wpallbackup.com/" title="Change Log" target="_blank">Plugin Updates</a></strong><br/>             
                 <strong>There is a new version of the <br/>WP Database Backup plugin available.</strong>
                  You have version ' . WPDB_VERSION . ' Update to version ' . $xml->latest . '.';
         @$changelog = $xml->changelog;
@@ -206,12 +206,12 @@ if (!empty($xml)) {
                     </a>
                 </li>
                 <li >
-                    <a href="http://www.wpseeds.com/wp-database-backup/" target="_blank" >
+                    <a href="http://wpallbackup.com/" target="_blank" >
                         <h5 ><?php _e('Documentation', 'wpdbbkp'); ?></h5>
                     </a>
                 </li>
                 <li >
-                    <a href="http://www.wpseeds.com/support/" target="_blank" >
+                    <a href="http://wpallbackup.com/support/" target="_blank" >
                         <h5 ><?php _e('Support', 'wpdbbkp'); ?></h5>
                     </a>
                 </li>
