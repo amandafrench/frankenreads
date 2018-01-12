@@ -877,6 +877,7 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 					if(get_option('moopenid_social_login_avatar') && isset($user_picture))
 						update_user_meta($email_user_id, 'moopenid_user_avatar', $user_picture);
 					$_SESSION['mo_login'] = true;
+					do_action( 'miniorange_collect_attributes_for_authenticated_user', $user, mo_openid_get_redirect_url());
 					do_action( 'wp_login', $user->user_login, $user );
 					wp_set_auth_cookie( $email_user_id, true );
 				}
@@ -957,6 +958,7 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 						}
 						$_SESSION['mo_login'] = true;
 						do_action( 'mo_user_register', $user_id);
+						do_action( 'miniorange_collect_attributes_for_authenticated_user', $user, mo_openid_get_redirect_url());
 						do_action( 'wp_login', $user->user_login, $user );
 						wp_set_auth_cookie( $user_id, true );
 					}
@@ -1015,6 +1017,7 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 					if(get_option('moopenid_social_login_avatar') && isset($user_picture))
 						update_user_meta($id_returning_user, 'moopenid_user_avatar', $user_picture);
 					$_SESSION['mo_login'] = true;
+					do_action( 'miniorange_collect_attributes_for_authenticated_user', $user, mo_openid_get_redirect_url());
 					do_action( 'wp_login', $user->user_login, $user );
 					wp_set_auth_cookie( $id_returning_user, true );
 				}
@@ -1127,6 +1130,7 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 						//registration hook
 						do_action( 'mo_user_register', $user_id);
 						//login hook
+						do_action( 'miniorange_collect_attributes_for_authenticated_user', $user, mo_openid_get_redirect_url());
 						do_action( 'wp_login', $user->user_login, $user );
 						wp_set_auth_cookie( $user_id, true );
 				}
@@ -1156,6 +1160,7 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 					if(get_option('moopenid_social_login_avatar') && isset($user_picture))
 						update_user_meta($user_id, 'moopenid_user_avatar', $user_picture);
 					$_SESSION['mo_login'] = true;
+					do_action( 'miniorange_collect_attributes_for_authenticated_user', $user, mo_openid_get_redirect_url());
 					do_action( 'wp_login', $user->user_login, $user );
 					wp_set_auth_cookie( $user_id, true );
 
@@ -1254,6 +1259,7 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 						//registration hook
 						do_action( 'mo_user_register', $user_id);
 						//login hook
+						do_action( 'miniorange_collect_attributes_for_authenticated_user', $user, mo_openid_get_redirect_url());
 						do_action( 'wp_login', $user->user_login, $user );
 						wp_set_auth_cookie( $user_id, true );
 					}

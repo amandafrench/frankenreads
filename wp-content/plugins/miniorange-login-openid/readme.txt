@@ -4,7 +4,7 @@ Donate link: http://miniorange.com
 Tags: social login, social, facebook, twitter, login
 Requires at least: 2.0.2
 Tested up to: 4.9
-Stable tag: 5.3.1
+Stable tag: 5.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -144,6 +144,9 @@ Please email us at info@miniorange.com. You can also submit your query from the 
 
 
 == Changelog ==
+= 5.4.1 =
+*	Added Compatibility with miniOrange 2 Factor Authentication Plugin
+
 = 5.3.1 =
 *	Removed mcrypt dependency
 
@@ -401,6 +404,9 @@ Please email us at info@miniorange.com. You can also submit your query from the 
 * First version of Social Login, Social Sharing plugin.
 
 == Upgrade Notice ==
+= 5.4.1 =
+*	Added Compatibility with miniOrange 2 Factor Authentication Plugin
+
 = 5.3.1 =
 *	Removed mcrypt dependency
 
