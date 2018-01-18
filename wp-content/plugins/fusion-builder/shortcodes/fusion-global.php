@@ -114,7 +114,7 @@ if ( ! class_exists( 'FusionSC_Global' ) ) {
 					if ( 'fusion_global' === $value ) {
 						$result = shortcode_parse_atts( $matches[3][ $key ] );
 						// Get relative global element CPT and replace in content.
-						if ( isset( $result['id'] ) ) {
+						if ( isset( $result['id'] ) && ! empty( $result['id'] ) ) {
 							$post = get_post( $result['id'] );
 
 							if ( ! is_null( $post ) ) {

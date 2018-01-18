@@ -506,7 +506,7 @@ class Fusion_Scripts {
 			'fusion-scroll-to-anchor',
 			self::$js_folder_url . '/general/fusion-scroll-to-anchor.js',
 			self::$js_folder_path . '/general/fusion-scroll-to-anchor.js',
-			array( 'jquery', 'jquery-easing', 'avada-menu' ),
+			array( 'jquery', 'jquery-easing' ),
 			'1',
 			true
 		);
@@ -551,6 +551,7 @@ class Fusion_Scripts {
 			'fusionVideoBgVars',
 			array(
 				'status_vimeo' => fusion_library()->get_option( 'status_vimeo' ) ? fusion_library()->get_option( 'status_vimeo' ) : '0',
+				'status_yt'    => fusion_library()->get_option( 'status_yt' ) ? fusion_library()->get_option( 'status_yt' ) : '0',
 			)
 		);
 		Fusion_Dynamic_JS::localize_script(

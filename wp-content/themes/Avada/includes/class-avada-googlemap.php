@@ -377,9 +377,7 @@ class Avada_GoogleMap {
 		}
 
 		$addresses_to_cache = get_option( 'fusion_map_addresses' );
-
-		// @codingStandardsIgnoreLine
-		$post_addresses = isset( $_POST['addresses'] ) ? wp_unslash( $_POST['addresses'] ) : array();
+		$post_addresses     = isset( $_POST['addresses'] ) ? wp_unslash( $_POST['addresses'] ) : array(); // WPCS: sanitization ok.
 		foreach ( $post_addresses as $address ) {
 
 			if ( isset( $address['latitude'] ) && isset( $address['longitude'] ) ) {

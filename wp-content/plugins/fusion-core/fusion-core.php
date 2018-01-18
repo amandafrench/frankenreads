@@ -3,7 +3,7 @@
  * Plugin Name: Fusion Core
  * Plugin URI: http://theme-fusion.com
  * Description: ThemeFusion Core Plugin for ThemeFusion Themes
- * Version: 3.4
+ * Version: 3.4.1
  * Author: ThemeFusion
  * Author URI: http://theme-fusion.com
  *
@@ -33,7 +33,7 @@ if ( ! class_exists( 'FusionCore_Plugin' ) ) {
 		 * @since   1.0.0
 		 * @var  string
 		 */
-		const VERSION = '3.4';
+		const VERSION = '3.4.1';
 
 		/**
 		 * Instance of the class.
@@ -166,6 +166,15 @@ if ( ! class_exists( 'FusionCore_Plugin' ) ) {
 		 * @return object
 		 */
 		public static function fusion_core_cached_query( $args ) {
+
+			// Make sure cached queries are not language agnostic.
+			if ( class_exists( 'Fusion_Multilingual' ) ) {
+				if ( is_array( $args ) ) {
+					$args['fusion_lang'] = Fusion_Multilingual::get_active_language();
+				} else {
+					$args .= '&fusion_lang=' . Fusion_Multilingual::get_active_language();
+				}
+			}
 
 			$query_id = md5( maybe_serialize( $args ) );
 			$query    = wp_cache_get( $query_id, 'avada' );
@@ -1124,3 +1133,30 @@ function fusion_remove_orphan_shortcodes( $content ) {
 
 	return $content;
 }
+
+/**
+ * Remove post type from the link selector.
+ *
+ * @since 1.0
+ * @param array $query Default query for link selector.
+ * @return array $query
+ */
+function fusion_core_wp_link_query_args( $query ) {
+
+	// Get array key for the post type 'slide'.
+	$slide_post_type_key = array_search( 'slide', $query['post_type'] );
+
+	// Remove the post type from query.
+	unset( $query['post_type'][ $slide_post_type_key ] );
+
+	// Get array key for the post type 'themefusion_elastic'.
+	$elastic_slider_post_type_key = array_search( 'themefusion_elastic', $query['post_type'] );
+
+	// Remove the post type from query.
+	unset( $query['post_type'][ $elastic_slider_post_type_key ] );
+
+	// Return updated query.
+	return $query;
+}
+
+add_filter( 'wp_link_query_args', 'fusion_core_wp_link_query_args' );

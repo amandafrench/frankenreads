@@ -114,9 +114,13 @@ class Avada_Admin {
 		// Facebook instant articles rule set definition.
 		add_filter( 'instant_articles_transformer_rules_loaded', array( $this, 'add_instant_article_rules' ) );
 
-		// Load jQuery in the demos page.
-		if ( isset( $_GET['page'] ) && 'avada-demos' === $_GET['page'] ) {
+		// Load jQuery in the demos and plugins page.
+		if ( isset( $_GET['page'] ) && ( 'avada-demos' === $_GET['page'] || 'avada-plugins' === $_GET['page'] ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'add_jquery' ) );
+
+			if ( 'avada-plugins' === $_GET['page'] ) {
+				add_action( 'admin_enqueue_scripts', array( $this, 'add_jquery_ui_styles' ) );
+			}
 		}
 
 		add_action( 'wp_ajax_fusion_activate_plugin', array( $this, 'ajax_activate_plugin' ) );
@@ -142,6 +146,17 @@ class Avada_Admin {
 	public function add_jquery() {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-dialog' );
+	}
+
+	/**
+	 * Adds jQuery.
+	 *
+	 * @since 5.4.1
+	 * @access public
+	 * @return void
+	 */
+	public function add_jquery_ui_styles() {
+		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 	}
 
 	/**
@@ -929,7 +944,7 @@ class Avada_Admin {
 					'install' => '<div class="fusion-builder-plugin-install-nag">' . esc_html__( 'Please update Fusion Core to latest version.', 'Avada' ) . '</div>',
 				);
 			}
-		} elseif ( ( 'LayerSlider' === $item['slug'] || 'revslider' === $item['slug'] ) && ! Avada()->registration->is_registered() ) {
+		} elseif ( 'fusion-core' !== $item['slug'] && 'fusion-builder' !== $item['slug'] && $item['premium'] && ! Avada()->registration->is_registered() ) {
 			$disable_class = ' disabled avada-no-token';
 		}
 
@@ -996,7 +1011,7 @@ class Avada_Admin {
 				'tgmpa-update',
 				'tgmpa-nonce'
 			);
-			if ( ( 'LayerSlider' === $item['slug'] || 'revslider' === $item['slug'] ) && ! Avada()->registration->is_registered() ) {
+			if ( 'fusion-core' !== $item['slug'] && 'fusion-builder' !== $item['slug'] && $item['premium'] && ! Avada()->registration->is_registered() ) {
 				$disable_class = ' disabled avada-no-token';
 			}
 			$actions = array(
@@ -1141,15 +1156,11 @@ class Avada_Admin {
 		if ( fusion_doing_ajax() ) {
 			return;
 		}
-		// @codingStandardsIgnoreLine
-		if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) ) {
+		if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) ) { // WPCS: CSRF ok.
 			// Cat and tag bases.
-			// @codingStandardsIgnoreLine
-			$portfolio_category_slug = ( isset( $_POST['avada_portfolio_category_slug'] ) ) ? sanitize_text_field( wp_unslash( $_POST['avada_portfolio_category_slug'] ) ) : '';
-			// @codingStandardsIgnoreLine
-			$portfolio_skills_slug   = ( isset( $_POST['avada_portfolio_skills_slug'] ) ) ? sanitize_text_field( wp_unslash( $_POST['avada_portfolio_skills_slug'] ) ) : '';
-			// @codingStandardsIgnoreLine
-			$portfolio_tags_slug     = ( isset( $_POST['avada_portfolio_tags_slug'] ) ) ? sanitize_text_field( wp_unslash( $_POST['avada_portfolio_tags_slug'] ) ) : '';
+			$portfolio_category_slug = ( isset( $_POST['avada_portfolio_category_slug'] ) ) ? sanitize_text_field( wp_unslash( $_POST['avada_portfolio_category_slug'] ) ) : ''; // WPCS: CSRF ok.
+			$portfolio_skills_slug   = ( isset( $_POST['avada_portfolio_skills_slug'] ) ) ? sanitize_text_field( wp_unslash( $_POST['avada_portfolio_skills_slug'] ) ) : ''; // WPCS: CSRF ok.
+			$portfolio_tags_slug     = ( isset( $_POST['avada_portfolio_tags_slug'] ) ) ? sanitize_text_field( wp_unslash( $_POST['avada_portfolio_tags_slug'] ) ) : ''; // WPCS: CSRF ok.
 
 			$permalinks = get_option( 'avada_permalinks' );
 
@@ -1301,8 +1312,8 @@ class Avada_Admin {
 			'error_timeout'         => wp_kses_post( sprintf( __( 'Demo server couldn\'t be reached. Please check for wp_remote_get on the <a href="%s" target="_blank">System Status</a> page.', 'Avada' ), admin_url( 'admin.php?page=avada-system-status' ) ) ),
 			'error_php_limits'      => wp_kses_post( sprintf( __( 'Demo import failed. Please check for PHP limits in red on the <a href="%s" target="_blank">System Status</a> page. Change those to the recommended value and try again.', 'Avada' ), admin_url( 'admin.php?page=avada-demos' ) ) ),
 			'remove_demo'           => esc_attr__( 'Removing demo content will remove ALL previously imported demo content from this demo and restore your site to the previous state it was in before this demo content was imported.', 'Avada' ),
-			'update_fc'             => __( 'ERROR:\n\nFusion Builder Plugin can only be installed and activated if Fusion Core plugin is at version 3.0 or higher. Your version of Fusion Core is %s. Please update Fusion Core first.', 'Avada' ),
-			'register_first'        => __( 'ERROR:\n\nThis plugin can only be installed or updated, after you have successfully completed the Avada product registration on the "Product Registration" tab.', 'Avada' ),
+			'update_fc'             => __( 'Fusion Builder Plugin can only be installed and activated if Fusion Core plugin is at version 3.0 or higher. Please update Fusion Core first.', 'Avada' ),
+			'register_first'        => sprintf( __( 'This plugin can only be installed or updated, after you have successfully completed the Avada product registration on the <a href="%s" target="_blank">Product Registration</a> tab.', 'Avada' ), admin_url( 'admin.php?page=avada-registration' ) ),
 			'plugin_install_failed' => __( 'Plugin install failed. Please try Again.', 'Avada' ),
 			'plugin_active'         => __( 'Active', 'Avada' ),
 		);

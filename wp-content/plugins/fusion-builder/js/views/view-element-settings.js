@@ -193,7 +193,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 						// Fetch attachments if neccessary.
 						if ( 0 < fetchIds.length ) {
-							wp.media.query({ post__in: fetchIds }).more().then( function( response ) { // jshint ignore:line
+							wp.media.query({ post__in: fetchIds, posts_per_page: fetchIds.length }).more().then( function( response ) { // jshint ignore:line
 								that.renderAttachments( ids, $multipleImageContainer );
 							});
 						} else {

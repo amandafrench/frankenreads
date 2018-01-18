@@ -80,8 +80,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 	public function custom_option_import_code() {
 		$option_name = Fusion_Settings::get_option_name();
 		$nonce_name  = 'fusionredux_ajax_nonce' . $option_name;
-		// @codingStandardsIgnoreLine WordPress.VIP.ValidatedSanitizedInput.InputNotSanitized
-		if ( ! isset( $_REQUEST['security'] ) || ! wp_verify_nonce( wp_unslash( $_REQUEST['security'] ), $nonce_name ) ) {
+		if ( ! isset( $_REQUEST['security'] ) || ! wp_verify_nonce( wp_unslash( $_REQUEST['security'] ), $nonce_name ) ) { // WPCS: sanitization ok.
 			echo json_encode(
 				array(
 					'status' => 'failed',
@@ -91,8 +90,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			die();
 		}
 
-		// @codingStandardsIgnoreLine
-		if ( ! empty( $_POST['data'] ) ) {
+		if ( isset( $_POST['data'] ) && ! empty( $_POST['data'] ) ) {
 			$values        = array();
 			$fusionredux   = FusionReduxFrameworkInstances::get_instance( $option_name );
 
@@ -102,17 +100,18 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 				$values
 			);
 
-			// @codingStandardsIgnoreStart
 			if ( isset( $_POST['data']['import_code'] ) && '' !== $_POST['data']['import_code'] ) {
-				$import_code = stripslashes( $_POST['data']['import_code'] );
+				$import_code = stripslashes( $_POST['data']['import_code'] ); // WPCS: sanitization ok.
 				$values['import_code'] = $import_code;
 			} else if ( isset( $_POST['data']['import_link'] ) && '' !== $_POST['data']['import_link'] ) {
-				$values['import_link'] = $_POST['data']['import_link'];
+				$values['import_link'] = $_POST['data']['import_link']; // WPCS: sanitization ok.
 			} else {
-				echo json_encode( array( 'status' => 'failed', 'action' => 'reload' ) );
-				die ();
+				echo json_encode( array(
+					'status' => 'failed',
+					'action' => 'reload',
+				) );
+				die();
 			}
-			// @codingStandardsIgnoreEnd
 
 			if ( isset( $fusionredux->validation_ran ) ) {
 				unset( $fusionredux->validation_ran );
@@ -172,18 +171,14 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			return;
 		}
 
-		// @codingStandardsIgnoreLine
-		if ( ! empty( $_POST['data'] ) ) {
+		if ( ! empty( $_POST['data'] ) ) { // WPCS: CSRF ok.
 
 			$existing_colors  = get_option( 'avada_custom_color_schemes', array() );
 
-			// @codingStandardsIgnoreLine
-			if ( 'import' !== $_POST['data']['type'] ) {
+			if ( 'import' !== $_POST['data']['type'] ) { // WPCS: CSRF ok.
 				$scheme        = array();
-				// @codingStandardsIgnoreLine
-				$scheme_colors = wp_unslash( $_POST['data']['values'] );
-				// @codingStandardsIgnoreLine
-				$scheme_name   = sanitize_text_field( wp_unslash( $_POST['data']['name'] ) );
+				$scheme_colors = wp_unslash( $_POST['data']['values'] ); // WPCS: CSRF ok sanitization ok.
+				$scheme_name   = sanitize_text_field( wp_unslash( $_POST['data']['name'] ) ); // WPCS: CSRF ok.
 
 				if ( defined( 'FUSION_BUILDER_PLUGIN_DIR' ) ) {
 					$fb_options = get_option( 'fusion_options' );
@@ -199,8 +194,8 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 					'values' => $scheme_colors,
 				);
 
-				// Check if scheme trying to be saved already exists, if so unset and merge. @codingStandardsIgnoreLine
-				if ( 'update' == $_POST['data']['type'] ) {
+				// Check if scheme trying to be saved already exists, if so unset and merge.
+				if ( 'update' == $_POST['data']['type'] ) { // WPCS: CSRF ok.
 					// Remove existing saved version and and merge in.
 					foreach ( $existing_colors as $key => $existing_color ) {
 						if ( $existing_color['name'] == $scheme_name ) {
@@ -226,8 +221,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 				);
 
 			} else {
-				// @codingStandardsIgnoreLine (sanitization is below using the sanitize_color_schemes method).
-				$schemes = stripslashes( stripcslashes( wp_unslash( $_POST['data']['values'] ) ) );
+				$schemes = stripslashes( stripcslashes( wp_unslash( $_POST['data']['values'] ) ) ); // WPCS: CSRF ok sanitization ok.
 				$schemes = json_decode( $schemes, true );
 				if ( is_array( $existing_colors ) ) {
 					// Add imported schemes to existing set.
@@ -265,13 +259,11 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			return;
 		}
 
-		// @codingStandardsIgnoreLine
-		if ( ! empty( $_POST['data'] ) && is_array( $_POST['data']['names'] ) ) {
+		if ( ! empty( $_POST['data'] ) && is_array( $_POST['data']['names'] ) ) { // WPCS: CSRF ok.
 
 			$existing_colors  = get_option( 'avada_custom_color_schemes', array() );
 
-			// @codingStandardsIgnoreLine (sanitization follows on a per-name basis).
-			$post_data_names = wp_unslash( $_POST['data']['names'] );
+			$post_data_names = wp_unslash( $_POST['data']['names'] ); // WPCS: CSRF ok sanitization ok.
 			foreach ( $post_data_names as $scheme_name ) {
 				$scheme_name = sanitize_text_field( $scheme_name );
 				// Remove from array of existing schemes.
@@ -428,6 +420,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			'footer_widgets_columns',
 			'blog_grid_columns',
 			'excerpt_length_blog',
+			'blog_excerpt_length',
 			'portfolio_archive_excerpt_length',
 			'portfolio_archive_columns',
 			'portfolio_archive_items',
@@ -601,8 +594,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 		if ( is_multisite() && is_main_site() ) {
 			$sites = get_sites();
 			foreach ( $sites as $site ) {
-				// @codingStandardsIgnoreLine
-				switch_to_blog( $site->blog_id );
+				switch_to_blog( $site->blog_id ); // phpcs:ignore WordPress.VIP.RestrictedFunctions.switch_to_blog_switch_to_blog
 				avada_reset_all_caches();
 				restore_current_blog();
 			}

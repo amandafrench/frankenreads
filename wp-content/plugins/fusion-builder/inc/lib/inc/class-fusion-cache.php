@@ -116,6 +116,7 @@ class Fusion_Cache {
 				'fusion_dynamic_js_filenames',
 				'fusion_patcher_check_num',
 				'fusion_dynamic_js_readable',
+				'avada_premium_plugins_info',
 			);
 			foreach ( $transients as $transient ) {
 				delete_transient( $transient );

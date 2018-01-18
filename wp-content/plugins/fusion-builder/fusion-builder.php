@@ -4,7 +4,7 @@
 Plugin Name: Fusion Builder
 Plugin URI: http://www.theme-fusion.com
 Description: ThemeFusion Page Builder Plugin
-Version: 1.4
+Version: 1.4.1
 Author: ThemeFusion
 Author URI: http://www.theme-fusion.com
 */
@@ -21,7 +21,7 @@ if ( ! defined( 'FUSION_BUILDER_DEV_MODE' ) ) {
 
 // Plugin version.
 if ( ! defined( 'FUSION_BUILDER_VERSION' ) ) {
-	define( 'FUSION_BUILDER_VERSION', '1.4' );
+	define( 'FUSION_BUILDER_VERSION', '1.4.1' );
 }
 // Plugin Folder Path.
 if ( ! defined( 'FUSION_BUILDER_PLUGIN_DIR' ) ) {
@@ -261,6 +261,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 			add_filter( 'the_content', array( $this, 'fusion_calculate_containers' ), 1 );
 			add_filter( 'widget_text', array( $this, 'fusion_calculate_columns' ), 1, 3 );
 			add_filter( 'widget_display_callback', array( $this, 'fusion_disable_wpautop_in_widgets' ), 10, 3 );
+			add_filter( 'no_texturize_shortcodes', array( $this, 'exempt_from_wptexturize' ) );
 
 			// Save Helper metaboxes.
 			add_action( 'save_post', array( $this, 'metabox_settings_save_details' ), 10, 2 );
@@ -879,6 +880,19 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 				remove_filter( 'widget_text_content', 'wpautop' );
 			}
 			return $widget_instance;
+		}
+
+		/**
+		 * Fixes image src issue for URLs with dashes.
+		 *
+		 * @access public
+		 * @since  1.4
+		 * @param  Array $shortcodes    Array of shortcodes to exempt.
+		 * @return $shortcodes
+		 */
+		public function exempt_from_wptexturize( $shortcodes ) {
+			$shortcodes[] = 'fusion_imageframe';
+			return $shortcodes;
 		}
 
 		/**

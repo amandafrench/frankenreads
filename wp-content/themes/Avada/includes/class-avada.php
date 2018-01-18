@@ -158,43 +158,7 @@ class Avada {
 	 * @access public
 	 * @var array
 	 */
-	public static $bundled_plugins = array(
-		'fusion_core' => array(
-			'slug'    => 'fusion-core',
-			'name'    => 'Fusion Core',
-			'version' => '3.4',
-		),
-		'fusion_builder' => array(
-			'slug'    => 'fusion-builder',
-			'name'    => 'Fusion Builder',
-			'version' => '1.4',
-		),
-		'fusion_white_label_branding' => array(
-			'slug'    => 'fusion-white-label-branding',
-			'name'    => 'Fusion White Label Branding',
-			'version' => '1.0',
-		),
-		'convert_plus' => array(
-			'slug'    => 'convertplug',
-			'name'    => 'Convert Plus',
-			'version' => '3.1.2',
-		),
-		'acf_pro' => array(
-			'slug'    => 'advanced-custom-fields-pro',
-			'name'    => 'Advanced Custom Fields PRO',
-			'version' => '5.6.7',
-		),
-		'layer_slider' => array(
-			'slug'    => 'LayerSlider',
-			'name'    => 'LayerSlider WP',
-			'version' => '6.6.5',
-		),
-		'slider_revolution' => array(
-			'slug'    => 'revslider',
-			'name'    => 'Slider Revolution',
-			'version' => '5.4.6.4',
-		),
-	);
+	public static $bundled_plugins = array();
 
 	/**
 	 * Fusion.
@@ -360,15 +324,13 @@ class Avada {
 				'type'    => 'theme',
 				'name'    => 'Avada',
 				'bundled' => array(
-					'Fusion Core',
-					'Fusion Builder',
-				),
-				'bundled-versions' => array(
-					'Fusion Core'    => self::$bundled_plugins['fusion_core']['version'],
-					'Fusion Builder' => self::$bundled_plugins['fusion_builder']['version'],
+					'fusion-core'                 => 'Fusion Core',
+					'fusion-builder'              => 'Fusion Builder',
+					'fusion-white-label-branding' => 'Fusion White Label Branding',
 				),
 			)
 		);
+
 		$this->init           = new Avada_Init();
 		$this->social_sharing = new Avada_Social_Sharing();
 		$this->template       = new Avada_Template();
@@ -387,8 +349,6 @@ class Avada {
 			$fusion_library->images = $this->images;
 		}
 	}
-
-
 
 	/**
 	 * Checks if we're in the migration page.
@@ -434,7 +394,8 @@ class Avada {
 	}
 
 	/**
-	 * Gets the bundled plugins.
+	 * Gets info for premium (and free) plugins from the ThemeFusion API
+	 * in a JSON format and then format them as an array.
 	 *
 	 * @static
 	 * @access public
@@ -442,6 +403,63 @@ class Avada {
 	 * @return array Array of bundled plugins.
 	 */
 	public static function get_bundled_plugins() {
+		if ( empty( self::$bundled_plugins ) ) {
+
+			// Check for transient, if none, grab remote HTML file.
+			$plugins = get_transient( 'avada_premium_plugins_info' );
+
+			if ( ! $plugins || empty( $plugins ) ) {
+				$url = 'https://updates.theme-fusion.com/?avada_action=get_plugins&avada_version=' . self::get_normalized_theme_version();
+
+				// Get remote HTML file.
+				$response = wp_remote_get(
+					$url, array(
+						'user-agent' => 'avada-user-agent',
+					)
+				);
+
+				// Check for error.
+				if ( is_wp_error( $response ) ) {
+					return array();
+				}
+
+				// Parse remote HTML file.
+				$data = wp_remote_retrieve_body( $response );
+
+				// Check for error.
+				if ( is_wp_error( $data ) ) {
+					return array();
+				}
+
+				$data = json_decode( $data, true );
+
+				if ( ! is_array( $data ) && function_exists( 'file_get_contents' ) ) {
+					// Fallback to file_get_contents in case.
+					$response = file_get_contents( $url );
+					$data     = json_decode( $response, true );
+				}
+
+				$plugins = array();
+				foreach ( $data as $plugin ) {
+					if ( $plugin['premium'] ) {
+
+						// Making sure the correct array index is present, latest_version being returned from server plugin.
+						$plugin['version'] = $plugin['latest_version'];
+
+						$plugin['Author'] = $plugin['plugin_author'];
+						$plugin['AuthorURI'] = $plugin['plugin_author_url'];
+					}
+
+					$plugins[ $plugin['slug'] ] = $plugin;
+				}
+
+				// Store remote data file in transient, expire after 24 hours.
+				set_transient( 'avada_premium_plugins_info', $plugins, 24 * HOUR_IN_SECONDS );
+			}
+
+			self::$bundled_plugins = $plugins;
+		}
+
 		return self::$bundled_plugins;
 	}
 

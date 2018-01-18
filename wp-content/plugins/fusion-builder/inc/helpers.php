@@ -1871,7 +1871,7 @@ function fusion_builder_map_descriptions( $shortcode, $param ) {
 	);
 	$shortcode_option_map['show_weeks']['fusion_countdown'] = array(
 		'theme-option' => 'countdown_show_weeks',
-		'type' => 'yesno',
+		'type' => 'select',
 	);
 	$shortcode_option_map['background_color']['fusion_countdown'] = array(
 		'theme-option' => 'countdown_background_color',
@@ -3379,3 +3379,24 @@ add_filter( 'embed_oembed_html', 'fusion_wrap_embed_with_div', 10 );
 if ( apply_filters( 'is_jetpack_site', false ) ) {
 	add_filter( 'video_embed_html', 'fusion_wrap_embed_with_div', 10 );
 }
+
+/**
+ * Remove post type from the link selector.
+ *
+ * @since 1.0
+ * @param array $query Default query for link selector.
+ * @return array $query
+ */
+function fusion_builder_wp_link_query_args( $query ) {
+
+	// Get array key for the post type 'fusion_template'.
+	$post_type_key = array_search( 'fusion_template', $query['post_type'] );
+
+	// Remove the post type from query.
+	unset( $query['post_type'][ $post_type_key ] );
+
+	// Return updated query.
+	return $query;
+}
+
+add_filter( 'wp_link_query_args', 'fusion_builder_wp_link_query_args' );

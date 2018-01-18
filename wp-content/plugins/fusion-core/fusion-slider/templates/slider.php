@@ -260,7 +260,6 @@
 					<?php endif; ?>
 					<div class="background <?php echo esc_attr( $background_class ); ?>" style="<?php echo esc_html( $background_image ); ?>max-width:<?php echo esc_attr( $slider_settings['slider_width'] ); ?>;height:<?php echo esc_attr( $slider_settings['slider_height'] ); ?>;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo esc_url_raw( $image_url[0] ); ?>', sizingMethod='scale');-ms-filter:'progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo esc_url_raw( $image_url[0] ); ?>', sizingMethod='scale')';" data-imgwidth="<?php echo esc_attr( $img_width ); ?>">
 						<?php if ( isset( $metadata['pyre_type'][0] ) ) : ?>
-							<?php // @codingStandardsIgnoreLine ?>
 							<?php if ( 'self-hosted-video' === $metadata['pyre_type'][0] && ( $metadata['pyre_webm'][0] || $metadata['pyre_mp4'][0] || $metadata['pyre_ogg'][0] ) && ( ( function_exists( 'avada_jetpack_is_mobile' ) && ! avada_jetpack_is_mobile() ) || ( function_exists( 'jetpack_is_mobile' ) && ! jetpack_is_mobile() ) || ! wp_is_mobile() ) ) : ?>
 								<video width="1800" height="700" <?php echo $video_attributes; // WPCS: XSS ok. ?> preload="auto">
 									<?php if ( array_key_exists( 'pyre_ogg', $metadata ) && $metadata['pyre_ogg'][0] ) : ?>

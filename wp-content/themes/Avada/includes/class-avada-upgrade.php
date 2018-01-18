@@ -130,6 +130,7 @@ class Avada_Upgrade {
 			'521' => array( '5.2.1', false ),
 			'530' => array( '5.3.0', false ),
 			'540' => array( '5.4.0', false ),
+			'541' => array( '5.4.1', false ),
 		);
 
 		$upgraded = false;
@@ -140,10 +141,14 @@ class Avada_Upgrade {
 			if ( $this->database_theme_version && version_compare( $this->database_theme_version, $version[0], '<' ) ) {
 				$upgraded = true;
 				// Instantiate the class if migration is needed.
-				new $classname();
+				if ( class_exists( $classname ) ) {
+					new $classname();
+				}
 			} elseif ( true === $version[1] ) {
 				// Instantiate the class if force-instantiation is set to true.
-				new $classname( true );
+				if ( class_exists( $classname ) ) {
+					new $classname( true );
+				}
 			}
 		}
 

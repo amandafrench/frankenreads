@@ -437,11 +437,7 @@ class Fusion_Images {
 		}
 
 		$upload_dir_paths = wp_upload_dir();
-		$upload_dir_paths_baseurl = $upload_dir_paths['baseurl'];
-
-		if ( substr( $attachment_url, 0, 2 ) === '//' ) {
-			$upload_dir_paths_baseurl = set_url_scheme( $upload_dir_paths_baseurl );
-		}
+		$upload_dir_paths_baseurl = set_url_scheme( $upload_dir_paths['baseurl'] );
 
 		// Make sure the upload path base directory exists in the attachment URL, to verify that we're working with a media library image.
 		if ( false !== strpos( $attachment_url, $upload_dir_paths_baseurl ) ) {

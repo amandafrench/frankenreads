@@ -130,6 +130,8 @@ class Fusion_Patcher_Filesystem {
 			$target = FUSION_CORE_PATH;
 		} elseif ( 'fusion-builder' === self::$target && defined( 'FUSION_BUILDER_PLUGIN_DIR' ) ) {
 			$target = FUSION_BUILDER_PLUGIN_DIR;
+		} elseif ( 'fusion-white-label-branding' === self::$target && defined( 'FUSION_WHITE_LABEL_BRANDING_PLUGIN_DIR' ) ) {
+			$target = FUSION_WHITE_LABEL_BRANDING_PLUGIN_DIR;
 		}
 
 		global $wp_filesystem;

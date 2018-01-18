@@ -944,6 +944,7 @@ class Avada_Demo_Import {
 
 		// Import Revslider.
 		if ( class_exists( 'UniteFunctionsRev' ) && false != $this->importer_files->get_revslider() ) { // If revslider is activated.
+			add_action( 'wp_generate_attachment_metadata', array( $this, 'add_rev_slider_demo_import_meta' ), 10, 2 );
 
 			$slider = new RevSlider();
 			foreach ( $this->importer_files->get_revslider() as $rev_file ) {
@@ -958,7 +959,22 @@ class Avada_Demo_Import {
 					$this->content_tracker->add_rev_slider_to_stack( $result['sliderID'] );
 				}
 			}
+
+			remove_action( 'wp_generate_attachment_metadata', array( $this, 'add_rev_slider_demo_import_meta' ), 10 );
 		}
+	}
+
+	/**
+	 * Add meta data for media imported by Rev Slider importer.
+	 *
+	 * @access public
+	 * @since 5.4.1
+	 *
+	 * @param mixed $metadata      Metadata for attachment.
+	 * @param int   $attachment_id ID of the attachment.
+	 */
+	public function add_rev_slider_demo_import_meta( $metadata, $attachment_id ) {
+		update_post_meta( $attachment_id, 'fusion_slider_demo_import', $this->demo_type );
 	}
 
 	/**

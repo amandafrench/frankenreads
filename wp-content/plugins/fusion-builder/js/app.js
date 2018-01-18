@@ -534,7 +534,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 							// If still some attachments needing fetched, fetch them in a single query.
 							if ( 0 < fetchIds.length ) {
-								wp.media.query({ post__in: fetchIds }).more().then( function( response ) { // jshint ignore:line
+								wp.media.query({ post__in: fetchIds, posts_per_page: fetchIds.length }).more().then( function( response ) { // jshint ignore:line
 									jQuery.each( ids, function( index, id ) {
 										if ( '' !== id && 'NaN' !== id ) {
 

@@ -26,7 +26,6 @@ class Avada_Init {
 	 * @access  public
 	 */
 	public function __construct() {
-
 		add_action( 'after_setup_theme', array( $this, 'load_textdomain' ) );
 		add_action( 'after_setup_theme', array( $this, 'set_builder_status' ), 10 );
 		add_action( 'after_setup_theme', array( $this, 'add_theme_supports' ), 10 );
@@ -36,6 +35,10 @@ class Avada_Init {
 
 		if ( class_exists( 'BuddyPress' ) && ! Avada_Helper::is_buddypress() ) {
 			add_action( 'init', array( $this, 'remove_buddypress_redirection' ), 5 );
+		}
+
+		if ( class_exists( 'Convert_Plug' ) ) {
+			add_action( 'init', array( $this, 'remove_convert_plus_notices' ) );
 		}
 
 		if ( class_exists( 'GF_User_Registration_Bootstrap' ) ) {
@@ -427,6 +430,19 @@ class Avada_Init {
 	 */
 	public function remove_buddypress_redirection() {
 		remove_action( 'bp_init', 'bp_core_wpsignup_redirect' );
+	}
+
+	/**
+	 * Removes admin notices from Convert Plus plugin.
+	 *
+	 * @since 5.4.1
+	 * @access public
+	 * @return void
+	 */
+	public function remove_convert_plus_notices() {
+		if ( ! defined( 'BSF_PRODUCTS_NOTICES' ) ) {
+			define( 'BSF_PRODUCTS_NOTICES', false );
+		}
 	}
 
 	/**

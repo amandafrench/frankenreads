@@ -30,7 +30,7 @@ class Fusion_Builder_Admin {
 		$post_type = isset( $post->post_type ) ? $post->post_type : false;
 
 		if ( ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) && post_type_supports( $post_type, 'editor' ) ) {
-			$publish_button_text     = ( isset( $post->post_status ) && 'publish' === $post->post_status ) ? esc_attr__( 'Update', 'fusion-builder' ) : esc_attr__( 'Publish', 'fusion-builder' );
+			$publish_button_text     = ( isset( $post->post_status ) && ( 'publish' === $post->post_status || 'private' === $post->post_status ) ) ? esc_attr__( 'Update', 'fusion-builder' ) : esc_attr__( 'Publish', 'fusion-builder' );
 			$fusion_builder_settings = get_option( 'fusion_builder_settings', array() );
 
 			$enable_builder_sticky_publish_buttons = true;

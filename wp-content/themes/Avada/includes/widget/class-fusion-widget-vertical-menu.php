@@ -109,7 +109,7 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 				'container'       => 'nav',
 				'item_spacing'    => 'discard',
 				'link_before'     => $link_before,
-				'link_after'      => $link_after,				
+				'link_after'      => $link_after,
 			);
 
 			wp_nav_menu( $nav_menu_args );

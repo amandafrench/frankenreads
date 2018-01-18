@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'AVADA_VERSION' ) ) {
-	define( 'AVADA_VERSION', '5.4' );
+	define( 'AVADA_VERSION', '5.4.1' );
 }
 
 /**
@@ -500,8 +500,7 @@ add_action( 'wp_loaded', 'remove_product_shortcode' );
 /**
  * Support email login on my account dropdown.
  */
-// @codingStandardsIgnoreLine
-if ( isset( $_POST['fusion_woo_login_box'] ) && 'true' === $_POST['fusion_woo_login_box'] ) {
+if ( isset( $_POST['fusion_woo_login_box'] ) && 'true' === $_POST['fusion_woo_login_box'] ) { // WPCS: CSRF ok.
 	add_filter( 'authenticate', 'avada_email_login_auth', 10, 3 );
 }
 
@@ -531,8 +530,7 @@ function avada_email_login_auth( $user, $username, $password ) {
 /**
  * No redirect on woo my account dropdown login when it fails.
  */
-// @codingStandardsIgnoreLine
-if ( isset( $_POST['fusion_woo_login_box'] ) && 'true' === $_POST['fusion_woo_login_box'] ) {
+if ( isset( $_POST['fusion_woo_login_box'] ) && 'true' === $_POST['fusion_woo_login_box'] ) { // WPCS: CSRF ok.
 	add_action( 'init', 'avada_load_login_redirect_support' );
 }
 
@@ -544,9 +542,8 @@ function avada_load_login_redirect_support() {
 
 		// When on the my account page, do nothing.
 		if ( ! empty( $_POST['login'] ) ) {
-			if ( ! isset( $_POST['_wpnonce'] ) && empty( $_POST['_wpnonce'] ) ) {
-				// @codingStandardsIgnoreLine
-				$nonce = sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) );
+			if ( isset( $_POST['_wpnonce'] ) && ! empty( $_POST['_wpnonce'] ) ) {
+				$nonce = sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ); // WPCS: CSRF ok.
 				if ( wp_verify_nonce( $nonce, 'woocommerce-login' ) ) {
 					return;
 				}
@@ -659,6 +656,7 @@ $avada_patcher = new Fusion_Patcher(
 		'bundled'     => array(
 			'fusion-builder',
 			'fusion-core',
+			'fusion-white-label-branding',
 		),
 	)
 );

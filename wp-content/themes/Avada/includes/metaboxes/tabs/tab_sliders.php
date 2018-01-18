@@ -20,7 +20,7 @@ $this->select(
 	array(
 		'no'      => esc_attr__( 'No Slider', 'Avada' ),
 		'layer'   => 'LayerSlider',
-		'flex'    => 'Fusion Slider',
+		'flex'    => esc_attr__( 'Fusion Slider', 'Avada' ),
 		'rev'     => 'Slider Revolution',
 		'elastic' => 'Elastic Slider',
 	),

@@ -85,12 +85,14 @@ class Avada_Admin_Notices {
 		if ( ! empty( $_POST ) ) {
 			$avada_admin_notices = get_transient( 'avada_admin_notices' );
 			$avada_admin_notices = ( false === $avada_admin_notices ? array() : $avada_admin_notices );
-			// @codingStandardsIgnoreLine
-			$option_name        = wp_unslash( sanitize_text_field( $_POST['option_name'] ) );
-			if ( ! array_key_exists( $option_name, $avada_admin_notices ) ) {
-				$avada_admin_notices[ $option_name ] = 'dismissed';
+			$option_name         = '';
+			if ( isset( $_POST['option_name'] ) ) {
+				wp_unslash( sanitize_text_field( $_POST['option_name'] ) ); // WPCS: CSRF ok sanitization ok.
+				if ( ! array_key_exists( $option_name, $avada_admin_notices ) ) {
+					$avada_admin_notices[ $option_name ] = 'dismissed';
+				}
+				set_transient( 'avada_admin_notices', $avada_admin_notices, 0 );
 			}
-			set_transient( 'avada_admin_notices', $avada_admin_notices, 0 );
 		}
 
 		wp_die();

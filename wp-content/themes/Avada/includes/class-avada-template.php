@@ -509,7 +509,7 @@ class Avada_Template {
 	 * @param int|string $size          The size.
 	 * @param string     $content_align The content alignment.
 	 */
-	public function title_template( $content = '', $size = '2', $content_align = 'left' ) {
+	public function title_template( $content = '', $size = '2', $content_align = '' ) {
 		$margin_top     = Avada()->settings->get( 'title_margin', 'top' );
 		$margin_bottom  = Avada()->settings->get( 'title_margin', 'bottom' );
 		$sep_color      = Avada()->settings->get( 'title_border_color' );
@@ -522,6 +522,14 @@ class Avada_Template {
 			'5' => 'five',
 			'6' => 'six',
 		);
+
+		if ( ! $content_align ) {
+			$content_align = 'left';
+			if ( is_rtl() ) {
+				$content_align = 'right';
+			}
+		}
+
 		$classes        = '';
 		$styles         = '';
 		$sep_styles     = '';

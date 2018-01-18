@@ -15,56 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Gets info for premium (and free) plugins from the ThemeFusion API
- * in a JSON format and then format them as an array.
- *
- * @since 5.4
- * @return array|null Returns array if we got the JSON, or null on fail.
- */
-function avada_get_premium_plugins_info() {
-
-	// Check for transient, if none, grab remote HTML file.
-	$data_final = get_transient( 'avada_premium_plugins_info' );
-	if ( ! $data_final || empty( $data_final ) ) {
-		$url = 'https://updates.theme-fusion.com/?avada_action=get_plugins';
-		// Get remote HTML file.
-		$response = wp_remote_get( $url );
-		// Check for error.
-		if ( is_wp_error( $response ) ) {
-			return;
-		}
-
-		// Parse remote HTML file.
-		$data = wp_remote_retrieve_body( $response );
-
-		// Check for error.
-		if ( is_wp_error( $data ) ) {
-			return;
-		}
-
-		$data = json_decode( $data, true );
-		if ( ! is_array( $data ) && function_exists( 'file_get_contents' ) ) {
-			// Fallback to file_get_contents in case.
-			$response = file_get_contents( $url );
-			$data     = json_decode( $response, true );
-		}
-		$data_final = array();
-		foreach ( $data as $plugin_id => $plugin_data ) {
-			$data_final[ $plugin_data['name'] ] = $plugin_data;
-			$data_final[ $plugin_data['name'] ]['id'] = $plugin_id;
-		}
-		// Tweak for backwards-compatibility.
-		if ( isset( $data_final['Revolution Slider'] ) ) {
-			$data_final['Slider Revolution'] = $data_final['Revolution Slider'];
-		}
-
-		// Store remote data file in transient, expire after 24 hours.
-		set_transient( 'avada_premium_plugins_info', $data_final, 24 * HOUR_IN_SECONDS );
-	}
-	return $data_final;
-}
-
-/**
  * Gets all recommended and required plugins for use in TGM plugin.
  *
  * @since 5.1.6
@@ -82,141 +32,19 @@ function avada_get_required_and_recommened_plugins() {
 		$is_plugins_page = true;
 	}
 
-	// Get the bundled plugin information.
-	$bundled_plugins = Avada()->get_bundled_plugins();
+	$plugins_info = Avada::get_bundled_plugins();
 
-	$remote_info = avada_get_premium_plugins_info();
+	if ( is_array( $plugins_info ) ) {
+		foreach ( $plugins_info as $plugin ) {
+			if ( $plugin['premium'] ) {
+				$plugins_info[ $plugin['slug'] ]['source'] = ( $is_plugins_page ) ? Avada()->remote_install->get_package( $plugin['name'] ) : 'bundled';
+			} else {
+				$plugins_info[ $plugin['slug'] ]['source'] = 'repo';
+			}
+		}
+	}
 
-	/**
-	 * Array of plugin arrays. Required keys are name and slug.
-	 * If the source is NOT from the .org repo, then source is also required.
-	 */
-	$plugins = array(
-		$bundled_plugins['fusion_core']['slug'] => array(
-			'name'               => $bundled_plugins['fusion_core']['name'],
-			'slug'               => $bundled_plugins['fusion_core']['slug'],
-			'source'             => ( $is_plugins_page ) ? Avada()->remote_install->get_package( 'Fusion Core' ) : 'bundled',
-			'required'           => true,
-			'premium'            => ( isset( $remote_info['Fusion Core'] ) && isset( $remote_info['Fusion Core']['premium'] ) ) ? $remote_info['Fusion Core']['premium'] : false,
-			'version'            => $bundled_plugins['fusion_core']['version'],
-			'force_activation'   => false,
-			'force_deactivation' => false,
-			'external_url'       => '',
-			'image_url'          => ( isset( $remote_info['Fusion Core'] ) && isset( $remote_info['Fusion Core']['image'] ) ) ? set_url_scheme( $remote_info['Fusion Core']['image'] ) : '',
-			'Author'             => 'ThemeFusion',
-			'AuthorURI'          => 'https://theme-fusion.com',
-		),
-		$bundled_plugins['fusion_builder']['slug'] => array(
-			'name'               => $bundled_plugins['fusion_builder']['name'],
-			'slug'               => $bundled_plugins['fusion_builder']['slug'],
-			'source'             => ( $is_plugins_page ) ? Avada()->remote_install->get_package( 'Fusion Builder' ) : 'bundled',
-			'required'           => true,
-			'premium'            => ( isset( $remote_info['Fusion Builder'] ) && isset( $remote_info['Fusion Builder']['premium'] ) ) ? $remote_info['Fusion Builder']['premium'] : false,
-			'version'            => $bundled_plugins['fusion_builder']['version'],
-			'force_activation'   => false,
-			'force_deactivation' => false,
-			'external_url'       => '',
-			'image_url'          => ( isset( $remote_info['Fusion Builder'] ) && isset( $remote_info['Fusion Builder']['image'] ) ) ? set_url_scheme( $remote_info['Fusion Builder']['image'] ) : '',
-			'Author'             => 'ThemeFusion',
-			'AuthorURI'          => 'https://theme-fusion.com',
-		),
-		$bundled_plugins['layer_slider']['slug'] => array(
-			'name'               => $bundled_plugins['layer_slider']['name'],
-			'slug'               => $bundled_plugins['layer_slider']['slug'],
-			'source'             => ( $is_plugins_page ) ? Avada()->remote_install->get_package( 'LayerSlider WP' ) : 'bundled',
-			'required'           => false,
-			'premium'            => ( isset( $remote_info['LayerSlider WP'] ) && isset( $remote_info['LayerSlider WP']['premium'] ) ) ? $remote_info['LayerSlider WP']['premium'] : false,
-			'version'            => $bundled_plugins['layer_slider']['version'],
-			'force_activation'   => false,
-			'force_deactivation' => false,
-			'external_url'       => '',
-			'image_url'          => ( isset( $remote_info['LayerSlider WP'] ) && isset( $remote_info['LayerSlider WP']['image'] ) ) ? set_url_scheme( $remote_info['LayerSlider WP']['image'] ) : '',
-			'Author'             => 'Kreatura Media',
-			'AuthorURI'          => 'https://layerslider.kreaturamedia.com/',
-		),
-		$bundled_plugins['slider_revolution']['slug'] => array(
-			'name'               => $bundled_plugins['slider_revolution']['name'],
-			'slug'               => $bundled_plugins['slider_revolution']['slug'],
-			'source'             => ( $is_plugins_page ) ? Avada()->remote_install->get_package( 'Revolution Slider' ) : 'bundled',
-			'required'           => false,
-			'premium'            => ( isset( $remote_info['Revolution Slider'] ) && isset( $remote_info['Revolution Slider']['premium'] ) ) ? $remote_info['Revolution Slider']['premium'] : false,
-			'version'            => $bundled_plugins['slider_revolution']['version'],
-			'force_activation'   => false,
-			'force_deactivation' => false,
-			'external_url'       => '',
-			'image_url'          => ( isset( $remote_info['Revolution Slider'] ) && isset( $remote_info['Revolution Slider']['image'] ) ) ? set_url_scheme( $remote_info['Revolution Slider']['image'] ) : '',
-			'Author'             => 'ThemePunch',
-			'AuthorURI'          => 'http://themepunch.com/',
-		),
-		$bundled_plugins['acf_pro']['slug'] => array(
-			'name'               => $bundled_plugins['acf_pro']['name'],
-			'slug'               => $bundled_plugins['acf_pro']['slug'],
-			'source'             => ( $is_plugins_page ) ? Avada()->remote_install->get_package( 'Advanced Custom Fields PRO' ) : 'bundled',
-			'required'           => false,
-			'premium'            => ( isset( $remote_info['Advanced Custom Fields PRO'] ) && isset( $remote_info['Advanced Custom Fields PRO']['premium'] ) ) ? $remote_info['Advanced Custom Fields PRO']['premium'] : false,
-			'version'            => $bundled_plugins['acf_pro']['version'],
-			'force_activation'   => false,
-			'force_deactivation' => false,
-			'external_url'       => '',
-			'image_url'          => ( isset( $remote_info['Advanced Custom Fields PRO'] ) && isset( $remote_info['Advanced Custom Fields PRO']['image'] ) ) ? set_url_scheme( $remote_info['Advanced Custom Fields PRO']['image'] ) : '',
-			'Author'             => 'Elliot Condon',
-			'AuthorURI'          => 'http://www.elliotcondon.com/',
-		),
-		$bundled_plugins['fusion_white_label_branding']['slug'] => array(
-			'name'               => $bundled_plugins['fusion_white_label_branding']['name'],
-			'slug'               => $bundled_plugins['fusion_white_label_branding']['slug'],
-			'source'             => ( $is_plugins_page ) ? Avada()->remote_install->get_package( 'Fusion White Label Branding' ) : 'bundled',
-			'required'           => false,
-			'premium'            => ( isset( $remote_info['Fusion White Label Branding'] ) && isset( $remote_info['Fusion White Label Branding']['premium'] ) ) ? $remote_info['Fusion White Label Branding']['premium'] : false,
-			'version'            => $bundled_plugins['fusion_white_label_branding']['version'],
-			'force_activation'   => false,
-			'force_deactivation' => false,
-			'external_url'       => '',
-			'image_url'          => ( isset( $remote_info['Fusion White Label Branding'] ) && isset( $remote_info['Fusion White Label Branding']['image'] ) ) ? set_url_scheme( $remote_info['Fusion White Label Branding']['image'] ) : '',
-			'Author'             => 'ThemeFusion',
-			'AuthorURI'          => 'https://theme-fusion.com',
-		),
-		$bundled_plugins['convert_plus']['slug'] => array(
-			'name'               => $bundled_plugins['convert_plus']['name'],
-			'slug'               => $bundled_plugins['convert_plus']['slug'],
-			'source'             => ( $is_plugins_page ) ? Avada()->remote_install->get_package( 'Convert Plus' ) : 'bundled',
-			'required'           => false,
-			'premium'            => ( isset( $remote_info['Convert Plus'] ) && isset( $remote_info['Convert Plus']['premium'] ) ) ? $remote_info['Convert Plus']['premium'] : false,
-			'version'            => $bundled_plugins['convert_plus']['version'],
-			'force_activation'   => false,
-			'force_deactivation' => false,
-			'external_url'       => '',
-			'image_url'          => ( isset( $remote_info['Convert Plus'] ) && isset( $remote_info['Convert Plus']['image'] ) ) ? set_url_scheme( $remote_info['Convert Plus']['image'] ) : '',
-			'Author'             => 'Brainstorm Force',
-			'AuthorURI'          => 'https://www.brainstormforce.com',
-		),
-		'woocommerce' => array(
-			'name'      => 'WooCommerce',
-			'slug'      => 'woocommerce',
-			'required'  => false,
-			'image_url' => ( isset( $remote_info['WooCommerce'] ) && isset( $remote_info['WooCommerce']['image'] ) ) ? set_url_scheme( $remote_info['WooCommerce']['image'] ) : '',
-		),
-		'bbpress' => array(
-			'name'      => 'bbPress',
-			'slug'      => 'bbpress',
-			'required'  => false,
-			'image_url' => ( isset( $remote_info['bbPress'] ) && isset( $remote_info['bbPress']['image'] ) ) ? set_url_scheme( $remote_info['bbPress']['image'] ) : '',
-		),
-		'the-events-calendar' => array(
-			'name'      => 'The Events Calendar',
-			'slug'      => 'the-events-calendar',
-			'required'  => false,
-			'image_url' => ( isset( $remote_info['The Events Calendar'] ) && isset( $remote_info['The Events Calendar']['image'] ) ) ? set_url_scheme( $remote_info['The Events Calendar']['image'] ) : '',
-		),
-		'contact-form-7' => array(
-			'name'      => 'Contact Form 7',
-			'slug'      => 'contact-form-7',
-			'required'  => false,
-			'image_url' => ( isset( $remote_info['Contact Form 7'] ) && isset( $remote_info['Contact Form 7']['image'] ) ) ? set_url_scheme( $remote_info['Contact Form 7']['image'] ) : '',
-		),
-	);
-
-	return $plugins;
+	return $plugins_info;
 }
 
 /**

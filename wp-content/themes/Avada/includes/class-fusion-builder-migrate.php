@@ -1355,12 +1355,12 @@ class Fusion_Builder_Migrate {
 				$bundled_plugins = Avada::get_bundled_plugins();
 				$fusion_core_latest = false;
 				if ( class_exists( 'FusionCore_Plugin' ) ) {
-					$fusion_core_latest = version_compare( FusionCore_Plugin::VERSION, $bundled_plugins['fusion_core']['version'], '>=' );
+					$fusion_core_latest = version_compare( FusionCore_Plugin::VERSION, $bundled_plugins['fusion-core']['version'], '>=' );
 				}
 
 				$fusion_builder_latest = false;
 				if ( defined( 'FUSION_BUILDER_VERSION' ) ) {
-					$fusion_builder_latest = version_compare( FUSION_BUILDER_VERSION, $bundled_plugins['fusion_builder']['version'], '>=' );
+					$fusion_builder_latest = version_compare( FUSION_BUILDER_VERSION, $bundled_plugins['fusion-builder']['version'], '>=' );
 				}
 				?>
 				<?php if ( $fusion_core_latest && $fusion_builder_latest ) : ?>

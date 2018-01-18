@@ -818,13 +818,11 @@ function avada_wp_get_http( $url = false, $file_path = false, $args = array() ) 
 	// Attempt to write the file.
 	if ( ! $wp_filesystem->put_contents( $file_path, $body, FS_CHMOD_FILE ) ) {
 		// If the attempt to write to the file failed, then fallback to fwrite.
-		// @codingStandardsIgnoreStart
-		@unlink( $file_path );
+		@unlink( $file_path ); // phpcs:ignore WordPress.VIP.FileSystemWritesDisallow.file_ops_unlink
 		$fp = @fopen( $file_path, 'w' );
 
-		$written = @fwrite( $fp, $body );
+		$written = @fwrite( $fp, $body ); // phpcs:ignore WordPress.VIP.FileSystemWritesDisallow.file_ops_fwrite
 		@fclose( $fp );
-		// @codingStandardsIgnoreEnd
 		if ( false === $written ) {
 			return false;
 		}
@@ -853,25 +851,21 @@ add_action( 'fusion_builder_before_content', 'avada_ajax_avada_slider_preview' )
 function avada_ajax_avada_slider_preview() {
 	global $post;
 
-	// @codingStandardsIgnoreLine
-	$slider_type = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['slidertype'] ) ) : get_post_meta( $post->ID, 'pyre_slider_type', true );
-	// @codingStandardsIgnoreLine
-	$slider_demo = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['demoslider'] ) ) : get_post_meta( $post->ID, 'pyre_demo_slider', true );
+	$slider_type = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['slidertype'] ) ) : get_post_meta( $post->ID, 'pyre_slider_type', true ); // WPCS: CSRF ok.
+	$slider_demo = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['demoslider'] ) ) : get_post_meta( $post->ID, 'pyre_demo_slider', true ); // WPCS: CSRF ok.
 
 	$slider_object = false;
 	$slider_type_string = '';
 
 	if ( 'layer' === $slider_type ) {
-		// @codingStandardsIgnoreLine
-		$slider = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['layerslider'] ) ) : get_post_meta( $post->ID, 'pyre_slider', true );
+		$slider = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['layerslider'] ) ) : get_post_meta( $post->ID, 'pyre_slider', true ); // WPCS: CSRF ok.
 		$slider_type_string = 'LayerSlider';
 		if ( class_exists( 'LS_Sliders' ) ) {
 			$slider_object = LS_Sliders::find( $slider );
 			$edit_link = admin_url( 'admin.php?page=layerslider&action=edit&id=' . $slider );
 		}
 	} elseif ( 'rev' === $slider_type ) {
-		// @codingStandardsIgnoreLine
-		$slider = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['revslider'] ) ) : get_post_meta( $post->ID, 'pyre_revslider', true );
+		$slider = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['revslider'] ) ) : get_post_meta( $post->ID, 'pyre_revslider', true ); // WPCS: CSRF ok.
 		$slider_type_string = 'Revolution Slider';
 		if ( class_exists( 'RevSlider' ) ) {
 			$slider_object = new RevSlider();
@@ -881,8 +875,7 @@ function avada_ajax_avada_slider_preview() {
 			}
 		}
 	} elseif ( 'flex' === $slider_type ) {
-		// @codingStandardsIgnoreLine
-		$slider = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['wooslider'] ) ) : get_post_meta( $post->ID, 'pyre_wooslider', true );
+		$slider = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['wooslider'] ) ) : get_post_meta( $post->ID, 'pyre_wooslider', true ); // WPCS: CSRF ok.
 		$slider_type_string = 'Fusion Slider';
 		$slider_object = get_term_by( 'slug', $slider, 'slide-page' );
 		if ( is_object( $slider_object ) ) {
@@ -890,8 +883,7 @@ function avada_ajax_avada_slider_preview() {
 			$edit_slides_link = admin_url( 'edit.php?slide-page=' . $slider . '&post_type=slide' );
 		}
 	} elseif ( 'elastic' === $slider_type ) {
-		// @codingStandardsIgnoreLine
-		$slider = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['elasticslider'] ) ) : get_post_meta( $post->ID, 'pyre_elasticslider', true );
+		$slider = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['elasticslider'] ) ) : get_post_meta( $post->ID, 'pyre_elasticslider', true ); // WPCS: CSRF ok.
 		$slider_type_string = 'Elastic Slider';
 		$slider_object = get_term_by( 'slug', $slider, 'themefusion_es_groups' );
 		if ( is_object( $slider_object ) ) {
@@ -1020,10 +1012,8 @@ add_filter( 'fusion_blog_read_more_excerpt', 'apply_avada_blog_read_more_excerpt
  * Add revslider styles.
  */
 function avada_revslider_styles() {
-	// @codingStandardsIgnoreStart
-	global $wpdb, $revSliderVersion;
-	$plugin_version = $revSliderVersion;
-	// @codingStandardsIgnoreEnd
+	global $wpdb, $revSliderVersion; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCase
+	$plugin_version = $revSliderVersion; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.NotSnakeCase
 
 	$table_name = $wpdb->prefix . 'revslider_css';
 	if ( shortcode_exists( 'rev_slider' ) && get_option( 'avada_revslider_version' ) !== $plugin_version ) {

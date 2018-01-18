@@ -666,6 +666,13 @@ if ( ! function_exists( 'fusion_cached_query' ) ) {
 	 */
 	function fusion_cached_query( $args ) {
 
+		// Make sure cached queries are not language agnostic.
+		if ( is_array( $args ) ) {
+			$args['fusion_lang'] = Fusion_Multilingual::get_active_language();
+		} else {
+			$args .= '&fusion_lang=' . Fusion_Multilingual::get_active_language();
+		}
+
 		$query_id   = md5( maybe_serialize( $args ) );
 		$query = wp_cache_get( $query_id, 'fusion_library' );
 		if ( false === $query ) {

@@ -216,6 +216,8 @@ if ( ! function_exists( 'avada_get_page_title_bar_contents' ) ) {
 				} else {
 					$title = single_cat_title( '', false );
 				}
+			} elseif ( class_exists( 'bbPress' ) && Avada_Helper::is_bbpress() && Avada_Helper::bbp_is_forum_archive() ) {
+				$title = post_type_archive_title( '', false );
 			}
 
 			if ( class_exists( 'WooCommerce' ) && Avada_Helper::is_woocommerce() && ( is_product() || is_shop() ) && ! is_search() ) {

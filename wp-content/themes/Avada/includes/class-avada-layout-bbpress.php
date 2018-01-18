@@ -55,7 +55,8 @@ class Avada_Layout_bbPress extends Avada_Layout {
 		add_filter( 'bbp_get_forum_pagination_links', array( $this, 'get_forum_pagination_links' ), 1 );
 		add_filter( 'bbp_get_topic_pagination_links', array( $this, 'get_topic_pagination_links' ), 1 );
 		add_filter( 'bbp_get_search_pagination_links', array( $this, 'get_search_pagination_links' ), 1 );
-		add_filter( 'bbp_get_reply_admin_links', array( $this, 'remove_empty_reply_admin_links_sep' ), 10, 3 );
+		add_filter( 'bbp_get_topic_admin_links', array( $this, 'remove_empty_admin_links_sep' ), 10, 3 );
+		add_filter( 'bbp_get_reply_admin_links', array( $this, 'remove_empty_admin_links_sep' ), 10, 3 );
 	}
 
 	/**
@@ -272,7 +273,7 @@ class Avada_Layout_bbPress extends Avada_Layout {
 	}
 
 	/**
-	 * Filters out the | if the reply admin links are empty
+	 * Filters out the | if the reply admin links are empty.
 	 *
 	 * @access  public
 	 * @since 3.9
@@ -281,8 +282,8 @@ class Avada_Layout_bbPress extends Avada_Layout {
 	 * @param  array  $args   Not used.
 	 * @return string Avada style pagination markup.
 	 */
-	public function remove_empty_reply_admin_links_sep( $retval, $r, $args ) {
-		if ( '<span class="bbp-admin-links"><span class="admin_links_sep"> | </span></span>' == $retval ) {
+	public function remove_empty_admin_links_sep( $retval, $r, $args ) {
+		if ( '<span class="bbp-admin-links"><span class="admin_links_sep"> | </span></span>' === $retval ) {
 			$retval = '<span class="bbp-admin-links"></span>';
 		}
 

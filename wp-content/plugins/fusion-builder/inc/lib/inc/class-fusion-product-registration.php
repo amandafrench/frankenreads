@@ -147,8 +147,9 @@ class Fusion_Product_Registration {
 	private function add_bundled_product( $bundled ) {
 
 		$bundled = (array) $bundled;
-		foreach ( $bundled as $product ) {
-			$product = sanitize_key( $product );
+		foreach ( $bundled as $product_slug => $product_name ) {
+			$product = sanitize_key( $product_name );
+
 			if ( ! isset( self::$bundled[ $product ] ) ) {
 				self::$bundled[ $product ] = $this->args['name'];
 			}
@@ -156,7 +157,20 @@ class Fusion_Product_Registration {
 	}
 
 	/**
-	 * Initialize the variables..
+	 * Gets bundled products array.
+	 *
+	 * @access public
+	 * @since 1.0.0
+	 * @return array
+	 */
+	public function get_bundled() {
+
+		return self::$bundled;
+
+	}
+
+	/**
+	 * Initialize the variables.
 	 *
 	 * @access private
 	 * @since 1.0.0
@@ -627,19 +641,6 @@ class Fusion_Product_Registration {
 		}
 		</style>
 		<?php
-	}
-
-	/**
-	 * Gets bundled products array.
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return array
-	 */
-	public function get_bundled() {
-
-		return self::$bundled;
-
 	}
 }
 

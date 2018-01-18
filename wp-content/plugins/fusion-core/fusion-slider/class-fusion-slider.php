@@ -354,8 +354,14 @@ if ( ! class_exists( 'Fusion_Slider' ) ) {
 		 */
 		public function export_sliders() {
 
-			// @codingStandardsIgnoreLine
-			if ( isset( $_POST['export_button'] ) && $_POST['export_button'] ) {
+			if ( isset( $_POST['fusion_slider_export_button'] ) ) {
+
+				check_admin_referer( 'fs_export' );
+
+				if ( ! wp_unslash( $_POST['fusion_slider_export_button'] ) ) {
+					return;
+				}
+
 				// Load Importer API.
 				require_once wp_normalize_path( ABSPATH . 'wp-admin/includes/export.php' );
 

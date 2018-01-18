@@ -63,7 +63,6 @@
   left: -192px;
   padding-left: 30px;
   opacity: 0.9;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
   filter: alpha(opacity=90);
   border-radius: 0 100px 100px 0;
 }

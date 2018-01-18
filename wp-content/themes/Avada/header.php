@@ -138,7 +138,6 @@ if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 						'infobox'                  => esc_attr( Avada()->settings->get( 'map_infobox_styling' ) ),
 						'infobox_background_color' => esc_attr( Avada()->settings->get( 'map_infobox_bg_color' ) ),
 						'infobox_text_color'       => esc_attr( Avada()->settings->get( 'map_infobox_text_color' ) ),
-						// @codingStandardsIgnoreLine
 						'infobox_content'          => htmlentities( Avada()->settings->get( 'map_infobox_content' ) ),
 						'icon'                     => esc_attr( Avada()->settings->get( 'map_custom_marker_icon' ) ),
 						'width'                    => esc_attr( Avada()->settings->get( 'gmap_dimensions', 'width' ) ),

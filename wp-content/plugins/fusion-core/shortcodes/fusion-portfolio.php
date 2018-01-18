@@ -393,7 +393,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 
 				wp_reset_postdata();
 
-				$portfolio_query = fusion_cached_query( apply_filters( 'fusion_portfolio_query_args', $args ) );
+				$portfolio_query = FusionCore_Plugin::fusion_core_cached_query( apply_filters( 'fusion_portfolio_query_args', $args ) );
 
 				if ( ! $portfolio_query->have_posts() ) {
 					$this->portfolio_counter++;
@@ -1518,8 +1518,8 @@ function fusion_element_portfolio() {
 				),
 				array(
 					'type'        => 'colorpickeralpha',
-					'heading'     => esc_attr__( 'Grid Box Color', 'fusion-builder' ),
-					'description' => esc_attr__( 'Controls the background color for the grid boxes. For grid layout this option will only work in boxed mode.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Grid Box Color', 'fusion-core' ),
+					'description' => esc_attr__( 'Controls the background color for the grid boxes. For grid layout this option will only work in boxed mode.', 'fusion-core' ),
 					'param_name'  => 'grid_box_color',
 					'value'       => '',
 					'default'     => $fusion_settings->get( 'timeline_bg_color' ),
@@ -1538,8 +1538,8 @@ function fusion_element_portfolio() {
 				),
 				array(
 					'type'        => 'colorpickeralpha',
-					'heading'     => esc_attr__( 'Grid Element Color', 'fusion-builder' ),
-					'description' => esc_attr__( 'Controls the color of borders/date box/timeline dots and arrows for the grid boxes.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Grid Element Color', 'fusion-core' ),
+					'description' => esc_attr__( 'Controls the color of borders/date box/timeline dots and arrows for the grid boxes.', 'fusion-core' ),
 					'param_name'  => 'grid_element_color',
 					'value'       => '',
 					'default'     => $fusion_settings->get( 'timeline_color' ),
@@ -1563,19 +1563,19 @@ function fusion_element_portfolio() {
 				),
 				array(
 					'type'        => 'select',
-					'heading'     => esc_attr__( 'Grid Separator Style', 'fusion-builder' ),
-					'description' => esc_attr__( 'Controls the line style of grid separators.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Grid Separator Style', 'fusion-core' ),
+					'description' => esc_attr__( 'Controls the line style of grid separators.', 'fusion-core' ),
 					'param_name'  => 'grid_separator_style_type',
 					'value'       => array(
-						''              => esc_attr__( 'Default', 'fusion-builder' ),
-						'none'          => esc_attr__( 'No Style', 'fusion-builder' ),
-						'single|solid'  => esc_attr__( 'Single Border Solid', 'fusion-builder' ),
-						'double|solid'  => esc_attr__( 'Double Border Solid', 'fusion-builder' ),
-						'single|dashed' => esc_attr__( 'Single Border Dashed', 'fusion-builder' ),
-						'double|dashed' => esc_attr__( 'Double Border Dashed', 'fusion-builder' ),
-						'single|dotted' => esc_attr__( 'Single Border Dotted', 'fusion-builder' ),
-						'double|dotted' => esc_attr__( 'Double Border Dotted', 'fusion-builder' ),
-						'shadow'        => esc_attr__( 'Shadow', 'fusion-builder' ),
+						''              => esc_attr__( 'Default', 'fusion-core' ),
+						'none'          => esc_attr__( 'No Style', 'fusion-core' ),
+						'single|solid'  => esc_attr__( 'Single Border Solid', 'fusion-core' ),
+						'double|solid'  => esc_attr__( 'Double Border Solid', 'fusion-core' ),
+						'single|dashed' => esc_attr__( 'Single Border Dashed', 'fusion-core' ),
+						'double|dashed' => esc_attr__( 'Double Border Dashed', 'fusion-core' ),
+						'single|dotted' => esc_attr__( 'Single Border Dotted', 'fusion-core' ),
+						'double|dotted' => esc_attr__( 'Double Border Dotted', 'fusion-core' ),
+						'shadow'        => esc_attr__( 'Shadow', 'fusion-core' ),
 					),
 					'default'     => '',
 					'dependency'  => array(
@@ -1603,8 +1603,8 @@ function fusion_element_portfolio() {
 				),
 				array(
 					'type'        => 'colorpickeralpha',
-					'heading'     => esc_attr__( 'Grid Separator Color', 'fusion-builder' ),
-					'description' => esc_attr__( 'Controls the line style color of grid separators.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Grid Separator Color', 'fusion-core' ),
+					'description' => esc_attr__( 'Controls the line style color of grid separators.', 'fusion-core' ),
 					'param_name'  => 'grid_separator_color',
 					'value'       => '',
 					'default'     => $fusion_settings->get( 'grid_separator_color' ),
@@ -1677,13 +1677,13 @@ function fusion_element_portfolio() {
 				),
 				array(
 					'type'        => 'radio_button_set',
-					'heading'     => esc_attr__( 'Equal Heights', 'fusion-builder' ),
-					'description' => esc_attr__( 'Set to yes to display grid boxes with equal heights per row.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Equal Heights', 'fusion-core' ),
+					'description' => esc_attr__( 'Set to yes to display grid boxes with equal heights per row.', 'fusion-core' ),
 					'param_name'  => 'equal_heights',
 					'default'     => 'no',
 					'value'       => array(
-						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
-						'no'  => esc_attr__( 'No', 'fusion-builder' ),
+						'yes' => esc_attr__( 'Yes', 'fusion-core' ),
+						'no'  => esc_attr__( 'No', 'fusion-core' ),
 					),
 					'dependency'  => array(
 						array(
@@ -1796,13 +1796,13 @@ function fusion_element_portfolio() {
 				),
 				array(
 					'type'        => 'radio_button_set',
-					'heading'     => esc_attr__( 'Pull Posts By', 'fusion-builder' ),
-					'description' => esc_attr__( 'Choose to show posts by category or tag.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Pull Posts By', 'fusion-core' ),
+					'description' => esc_attr__( 'Choose to show posts by category or tag.', 'fusion-core' ),
 					'param_name'  => 'pull_by',
 					'default'     => 'category',
 					'value'       => array(
-						'category' => esc_attr__( 'Category', 'fusion-builder' ),
-						'tag'      => esc_attr__( 'Tag', 'fusion-builder' ),
+						'category' => esc_attr__( 'Category', 'fusion-core' ),
+						'tag'      => esc_attr__( 'Tag', 'fusion-core' ),
 					),
 				),
 				array(
@@ -1837,8 +1837,8 @@ function fusion_element_portfolio() {
 				),
 				array(
 					'type'        => 'multiple_select',
-					'heading'     => esc_attr__( 'Tags', 'fusion-builder' ),
-					'description' => esc_attr__( 'Select a tag or leave blank for all.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Tags', 'fusion-core' ),
+					'description' => esc_attr__( 'Select a tag or leave blank for all.', 'fusion-core' ),
 					'param_name'  => 'tag_slug',
 					'value'       => function_exists( 'fusion_builder_shortcodes_tags' ) ? fusion_builder_shortcodes_tags( 'portfolio_tags' ) : array(),
 					'default'     => '',
@@ -1852,8 +1852,8 @@ function fusion_element_portfolio() {
 				),
 				array(
 					'type'        => 'multiple_select',
-					'heading'     => esc_attr__( 'Exclude Tags', 'fusion-builder' ),
-					'description' => esc_attr__( 'Select a tag to exclude.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Exclude Tags', 'fusion-core' ),
+					'description' => esc_attr__( 'Select a tag to exclude.', 'fusion-core' ),
 					'param_name'  => 'exclude_tags',
 					'value'       => function_exists( 'fusion_builder_shortcodes_tags' ) ? fusion_builder_shortcodes_tags( 'portfolio_tags' ) : array(),
 					'default'     => '',
@@ -1916,30 +1916,30 @@ function fusion_element_portfolio() {
 				),
 				array(
 					'type'        => 'select',
-					'heading'     => esc_attr__( 'Order By', 'fusion-builder' ),
-					'description' => esc_attr__( 'Defines how portfolios should be ordered.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Order By', 'fusion-core' ),
+					'description' => esc_attr__( 'Defines how portfolios should be ordered.', 'fusion-core' ),
 					'param_name'  => 'orderby',
 					'default'     => 'date',
 					'value'       => array(
-						'date'          => esc_attr__( 'Date', 'fusion-builder' ),
-						'title'         => esc_attr__( 'Post Title', 'fusion-builder' ),
-						'menu_order'    => esc_attr__( 'Portfolio Order', 'fusion-builder' ),
-						'name'          => esc_attr__( 'Post Slug', 'fusion-builder' ),
-						'author'        => esc_attr__( 'Author', 'fusion-builder' ),
-						'comment_count' => esc_attr__( 'Number of Comments', 'fusion-builder' ),
-						'modified'      => esc_attr__( 'Last Modified', 'fusion-builder' ),
-						'rand'          => esc_attr__( 'Random', 'fusion-builder' ),
+						'date'          => esc_attr__( 'Date', 'fusion-core' ),
+						'title'         => esc_attr__( 'Post Title', 'fusion-core' ),
+						'menu_order'    => esc_attr__( 'Portfolio Order', 'fusion-core' ),
+						'name'          => esc_attr__( 'Post Slug', 'fusion-core' ),
+						'author'        => esc_attr__( 'Author', 'fusion-core' ),
+						'comment_count' => esc_attr__( 'Number of Comments', 'fusion-core' ),
+						'modified'      => esc_attr__( 'Last Modified', 'fusion-core' ),
+						'rand'          => esc_attr__( 'Random', 'fusion-core' ),
 					),
 				),
 				array(
 					'type'        => 'radio_button_set',
-					'heading'     => esc_attr__( 'Order', 'fusion-builder' ),
-					'description' => esc_attr__( 'Defines the sorting order of portfolios.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Order', 'fusion-core' ),
+					'description' => esc_attr__( 'Defines the sorting order of portfolios.', 'fusion-core' ),
 					'param_name'  => 'order',
 					'default'     => 'DESC',
 					'value'       => array(
-						'DESC' => esc_attr__( 'Descending', 'fusion-builder' ),
-						'ASC'  => esc_attr__( 'Ascending', 'fusion-builder' ),
+						'DESC' => esc_attr__( 'Descending', 'fusion-core' ),
+						'ASC'  => esc_attr__( 'Ascending', 'fusion-core' ),
 					),
 					'dependency'  => array(
 						array(

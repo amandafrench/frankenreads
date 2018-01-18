@@ -137,12 +137,9 @@ class Avada_Head {
 	 * @access  public
 	 */
 	public function x_ua_meta() {
-		// @codingStandardsIgnoreLine
-		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && ( false !== strpos( $_SERVER['HTTP_USER_AGENT'], 'MSIE' ) ) ) : ?>
-			<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<?php
-		endif;
-
+		if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && ( false !== strpos( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ), 'MSIE' ) ) ) { // WPCS: sanitization ok.
+			echo '<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />';
+		}
 	}
 
 	/**
@@ -218,8 +215,7 @@ class Avada_Head {
 	 */
 	public function the_viewport() {
 
-		// @codingStandardsIgnoreLine
-		$is_ipad = (bool) ( isset( $_SERVER['HTTP_USER_AGENT'] ) && false !== strpos( $_SERVER['HTTP_USER_AGENT'],'iPad' ) );
+		$is_ipad = (bool) ( isset( $_SERVER['HTTP_USER_AGENT'] ) && false !== strpos( $_SERVER['HTTP_USER_AGENT'], 'iPad' ) ); // WPCS: sanitization ok.
 
 		$viewport = '';
 		if ( Avada()->settings->get( 'responsive' ) && $is_ipad ) {

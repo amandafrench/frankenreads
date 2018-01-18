@@ -69,6 +69,7 @@ class Fusion_Patcher_Client {
 		if ( ! empty( $this->args ) ) {
 			$id = str_replace( '-', '_', $this->args['context'] );
 			$args[ $id . '_version' ] = $this->args['version'];
+			$args['limit'] = true;
 		}
 		$site_url = site_url();
 		// EVERYTHING is anonymous.

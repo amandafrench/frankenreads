@@ -7,6 +7,53 @@ This is why we highly recommend to stay up to date with each new theme version a
 
 
 -----------------------------------------------------------------------------------------
+Version 5.4.1 - January 16th, 2018
+-----------------------------------------------------------------------------------------
+
+
+- NEW: Added possibility to update bundled premium plugins outside of theme updates
+- NEW: Updated Fusion White Label Branding Plugin To Latest Version As of Release Date
+- NEW: Updated Advanced Custom Fields Pro Plugin To Latest Version As of Release Date
+- NEW: Updated Convert Plus Plugin To Latest Version As of Release Date
+- NEW: Updated Slider Revolution Plugin To Latest Version As of Release Date
+- NEW: Updated Layer Slider Plugin To Latest Version As of Release Date
+- NEW: It is now possible to link to a single tab directly, when using a smooth scroll anchor link on the same page
+- IMPROVEMENT: Integrated the styling of featured events for The Events Calendar plugin
+- IMPROVEMENT: Rendering of images in gallery element preview optimized when using a lot of images
+- IMPROVEMENT: Cached queries are no longer language agnostic, to improve compatibility with mem cache plugins
+- IMPROVEMENT: Updated error notices popup on plugin installation page for better UX
+- IMPROVEMENT: Removed the Convert Plus registration nag to free admin pages from clutter
+- IMPROVEMENT: Fusion Builder CPT now hidden from the link selector options for easier navigation
+- FIXED: Added nonce check for Fusion Slider exports, so slider export can't be downloaded outside of backend
+- FIXED: Spacing issue inside vertical timeline content boxes, when box title is linked
+- FIXED: page contents height sometimes being too large when using parallax Fusion Slider together with parallax footer
+- FIXED: Icon unboxed mode not working correctly in FAQ element
+- FIXED: Indentation issue and missing arrows on vertical menu widget when using custom menu
+- FIXED: Gallery element not being rendered when there is a URL scheme mismatch between actual URLS and site URL in WP settings
+- FIXED: WooCommerce equal height products not working correctly in IE11
+- FIXED: Content area being misaligned on WooCommerce MyAccount page when horizontal tabs layout is used
+- FIXED: Compatibility issue with YITH WooCommerce Pre Order Premium plugin on single products page
+- FIXED: Menu items linking to an anchor on same page not highlighted correctly in mobile menus when page is scrolled
+- FIXED: Sticky header height calcs being incorrect when using very small headers and no sticky animation
+- FIXED: Smooth scroll to anchor not working when header is turned off in Fusion Page Options
+- FIXED: Content behind overlay moving up under certain circumstances when mobile flyout menu is used
+- FIXED: Fusion Builder sticky button being labeled "Publish" even on a private post where it should be "Update" instead
+- FIXED: Fusion Builder sticky update buttons getting added to WP dashboard when activity widget is used
+- FIXED: Positioning issue of titles on single posts page on RTL setups
+- FIXED: Image element not being able to render all foreign image file names, due to encoding
+- FIXED: Portfolio using fusion-builder text domain instead of fusion-core
+- FIXED: Small admin links separator showing on first post of bbPress topics when logged out
+- FIXED: Minor styling issue with form inputs on iOS
+- FIXED: Countdown element weeks default option value not being correctly shown in backend
+- FIXED: "Imported" label in importer not being AJAX updated
+- FIXED: Slider Revolution attachment not being correctly deleted, when a demo containing such a slider is removed
+- FIXED: onYouTubeIframeAPIReady() function being called even if YouTube scripts are turned off in Theme Options
+- FIXED: Rare issue with Fusion Builder global elements causing memory issue, if the template id was missing
+- FIXED: Side header with sticky header enabled on mobile cannot scroll menu
+- FIXED: Portfolio lightbox gallery not working correctly when set to show post images only, and All filter is deactivated
+
+
+-----------------------------------------------------------------------------------------
 Version 5.4 - December 19th, 2017
 -----------------------------------------------------------------------------------------
 

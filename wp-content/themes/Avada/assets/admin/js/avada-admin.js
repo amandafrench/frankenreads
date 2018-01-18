@@ -265,7 +265,7 @@ jQuery( document ).ready( function() {
 			    importArray,
 			    importContentArray;
 
-			importedLabel = jQuery( '#theme-demo-' + demoType + ' .demo-imported' );
+			importedLabel = jQuery( '#theme-demo-' + demoType + ' .plugin-premium' );
 
 			importArray        = ['download'];
 			importContentArray = [];
@@ -382,7 +382,7 @@ jQuery( document ).ready( function() {
 			var data,
 			    removeArray = [];
 
-			importedLabel = jQuery( '#theme-demo-' + demoType + ' .demo-imported' );
+			importedLabel = jQuery( '#theme-demo-' + demoType + ' .plugin-premium' );
 			jQuery( '#remove-' + demoType + ' input:checkbox:checked' ).each(function() {
 
 				if ( 'content' === this.getAttribute( 'data-type' ) ) {
@@ -599,15 +599,30 @@ jQuery( document ).ready( function() {
 
 		jQuery( '.avada-install-plugins .theme-actions .button-primary.disabled' ).on( 'click', function( e ) {
 
-			var confirm;
+			var pluginDialog = jQuery( '#dialog-plugin-confirm' );
 
 			e.preventDefault();
 
 			if ( jQuery( this ).hasClass( 'fusion-builder' ) ) {
-				confirm = window.alert( avadaAdminL10nStrings.update_fc.replace( '%s', jQuery( this ).data( 'version' ) ) );
+				pluginDialog.html( avadaAdminL10nStrings.update_fc.replace( '%s', jQuery( this ).data( 'version' ) ) );
 			} else {
-				confirm = window.alert( avadaAdminL10nStrings.register_first );
+				pluginDialog.html( avadaAdminL10nStrings.register_first  );
 			}
+
+			jQuery( '#' + pluginDialog.attr( 'id' ) ).dialog({
+				dialogClass: 'avada-plugin-dialog',
+				resizable: false,
+				draggable: false,
+				height: 'auto',
+				width: 400,
+				modal: true,
+				buttons: {
+					'OK': function() {
+						pluginDialog.html( '' );
+						jQuery( this ).dialog( 'close' );
+					}
+				}
+			});
 		});
 
 		jQuery( '#manage-plugins' ).on( 'click', function( e ) {

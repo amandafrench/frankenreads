@@ -437,7 +437,6 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
 	}
 
-
 	if ( Avada()->settings->get( 'slidingbar_widgets' ) ) {
 
 		$elements = array(
@@ -811,6 +810,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$elements[] = '.woocommerce-pagination .page-numbers';
 		$elements[] = '.woocommerce-pagination .next';
 		$elements[] = '.woocommerce-pagination .prev';
+		$elements[] = '.woocommerce-pagination--without-numbers .woocommerce-button';
 	}
 
 	if ( class_exists( 'bbPress' ) ) {
@@ -1163,8 +1163,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$elements = array(
 		'.input-text',
 		'input[type="text"]',
-		'input[type="password"]',
+		'input[type="number"]',
 		'input[type="email"]',
+		'input[type="password"]',
 		'textarea',
 		'input.s',
 		'#comment-input input',
@@ -1235,7 +1236,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$elements = array(
 		'.input-text',
 		'input[type="text"]',
+		'input[type="number"]',
 		'input[type="email"]',
+		'input[type="password"]',
 		'textarea',
 		'input.s',
 		'input.s .placeholder',
@@ -1370,7 +1373,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$elements = array(
 		'.input-text',
 		'input[type="text"]',
+		'input[type="number"]',
 		'input[type="email"]',
+		'input[type="password"]',
 		'textarea',
 		'input.s',
 		'#comment-input input',
@@ -1448,8 +1453,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$elements = array(
 		'.input-text:not(textarea)',
 		'input[type="text"]',
-		'input[type="password"]',
+		'input[type="number"]',
 		'input[type="email"]',
+		'input[type="password"]',
 		'input.s',
 		'#comment-input input',
 		'.post-password-form label input[type="password"]',
@@ -3341,17 +3347,21 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global']['.fusion-mobile-nav-item a']['color']            = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_typography', 'color' ) );
 	$css['global']['.fusion-mobile-nav-item a']['line-height']      = intval( Avada()->settings->get( 'mobile_menu_typography', 'line-height' ) ) . 'px';
 
+	$elements = array(
+		'.fusion-mobile-current-nav-item > a',
+		'.fusion-mobile-nav-item.current-menu-item > a',
+		'.fusion-mobile-nav-item a:hover',
+	);
+
 	if ( 'flyout' !== Avada()->settings->get( 'mobile_menu_design' ) ) {
 		$css['global']['.fusion-mobile-nav-item a']['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_background_color' ) );
 		$css['global']['.fusion-mobile-nav-item a']['border-color']     = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_border_color' ) );
 		$css['global']['.fusion-mobile-nav-item a']['height']           = intval( Avada()->settings->get( 'mobile_menu_nav_height' ) ) . 'px';
 
-		$css['global']['.fusion-mobile-nav-item a:hover']['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_hover_color' ) );
-		$css['global']['.fusion-mobile-current-nav-item > a']['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_hover_color' ) );
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_hover_color' ) );
 	}
 
-	$css['global']['.fusion-mobile-current-nav-item > a']['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_font_hover_color' ) );
-	$css['global']['.fusion-mobile-nav-item a:hover']['color']     = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_font_hover_color' ) );
+	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_font_hover_color' ) );
 
 	$css['global']['.fusion-mobile-nav-item.fusion-main-menu-sliding-bar a:after']['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_typography', 'color' ) );
 

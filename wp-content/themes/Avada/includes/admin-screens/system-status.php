@@ -362,7 +362,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 							if ( version_compare( $php_version, '7.2' ) >= 0 ) {
 								$message = $php_version;
 							} else {
-								$message = sprintf( esc_attr__( '%1$s. WordPress recomendation: 7.2 or above. See %2$s for details.', 'Avada' ), $php_version, '<a href="https://wordpress.org/about/requirements/" target="_blank">WordPress Requirements</a>' );
+								$message = sprintf(
+									esc_attr__( '%1$s. WordPress recommendation: %2$s or above. See %3$s for details.', 'Avada' ),
+									$php_version,
+									'7.2',
+									'<a href="https://wordpress.org/about/requirements/" target="_blank">WordPress Requirements</a>'
+								);
 							}
 						}
 						echo $message; // WPCS: XSS ok.

@@ -18,7 +18,7 @@ if ( ! class_exists( 'Avada' ) ) {
 <div id="content" <?php Avada()->layout->add_class( 'content_class' ); ?> <?php Avada()->layout->add_style( 'content_style' ); ?>>
 	<?php
 	$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-	fusion_cached_query( $query_string . '&paged=' . $paged );
+	FusionCore_Plugin::fusion_core_cached_query( $query_string . '&paged=' . $paged );
 	$nav_categories  = ( isset( $_GET['portfolioCats'] ) ) ? $_GET['portfolioCats'] : '';
 	?>
 
@@ -112,6 +112,7 @@ if ( ! class_exists( 'Avada' ) ) {
 									<li>
 										<?php if ( Avada()->settings->get( 'status_lightbox' ) && Avada()->settings->get( 'status_lightbox_single' ) ) : ?>
 											<a href="<?php echo esc_url_raw( $full_image[0] ); ?>" data-rel="iLightbox[gallery<?php the_ID(); ?>]" title="<?php echo esc_attr( get_post_field( 'post_excerpt', get_post_thumbnail_id() ) ); ?>" data-title="<?php echo esc_attr( get_post_field( 'post_title', get_post_thumbnail_id() ) ); ?>" data-caption="<?php echo esc_attr( get_post_field( 'post_excerpt', get_post_thumbnail_id() ) ); ?>">
+												<span class="screen-reader-text"><?php esc_html_e( 'View Larger Image', 'fusion-core' ); ?></span>
 												<img src="<?php echo esc_url_raw( $attachment_image[0] ); ?>" alt="<?php echo esc_attr( $alt_tag ); ?>" role="presentation" />
 											</a>
 										<?php else : ?>
