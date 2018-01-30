@@ -99,7 +99,7 @@ class Avada_Layout_bbPress extends Avada_Layout {
 	public function add_author_post_date_count_ip() {
 		?>
 		<div class="bbp-reply-post-date"><?php bbp_reply_post_date( bbp_get_reply_id() ); ?></div>
-
+		<?php /* translators: Number. */ ?>
 		<div class="bbps-post-count"><?php printf( esc_attr__( 'Post count: %s', 'Avada' ), absint( bbp_get_user_reply_count_raw( bbp_get_reply_author_id() ) + bbp_get_user_topic_count_raw( bbp_get_reply_author_id() ) ) ); ?></div>
 
 		<?php if ( bbp_is_user_keymaster() ) : ?>

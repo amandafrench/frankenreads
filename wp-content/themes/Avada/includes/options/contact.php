@@ -82,6 +82,7 @@ function avada_options_section_contact( $sections ) {
 					),
 					'recaptcha_public' => ( Avada::$is_updating || version_compare( PHP_VERSION, '5.3' ) >= 0 ) ? array(
 						'label'           => esc_html__( 'ReCaptcha Site Key', 'Avada' ),
+						/* translators: "our docs" link. */
 						'description'     => sprintf( esc_html__( 'Follow the steps in %s to get the site key.', 'Avada' ), '<a href="http://theme-fusion.com/avada-doc/pages/setting-up-contact-page/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'our docs', 'Avada' ) . '</a>' ),
 						'id'              => 'recaptcha_public',
 						'default'         => '',
@@ -90,6 +91,7 @@ function avada_options_section_contact( $sections ) {
 					) : array(),
 					'recaptcha_private' => ( Avada::$is_updating || version_compare( PHP_VERSION, '5.3' ) >= 0 ) ? array(
 						'label'           => esc_html__( 'ReCaptcha Secret Key', 'Avada' ),
+						/* translators: "our docs" link. */
 						'description'     => sprintf( esc_html__( 'Follow the steps in %s to get the secret key.', 'Avada' ), '<a href="http://theme-fusion.com/avada-doc/pages/setting-up-contact-page/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'our docs', 'Avada' ) . '</a>' ),
 						'id'              => 'recaptcha_private',
 						'default'         => '',
@@ -146,6 +148,7 @@ function avada_options_section_contact( $sections ) {
 					),
 					'gmap_api' => array(
 						'label'           => esc_html__( 'Google Maps API Key', 'Avada' ),
+						/* translators: "the Google docs" link. */
 						'description'     => sprintf( esc_html__( 'Follow the steps in %s to get the API key. This key applies to both the contact page map and Fusion Builder google map element.', 'Avada' ), '<a href="https://developers.google.com/maps/documentation/javascript/get-api-key#key" target="_blank" rel="noopener noreferrer">' . esc_html__( 'the Google docs', 'Avada' ) . '</a>' ),
 						'id'              => 'gmap_api',
 						'default'         => '',

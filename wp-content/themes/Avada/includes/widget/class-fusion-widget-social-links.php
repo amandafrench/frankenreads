@@ -630,6 +630,7 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 			}
 
 			echo '<p>';
+			/* translators: The social-network label. */
 			echo '<label for="' . esc_attr( $this->get_field_id( $key . '_link' ) ) . '">' . sprintf( esc_attr__( '%s Link:', 'Avada' ), esc_attr( $value['label'] ) ) . '</label>';
 			echo '<input class="widefat" type="text" id="' . esc_attr( $this->get_field_id( $key . '_link' ) ) . '" name="' . esc_attr( $this->get_field_name( $key . '_link' ) ) . '" value="' . esc_attr( $instance[ $key . '_link' ] ) . '" />';
 			echo '</p>';

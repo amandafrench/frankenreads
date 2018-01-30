@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function avada_options_section_menu( $sections ) {
 
 	$settings = get_option( Avada::get_option_name(), array() );
+	/* translators: value. */
 	$menu_height_hint = '<span id="fusion-menu-height-hint" style="display: none">' . sprintf( esc_html__( '  To match the logo height set to %s.', 'Avada' ), '<strong>Unknown</strong>' ) . '</span>';
 
 	// If we can get logo height and the logo margins are in pixels, then we can provide a hint.
@@ -34,6 +35,7 @@ function avada_options_section_menu( $sections ) {
 			$logo_bottom_margin = Fusion_Sanitize::size( $settings['logo_margin']['bottom'] );
 			if ( strpos( $logo_top_margin, 'px' ) && strpos( $logo_bottom_margin, 'px' ) ) {
 				$total_logo_height = intval( $logo_top_margin ) + intval( $logo_bottom_margin ) + intval( $logo_data['height'] );
+				/* translators: value. */
 				$menu_height_hint = '<span id="fusion-menu-height-hint" style="display:inline">' . sprintf( esc_html__( '  To match the logo height set to %s.', 'Avada' ), '<strong>' . $total_logo_height . '</strong>' ) . '</span>';
 			}
 		}

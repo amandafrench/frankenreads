@@ -30,6 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			var DemoImportNonce = '<?php echo esc_attr( wp_create_nonce( 'avada_demo_ajax' ) ); ?>';
 		</script>
 		<div class="avada-important-notice">
+			<?php /* translators: %1$s: "System Status" link. %2$s: "View more info here" link. */ ?>
 			<p class="about-description"><?php printf( wp_kses_post( __( "Avada demos can be fully imported (everything), or partially imported (only portions). Hover over the demo you want to use and make your selections. Any demo you use will display a badge on it after import so you can quickly recognize and modify the content you already imported. You can choose to uninstall this content at any time. Uninstalling content from a demo will remove ALL previously imported demo content from that demo and restore your site to it's previous state before the demo content was imported.<br /><strong>IMPORTANT:</strong> Demo imports can vary in time. The included plugins need to be installed and activated before you install a demo. Please check the %1\$s tab to ensure your server meets all requirements for a successful import. Settings that need attention will be listed in red. %2\$s.", 'Avada' ) ), '<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-system-status' ) ) . '" target="_blank">' . esc_attr__( 'System Status', 'Avada' ) . '</a>', '<a href="' . esc_url_raw( trailingslashit( $this->theme_fusion_url ) ) . 'avada-doc/demo-content-info/import-xml-file/" target="_blank">' . esc_attr__( 'View more info here', 'Avada' ) . '</a>' ); ?></p>
 		</div>
 	<?php
@@ -370,6 +371,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php else : ?>
 		<div class="avada-important-notice" style="border-left: 4px solid #dc3232;">
 			<h3 style="color: #dc3232; margin-top: 0;"><?php esc_attr_e( 'Avada Demos Can Only Be Imported With A Valid Token Registration', 'Avada' ); ?></h3>
+			<?php /* translators: "Product Registration" link. */ ?>
 			<p><?php printf( esc_attr__( 'Please visit the %s page and enter a valid token to import the full Avada Demos and the single pages through Fusion Builder.', 'Avada' ), '<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-registration' ) ) . '">' . esc_attr__( 'Product Registration', 'Avada' ) . '</a>' ); ?></p>
 		</div>
 	<?php endif; ?>

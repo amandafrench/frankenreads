@@ -185,8 +185,10 @@ class Fusion_Widget_Tabs extends WP_Widget {
 											</div>
 
 											<div class="post-holder">
+												<?php /* translators: comment author. */ ?>
 												<p><?php printf( esc_attr__( '%s says:', 'Avada' ), esc_attr( strip_tags( $comment->comment_author ) ) ); ?></p>
 												<div class="fusion-meta">
+													<?php /* translators: %1$s: comment author. %2$s: post-title. */ ?>
 													<a class="comment-text-side" href="<?php echo esc_url_raw( get_permalink( $comment->ID ) ); ?>#comment-<?php echo esc_attr( $comment->comment_ID ); ?>" title="<?php printf( esc_attr__( '%1$s on %2$s', 'Avada' ), esc_attr( strip_tags( $comment->comment_author ) ), esc_attr( $comment->post_title ) ); ?>"><?php echo wp_trim_words( strip_tags( $comment->com_excerpt ), 12 ); // WPCS: XSS ok. ?></a>
 												</div>
 											</div>

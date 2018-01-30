@@ -242,7 +242,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 				});
 			});
 		</script>
-
+		<?php /* translators: "How to setup the Avada twitter widget." link. */ ?>
 		<p><?php printf( esc_attr__( 'For general setup information or information on how to setup a Twitter App or a Twitter Widget on twitter.com, please see our documentation: %s', 'Avada' ), '<a href="' . esc_url_raw( $twitter_doc_url ) . '" target="_blank" rel="noopener noreferrer">' . esc_attr__( 'How to setup the Avada twitter widget.', 'Avada' ) . '</a>' ); ?></p>
 
 		<p>
@@ -362,6 +362,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 			<?php if ( 'twitter_style' == $widget_type ) : ?>
 				<a class="twitter-timeline" data-dnt="true" href="<?php echo esc_url_raw( 'https://twitter.com/' . $twitter_id ); ?>" data-tweet-limit="<?php echo esc_attr( $count ); ?>" data-width="<?php echo esc_attr( $width ); ?>" data-height="<?php echo esc_attr( $height ); ?>" width="<?php echo esc_attr( $width ); ?>" height="<?php echo esc_attr( $height ); ?>" data-theme="<?php echo esc_attr( $theme ); ?>" data-link-color="<?php echo esc_attr( $link_color ); ?>" data-border-color="<?php echo esc_attr( $border_color ); ?>" data-chrome="<?php echo esc_attr( $chrome ); ?>">Tweets by <?php echo esc_attr( $twitter_id ); ?></a>
 			<?php else : ?>
+				<?php /* translators: The twitter-ID. */ ?>
 				<a class="twitter-timeline" data-dnt="true" href="<?php echo esc_url_raw( 'https://twitter.com/' . $twitter_id ); ?>" data-widget-id="<?php echo esc_attr( $widget_id ); ?>"><?php printf( esc_attr__( 'Tweets by %s', 'Avada' ), esc_attr( $twitter_id ) ); ?></a>
 			<?php endif; ?>
 			<?php // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
@@ -669,6 +670,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 	 * @return string The formatted date for the twwet's publishing date.
 	 */
 	public function ago( $time ) {
+		/* translators: time difference. */
 		return sprintf( _x( '%s ago', '%s = human-readable time difference', 'Avada' ), human_time_diff( $time, current_time( 'timestamp' ) ) );
 	}
 }

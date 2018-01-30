@@ -296,6 +296,7 @@ class Avada_Page_Options {
 
 		if ( empty( $options_title ) ) {
 			$posts_no = wp_count_posts( 'avada_page_options' );
+			/* translators: Number. */
 			$options_title = sprintf( __( 'Custom page options %d ', 'Avada' ), ( $posts_no->publish + 1 ) );
 		}
 

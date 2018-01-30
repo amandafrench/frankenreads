@@ -326,7 +326,7 @@
 		avadaTaxMeta.enableDependencies();
 	});
 
-	jQuery( '.avada-tax-meta-field select:not(.hidden-sidebar)' ).select2({
+	jQuery( '.avada-tax-meta-field select:not(.hidden-sidebar)' ).selectWoo({
 		minimumResultsForSearch: 10,
 		dropdownCssClass: 'avada-select2',
 		allowClear: true

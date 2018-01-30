@@ -975,6 +975,7 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 			$decrypted_user_name = isset($_POST['username']) ? mo_openid_decrypt_sanitize($_POST['username']): '';
 			$decrypted_user_picture = isset($_POST['profilePic']) ? mo_openid_decrypt_sanitize($_POST['profilePic']): '';
 			$decrypted_user_url = isset($_POST['profileUrl']) ? mo_openid_decrypt_sanitize($_POST['profileUrl']): '';
+			$decrypted_user_url = urldecode($decrypted_user_url);
 			$decrypted_first_name = isset($_POST['firstName']) ? mo_openid_decrypt_sanitize($_POST['firstName']): '';
 			$decrypted_last_name = isset($_POST['lastName']) ? mo_openid_decrypt_sanitize($_POST['lastName']): '';
 			$decrypted_app_name = isset($_POST['appName']) ? mo_openid_decrypt_sanitize($_POST['appName']): '';
@@ -982,6 +983,11 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 			
 			//echo('email: '.$decrypted_email.' user_name'.$decrypted_user_name);exit;
 			
+			//check to ensure login starts at the click of social login button
+			if(empty($decrypted_app_name)){
+				wp_die('There was an error during login. Please try to login/register manually.<a href='.site_url().'> Back</a>');
+			}
+				
 			if(isset( $_POST['firstName'] ) && isset( $_POST['lastName'] )){
 				if(strcmp($decrypted_first_name, $decrypted_last_name)!=0)
 					$user_full_name = $decrypted_first_name.' '.$decrypted_last_name;
@@ -1004,6 +1010,12 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 			//if email or username not returned from app
 			if ( empty($decrypted_email) || empty($decrypted_user_name) )
 			{	
+			
+				if( empty($decrypted_app_name) || empty($decrypted_user_id)){
+					wp_die('There was an error during login. Please try to login manually.');
+				}		
+				else
+				{
 				//check if provider + identifier group exists
 				global $wpdb;
 				$id_returning_user = $wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->users where provider = %s AND identifier = %s",$decrypted_app_name,$decrypted_user_id));
@@ -1141,6 +1153,9 @@ class mo_openid_sharing_ver_wid extends WP_Widget {
 					
 				}
 
+			}
+					
+				
 			}
 			//email and username are both returned..dont show profile completion 
 			else{
@@ -1623,5 +1638,81 @@ add_action( 'init', 'mo_openid_login_validate' );
 //add_action( 'init', 'mo_openid_start_session' );
 //add_action( 'wp_logout', 'mo_openid_end_session' );
 add_action( 'wp_login', 'mo_openid_login_redirect', 9, 2);
+add_filter('sanitize_user', 'mo_openid_sanitize_user', 10, 3);
+remove_filter('sanitize_title','sanitize_title_with_dashes', 10);
+add_filter( 'sanitize_title', 'mo_openid_sanitize_title_with_dashes', 10, 3 );
+
+	function mo_openid_sanitize_user($username, $raw_username, $strict) { 
+		
+		$username = wp_strip_all_tags( $raw_username );
+		$username = remove_accents( $username );
+		// Kill octets
+		$username = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '', $username );
+		$username = preg_replace( '/&.+?;/', '', $username ); // Kill entities
+		// If strict, reduce to ASCII and Cyrillic characters for max portability.
+		if ( $strict )
+		$username = preg_replace( '|[^a-zあ-ん\p{Han}а-я0-9ㅂㅈㄷㄱ쇼ㅕㅑㅐㅔㅁㄴㅇㄹ호ㅓㅏㅣㅋㅌㅊ퓨ㅜㅡㅃㅉㄸㄲ썌ㅖ _.\-@]|iu', '', $username );
+		$username = trim( $username );
+		// Consolidate contiguous whitespace
+		$username = preg_replace( '|\s+|', ' ', $username );
+		return $username;
+	}
+
+	function mo_openid_sanitize_title_with_dashes( $title, $raw_title = '', $context = 'display' ) {
+		
+		$title = strip_tags($raw_title);
+		// Preserve escaped octets.
+		$title = preg_replace('|%([a-fA-F0-9][a-fA-F0-9])|', '---$1---', $title);
+		// Remove percent signs that are not part of an octet.
+		$title = str_replace('%', '', $title);
+		// Restore octets.
+		$title = preg_replace('|---([a-fA-F0-9][a-fA-F0-9])---|', '%$1', $title);
+		if (seems_utf8($title)) {
+			if (function_exists('mb_strtolower')) {
+				$title = mb_strtolower($title, 'UTF-8');
+			}
+		}
+
+		$title = strtolower($title);
+
+		if ( 'save' == $context ) {
+			// Convert nbsp, ndash and mdash to hyphens
+			$title = str_replace( array( '%c2%a0', '%e2%80%93', '%e2%80%94' ), '-', $title );
+			// Convert nbsp, ndash and mdash HTML entities to hyphens
+			$title = str_replace( array( '&nbsp;', '&#160;', '&ndash;', '&#8211;', '&mdash;', '&#8212;' ), '-', $title );
+			// Convert forward slash to hyphen
+			$title = str_replace( '/', '-', $title );
+
+			// Strip these characters entirely
+			$title = str_replace( array(
+				// iexcl and iquest
+				'%c2%a1', '%c2%bf',
+				// angle quotes
+				'%c2%ab', '%c2%bb', '%e2%80%b9', '%e2%80%ba',
+				// curly quotes
+				'%e2%80%98', '%e2%80%99', '%e2%80%9c', '%e2%80%9d',
+				'%e2%80%9a', '%e2%80%9b', '%e2%80%9e', '%e2%80%9f',
+				// copy, reg, deg, hellip and trade
+				'%c2%a9', '%c2%ae', '%c2%b0', '%e2%80%a6', '%e2%84%a2',
+				// acute accents
+				'%c2%b4', '%cb%8a', '%cc%81', '%cd%81',
+				// grave accent, macron, caron
+				'%cc%80', '%cc%84', '%cc%8c',
+			), '', $title );
+			// Convert times to x
+			$title = str_replace( '%c3%97', 'x', $title );
+		}
+
+		$title = preg_replace('/&.+?;/', '', $title); // kill entities
+		$title = str_replace('.', '-', $title);
+
+		//$title = preg_replace('/[^%a-z0-9 _-]/', '', $title);
+		$title = preg_replace( '|[^a-zあ-ん\p{Han}а-я0-9ㅂㅈㄷㄱ쇼ㅕㅑㅐㅔㅁㄴㅇㄹ호ㅓㅏㅣㅋㅌㅊ퓨ㅜㅡㅃㅉㄸㄲ썌ㅖ _.\-@]|iu', '', $title );
+		$title = preg_replace('/\s+/', '-', $title);
+		$title = preg_replace('|-+|', '-', $title);
+		$title = trim($title, '-');
+
+		return $title;
+	}
 }
 ?>

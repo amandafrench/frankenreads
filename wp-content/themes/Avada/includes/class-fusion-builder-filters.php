@@ -163,11 +163,13 @@ class Fusion_Builder_Filters {
 	public function add_builder_import_title( $title ) {
 		// Check registration.
 		if ( ! Avada()->registration->is_registered() ) {
+			/* translators: "Product Registration" link. */
 			return sprintf( esc_attr__( 'Your product must be registered to receive Avada demo pages. Go to the %s tab to complete registration.', 'Avada' ), '<a href="' . admin_url( 'admin.php?page=avada-registration' ) . '">' . esc_attr__( 'Product Registration', 'Avada' ) . '</a>' );
 		}
 
 		// Check we can download the demos.
 		if ( false === Fusion_Builder_Demos_Importer::is_demo_folder_writeable() && 2 > Fusion_Builder_Demos_Importer::get_number_of_demo_files() ) {
+			/* translators: system path wrapped in <code> tags. */
 			return sprintf( esc_attr__( 'It looks like the %s folder in your WordPress installation is not writable. Please make sure to change the file/folder permissions to allow downloading the Avada demo pages through the Fusion Builder Library before using them.', 'Avada' ), '<code>wp-content/uploads/fusion-builder-avada-pages</code>' );
 		}
 		// Return the title.

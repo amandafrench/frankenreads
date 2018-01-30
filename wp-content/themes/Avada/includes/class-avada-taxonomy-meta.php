@@ -143,10 +143,10 @@ class Avada_Taxonomy_Meta {
 
 			if ( class_exists( 'Avada' ) ) {
 				wp_enqueue_script(
-					'select2-js',
-					Avada::$template_dir_url . '/assets/admin/js/select2.min.js',
+					'selectwoo-js',
+					Avada::$template_dir_url . '/assets/admin/js/selectWoo.full.min.js',
 					array( 'jquery' ),
-					'4.0.3'
+					'1.0.2'
 				);
 				wp_enqueue_style(
 					'select2-css',

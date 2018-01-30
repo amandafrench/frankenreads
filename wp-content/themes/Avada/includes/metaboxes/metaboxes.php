@@ -85,14 +85,11 @@ class PyreThemeFrameworkMetaboxes {
 			'4.0.3',
 			'all'
 		);
-		wp_dequeue_script( 'yoast-seo-select2' );
-		wp_deregister_script( 'yoast-seo-select2' );
-		wp_dequeue_script( 'select2' );
 		wp_enqueue_script(
-			( class_exists( 'WPSEO_Admin_Asset_Manager' ) ) ? 'yoast-seo-select2' : 'select2-avada-js',
-			Avada::$template_dir_url . '/assets/admin/js/select2.min.js',
+			'selectwoo-js',
+			Avada::$template_dir_url . '/assets/admin/js/selectWoo.full.min.js',
 			array( 'jquery' ),
-			'4.0.3'
+			'1.0.2'
 		);
 
 		// Range field assets.
@@ -429,7 +426,7 @@ class PyreThemeFrameworkMetaboxes {
 				<?php endif; ?>
 			</div>
 			<div class="pyre_field avada-color <?php echo esc_attr( $styling_class ); ?>">
-				<input id="pyre_<?php echo esc_attr( $id ); ?>" name="pyre_<?php echo esc_attr( $id ); ?>" class="fusion-builder-color-picker-hex color-picker" type="text" value="<?php echo esc_attr( get_post_meta( $post->ID, 'pyre_' . $id, true ) ) ?>" <?php echo ( $alpha ) ? 'data-alpha="true"' : ''; ?> <?php echo ( $default ) ? 'data-default="' . esc_attr( $default ) . '"' : ''; ?> />
+				<input id="pyre_<?php echo esc_attr( $id ); ?>" name="pyre_<?php echo esc_attr( $id ); ?>" class="fusion-builder-color-picker-hex color-picker" type="text" value="<?php echo esc_attr( get_post_meta( $post->ID, 'pyre_' . $id, true ) ); ?>" <?php echo ( $alpha ) ? 'data-alpha="true"' : ''; ?> <?php echo ( $default ) ? 'data-default="' . esc_attr( $default ) . '"' : ''; ?> />
 			</div>
 		</div>
 		<?php
@@ -776,7 +773,7 @@ class PyreThemeFrameworkMetaboxes {
 
 global $pagenow;
 
-if ( is_admin() && ( ( in_array( $pagenow, array( 'post-new.php', 'post.php' ) ) ) || ! isset( $pagenow ) ) ) {
+if ( is_admin() && ( ( in_array( $pagenow, array( 'post-new.php', 'post.php' ) ) ) || ! isset( $pagenow ) || apply_filters( 'fusion_page_options_init', false ) ) ) {
 	$metaboxes = new PyreThemeFrameworkMetaboxes();
 }
 

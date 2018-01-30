@@ -39,11 +39,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$this->text(
 			'youtube_id',
 			esc_attr__( 'Youtube Video ID', 'Avada' ),
+			/* translators: %1$s: URL. %2$s: ID. */
 			sprintf( esc_html__( 'For example the Video ID for %1$s is %2$s', 'Avada' ), 'https://www.youtube.com/<strong>LOfeCR7KqUs</strong>', '<strong>LOfeCR7KqUs</strong>' )
 		);
 		$this->text(
 			'vimeo_id',
 			esc_attr__( 'Vimeo Video ID', 'Avada' ),
+			/* translators: %1$s: URL. %2$s: ID. */
 			sprintf( esc_html__( 'For example the Video ID for %1$s is %2$s', 'Avada' ), 'http://vimeo.com/<strong>75230326</strong>', '<strong>75230326</strong>' )
 		);
 		$this->upload(
@@ -161,6 +163,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		),
 		esc_html__( 'Choose the heading separator you want to use.', 'Avada' )
 	);
+	/* translators: default value. */
 	$default = sprintf( esc_html__( 'Default: %s', 'Avada' ), 'H2' );
 	$this->radio_buttonset(
 		'heading_size',
@@ -173,19 +176,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'5' => esc_attr__( 'H5', 'Avada' ),
 			'6' => esc_attr__( 'H6', 'Avada' ),
 		),
+		/* translators: default value. */
 		sprintf( esc_html__( 'Choose the title size you want to use. The size you choose will utilize the font family and letter spacing typography settings in Theme Options for that specific size. Font size is set below.  %s', 'Avada' ), '<strong>' . $default . '</strong>' ),
 		'2'
 	);
+	/* translators: default value. */
 	$default = sprintf( esc_html__( 'Default: %s', 'Avada' ), '60' );
 	$this->text(
 		'heading_font_size',
 		esc_attr__( 'Heading Font Size', 'Avada' ),
+		/* translators: default value. */
 		sprintf( esc_html__( 'Enter heading font size without px unit. In pixels, ex: 50 instead of 50px. %s', 'Avada' ), '<strong>' . $default . '</strong>' )
 	);
+	/* translators: default value. */
 	$default = sprintf( esc_html__( 'Default: %s', 'Avada' ), '#fff' );
 	$this->text(
 		'heading_color',
 		esc_attr__( 'Heading Color', 'Avada' ),
+		/* translators: default value. */
 		sprintf( esc_html__( 'Select a color for the heading font. Hex color code, ex: #fff. %s', 'Avada' ), '<strong>' . $default . '</strong>' )
 	);
 	$this->select(
@@ -197,10 +205,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		),
 		esc_html__( 'Select this option if you would like a semi-transparent background behind your heading.', 'Avada' )
 	);
+	/* translators: default value. */
 	$default = sprintf( esc_html__( 'Default: %s', 'Avada' ), '#000' );
 	$this->text(
 		'heading_bg_color',
 		esc_html__( 'Heading Background Color', 'Avada' ),
+		/* translators: default value. */
 		sprintf( esc_html__( 'Select a color for the heading background. Hex color code, ex: #000. %s', 'Avada' ), '<strong>' . $default . '</strong>' )
 	);
 	$this->textarea(
@@ -225,6 +235,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		),
 		esc_html__( 'Choose the caption separator you want to use.', 'Avada' )
 	);
+	/* translators: default value. */
 	$default = sprintf( esc_html__( 'Default: %s', 'Avada' ), 'H3' );
 	$this->radio_buttonset(
 		'caption_size',
@@ -237,19 +248,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'5' => esc_attr__( 'H5', 'Avada' ),
 			'6' => esc_attr__( 'H6', 'Avada' ),
 		),
+		/* translators: default value. */
 		sprintf( esc_html__( 'Choose the caption size you want to use. The size you choose will utilize the font family and letter spacing typography settings in Theme Options for that specific size. Font size is set below. %s', 'Avada' ), '<strong>' . $default . '</strong>' ),
 		'3'
 	);
+	/* translators: default value. */
 	$default = sprintf( esc_html__( 'Default: %s', 'Avada' ), '24' );
 	$this->text(
 		'caption_font_size',
 		esc_attr__( 'Caption Font Size', 'Avada' ),
+		/* translators: default value. */
 		sprintf( esc_html__( 'Enter caption font size without px unit. In pixels, ex: 24 instead of 24px. %s', 'Avada' ), '<strong>' . $default . '</strong>' )
 	);
+	/* translators: default value. */
 	$default = sprintf( esc_html__( 'Default: %s', 'Avada' ), '#fff' );
 	$this->text(
 		'caption_color',
 		esc_attr__( 'Caption Color', 'Avada' ),
+		/* translators: default value. */
 		sprintf( esc_html__( 'Select a color for the caption font. Hex color code, ex: #fff. %s', 'Avada' ), '<strong>' . $default . '</strong>' )
 	);
 	$this->select(
@@ -261,10 +277,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		),
 		esc_html__( 'Select this option if you would like a semi-transparent background behind your caption.', 'Avada' )
 	);
+	/* translators: default value. */
 	$default = sprintf( esc_html__( 'Default: %s', 'Avada' ), '#000' );
 	$this->text(
 		'caption_bg_color',
 		esc_attr__( 'Caption Background Color', 'Avada' ),
+		/* translators: default value. */
 		sprintf( esc_html__( 'Select a color for the caption background. Hex color code, ex: #000. %s', 'Avada' ), '<strong>' . $default . '</strong>' )
 	);
 	?>

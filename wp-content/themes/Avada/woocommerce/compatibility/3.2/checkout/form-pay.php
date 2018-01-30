@@ -48,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								</span>
 								<div class="product-info">
 									<?php echo esc_html( $item['name'] ); ?>
-									<strong class="product-quantity"><?php echo esc_html( $item['qty'] ); ?></strong>
+									<?php echo apply_filters( 'woocommerce_order_item_quantity_html', ' <strong class="product-quantity">' . sprintf( '&times; %s', $item['qty'] ) . '</strong>' ); ?>
 								</div>
 							</td>
 							<td class="product-total"><?php echo $order->get_formatted_line_subtotal( $item ); ?></td>
@@ -66,7 +66,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php else : ?>
 							<tr>
 						<?php endif; ?>
-							<th scope="row" colspan="2"><?php echo $total['label']; ?></th>
+							<th scope="row"><?php echo $total['label']; ?></th>
 							<td class="product-total"><?php echo $total['value']; ?></td>
 						</tr>
 						<?php $i++; ?>
@@ -92,7 +92,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="form-row">
 				<input type="hidden" name="woocommerce_pay" value="1" />
 
+				<?php do_action( 'woocommerce_pay_order_before_submit' ); ?>
+
 				<?php echo apply_filters( 'woocommerce_pay_order_button_html', '<input type="submit" class="button alt" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '" />' ); ?>
+
+				<?php do_action( 'woocommerce_pay_order_after_submit' ); ?>
 
 				<?php wc_get_template( 'checkout/terms.php' ); ?>
 

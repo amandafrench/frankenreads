@@ -45,6 +45,11 @@ class Avada_Init {
 			add_action( 'init', array( $this, 'change_gravity_user_registration_priority' ) );
 		}
 
+		// Init FPO for Event Espresso plugin.
+		if ( class_exists( 'EE_Calendar' ) ) {
+			add_filter( 'fusion_page_options_init', array( $this, 'init_fusion_page_option_for_event_espresso' ) );
+		}
+
 		add_action( 'widgets_init', array( $this, 'widget_init' ) );
 
 		add_action( 'wp', array( $this, 'set_theme_version' ) );
@@ -297,6 +302,11 @@ class Avada_Init {
 				0,
 			)
 		);
+
+		update_option( 'woocommerce_single_image_width', 700 );
+		update_option( 'woocommerce_thumbnail_image_width', 500 );
+		update_option( 'woocommerce_thumbnail_cropping', 'uncropped' );
+
 		// Delete the patcher caches.
 		delete_site_transient( 'fusion_patcher_check_num' );
 		// Delete compiled JS.
@@ -455,6 +465,22 @@ class Avada_Init {
 	public function change_gravity_user_registration_priority() {
 		remove_action( 'wp', array( gf_user_registration(), 'maybe_activate_user' ) );
 		add_action( 'wp', array( gf_user_registration(), 'maybe_activate_user' ), 999 );
+	}
+
+	/**
+	 * Adds needed argument to FPO loading if clause, so that options will be displayed on Events Espresso pages.
+	 *
+	 * @since 5.4.2
+	 * @access public
+	 * @param bool $additional_argument Additional argument.
+	 * @return bool
+	 */
+	public function init_fusion_page_option_for_event_espresso( $additional_argument ) {
+		global $pagenow;
+
+		$additional_argument = 'admin.php' === $pagenow && isset( $_GET['page'] ) && 'espresso_events' === $_GET['page'] && isset( $_GET['action'] ) && 'edit' === $_GET['action'] && isset( $_GET['post'] );
+
+		return $additional_argument;
 	}
 
 

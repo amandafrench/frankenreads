@@ -316,6 +316,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 				var timer = document.getElementById("timer");
 				if (count > 0){
 					count--;
+					<?php /* translators: Number. */ ?>
 					timer.innerHTML = "<?php printf( esc_html__( 'Theme options have changed, redirecting you to the new page in %s seconds.', 'Avada' ), '" + count + "' ); ?>";
 					setTimeout("countDown()", 1000);
 				} else {

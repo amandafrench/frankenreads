@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'AVADA_VERSION' ) ) {
-	define( 'AVADA_VERSION', '5.4.1' );
+	define( 'AVADA_VERSION', '5.4.2' );
 }
 
 /**
@@ -433,15 +433,7 @@ function avada_woo_product( $atts ) {
 		'columns'         => 1,
 	);
 
-	if ( version_compare( WC_VERSION, '3.0', '<' ) ) {
-		$args['meta_query'][] = array(
-			'key'     => '_visibility',
-			'value'   => array( 'catalog', 'visible' ),
-			'compare' => 'IN',
-		);
-	} else {
-		$args['tax_query'][] = WC()->query->get_tax_query();
-	}
+	$args['tax_query'][] = WC()->query->get_tax_query();
 
 	if ( isset( $atts['sku'] ) && '' !== $atts['sku'] ) {
 		$args['meta_query'][] = array(

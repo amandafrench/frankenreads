@@ -210,7 +210,8 @@ function avada_options_section_sidebars( $sections ) {
 				'fields'      => array(
 					'portfolio_archive_important_note_info' => array(
 						'label'       => '',
-						'description' => '<div class="fusion-redux-important-notice">' . sprintf( __( '<strong>IMPORTANT NOTE:</strong> The sidebar position for portfolio archive pages is controlled by the option on the %s tab.', 'Avada' ), '<a href="' . admin_url( 'themes.php?page=avada_options&amp;lang=en#portfolio_sidebar' ) . '" target="_blank">Portfolio Posts sidebar</a>' ) . '</div>',
+						/* translators: "Portfolio Posts sidebar" link. */
+						'description' => '<div class="fusion-redux-important-notice">' . sprintf( __( '<strong>IMPORTANT NOTE:</strong> The sidebar position for portfolio archive pages is controlled by the option on the %s tab.', 'Avada' ), '<a href="' . admin_url( 'themes.php?page=avada_options&amp;lang=en#portfolio_sidebar' ) . '" target="_blank">' . esc_attr__( 'Portfolio Posts sidebar', 'Avada' ) . '</a>' ) . '</div>',
 						'id'          => 'portfolio_archive_important_note_info',
 						'type'        => 'custom',
 					),
@@ -284,7 +285,8 @@ function avada_options_section_sidebars( $sections ) {
 				'fields'      => array(
 					'blog_archive_important_note_info' => array(
 						'label'       => '',
-						'description' => '<div class="fusion-redux-important-notice">' . sprintf( __( '<strong>IMPORTANT NOTE:</strong> The sidebar position for blog archive pages is controlled by the option on the %s tab.', 'Avada' ), '<a href="' . admin_url( 'themes.php?page=avada_options&amp;lang=en#posts_sidebar' ) . '" target="_blank">Blog Posts sidebar</a>' ) . '</div>',
+						/* translators: "Blog Posts sidebar" link. */
+						'description' => '<div class="fusion-redux-important-notice">' . sprintf( __( '<strong>IMPORTANT NOTE:</strong> The sidebar position for blog archive pages is controlled by the option on the %s tab.', 'Avada' ), '<a href="' . admin_url( 'themes.php?page=avada_options&amp;lang=en#posts_sidebar' ) . '" target="_blank">' . esc_attr__( 'Blog Posts sidebar', 'Avada' ) . '</a>' ) . '</div>',
 						'id'          => 'blog_archive_important_note_info',
 						'type'        => 'custom',
 					),
@@ -399,7 +401,8 @@ function avada_options_section_sidebars( $sections ) {
 				'fields'          => array(
 					'woocommerce_archive_important_note_info' => array(
 						'label'       => '',
-						'description' => '<div class="fusion-redux-important-notice">' . sprintf( __( '<strong>IMPORTANT NOTE:</strong> The sidebar position for WooCommerce archive pages is controlled by the option on the %s tab.', 'Avada' ), '<a href="' . admin_url( 'themes.php?page=avada_options&amp;lang=en#woo_sidebar' ) . '" target="_blank">WooCommerce Products sidebar</a>' ) . '</div>',
+						/* translators: "WooCommerce Products sidebar" link. */
+						'description' => '<div class="fusion-redux-important-notice">' . sprintf( __( '<strong>IMPORTANT NOTE:</strong> The sidebar position for WooCommerce archive pages is controlled by the option on the %s tab.', 'Avada' ), '<a href="' . admin_url( 'themes.php?page=avada_options&amp;lang=en#woo_sidebar' ) . '" target="_blank">' . esc_attr__( 'WooCommerce Products sidebar', 'Avada' ) . '</a>' ) . '</div>',
 						'id'          => 'woocommerce_archive_important_note_info',
 						'type'        => 'custom',
 					),

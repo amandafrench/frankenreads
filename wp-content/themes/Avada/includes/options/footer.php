@@ -128,6 +128,7 @@ function avada_options_section_footer( $sections ) {
 						'label'             => esc_html__( 'Copyright Text', 'Avada' ),
 						'description'       => esc_html__( 'Enter the text that displays in the copyright bar. HTML markup can be used.', 'Avada' ),
 						'id'                => 'footer_text',
+						/* translators: %1$s: Years. %2$s: WordPress link. %3$s: Theme Fusion link. */
 						'default'           => sprintf( esc_html__( 'Copyright %1$s Avada | All Rights Reserved | Powered by %2$s | %3$s', 'Avada' ), '2012 - ' . date( 'Y' ), '<a href="http://wordpress.org">WordPress</a>', '<a href="http://theme-fusion.com">Theme Fusion</a>' ),
 						'type'              => 'textarea',
 						'sanitize_callback' => array( 'Kirki_Sanitize', 'unfiltered' ),

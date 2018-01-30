@@ -287,6 +287,7 @@ class Avada_Admin {
 			$this->add_wp_toolbar_menu_item( esc_attr__( 'Theme Options', 'Avada' ), 'avada', admin_url( 'themes.php?page=avada_options' ) );
 			if ( isset( $patches['avada'] ) && 1 <= $patches['avada'] ) {
 				$patches_label = '<span style="' . $avada_updates_styles . '">' . $patches['avada'] . '</span>';
+				/* translators: The patches numeric counter. */
 				$this->add_wp_toolbar_menu_item( sprintf( esc_attr__( 'Fusion Patcher %s', 'Avada' ), $patches_label ), 'avada', admin_url( 'admin.php?page=avada-fusion-patcher' ) );
 			}
 		} // End if().
@@ -663,11 +664,14 @@ class Avada_Admin {
 				<p><strong><?php esc_attr_e( "We're sorry but the demo data could not be imported. It is most likely due to low PHP configurations on your server. There are two possible solutions.", 'Avada' ); ?></strong></p>
 
 				<p><strong><?php esc_attr_e( 'Solution 1:', 'Avada' ); ?></strong> <?php esc_attr_e( 'Import the demo using an alternate method.', 'Avada' ); ?><a href="https://theme-fusion.com/avada-doc/demo-content-info/alternate-demo-method/" class="button-primary" target="_blank" style="margin-left: 10px;"><?php esc_attr_e( 'Alternate Method', 'Avada' ); ?></a></p>
+				<?php /* translators: %1$s: RED. %2$s: "Reset WordPress Plugin" link. */ ?>
 				<p><strong><?php esc_attr_e( 'Solution 2:', 'Avada' ); ?></strong> <?php printf( __( 'Fix the PHP configurations in the System Status that are reported in %1$s, then use the %2$s, then reimport.', 'Avada' ), '<strong style="color: red;">' . esc_attr__( 'RED', 'Avada' ) . '</strong>', '<a href="' . esc_url_raw( admin_url( 'plugin-install.php?tab=plugin-information&amp;plugin=wordpress-reset&amp;TB_iframe=true&amp;width=830&amp;height=472' ) ) . '">' . esc_attr__( 'Reset WordPress Plugin', 'Avada' ) . '</a>' ); // WPCS: XSS ok. ?><a href="<?php echo esc_url_raw( admin_url( 'admin.php?page=avada-system-status' ) ); ?>" class="button-primary" target="_blank" style="margin-left: 10px;"><?php esc_attr_e( 'System Status', 'Avada' ); ?></a></p>
 			</div>
 
 			<div class="updated importer-notice importer-notice-2" style="display: none;">
+				<?php /* translators: "Regenerate Thumbnails" plugin link. */ ?>
 				<p><?php printf( esc_html__( 'Demo data successfully imported. Install and run %s plugin once if you would like images generated to the specific theme sizes. This is not needed if you upload your own images because WP does it automatically.', 'Avada' ), '<a href="' . esc_url_raw( admin_url( 'plugin-install.php?tab=plugin-information&amp;plugin=regenerate-thumbnails&amp;TB_iframe=true&amp;width=830&amp;height=472' ) ) . ' class="thickbox" title="' . esc_attr__( 'Regenerate Thumbnails', 'Avada' ) . '">' . esc_attr__( 'Regenerate Thumbnails', 'Avada' ) . '</a>' ); ?></p>
+				<?php /* translators: "Permalinks" link. */ ?>
 				<p><?php printf( esc_attr__( 'Please visit the %s page and change your permalinks structure to "Post Name" so that content links work properly.', 'Avada' ), '<a href="' . esc_url_raw( admin_url( 'options-permalink.php' ) ) . '">' . esc_attr__( 'Permalinks', 'Avada' ) . '</a>' ); ?></p>
 			</div>
 
@@ -675,6 +679,7 @@ class Avada_Admin {
 				<p><strong><?php esc_attr_e( "We're sorry but the demo data could not be imported. It is most likely due to low PHP configurations on your server. There are two possible solutions.", 'Avada' ); ?></strong></p>
 
 				<p><strong><?php esc_attr_e( 'Solution 1:', 'Avada' ); ?></strong> <?php esc_attr_e( 'Import the demo using an alternate method.', 'Avada' ); ?><a href="https://theme-fusion.com/avada-doc/demo-content-info/alternate-demo-method/" class="button-primary" target="_blank" style="margin-left: 10px;"><?php esc_attr_e( 'Alternate Method', 'Avada' ); ?></a></p>
+				<?php /* translators: %1$s: RED. %2$s: "Reset WordPress Plugin" link. */ ?>
 				<p><strong><?php esc_attr_e( 'Solution 2:', 'Avada' ); ?></strong> <?php printf( __( 'Fix the PHP configurations in the System Status that are reported in %1$s, then use the %2$s, then reimport.', 'Avada' ), '<strong style="color: red;">' . esc_attr__( 'RED', 'Avada' ) . '</strong>', '<a href="' . esc_url_raw( admin_url( 'plugin-install.php?tab=plugin-information&amp;plugin=wordpress-reset&amp;TB_iframe=true&amp;width=830&amp;height=472' ) ) . '">' . esc_attr__( 'Reset WordPress Plugin', 'Avada' ) . '</a>' ); // WPCS: XSS ok. ?><a href="<?php echo esc_url_raw( admin_url( 'admin.php?page=avada-system-status' ) ); ?>" class="button-primary" target="_blank" style="margin-left: 10px;"><?php esc_attr_e( 'System Status', 'Avada' ); ?></a></p>
 			</div>
 
@@ -687,8 +692,10 @@ class Avada_Admin {
 		<?php endif; ?>
 		<div class="about-text">
 			<?php if ( ! defined( 'ENVATO_HOSTED_SITE' ) ) : ?>
+				<?php /* translators: %1$s: URL. %2$s: _blank. %3$s: URL. */ ?>
 				<?php $welcome_text = sprintf( __( 'Avada is now installed and ready to use! Get ready to build something beautiful. Please <a href="%1$s" target="%2$s">register your purchase</a> to get automatic theme updates, import Avada demos and install premium plugins. Check out the <a href="%3$s">Support tab</a> to learn how to receive product support. We hope you enjoy it!', 'Avada' ), esc_url( admin_url( 'admin.php?page=avada-registration' ) ), '_blank', esc_url( admin_url( 'admin.php?page=avada-support' ) ) ); // WPCS: XSS ok. ?>
 			<?php else : ?>
+				<?php /* translators: URL. */ ?>
 				<?php $welcome_text = sprintf( __( 'Avada is now installed and ready to use! Get ready to build something beautiful. Through your registration on the Envato hosted platform, you can now get automatic theme updates, import Avada demos and install premium plugins. Check out the <a href="%s" target="_blank">Envato Hosted Support Policy</a> to learn how to receive support through the Envato hosted support team. We hope you enjoy it!', 'Avada' ), esc_url( 'https://envatohosted.zendesk.com/hc/en-us/articles/115001666945-Envato-Hosted-Support-Policy' ) ); // WPCS: XSS ok. ?>
 			<?php endif; ?>
 
@@ -773,10 +780,6 @@ class Avada_Admin {
 			}
 
 			if ( 'nav-menus.php' == $pagenow || 'widgets.php' == $pagenow ) {
-				wp_dequeue_script( 'tribe-events-select2' );
-				wp_dequeue_script( 'tribe-select2' );
-				wp_deregister_script( 'tribe-select2' );
-
 				wp_enqueue_style(
 					'select2-css',
 					Avada::$template_dir_url . '/assets/admin/css/select2.css',
@@ -785,10 +788,10 @@ class Avada_Admin {
 					'all'
 				);
 				wp_enqueue_script(
-					'select2-js',
-					Avada::$template_dir_url . '/assets/admin/js/select2.min.js',
+					'selectwoo-js',
+					Avada::$template_dir_url . '/assets/admin/js/selectWoo.full.min.js',
 					array( 'jquery' ),
-					'4.0.3'
+					'1.0.2'
 				);
 				wp_enqueue_script( 'jquery-color' );
 				wp_enqueue_script( 'wp-color-picker' );
@@ -796,7 +799,7 @@ class Avada_Admin {
 				// ColorPicker Alpha Channel.
 				wp_enqueue_script( 'wp-color-picker-alpha', trailingslashit( Avada::$template_dir_url ) . 'assets/admin/js/wp-color-picker-alpha.js', array( 'wp-color-picker', 'jquery-color' ), $version );
 				wp_enqueue_style( 'fontawesome', FUSION_LIBRARY_URL . '/assets/fonts/fontawesome/font-awesome.css', array(), $version );
-				wp_enqueue_script( 'fusion-menu-options', trailingslashit( Avada::$template_dir_url ) . 'assets/admin/js/fusion-menu-options.js', array( 'select2-js' ), $version, true );
+				wp_enqueue_script( 'fusion-menu-options', trailingslashit( Avada::$template_dir_url ) . 'assets/admin/js/fusion-menu-options.js', array( 'selectwoo-js' ), $version, true );
 				wp_localize_script(
 					'fusion-menu-options', 'fusionMenuConfig', array(
 						'fontawesomeicons' => fusion_get_icons_array(),
@@ -974,6 +977,7 @@ class Avada_Admin {
 				$actions = $fusion_builder_action;
 			} else {
 				$actions = array(
+					/* translators: Plugin name. */
 					'install' => '<a href="' . $url . '" class="button button-primary' . $disable_class . '"' . $data_version . ' title="' . sprintf( esc_attr__( 'Install %s', 'Avada' ), $item['sanitized_plugin'] ) . '">' . esc_attr__( 'Install', 'Avada' ) . '</a>',
 				);
 			}
@@ -992,6 +996,7 @@ class Avada_Admin {
 			);
 
 			$actions = array(
+				/* translators: Plugin Name. */
 				'activate' => '<a href="' . $url . '" class="button button-primary"' . $data_version . ' title="' . sprintf( esc_attr__( 'Activate %s', 'Avada' ), $item['sanitized_plugin'] ) . '">' . esc_attr__( 'Activate', 'Avada' ) . '</a>',
 			);
 		} elseif ( version_compare( $installed_plugins[ $item['file_path'] ]['Version'], $item['version'], '<' ) ) {
@@ -1015,6 +1020,7 @@ class Avada_Admin {
 				$disable_class = ' disabled avada-no-token';
 			}
 			$actions = array(
+				/* translators: Plugin Name. */
 				'update' => '<a href="' . $url . '" class="button button-primary' . $disable_class . '" title="' . sprintf( esc_attr__( 'Update %s', 'Avada' ), $item['sanitized_plugin'] ) . '">' . esc_attr__( 'Update', 'Avada' ) . '</a>',
 			);
 		} elseif ( is_plugin_active( $item['file_path'] ) ) {
@@ -1030,6 +1036,7 @@ class Avada_Admin {
 				)
 			);
 			$actions = array(
+				/* translators: Plugin name. */
 				'deactivate' => '<a href="' . $url . '" class="button button-primary" title="' . sprintf( esc_attr__( 'Deactivate %s', 'Avada' ), $item['sanitized_plugin'] ) . '">' . esc_attr__( 'Deactivate', 'Avada' ) . '</a>',
 			);
 		} // End if().
@@ -1306,13 +1313,18 @@ class Avada_Admin {
 			'technology'            => __( 'Importing demo content will give you sliders, pages, posts, theme options, widgets, sidebars and other settings. This will replicate the live demo. <strong>Clicking this option will replace your current theme options and widgets.</strong> It can also take a minute to complete.<br /><br /> REQUIREMENTS:<br /><br />• Memory Limit of 256 MB and max execution time (php time limit) of 300 seconds.<br /><br />• Fusion Core and LayerSlider must be activated for sliders to import.<br /><br />• Contact Form 7 plugin must be activated for the form to import.<br /><br />• Fusion Builder must be activated for page content to display as intended.', 'Avada' ),
 			'creative'              => __( 'Importing demo content will give you sliders, pages, posts, theme options, widgets, sidebars and other settings. This will replicate the live demo. <strong>Clicking this option will replace your current theme options and widgets.</strong> It can also take a minute to complete.<br /><br /> REQUIREMENTS:<br /><br />• Memory Limit of 128 MB and max execution time (php time limit) of 180 seconds.<br /><br />• Revolution Slider must be activated for sliders to import.<br /><br />• Contact Form 7 plugin must be activated for the form to import.<br /><br />• Fusion Core must be activated for Fusion Slider, portfolio and FAQs to be imported. <br /><br />• Fusion Builder must be activated for page content to display as intended.', 'Avada' ),
 			'default'               => __( 'Importing demo content will give you sliders, pages, posts, theme options, widgets, sidebars and other settings. This will replicate the live demo. <strong>Clicking this option will replace your current theme options and widgets.</strong> It can also take a minute to complete.<br /><br /> REQUIREMENTS:<br /><br />• Memory Limit of 128 MB and max execution time (php time limit) of 180 seconds.<br /><br />• Fusion Core must be activated for sliders, portfolios and FAQs to import.<br /><br />• Contact Form 7 plugin must be activated for the form to import.<br /><br />• Fusion Builder must be activated for page content to display as intended.', 'Avada' ),
+			/* translators: The current step label. */
 			'currently_processing'  => esc_attr__( 'Currently Processing: %s', 'Avada' ),
+			/* translators: The current step label. */
 			'currently_removing'    => esc_attr__( 'Currently Removing: %s', 'Avada' ),
 			'file_does_not_exist'   => esc_attr__( 'The file does not exist', 'Avada' ),
+			/* translators: URL. */
 			'error_timeout'         => wp_kses_post( sprintf( __( 'Demo server couldn\'t be reached. Please check for wp_remote_get on the <a href="%s" target="_blank">System Status</a> page.', 'Avada' ), admin_url( 'admin.php?page=avada-system-status' ) ) ),
+			/* translators: URL. */
 			'error_php_limits'      => wp_kses_post( sprintf( __( 'Demo import failed. Please check for PHP limits in red on the <a href="%s" target="_blank">System Status</a> page. Change those to the recommended value and try again.', 'Avada' ), admin_url( 'admin.php?page=avada-demos' ) ) ),
 			'remove_demo'           => esc_attr__( 'Removing demo content will remove ALL previously imported demo content from this demo and restore your site to the previous state it was in before this demo content was imported.', 'Avada' ),
 			'update_fc'             => __( 'Fusion Builder Plugin can only be installed and activated if Fusion Core plugin is at version 3.0 or higher. Please update Fusion Core first.', 'Avada' ),
+			/* translators: URL. */
 			'register_first'        => sprintf( __( 'This plugin can only be installed or updated, after you have successfully completed the Avada product registration on the <a href="%s" target="_blank">Product Registration</a> tab.', 'Avada' ), admin_url( 'admin.php?page=avada-registration' ) ),
 			'plugin_install_failed' => __( 'Plugin install failed. Please try Again.', 'Avada' ),
 			'plugin_active'         => __( 'Active', 'Avada' ),

@@ -169,10 +169,12 @@ class Avada_AvadaRedux_Migration extends Avada_Migrate {
 			),
 			array(
 				'callback'    => array( $this, 'typography_1' ),
+				/* translators: %1$s, %2$s: Numbers. */
 				'description' => sprintf( esc_html__( 'Typography Options (step %1$s of %2$s)', 'Avada' ), '1', '2' ),
 			),
 			array(
 				'callback'    => array( $this, 'typography_2' ),
+				/* translators: %1$s, %2$s: Numbers. */
 				'description' => sprintf( esc_html__( 'Typography Options (step %1$s of %2$s)', 'Avada' ), '2', '2' ),
 			),
 			array(

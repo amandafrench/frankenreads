@@ -15,6 +15,7 @@
   -webkit-box-shadow: none !important;
 }
 .transition {
+  -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
 }
 .select3-drop {
@@ -353,6 +354,7 @@
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-field[data-id="header_layout"] ul.fusionredux-image-select li {
   float: right;
   max-width: 50%;
+  -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-field[data-id="header_layout"] ul.fusionredux-image-select li:hover {
@@ -436,6 +438,7 @@
   color: $color_text_menu_top_level_active !important;
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-typography-container .select_wrapper {
+  max-width: -webkit-calc(50% - 10px) !important;
   max-width: calc(50% - 10px) !important;
   min-width: 160px !important;
   height: 67px;
@@ -483,12 +486,14 @@
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color .wp-picker-container.wp-picker-active,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color_alpha .wp-picker-container.wp-picker-active,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-typography .wp-picker-container.wp-picker-active {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
+  -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -496,9 +501,11 @@
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color .wp-picker-container.wp-picker-active .wp-picker-input-wrap,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color_alpha .wp-picker-container.wp-picker-active .wp-picker-input-wrap,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-typography .wp-picker-container.wp-picker-active .wp-picker-input-wrap {
+  display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -559,6 +566,7 @@
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color .wp-picker-container .iris-picker .iris-picker-inner,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color_alpha .wp-picker-container .iris-picker .iris-picker-inner,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-typography .wp-picker-container .iris-picker .iris-picker-inner {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -594,6 +602,7 @@
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color .wp-picker-container .iris-picker .iris-picker-inner .iris-square,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color_alpha .wp-picker-container .iris-picker .iris-picker-inner .iris-square,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-typography .wp-picker-container .iris-picker .iris-picker-inner .iris-square {
+  width: -webkit-calc(100% - 45px) !important;
   width: calc(100% - 45px) !important;
   margin-right: 0;
   border-radius: 0 !important;
@@ -612,9 +621,11 @@
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color .wp-picker-container .iris-palette-container,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color_alpha .wp-picker-container .iris-palette-container,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-typography .wp-picker-container .iris-palette-container {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  width: -webkit-calc(100% - 45px) !important;
   width: calc(100% - 45px) !important;
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color .wp-picker-container .iris-palette-container > .iris-palette,
@@ -648,6 +659,7 @@
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color .wp-picker-container.wp-picker-alpha-container .iris-picker .iris-square,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-color_alpha .wp-picker-container.wp-picker-alpha-container .iris-picker .iris-square,
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-typography .wp-picker-container.wp-picker-alpha-container .iris-picker .iris-square {
+  width: -webkit-calc(100% - 85px) !important;
   width: calc(100% - 85px) !important;
   margin-right: 15px;
 }
@@ -746,6 +758,7 @@
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-spacing .field-spacing-input {
   margin-right: 5px !important;
+  width: -webkit-calc(25% - 5px);
   width: calc(25% - 5px);
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-spacing .field-spacing-input.input-append .add-on,
@@ -781,6 +794,7 @@
   padding-bottom: 3px;
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-spacing .field-spacing-input input.mini[type="text"] {
+  width: -webkit-calc(100% - 33px);
   width: calc(100% - 33px);
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main #fusionredux-defaults-section {
@@ -814,6 +828,7 @@
   border-top-right-radius: 0 !important;
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
+  -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .button-primary,
@@ -842,6 +857,7 @@
   background: #f4f2f2 !important;
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
+  -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
@@ -869,6 +885,7 @@
   background: #f4f2f2 !important;
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
+  -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
   border-left: 1px solid rgba(0, 0, 0, 0.05);
 }
@@ -940,6 +957,7 @@
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-slider .fusionredux-slider-container {
   margin: 10px 0;
+  width: -webkit-calc(100% - 130px);
   width: calc(100% - 130px);
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-slider-container.noUi-target.noUi-connect {
@@ -1008,6 +1026,7 @@
   *z-index: -1;
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-slider-container .noUi-state-tap .noUi-origin {
+  -webkit-transition: left 0.3s, top 0.3s;
   transition: left 0.3s, top 0.3s;
 }
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-slider-container .noUi-state-drag * {
@@ -1024,6 +1043,7 @@
   top: -5px;
   cursor: ew-resize;
   border-radius: 100%;
+  -webkit-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
   border: 1px solid;
 }
@@ -1553,6 +1573,7 @@
 }
 .fusionredux-container .fusion_theme_options-custom_fonts fieldset.fusionredux-field[data-id="custom_fonts"] fieldset.fusionredux-container-media input[type="text"] {
   display: inline-block;
+  max-width: -webkit-calc(100% - 80px);
   max-width: calc(100% - 80px);
   float: left;
   height: 31px;
@@ -1575,6 +1596,7 @@
   border: 1px solid #dedede;
 }
 .fusion-redux-search .fusionredux-sidebar {
+  -webkit-transition: all 250ms ease-in-out;
   transition: all 250ms ease-in-out;
   opacity: 0.2;
 }
@@ -1647,6 +1669,7 @@
 .fusion-custom-color-scheme .color-toggle {
   height: auto;
   opacity: 1;
+  -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
 .fusion-custom-color-scheme .color-toggle.color-hidden {
@@ -1654,6 +1677,7 @@
   overflow: hidden;
   opacity: 0;
   padding-top: 0;
+  -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
 .fusion-custom-color-scheme textarea {
@@ -1712,6 +1736,7 @@
   width: 100px!important;
   text-align: center;
   background: #f4f2f2 !important;
+  -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
   border: 1px solid rgba(0, 0, 0, 0.05);
   margin: 1px;
@@ -1734,6 +1759,7 @@
     float: none;
   }
   .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-container-spacing .field-spacing-input {
+    width: -webkit-calc(35% - 5px);
     width: calc(35% - 5px);
   }
   .fusionredux_field_search {
@@ -1989,6 +2015,7 @@
   padding-right: 0;
 }
 .rtl .fusionredux-container #fusionredux-form-wrapper .fusionredux-field-container .field-spacing-input.input-prepend {
+  width: -webkit-calc(45% - 5px);
   width: calc(45% - 5px);
 }
 .rtl .fusionredux-container .fusionredux-action_bar .spinner {
@@ -2010,6 +2037,7 @@
   right: 40px;
 }
 .fusionredux-main .fusionredux-element-highlight .fusionredux-accordion-field .fusionredux-element-highlight {
+  top: -webkit-calc(50% - 12px);
   top: calc(50% - 12px);
   right: 70px;
 }

@@ -131,6 +131,7 @@ class Avada_Upgrade {
 			'530' => array( '5.3.0', false ),
 			'540' => array( '5.4.0', false ),
 			'541' => array( '5.4.1', false ),
+			'542' => array( '5.4.2', false ),
 		);
 
 		$upgraded = false;

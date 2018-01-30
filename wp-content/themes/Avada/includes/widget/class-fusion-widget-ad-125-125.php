@@ -121,6 +121,7 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, $defaults );
 		?>
 
+		<?php /* translators: Number.*/ ?>
 		<p><strong><?php printf( esc_attr__( 'Ad %s', 'Avada' ), '1' ); ?></strong></p>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_1' ) ); ?>"><?php esc_attr_e( 'Image Ad Link:', 'Avada' ); ?></label>
@@ -130,6 +131,7 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_1' ) ); ?>"><?php esc_attr_e( 'Ad Link:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_1' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_link_1' ) ); ?>" value="<?php echo esc_attr( $instance['ad_125_link_1'] ); ?>" />
 		</p>
+		<?php /* translators: Number.*/ ?>
 		<p><strong><?php printf( esc_attr__( 'Ad %s', 'Avada' ), '2' ); ?></strong></p>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_2' ) ); ?>"><?php esc_attr_e( 'Image Ad Link:', 'Avada' ); ?></label>
@@ -139,6 +141,7 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_2' ) ); ?>"><?php esc_attr_e( 'Ad Link:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_2' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_link_2' ) ); ?>" value="<?php echo esc_attr( $instance['ad_125_link_2'] ); ?>" />
 		</p>
+		<?php /* translators: Number.*/ ?>
 		<p><strong><?php printf( esc_attr__( 'Ad %s', 'Avada' ), '3' ); ?></strong></p>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_3' ) ); ?>"><?php esc_attr_e( 'Image Ad Link:', 'Avada' ); ?></label>
@@ -148,6 +151,7 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_3' ) ); ?>"><?php esc_attr_e( 'Ad Link:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_3' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_link_3' ) ); ?>" value="<?php echo esc_attr( $instance['ad_125_link_3'] ); ?>" />
 		</p>
+		<?php /* translators: Number.*/ ?>
 		<p><strong><?php printf( esc_attr__( 'Ad %s', 'Avada' ), '4' ); ?></strong></p>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_4' ) ); ?>"><?php esc_attr_e( 'Image Ad Link:', 'Avada' ); ?></label>

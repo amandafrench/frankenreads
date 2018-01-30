@@ -965,10 +965,7 @@ if ( ! function_exists( 'avada_gravity_form_merge_tags' ) ) {
 	 * @param array $args Array of bool auto_append_eid and encrypt_eid.
 	 */
 	function avada_gravity_form_merge_tags( $args = array() ) {
-
-		include_once Avada::$template_dir_path . '/includes/class-avada-gravityforms-tags-merger.php';
 		Avada_Gravity_Forms_Tags_Merger::get_instance( $args );
-
 	}
 }
 
@@ -1426,8 +1423,6 @@ if ( ! function_exists( 'avada_header_social_links' ) ) {
 
 		$options = array(
 			'position'          => 'header',
-			'icon_colors'       => Avada()->settings->get( 'header_social_links_icon_color' ),
-			'box_colors'        => Avada()->settings->get( 'header_social_links_box_color' ),
 			'icon_boxed'        => Avada()->settings->get( 'header_social_links_boxed' ),
 			'icon_boxed_radius' => Fusion_Sanitize::size( Avada()->settings->get( 'header_social_links_boxed_radius' ) ),
 			'tooltip_placement' => Avada()->settings->get( 'header_social_links_tooltip_placement' ),
@@ -1449,11 +1444,13 @@ if ( ! function_exists( 'avada_secondary_header_content' ) ) {
 	 * @return string               Html for the content.
 	 */
 	function avada_secondary_header_content( $content_area ) {
-		if ( Avada()->settings->get( $content_area ) == 'Contact Info' ) {
-			return avada_contact_info();
-		} elseif ( Avada()->settings->get( $content_area ) == 'Social Links' ) {
-			return avada_header_social_links();
-		} elseif ( Avada()->settings->get( $content_area ) == 'Navigation' ) {
+		$secondary_content = '';
+		$content_to_display = Avada()->settings->get( $content_area );
+		if ( 'Contact Info' === $content_to_display ) {
+			$secondary_content = avada_contact_info();
+		} elseif ( 'Social Links' === $content_to_display ) {
+			$secondary_content = avada_header_social_links();
+		} elseif ( 'Navigation' === $content_to_display ) {
 			$mobile_menu_wrapper = '';
 			if ( has_nav_menu( 'top_navigation' ) ) {
 
@@ -1466,8 +1463,10 @@ if ( ! function_exists( 'avada_secondary_header_content' ) ) {
 			$secondary_menu .= avada_secondary_nav();
 			$secondary_menu .= '</nav>';
 
-			return $secondary_menu . $mobile_menu_wrapper;
+			$secondary_content = $secondary_menu . $mobile_menu_wrapper;
 		}
+
+		return apply_filters( 'avada_secondary_header_content', $secondary_content, $content_area, $content_to_display );
 	}
 }
 

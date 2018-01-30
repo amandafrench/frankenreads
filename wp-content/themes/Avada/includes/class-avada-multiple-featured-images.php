@@ -51,8 +51,11 @@ class Avada_Multiple_Featured_Images {
 					array(
 						'id'           => 'featured-image-' . $i,
 						'post_type'    => $post_type,
+						/* translators: Number. */
 						'name'         => sprintf( __( 'Featured image %s', 'Avada' ), $i ),
+						/* translators: Number. */
 						'label_set'    => sprintf( __( 'Set featured image %s', 'Avada' ), $i ),
+						/* translators: Number. */
 						'label_remove' => sprintf( __( 'Remove featured image %s', 'Avada' ), $i ),
 					)
 				);

@@ -17,8 +17,6 @@
 
 	$footer_social_icon_options = array(
 		'position'          => 'footer',
-		'icon_colors'       => Avada()->settings->get( 'footer_social_links_icon_color' ),
-		'box_colors'        => Avada()->settings->get( 'footer_social_links_box_color' ),
 		'icon_boxed'        => Avada()->settings->get( 'footer_social_links_boxed' ),
 		'icon_boxed_radius' => Fusion_Sanitize::size( Avada()->settings->get( 'footer_social_links_boxed_radius' ) ),
 		'tooltip_placement' => Avada()->settings->get( 'footer_social_links_tooltip_placement' ),

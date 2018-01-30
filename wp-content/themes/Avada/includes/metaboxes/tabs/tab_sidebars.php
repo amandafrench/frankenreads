@@ -86,6 +86,7 @@ if ( ! isset( $post_type_options['global'] ) || ( isset( $post_type_options['glo
 			'left'    => esc_attr__( 'Left', 'Avada' ),
 			'right'   => esc_attr__( 'Right', 'Avada' ),
 		),
+		/* translators: Additional description (defaults). */
 		sprintf( esc_html__( 'Select the sidebar 1 position. If sidebar 2 is selected, it will display on the opposite side. %s', 'Avada' ), ( ! empty( $post_type_options ) ) ? Avada()->settings->get_default_description( $post_type_options['position'], '', 'select' ) : '' ),
 		'',
 		array(
@@ -107,6 +108,7 @@ if ( ! isset( $post_type_options['global'] ) || ( isset( $post_type_options['glo
 			'sidebar_two' => esc_attr__( 'Sidebar 2', 'Avada' ),
 			'both'        => esc_attr__( 'Both', 'Avada' ),
 		),
+		/* translators: Additional description (defaults). */
 		sprintf( esc_html__( 'Select the sidebar(s) that should remain sticky when scrolling the page. If the sidebar content is taller than the screen, it acts like a normal sidebar until the bottom of the sidebar is within the viewport, which will then remain fixed in place as you scroll down. %s', 'Avada' ), Avada()->settings->get_default_description( 'sidebar_sticky', '', 'select' ) ),
 		array(
 			array(
@@ -134,6 +136,7 @@ if ( ! isset( $post_type_options['global'] ) || ( isset( $post_type_options['glo
 	$this->color(
 		'sidebar_bg_color',
 		esc_attr__( 'Sidebar Background Color', 'Avada' ),
+		/* translators: Additional description (defaults). */
 		sprintf( esc_html__( 'Controls the background color of the sidebar. Hex code, ex: #000. %s', 'Avada' ), ( 'tribe_events' === $post_type ) ? Avada()->settings->get_default_description( 'ec_sidebar_bg_color' ) : Avada()->settings->get_default_description( 'sidebar_bg_color' ) ),
 		true,
 		array(
@@ -147,9 +150,8 @@ if ( ! isset( $post_type_options['global'] ) || ( isset( $post_type_options['glo
 	);
 } else {
 
-	$message = isset( $post_type_options['global'] )
-			 ? sprintf( __( '<strong>IMPORTANT NOTE:</strong> The <a href="%s" target="_blank">Activate Global Sidebars</a> option is turned on which removes the ability to choose individual sidebars. Turn off that option to assign unique sidebars.', 'Avada' ), Avada()->settings->get_setting_link( $post_type_options['global'] ) )
-			 : __( '<strong>IMPORTANT NOTE:</strong> The Activate Global Sidebars option is turned on which removes the ability to choose individual sidebars. Turn off that option to assign unique sidebars.', 'Avada' );
+	/* translators: URL. */
+	$message = isset( $post_type_options['global'] ) ? sprintf( __( '<strong>IMPORTANT NOTE:</strong> The <a href="%s" target="_blank">Activate Global Sidebars</a> option is turned on which removes the ability to choose individual sidebars. Turn off that option to assign unique sidebars.', 'Avada' ), Avada()->settings->get_setting_link( $post_type_options['global'] ) ) : __( '<strong>IMPORTANT NOTE:</strong> The Activate Global Sidebars option is turned on which removes the ability to choose individual sidebars. Turn off that option to assign unique sidebars.', 'Avada' );
 
 	$this->raw(
 		'sidebar_global_to_enabled',

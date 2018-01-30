@@ -72,27 +72,34 @@ $pc = ! empty( $params['product_count'] ) ? $params['product_count'] : $per_page
 				<li>
 					<span class="current-li">
 						<span class="current-li-content">
+							<?php /* translators: Name, Price, Date etc. */ ?>
 							<a aria-haspopup="true"><?php printf( esc_html__( 'Sort by %s', 'Avada' ), '<strong>' . esc_attr( $order_string ) . '</strong>' ); ?></a>
 						</span>
 					</span>
 					<ul>
 						<li class="<?php echo ( 'menu_order' === $pob ) ? 'current' : ''; ?>">
+							<?php /* translators: Name, Price, Date etc. */ ?>
 							<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_orderby', 'default' ) ); ?>"><?php printf( esc_html__( 'Sort by %s', 'Avada' ), '<strong>' . esc_attr__( 'Default Order', 'Avada' ) . '</strong>' ); ?></a>
 						</li>
 						<li class="<?php echo ( 'name' === $pob ) ? 'current' : ''; ?>">
+							<?php /* translators: Name, Price, Date etc. */ ?>
 							<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_orderby', 'name' ) ); ?>"><?php printf( esc_html__( 'Sort by %s', 'Avada' ), '<strong>' . esc_attr__( 'Name', 'Avada' ) . '</strong>' ); ?></a>
 						</li>
 						<li class="<?php echo ( 'price' === $pob || 'price-desc' === $pob ) ? 'current' : ''; ?>">
+							<?php /* translators: Name, Price, Date etc. */ ?>
 							<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_orderby', 'price' ) ); ?>"><?php printf( esc_html__( 'Sort by %s', 'Avada' ), '<strong>' . esc_attr__( 'Price', 'Avada' ) . '</strong>' ); ?></a>
 						</li>
 						<li class="<?php echo ( 'date' === $pob ) ? 'current' : ''; ?>">
+							<?php /* translators: Name, Price, Date etc. */ ?>
 							<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_orderby', 'date' ) ); ?>"><?php printf( esc_html__( 'Sort by %s', 'Avada' ), '<strong>' . esc_attr__( 'Date', 'Avada' ) . '</strong>' ); ?></a>
 						</li>
 						<li class="<?php echo ( 'popularity' === $pob ) ? 'current' : ''; ?>">
+							<?php /* translators: Name, Price, Date etc. */ ?>
 							<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_orderby', 'popularity' ) ); ?>"><?php printf( esc_html__( 'Sort by %s', 'Avada' ), '<strong>' . esc_attr__( 'Popularity', 'Avada' ) . '</strong>' ); ?></a>
 						</li>
 						<?php if ( 'no' !== get_option( 'woocommerce_enable_review_rating' ) ) : ?>
 							<li class="<?php echo ( 'rating' === $pob ) ? 'current' : ''; ?>">
+								<?php /* translators: Name, Price, Date etc. */ ?>
 								<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_orderby', 'rating' ) ); ?>"><?php printf( esc_html__( 'Sort by %s', 'Avada' ), '<strong>' . esc_attr__( 'Rating', 'Avada' ) . '</strong>' ); ?></a>
 							</li>
 						<?php endif; ?>
@@ -113,15 +120,19 @@ $pc = ! empty( $params['product_count'] ) ? $params['product_count'] : $per_page
 
 		<ul class="sort-count order-dropdown">
 			<li>
+				<?php /* translators: Number. */ ?>
 				<span class="current-li"><a aria-haspopup="true"><?php printf( __( 'Show <strong>%s Products</strong>', 'Avada' ), (int) $per_page ); // WPCS: XSS ok. ?></a></span>
 				<ul>
 					<li class="<?php echo ( $pc == $per_page ) ? 'current' : ''; ?>">
+						<?php /* translators: Number. */ ?>
 						<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_count', $per_page ) ); ?>"><?php printf( __( 'Show <strong>%s Products</strong>', 'Avada' ), (int) $per_page ); // WPCS: XSS ok. ?></a>
 					</li>
 					<li class="<?php echo ( $pc == $per_page * 2 ) ? 'current' : ''; ?>">
+						<?php /* translators: Number. */ ?>
 						<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_count', $per_page * 2 ) ); ?>"><?php printf( __( 'Show <strong>%s Products</strong>', 'Avada' ), (int) $per_page * 2 ); // WPCS: XSS ok. ?></a>
 					</li>
 					<li class="<?php echo ( $pc == $per_page * 3 ) ? 'current' : ''; ?>">
+						<?php /* translators: Number. */ ?>
 						<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_count', $per_page * 3 ) ); ?>"><?php printf( __( 'Show <strong>%s Products</strong>', 'Avada' ), (int) $per_page * 3 ); // WPCS: XSS ok. ?></a>
 					</li>
 				</ul>

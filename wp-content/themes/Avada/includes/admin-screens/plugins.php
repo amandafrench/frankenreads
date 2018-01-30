@@ -46,13 +46,16 @@ if ( ! $wp_api_plugins ) {
 	<?php add_thickbox(); ?>
 	 <div class="avada-important-notice">
 		<p class="about-description">
+			<?php /* translators: link attributes. */ ?>
 			<?php $premium_plugins_string = sprintf( __( 'Convert Plus, ACF Pro, Slider Revolution & Layer Slider are premium plugins that can be installed once your <a %1$s>product is registered</a>.', 'Avada' ), 'href="' . esc_url_raw( admin_url( 'admin.php?page=avada-registration' ) ) . '"' ); ?>
 			<?php if ( defined( 'ENVATO_HOSTED_SITE' ) && ENVATO_HOSTED_SITE ) : ?>
 				<?php $premium_plugins_string = __( 'Convert Plus, ACF Pro, Slider Revolution & Layer Slider are premium plugins included in Avada.', 'Avada' ); ?>
 			<?php endif; ?>
 			<?php if ( false !== get_option( 'avada_previous_version' ) ) : ?>
+				<?php /* translators: %1$s: Premium plugins info. %2$s: URL. */ ?>
 				<?php printf( __( 'Fusion Core and Fusion Builder are required to use Avada. Fusion Builder can only be installed after Fusion Core is updated to version 3.0 or higher. %1$s Before updating premium plugins, please always make sure Avada is on the latest available version. The other plugins below offer design integration with Avada. You can manage the plugins from this tab. <a href="%2$s" target="_blank"> Subscribe to our newsletter</a> to be notified about new products coming in the future!', 'Avada' ), $premium_plugins_string, 'http://theme-fusion.us2.list-manage2.com/subscribe?u=4345c7e8c4f2826cc52bb84cd&id=af30829ace' ); // WPCS: XSS ok. ?>
 			<?php else : ?>
+				<?php /* translators: %1$s: Premium plugins info. %2$s: URL. */ ?>
 				<?php printf( __( 'Fusion Core and Fusion Builder are required to use Avada. %1$s Before updating premium plugins, please always make sure Avada is on the latest available version. The other plugins below offer design integration with Avada. You can manage the plugins from this tab. <a href="%2$s" target="_blank">Subscribe to our newsletter</a> to be notified about new products coming in the future!', 'Avada' ), $premium_plugins_string, 'http://theme-fusion.us2.list-manage2.com/subscribe?u=4345c7e8c4f2826cc52bb84cd&id=af30829ace' ); // WPCS: XSS ok. ?>
 			<?php endif; ?>
 		</p>
@@ -60,6 +63,7 @@ if ( ! $wp_api_plugins ) {
 	<?php if ( ! Avada()->registration->is_registered() ) : ?>
 		<div class="avada-important-notice" style="border-left: 4px solid #dc3232;">
 			<h3 style="color: #dc3232; margin-top: 0;"><?php esc_html_e( 'Premium Plugins Can Only Be Installed and Updated With A Valid Token Registration', 'Avada' ); ?></h3>
+			<?php /* translators: The "Product Registration" link. */ ?>
 			<p><?php printf( esc_html__( 'Please visit the %s page and enter a valid token to install or update the premium plugins: Convert Plus, ACF Pro, Slider Revolution & Layer Slider.', 'Avada' ), '<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-registration' ) ) . '">' . esc_html__( 'Product Registration', 'Avada' ) . '</a>' ); ?></p>
 		</div>
 	<?php endif; ?>
@@ -125,19 +129,23 @@ if ( ! $wp_api_plugins ) {
 							</div>
 							<?php if ( isset( $plugin_action['update'] ) && $plugin_action['update'] ) : ?>
 								<div class="update-message notice inline notice-warning notice-alt">
+									<?php /* translators: Version number. */ ?>
 									<p><?php printf( esc_html__( 'New Version Available: %s', 'Avada' ), esc_html( $plugin['version'] ) ); ?></p>
 								</div>
 							<?php endif; ?>
 							<h3 class="theme-name">
 								<?php if ( 'active' === $plugin_status ) : ?>
+									<?php /* translators: plugin name. */ ?>
 									<span><?php printf( esc_html__( 'Active: %s', 'Avada' ), esc_html( $plugin['name'] ) ); ?></span>
 								<?php else : ?>
 									<?php echo esc_html( $plugin['name'] ); ?>
 								<?php endif; ?>
 								<div class="plugin-info">
 									<?php if ( isset( $installed_plugins[ $plugin['file_path'] ] ) ) : ?>
+										<?php /* translators: %1$s: Plugin version. %2$s: Author URL. %3$s: Author Name. */ ?>
 										<?php printf( __( 'v%1$s | <a href="%2$s" target="_blank">%3$s</a>', 'Avada' ), esc_html( $installed_plugins[ $plugin['file_path'] ]['Version'] ), esc_url_raw( $installed_plugins[ $plugin['file_path'] ]['AuthorURI'] ), esc_html( $installed_plugins[ $plugin['file_path'] ]['Author'] ) ); // WPCS: XSS ok. ?>
 									<?php elseif ( 'fusion-builder' === $plugin['slug'] || 'fusion-core' === $plugin['slug'] ) : ?>
+										<?php /* translators: Version number. */ ?>
 										<?php printf( esc_html__( 'Available Version: %s', 'Avada' ), esc_html( $plugin['version'] ) ); // WPCS: XSS ok. ?>
 									<?php else : ?>
 										<?php
@@ -147,6 +155,7 @@ if ( ! $wp_api_plugins ) {
 										$author  = ( isset( $wp_api_plugins[ $plugin['slug'] ] ) && isset( $wp_api_plugins[ $plugin['slug'] ]['author'] ) ) ? $wp_api_plugins[ $plugin['slug'] ]['author'] : $author;
 										?>
 										<?php if ( $version && $author ) : ?>
+											<?php /* translators: %1$s: Version. $2%s: Author. */ ?>
 											<?php printf( __( 'v%1$s | %2$s', 'Avada' ), $version, $author ); // WPCS: XSS ok. ?>
 										<?php endif; ?>
 									<?php endif; ?>

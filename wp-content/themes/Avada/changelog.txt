@@ -7,6 +7,37 @@ This is why we highly recommend to stay up to date with each new theme version a
 
 
 -----------------------------------------------------------------------------------------
+Version 5.4.2 - January 29th, 2018
+-----------------------------------------------------------------------------------------
+
+
+- NEW: Full support of WooCommerce 3.3
+- NEW: Updated all premium bundled plugins to latest version as of release date
+- NEW: Added a Theme Option to set a custom link URL for the site logo
+- NEW: Added a Theme Option to set the icon circle bg color for separator element
+- NEW: Added filter for easier changes of secondary (top) header content
+- NEW: Replaced the select2 JS library with selectWoo library for better 3rd party compatibility
+- IMPROVEMENT: Added the post ID as class to portfolio element posts to make CSS targetting easier
+- IMPROVEMENT: Made Fusion Page Options available on Event Espresso single event screens
+- FIXED: PHP fatal error when Fusion Builder is active without Avada
+- FIXED: PHP fatal error on view order page, if a product of the order was already deleted from db
+- FIXED: Border on tab missing on My-Account view order pages, when using WooCommerce horizontal tabs layout
+- FIXED: Select2 library conflict with Events Calendar Pro list widget on backend
+- FIXED: Links in lists inside the widget area element being displayed as block elements
+- FIXED: Smooth scroll for on page anchors not working if header is turned off in Page Options
+- FIXED: PHP fatal error on PHP 7+ in recent posts element, when retrieving posts by tags
+- FIXED: PHP 7.2 compatibility issue happening on Theme Options save, causing a PHP notice
+- FIXED: Page Option dependency with the rollover custom link icon
+- FIXED: Smooth anchor scrolling to begin of 100% height scrolling section not working on setups like Adventure demo
+- FIXED: Smooth anchor scrolling position incorrect on mobiles when anchor is inside 100% height scrolling section
+- FIXED: Smooth anchor scrolling not working on mobiles when JS compiler is off
+- FIXED: Flip boxes column alignment issue on desktop
+- FIXED: Content boxes column alignment issue on tablet portrait mode
+- FIXED: Icon circle bg color in separator element being used, even if circle was turned off
+- FIXED: Default mobile menu font color not changing with color scheme
+
+
+-----------------------------------------------------------------------------------------
 Version 5.4.1 - January 16th, 2018
 -----------------------------------------------------------------------------------------
 

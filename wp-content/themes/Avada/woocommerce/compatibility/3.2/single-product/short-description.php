@@ -7,12 +7,17 @@
  * @version	 1.6.4
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+ if ( ! defined( 'ABSPATH' ) ) {
+ 	exit; // Exit if accessed directly
+ }
 
 global $post;
 
-if ( ! $post->post_excerpt ) return;
+if ( ! $post->post_excerpt ) {
+	return;
+}
 ?>
-<div class="post-content" itemprop="description">
+
+<div class="post-content woocommerce-product-details__short-description">
 	<?php echo apply_filters( 'woocommerce_short_description', $post->post_excerpt ) ?>
 </div>

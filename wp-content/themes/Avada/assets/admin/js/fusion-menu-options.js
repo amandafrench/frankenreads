@@ -122,7 +122,7 @@ jQuery( window ).load( function() {
 		jQuery( '.fusion-menu-clone' ).append( $clone );
 
 		// Select field functionality.
-		jQuery( $modal ).find( '.fusion-builder-option select' ).select2({
+		jQuery( $modal ).find( '.fusion-builder-option select' ).selectWoo({
 			minimumResultsForSearch: 10,
 			dropdownCssClass: 'avada-select2',
 			width: '100%'
@@ -151,7 +151,7 @@ jQuery( window ).load( function() {
 		}
 
 		jQuery( '.fusion-builder-option .wp-color-picker' ).wpColorPicker( 'close' );
-		jQuery( '.fusion-builder-option select.select2-hidden-accessible' ).select2( 'destroy' );
+		jQuery( '.fusion-builder-option select.select2-hidden-accessible' ).selectWoo( 'destroy' );
 		jQuery( '.fusion-active' ).removeClass( 'fusion-active' );
 		jQuery( this ).parents( '.fusion-builder-modal-settings-container' ).replaceWith( $backup );
 		jQuery( this ).parents( '.fusion-builder-modal-settings-container' ).hide();
@@ -172,7 +172,7 @@ jQuery( window ).load( function() {
 		}
 
 		jQuery( '.fusion-builder-option .wp-color-picker' ).wpColorPicker( 'close' );
-		jQuery( '.fusion-builder-option select.select2-hidden-accessible' ).select2( 'destroy' );
+		jQuery( '.fusion-builder-option select.select2-hidden-accessible' ).selectWoo( 'destroy' );
 		jQuery( '.fusion-active' ).removeClass( 'fusion-active' );
 		jQuery( this ).next().replaceWith( $backup );
 		jQuery( this ).next().hide();
@@ -190,7 +190,7 @@ jQuery( window ).load( function() {
 		}
 
 		jQuery( '.fusion-builder-option .wp-color-picker' ).wpColorPicker( 'close' );
-		jQuery( '.fusion-builder-option select.select2-hidden-accessible' ).select2( 'destroy' );
+		jQuery( '.fusion-builder-option select.select2-hidden-accessible' ).selectWoo( 'destroy' );
 		jQuery( '.fusion-active' ).removeClass( 'fusion-active' );
 		jQuery( this ).parents( '.fusion-builder-modal-settings-container' ).hide();
 		jQuery( '.fusion_builder_modal_overlay' ).hide();

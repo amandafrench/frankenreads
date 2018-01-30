@@ -35,6 +35,7 @@ function fusion_builder_redux_shortcode_styling( $sections ) {
 			'fields'   => array(
 				'shortcode_styling' => array(
 					'label'       => '',
+					/* translators: URL. */
 					'description' => '<div class="fusion-redux-important-notice">' . sprintf( __( '<strong>IMPORTANT NOTE:</strong> Fusion Builder Elements settigns are moved to Fusion Builder Elements options panel <a href="%s" target="_blank">here</a>.', 'Avada' ), admin_url( 'admin.php?page=fusion-element-options' ) ) . '</div>',
 					'id'          => 'shortcode_styling',
 					'type'        => 'custom',

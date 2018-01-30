@@ -175,17 +175,22 @@ final class Fusion_Updater {
 	public function update_plugins( $transient ) {
 
 		// Get the array of arguments.
-		$bundled_plugins = $this->args['bundled'];
-		$plugins_info = Avada::get_bundled_plugins();
+		$bundled_plugins = array();
+		$plugins = array();
+
+		if ( class_exists( 'Avada' ) ) {
+			$plugins_info = Avada::get_bundled_plugins();
+			$bundled_plugins = $this->args['bundled'];
+			$plugins = get_plugins();
+		}
 
 		// Get an array of premium plugins from the Envato API.
 		/* $premiums = $this->registration->envato_api()->plugins(); */
 
 		// Loop available plugins.
-		$plugins = get_plugins();
-		foreach ( $plugins as $plugin_file => $plugin ) {
-			// Process bundled plugin updates.
-			if ( isset( $bundled_plugins ) && ! empty( $bundled_plugins ) ) {
+		if ( isset( $plugins ) && ! empty( $plugins ) && isset( $bundled_plugins ) && ! empty( $bundled_plugins ) ) {
+			foreach ( $plugins as $plugin_file => $plugin ) {
+				// Process bundled plugin updates.
 				foreach ( $bundled_plugins as $bundled_plugin_slug => $bundled_plugin_name ) {
 					if ( $plugin['Name'] === $bundled_plugin_name && isset( $plugins_info[ $bundled_plugin_slug ] ) && version_compare( $plugin['Version'], $plugins_info[ $bundled_plugin_slug ]['version'], '<' ) && class_exists( 'Avada' ) ) {
 						$_plugin = array(
@@ -208,25 +213,26 @@ final class Fusion_Updater {
 						$transient->response[ $plugin_file ] = (object) $_plugin;
 					}
 				}
-			}
 
-			/*
-			WIP
-			// Process premium plugin updates.
-			foreach ( $premiums as $premium ) {
-				if ( $plugin['Name'] === $premium['name'] && version_compare( $plugin['Version'], $premium['version'], '<' ) ) {
-					$_plugin = array(
-						'slug'        => dirname( $plugin_file ),
-						'plugin'      => $plugin,
-						'new_version' => $premium['version'],
-						'url'         => $premium['url'],
-						'package'     => $this->deferred_download( $premium['id'] ),
-					);
-					$transient->response[ $plugin_file ] = (object) $_plugin;
+				/*
+				WIP
+				// Process premium plugin updates.
+				foreach ( $premiums as $premium ) {
+					if ( $plugin['Name'] === $premium['name'] && version_compare( $plugin['Version'], $premium['version'], '<' ) ) {
+						$_plugin = array(
+							'slug'        => dirname( $plugin_file ),
+							'plugin'      => $plugin,
+							'new_version' => $premium['version'],
+							'url'         => $premium['url'],
+							'package'     => $this->deferred_download( $premium['id'] ),
+						);
+						$transient->response[ $plugin_file ] = (object) $_plugin;
+					}
 				}
+				*/
 			}
-			*/
 		}
+
 		return $transient;
 	}
 

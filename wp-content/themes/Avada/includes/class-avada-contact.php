@@ -215,9 +215,13 @@ class Avada_Contact {
 		$message = html_entity_decode( $message );
 
 		$email_to = $options['email_address'];
+		/* translators: The name. */
 		$body  = sprintf( esc_attr__( 'Name: %s', 'Avada' ), " $name \n\n" );
+		/* translators: The email. */
 		$body .= sprintf( esc_attr__( 'Email: %s', 'Avada' ), " $email \n\n" );
+		/* translators: The subject. */
 		$body .= sprintf( esc_attr__( 'Subject: %s', 'Avada' ), " $subject \n\n" );
+		/* translators: The comments. */
 		$body .= sprintf( esc_attr__( 'Comments: %s', 'Avada' ), "\n $message" );
 
 		$headers = 'Reply-To: ' . $name . ' <' . $email . '>' . "\r\n";

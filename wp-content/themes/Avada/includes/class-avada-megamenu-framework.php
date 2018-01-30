@@ -180,6 +180,7 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 								<div class="fusion-builder-option field-menu-highlight-background">
 									<div class="option-details">
 										<h3><?php esc_attr_e( 'Menu Highlight Label Background Color', 'Avada' ); ?></h3>
+										<?php /* translators: "Theme Options" link. */ ?>
 										<p class="description"><?php printf( esc_attr__( 'Set the highlight label background color. To set a border radius, visit %s and modify the Menu Highlight Label Radius option.', 'Avada' ), '<a href="' . esc_url_raw( admin_url( 'themes.php?page=avada_options#main_nav_highlight_radius' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_attr__( 'Theme Options', 'Avada' ) . '</a>' ); ?></p>
 									</div>
 									<div class="option-field fusion-builder-option-container pyre_field avada-color colorpickeralpha">

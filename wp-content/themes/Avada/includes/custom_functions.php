@@ -178,6 +178,7 @@ if ( ! function_exists( 'avada_get_page_title_bar_contents' ) ) {
 		}
 
 		if ( is_search() ) {
+			/* translators: The search query. */
 			$title = sprintf( esc_html__( 'Search results for: %s', 'Avada' ), get_search_query() );
 			$subtitle = '';
 		}
@@ -198,10 +199,13 @@ if ( ! function_exists( 'avada_get_page_title_bar_contents' ) ) {
 				$title = tribe_get_events_title();
 			} elseif ( is_archive() && ! Avada_Helper::is_bbpress() && ! is_search() ) {
 				if ( is_day() ) {
+					/* translators: Date. */
 					$title = sprintf( esc_html__( 'Daily Archives: %s', 'Avada' ), '<span>' . get_the_date() . '</span>' );
 				} elseif ( is_month() ) {
+					/* translators: Date. */
 					$title = sprintf( esc_html__( 'Monthly Archives: %s', 'Avada' ), '<span>' . get_the_date( 'F Y' ) . '</span>' );
 				} elseif ( is_year() ) {
+					/* translators: Date. */
 					$title = sprintf( esc_html__( 'Yearly Archives: %s', 'Avada' ), '<span> ' . get_the_date( 'Y' ) . '</span>' );
 				} elseif ( is_author() ) {
 					$curauth = get_user_by( 'id', get_query_var( 'author' ) );

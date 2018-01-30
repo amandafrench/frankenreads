@@ -418,6 +418,7 @@ class Sidebar_Generator {
 				<p>
 					<?php
 					printf(
+						/* translators: additional description. */
 						esc_html__( 'Select sidebar 1 that will display on this page. Choose "No Sidebar" for full width. %s', 'Avada' ),
 						// @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped
 						( ! empty( $post_type_options ) ) ? Avada()->settings->get_default_description( $post_type_options['sidebar'], '', 'select' ) : ''
@@ -453,7 +454,7 @@ class Sidebar_Generator {
 				</select>
 				<select name="sidebar_generator_replacement[<?php echo esc_attr( $i ); ?>]" style="width:100%" id="pyre_sidebar_1" data-fusion_id="sbg_selected_sidebar_replacement">
 					<?php if ( ! empty( $post_type_options ) ) : ?>
-						<option value="default_sidebar" <?php echo $default_selected ? 'selected="selected"' : '' ?>><?php esc_html_e( 'Default', 'Avada' ); ?> (<?php echo esc_attr( Avada()->settings->get( $post_type_options['sidebar'] ) ); ?>)</option>
+						<option value="default_sidebar" <?php echo $default_selected ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Default', 'Avada' ); ?> (<?php echo esc_attr( Avada()->settings->get( $post_type_options['sidebar'] ) ); ?>)</option>
 					<?php endif; ?>
 					<option value="" <?php echo ( '' === $selected_sidebar_replacement[ $i ] ) ? ' selected' : ''; ?>><?php esc_html_e( 'No Sidebar', 'Avada' ); ?></option>
 					<?php $sidebar_replacements = $wp_registered_sidebars; ?>
@@ -494,6 +495,7 @@ class Sidebar_Generator {
 				<p>
 					<?php
 					printf(
+						/* translators: Additional description. */
 						esc_html__( 'Select sidebar 2 that will display on this page. Sidebar 2 can only be used if sidebar 1 is selected. %s', 'Avada' ),
 						// @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped
 						( ! empty( $post_type_options ) ) ? Avada()->settings->get_default_description( $post_type_options['sidebar_2'], '', 'select' ) : ''
@@ -529,7 +531,7 @@ class Sidebar_Generator {
 				</select>
 				<select name="sidebar_2_generator_replacement[<?php echo esc_attr( $i ); ?>]" style="width:100%" data-fusion_id="sbg_selected_sidebar_2_replacement">
 					<?php if ( ! empty( $post_type_options ) ) : ?>
-						<option value="default_sidebar" <?php echo $default_selected_2 ? 'selected="selected"' : '' ?>><?php esc_html_e( 'Default', 'Avada' ); ?> (<?php echo esc_attr( Avada()->settings->get( $post_type_options['sidebar_2'] ) ); ?>)</option>
+						<option value="default_sidebar" <?php echo $default_selected_2 ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Default', 'Avada' ); ?> (<?php echo esc_attr( Avada()->settings->get( $post_type_options['sidebar_2'] ) ); ?>)</option>
 					<?php endif; ?>
 					<option value=""<?php echo ( '' == $selected_sidebar_2_replacement[ $i ] ) ? ' selected' : ''; ?>><?php esc_html_e( 'No Sidebar', 'Avada' ); ?></option>
 					<?php $sidebar_replacements = $wp_registered_sidebars; ?>

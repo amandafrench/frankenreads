@@ -18,6 +18,7 @@ global $woocommerce, $current_user;
 			<span class="hello">
 				<?php
 				printf(
+					/* translators: %1$s: Username. %2$s: Username (same as %1$s). %3$s: "Sign Out" link. */
 					esc_attr__( 'Hello %1$s (not %2$s? %3$s)', 'Avada' ),
 					'<strong>' . esc_html( $current_user->display_name ) . '</strong></span><span class="not-user">',
 					esc_html( $current_user->display_name ),

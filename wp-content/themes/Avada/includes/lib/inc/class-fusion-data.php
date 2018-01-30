@@ -1159,6 +1159,9 @@ class Fusion_Data {
 		$light['mobile_menu_background_color'] = '#f9f9f9';
 		$light['mobile_menu_border_color'] = '#dadada';
 		$light['mobile_menu_hover_color'] = '#f6f6f6';
+		$light['mobile_menu_typography'] = isset( $options['mobile_menu_typography'] ) ? $options['mobile_menu_typography'] : array();
+		$light['mobile_menu_typography']['color'] = '#333333';
+		$light['mobile_menu_font_hover_color'] = '#333333';
 		$light['social_links_icon_color'] = '#bebdbd';
 		$light['social_links_box_color'] = '#e8e8e8';
 		$light['sharing_social_links_icon_color'] = '#bebdbd';
@@ -1278,6 +1281,9 @@ class Fusion_Data {
 		$dark['mobile_menu_background_color'] = '#3e3e3e';
 		$dark['mobile_menu_border_color'] = '#212122';
 		$dark['mobile_menu_hover_color'] = '#383737';
+		$dark['mobile_menu_typography'] = isset( $options['mobile_menu_typography'] ) ? $options['mobile_menu_typography'] : array();
+		$dark['mobile_menu_typography']['color'] = '#ffffff';
+		$dark['mobile_menu_font_hover_color'] = '#ffffff';
 		$dark['social_links_icon_color'] = '#3e3e3e';
 		$dark['social_links_box_color'] = '#383838';
 		$dark['sharing_social_links_icon_color'] = '#919191';

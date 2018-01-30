@@ -862,6 +862,7 @@ class Fusion_Builder_Migrate {
 								<?php $this->get_migration_page_buttons(); ?>
 							</div>
 						</div>
+						<?php /* translators: Icon. */ ?>
 						<div class="avada-footer"><a class="avada-themefusion-link" href="https://theme-fusion.com" target="_blank" rel="noopener noreferrer" title="ThemeFusion">ThemeFusion</a><span class="avada-separator">|</span><?php printf( esc_html__( 'Created with %s', 'Avada' ), '<span class="avada-heart"></span>' ); ?></div>
 					</div>
 				</div>
@@ -1073,6 +1074,7 @@ class Fusion_Builder_Migrate {
 	 */
 	private function get_migration_page_welcome_message() {
 		if ( ! self::$revert ) {
+			/* translators: Version number. */
 			printf( esc_html__( 'Avada 5.0 is an amazing update with new features, improvements and our brand new Fusion Builder. To enjoy Avada 5.0, conversion steps need to be performed. Please see below. Thank you for choosing Avada!', 'Avada' ), esc_attr( Avada()->get_theme_version() ) );
 		} else {
 			esc_html_e( 'This is the reversion process. Please see below for further information.', 'Avada' );
@@ -1154,15 +1156,20 @@ class Fusion_Builder_Migrate {
 				<p><?php esc_html_e( 'Our newly built Fusion Builder is amazing and up to 5x faster. It needs to convert your old shortcodes to the new syntax. This will ensure all shortcodes use unique names, so there will be no conflicts with other plugins.', 'Avada' ); ?></p>
 				<p><?php esc_html_e( 'Avada will search through your posts and pages and collect IDs of all pages using the old shortcodes and convert them to our new syntax. A backup is created of those pages and posts, to ensure all your data is fully secure.', 'Avada' ); ?></p>
 				<p><strong><?php esc_html_e( 'The process can take time, please be patient during conversion and DO NOT CLOSE THIS SCREEN!', 'Avada' ); ?></strong></p>
+				<?php /* translators: Version number. */ ?>
 				<p><?php printf( esc_html__( 'If the migration is not performed, you won\'t be able to use Avada %s unless you manually trigger the conversion at a later time through the WP admin area.', 'Avada' ), esc_attr( Avada()->get_normalized_theme_version() ) ); ?></p>
-				<p><?php printf( esc_attr__( 'If you don\'t want your pages converted then please delete the new Avada folder and copy the old Avada folder to your server. If you did not backup your previous Avada theme folder, you can %s.', 'Avada' ), '<a href="https://theme-fusion.com/forums/topic/downloading-avada-4-0-3/" target="_blank">download Avada 4.0.3 here</a>' ); ?></p>
+				<?php /* translators: Download link containing the "download Avada 4.0.3 here" string. */ ?>
+				<p><?php printf( esc_attr__( 'If you don\'t want your pages converted then please delete the new Avada folder and copy the old Avada folder to your server. If you did not backup your previous Avada theme folder, you can %s.', 'Avada' ), '<a href="https://theme-fusion.com/forums/topic/downloading-avada-4-0-3/" target="_blank">' . esc_attr__( 'download Avada 4.0.3 here', 'Avada' ) . '</a>' ); ?></p>
 				<p><strong><?php esc_html_e( 'We recommend doing a full database backup before proceeding with conversion.', 'Avada' ); ?></strong></p>
+				<?php /* translators: Version number. */ ?>
 				<p><?php printf( esc_html__( 'By pressing the "Start Conversion" button below, you confirm that Avada should convert your posts and pages to the new shortcode syntax.', 'Avada' ), esc_attr( Avada()->get_theme_version() ) ); ?></p>
 				<p><form><label><input id="confirm-reading" type="checkbox" name="confirm_reading" value="confirm_reading"><?php esc_html_e( 'I have read the above.', 'Avada' ); ?></label></form></p>
 			<?php else : ?>
 				<p><?php esc_html_e( 'You have already converted your shortcodes to the new Avada 5.0 structure, but have chosen to revert back to their previous state before you installed Avada 5.0. This process does not downgrade you to the previous version of Avada.', 'Avada' ); ?></p>
+				<?php /* translators: "Avada 4.0.3" text string & link. */ ?>
 				<p><?php printf( esc_attr__( 'Once reversion is done, you can load a previous version of Avada onto your server. You can download %s here if you do not have a backup of your previous theme.', 'Avada' ), '<a href="https://theme-fusion.com/forums/topic/downloading-avada-4-0-3/">' . esc_attr__( 'Avada 4.0.3', 'Avada' ) . '</a>' ); ?></p>
 				<p><strong><?php esc_html_e( 'The process can take time, please be patient during reversion and DO NOT CLOSE THIS SCREEN!', 'Avada' ); ?></strong></p>
+				<?php /* translators: Version number. */ ?>
 				<p><?php printf( esc_html__( 'By pressing the "Start Reversion" button below, you confirm that Avada should revert your posts and pages to the previous syntax.', 'Avada' ), esc_attr( Avada()->get_theme_version() ) ); ?></p>
 				<p><form><label><input id="confirm-reading" type="checkbox" name="confirm_reading" value="confirm_reading"><?php esc_html_e( 'I have read the above.', 'Avada' ); ?></label></form></p>
 			<?php endif; ?>
@@ -1170,6 +1177,7 @@ class Fusion_Builder_Migrate {
 			<p>
 			<?php
 			printf(
+				/* translators: %1$s: post-type label. %2$s, %3%s, %4%s: Numbers. */
 				esc_attr__( 'Currently scanning posts of post type "%1$s" (items %2$s to %3$s of %4$s total).', 'Avada' ),
 				esc_attr( $this->current_post_type ),
 				absint( $this->from_offset ),
@@ -1179,8 +1187,10 @@ class Fusion_Builder_Migrate {
 			?>
 			</p>
 			<?php if ( ! self::$revert ) : ?>
+				<?php /* translators: Number. */ ?>
 				<p><?php printf( esc_attr__( 'Posts that need to be converted: %s', 'Avada' ), absint( count( self::$option ) ) ); ?></p>
 			<?php else : ?>
+				<?php /* translators: Number. */ ?>
 				<p><?php printf( esc_attr__( 'Posts that need to be reverted: %s', 'Avada' ), absint( count( self::$option ) ) ); ?></p>
 			<?php endif; ?>
 		<?php elseif ( isset( $_GET['step'] ) && 'convert' === $_GET['step'] ) : ?>
@@ -1197,15 +1207,18 @@ class Fusion_Builder_Migrate {
 			}
 			?>
 			<?php if ( ! self::$revert ) : ?>
+				<?php /* translators: Number. */ ?>
 				<?php printf( esc_attr__( 'Remaining items to convert: %s', 'Avada' ), (int) $still_to_convert ); ?>
 			<?php else : ?>
+				<?php /* translators: Number. */ ?>
 				<?php printf( esc_attr__( 'Remaining items to revert: %s', 'Avada' ), (int) $still_to_convert ); ?>
 			<?php endif; ?>
 		<?php elseif ( isset( $_GET['step'] ) && 'done' === $_GET['step'] ) : ?>
 			<?php if ( ! self::$revert ) : ?>
 				<?php esc_attr_e( 'All needed posts have been converted to the new Fusion Builder syntax. You can now update Fusion Core and install Fusion Builder plugin.', 'Avada' ); ?>
 			<?php else : ?>
-				<?php printf( esc_attr__( 'All needed posts have been reverted to the previous syntax. You can now roll-back to %s.', 'Avada' ), '<a href="https://theme-fusion.com/forums/topic/downloading-avada-4-0-3/" target="_blank">Avada 4.0.3</a>' ); ?>
+				<?php /* translators: "Avada 4.0.3" link & string. */ ?>
+				<?php printf( esc_attr__( 'All needed posts have been reverted to the previous syntax. You can now roll-back to %s.', 'Avada' ), '<a href="https://theme-fusion.com/forums/topic/downloading-avada-4-0-3/" target="_blank">' . esc_attr__( 'Avada 4.0.3', 'Avada' ) . '</a>' ); ?>
 			<?php endif; ?>
 		<?php
 		endif;
@@ -1261,6 +1274,7 @@ class Fusion_Builder_Migrate {
 					}
 					?>
 					<li class="<?php echo esc_attr( $li_class ); ?>">
+						<?php /* translators: %1%s: post-type label. %2$s: Number. */ ?>
 						<span class="content"><?php printf( esc_attr__( 'Scanning posts of post type "%1$s". Total posts: %2$s.', 'Avada' ), esc_attr( $post_type ), absint( $this->total_posts_count[ $post_type ] ) ); ?></span>
 					</li>
 				<?php endforeach; ?>

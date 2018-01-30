@@ -1130,8 +1130,8 @@ class Fusion_FusionRedux {
 				}
 
 				if ( isset( $parsed_url['query'] ) ) {
-					parse_str( $parsed_url['query'] );
-					if ( isset( $lang ) && 'all' === $lang ) {
+					parse_str( $parsed_url['query'], $query_args );
+					if ( isset( $query_args['lang'] ) && 'all' === $query_args['lang'] ) {
 						$is_all = true;
 					}
 				}

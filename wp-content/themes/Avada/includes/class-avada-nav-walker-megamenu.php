@@ -221,6 +221,7 @@ if ( ! class_exists( 'Avada_Nav_Walker_Megamenu' ) ) {
 					<div class="menu-item-actions description-wide submitbox">
 						<?php if ( 'custom' != $item->type && false !== $original_title ) : ?>
 							<p class="link-to-original">
+								<?php /* translators: Title (with link). */ ?>
 								<?php printf( esc_html__( 'Original: %s', 'Avada' ), '<a href="' . esc_attr( $item->url ) . '">' . esc_html( $original_title ) . '</a>' ); ?>
 							</p>
 						<?php endif; ?>

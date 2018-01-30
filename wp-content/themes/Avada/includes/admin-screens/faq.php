@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php if ( ! defined( 'ENVATO_HOSTED_SITE' ) ) : ?>
 		<div class="avada-important-notice">
 			<p class="about-description">
+				<?php /* translators: "online support center" link. */ ?>
 				<?php printf( esc_attr__( 'These are general frequently asked questions to help you get started. For more in-depth documentation, please visit our %s to view documentation, knowledgebase and video tutorials.', 'Avada' ), '<a href="https://theme-fusion.com/support/" target="_blank">' . esc_attr__( 'online support center', 'Avada' ) . '</a>' ); ?>
 			</p>
 		</div>
@@ -30,6 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<span class="avada-admin-toggle-icon avada-plus"></span>
 			</div>
 			<div class="avada-admin-toggle-content">
+				<?php /* translators: "Product Registration" link. */ ?>
 				<?php printf( esc_attr__( 'Your Avada purchase requires product registration to receive the Avada demos, Slider Revolution, Layer Slider and automatic theme updates. You can easily register your product on the %s tab.', 'Avada' ), '<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-registration' ) ) . '">' . esc_attr__( 'Product Registration', 'Avada' ) . '</a>' ); ?><br/><br/>
 			</div>
 		</div>
@@ -91,6 +93,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="avada-admin-toggle-icon avada-plus"></span>
 		</div>
 		<div class="avada-admin-toggle-content">
+			<?php /* translators: "Plugins" link. */ ?>
 			<?php printf( esc_attr__( 'Avada can be used by itself without any additional plugins it includes. However, to utilize all the features Avada offers, Fusion Core and Fusion Builder plugins must be installed and activated. They are considered required plugins. The recommended plugins are either premium plugins we bundle with Avada (Slider Revolution / Layer Slider) or free plugins that we offer design integration for (WooCommerce or The Events Calendar). All of these can be installed on the %s tab.', 'Avada' ), '<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-plugins' ) ) . '">Plugins</a>' ); ?><br/><br/>
 		</div>
 	</div>
@@ -101,6 +104,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="avada-admin-toggle-icon avada-plus"></span>
 		</div>
 		<div class="avada-admin-toggle-content">
+			<?php /* translators: "Import Demos" link. */ ?>
 			<?php printf( esc_attr__( 'Avada Demos can be fully imported with the same setup you see on our live demos; or you can import single pages through Fusion Builder. To import a full demo, simply visit the %s tab and select a demo. To import a single page from an Avada Demo, create a new page (make sure Fusion Builder is active) and click the "Library" tab. A window will open allowing you to select the "Demos" tab. Choose a demo from the dropdown field and the pages for that demo will load, allowing you to import the single demo page of your choice.', 'Avada' ), '<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-demos' ) ) . '">Import Demos</a>' ); ?>
 		</div>
 	</div>
@@ -138,6 +142,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="avada-admin-toggle-icon avada-plus"></span>
 		</div>
 		<div class="avada-admin-toggle-content">
+			<?php /* translators: "System Status" link. */ ?>
 			<?php printf( esc_attr__( 'The %s tab contains a collection of relevant data that will help you debug your website more efficiently. In this tab, you can also generate a System Report, which you can include in your support tickets to help our support team find solutions for your issues much faster. This tab is divided into three sections; the WordPress Environment section, the Server Environment section, and the Active Plugins section. Please see the relevant links below about the System Status tab.', 'Avada' ), '<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-system-status' ) ) . '" target="_blank">System Status</a>' ); ?>
 			<ul>
 				<li><a href="https://theme-fusion.com/avada-doc/special-features/system-status/" target="_blank"><?php esc_attr_e( 'System Status General Information', 'Avada' ); ?></a></li>

@@ -27,6 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	if ( ! defined( 'ENVATO_HOSTED_SITE' ) ) {
 		$welcome_html .= '<h3>' . esc_html__( '5 Star Customer Support', 'Avada' ) . '</h3><p>' . esc_html__( 'ThemeFusion understands that there can be no product success, without excellent customer support. We strive to always provide 5 star support and to treat you as we would want to be treated. This helps form a relationship between us that benefits all Avada customers.', 'Avada' ) . '</p>';
 	} else {
+		/* translators: URL. */
 		$welcome_html .= '<h3>' . esc_html__( 'Envato Hosted Customer Support', 'Avada' ) . '</h3><p>' . sprintf( __( 'Envato Hosted offers full support for your Hosted account, webspace and WordPress install. Additionally, they offer support for Avada as outlined here: <a href="%s" target="_blank">Envato Hosted Support Policy</a>', 'Avada' ), esc_url( 'https://envatohosted.zendesk.com/hc/en-us/articles/115001666945-Envato-Hosted-Support-Policy' ) ) . '</p>';
 	}
 	$welcome_html .= '</div>';

@@ -23,10 +23,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function avada_options_section_woocommerce( $sections ) {
 
-	$wc_version_greater_than_3 = false;
+	$wc_version_greater_than_33 = false;
 	if ( defined( 'WC_VERSION' ) ) {
-		if ( WC_VERSION && version_compare( WC_VERSION, '3.0.0', '>=' ) ) {
-			$wc_version_greater_than_3 = true;
+		if ( WC_VERSION && version_compare( WC_VERSION, '3.3', '>=' ) ) {
+			$wc_version_greater_than_33 = true;
 		}
 	}
 
@@ -101,13 +101,13 @@ function avada_options_section_woocommerce( $sections ) {
 					),
 					'woocommerce_single_gallery_size' => array(
 						'label'       => esc_html__( 'WooCommerce Product Gallery Size', 'Avada' ),
-						'description' => ( $wc_version_greater_than_3 ) ? __( 'Controls the size of the single product page image gallery. For the image gallery zoom feature to work, the images you upload must be larger than the gallery size you select for this option. <strong>Important:</strong> When this option is changed, you may need to adjust the Single Product Image size setting in WooCommerce Settings to make sure that one is larger and also regenerate thumbnails. <a href="http://theme-fusion.com/avada-doc/woocommerce-single-product-gallery/" target="_blank">See this post for more information.</a><br/>', 'Avada' ) : esc_attr__( 'Controls the size of the single product page image gallery.', 'Avada' ),
+						'description' => __( 'Controls the size of the single product page image gallery. For the image gallery zoom feature to work, the images you upload must be larger than the gallery size you select for this option. <strong>Important:</strong> When this option is changed, you may need to adjust the Single Product Image size setting in WooCommerce Settings to make sure that one is larger and also regenerate thumbnails. <a href="http://theme-fusion.com/avada-doc/woocommerce-single-product-gallery/" target="_blank">See this post for more information.</a><br/>', 'Avada' ),
 						'id'          => 'woocommerce_single_gallery_size',
 						'default'     => '500px',
 						'type'        => 'dimension',
 						'choices'     => array( 'px' ),
 					),
-					'woocommerce_gallery_thumbnail_columns' => ( $wc_version_greater_than_3 ) ? array(
+					'woocommerce_gallery_thumbnail_columns' => array(
 						'label'           => esc_html__( 'WooCommerce Product Gallery Thumbnails Columns', 'Avada' ),
 						'description'     => esc_html__( 'Controls the number of columns of the single product page image gallery thumbnails. In order to avoid blurry thumbnails, make sure the Product Thumbnails size setting in WooCommerce Settings is large enough. It has to be at least WooCommerce Product Gallery Size setting divided by this number of columns.', 'Avada' ),
 						'id'              => 'woocommerce_gallery_thumbnail_columns',
@@ -118,14 +118,14 @@ function avada_options_section_woocommerce( $sections ) {
 							'max'  => 6,
 							'step' => 1,
 						),
-					) : array(),
-					'enable_woo_gallery_zoom' => ( $wc_version_greater_than_3 ) ? array(
+					),
+					'enable_woo_gallery_zoom' => array(
 						'label'           => esc_html__( 'WooCommerce Product Gallery Zoom', 'Avada' ),
 						'description'     => __( 'Turn on to enable the WooCommerce gallery zoom feature. Important: Every product image you use must be larger than the gallery container for zoom to work correctly.<br/><a href="http://theme-fusion.com/avada-doc/woocommerce-single-product-gallery/" target="_blank">See this post for more information.</a>', 'Avada' ),
 						'id'              => 'enable_woo_gallery_zoom',
 						'default'         => '1',
 						'type'            => 'switch',
-					) : array(),
+					),
 					'woocommerce_avada_ordering' => array(
 						'label'           => esc_html__( 'WooCommerce Shop Page Ordering Boxes', 'Avada' ),
 						'description'     => esc_html__( 'Turn on to display the ordering boxes on the shop page.', 'Avada' ),
