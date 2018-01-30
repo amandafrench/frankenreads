@@ -237,8 +237,6 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 
 				$recent_posts = fusion_cached_query( $args );
 
-				$count = 1;
-
 				if ( ! $recent_posts->have_posts() ) {
 					return fusion_builder_placeholder( 'post', 'blog posts' );
 				}
@@ -358,15 +356,7 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 						$content .= fusion_builder_get_post_content( '', 'no', $excerpt_words, $strip_html );
 					}
 
-					if ( $count == $this->args['columns'] ) {
-						$count = 0;
-						$items .= '<div ' . FusionBuilder::attributes( 'recentposts-shortcode-column' ) . '>' . $date_box . $slideshow . '<div ' . FusionBuilder::attributes( 'recent-posts-content' ) . '>' . $content . '</div></div><div class="fusion-clearfix"></div>';
-					} else {
-						$items .= '<div ' . FusionBuilder::attributes( 'recentposts-shortcode-column' ) . '>' . $date_box . $slideshow . '<div ' . FusionBuilder::attributes( 'recent-posts-content' ) . '>' . $content . '</div></div>';
-					}
-
-					$count++;
-
+					$items .= '<div ' . FusionBuilder::attributes( 'recentposts-shortcode-column' ) . '>' . $date_box . $slideshow . '<div ' . FusionBuilder::attributes( 'recent-posts-content' ) . '>' . $content . '</div></div>';
 				}
 
 				$html = '<div ' . FusionBuilder::attributes( 'recentposts-shortcode' ) . '><section ' . FusionBuilder::attributes( 'recentposts-shortcode-section' ) . '>' . $items . '</section></div>';
