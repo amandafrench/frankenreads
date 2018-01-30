@@ -364,7 +364,7 @@
 .option-field #excerpt {
   height: auto;
 }
-.option-field .wp-picker-container {
+.option-field .wp-picker-container.wp-picker-active {
   width: 317px;
 }
 .option-field .wp-picker-container .wp-color-result-text {
@@ -464,7 +464,7 @@
 .option-field .wp-picker-container .iris-palette-container > .iris-palette:first-child {
   margin-left: 0 !important;
 }
-.option-field .wp-picker-container.wp-picker-alpha-container {
+.option-field .wp-picker-container.wp-picker-alpha-container.wp-picker-active {
   width: 365px;
 }
 .option-field .wp-picker-container.wp-picker-alpha-container .iris-picker .iris-square {

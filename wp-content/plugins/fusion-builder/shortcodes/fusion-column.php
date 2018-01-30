@@ -587,9 +587,9 @@ if ( ! class_exists( 'FusionSC_Column' ) ) {
 				$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['float'] = 'left !important';
 
 				$elements = array(
-					'.fusion-columns-2 .fusion-column:nth-of-type(3n)',
-					'.fusion-columns-4 .fusion-column:nth-of-type(3n)',
-					'.fusion-columns-2 .fusion-flip-box-wrapper:nth-of-type(3n)',
+					'.fusion-columns-2 .fusion-column:nth-of-type(2n+1)',
+					'.fusion-columns-4 .fusion-column:nth-of-type(2n+1)',
+					'.fusion-columns-2 .fusion-flip-box-wrapper:nth-of-type(2n+1)',
 				);
 				$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['clear'] = 'both';
 
@@ -608,14 +608,20 @@ if ( ! class_exists( 'FusionSC_Column' ) ) {
 				$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['float'] = 'left !important';
 
 				$elements = array(
-					'.fusion-columns-3 .fusion-column:nth-of-type(4n)',
-					'.fusion-columns-3 .fusion-flip-box-wrapper:nth-of-type(4n)',
-					'.fusion-columns-5 .fusion-column:nth-of-type(4n)',
-					'.fusion-columns-5 .fusion-flip-box-wrapper:nth-of-type(4n)',
-					'.fusion-columns-6 .fusion-column:nth-of-type(4n)',
-					'.fusion-columns-6 .fusion-flip-box-wrapper:nth-of-type(4n)',
+					'.fusion-columns-3 .fusion-column:nth-of-type(3n+1)',
+					'.fusion-columns-3 .fusion-flip-box-wrapper:nth-of-type(3n+1)',
+					'.fusion-columns-5 .fusion-column:nth-of-type(3n+1)',
+					'.fusion-columns-5 .fusion-flip-box-wrapper:nth-of-type(3n+1)',
+					'.fusion-columns-6 .fusion-column:nth-of-type(3n+1)',
+					'.fusion-columns-6 .fusion-flip-box-wrapper:nth-of-type(3n+1)',
 				);
 				$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['clear'] = 'both';
+
+				$elements = array(
+					'.fusion-columns-5 .fusion-column:nth-of-type(5n+1)',
+					'.fusion-columns-5 .fusion-flip-box-wrapper:nth-of-type(5n+1)',
+				);
+				$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['clear'] = 'none';
 
 				$elements = array(
 					'.fusion-layout-column.fusion-one-sixth',

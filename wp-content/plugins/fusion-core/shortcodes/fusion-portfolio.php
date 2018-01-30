@@ -44,6 +44,16 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 			 */
 			private $portfolio_counter = 1;
 
+
+			/**
+			 * The portfolio post ID.
+			 *
+			 * @access private
+			 * @since 3.4.2
+			 * @var string
+			 */
+			private $post_id;
+
 			/**
 			 * An array of the shortcode arguments.
 			 *
@@ -420,6 +430,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 				while ( $portfolio_query->have_posts() ) {
 					$portfolio_query->the_post();
 
+					$this->post_id = get_the_ID();
+
 					// Only add post if it has a featured image, or a video, or if placeholders are activated.
 					if ( has_post_thumbnail() || $fusion_settings->get( 'featured_image_placeholder' ) || fusion_get_page_option( 'video', get_the_ID() ) ) {
 
@@ -506,8 +518,10 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 
 							// Add the col-spacing class if needed.
 							if ( $column_spacing ) {
-								$post_classes .= 'fusion-col-spacing';
+								$post_classes .= 'fusion-col-spacing ';
 							}
+
+							$post_classes .= 'post-' . $this->post_id;
 
 							// Render the video set in page options if no featured image is present.
 							if ( ! has_post_thumbnail() && fusion_get_page_option( 'video', get_the_ID() ) ) {
@@ -677,7 +691,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 								$post_separator = '<div class="fusion-clearfix"></div><div class="fusion-separator sep-double"></div>';
 							}
 
-							$portfolio_posts .= '<article ' . FusionBuilder::attributes( 'fusion-portfolio-post ' . $post_classes ) . '><div ' . FusionBuilder::attributes( 'portfolio-fusion-portfolio-content-wrapper' ) . '>' . $rich_snippets . $image . $post_content . '</div>' . apply_filters( 'fusion_portfolio_grid_post_separator', $post_separator ) . '</article>';
+							$portfolio_posts .= '<article id="portfolio-' . $this->portfolio_counter . '-post-' . $this->post_id . '" class="fusion-portfolio-post ' . $post_classes . '"><div ' . FusionBuilder::attributes( 'portfolio-fusion-portfolio-content-wrapper' ) . '>' . $rich_snippets . $image . $post_content . '</div>' . apply_filters( 'fusion_portfolio_grid_post_separator', $post_separator ) . '</article>';
 						} // End if().
 					} // End if().
 				} // End while().

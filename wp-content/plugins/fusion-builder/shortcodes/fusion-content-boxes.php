@@ -520,12 +520,6 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 				$html .= '<div ' . FusionBuilder::attributes( 'content-box-shortcode-content-wrapper' ) . '>' . $output . $timeline . '</div>';
 				$html .= '</div>';
 
-				$clearfix_test = $this->column_counter / $this->num_of_columns;
-
-				if ( is_int( $clearfix_test ) ) {
-					$html .= '<div class="fusion-clearfix"></div>';
-				}
-
 				$this->column_counter++;
 
 				if ( 'transparent' === $circlecolor || 0 === Fusion_Color::new_color( $circlecolor )->alpha ) {

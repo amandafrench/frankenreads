@@ -124,21 +124,13 @@ if ( fusion_is_element_enabled( 'fusion_products_slider' ) ) {
 						);
 					}
 
-					if ( version_compare( WC_VERSION, '3.0', '<' ) ) {
-						$args['meta_query'][] = array(
-							'key'     => '_visibility',
-							'value'   => array( 'catalog', 'visible' ),
-							'compare' => 'IN',
-						);
-					} else {
-						$args['tax_query']['relation'] = 'AND';
-						$args['tax_query'][] = array(
-							'taxonomy' => 'product_visibility',
-							'field'    => 'slug',
-							'terms'    => array( 'exclude-from-catalog', 'exclude-from-search' ),
-							'operator' => 'NOT IN',
-						);
-					}
+					$args['tax_query']['relation'] = 'AND';
+					$args['tax_query'][] = array(
+						'taxonomy' => 'product_visibility',
+						'field'    => 'slug',
+						'terms'    => array( 'exclude-from-catalog', 'exclude-from-search' ),
+						'operator' => 'NOT IN',
+					);
 
 					$featured_image_size = 'full';
 					if ( 'fixed' === $picture_size ) {

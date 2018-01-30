@@ -480,6 +480,7 @@ class Fusion_Scripts {
 	 * @return void
 	 */
 	protected function enqueue_scripts() {
+		global $post;
 
 		// Some general enqueue for now.
 		Fusion_Dynamic_JS::enqueue_script(
@@ -506,7 +507,7 @@ class Fusion_Scripts {
 			'fusion-scroll-to-anchor',
 			self::$js_folder_url . '/general/fusion-scroll-to-anchor.js',
 			self::$js_folder_path . '/general/fusion-scroll-to-anchor.js',
-			array( 'jquery', 'jquery-easing' ),
+			array( 'jquery', 'jquery-easing', ( ! isset( $post->ID ) || 'no' !== fusion_get_page_option( 'display_header', $post->ID ) ) ? 'avada-menu' : '' ),
 			'1',
 			true
 		);
@@ -619,6 +620,14 @@ class Fusion_Scripts {
 				'form_bg_color' => fusion_library()->get_option( 'form_bg_color' ) ? fusion_library()->get_option( 'form_bg_color' ) : '#ffffff',
 			)
 		);
+		Fusion_Dynamic_JS::localize_script(
+			'fusion-scroll-to-anchor',
+			'fusionScrollToAnchorVars',
+			array(
+				'content_break_point' => intval( fusion_library()->get_option( 'content_break_point' ) ),
+				'container_hundred_percent_height_mobile' => intval( fusion_library()->get_option( 'container_hundred_percent_height_mobile' ) ),
+			)
+		);
 
 		$smooth_height = ( 'auto' === get_post_meta( fusion_library()->get_page_id(), 'pyre_fimg_width', true ) && 'half' === get_post_meta( fusion_library()->get_page_id(), 'pyre_width', true ) ) ? 'true' : 'false';
 		if ( 'true' === $smooth_height ) {
@@ -654,8 +663,8 @@ class Fusion_Scripts {
 			'fusion-blog',
 			'fusionBlogVars',
 			array(
-				'infinite_blog_text'     => '<em>' . __( 'Loading the next set of posts...', 'fusion-builder' ) . '</em>',
-				'infinite_finished_msg'  => '<em>' . __( 'All items displayed.', 'fusion-builder' ) . '</em>',
+				'infinite_blog_text'     => '<em>' . __( 'Loading the next set of posts...', 'Avada' ) . '</em>',
+				'infinite_finished_msg'  => '<em>' . __( 'All items displayed.', 'Avada' ) . '</em>',
 				'slideshow_autoplay'     => fusion_library()->get_option( 'slideshow_autoplay' ) ? fusion_library()->get_option( 'slideshow_autoplay' ) : false,
 				'slideshow_speed'        => fusion_library()->get_option( 'slideshow_speed' ) ? (int) fusion_library()->get_option( 'slideshow_speed' ) : 5000,
 				'pagination_video_slide' => fusion_library()->get_option( 'pagination_video_slide' ) ? fusion_library()->get_option( 'pagination_video_slide' ) : false,

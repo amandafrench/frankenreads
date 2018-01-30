@@ -95,19 +95,14 @@ if ( fusion_is_element_enabled( 'fusion_featured_products_slider' ) ) {
 
 					$featured_image_size = ( 'fixed' === $picture_size ) ? 'shop_single' : 'full';
 
-					if ( version_compare( WC_VERSION, '3.0', '<' ) ) {
-						$this->args['meta_key'] = '_featured';
-						$this->args['meta_value'] = 'yes';
-					} else {
-						$this->args['tax_query'] = array(
-							array(
-								'taxonomy' => 'product_visibility',
-								'field'    => 'name',
-								'terms'    => 'featured',
-								'operator' => 'IN',
-							),
-						);
-					}
+					$this->args['tax_query'] = array(
+						array(
+							'taxonomy' => 'product_visibility',
+							'field'    => 'name',
+							'terms'    => 'featured',
+							'operator' => 'IN',
+						),
+					);
 
 					$products = fusion_cached_query( $this->args );
 

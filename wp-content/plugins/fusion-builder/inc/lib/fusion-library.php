@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Don't use a constant, we need this as a simple var.
-$fusion_library_version = '1.4.1';
+$fusion_library_version = '1.4.2';
 
 $current_dir = dirname( __FILE__ );
 

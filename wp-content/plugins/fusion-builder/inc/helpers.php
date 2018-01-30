@@ -2186,6 +2186,10 @@ function fusion_builder_map_descriptions( $shortcode, $param ) {
 		'theme-option' => 'separator_circle',
 		'type' => 'yesno',
 	);
+	$shortcode_option_map['icon_circle_color']['fusion_separator'] = array(
+		'theme-option' => 'separator_circle_bg_color',
+		'reset' => true,
+	);
 	$shortcode_option_map['sep_color']['fusion_separator'] = array(
 		'theme-option' => 'sep_color',
 		'reset' => true,

@@ -58,7 +58,7 @@ if ( fusion_is_element_enabled( 'fusion_separator' ) ) {
 						'border_size'       => $fusion_settings->get( 'separator_border_size' ),
 						'icon'              => '',
 						'icon_circle'       => $fusion_settings->get( 'separator_circle' ),
-						'icon_circle_color' => '',
+						'icon_circle_color' => $fusion_settings->get( 'separator_circle_bg_color' ),
 						'sep_color'         => $fusion_settings->get( 'sep_color' ),
 						'style_type'        => 'none',
 						'top_margin'        => '',
@@ -224,7 +224,7 @@ if ( fusion_is_element_enabled( 'fusion_separator' ) ) {
 
 				$attr['style'] = 'border-color:' . $circle_color . ';';
 
-				if ( $this->args['icon_circle_color'] ) {
+				if ( $this->args['icon_circle_color'] && 'no' !== $this->args['icon_circle'] ) {
 					$attr['style'] .= 'background-color:' . $this->args['icon_circle_color'] . ';';
 				}
 
@@ -342,13 +342,6 @@ if ( fusion_is_element_enabled( 'fusion_separator' ) ) {
 								'default'     => '#e0dede',
 								'type'        => 'color-alpha',
 							),
-							'separator_circle' => array(
-								'label'       => esc_html__( 'Separator Circle', 'fusion-builder' ),
-								'description' => esc_html__( 'Turn on if you want to display a circle around the separator icon.', 'fusion-builder' ),
-								'id'          => 'separator_circle',
-								'default'     => '1',
-								'type'        => 'switch',
-							),
 							'separator_border_size' => array(
 								'label'       => esc_html__( 'Border Size', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the border size of the separator.', 'fusion-builder' ),
@@ -359,6 +352,27 @@ if ( fusion_is_element_enabled( 'fusion_separator' ) ) {
 									'min'  => '0',
 									'max'  => '50',
 									'step' => '1',
+								),
+							),
+							'separator_circle' => array(
+								'label'       => esc_html__( 'Separator Circle', 'fusion-builder' ),
+								'description' => esc_html__( 'Turn on if you want to display a circle around the separator icon.', 'fusion-builder' ),
+								'id'          => 'separator_circle',
+								'default'     => '1',
+								'type'        => 'switch',
+							),
+							'separator_circle_bg_color' => array(
+								'label'       => esc_html__( 'Circle Color', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the background color of the circle around the icon.', 'fusion-builder' ),
+								'id'          => 'separator_circle_bg_color',
+								'default'     => 'rgba(255,255,255,0)',
+								'type'        => 'color-alpha',
+								'required'    => array(
+									array(
+										'setting'  => 'separator_circle',
+										'operator' => '==',
+										'value'    => '1',
+									),
 								),
 							),
 						),
@@ -478,7 +492,7 @@ function fusion_element_separator() {
 					'description' => esc_attr__( 'Controls the background color of the circle around the icon.', 'fusion-builder' ),
 					'param_name'  => 'icon_circle_color',
 					'value'       => '',
-					'default'     => $fusion_settings->get( 'icon_circle_color' ),
+					'default'     => $fusion_settings->get( 'separator_circle_bg_color' ),
 					'group'       => esc_attr__( 'Design', 'fusion-builder' ),
 					'dependency'  => array(
 						array(

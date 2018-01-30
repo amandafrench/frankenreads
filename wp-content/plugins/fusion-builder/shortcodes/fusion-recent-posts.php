@@ -156,7 +156,7 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 					$tags_id_to_exclude = array();
 					if ( $tags_to_exclude ) {
 						foreach ( $tags_to_exclude as $tag_to_exclude ) {
-							// @codingStandardsIgnoreLine
+							// @codingStandardsIgnoreLine WordPress.VIP.RestrictedFunctions.get_term_by_get_term_by
 							$id_obj = get_term_by( 'slug', $tag_to_exclude, 'post_tag' );
 							if ( $id_obj ) {
 								$tags_id_to_exclude[] = $id_obj->term_id;
@@ -168,12 +168,12 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 					}
 
 					// Setting up tags to be used.
-					$tag_ids = '';
+					$tag_ids = array();
 					if ( '' !== $defaults['tag_slug'] ) {
 						$tags = explode( ',', $defaults['tag_slug'] );
 						if ( isset( $tags ) && $tags ) {
 							foreach ( $tags as $tag ) {
-								// @codingStandardsIgnoreLine
+								// @codingStandardsIgnoreLine WordPress.VIP.RestrictedFunctions.get_term_by_get_term_by
 								$id_obj = get_term_by( 'slug', $tag, 'post_tag' );
 
 								if ( $id_obj ) {

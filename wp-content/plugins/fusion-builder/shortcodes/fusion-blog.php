@@ -809,7 +809,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					'post_count' => '',
 				);
 
-				$attr['id'] = 'post-' . $this->post_id;
+				$attr['id'] = 'blog-' . $this->blog_sc_counter . '-post-' . $this->post_id;
 
 				$extra_classes = array();
 
