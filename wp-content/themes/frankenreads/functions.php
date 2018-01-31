@@ -25,3 +25,12 @@ function fr_remove_tec_customizer_style_output() {
 	}
 }
 add_action( 'init', 'fr_remove_tec_customizer_style_output' );
+
+function allow_subscriber_media( ) {
+$role = 'subscriber';
+if(!current_user_can($role) || current_user_can('upload_files'))
+return;
+$subscriber = get_role( $role );
+$subscriber->add_cap('upload_files');
+} 
+add_action('admin_init', 'allow_subscriber_media');
