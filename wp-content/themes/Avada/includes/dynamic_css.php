@@ -4784,6 +4784,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css[ $mobile_menu_media_query ]['.fusion-mobile-menu-design-flyout.fusion-header-v7 .fusion-main-menu']['float']   = 'left';
 		$css[ $mobile_menu_media_query ]['.fusion-mobile-menu-design-flyout.fusion-header-v7 .fusion-main-menu']['width']   = 'auto';
 
+		$css[ $mobile_menu_media_query ]['.fusion-mobile-menu-design-flyout.fusion-header-v7 .fusion-main-menu.fusion-sticky-menu']['display'] = 'none';
+
 		if ( class_exists( 'SitePress' ) ) {
 			$css[ $mobile_menu_media_query ]['.fusion-mobile-nav-holder li.fusion-mobile-nav-item .wpml-ls-item a::before']['display'] = 'none';
 			$elements = array(

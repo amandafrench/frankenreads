@@ -1088,6 +1088,7 @@ class Fusion_Data {
 		$light['body_typography']['color'] = '#747474';
 		$light['link_color'] = '#333333';
 		$light['menu_h45_bg_color'] = '#FFFFFF';
+		$light['nav_typography'] = isset( $options['nav_typography'] ) ? $options['nav_typography'] : array();
 		$light['nav_typography']['color'] = '#333333';
 		$light['menu_sub_bg_color'] = '#f2efef';
 		$light['menu_sub_color'] = '#333333';
@@ -1210,6 +1211,7 @@ class Fusion_Data {
 		$dark['body_typography']['color'] = '#aaa9a9';
 		$dark['link_color'] = '#ffffff';
 		$dark['menu_h45_bg_color'] = '#29292A';
+		$dark['nav_typography'] = isset( $options['nav_typography'] ) ? $options['nav_typography'] : array();
 		$dark['nav_typography']['color'] = '#ffffff';
 		$dark['menu_sub_bg_color'] = '#3e3e3e';
 		$dark['menu_sub_color'] = '#d6d6d6';
