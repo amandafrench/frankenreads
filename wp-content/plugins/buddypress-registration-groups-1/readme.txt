@@ -1,15 +1,15 @@
 === BuddyPress Registration Groups ===
 Plugin URI: https://wordpress.org/plugins/buddypress-registration-groups-1/
-Version: 1.2.0
+Version: 1.2.1
 Tags: wordpress, multisite, buddypress, groups, registration, autojoin
-Requires at least: WordPress 3.7.1 / BuddyPress 1.8.1
-Tested up to: WordPress 4.9.2 / BuddyPress 2.9.2
+Requires at least: WordPress 3.7.1
+Tested up to: WordPress 4.9.2
 License: GNU/GPL 2
 Author: Eric Johnson
 Author URI: http://hardlyneutral.com/
 Contributors: hardlyneutral
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TYJT5VMV8YMVQ
-Stable tag: Release_1.2.0
+Stable tag: Release_1.2.1
 
 Allows a new BuddyPress user to select groups to join during the registration process.
 
@@ -38,6 +38,71 @@ If you would like to install manually:
 2. Upload the extracted directory and all its contents to the '/wp-content/plugins/' directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
 
+== Custom Styles ==
+This plugin includes specific CSS for changing the way content is displayed. The default CSS will place the group after the "Profile Details" section and before the "Complete Sign Up" button on the register page. You can view `includes/styles.css` in this plugin directory to see how to target each element.
+
+Here is a list of the current selectors used in `includes/styles.css`.
+
+**Groups section:**
+`
+#registration-groups-section {
+	float: right;
+	width: 48%;
+}
+`
+
+**Checkboxes:**
+`
+.reg_groups_group_checkbox {
+	margin: 0 5px 0 0;
+}
+`
+
+**Form labels:**
+`
+#buddypress .standard-form label.reg_groups_group_label,
+.reg_groups_group_label {
+	display: inline;
+	font-weight: normal;
+}
+`
+
+**Groups section - responsive:**
+`
+@media only screen and (max-width: 480px) {
+	#registration-groups-section {
+		float: none;
+		width: 100%;
+	}
+}
+`
+
+**List items:**
+`
+.reg_groups_item {
+	list-style: none;
+}
+`
+
+**No groups message:**
+`
+.reg_groups_none {
+	font-style: italic;
+	color: gray;
+}
+`
+
+**Multiselect:**
+`
+.reg_groups_list_multiselect {
+    height: 8em;
+		border: 1px solid #ccc;
+		background: #fafafa;
+		padding: 6px;
+    overflow: auto;
+}
+`
+
 == Frequently Asked Questions ==
 
 = Does this plugin show Private groups? =
@@ -59,6 +124,10 @@ Use the WordPress plugin support form (http://wordpress.org/support/plugin/buddy
 4. Screenshot of the admin settings menu and options.
 
 == Changelog ==
+= 1.2.1 =
+* Maintenance update.
+* Added CSS documentation to the readme.
+* Removed the minimum BuddyPress version number to address version management in the WordPress plugins repository.
 
 = 1.2.0 =
 * New minor version!
@@ -154,6 +223,9 @@ Use the WordPress plugin support form (http://wordpress.org/support/plugin/buddy
 * First version!
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+* Maintenance update. No changes to core functionality. Safe to upgrade.
 
 = 1.2.0 =
 * New minor version! Includes internationalization. No changes to core functionality. Safe to upgrade.
