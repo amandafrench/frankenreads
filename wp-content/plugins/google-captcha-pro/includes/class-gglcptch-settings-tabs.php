@@ -408,7 +408,7 @@ if ( ! class_exists( 'Gglcptch_Settings_Tabs' ) ) {
 		 * @return void
 		 */
 		public function display_custom_messages( $save_results ) {
-			if ( $this->options['recaptcha_version'] == 'v1' ) { ?>
+			if ( 'v1' == $this->options['recaptcha_version'] ) { ?>
 				<div class="updated inline bws-notice"><p><strong><?php _e( "Only one reCAPTCHA can be displayed on the page, it's related to reCAPTCHA version 1 features.", 'google-captcha-pro' ); ?></strong></p></div>
 			<?php }
 			if ( ! empty( $this->options['need_keys_verified_check'] ) ) { ?>

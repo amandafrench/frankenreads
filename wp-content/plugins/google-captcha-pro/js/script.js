@@ -95,24 +95,24 @@
 
 		function storeEvents( el ) {
 			var target = el,
-				events = $._data( el.get(0), 'events' );
+				events = $._data( el.get( 0 ), 'events' );
 			/* restoring events */
 			if ( typeof events != 'undefined' ) {
 				var storedEvents = {};
 				$.extend( true, storedEvents, events );
 				target.off();
-				target.data('storedEvents', storedEvents );
+				target.data( 'storedEvents', storedEvents );
 			}
 			/* storing and removing onclick action */
 			if ( 'undefined' != typeof target.attr( 'onclick') ) {
 				target.attr( 'gglcptch-onclick', target.attr( 'onclick') );
-				target.removeAttr('onclick');
+				target.removeAttr( 'onclick' );
 			}
 		}
 
 		function restoreEvents( el ) {
 			var target = el,
-				events = target.data('storedEvents');
+				events = target.data( 'storedEvents' );
 			/* restoring events */
 			if ( typeof events != 'undefined' ) {
 				for ( var event in events ) {
@@ -125,14 +125,14 @@
 			target.removeData( 'storedEvents' );
 			/* restoring onclick action */
 			if ( 'undefined' != typeof target.attr( 'gglcptch-onclick' ) ) {
-				target.attr('onclick', target.attr( 'gglcptch-onclick') );
-				target.removeAttr('gglcptch-onclick');
+				target.attr( 'onclick', target.attr( 'gglcptch-onclick' ) );
+				target.removeAttr( 'gglcptch-onclick' );
 			}
 		}
 
 		function storeOnSubmit( form, gglcptch_index ) {
 			form.on( 'submit', function( e ) {
-				if ( '' == form.find('.g-recaptcha-response').val() ) {
+				if ( '' == form.find( '.g-recaptcha-response' ).val() ) {
 					e.preventDefault();
 					e.stopImmediatePropagation();
 					targetObject = $( e.target || e.srcElement || e.targetObject );
@@ -140,7 +140,7 @@
 					grecaptcha.execute( gglcptch_index );
 				}
 			} ).find( 'input:submit, button' ).on( 'click', function( e ) {
-				if ( '' == form.find('.g-recaptcha-response').val() ) {
+				if ( '' == form.find( '.g-recaptcha-response' ).val() ) {
 					e.preventDefault();
 					e.stopImmediatePropagation();
 					targetObject = $( e.target || e.srcElement || e.targetObject );
@@ -160,7 +160,16 @@
 		}
 
 		if ( 'v2' == gglcptch_version ) {
-			var parameters = params ? params : { 'sitekey' : gglcptch.options.sitekey, 'theme' : gglcptch.options.theme, 'size' : gglcptch.options.size },
+			if ( gglcptch.options.size == 'normal' ) {
+				if ( $( '#' + container ).parent().width() <= 300 ) {
+					var size = 'compact';
+				} else {
+					var size = 'normal';
+				}
+			} else {
+				var size = gglcptch.options.size;
+			}
+			var parameters = params ? params : { 'sitekey' : gglcptch.options.sitekey, 'theme' : gglcptch.options.theme, 'size' : size },
 				gglcptch_index = grecaptcha.render( container, parameters );
 			$( '#' + container ).data( 'gglcptch_index', gglcptch_index );
 		}
@@ -168,7 +177,7 @@
 		if ( 'invisible' == gglcptch_version ) {
 			var block = $( '#' + container ),
 				form = block.closest( 'form' ),
-				parameters = params ? params : { 'sitekey' : gglcptch.options.sitekey, 'size' : gglcptch.options.size },
+				parameters = params ? params : { 'sitekey' : gglcptch.options.sitekey, 'size' : gglcptch.options.size, 'tabindex' : 9999 },
 				targetObject = false,
 				targetEvent = false;
 
@@ -286,4 +295,31 @@
 			return id;
 		}
 	}
+
+	if ( gglcptch.options.version == 'v2' && gglcptch.options.size == 'normal' ) {
+		var width = $( window ).width();
+		$( window ).on( 'resize', function( ) {
+			if( $( window ).width() != width ) {
+				width = $( window ).width();
+				if ( typeof grecaptcha != "undefined" ) {
+					$( '.gglcptch_recaptcha' ).html( '' );
+					$( 'script[src^="https://www.google.com/recaptcha/api.js"], script[src^="https://www.gstatic.com/recaptcha/api2"]' ).remove();
+					var src = "https://www.google.com/recaptcha/api.js";
+					$.getScript( {
+						url : src,
+						success : function() {
+							setTimeout( function() {
+								try {
+									gglcptch.prepare();
+								} catch ( e ) {
+									console.log( e );
+								}
+							}, 500 );
+						}
+					} );
+				}
+			}
+		} );
+	}
+
 } )( jQuery, gglcptch );

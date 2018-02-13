@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Google Captcha Pro\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-14 20:10+0300\n"
+"POT-Creation-Date: 2018-02-06 10:05+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language-Team: BestWebSoft Team <plugin@bestwebsoft.com>\n"
@@ -42,7 +42,7 @@ msgstr "Скопируйте этот код и вставьте его в фо�
 msgid "Insert Tag"
 msgstr "Вставить тэг"
 
-#: captcha_for_cf7.php:276 captcha_for_cf7.php:277
+#: captcha_for_cf7.php:261 captcha_for_cf7.php:262
 msgid "Error: You have entered an incorrect reCAPTCHA value"
 msgstr "Ошибка: Вы ввели неверное значение reCAPTCHA"
 
@@ -51,8 +51,8 @@ msgstr "Ошибка: Вы ввели неверное значение reCAPTCH
 msgid "Google Captcha Settings"
 msgstr "Настройки Google Captcha"
 
-#: google-captcha-pro.php:23 google-captcha-pro.php:1191
-#: google-captcha-pro.php:1203 includes/class-gglcptch-settings-tabs.php:26
+#: google-captcha-pro.php:23 google-captcha-pro.php:1229
+#: google-captcha-pro.php:1241 includes/class-gglcptch-settings-tabs.php:26
 #: includes/class-gglcptch-settings-tabs.php:32
 msgid "Settings"
 msgstr "Настройки"
@@ -89,59 +89,55 @@ msgstr "Внимание"
 msgid "Google Captcha Pro Settings"
 msgstr "Настройки Google Captcha Pro"
 
-#: google-captcha-pro.php:726 google-captcha-pro.php:1297
+#: google-captcha-pro.php:727 google-captcha-pro.php:1335
 msgid "To use Google Captcha you must get the keys from"
 msgstr "Чтобы использовать Google Captcha, вам необходимо получить ключи"
 
-#: google-captcha-pro.php:727 google-captcha-pro.php:1298
+#: google-captcha-pro.php:728 google-captcha-pro.php:1336
 msgid "here"
 msgstr "здесь"
 
-#: google-captcha-pro.php:728 google-captcha-pro.php:1299
+#: google-captcha-pro.php:729 google-captcha-pro.php:1337
 msgid "and enter them on the"
 msgstr "и вставить их на"
 
-#: google-captcha-pro.php:730 google-captcha-pro.php:1301
+#: google-captcha-pro.php:731 google-captcha-pro.php:1339
 msgid "plugin setting page"
 msgstr "странице настроек плагина"
 
-#: google-captcha-pro.php:987 includes/forms.php:532 includes/forms.php:566
-#: includes/forms.php:599 includes/forms.php:644 includes/forms.php:690
-#: includes/forms.php:724 includes/forms.php:1133 includes/forms.php:1184
-#: includes/forms.php:1215 includes/forms.php:1242 includes/forms.php:1272
-#: includes/forms.php:1309
+#: google-captcha-pro.php:1025 includes/forms.php:621 includes/forms.php:940
 msgid "Error"
 msgstr "Ошибка"
 
-#: google-captcha-pro.php:1060
+#: google-captcha-pro.php:1098
 msgid "User response is missing."
 msgstr "Ответ пользователя отсутствует."
 
-#: google-captcha-pro.php:1064 google-captcha-pro.php:1072
+#: google-captcha-pro.php:1102 google-captcha-pro.php:1110
 msgid "Secret Key is invalid."
 msgstr "Некорректный секретный ключ."
 
-#: google-captcha-pro.php:1065 google-captcha-pro.php:1073
+#: google-captcha-pro.php:1103 google-captcha-pro.php:1111
 msgid "Check your domain configurations"
 msgstr "Проверьте настройки вашего домена"
 
-#: google-captcha-pro.php:1066 google-captcha-pro.php:1074
+#: google-captcha-pro.php:1104 google-captcha-pro.php:1112
 msgid "and enter it again"
 msgstr "и введите его снова"
 
-#: google-captcha-pro.php:1069
+#: google-captcha-pro.php:1107
 msgid "Secret Key is missing."
 msgstr "Секретный ключ отсутствует."
 
-#: google-captcha-pro.php:1076
+#: google-captcha-pro.php:1114
 msgid "User response is invalid"
 msgstr "Некорректный ответ пользователя"
 
-#: google-captcha-pro.php:1077
+#: google-captcha-pro.php:1115
 msgid "You have entered an incorrect reCAPTCHA value."
 msgstr "Вы ввели неверное значение reCAPTCHA."
 
-#: google-captcha-pro.php:1078
+#: google-captcha-pro.php:1116
 msgid ""
 "More than one reCAPTCHA has been found in the current form. Please remove "
 "all unnecessary reCAPTCHA fields to make it work properly."
@@ -149,28 +145,28 @@ msgstr ""
 "В текущей форме найдено более одного блока reCAPTCHA. Пожалуйста, удалите "
 "все лишние блоки reCAPTCHA для дальнейшей корректной работы."
 
-#: google-captcha-pro.php:1127
+#: google-captcha-pro.php:1165
 msgid "Please submit \"Test verification\""
 msgstr "Пожалуйста, нажмите кнопку \"Тестирование проверки\""
 
-#: google-captcha-pro.php:1129
+#: google-captcha-pro.php:1167
 msgid "Please complete the captcha and submit \"Test verification\""
 msgstr ""
 "Пожалуйста, заполните капчу и нажмите кнопку \"Тестирование проверки\"."
 
-#: google-captcha-pro.php:1136
+#: google-captcha-pro.php:1174
 msgid "Test verification"
 msgstr "Тестирование проверки"
 
-#: google-captcha-pro.php:1161
+#: google-captcha-pro.php:1199
 msgid "The verification is successfully completed."
 msgstr "Проверка завершена успешно."
 
-#: google-captcha-pro.php:1204
+#: google-captcha-pro.php:1242
 msgid "FAQ"
 msgstr "FAQ"
 
-#: google-captcha-pro.php:1205
+#: google-captcha-pro.php:1243
 msgid "Support"
 msgstr "Поддержка"
 
@@ -234,8 +230,8 @@ msgid ""
 "It is prohibited to view Google Captcha Pro settings on this site in the "
 "Google Captcha Pro network settings."
 msgstr ""
-"Просмотр настроек плагина на этом сайте запрещено сетевыми настройками "
-"Google Captcha Pro."
+"Просмотр настроек плагина на этом сайте запрещен сетевыми настройками Google "
+"Captcha Pro."
 
 #: includes/class-gglcptch-settings-tabs.php:202
 msgid ""
@@ -339,13 +335,13 @@ msgstr "Компактный"
 msgid "Language"
 msgstr "Язык"
 
-#: includes/class-gglcptch-settings-tabs.php:374 includes/forms.php:175
-#: includes/forms.php:220
+#: includes/class-gglcptch-settings-tabs.php:374 includes/forms.php:177
+#: includes/forms.php:223
 msgid "Activate"
 msgstr "Активировать"
 
-#: includes/class-gglcptch-settings-tabs.php:377 includes/forms.php:177
-#: includes/forms.php:223 includes/forms.php:227
+#: includes/class-gglcptch-settings-tabs.php:377 includes/forms.php:179
+#: includes/forms.php:226 includes/forms.php:228 includes/forms.php:232
 msgid "Install Now"
 msgstr "Установить сейчас"
 
@@ -493,38 +489,46 @@ msgstr "Форма новой темы плагина wpForo"
 msgid "wpForo Reply form"
 msgstr "Форма ответа плагина wpForo"
 
-#: includes/forms.php:54
+#: includes/forms.php:33
+msgid "MailChimp for Wordpress"
+msgstr "MailChimp for Wordpress"
+
+#: includes/forms.php:55
 msgid "WordPress default"
 msgstr "Стандартные формы WordPress"
 
-#: includes/forms.php:63
+#: includes/forms.php:64
 msgid "External Plugins"
 msgstr "Внешние плагины"
 
-#: includes/forms.php:109
+#: includes/forms.php:111
 msgid "Custom Forms"
 msgstr "Пользовательские формы"
 
-#: includes/forms.php:129
+#: includes/forms.php:131
 msgid "Google Captcha Plugin"
 msgstr "Плагин Google Captcha"
 
-#: includes/forms.php:172
+#: includes/forms.php:174
 msgid "BuddyPress works only with single site or main domain"
 msgstr ""
 "Плагин BuddyPress работает только на одиночном сайте или главном подсайте"
 
-#: includes/forms.php:205
+#: includes/forms.php:208
 #, php-format
 msgid "Update %s at least up to %s"
 msgstr "Обновите %s как минимум до версии %s"
 
-#: includes/forms.php:212
+#: includes/forms.php:215
 #, php-format
 msgid "%1$s %2$s requires WordPress %3$s or higher."
 msgstr "%1$s %2$s требует версию WordPress %3$s или выше."
 
-#: includes/forms.php:692
+#: includes/forms.php:532
+msgid "Authentication failed."
+msgstr "Ошибка аутентификации."
+
+#: includes/forms.php:623
 msgid "Click the BACK button on your browser and try again."
 msgstr "Нажмите кнопку НАЗАД в вашем браузере и попытайтесь снова."
 

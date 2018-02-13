@@ -6,7 +6,7 @@
 		function gglcptch_network_apply() {
 			if ( $( 'input[name="gglcptch_network_apply"]:checked' ).val() != 'all' ) {
 				$( '.gglcptch_network_settings .bws_network_apply_all, #gglcptch_network_notice' ).hide();
-				if ( $( 'input[name="gglcptch_network_apply"]:checked' ).val() == 'off' ) {
+				if ( 'off' == $( 'input[name="gglcptch_network_apply"]:checked' ).val() ) {
 					$( '.gglcptch_settings_form' ).hide();
 				} else
 					$( '.gglcptch_settings_form' ).show();
@@ -70,7 +70,7 @@
 
 		/* Putting initial value of each textarea into data 'default-value' attr */
 		$( '.gglcptch-add-reason-textarea' ).each( function( e ) {
-			$( this ).data('default-value', $( this ).val() );
+			$( this ).data( 'default-value', $( this ).val() );
 		} );
 
 		$( '.gglcptch-add-reason-textarea' ).css( {"overflow": "hidden"} );
@@ -204,7 +204,7 @@ function gglcptch_update_reason( ip, reason ) {
 					result		= $.parseJSON( result );
 					if ( result['success'] != '' ){
 						reason_textarea.val( result['reason'] );
-						reason_textarea.data('default-value', result['reason'] );
+						reason_textarea.data( 'default-value', result['reason'] );
 						reason_display.html( result['reason-html'] );
 						reason_display
 							.animate(
@@ -219,7 +219,7 @@ function gglcptch_update_reason( ip, reason ) {
 						if ( result['no_changes'] != '' ) {
 						} else {
 							var str = reason_display.html();
-							reason_textarea.val( str.replace(/<br>/g, "") );
+							reason_textarea.val( str.replace( /<br>/g, "" ) );
 							reason_display
 								.animate(
 									{ color: "#dc3232" },
@@ -233,7 +233,7 @@ function gglcptch_update_reason( ip, reason ) {
 					}
 				} catch( e ) {
 					var str = reason_display.html();
-					reason_textarea.val( str.replace(/<br>/g, "") );
+					reason_textarea.val( str.replace( /<br>/g, "" ) );
 					reason_display
 						.animate(
 							{ color: "#dc3232" },

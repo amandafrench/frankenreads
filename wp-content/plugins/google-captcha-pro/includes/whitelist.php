@@ -222,7 +222,7 @@ if ( ! class_exists( 'Gglcptch_Pro_Whitelist' ) ) {
 			$actions = array(
 				'delete' => '<a href="' . wp_nonce_url( $url, "gglcptch_nonce_remove_{$item['id']}" ) . '">' . __( 'Delete', 'google-captcha-pro' ) . '</a>'
 			);
-			return sprintf('%1$s %2$s', $item['ip'], $this->row_actions( $actions ) );
+			return sprintf( '%1$s %2$s', $item['ip'], $this->row_actions( $actions ) );
 		}
 
 		function column_add_reason( $item ) {

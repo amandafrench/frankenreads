@@ -98,13 +98,13 @@
 				/* Hide any error messages */
 				$( 'form#' + form.attr( 'id' ) + ' div.error' ).hide();
 				target.addClass( 'loading' ).prop( 'disabled', true );
-				content.addClass('loading').prop( 'disabled', true );
+				content.addClass( 'loading' ).prop( 'disabled', true );
 
 				/* continue buddypress script */
 				var ajaxdata = {
 					action: 'new_activity_comment',
 					'cookie': bp_get_cookies(),
-					'_wpnonce_new_activity_comment': $("input#_wpnonce_new_activity_comment").val(),
+					'_wpnonce_new_activity_comment': $( "input#_wpnonce_new_activity_comment" ).val(),
 					'comment_id': comment_id,
 					'form_id': form_id[2],
 					'content': content.val()
@@ -157,7 +157,7 @@
 						$( 'li#activity-' + form_id[2] + ' a.acomment-reply span' ).html( new_count );
 
 						/* Increment the 'Show all x comments' string, if present */
-						var show_all_a = activity_comments.parents('.activity-comments').find( '.show-all a' );
+						var show_all_a = activity_comments.parents( '.activity-comments' ).find( '.show-all a' );
 						if ( show_all_a ) {
 							show_all_a.html( BP_DTheme.show_x_comments.replace( '%d', new_count ) );
 						}
@@ -197,7 +197,7 @@
 				$( '.activity-comments ul .error' ).remove();
 
 				/* Reset the form position */
-				comment_li.parents( '.activity-comments' ).append(form);
+				comment_li.parents( '.activity-comments' ).append( form );
 
 				$.post( ajaxurl, {
 					action: 'delete_activity_comment',
@@ -384,9 +384,9 @@
 
 					if ( response[0] + response[1] === '-1' ) {
 						li.prepend( response.substr( 2, response.length ) );
-						li.children( '#message' ).hide().fadeIn(300);
+						li.children( '#message' ).hide().fadeIn( 300 );
 					} else {
-						li.slideUp(300);
+						li.slideUp( 300 );
 
 						/* reset vars to get newest activities */
 						if ( timestamp && activity_last_recorded === timestamp[1] ) {
@@ -415,7 +415,7 @@
 				function( response ) {
 					if ( response[0] + response[1] === '-1' ) {
 						li.prepend( response.substr( 2, response.length ) );
-						li.children( '#message' ).hide().fadeIn(300);
+						li.children( '#message' ).hide().fadeIn( 300 );
 					} else {
 						li.slideUp( 300 );
 						/* reset vars to get newest activities */
@@ -470,7 +470,7 @@
 					jq.cookie( 'bp-activity-oldestpage', oldest_page, {
 						path: '/'
 					} );
-					jq( '#buddypress ul.activity-list' ).append(response.contents);
+					jq( '#buddypress ul.activity-list' ).append( response.contents );
 
 					target.parent().hide();
 				}, 'json' );
@@ -493,9 +493,9 @@
 				activity_html = jq.parseHTML( newest_activities );
 
 				jq.each( activity_html, function( i, el ){
-					if( 'LI' === el.nodeName && jq(el).hasClass( 'just-posted' ) ) {
-						if( jq( '#' + jq(el).attr( 'id' ) ).length ) {
-							jq( '#' + jq(el).attr( 'id' ) ).remove();
+					if( 'LI' === el.nodeName && jq( el ).hasClass( 'just-posted' ) ) {
+						if( jq( '#' + jq( el ).attr( 'id' ) ).length ) {
+							jq( '#' + jq( el ).attr( 'id' ) ).remove();
 						}
 					}
 				} );

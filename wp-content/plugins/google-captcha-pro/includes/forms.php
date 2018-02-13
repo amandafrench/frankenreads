@@ -29,7 +29,8 @@ if ( ! function_exists( 'gglcptch_get_forms' ) ) {
 			'wpforo_login_form'			=> array( 'form_name' => __( 'wpForo Login form', 'google-captcha-pro' ) ),
 			'wpforo_register_form'		=> array( 'form_name' => __( 'wpForo Registration form', 'google-captcha-pro' ) ),
 			'wpforo_new_topic_form'		=> array( 'form_name' => __( 'wpForo New Topic form', 'google-captcha-pro' ) ),
-			'wpforo_reply_form'			=> array( 'form_name' => __( 'wpForo Reply form', 'google-captcha-pro') )
+			'wpforo_reply_form'			=> array( 'form_name' => __( 'wpForo Reply form', 'google-captcha-pro') ),
+			'mailchimp'					=> array( 'form_name' => __( 'MailChimp for Wordpress', 'google-captcha-pro' ) )
 		);
 
 		$custom_forms = apply_filters( 'gglcptch_add_custom_form', array() );
@@ -66,7 +67,8 @@ if ( ! function_exists( 'gglcptch_get_sections' ) ) {
 					'cf7',
 					'si_contact_form',
 					'jetpack_contact_form',
-					'sbscrbr'
+					'sbscrbr',
+					'mailchimp'
 				)
 			),
 			'bbpress' => array(
@@ -192,7 +194,8 @@ if ( ! function_exists( 'gglcptch_get_form_notice' ) ) {
 			'sbscrbr'				=> array( 'subscriber/subscriber.php', 'subscriber-pro/subscriber-pro.php' ),
 			'cf7'					=> 'contact-form-7/wp-contact-form-7.php',
 			'si_contact_form'		=> 'si-contact-form/si-contact-form.php',
-			'jetpack_contact_form'	=> 'jetpack/jetpack.php'
+			'jetpack_contact_form'	=> 'jetpack/jetpack.php',
+			'mailchimp'				=> 'mailchimp-for-wp/mailchimp-for-wp.php',
 		);
 
 		if ( isset( $plugins[ $form_slug ] ) ) {
@@ -292,6 +295,14 @@ if ( ! function_exists( 'gglcptch_add_pro_actions' ) ) {
 			add_filter( 'cntctfrm_display_captcha', 'gglcptch_display', 10, 1 );
 			if ( ! $gglcptch_ip_in_whitelist ) {
 				add_filter( 'cntctfrm_check_form', 'gglcptch_contact_form_check' );
+			}
+		}
+
+		/* Add Google Captcha to Mailchimp for WordPress */
+		if ( gglcptch_is_recaptcha_required( 'mailchimp', $is_user_logged_in ) ) {
+			add_filter( 'mc4wp_form_content', 'gglcptch_mailchimp_display', 20, 3 );
+			if ( ! $gglcptch_ip_in_whitelist ) {
+				add_filter( 'mc4wp_valid_form_request', 'gglcptch_mailchimp_check', 10, 2 );
 			}
 		}
 
@@ -420,7 +431,7 @@ if ( ! function_exists( 'gglcptch_add_pro_actions' ) ) {
 		}
 
 		/* wpForo*/
-		if ( function_exists('is_wpforo_page') && is_wpforo_page() ) {
+		if ( function_exists( 'is_wpforo_page' ) && is_wpforo_page() ) {
 			if ( gglcptch_is_recaptcha_required( 'wpforo_login_form', $is_user_logged_in ) ) {
 				add_action( 'login_form', 'gglcptch_login_display' );
 				if ( ! $gglcptch_ip_in_whitelist ) {
@@ -506,73 +517,43 @@ if ( ! function_exists( 'gglcptch_login_display' ) ) {
 /* Check google captcha in login form */
 if ( ! function_exists( 'gglcptch_login_check' ) ) {
 	function gglcptch_login_check( $user ) {
-
-		if ( gglcptch_is_woocommerce_page() ) return $user;
-
-		if ( is_wp_error( $user ) )
+		global $gglcptch_check;
+		if ( gglcptch_is_woocommerce_page() )
+			return $user;
+		if ( is_wp_error( $user ) && isset( $user->errors["empty_username"] ) && isset( $user->errors["empty_password"] ) )
 			return $user;
 
-		$gglcptch_check = gglcptch_check();
+		$gglcptch_check = gglcptch_check( 'login_form' );
 
-		/* reCAPTCHA is not configured */
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $user;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'login_form' );
-
-		if ( true !== $la_result ) {
-			$user = new WP_Error();
-
-			if ( is_wp_error( $la_result ) ) {
-				$user = $la_result;
-			} elseif ( is_string( $la_result ) ) {
-				$user->add( 'gglcptch_la_error', $la_result );
-			}
-
+		if ( ! $gglcptch_check['response'] ) {
 			if ( $gglcptch_check['reason'] == 'VERIFICATION_FAILED' ) {
 				wp_clear_auth_cookie();
 			}
-
-			if ( ! $gglcptch_check['response'] ) {
-				$error_message = sprintf( '<strong>%s</strong>:&nbsp;%s', __( 'Error', 'google-captcha-pro' ), gglcptch_get_message() );
-				$user->add( 'gglcptch_error', $error_message );
+			$error_code = ( is_wp_error( $user ) ) ? $user->get_error_code() : 'incorrect_password';
+			$errors = new WP_Error( $error_code, __( 'Authentication failed.', 'google-captcha-pro' ) );
+			$gglcptch_errors = $gglcptch_check['errors']->errors;
+			foreach ( $gglcptch_errors as $code => $messages ) {
+				foreach ( $messages as $message ) {
+					$errors->add( $code, $message );
+				}
 			}
+			$gglcptch_check['errors'] = $errors;
+			return $gglcptch_check['errors'];
 		}
-
 		return $user;
 	}
 }
 
-/* Check google captcha in lostpassword form */
+/* Check google captcha in registration form */
 if ( ! function_exists( 'gglcptch_register_check' ) ) {
 	function gglcptch_register_check( $allow ) {
-
+		global $gglcptch_check;
 		if ( gglcptch_is_woocommerce_page() )
 			return $allow;
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $allow;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'registration_form' );
-
-		if ( true !== $la_result ) {
-			if ( ! is_wp_error( $allow ) )
-				$allow = new WP_Error();
-
-			if ( is_wp_error( $la_result ) ) {
-				$allow = $la_result;
-			} elseif ( is_string( $la_result ) ) {
-				$allow->add( 'gglcptch_la_error', $la_result );
-			}
-
-			if ( ! $gglcptch_check['response'] ) {
-				$error_message = sprintf( '<strong>%s</strong>:&nbsp;%s', __( 'Error', 'google-captcha-pro' ), gglcptch_get_message() );
-				$allow->add( 'gglcptch_error', $error_message );
-			}
+		$gglcptch_check = gglcptch_check( 'registration_form' );
+		if ( ! $gglcptch_check['response'] ) {
+			return $gglcptch_check['errors'];
 		}
-
 		return $allow;
 	}
 }
@@ -580,32 +561,13 @@ if ( ! function_exists( 'gglcptch_register_check' ) ) {
 /* Check google captcha in lostpassword form */
 if ( ! function_exists( 'gglcptch_lostpassword_check' ) ) {
 	function gglcptch_lostpassword_check( $allow ) {
-
-		if ( gglcptch_is_woocommerce_page() ) return $allow;
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
+		global $gglcptch_check;
+		if ( gglcptch_is_woocommerce_page() )
 			return $allow;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'reset_pwd_form' );
-
-		if ( true !== $la_result ) {
-			if ( ! is_wp_error( $allow ) )
-				$allow = new WP_Error();
-
-			if ( is_wp_error( $la_result ) ) {
-				$allow = $la_result;
-			} elseif ( is_string( $la_result ) ) {
-				$allow->add( 'gglcptch_la_error', $la_result );
-			}
-
-			if ( ! $gglcptch_check['response'] ) {
-				$error_message = sprintf( '<strong>%s</strong>:&nbsp;%s', __( 'Error', 'google-captcha-pro' ), gglcptch_get_message() );
-				$allow->add( 'gglcptch_error', $error_message );
-			}
+		$gglcptch_check = gglcptch_check( 'reset_pwd_form' );
+		if ( ! $gglcptch_check['response'] ) {
+			return $gglcptch_check['errors'];
 		}
-
 		return $allow;
 	}
 }
@@ -616,43 +578,24 @@ if ( ! function_exists( 'gglcptch_signup_display' ) ) {
 		if ( $error_message = $errors->get_error_message( 'gglcptch_error' ) ) {
 			printf( '<p class="error gglcptch_error">%s</p>', $error_message );
 		}
+		if ( $error_message = $errors->get_error_message( 'lmttmpts_error' ) ) {
+			printf( '<p class="error lmttmpts_error">%s</p>', $error_message );
+		}
 		echo gglcptch_display();
 	}
 }
 
-/* Check google captcha in multisite login form */
+/* Check google captcha in multisite registration form */
 if ( ! function_exists( 'gglcptch_signup_check' ) ) {
 	function gglcptch_signup_check( $result ) {
-		global $current_user;
-
+		global $current_user, $gglcptch_check;
 		if ( is_admin() && ! defined( 'DOING_AJAX' ) && ! empty( $current_user->data->ID ) )
 			return $result;
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
+		$gglcptch_check = gglcptch_check( 'registration_form' );
+		if ( ! $gglcptch_check['response'] ) {
+			$result['errors'] = $gglcptch_check['errors'];
 			return $result;
-
-		$errors = $result['errors'];
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'registration_form' );
-
-		if ( true !== $la_result ) {
-			if ( is_wp_error( $la_result ) ) {
-				$la_result = $la_result->get_error_message();
-				$errors->add( 'gglcptch_la_error', $la_result );
-			} elseif ( is_string( $la_result ) ) {
-				$errors->add( 'gglcptch_la_error', $la_result );
-			}
-
-			if ( ! $gglcptch_check['response'] ) {
-				$error_message = sprintf( '<strong>%s</strong>:&nbsp;%s', __( 'Error', 'google-captcha-pro' ), gglcptch_get_message() );
-				$errors->add( 'gglcptch_error', $error_message );
-			}
-
-			$result['errors'] = $errors;
 		}
-
 		return $result;
 	}
 }
@@ -670,32 +613,20 @@ if ( ! function_exists( 'gglcptch_commentform_display' ) ) {
 /* Check JS enabled for comment form  */
 if ( ! function_exists( 'gglcptch_commentform_check' ) ) {
 	function gglcptch_commentform_check() {
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'comments_form' );
-
-		if ( true !== $la_result ) {
-			$error_message = '';
-			if ( is_wp_error( $la_result ) ) {
-				$la_result = $la_result->get_error_message();
-				$error_message .= $la_result . "<br />";
-			} elseif ( is_string( $la_result ) ) {
-				$error_message .= $la_result . "<br />";
-			}
-
-			if ( ! $gglcptch_check['response'] )
-				$error_message .= gglcptch_get_message() . "<br />";
-
+		global $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'comments_form' );
+		if ( ! $gglcptch_check['response'] ) {
+			$message = gglcptch_get_message() . "<br />";
 			$error_message = sprintf(
 				'<strong>%s</strong>:&nbsp;%s&nbsp;%s',
 				__( 'Error', 'google-captcha-pro' ),
-				$error_message,
+				$message,
 				__( 'Click the BACK button on your browser and try again.', 'google-captcha-pro' )
 			);
+			$lmtttmpts_error = $gglcptch_check['errors']->get_error_message( 'lmttmpts_error' );
+			if ( $lmtttmpts_error ) {
+				printf( '<p class="error lmttmpts_error">%s</p>', $lmtttmpts_error );
+			}
 			wp_die( $error_message );
 		}
 		return;
@@ -705,35 +636,36 @@ if ( ! function_exists( 'gglcptch_commentform_check' ) ) {
 /* Check google captcha in BWS Contact Form */
 if ( ! function_exists( 'gglcptch_contact_form_check' ) ) {
 	function gglcptch_contact_form_check( $allow = true ) {
+		global $gglcptch_check;
 		if ( ! $allow || is_string( $allow ) || is_wp_error( $allow ) ) {
 			return $allow;
 		}
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return true;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'contact_form' );
-
-		if ( true !== $la_result ) {
-			$allow = new WP_Error();
-
-			if ( is_wp_error( $la_result ) ) {
-				$allow = $la_result;
-			} elseif ( is_string( $la_result ) ) {
-				$allow->add( 'gglcptch_la_error', $la_result );
-			}
-
-			if ( ! $gglcptch_check['response'] ) {
-				$error_message = sprintf( '<strong>%s</strong>:&nbsp;%s', __( 'Error', 'google-captcha-pro' ), gglcptch_get_message() );
-				$allow->add( 'gglcptch_error', $error_message );
-			}
-
-			return $allow;
-		} else {
-			return true;
+		$gglcptch_check = gglcptch_check( 'contact_form' );
+		if ( ! $gglcptch_check['response'] ) {
+			return $gglcptch_check['errors'];
 		}
+		return $allow;
+	}
+}
+
+/* display google captcha in Mailchimp for WordPress */
+if ( ! function_exists( 'gglcptch_mailchimp_display' ) ) {
+	function gglcptch_mailchimp_display( $content = '', $form = '', $element = '' ) {
+		$content = str_replace( '<input type="submit"', gglcptch_display() . '<input type="submit"', $content );
+		return $content;
+	}
+}
+
+/* check google captcha in Mailchimp for Wordpress */
+if ( ! function_exists( 'gglcptch_mailchimp_check' ) ) {
+	function gglcptch_mailchimp_check( $errors ) {
+		global $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'mailchimp' );
+		if ( ! $gglcptch_check['response'] ) {
+			$errors = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
+			add_filter( 'gglcptch_recaptcha_content', 'gglcptch_error_message', 10, 1 );
+		}
+		return $errors;
 	}
 }
 
@@ -747,31 +679,14 @@ if ( ! function_exists( 'gglcptch_susbscriber_display' ) ) {
 /* check google captcha in subscriber */
 if ( ! function_exists( 'gglcptch_susbscriber_check' ) ) {
 	function gglcptch_susbscriber_check( $check_result = true ) {
-
+		global $gglcptch_check;
 		if ( is_array( $check_result ) ) {
 			$check_result = false;
 		}
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $check_result;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'sbscrbr' );
-
-		if ( true !== $la_result ) {
-			$check_result = "";
-			if ( is_wp_error( $la_result ) ) {
-				$la_result = $la_result->get_error_message();
-				$check_result .= $la_result . "\n";
-			} elseif ( is_string( $la_result ) ) {
-				$check_result .= $la_result . "\n";
-			}
-
-			if ( ! $gglcptch_check['response'] )
-				$check_result .= gglcptch_get_message();
+		$gglcptch_check = gglcptch_check( 'sbscrbr' );
+		if ( ! $gglcptch_check['response'] ) {
+			$check_result = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
 		}
-
 		return $check_result;
 	}
 }
@@ -811,28 +726,11 @@ if ( ! function_exists( 'gglcptch_buddypress_register_display' ) ) {
 /* check google captcha in BuddyPress registration form */
 if ( ! function_exists( 'gglcptch_buddypress_register_check' ) ) {
 	function gglcptch_buddypress_register_check( $errors ) {
-		global $bp;
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return true;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'buddypress_register' );
-
-		if ( true !== $la_result ) {
-			$error_message = "";
-			if ( is_wp_error( $la_result ) ) {
-				$la_result = $la_result->get_error_message();
-				$error_message .= $la_result . "\n";
-			} elseif ( is_string( $la_result ) ) {
-				$error_message .= $la_result . "\n";
-			}
-
-			if ( ! $gglcptch_check['response'] )
-				$error_message .= gglcptch_get_message();
-			$bp->signup->errors['gglcptch_buddypress_registration'] = $error_message;
-			return false;
+		global $bp, $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'buddypress_register' );
+		if ( ! $gglcptch_check['response'] ) {
+			$errors = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
+			$bp->signup->errors['gglcptch_buddypress_registration'] = $errors;
 		} else {
 			return true;
 		}
@@ -859,36 +757,15 @@ if ( ! function_exists( 'gglcptch_buddypress_comments_display' ) ) {
 /* check google captcha in BuddyPress comments form */
 if ( ! function_exists( 'gglcptch_buddypress_comments_check' ) ) {
 	function gglcptch_buddypress_comments_check( $bp_activity ) {
-
+		global $gglcptch_check;
 		if ( 'activity_comment' != $bp_activity->type )
 			return $bp_activity;
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $activity_id;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'buddypress_comments' );
-
-		if ( true !== $la_result ) {
-			$bp_activity->error_type = 'wp_error';
-			$bp_activity->errors = new WP_Error();
-
-			if ( is_wp_error( $la_result ) ) {
-				$error_message = $la_result->get_error_message();
-				$bp_activity->errors->add( 'gglcptch_la_error', $error_message );
-			} elseif ( is_string( $la_result ) ) {
-				$error_message .= $la_result;
-				$bp_activity->errors->add( 'gglcptch_la_error', $error_message );
-			}
-
-			if ( ! $gglcptch_check['response'] ) {
-				$error_message = gglcptch_get_message();
-				$bp_activity->errors->add( 'gglcptch_error', $error_message );
-			}
+		$gglcptch_check = gglcptch_check( 'buddypress_comments' );
+		if ( ! $gglcptch_check['response'] ) {
+			$error_message = implode( "\n", $gglcptch_check['errors']->get_error_messages() );
+			$bp_activity->errors->add( 'gglcptch_error', $error_message );
 		}
-
-		return $bp_activity;
+	return $bp_activity;
 	}
 }
 
@@ -903,29 +780,13 @@ if ( ! function_exists( 'gglcptch_buddypress_create_group_display' ) ) {
 /* check google captcha in BuddyPress create group */
 if ( ! function_exists( 'gglcptch_buddypress_create_group_check' ) ) {
 	function gglcptch_buddypress_create_group_check( $bp_group ) {
-		$gglcptch_check = gglcptch_check();
-
+		global $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'buddypress_group' );
 		/* Skip reCAPTCHA check for the second step */
 		if ( ! bp_is_group_creation_step( 'group-details' ) )
 			return false;
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return false;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'buddypress_group' );
-
-		if ( true !== $la_result ) {
-			$error_message = "";
-			if ( is_wp_error( $la_result ) ) {
-				$la_result = $la_result->get_error_message();
-				$error_message .= $la_result . "\n";
-			} elseif ( is_string( $la_result ) ) {
-				$error_message .= $la_result . "\n";
-			}
-
-			if ( ! $gglcptch_check['response'] )
-				$error_message .= gglcptch_get_message();
-
+		if ( ! $gglcptch_check['response'] ) {
+			$error_message = implode( "\n", $gglcptch_check['errors']->get_error_messages() );
 			$bp_group->name = '';
 			bp_core_add_message( $error_message, 'error' );
 			bp_core_redirect( bp_get_root_domain() . '/' . bp_get_groups_root_slug() . '/create/step/group-details/' );
@@ -942,22 +803,11 @@ if ( ! function_exists( 'gglcptch_buddypress_create_group_check' ) ) {
  */
 if ( ! function_exists( 'gglcptch_woocommerce_login_check' ) ) {
 	function gglcptch_woocommerce_login_check( $allow ) {
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $allow;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'woocommerce_login' );
-
-		if ( true !== $la_result ) {
-			if ( is_wp_error( $la_result ) ) {
-				$la_result = $la_result->get_error_message();
-			}
-			$allow->add( 'gglcptch_la_error', $la_result );
-
-			if ( ! $gglcptch_check['response'] )
-				$allow->add( 'gglcptch_error', gglcptch_get_message() );
+		global $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'woocommerce_login' );
+		if ( ! $gglcptch_check['response'] ) {
+			$error_message = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
+			$allow->add( 'gglcptch_error', $error_message );
 		}
 		return $allow;
 	}
@@ -971,29 +821,12 @@ if ( ! function_exists( 'gglcptch_woocommerce_login_check' ) ) {
  */
 if ( ! function_exists( 'gglcptch_woocommerce_register_check' ) ) {
 	function gglcptch_woocommerce_register_check( $allow ) {
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $allow;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'woocommerce_register' );
-
-		if ( true !== $la_result ) {
-			if ( ! is_wp_error( $allow ) ) {
-				$allow = new WP_Error();
-			}
-
-			if ( is_wp_error( $la_result ) ) {
-				$la_result = $la_result->get_error_message();
-			}
-			$allow->add( 'gglcptch_la_error', $la_result );
-
-			if ( ! $gglcptch_check['response'] ) {
-				$error_message = gglcptch_get_message();
-				$allow->add( 'gglcptch_error', $error_message );
-			}
+		global $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'woocommerce_register' );
+		if ( ! $gglcptch_check['response'] ) {
+			$error_message = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
+			$allow->add( 'gglcptch_error', $error_message );
 		}
-
 		return $allow;
 	}
 }
@@ -1008,6 +841,7 @@ if ( ! function_exists( 'gglcptch_woocommerce_register_check' ) ) {
  */
 if ( ! function_exists( 'gglcptch_woocommerce_allow_password_reset' ) ) {
 	function gglcptch_woocommerce_allow_password_reset( $allow = false ) {
+		global $gglcptch_check;
 		/* prevent the repeated checking of the WP lost password form */
 		$backtraces = debug_backtrace();
 		foreach ( $backtraces as $key => $backtrace ) {
@@ -1015,31 +849,12 @@ if ( ! function_exists( 'gglcptch_woocommerce_allow_password_reset' ) ) {
 				return $allow;
 			}
 		}
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $allow;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'woocommerce_lost_password' );
-
-		if ( true !== $la_result ) {
-			if ( ! is_wp_error( $allow ) ) {
-				$allow = new WP_Error();
-			}
-
-			if ( is_wp_error( $la_result ) ) {
-				$la_result = $la_result->get_error_message();
-			}
-
-			$allow->add( 'gglcptch_la_error', $la_result );
-
-			if ( ! $gglcptch_check['response'] ) {
-				$error_message = gglcptch_get_message();
-				$allow->add( 'gglcptch_error', $error_message );
-			}
+		$gglcptch_check = gglcptch_check( 'woocommerce_lost_password' );
+		if ( ! $gglcptch_check['response'] ) {
+			$allow = new WP_Error;
+			$error_message = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
+			$allow->add( 'gglcptch_error', $error_message );
 		}
-
 		return $allow;
 	}
 }
@@ -1054,24 +869,10 @@ if ( ! function_exists( 'gglcptch_woocommerce_allow_password_reset' ) ) {
  */
 if ( ! function_exists( 'gglcptch_woocommerce_checkout_process' ) ) {
 	function gglcptch_woocommerce_checkout_process() {
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return false;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'woocommerce_checkout' );
-
-		if ( true !== $la_result ) {
-			$error_message = '';
-			if ( is_wp_error( $la_result ) ) {
-				$error_message .= $la_result->get_error_message();
-			} elseif ( is_string( $la_result ) ) {
-				$error_message .= $la_result;
-			}
-
-			if ( ! $gglcptch_check['response'] )
-				$error_message .= gglcptch_get_message();
-
+		global $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'woocommerce_checkout' );
+		if ( ! $gglcptch_check['response'] ) {
+			$error_message = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
 			wc_add_notice( $error_message, 'error' );
 		}
 	}
@@ -1119,37 +920,28 @@ if ( ! function_exists( 'gglcptch_si_cf_display' ) ) {
 if ( ! function_exists( 'gglcptch_si_cf_check' ) ) {
 	function gglcptch_si_cf_check( $form_errors ) {
 		global $gglcptch_si_cf_is_checked;
-
 		if ( isset( $gglcptch_si_cf_is_checked ) )
 			return $form_errors;
-
 		$gglcptch_si_cf_is_checked = true;
-
 		$gglcptch_check = gglcptch_check();
-
 		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
 			return $form_errors;
-
 		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'si_contact_form' );
-
 		if ( true !== $la_result ) {
 			$error_message = '';
 			if ( ! is_array( $form_errors ) )
 				$form_errors = array();
-
 			if ( is_wp_error( $la_result ) ) {
 				$error_message .= $la_result->get_error_message();
 			} elseif ( is_string( $la_result ) ) {
 				$error_message .= $la_result;
 			}
 			$form_errors['gglcptch_la_error'] = $error_message;
-
 			if ( ! $gglcptch_check['response'] ) {
 				$error_message = sprintf( '<strong>%s</strong>:&nbsp;%s', __( 'Error', 'google-captcha-pro' ), gglcptch_get_message() );
 				$form_errors['gglcptch_error'] = $error_message;
 			}
 		}
-
 		return $form_errors;
 	}
 } /* end function gglcptch_si_cf_check */
@@ -1176,59 +968,38 @@ if ( ! function_exists( 'gglcptch_jetpack_cf_callback' ) ) {
 /* check reCAPTCHA answer from the Jetpack Contact Form */
 if ( ! function_exists( 'gglcptch_jetpack_cf_check' ) ) {
 	function gglcptch_jetpack_cf_check( $is_spam = false ) {
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $is_spam;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'jetpack_contact_form' );
-
-		if ( true !== $la_result ) {
-			$error_message = '';
-			if ( ! is_wp_error( $is_spam ) )
-				$is_spam = new WP_Error();
-
-			if ( is_wp_error( $la_result ) ) {
-				$error_message .= $la_result->get_error_message();
-			} elseif ( is_string( $la_result ) ) {
-				$error_message .= $la_result;
-			}
-			$is_spam->add( 'gglcptch_la_error', $error_message );
-
-			if ( ! $gglcptch_check['response'] ) {
-				$error_message = sprintf( '<strong>%s</strong>:&nbsp;%s', __( 'Error', 'google-captcha-pro' ), gglcptch_get_message() );
-				$is_spam->add( 'gglcptch_error', $error_message );
-			}
+		global $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'jetpack_contact_form' );
+		if ( ! $gglcptch_check['response'] ) {
+			$is_spam = new WP_Error();
+			$errors = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
+			$is_spam->add( 'gglcptch_error', $errors );
+			add_filter( 'gglcptch_recaptcha_content', 'gglcptch_error_message', 10, 1 );
 		}
-
 		return $is_spam;
 	}
 } /* end function gglcptch_jetpack_cf_check */
+
+/* Add google captcha error message to various forms */
+if ( ! function_exists( 'gglcptch_error_message' ) ) {
+	function gglcptch_error_message( $recaptcha_content = '' ) {
+		global $gglcptch_check;
+		if ( ! empty( $gglcptch_check['errors'] ) ) {
+			$recaptcha_content = sprintf( '<p id="gglcptch_error" class="error gglcptch_error">%s</p>', implode( '<br>', $gglcptch_check['errors']->get_error_messages() ) ) . $recaptcha_content;
+		}
+		return $recaptcha_content;
+	}
+}
 
 /*						bbPress						*/
 
 /* check reCAPTCHA answer from the bbPress New Topic form */
 if ( ! function_exists( 'gglcptch_bbpress_topic_check' ) ) {
 	function gglcptch_bbpress_topic_check() {
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'bbpress_new_topic_form' );
-
-		if ( true !== $la_result && function_exists( 'bbp_add_error' ) ) {
-			$error_message = '';
-			if ( is_wp_error( $la_result ) ) {
-				$error_message .= $la_result->get_error_message();
-			} elseif ( is_string( $la_result ) ) {
-				$error_message .= $la_result;
-			}
-			bbp_add_error( 'gglcptch_la_error', $error_message );
-
-			if ( ! $gglcptch_check['response'] )
-				$error_message = sprintf( '<strong>%s</strong>:&nbsp;%s', __( 'Error', 'google-captcha-pro' ), gglcptch_get_message() );
-
+		global $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'bbpress_new_topic_form' );
+		if ( ! $gglcptch_check['response'] && function_exists( 'bbp_add_error' ) ) {
+			$error_message = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
 			bbp_add_error( 'gglcptch_error', $error_message );
 		}
 	}
@@ -1237,25 +1008,10 @@ if ( ! function_exists( 'gglcptch_bbpress_topic_check' ) ) {
 /* check reCAPTCHA answer from the bbPress Reply form */
 if ( ! function_exists( 'gglcptch_bbpress_reply_check' ) ) {
 	function gglcptch_bbpress_reply_check() {
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'bbpress_reply_form' );
-
-		if ( true !== $la_result && function_exists( 'bbp_add_error' ) ) {
-			$error_message = '';
-			if ( is_wp_error( $la_result ) ) {
-				$error_message .= $la_result->get_error_message();
-			} elseif ( is_string( $la_result ) ) {
-				$error_message .= $la_result;
-			}
-			bbp_add_error( 'gglcptch_la_error', $error_message );
-
-			if ( ! $gglcptch_check['response'] )
-				$error_message = sprintf( '<strong>%s</strong>:&nbsp;%s', __( 'Error', 'google-captcha-pro' ), gglcptch_get_message() );
-
+		global $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'bbpress_reply_form' );
+		if ( ! $gglcptch_check['response'] && function_exists( 'bbp_add_error' ) ) {
+			$error_message = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
 			bbp_add_error( 'gglcptch_error', $error_message );
 		}
 	}
@@ -1266,33 +1022,18 @@ if ( ! function_exists( 'gglcptch_bbpress_reply_check' ) ) {
 /* Check google captcha in wpForo login form */
 if ( ! function_exists( 'gglcptch_wpforo_login_check' ) ) {
 	function gglcptch_wpforo_login_check( $user ) {
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $user;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'wpforo_login_form' );
-
-		if ( true !== $la_result ) {
-			$user = new WP_Error();
-
-			if ( is_wp_error( $la_result ) ) {
-				$user = $la_result;
-			} elseif ( is_string( $la_result ) ) {
-				$user->add( 'gglcptch_la_error', $la_result );
+		global $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'wpforo_login_form' );
+		if ( ! $gglcptch_check['response'] ) {
+			if ( ! is_wp_error( $user ) ) {
+				$user = new WP_Error();
 			}
-
-			if ( ! $gglcptch_check['response'] ) {
-				$error_message = sprintf( '<strong>%s</strong>:&nbsp;%s', __( 'Error', 'google-captcha-pro' ), gglcptch_get_message() );
-				$user->add( 'gglcptch_error', $error_message );
-			}
-
+			$error_message = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
+			$user->add( 'gglcptch_error', $error_message );
 			if ( $gglcptch_check['reason'] == 'VERIFICATION_FAILED' ) {
 				wp_clear_auth_cookie();
 			}
 		}
-
 		return $user;
 	}
 }
@@ -1300,32 +1041,13 @@ if ( ! function_exists( 'gglcptch_wpforo_login_check' ) ) {
 /* Check google captcha in wpForo Register form */
 if ( ! function_exists( 'gglcptch_wpforo_register_check' ) ) {
 	function gglcptch_wpforo_register_check( $allow ) {
-
+		global $gglcptch_check;
 		if ( gglcptch_is_woocommerce_page() ) return $allow;
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $allow;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'wpforo_register_form' );
-
-		if ( true !== $la_result ) {
-			if ( ! is_wp_error( $allow ) )
-				$allow = new WP_Error();
-
-			if ( is_wp_error( $la_result ) ) {
-				$allow = $la_result;
-			} elseif ( is_string( $la_result ) ) {
-				$allow->add( 'gglcptch_la_error', $la_result );
-			}
-
-			if ( ! $gglcptch_check['response'] ) {
-				$error_message = sprintf( '<strong>%s</strong>:&nbsp;%s', __( 'Error', 'google-captcha-pro' ), gglcptch_get_message() );
-				$allow->add( 'gglcptch_error', $error_message );
-			}
+		$gglcptch_check = gglcptch_check( 'wpforo_register_form' );
+		if ( ! $gglcptch_check['response'] ) {
+			$error_message = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
+			$allow->add( 'gglcptch_error', $error_message );
 		}
-
 		return $allow;
 	}
 }
@@ -1333,30 +1055,13 @@ if ( ! function_exists( 'gglcptch_wpforo_register_check' ) ) {
 /* check reCAPTCHA answer from wpForo New Topic form */
 if ( ! function_exists( 'gglcptch_wpfpro_topic_check' ) ) {
 	function gglcptch_wpfpro_topic_check( $data ) {
-		global $wpforo;
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $data;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'wpforo_new_topic_form' );
-
-		if ( true !== $la_result ) {
-			if ( is_wp_error( $la_result ) ) {
-				$error_message = $la_result->get_error_message();
-			} elseif ( is_string( $la_result ) ) {
-				$error_message = $la_result;
-			}
+		global $wpforo, $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'wpforo_new_topic_form' );
+		if ( ! $gglcptch_check['response'] ) {
+			$error_message = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
 			$wpforo->notice->add( $error_message, 'error');
-
-			if ( ! $gglcptch_check['response'] ) {
-				$wpforo->notice->add( gglcptch_get_message(), 'error');
-			}
-
 			return false;
 		}
-
 		return $data;
 	}
 } /* end function gglcptch_wpfpro_topic_check */
@@ -1364,32 +1069,13 @@ if ( ! function_exists( 'gglcptch_wpfpro_topic_check' ) ) {
 /* check reCAPTCHA answer from wpForo Reply form */
 if ( ! function_exists( 'gglcptch_wpfpro_reply_check' ) ) {
 	function gglcptch_wpfpro_reply_check( $data ) {
-		global $wpforo;
-
-		$gglcptch_check = gglcptch_check();
-
-		if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-			return $data;
-
-		$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'wpforo_reply_form' );
-
-		if ( true !== $la_result ) {
-			if ( is_wp_error( $la_result ) ) {
-				$error_message = $la_result->get_error_message();
-			} elseif ( is_string( $la_result ) ) {
-				$error_message = $la_result;
-			}
+		global $wpforo, $gglcptch_check;
+		$gglcptch_check = gglcptch_check( 'wpforo_reply_form');
+		if ( ! $gglcptch_check['response'] ) {
+			$error_message = implode( "<br>", $gglcptch_check['errors']->get_error_messages() );
 			$wpforo->notice->add( $error_message, 'error');
-
-			if ( ! $gglcptch_check['response'] ) {
-				$wpforo->notice->add( gglcptch_get_message(), 'error');
-			}
-
 			return false;
 		}
-
 		return $data;
 	}
 } /* end function gglcptch_wpfpro_reply_check */
-
-

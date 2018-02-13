@@ -200,19 +200,9 @@ if ( ! function_exists ( 'wpcf7_bws_google_captcha_pro_validation_filter' ) ) {
 
 			if ( ! empty( $tags ) ) {
 
-				$gglcptch_check = gglcptch_check();
-
-				if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-					return $result;
-
-				$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'cf7' );
-
-				if ( true !== $la_result ) {
-					$result_reason = '';
-
-					if ( ! $gglcptch_check['response'] ) {
-						$result_reason = wpcf7_get_message( 'wrong_bwsgooglecaptcha' );
-					}
+				$gglcptch_check = gglcptch_check( 'cf7' );
+				if ( ! $gglcptch_check['response'] ) {
+					$result_reason = implode( "\n", $gglcptch_check['errors']->get_error_messages() );
 				}
 
 				if ( ! empty( $result_reason ) ) {
@@ -239,19 +229,10 @@ if ( ! function_exists ( 'wpcf7_bws_google_captcha_pro_validation_filter' ) ) {
 
 			if ( ! empty( $tags ) ) {
 
-				$gglcptch_check = gglcptch_check();
+				$gglcptch_check = gglcptch_check( 'cf7' );
 
-				if ( ! $gglcptch_check['response'] && $gglcptch_check['reason'] == 'ERROR_NO_KEYS' )
-					return $result;
-
-				$la_result = gglcptch_handle_by_limit_attempts( $gglcptch_check['response'], 'cf7' );
-
-				if ( true !== $la_result ) {
-					$result_reason = '';
-
-					if ( ! $gglcptch_check['response'] ) {
-						$result_reason = wpcf7_get_message( 'wrong_bwsgooglecaptcha' );
-					}
+				if ( ! $gglcptch_check['response'] ) {
+					$result_reason = implode( "\n", $gglcptch_check['errors']->get_error_messages() );
 				}
 
 				if ( ! empty( $result_reason ) ) {
@@ -292,9 +273,9 @@ if ( ! function_exists ( 'wpcf7_bws_google_captcha_pro_display_warning_message' 
 			return;
 
 		if ( method_exists( $contact_form, 'scan_form_tags' ) ) {
-			$has_tags = (bool)$contact_form->scan_form_tags( array( 'type' => array( 'bwsgooglecaptcha' ) ) );
+			$has_tags = ( bool )$contact_form->scan_form_tags( array( 'type' => array( 'bwsgooglecaptcha' ) ) );
 		} else {
-			$has_tags = (bool)$contact_form->form_scan_shortcode( array( 'type' => array( 'bwsgooglecaptcha' ) ) );
+			$has_tags = ( bool )$contact_form->form_scan_shortcode( array( 'type' => array( 'bwsgooglecaptcha' ) ) );
 		}
 
 		if ( ! $has_tags )

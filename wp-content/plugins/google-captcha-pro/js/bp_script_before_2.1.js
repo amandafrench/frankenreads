@@ -1,5 +1,5 @@
-(function($) {
-	$(document).ready( function() {
+( function( $ ) {
+	$( document ).ready( function() {
 
 		var gglcptch_version = gglcptch.options.version,
 			gglcptch_buddypress_comments = function( $form, reload ) {
@@ -96,7 +96,7 @@
 					var comment_id = form_id[2];
 				}
 
-				var content = $( '#' + form.attr('id') + ' textarea' );
+				var content = $( '#' + form.attr( 'id' ) + ' textarea' );
 
 				/* Hide any error messages */
 				$( '#' + form.attr( 'id' ) + ' div.error' ).hide();
@@ -174,7 +174,7 @@
 										form.children( 'textarea' ).val( '' );
 										activity_comments.parent().addClass( 'has-comments' );
 									} );
-									$( '#' + form.attr('id') + ' textarea').val( '' );
+									$( '#' + form.attr( 'id' ) + ' textarea').val( '' );
 
 									/* Increase the "Reply (X)" button count */
 									$( '#activity-' + form_id[2] + ' a.acomment-reply span' ).html( Number( $( '#activity-' + form_id[2] + ' a.acomment-reply span' ).html() ) + 1 );
@@ -197,7 +197,7 @@
 
 								$( target ).prop( 'disabled', false );
 								$( content ).prop( 'disabled', false );
-								$( '#' + form.attr('id') + ' input[name="cptchpr_number"]' ).val( '' );
+								$( '#' + form.attr( 'id' ) + ' input[name="cptchpr_number"]' ).val( '' );
 							});
 						}
 					}
@@ -238,10 +238,10 @@
 					if ( response[0] + response[1] == '-1' ) {
 						comment_li.prepend( $( response.substr( 2, response.length ) ).hide().fadeIn( 200 ) );
 					} else {
-						var children = $( '#' + comment_li.attr('id') + ' ul' ).children( 'li' );
+						var children = $( '#' + comment_li.attr( 'id' ) + ' ul' ).children( 'li' );
 						var child_count = 0;
 						$( children ).each( function() {
-							if ( ! $(this).is( ':hidden' ) )
+							if ( ! $( this ).is( ':hidden' ) )
 								child_count++;
 						});
 						comment_li.fadeOut( 200, function() {
@@ -249,7 +249,7 @@
 						});
 
 						/* Decrease the "Reply (X)" button count */
-						var count_span = $( '#' + comment_li.parents( '#activity-stream > li' ).attr('id') + ' a.acomment-reply span' );
+						var count_span = $( '#' + comment_li.parents( '#activity-stream > li' ).attr( 'id' ) + ' a.acomment-reply span' );
 						var new_count = count_span.html() - ( 1 + child_count );
 						count_span.html( new_count );
 
@@ -332,69 +332,69 @@
 
 		/* Stream event delegation */
 		$( 'div.activity' ).on( 'click', function( event ) {
-			var target = jq(event.target);
+			var target = jq( event.target );
 
 			/* Favoriting activity stream items */
-			if ( target.hasClass('fav') || target.hasClass('unfav') ) {
-				var type = target.hasClass('fav') ? 'fav' : 'unfav';
-				var parent = target.closest('.activity-item');
-				var parent_id = parent.attr('id').substr( 9, parent.attr('id').length );
+			if ( target.hasClass( 'fav' ) || target.hasClass( 'unfav' ) ) {
+				var type = target.hasClass( 'fav' ) ? 'fav' : 'unfav';
+				var parent = target.closest( '.activity-item' );
+				var parent_id = parent.attr( 'id' ).substr( 9, parent.attr( 'id' ).length );
 
-				target.addClass('loading');
+				target.addClass( 'loading' );
 
 				jq.post( ajaxurl, {
 					action: 'activity_mark_' + type,
 					'cookie': bp_get_cookies(),
 					'id': parent_id
 				},
-				function(response) {
-					target.removeClass('loading');
+				function( response ) {
+					target.removeClass( 'loading' );
 
 					target.fadeOut( 100, function() {
-						jq(this).html(response);
-						jq(this).attr('title', 'fav' == type ? BP_DTheme.remove_fav : BP_DTheme.mark_as_fav);
-						jq(this).fadeIn(100);
+						jq( this ).html( response );
+						jq( this ).attr( 'title', 'fav' == type ? BP_DTheme.remove_fav : BP_DTheme.mark_as_fav );
+						jq( this ).fadeIn( 100 );
 					});
 
 					if ( 'fav' == type ) {
-						if ( !jq('.item-list-tabs li#activity-favorites').length )
-							jq('.item-list-tabs ul li#activity-mentions').before( '<li id="activity-favorites"><a href="#">' + BP_DTheme.my_favs + ' <span>0</span></a></li>');
+						if ( !jq( '.item-list-tabs li#activity-favorites' ).length )
+							jq( '.item-list-tabs ul li#activity-mentions' ).before( '<li id="activity-favorites"><a href="#">' + BP_DTheme.my_favs + ' <span>0</span></a></li>');
 
-						target.removeClass('fav');
-						target.addClass('unfav');
+						target.removeClass( 'fav' );
+						target.addClass( 'unfav' );
 
-						jq('.item-list-tabs ul li#activity-favorites span').html( Number( jq('.item-list-tabs ul li#activity-favorites span').html() ) + 1 );
+						jq( '.item-list-tabs ul li#activity-favorites span' ).html( Number( jq( '.item-list-tabs ul li#activity-favorites span' ).html() ) + 1 );
 					} else {
-						target.removeClass('unfav');
-						target.addClass('fav');
+						target.removeClass( 'unfav' );
+						target.addClass( 'fav' );
 
-						jq('.item-list-tabs ul li#activity-favorites span').html( Number( jq('.item-list-tabs ul li#activity-favorites span').html() ) - 1 );
+						jq( '.item-list-tabs ul li#activity-favorites span' ).html( Number( jq( '.item-list-tabs ul li#activity-favorites span' ).html() ) - 1 );
 
-						if ( !Number( jq('.item-list-tabs ul li#activity-favorites span').html() ) ) {
-							if ( jq('.item-list-tabs ul li#activity-favorites').hasClass('selected') )
+						if ( !Number( jq( '.item-list-tabs ul li#activity-favorites span' ).html() ) ) {
+							if ( jq( '.item-list-tabs ul li#activity-favorites' ).hasClass( 'selected' ) )
 								bp_activity_request( null, null );
 
-							jq('.item-list-tabs ul li#activity-favorites').remove();
+							jq( '.item-list-tabs ul li#activity-favorites' ).remove();
 						}
 					}
 
-					if ( 'activity-favorites' == jq( '.item-list-tabs li.selected').attr('id') )
-						target.parent().parent().parent().slideUp(100);
+					if ( 'activity-favorites' == jq( '.item-list-tabs li.selected').attr( 'id' ) )
+						target.parent().parent().parent().slideUp( 100 );
 				});
 
 				return false;
 			}
 
 			/* Delete activity stream items */
-			if ( target.hasClass('delete-activity') ) {
-				var li        = target.parents('div.activity ul li');
-				var id        = li.attr('id').substr( 9, li.attr('id').length );
-				var link_href = target.attr('href');
-				var nonce     = link_href.split('_wpnonce=');
+			if ( target.hasClass( 'delete-activity' ) ) {
+				var li        = target.parents( 'div.activity ul li' );
+				var id        = li.attr( 'id' ).substr( 9, li.attr( 'id' ).length );
+				var link_href = target.attr( 'href' );
+				var nonce     = link_href.split( '_wpnonce=' );
 
 				nonce = nonce[1];
 
-				target.addClass('loading');
+				target.addClass( 'loading' );
 
 				jq.post( ajaxurl, {
 					action: 'delete_activity',
@@ -402,13 +402,13 @@
 					'id': id,
 					'_wpnonce': nonce
 				},
-				function(response) {
+				function( response ) {
 
 					if ( response[0] + response[1] == '-1' ) {
 						li.prepend( response.substr( 2, response.length ) );
-						li.children('div#message').hide().fadeIn(300);
+						li.children( 'div#message' ).hide().fadeIn( 300 );
 					} else {
-						li.slideUp(300);
+						li.slideUp( 300 );
 					}
 				});
 
@@ -427,10 +427,10 @@
 					'_wpnonce': target.attr( 'href' ).split( '_wpnonce=' )[1]
 				},
 
-				function(response) {
+				function( response ) {
 					if ( response[0] + response[1] === '-1' ) {
 						li.prepend( response.substr( 2, response.length ) );
-						li.children( 'div#message' ).hide().fadeIn(300);
+						li.children( 'div#message' ).hide().fadeIn( 300 );
 					} else {
 						li.slideUp( 300 );
 					}
@@ -440,34 +440,34 @@
 			}
 
 			/* Load more updates at the end of the page */
-			if ( target.parent().hasClass('load-more') ) {
-				jq("#content li.load-more").addClass('loading');
+			if ( target.parent().hasClass( 'load-more' ) ) {
+				jq( "#content li.load-more" ).addClass( 'loading' );
 
-				if ( null == jq.cookie('bp-activity-oldestpage') )
-					jq.cookie('bp-activity-oldestpage', 1, {
+				if ( null == jq.cookie( 'bp-activity-oldestpage' ) )
+					jq.cookie( 'bp-activity-oldestpage', 1, {
 						path: '/'
 					} );
 
-				var oldest_page = ( jq.cookie('bp-activity-oldestpage') * 1 ) + 1;
+				var oldest_page = ( jq.cookie( 'bp-activity-oldestpage' ) * 1 ) + 1;
 
 				var just_posted = [];
 
-				jq('.activity-list li.just-posted').each( function(){
-					just_posted.push( jq(this).attr('id').replace( 'activity-','' ) );
+				jq( '.activity-list li.just-posted' ).each( function(){
+					just_posted.push( jq( this ).attr( 'id' ).replace( 'activity-','' ) );
 				});
 
 				jq.post( ajaxurl, {
 					action: 'activity_get_older_updates',
 					'cookie': bp_get_cookies(),
 					'page': oldest_page,
-					'exclude_just_posted': just_posted.join(',')
+					'exclude_just_posted': just_posted.join( ',' )
 				},
-				function(response) {
-					jq("#content li.load-more").removeClass('loading');
+				function( response ) {
+					jq( "#content li.load-more" ).removeClass( 'loading' );
 					jq.cookie( 'bp-activity-oldestpage', oldest_page, {
 						path: '/'
 					} );
-					jq("#content ul.activity-list").append(response.contents);
+					jq( "#content ul.activity-list" ).append( response.contents );
 
 					target.parent().hide();
 				}, 'json' );

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Google Сaptcha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-14 20:10+0300\n"
+"POT-Creation-Date: 2018-02-06 10:04+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language-Team: Cloudzeroxyz <cloudzeroxyz@gmail.com>\n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "Insert Tag"
 msgstr ""
 
-#: captcha_for_cf7.php:276 captcha_for_cf7.php:277
+#: captcha_for_cf7.php:261 captcha_for_cf7.php:262
 msgid "Error: You have entered an incorrect reCAPTCHA value"
 msgstr "Error: Ha introducido un valor incorrecto de CAPTCHA"
 
@@ -52,8 +52,8 @@ msgstr "Error: Ha introducido un valor incorrecto de CAPTCHA"
 msgid "Google Captcha Settings"
 msgstr "Googe Captcha Ajustes"
 
-#: google-captcha-pro.php:23 google-captcha-pro.php:1191
-#: google-captcha-pro.php:1203 includes/class-gglcptch-settings-tabs.php:26
+#: google-captcha-pro.php:23 google-captcha-pro.php:1229
+#: google-captcha-pro.php:1241 includes/class-gglcptch-settings-tabs.php:26
 #: includes/class-gglcptch-settings-tabs.php:32
 msgid "Settings"
 msgstr "Configuraciónes"
@@ -91,59 +91,55 @@ msgstr "Atención"
 msgid "Google Captcha Pro Settings"
 msgstr "Googe Captcha Configuración"
 
-#: google-captcha-pro.php:726 google-captcha-pro.php:1297
+#: google-captcha-pro.php:727 google-captcha-pro.php:1335
 msgid "To use Google Captcha you must get the keys from"
 msgstr "Para utilizar Google Captcha debe obtener las claves de"
 
-#: google-captcha-pro.php:727 google-captcha-pro.php:1298
+#: google-captcha-pro.php:728 google-captcha-pro.php:1336
 msgid "here"
 msgstr "aquí"
 
-#: google-captcha-pro.php:728 google-captcha-pro.php:1299
+#: google-captcha-pro.php:729 google-captcha-pro.php:1337
 msgid "and enter them on the"
 msgstr "e introducirlas en"
 
-#: google-captcha-pro.php:730 google-captcha-pro.php:1301
+#: google-captcha-pro.php:731 google-captcha-pro.php:1339
 msgid "plugin setting page"
 msgstr "página de configuración de plugin"
 
-#: google-captcha-pro.php:987 includes/forms.php:532 includes/forms.php:566
-#: includes/forms.php:599 includes/forms.php:644 includes/forms.php:690
-#: includes/forms.php:724 includes/forms.php:1133 includes/forms.php:1184
-#: includes/forms.php:1215 includes/forms.php:1242 includes/forms.php:1272
-#: includes/forms.php:1309
+#: google-captcha-pro.php:1025 includes/forms.php:621 includes/forms.php:940
 msgid "Error"
 msgstr "Error "
 
-#: google-captcha-pro.php:1060
+#: google-captcha-pro.php:1098
 msgid "User response is missing."
 msgstr "Respuesta del usuario está ausente."
 
-#: google-captcha-pro.php:1064 google-captcha-pro.php:1072
+#: google-captcha-pro.php:1102 google-captcha-pro.php:1110
 msgid "Secret Key is invalid."
 msgstr ""
 
-#: google-captcha-pro.php:1065 google-captcha-pro.php:1073
+#: google-captcha-pro.php:1103 google-captcha-pro.php:1111
 msgid "Check your domain configurations"
 msgstr ""
 
-#: google-captcha-pro.php:1066 google-captcha-pro.php:1074
+#: google-captcha-pro.php:1104 google-captcha-pro.php:1112
 msgid "and enter it again"
 msgstr "e introducirle otra vez"
 
-#: google-captcha-pro.php:1069
+#: google-captcha-pro.php:1107
 msgid "Secret Key is missing."
 msgstr "Clave Secreta está ausente."
 
-#: google-captcha-pro.php:1076
+#: google-captcha-pro.php:1114
 msgid "User response is invalid"
 msgstr "Respuesta del usuario no es válido"
 
-#: google-captcha-pro.php:1077
+#: google-captcha-pro.php:1115
 msgid "You have entered an incorrect reCAPTCHA value."
 msgstr "Ha introducido un valor incorrecto de reCAPTCHA."
 
-#: google-captcha-pro.php:1078
+#: google-captcha-pro.php:1116
 msgid ""
 "More than one reCAPTCHA has been found in the current form. Please remove "
 "all unnecessary reCAPTCHA fields to make it work properly."
@@ -151,28 +147,28 @@ msgstr ""
 "Más de un reCAPTCHA se ha encontrado en la forma actual. Por favor, elimine "
 "todos los campos de reCAPTCHA innecesarios para que funcione correctamente."
 
-#: google-captcha-pro.php:1127
+#: google-captcha-pro.php:1165
 msgid "Please submit \"Test verification\""
 msgstr ""
 
-#: google-captcha-pro.php:1129
+#: google-captcha-pro.php:1167
 msgid "Please complete the captcha and submit \"Test verification\""
 msgstr ""
 
-#: google-captcha-pro.php:1136
+#: google-captcha-pro.php:1174
 msgid "Test verification"
 msgstr "Test de verificación"
 
-#: google-captcha-pro.php:1161
+#: google-captcha-pro.php:1199
 #, fuzzy
 msgid "The verification is successfully completed."
 msgstr "La verificación es completada con éxito"
 
-#: google-captcha-pro.php:1204
+#: google-captcha-pro.php:1242
 msgid "FAQ"
 msgstr "Preguntas Frecuentes"
 
-#: google-captcha-pro.php:1205
+#: google-captcha-pro.php:1243
 msgid "Support"
 msgstr "Soporte"
 
@@ -342,13 +338,13 @@ msgstr "Compacto"
 msgid "Language"
 msgstr ""
 
-#: includes/class-gglcptch-settings-tabs.php:374 includes/forms.php:175
-#: includes/forms.php:220
+#: includes/class-gglcptch-settings-tabs.php:374 includes/forms.php:177
+#: includes/forms.php:223
 msgid "Activate"
 msgstr "Activar"
 
-#: includes/class-gglcptch-settings-tabs.php:377 includes/forms.php:177
-#: includes/forms.php:223 includes/forms.php:227
+#: includes/class-gglcptch-settings-tabs.php:377 includes/forms.php:179
+#: includes/forms.php:226 includes/forms.php:228 includes/forms.php:232
 msgid "Install Now"
 msgstr ""
 
@@ -490,37 +486,45 @@ msgstr ""
 msgid "wpForo Reply form"
 msgstr ""
 
-#: includes/forms.php:54
+#: includes/forms.php:33
+msgid "MailChimp for Wordpress"
+msgstr ""
+
+#: includes/forms.php:55
 msgid "WordPress default"
 msgstr "WordPress defecto"
 
-#: includes/forms.php:63
+#: includes/forms.php:64
 msgid "External Plugins"
 msgstr ""
 
-#: includes/forms.php:109
+#: includes/forms.php:111
 msgid "Custom Forms"
 msgstr ""
 
-#: includes/forms.php:129
+#: includes/forms.php:131
 msgid "Google Captcha Plugin"
 msgstr ""
 
-#: includes/forms.php:172
+#: includes/forms.php:174
 msgid "BuddyPress works only with single site or main domain"
 msgstr ""
 
-#: includes/forms.php:205
+#: includes/forms.php:208
 #, php-format
 msgid "Update %s at least up to %s"
 msgstr ""
 
-#: includes/forms.php:212
+#: includes/forms.php:215
 #, php-format
 msgid "%1$s %2$s requires WordPress %3$s or higher."
 msgstr ""
 
-#: includes/forms.php:692
+#: includes/forms.php:532
+msgid "Authentication failed."
+msgstr ""
+
+#: includes/forms.php:623
 msgid "Click the BACK button on your browser and try again."
 msgstr ""
 
