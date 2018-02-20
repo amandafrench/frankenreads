@@ -18,7 +18,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		/**
 		 * The current version of Community Events
 		 */
-		const VERSION = '4.5.8';
+		const VERSION = '4.5.9';
 
 		/**
 		 * required The Events Calendar Version
@@ -2748,7 +2748,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		/**
 		 * Get determination if the user has a role that allows access to the admin
 		 *
-		 * @since TBD
+		 * @since 4.5.9
 		 *
 		 * @param int $user_id
 		 *

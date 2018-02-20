@@ -84,7 +84,6 @@ class Tribe__Events__Community__Submission_Scrubber {
 
 		remove_filter( 'wp_kses_allowed_html', array( $this, 'filter_allowed_html_tags' ), 10, 2 );
 
-
 		$this->submission = apply_filters( 'tribe_events_community_sanitize_submission', $this->submission );
 		return $this->submission;
 	}

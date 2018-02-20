@@ -130,7 +130,7 @@ function tribe_community_events_delete_event_link( $event_id = null ) {
 }
 
 /**
- * Return the event start date string with a default of today.
+ * Return the event start date on the Community Events submission form with a default of today.
  *
  * @param null|int $event_id
  * @return string event date
@@ -138,15 +138,24 @@ function tribe_community_events_delete_event_link( $event_id = null ) {
  * @since 3.1
  */
 function tribe_community_events_get_start_date( $event_id = null ) {
-	$event_id = Tribe__Events__Main::postIdHelper( $event_id );
-	$event = ( $event_id ) ? get_post( $event_id ) : null;
-	$date = tribe_get_start_date( $event, true, 'Y-m-d' );
-	$date = ( $date ) ? Tribe__Date_Utils::date_only( $date ) : date_i18n( 'Y-m-d' );
+	$event_id          = Tribe__Events__Main::postIdHelper( $event_id );
+	$event             = ( $event_id ) ? get_post( $event_id ) : null;
+	$datepicker_format = Tribe__Date_Utils::datepicker_formats( tribe_get_option( 'datepickerFormat' ) );
+
+	$date = tribe_get_start_date( $event, false, $datepicker_format );
+	$date = $date ? $date : date_i18n( $datepicker_format );
+
+	/**
+	 * Filter the event start date value on the Community Events submission form.
+	 *
+	 * @param string $date The event start date
+	 * @param int|null $event_id The ID of this event, or null
+	 */
 	return apply_filters( 'tribe_community_events_get_start_date', $date, $event_id );
 }
 
 /**
- * Return the event end date string with a default of today.
+ * Return the event end date on the Community Events submission form with a default of today.
  *
  * @param null|int $event_id
  * @return string event date
@@ -154,10 +163,19 @@ function tribe_community_events_get_start_date( $event_id = null ) {
  * @since 3.1
  */
 function tribe_community_events_get_end_date( $event_id = null ) {
-	$event_id = Tribe__Events__Main::postIdHelper( $event_id );
-	$event = ( $event_id ) ? get_post( $event_id ) : null;
-	$date = tribe_get_end_date( $event, true, 'Y-m-d' );
-	$date = ( $date ) ? Tribe__Date_Utils::date_only( $date ) : date_i18n( 'Y-m-d' );
+	$event_id          = Tribe__Events__Main::postIdHelper( $event_id );
+	$event             = ( $event_id ) ? get_post( $event_id ) : null;
+	$datepicker_format = Tribe__Date_Utils::datepicker_formats( tribe_get_option( 'datepickerFormat' ) );
+
+	$date = tribe_get_end_date( $event, false, $datepicker_format );
+	$date = $date ? $date : date_i18n( $datepicker_format );
+
+	/**
+	 * Filter the event end date value on the Community Events submission form.
+	 *
+	 * @param string $date The event end date
+	 * @param int|null $event_id The ID of this event, or null
+	 */
 	return apply_filters( 'tribe_community_events_get_end_date', $date, $event_id );
 }
 

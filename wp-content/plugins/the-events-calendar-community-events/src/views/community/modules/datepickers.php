@@ -11,7 +11,7 @@ defined( 'WPINC' ) or die;
  * [your-theme]/tribe-events/community/modules/datepickers.php
  *
  * @since  3.1
- * @version 4.5.7
+ * @version 4.5.9
  *
  */
 
@@ -24,20 +24,24 @@ $metabox = tribe( 'tec.admin.event-meta-box' );
 // We are using this to mimic variables from the Administration
 extract( $metabox->get_extract_vars( $has_post ) );
 
+$tz_choice = Tribe__Events__Timezones::get_event_timezone_string();
+
 if ( $has_post && 0 !== get_the_ID() && 'auto-draft' !== get_post_status( $has_post ) ) {
-	$all_day = tribe_community_events_is_all_day();
 	$start_date = tribe_community_events_get_start_date();
-	$end_date = tribe_community_events_get_end_date();
+	$end_date   = tribe_community_events_get_end_date();
 } else {
-	$all_day = ! empty( $_POST['EventAllDay'] );
-	$start_date = isset( $_POST['EventStartDate'] ) ? $_POST['EventStartDate'] : tribe_community_events_get_start_date();
-	$end_date = isset( $_POST['EventEndDate'] ) ? $_POST['EventEndDate'] : tribe_community_events_get_end_date();
+	$start_date    = ! empty( $_POST['EventStartDate'] ) ? $_POST['EventStartDate'] : tribe_community_events_get_start_date();
+	$end_date      = ! empty( $_POST['EventEndDate'] ) ? $_POST['EventEndDate'] : tribe_community_events_get_end_date();
+	$start_time    = ! empty( $_POST['EventStartTime'] ) ? $_POST['EventStartTime'] : $start_timepicker_default;
+	$end_time      = ! empty( $_POST['EventEndTime'] ) ? $_POST['EventEndTime'] : $end_timepicker_default;
+	$isEventAllDay = ! empty( $_POST['EventAllDay'] ) && tribe_is_truthy( $_POST['EventAllDay'] ) ? 'checked="checked"' : $isEventAllDay;
+	$tz_choice     = ! empty( $_POST['EventTimezone'] ) ? $_POST['EventTimezone'] : $tz_choice;
 }
 
-$events_label_singular = tribe_get_event_label_singular();
-$events_label_plural = tribe_get_event_label_plural();
+$events_label_singular           = tribe_get_event_label_singular();
+$events_label_plural             = tribe_get_event_label_plural();
 $events_label_singular_lowercase = tribe_get_event_label_singular_lowercase();
-$events_label_plural_lowercase = tribe_get_event_label_plural_lowercase();
+$events_label_plural_lowercase   = tribe_get_event_label_plural_lowercase();
 
 ?>
 
@@ -80,7 +84,7 @@ $events_label_plural_lowercase = tribe_get_event_label_plural_lowercase();
 					type="text"
 					class="tribe-datepicker tribe-field-start_date"
 					name="EventStartDate"
-					value="<?php echo esc_attr( $EventStartDate ) ?>"
+					value="<?php echo esc_attr( $start_date ) ?>"
 				/>
 				<span class="helper-text hide-if-js"><?php esc_html_e( 'YYYY-MM-DD', 'tribe-events-community' ) ?></span>
 
@@ -98,7 +102,7 @@ $events_label_plural_lowercase = tribe_get_event_label_plural_lowercase();
 					data-step="<?php echo esc_attr( $start_timepicker_step ); ?>"
 					data-round="<?php echo esc_attr( $timepicker_round ); ?>"
 					data-disable-touch-keyboard="true"
-					value="<?php echo esc_attr( $metabox->is_auto_draft() ? $start_timepicker_default : $EventStartTime ) ?>"
+					value="<?php echo esc_attr( $metabox->is_auto_draft() ? $start_time : $EventStartTime ) ?>"
 				/>
 				<span class="helper-text hide-if-js"><?php esc_html_e( 'HH:MM', 'tribe-events-community' ) ?></span>
 				<span class="tribe-datetime-separator"> <?php echo esc_html_x( 'to', 'Start Date Time "to" End Date Time', 'tribe-events-community' ); ?> </span>
@@ -117,7 +121,7 @@ $events_label_plural_lowercase = tribe_get_event_label_plural_lowercase();
 					data-step="<?php echo esc_attr( $end_timepicker_step ); ?>"
 					data-round="<?php echo esc_attr( $timepicker_round ); ?>"
 					data-disable-touch-keyboard="true"
-					value="<?php echo esc_attr( $metabox->is_auto_draft() ? $end_timepicker_default : $EventEndTime ); ?>"
+					value="<?php echo esc_attr( $metabox->is_auto_draft() ? $end_time : $EventEndTime ); ?>"
 				/>
 				<span class="helper-text hide-if-js"><?php esc_html_e( 'HH:MM', 'tribe-events-community' ) ?></span>
 
@@ -131,7 +135,7 @@ $events_label_plural_lowercase = tribe_get_event_label_plural_lowercase();
 					type="text"
 					class="tribe-datepicker tribe-field-end_date"
 					name="EventEndDate"
-					value="<?php echo esc_attr( $EventEndDate ); ?>"
+					value="<?php echo esc_attr( $end_date ); ?>"
 				/>
 				<span class="helper-text hide-if-js"><?php esc_html_e( 'YYYY-MM-DD', 'tribe-events-community' ) ?></span>
 
@@ -144,14 +148,14 @@ $events_label_plural_lowercase = tribe_get_event_label_plural_lowercase();
 						name="EventTimezone"
 						class="tribe-field-timezone tribe-dropdown hide-if-js"
 						data-timezone-label="<?php esc_attr_e( 'Timezone:', 'tribe-events-community' ) ?>"
-						data-timezone-value="<?php echo esc_attr( Tribe__Events__Timezones::get_event_timezone_string() ) ?>"
+						data-timezone-value="<?php echo esc_attr( $tz_choice ) ?>"
 					>
 						<?php
 						// Use the Tribe-specific wrapper function (the output of which is filterable) if available
 						if ( function_exists( 'tribe_events_timezone_choice' ) ) {
-							echo tribe_events_timezone_choice( Tribe__Events__Timezones::get_event_timezone_string() );
+							echo tribe_events_timezone_choice( $tz_choice );
 						} else {
-							echo wp_timezone_choice( Tribe__Events__Timezones::get_event_timezone_string() );
+							echo wp_timezone_choice( $tz_choice );
 						}
 						?>
 					</select>

@@ -309,7 +309,7 @@
 							return "All" + " " + b_start + this.create_title(prefix).toLowerCase() + b_end + " " + "have been excluded";
 						}
 					}else{
-						return "<?php echo home_url();?>" + "/" + request_uri;
+						return "<?php echo preg_replace("/(https?\:\/\/[^\/]+).*/", "$1", site_url());?>" + "/" + request_uri;
 					}
 				}else if(type == "useragent"){
 					return "User-Agent: " + request_uri;

@@ -616,6 +616,7 @@
 					$this->excludeAdminCookie()."\n".
 					$this->http_condition_rule()."\n".
 					"RewriteCond %{HTTP_USER_AGENT} !(".$this->get_excluded_useragent().")"."\n".
+					"RewriteCond %{HTTP_USER_AGENT} !(WP\sFastest\sCache\sPreload(\siPhone\sMobile)?\s*Bot)"."\n".
 					"RewriteCond %{REQUEST_METHOD} !POST"."\n".
 					$ifIsNotSecure."\n".
 					"RewriteCond %{REQUEST_URI} !(\/){2}$"."\n".
@@ -804,7 +805,7 @@
 			
 
 			$wpFastestCacheLazyLoad = isset($this->options->wpFastestCacheLazyLoad) ? 'checked="checked"' : "";
-
+			$wpFastestCacheLazyLoad_keywords = isset($this->options->wpFastestCacheLazyLoad_keywords) ? $this->options->wpFastestCacheLazyLoad_keywords : "";
 
 
 
@@ -837,6 +838,9 @@
 			$wpFastestCachePreload_tag = isset($this->options->wpFastestCachePreload_tag) ? 'checked="checked"' : "";
 			$wpFastestCachePreload_attachment = isset($this->options->wpFastestCachePreload_attachment) ? 'checked="checked"' : "";
 			$wpFastestCachePreload_number = isset($this->options->wpFastestCachePreload_number) ? $this->options->wpFastestCachePreload_number : 4;
+			$wpFastestCachePreload_restart = isset($this->options->wpFastestCachePreload_restart) ? 'checked="checked"' : "";
+
+
 
 
 			$wpFastestCacheStatus = isset($this->options->wpFastestCacheStatus) ? 'checked="checked"' : "";
@@ -1206,6 +1210,8 @@
 											// "pt-PT",
 											// "pt-BR",
 											"tr-TR",
+											"addkenmerken.net",
+											"animefantastica.com",
 											"rynofitness.com.au",
 											"margotickets.com",
 											"berkatan.com",
@@ -1222,7 +1228,13 @@
 											"spycoupon.in",
 											"groovypost.com",
 											"parkviewhomes.info",
-											"myparkviewhomes.com"
+											"myparkviewhomes.com",
+											"kompressorcheck.de",
+											"sackkarre-tests.de",
+											"schraubstock-test.de",
+											"knarrenkasten-tests.de",
+											"zahlungserinnerung-vorlage.de",
+											"eigenbeleg-vorlage.de"
 											);
 														
 							if(in_array(get_bloginfo('language'), $tester_arr) || in_array(str_replace("www.", "", $_SERVER["HTTP_HOST"]), $tester_arr)){ ?>
@@ -1231,9 +1243,19 @@
 									<?php if(method_exists("WpFastestCachePowerfulHtml", "lazy_load")){ ?>
 										<div class="questionCon">
 											<div class="question">Lazy Load</div>
-											<div class="inputCon"><input type="checkbox" <?php echo $wpFastestCacheLazyLoad; ?> id="wpFastestCacheLazyLoad" name="wpFastestCacheLazyLoad"><label for="wpFastestCacheLazyLoad">Lazy Load</label></div>
+											<div class="inputCon">
+												<input type="hidden" value="<?php echo $wpFastestCacheLazyLoad_keywords; ?>" id="wpFastestCacheLazyLoad_keywords" name="wpFastestCacheLazyLoad_keywords">
+												<input type="checkbox" <?php echo $wpFastestCacheLazyLoad; ?> id="wpFastestCacheLazyLoad" name="wpFastestCacheLazyLoad"><label for="wpFastestCacheLazyLoad">Load images and iframes when they enter the browsers viewport</label>
+											</div>
 											<div class="get-info"><a target="_blank" href="http://www.wpfastestcache.com/premium/lazy-load-reduce-http-request-and-page-load-time/"><img src="<?php echo plugins_url("wp-fastest-cache/images/info.png"); ?>" /></a></div>
 										</div>
+
+										<?php 
+											if(file_exists(WPFC_WP_PLUGIN_DIR."/wp-fastest-cache-premium/pro/templates/lazy-load.php")){
+												include_once WPFC_WP_PLUGIN_DIR."/wp-fastest-cache-premium/pro/templates/lazy-load.php"; 
+											}
+										?>
+
 									<?php }else{ ?>
 										<div class="questionCon update-needed">
 											<div class="question">Lazy Load</div>
@@ -1623,7 +1645,7 @@
 						    				<?php }else{ ?>
 							    				<form action="https://api.wpfastestcache.net/paypal/buypremium/" method="post">
 							    					<input type="hidden" name="ip" value="<?php echo $_SERVER["REMOTE_ADDR"]; ?>">
-							    					<input type="hidden" name="wpfclang" value="<?php echo $this->options->wpFastestCacheLanguage; ?>">
+							    					<input type="hidden" name="wpfclang" value="<?php echo isset($this->options->wpFastestCacheLanguage) ? $this->options->wpFastestCacheLanguage : ""; ?>">
 							    					<input type="hidden" name="bloglang" value="<?php echo get_bloginfo('language'); ?>">
 							    					<input type="hidden" name="hostname" value="<?php echo str_replace(array("http://", "www."), "", $_SERVER["HTTP_HOST"]); ?>">
 								    				<button id="wpfc-buy-premium-button" type="submit" class="wpfc-btn primaryCta" style="width:200px;">
@@ -2230,6 +2252,8 @@
 				jQuery(document).ready(function() {
 					Wpfclang.init("<?php echo $wpFastestCacheLanguage; ?>");
 				});
+				
+				document.getElementById("wpFastestCacheLanguage").value = "<?php echo $wpFastestCacheLanguage; ?>";
 			</script>
 			<?php
 			if(isset($_SERVER["SERVER_SOFTWARE"]) && $_SERVER["SERVER_SOFTWARE"] && !preg_match("/iis/i", $_SERVER["SERVER_SOFTWARE"]) && !preg_match("/nginx/i", $_SERVER["SERVER_SOFTWARE"])){

@@ -11,7 +11,7 @@ defined( 'WPINC' ) or die;
  * [your-theme]/tribe-events/community/modules/custom.php
  *
  * @since  2.1
- * @version 4.5
+ * @version 4.5.9
  */
 // Makes sure we dont even try when Pro is inactive
 if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
@@ -34,7 +34,9 @@ $post_id = get_the_ID();
 
 	<?php
 		/**
-		 * Allow developers to hook and add content to the begining of this section
+		 * Allow developers to hook and add content to the begining of this section.
+		 *
+		 * @param int $post_id The post ID of the event.
 		 */
 		do_action( 'tribe_events_community_section_before_custom_fields', $post_id );
 	?>
@@ -48,23 +50,59 @@ $post_id = get_the_ID();
 		<?php foreach ( $fields as $field ) : ?>
 			<?php
 				$value = get_post_meta( get_the_ID(), $field['name'], true );
+
+				// Possibly save field value on failed form submit so user doesn't have to re-enter.
+				if ( empty( $value ) && ! empty( $_POST[ $field['name'] ] ) ) {
+					$value = $_POST[ $field['name'] ];
+				}
+
+				/**
+				 * Allows setting and/or modifying the field's value.
+				 *
+				 * @param mixed $value The existing field value.
+				 * @param string $name The field name.
+				 * @param int $event_id The event's post ID.
+				 */
 				$value = apply_filters( 'tribe_events_community_custom_field_value', $value, $field['name'], get_the_ID() );
-				if ( 'checkbox' === $field['type'] && ! is_array( $value ) ) {
-					$value = array_map(	'trim', explode( '|', $value ) );
-					$value = array_filter( $value );
-					$value = array_map(	'esc_attr', $value );
-				} else {
-					if ( 'textarea' !== $field['type'] ) {
-						$value = esc_attr( trim( $value ) );
-					} else {
+
+				switch ( $field['type'] ) {
+
+					case 'checkbox' :
+					case 'radio' :
+					case 'dropdown' :
+
+						// Handle values that may be a "|"-delimited string.
+						if ( ! is_array( $value ) ) {
+							$value = explode( '|', $value );
+						}
+
+						// Handle the value in its more common form as an array.
+						$value = array_filter( $value );
+ 						$value = array_map( 'trim', $value );
+ 						$value = array_map( 'esc_attr', $value );
+
+						break;
+
+					case 'textarea' :
+
+						$value = is_array( $value ) ? $value[0] : $value;
 						$value = esc_textarea( trim( stripslashes( $value ) ) );
-					}
+						break;
+
+					case 'text' :
+					case 'url' :
+
+						$value = is_array( $value ) ? $value[0] : $value;
+						$value = esc_textarea( trim( stripslashes( $value ) ) );
+						break;
 				}
 
 				$field_id = sanitize_html_class( 'tribe_custom_' . $field['label'] );
+
 				if ( in_array( $field['type'], array( 'radio', 'dropdown', 'checkbox' ) ) ) {
 					$field['name'] = stripslashes( $field['name'] );
 				}
+
 				$field['name'] = esc_attr( $field['name'] );
 
 				// Configure options
@@ -109,7 +147,7 @@ $post_id = get_the_ID();
 									type="radio"
 									name="<?php echo $field['name']; ?>"
 									value="<?php echo $option; ?>"
-									<?php checked( $value, $option ); ?>
+									<?php checked( in_array( $option, (array) $value ) ); ?>
 								>
 								<?php echo stripslashes( $option ); ?>
 							</label>
@@ -120,7 +158,7 @@ $post_id = get_the_ID();
 								<input
 									type="checkbox"
 									value="<?php echo $option; ?>"
-									<?php checked( in_array( $option, $value ) ) ?>
+									<?php checked( in_array( $option, (array) $value ) ); ?>
 									name="<?php echo $field['name']; ?>[]"
 								>
 								<?php echo stripslashes( $option ); ?>
@@ -131,7 +169,7 @@ $post_id = get_the_ID();
 							<?php foreach ( $options as $option ) : ?>
 								<option
 									value="<?php echo $option; ?>"
-									<?php selected( $value, $option ); ?>
+									<?php selected( in_array( $option, (array) $value ) ); ?>
 								>
 									<?php echo stripslashes( $option ); ?>
 								</option>
@@ -150,7 +188,9 @@ $post_id = get_the_ID();
 
 	<?php
 		/**
-		 * Allow developers to hook and add content to the end of this section
+		 * Allow developers to hook and add content to the end of this section.
+		 *
+		 * @param int $post_id The post ID of the event.
 		 */
 		do_action( 'tribe_events_community_section_after_custom_fields', $post_id );
 	?>

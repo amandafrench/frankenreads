@@ -30,28 +30,28 @@ class Tribe__Events__Community__Event_Form {
 			$this->event_id = wp_insert_post( array( 'post_title' => _x( 'Auto Draft', 'Tribe Community Events fallback post title', 'tribe-events-community' ), 'post_type' => Tribe__Events__Main::POSTTYPE, 'post_status' => 'auto-draft' ) );
 			$this->event = get_post( $this->event_id );
 		}
-	}//end set_event
+	}
 
 	/**
 	 * sets the error fields for the form
 	 */
 	public function set_error_fields( $error_fields = array() ) {
 		$this->error_fields = $error_fields;
-	}//end set_error_fields
+	}
 
 	/**
 	 * sets the required fields for the form
 	 */
 	public function set_required_fields( $required_fields = array() ) {
 		$this->required_fields = $required_fields;
-	}//end set_required_fields
+	}
 
 	/**
 	 * Returns the event id for the event form
 	 */
 	public function get_event_id() {
 		return $this->event_id;
-	}//end get_event_id
+	}
 
 	public function render() {
 		$edit_template = $this->get_template_path();

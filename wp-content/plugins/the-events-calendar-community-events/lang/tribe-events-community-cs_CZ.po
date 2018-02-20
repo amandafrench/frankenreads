@@ -102,11 +102,11 @@ msgstr ""
 msgid "Search Event Titles"
 msgstr "Hledat v názvech akcí"
 
-#: src/functions/template-tags.php:620
+#: src/functions/template-tags.php:638
 msgid "Past events"
 msgstr "Minulé akce"
 
-#: src/functions/template-tags.php:614
+#: src/functions/template-tags.php:632
 msgid "Upcoming events"
 msgstr "Plánované akce"
 
@@ -127,41 +127,41 @@ msgstr "Nahrát soubor"
 msgid "Event Image"
 msgstr "Obrázek akce"
 
-#: src/views/community/modules/datepickers.php:167
+#: src/views/community/modules/datepickers.php:171
 msgid "All Day Event"
 msgstr "Celodenní akce"
 
-#: src/views/community/modules/datepickers.php:143
+#: src/views/community/modules/datepickers.php:147
 msgid "Timezone"
 msgstr "Časová zóna"
 
-#: src/views/community/modules/datepickers.php:126
+#: src/views/community/modules/datepickers.php:130
 msgid "Event End Date"
 msgstr "Koncové datum akce"
 
-#: src/views/community/modules/datepickers.php:108
+#: src/views/community/modules/datepickers.php:112
 msgid "Event End Time"
 msgstr "Čas ukončení akce"
 
-#: src/views/community/modules/datepickers.php:104
+#: src/views/community/modules/datepickers.php:108
 msgctxt "Start Date Time \"to\" End Date Time"
 msgid "to"
 msgstr "do"
 
-#: src/views/community/modules/datepickers.php:103
-#: src/views/community/modules/datepickers.php:122
+#: src/views/community/modules/datepickers.php:107
+#: src/views/community/modules/datepickers.php:126
 msgid "HH:MM"
 msgstr "HH:MM"
 
-#: src/views/community/modules/datepickers.php:89
+#: src/views/community/modules/datepickers.php:93
 msgid "Event Start Time"
 msgstr "Čas zahájení akce"
 
-#: src/views/community/modules/datepickers.php:75
+#: src/views/community/modules/datepickers.php:79
 msgid "Event Start Date"
 msgstr "Počáteční datum akce"
 
-#: src/views/community/modules/datepickers.php:70
+#: src/views/community/modules/datepickers.php:74
 msgid "Start/End:"
 msgstr "Začátek/Konec:"
 
@@ -280,7 +280,7 @@ msgstr "Community Events přidává dodatečné funkce do pluginu The Events Cal
 msgid "The Events Calendar: Community Events"
 msgstr "The Events Calendar: Community Events"
 
-#: src/views/community/modules/datepickers.php:146
+#: src/views/community/modules/datepickers.php:150
 msgid "Timezone:"
 msgstr "Časové pásmo:"
 
@@ -376,7 +376,7 @@ msgstr "Město"
 msgid "Address"
 msgstr "Adresa"
 
-#: src/views/community/modules/custom.php:75
+#: src/views/community/modules/custom.php:113
 msgid "None"
 msgstr "Žádné"
 
@@ -416,20 +416,20 @@ msgstr "Obrázek akce"
 msgid "My %s"
 msgstr "Moje akce"
 
-#: src/views/community/modules/datepickers.php:85
-#: src/views/community/modules/datepickers.php:136
+#: src/views/community/modules/datepickers.php:89
+#: src/views/community/modules/datepickers.php:140
 msgid "YYYY-MM-DD"
 msgstr "RRRR-MM-DD"
 
-#: src/views/community/modules/datepickers.php:64
+#: src/views/community/modules/datepickers.php:68
 msgid "You have changed the recurrence rules of this %1$s. Saving the %1$s will update all future %2$s.  If you did not mean to change all %2$s, then please refresh the page."
 msgstr "Změnili jste pravidla pro opakování této akce.  Uložením této akce zaktualizujete i všechny budoucí akce.  Pokud jste nechtěli měnit všechny akce, pak prosím obnovte tuto stránku."
 
-#: src/views/community/modules/datepickers.php:46
+#: src/views/community/modules/datepickers.php:50
 msgid "%s Time &amp; Date"
 msgstr "Datum a čas akce"
 
-#: src/views/community/modules/custom.php:88
+#: src/views/community/modules/custom.php:126
 msgctxt "custom field label"
 msgid "%s:"
 msgstr "%s:"
@@ -466,27 +466,27 @@ msgstr "Ne"
 msgid "Yes"
 msgstr "Ano"
 
-#: src/functions/template-tags.php:579
+#: src/functions/template-tags.php:597
 msgid "End Date"
 msgstr "Koncové datum"
 
-#: src/functions/template-tags.php:578
+#: src/functions/template-tags.php:596
 msgid "Start Date"
 msgstr "Počáteční datum"
 
-#: src/functions/template-tags.php:575
+#: src/functions/template-tags.php:593
 msgid "Recurring?"
 msgstr "Opakující"
 
-#: src/functions/template-tags.php:571
+#: src/functions/template-tags.php:589
 msgid "Category"
 msgstr "Rubrika"
 
-#: src/functions/template-tags.php:568
+#: src/functions/template-tags.php:586
 msgid "Title"
 msgstr "Název"
 
-#: src/functions/template-tags.php:567
+#: src/functions/template-tags.php:585
 msgid "Status"
 msgstr "Stav"
 
@@ -549,7 +549,7 @@ msgstr "Popis:"
 msgid "%s Title:"
 msgstr "Název akce:"
 
-#: src/functions/template-tags.php:497
+#: src/functions/template-tags.php:515
 #: src/views/community/edit-organizer.php:31
 #: src/views/community/edit-venue.php:30
 msgid "(required)"

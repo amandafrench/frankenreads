@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Community Events package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-02-13 04:14:25+0000\n"
+"PO-Revision-Date: 2018-02-14 15:44:22+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,189 +14,189 @@ msgstr ""
 #: src/views/community/modules/taxonomy.php:94
 msgctxt "taxonomy selector ajax search placeholder"
 msgid "Searching…"
-msgstr ""
+msgstr "Søger..."
 
 #: src/views/community/modules/header-links.php:27
 msgid "Edit Venue"
-msgstr ""
+msgstr "Rediger sted for begivenhed"
 
 #: src/views/community/modules/header-links.php:25
 msgid "Edit Organizer"
-msgstr ""
+msgstr "Rediger arrangør"
 
 #: src/Tribe/Submission_Handler.php:403
 msgctxt "field label for post tags"
 msgid "Tag"
-msgstr ""
+msgstr "Tag"
 
 #: src/Tribe/Submission_Handler.php:400
 msgctxt "field label for event categories"
 msgid "%s Category"
-msgstr ""
+msgstr "%s Kategori"
 
 #: src/views/community/modules/taxonomy.php:95
 msgid "Search from existing %s"
-msgstr ""
+msgstr "Søg fra eksisterende %s"
 
 #: src/views/community/modules/taxonomy.php:59
 msgid "terms"
-msgstr ""
+msgstr "betingelser"
 
 #: src/admin-views/community-options-template.php:234
 msgid "Users can delete their events"
-msgstr ""
+msgstr "Bruger kan slette sine begivenheder"
 
 #: src/admin-views/community-options-template.php:225
 msgid "Users can edit their events, venues, and organizers"
-msgstr ""
+msgstr "Bruger kan redigere sine begivenheder, sted for begivenhed og arrangør"
 
 #: src/views/community/modules/website.php:48
 msgid "Enter URL for event information"
-msgstr ""
+msgstr "Indtast URL for information om begivenhed"
 
 #: src/views/community/modules/website.php:45
 msgid "External Link:"
-msgstr ""
+msgstr "Ekstern link:"
 
 #: src/views/community/modules/image.php:73
 msgid "Choose Image"
-msgstr ""
+msgstr "Vælg billede"
 
 #: src/views/community/modules/image.php:64
 msgid "Selected:"
-msgstr ""
+msgstr "Valgt:"
 
 #: src/views/community/modules/image.php:52
 msgid "Uploaded:"
-msgstr ""
+msgstr "Uploaded:"
 
 #: src/views/community/modules/image.php:43
 msgid "Choose a .jpg, .png, or .gif file under %1$s in size."
-msgstr ""
+msgstr "Vælg mellem .jpg, .png, or .gif filer under %1$s i størrelse."
 
 #: src/views/community/modules/header-links.php:39
 msgid "View Your Submitted Events"
-msgstr ""
+msgstr "Vis de begivenheder, som du har tilføjet"
 
 #: src/views/community/modules/header-links.php:29
 msgid "Add New Event"
-msgstr ""
+msgstr "Tilføj en ny begivenhed"
 
 #: src/views/community/modules/header-links.php:23
 msgid "Edit Event"
-msgstr ""
+msgstr "Rediger begivenhed"
 
 #: src/views/community/event-list.php:159
 msgid "You have no upcoming %s"
-msgstr ""
+msgstr "Du har ingen kommende %s"
 
 #: src/views/community/event-list.php:157
 msgid "You have no past %s"
-msgstr ""
+msgstr "Du har ingen tidligere %s"
 
 #: src/views/community/event-list.php:66
 msgid "Display Option"
-msgstr ""
+msgstr "Hvis muligheder"
 
 #: src/views/community/event-list.php:50
 msgid "Search Event Titles"
-msgstr ""
+msgstr "Søg mellem begivenhedstitler"
 
-#: src/functions/template-tags.php:620
+#: src/functions/template-tags.php:638
 msgid "Past events"
-msgstr ""
+msgstr "Tidligere begivenheder"
 
-#: src/functions/template-tags.php:614
+#: src/functions/template-tags.php:632
 msgid "Upcoming events"
-msgstr ""
+msgstr "Kommende begivenheder"
 
 #: src/Tribe/Main.php:1097 src/views/community/modules/image.php:83
 msgid "Remove image"
-msgstr ""
+msgstr "Fjern billede"
 
 #: src/Tribe/Event_Form.php:30
 msgctxt "Tribe Community Events fallback post title"
 msgid "Auto Draft"
-msgstr ""
+msgstr "Auto udkast"
 
 #: src/views/community/modules/image.php:76
 msgid "Upload File"
-msgstr ""
+msgstr "Upload Fil"
 
 #: src/views/community/modules/image.php:70
 msgid "Event Image"
-msgstr ""
+msgstr "Billede for begivenhed"
 
-#: src/views/community/modules/datepickers.php:167
+#: src/views/community/modules/datepickers.php:171
 msgid "All Day Event"
 msgstr "Heldagsbegivenhed "
 
-#: src/views/community/modules/datepickers.php:143
+#: src/views/community/modules/datepickers.php:147
 msgid "Timezone"
-msgstr ""
+msgstr "Tidszone"
 
-#: src/views/community/modules/datepickers.php:126
+#: src/views/community/modules/datepickers.php:130
 msgid "Event End Date"
 msgstr "Slutdato "
 
-#: src/views/community/modules/datepickers.php:108
+#: src/views/community/modules/datepickers.php:112
 msgid "Event End Time"
 msgstr "Sluttidspunkt "
 
-#: src/views/community/modules/datepickers.php:104
+#: src/views/community/modules/datepickers.php:108
 msgctxt "Start Date Time \"to\" End Date Time"
 msgid "to"
-msgstr ""
+msgstr "til"
 
-#: src/views/community/modules/datepickers.php:103
-#: src/views/community/modules/datepickers.php:122
+#: src/views/community/modules/datepickers.php:107
+#: src/views/community/modules/datepickers.php:126
 msgid "HH:MM"
-msgstr ""
+msgstr "HH:MM"
 
-#: src/views/community/modules/datepickers.php:89
+#: src/views/community/modules/datepickers.php:93
 msgid "Event Start Time"
 msgstr "Starttidspunkt"
 
-#: src/views/community/modules/datepickers.php:75
+#: src/views/community/modules/datepickers.php:79
 msgid "Event Start Date"
 msgstr "Startdato"
 
-#: src/views/community/modules/datepickers.php:70
+#: src/views/community/modules/datepickers.php:74
 msgid "Start/End:"
-msgstr ""
+msgstr "Start/slut"
 
 #: src/views/community/modules/cost.php:80
 msgid "Events Currency Position"
-msgstr ""
+msgstr "Position for valutasymbol"
 
 #: src/admin-views/community-options-template.php:147
 msgctxt "Click path in The Events Calendar settings to get to the API settings section separated by right arrows (HTML \"&rarr;\")"
 msgid "Events &rarr; Settings &rarr; APIs"
-msgstr ""
+msgstr "Begivenheder &rarr; Indstillinger &rarr; APIs"
 
 #: src/admin-views/community-options-template.php:142
 msgid "To enable spam prevention for anonymous submissions, enter your reCAPTCHA API keys under <a href=\"%1$s\">%2$s</a>"
-msgstr ""
+msgstr "For at aktivere spam beskyttelse ved anonyme oprettelser, skal du indtaste din  reCAPTCHA API nøgle under <a href=\"%1$s\">%2$s</a>"
 
 #: src/admin-views/community-options-template.php:140
 msgid "Spam Prevention"
-msgstr ""
+msgstr "Spam beskyttelse"
 
 #: src/admin-views/community-options-template.php:132
 msgid "Users will be limited to choosing from existing organizers."
-msgstr ""
+msgstr "Brugere vil blive begrænset til at vælge mellem eksisterende arrangører"
 
 #: src/admin-views/community-options-template.php:131
 msgid "Users cannot create new Organizers"
-msgstr ""
+msgstr "Brugere kan ikke oprette nye arrangører"
 
 #: src/admin-views/community-options-template.php:123
 msgid "Users will be limited to choosing from existing venues."
-msgstr ""
+msgstr "Brugere vil blive begrænset til at vælge mellem eksisterende steder for begivenheder"
 
 #: src/admin-views/community-options-template.php:122
 msgid "Users cannot create new Venues"
-msgstr ""
+msgstr "Brugere kan ikke oprette nye steder for begivenheder"
 
 #: src/Tribe/Captcha/Recaptcha_V2.php:139
 msgctxt "failed recaptcha response validation"
@@ -280,7 +280,7 @@ msgstr "Community Events er et add-on der tilføjer yderligere funktionalitet ti
 msgid "The Events Calendar: Community Events"
 msgstr "The Events Calendar: Community Events"
 
-#: src/views/community/modules/datepickers.php:146
+#: src/views/community/modules/datepickers.php:150
 msgid "Timezone:"
 msgstr "Tidszone:"
 
@@ -376,7 +376,7 @@ msgstr "By"
 msgid "Address"
 msgstr "Adresse"
 
-#: src/views/community/modules/custom.php:75
+#: src/views/community/modules/custom.php:113
 msgid "None"
 msgstr "Ingen"
 
@@ -416,20 +416,20 @@ msgstr "%sbillede"
 msgid "My %s"
 msgstr "Mine %s"
 
-#: src/views/community/modules/datepickers.php:85
-#: src/views/community/modules/datepickers.php:136
+#: src/views/community/modules/datepickers.php:89
+#: src/views/community/modules/datepickers.php:140
 msgid "YYYY-MM-DD"
 msgstr "ÅÅÅÅ-MM-DD"
 
-#: src/views/community/modules/datepickers.php:64
+#: src/views/community/modules/datepickers.php:68
 msgid "You have changed the recurrence rules of this %1$s. Saving the %1$s will update all future %2$s.  If you did not mean to change all %2$s, then please refresh the page."
-msgstr ""
+msgstr "Du har ændret tilbagevendende regler for %1$s. at gemme %1$s vil opdatere alle fremtidige %2$s.  Hvis du ikke ønsker at ændre alle %2$s, så skal du opdatere siden."
 
-#: src/views/community/modules/datepickers.php:46
+#: src/views/community/modules/datepickers.php:50
 msgid "%s Time &amp; Date"
 msgstr "%s tid og dato"
 
-#: src/views/community/modules/custom.php:88
+#: src/views/community/modules/custom.php:126
 msgctxt "custom field label"
 msgid "%s:"
 msgstr "%s:"
@@ -466,27 +466,27 @@ msgstr "Nej"
 msgid "Yes"
 msgstr "Ja"
 
-#: src/functions/template-tags.php:579
+#: src/functions/template-tags.php:597
 msgid "End Date"
 msgstr "Slutdato"
 
-#: src/functions/template-tags.php:578
+#: src/functions/template-tags.php:596
 msgid "Start Date"
 msgstr "Startdato"
 
-#: src/functions/template-tags.php:575
+#: src/functions/template-tags.php:593
 msgid "Recurring?"
 msgstr "Tilbagevendende?"
 
-#: src/functions/template-tags.php:571
+#: src/functions/template-tags.php:589
 msgid "Category"
 msgstr "Kategori"
 
-#: src/functions/template-tags.php:568
+#: src/functions/template-tags.php:586
 msgid "Title"
 msgstr "Titel"
 
-#: src/functions/template-tags.php:567
+#: src/functions/template-tags.php:585
 msgid "Status"
 msgstr "Status"
 
@@ -549,7 +549,7 @@ msgstr "%sbeskrivelse:"
 msgid "%s Title:"
 msgstr "%stitel:"
 
-#: src/functions/template-tags.php:497
+#: src/functions/template-tags.php:515
 #: src/views/community/edit-organizer.php:31
 #: src/views/community/edit-venue.php:30
 msgid "(required)"
@@ -989,6 +989,9 @@ msgstr "Bemærk: reCAPTCHA er kun synligt for brugere der ikke er logget ind."
 #: src/Tribe/Captcha/Recaptcha.php:24
 msgid "Provide reCAPTCHA API keys for both fields to enable reCAPTCHA on your Community Events form."
 msgstr ""
+"Indtast reCAPTCHA API-nøgler for begge felter for at aktivere reCAPTCHA på dine events\n"
+"\n"
+"."
 
 #: src/Tribe/Captcha/Recaptcha.php:20
 msgid "reCAPTCHA API Keys"

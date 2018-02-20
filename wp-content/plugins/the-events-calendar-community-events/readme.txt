@@ -5,7 +5,7 @@ Tags: widget, events, simple, tooltips, grid, month, list, calendar, event, venu
 Donate link: http://m.tri.be/29
 Requires at least: 4.5
 Tested up to: 4.9
-Stable tag: 4.5.8
+Stable tag: 4.5.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -151,6 +151,13 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.5.9] 2018-02-14 =
+
+* Fix - Prevent the loss of event start date, end date, start time, end time, "all day" event, and timezone choices upon failed event submission (thanks to @netdesign and many others for highlighting this issue) [94010]
+* Fix - Fixed additional fields from Events Calendar PRO on the event-submission form so that their values are saved upon a failed form submission (thanks @myrunningresource for flagging this bug!) [94908]
+* Tweak - Fixed misalignment of "Display Options" button in the front-end "My Events" list [93521]
+* Tweak - Adjust the edit-organizer and edit-venue form styles to make both forms more readable (props @artcantina for highlighting these issues) [95043]
 
 = [4.5.8] 2017-11-21 =
 

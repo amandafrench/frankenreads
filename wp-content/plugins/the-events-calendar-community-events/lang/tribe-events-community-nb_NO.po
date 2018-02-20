@@ -102,11 +102,11 @@ msgstr ""
 msgid "Search Event Titles"
 msgstr ""
 
-#: src/functions/template-tags.php:620
+#: src/functions/template-tags.php:638
 msgid "Past events"
 msgstr ""
 
-#: src/functions/template-tags.php:614
+#: src/functions/template-tags.php:632
 msgid "Upcoming events"
 msgstr ""
 
@@ -127,41 +127,41 @@ msgstr ""
 msgid "Event Image"
 msgstr ""
 
-#: src/views/community/modules/datepickers.php:167
+#: src/views/community/modules/datepickers.php:171
 msgid "All Day Event"
 msgstr "Heldagshendelse"
 
-#: src/views/community/modules/datepickers.php:143
+#: src/views/community/modules/datepickers.php:147
 msgid "Timezone"
 msgstr ""
 
-#: src/views/community/modules/datepickers.php:126
+#: src/views/community/modules/datepickers.php:130
 msgid "Event End Date"
 msgstr "Hendelse sluttdato"
 
-#: src/views/community/modules/datepickers.php:108
+#: src/views/community/modules/datepickers.php:112
 msgid "Event End Time"
 msgstr "Hendelsens sluttid"
 
-#: src/views/community/modules/datepickers.php:104
+#: src/views/community/modules/datepickers.php:108
 msgctxt "Start Date Time \"to\" End Date Time"
 msgid "to"
 msgstr ""
 
-#: src/views/community/modules/datepickers.php:103
-#: src/views/community/modules/datepickers.php:122
+#: src/views/community/modules/datepickers.php:107
+#: src/views/community/modules/datepickers.php:126
 msgid "HH:MM"
 msgstr ""
 
-#: src/views/community/modules/datepickers.php:89
+#: src/views/community/modules/datepickers.php:93
 msgid "Event Start Time"
 msgstr "Hendelsens starttid"
 
-#: src/views/community/modules/datepickers.php:75
+#: src/views/community/modules/datepickers.php:79
 msgid "Event Start Date"
 msgstr "Hendelsens startdato"
 
-#: src/views/community/modules/datepickers.php:70
+#: src/views/community/modules/datepickers.php:74
 msgid "Start/End:"
 msgstr ""
 
@@ -280,7 +280,7 @@ msgstr "Community Events er en plugin som tilbyr ekstra funksjonalitet til The E
 msgid "The Events Calendar: Community Events"
 msgstr "The Events Calendar: Community Events"
 
-#: src/views/community/modules/datepickers.php:146
+#: src/views/community/modules/datepickers.php:150
 msgid "Timezone:"
 msgstr "Tidssone:"
 
@@ -376,7 +376,7 @@ msgstr "By"
 msgid "Address"
 msgstr "Adresse"
 
-#: src/views/community/modules/custom.php:75
+#: src/views/community/modules/custom.php:113
 msgid "None"
 msgstr "Ingen"
 
@@ -416,20 +416,20 @@ msgstr "%ssbilde"
 msgid "My %s"
 msgstr "%s: Mine"
 
-#: src/views/community/modules/datepickers.php:85
-#: src/views/community/modules/datepickers.php:136
+#: src/views/community/modules/datepickers.php:89
+#: src/views/community/modules/datepickers.php:140
 msgid "YYYY-MM-DD"
 msgstr "YYYY-MM-DD"
 
-#: src/views/community/modules/datepickers.php:64
+#: src/views/community/modules/datepickers.php:68
 msgid "You have changed the recurrence rules of this %1$s. Saving the %1$s will update all future %2$s.  If you did not mean to change all %2$s, then please refresh the page."
 msgstr "Du har endret gjentakelsesreglene for dette %1$s. Lagring av %1$s vil endre alle fremtidige %2$s. Hvis du ikke mente å endre alle %2$s, vennligst oppdater siden."
 
-#: src/views/community/modules/datepickers.php:46
+#: src/views/community/modules/datepickers.php:50
 msgid "%s Time &amp; Date"
 msgstr "%s tid og dato"
 
-#: src/views/community/modules/custom.php:88
+#: src/views/community/modules/custom.php:126
 msgctxt "custom field label"
 msgid "%s:"
 msgstr "%s:"
@@ -466,27 +466,27 @@ msgstr "Nei"
 msgid "Yes"
 msgstr "Ja"
 
-#: src/functions/template-tags.php:579
+#: src/functions/template-tags.php:597
 msgid "End Date"
 msgstr "Sluttdato"
 
-#: src/functions/template-tags.php:578
+#: src/functions/template-tags.php:596
 msgid "Start Date"
 msgstr "Starddato"
 
-#: src/functions/template-tags.php:575
+#: src/functions/template-tags.php:593
 msgid "Recurring?"
 msgstr "Gjentakende?"
 
-#: src/functions/template-tags.php:571
+#: src/functions/template-tags.php:589
 msgid "Category"
 msgstr "Kategori"
 
-#: src/functions/template-tags.php:568
+#: src/functions/template-tags.php:586
 msgid "Title"
 msgstr "Tittel"
 
-#: src/functions/template-tags.php:567
+#: src/functions/template-tags.php:585
 msgid "Status"
 msgstr "Status"
 
@@ -549,7 +549,7 @@ msgstr "%ssbeskrivelse:"
 msgid "%s Title:"
 msgstr "%sstittel:"
 
-#: src/functions/template-tags.php:497
+#: src/functions/template-tags.php:515
 #: src/views/community/edit-organizer.php:31
 #: src/views/community/edit-venue.php:30
 msgid "(required)"

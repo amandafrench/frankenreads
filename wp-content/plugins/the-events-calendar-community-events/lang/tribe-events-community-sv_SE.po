@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Community Events package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-09-04 19:30:16+0000\n"
+"PO-Revision-Date: 2018-01-17 13:45:12+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,7 +14,7 @@ msgstr ""
 #: src/views/community/modules/taxonomy.php:94
 msgctxt "taxonomy selector ajax search placeholder"
 msgid "Searching…"
-msgstr ""
+msgstr "Söker..."
 
 #: src/views/community/modules/header-links.php:27
 msgid "Edit Venue"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: src/views/community/modules/header-links.php:25
 msgid "Edit Organizer"
-msgstr ""
+msgstr "Redigera organisatör"
 
 #: src/Tribe/Submission_Handler.php:403
 msgctxt "field label for post tags"
@@ -32,7 +32,7 @@ msgstr ""
 #: src/Tribe/Submission_Handler.php:400
 msgctxt "field label for event categories"
 msgid "%s Category"
-msgstr ""
+msgstr "%s kategori"
 
 #: src/views/community/modules/taxonomy.php:95
 msgid "Search from existing %s"
@@ -102,11 +102,11 @@ msgstr "Visningsalternativ"
 msgid "Search Event Titles"
 msgstr "Sök evenemangstitlar"
 
-#: src/functions/template-tags.php:620
+#: src/functions/template-tags.php:638
 msgid "Past events"
 msgstr "Tidigare evenemang"
 
-#: src/functions/template-tags.php:614
+#: src/functions/template-tags.php:632
 msgid "Upcoming events"
 msgstr "Kommande evenemang"
 
@@ -127,41 +127,41 @@ msgstr "Ladda upp fil"
 msgid "Event Image"
 msgstr "Evenemangsbild"
 
-#: src/views/community/modules/datepickers.php:167
+#: src/views/community/modules/datepickers.php:171
 msgid "All Day Event"
 msgstr "Heldagsevenemang"
 
-#: src/views/community/modules/datepickers.php:143
+#: src/views/community/modules/datepickers.php:147
 msgid "Timezone"
 msgstr "Tidszon"
 
-#: src/views/community/modules/datepickers.php:126
+#: src/views/community/modules/datepickers.php:130
 msgid "Event End Date"
 msgstr "Slutdatum"
 
-#: src/views/community/modules/datepickers.php:108
+#: src/views/community/modules/datepickers.php:112
 msgid "Event End Time"
 msgstr "Sluttid"
 
-#: src/views/community/modules/datepickers.php:104
+#: src/views/community/modules/datepickers.php:108
 msgctxt "Start Date Time \"to\" End Date Time"
 msgid "to"
 msgstr "till"
 
-#: src/views/community/modules/datepickers.php:103
-#: src/views/community/modules/datepickers.php:122
+#: src/views/community/modules/datepickers.php:107
+#: src/views/community/modules/datepickers.php:126
 msgid "HH:MM"
 msgstr "HH:MM"
 
-#: src/views/community/modules/datepickers.php:89
+#: src/views/community/modules/datepickers.php:93
 msgid "Event Start Time"
 msgstr "Starttid"
 
-#: src/views/community/modules/datepickers.php:75
+#: src/views/community/modules/datepickers.php:79
 msgid "Event Start Date"
 msgstr "Startdatum"
 
-#: src/views/community/modules/datepickers.php:70
+#: src/views/community/modules/datepickers.php:74
 msgid "Start/End:"
 msgstr "Start/Slut:"
 
@@ -280,7 +280,7 @@ msgstr ""
 msgid "The Events Calendar: Community Events"
 msgstr ""
 
-#: src/views/community/modules/datepickers.php:146
+#: src/views/community/modules/datepickers.php:150
 msgid "Timezone:"
 msgstr "Tidszon:"
 
@@ -376,7 +376,7 @@ msgstr "Stad"
 msgid "Address"
 msgstr "Adress"
 
-#: src/views/community/modules/custom.php:75
+#: src/views/community/modules/custom.php:113
 msgid "None"
 msgstr "Ingen"
 
@@ -416,20 +416,20 @@ msgstr "%s bild"
 msgid "My %s"
 msgstr "Mina %s"
 
-#: src/views/community/modules/datepickers.php:85
-#: src/views/community/modules/datepickers.php:136
+#: src/views/community/modules/datepickers.php:89
+#: src/views/community/modules/datepickers.php:140
 msgid "YYYY-MM-DD"
 msgstr "ÅÅÅÅ-MM-DD"
 
-#: src/views/community/modules/datepickers.php:64
+#: src/views/community/modules/datepickers.php:68
 msgid "You have changed the recurrence rules of this %1$s. Saving the %1$s will update all future %2$s.  If you did not mean to change all %2$s, then please refresh the page."
 msgstr "Du har ändrat repeteringsreglerna för detta %1$s.  Om du sparar kommer alla kommande %2$s. Om du inte vill ändra alla %2$s, vänligen uppdatera sidan."
 
-#: src/views/community/modules/datepickers.php:46
+#: src/views/community/modules/datepickers.php:50
 msgid "%s Time &amp; Date"
 msgstr "%s tid &amp; datum"
 
-#: src/views/community/modules/custom.php:88
+#: src/views/community/modules/custom.php:126
 msgctxt "custom field label"
 msgid "%s:"
 msgstr "%s:"
@@ -466,27 +466,27 @@ msgstr "Nej"
 msgid "Yes"
 msgstr "Ja"
 
-#: src/functions/template-tags.php:579
+#: src/functions/template-tags.php:597
 msgid "End Date"
 msgstr "Slutdatum"
 
-#: src/functions/template-tags.php:578
+#: src/functions/template-tags.php:596
 msgid "Start Date"
 msgstr "Startdatum"
 
-#: src/functions/template-tags.php:575
+#: src/functions/template-tags.php:593
 msgid "Recurring?"
 msgstr "Återkommande?"
 
-#: src/functions/template-tags.php:571
+#: src/functions/template-tags.php:589
 msgid "Category"
 msgstr "Kategori"
 
-#: src/functions/template-tags.php:568
+#: src/functions/template-tags.php:586
 msgid "Title"
 msgstr "Titel"
 
-#: src/functions/template-tags.php:567
+#: src/functions/template-tags.php:585
 msgid "Status"
 msgstr "Status"
 
@@ -549,7 +549,7 @@ msgstr "%s beskrivning:"
 msgid "%s Title:"
 msgstr "%s titel:"
 
-#: src/functions/template-tags.php:497
+#: src/functions/template-tags.php:515
 #: src/views/community/edit-organizer.php:31
 #: src/views/community/edit-venue.php:30
 msgid "(required)"
@@ -717,7 +717,7 @@ msgstr "Ett problem uppstod när ditt %s skulle sparas, vänligen försök igen.
 
 #: src/Tribe/Submission_Handler.php:101
 msgid "%s submitted."
-msgstr ""
+msgstr "%s inskickat."
 
 #: src/Tribe/Submission_Handler.php:86
 msgid "There was a problem saving your %s, please try again."

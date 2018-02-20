@@ -4,7 +4,7 @@ Donate link: http://profiles.wordpress.org/emrevona/
 Tags: cache, performance, wp-cache, total cache, super cache
 Requires at least: 3.3
 Tested up to: 4.9
-Stable tag: 0.8.7.6
+Stable tag: 0.8.7.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,8 +102,16 @@ Wpfc does not support Wordpress Multisite yet.
 
 == Changelog ==
 
+= 0.8.7.7 =
+* to remove "via php" text if WPFC_REMOVE_VIA_FOOTER_COMMENT is defined as true
+* <strong>[FEATURE]</strong> Restart Preload [<a target="_blank" href="http://www.wpfastestcache.com/features/restart-preload-after-completed/">Details</a>]
+* to fix the problem of selecting chinese language automatically
+* to fix php notice trying to get property of non-object in delete_cache_of_term()
+* to speed up getting db optimization statistics()
+* to show the cache of main content without query string if google analytics parameters are set [<a target="_blank" href="http://www.wpfastestcache.com/features/cache-url-with-google-analytics-parameters-querystring/">Details</a>]
+
+
 = 0.8.7.6 =
-* to remove "via php" text if WPFC_REMOVE_FOOTER_COMMENT is defined as true
 * to fix the problem which show the same cache for every language on Polylang
 * <strong>[FEATURE]</strong> to remove wordpress emojis [<a target="_blank" href="http://www.wpfastestcache.com/optimization/disableremove-wordpress-emojis/">Details</a>]
 

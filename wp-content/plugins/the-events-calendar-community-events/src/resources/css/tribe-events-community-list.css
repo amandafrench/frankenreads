@@ -179,6 +179,7 @@
 
 .tribe-community-events-content .tribe-nav .my-events-display-options a.tribe-button-tertiary {
 	color: #64686c;
+	margin: 0;
 }
 
 .tribe-community-events-content .tribe-nav .table-menu-wrapper {
@@ -190,6 +191,7 @@
 
 .tribe-community-events-content .tribe-nav .table-menu-wrapper a.tribe-button-tertiary {
 	color: #64686c;
+	margin: 0;
 }
 
 /*---------------------------------------*\
@@ -417,10 +419,26 @@ div.tribe-community-events-list {
 	right: auto;
 }
 
-.tribe-responsive-table-container{
+.tribe-responsive-table-container {
   max-width: 100%;
   overflow: auto;
   overflow-y: hidden;
+}
+
+/*---------------------------------------*\
+	Edit-Organizer and Edit-Venue Views
+\*---------------------------------------*/
+
+.tribe_community_edit .form.organizer .events-community-post-content {
+	margin: 1.5em 0 3em;
+}
+
+.tribe_community_edit .form.venue .tribe-community-event-info {
+	margin: 0;
+}
+
+.tribe_community_edit .form.venue .events-community-post-content {
+	margin: 1.5em 0 3em;
 }
 
 /*---------------------------------------*\

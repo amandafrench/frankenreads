@@ -102,11 +102,11 @@ msgstr "Näytä valinta"
 msgid "Search Event Titles"
 msgstr "Hae tapahtumien nimiä"
 
-#: src/functions/template-tags.php:620
+#: src/functions/template-tags.php:638
 msgid "Past events"
 msgstr "Menneet tapahtumat"
 
-#: src/functions/template-tags.php:614
+#: src/functions/template-tags.php:632
 msgid "Upcoming events"
 msgstr "Tulevat tapahtumat"
 
@@ -127,41 +127,41 @@ msgstr "Lähetä tiedosto"
 msgid "Event Image"
 msgstr "Tapahtumakuva"
 
-#: src/views/community/modules/datepickers.php:167
+#: src/views/community/modules/datepickers.php:171
 msgid "All Day Event"
 msgstr "Koko päivän tapahtuma"
 
-#: src/views/community/modules/datepickers.php:143
+#: src/views/community/modules/datepickers.php:147
 msgid "Timezone"
 msgstr "Aikavyöhyke"
 
-#: src/views/community/modules/datepickers.php:126
+#: src/views/community/modules/datepickers.php:130
 msgid "Event End Date"
 msgstr "Tapahtuman päättymispäivä"
 
-#: src/views/community/modules/datepickers.php:108
+#: src/views/community/modules/datepickers.php:112
 msgid "Event End Time"
 msgstr "Tapahtuman päättymisaika"
 
-#: src/views/community/modules/datepickers.php:104
+#: src/views/community/modules/datepickers.php:108
 msgctxt "Start Date Time \"to\" End Date Time"
 msgid "to"
 msgstr "-"
 
-#: src/views/community/modules/datepickers.php:103
-#: src/views/community/modules/datepickers.php:122
+#: src/views/community/modules/datepickers.php:107
+#: src/views/community/modules/datepickers.php:126
 msgid "HH:MM"
 msgstr "HH:MM"
 
-#: src/views/community/modules/datepickers.php:89
+#: src/views/community/modules/datepickers.php:93
 msgid "Event Start Time"
 msgstr "Tapahtuman aloitusaika"
 
-#: src/views/community/modules/datepickers.php:75
+#: src/views/community/modules/datepickers.php:79
 msgid "Event Start Date"
 msgstr "Tapahtuman aloituspäivä"
 
-#: src/views/community/modules/datepickers.php:70
+#: src/views/community/modules/datepickers.php:74
 msgid "Start/End:"
 msgstr "Alku/Loppu:"
 
@@ -280,7 +280,7 @@ msgstr "Community Events on lisäosa joka tuo lisätoimintoja avoimen lähdekood
 msgid "The Events Calendar: Community Events"
 msgstr "The Events Calendar: Community Events"
 
-#: src/views/community/modules/datepickers.php:146
+#: src/views/community/modules/datepickers.php:150
 msgid "Timezone:"
 msgstr "Aikavyöhyke:"
 
@@ -376,7 +376,7 @@ msgstr "Kaupunki"
 msgid "Address"
 msgstr "Osoite"
 
-#: src/views/community/modules/custom.php:75
+#: src/views/community/modules/custom.php:113
 msgid "None"
 msgstr "Ei mitään"
 
@@ -416,20 +416,20 @@ msgstr "%s: kuva"
 msgid "My %s"
 msgstr "Minun %s"
 
-#: src/views/community/modules/datepickers.php:85
-#: src/views/community/modules/datepickers.php:136
+#: src/views/community/modules/datepickers.php:89
+#: src/views/community/modules/datepickers.php:140
 msgid "YYYY-MM-DD"
 msgstr "YYYY-MM-DD"
 
-#: src/views/community/modules/datepickers.php:64
+#: src/views/community/modules/datepickers.php:68
 msgid "You have changed the recurrence rules of this %1$s. Saving the %1$s will update all future %2$s.  If you did not mean to change all %2$s, then please refresh the page."
 msgstr "Olet muuttanut %1$s toistuvuussääntöjä. Tallentamalla %1$s päivittää kaikki tulevat %2$s. Jos et halua muuttaa kaikkia %2$s, ole hyvä ja lataa sivu uudelleen."
 
-#: src/views/community/modules/datepickers.php:46
+#: src/views/community/modules/datepickers.php:50
 msgid "%s Time &amp; Date"
 msgstr "%s: päivä ja aika"
 
-#: src/views/community/modules/custom.php:88
+#: src/views/community/modules/custom.php:126
 msgctxt "custom field label"
 msgid "%s:"
 msgstr "%s:"
@@ -466,27 +466,27 @@ msgstr "Ei"
 msgid "Yes"
 msgstr "Kyllä"
 
-#: src/functions/template-tags.php:579
+#: src/functions/template-tags.php:597
 msgid "End Date"
 msgstr "Päättymispäivä"
 
-#: src/functions/template-tags.php:578
+#: src/functions/template-tags.php:596
 msgid "Start Date"
 msgstr "Aloituspäivä"
 
-#: src/functions/template-tags.php:575
+#: src/functions/template-tags.php:593
 msgid "Recurring?"
 msgstr "Toistuva?"
 
-#: src/functions/template-tags.php:571
+#: src/functions/template-tags.php:589
 msgid "Category"
 msgstr "Luokka"
 
-#: src/functions/template-tags.php:568
+#: src/functions/template-tags.php:586
 msgid "Title"
 msgstr "Otsikko"
 
-#: src/functions/template-tags.php:567
+#: src/functions/template-tags.php:585
 msgid "Status"
 msgstr "Tila"
 
@@ -549,7 +549,7 @@ msgstr "%s kuvaus:"
 msgid "%s Title:"
 msgstr "%s otsikko:"
 
-#: src/functions/template-tags.php:497
+#: src/functions/template-tags.php:515
 #: src/views/community/edit-organizer.php:31
 #: src/views/community/edit-venue.php:30
 msgid "(required)"

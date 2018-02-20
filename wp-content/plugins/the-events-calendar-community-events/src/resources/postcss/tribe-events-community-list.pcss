@@ -196,6 +196,7 @@
 
 			a.tribe-button-tertiary {
 				color: var(--shuttle-gray);
+				margin: 0;
 			}
 
 		}
@@ -212,6 +213,7 @@
 
 			a.tribe-button-tertiary {
 				color: var(--shuttle-gray);
+				margin: 0;
 			}
 		}
 	}
@@ -527,10 +529,35 @@ div.tribe-community-events-list {
 }
 
 
-.tribe-responsive-table-container{
+.tribe-responsive-table-container {
   max-width: 100%;
   overflow: auto;
   overflow-y: hidden;
+}
+
+/*---------------------------------------*\
+	Edit-Organizer and Edit-Venue Views
+\*---------------------------------------*/
+
+.tribe_community_edit {
+
+	.form.organizer {
+
+		.events-community-post-content {
+			margin: 1.5em 0 3em;
+		}
+	}
+
+	.form.venue {
+
+		.tribe-community-event-info {
+			margin: 0;
+		}
+
+		.events-community-post-content {
+			margin: 1.5em 0 3em;
+		}
+	}
 }
 
 /*---------------------------------------*\
