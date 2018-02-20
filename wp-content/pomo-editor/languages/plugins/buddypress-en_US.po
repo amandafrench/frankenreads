@@ -5473,7 +5473,7 @@ msgstr ""
 
 #: bp-members/classes/class-bp-registration-theme-compat.php:103
 msgid "Check Your Email To Activate Your Account!"
-msgstr ""
+msgstr "Check your email to activate your account."
 
 #: bp-members/classes/class-bp-registration-theme-compat.php:111
 msgid "Account Activated"
