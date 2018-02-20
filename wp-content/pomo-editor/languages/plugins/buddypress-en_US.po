@@ -6857,7 +6857,7 @@ msgstr ""
 
 #: bp-templates/bp-legacy/buddypress/members/register.php:391
 msgid "You have successfully created your account! To begin using this site you will need to activate your account via the email we have just sent to your address."
-msgstr ""
+msgstr "You have successfully created your account! To complete your registration you will need to activate your account by clicking the link in the email we have just sent. If you cannot find the email, please check your spam folder."
 
 #: bp-templates/bp-legacy/buddypress/members/register.php:393
 msgid "You have successfully created your account! Please log in using the username and password you have just created."
