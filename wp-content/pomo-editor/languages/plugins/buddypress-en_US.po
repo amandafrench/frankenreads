@@ -2487,7 +2487,7 @@ msgstr ""
 #: bp-core/bp-core-template.php:3194
 #: bp-members/classes/class-bp-registration-theme-compat.php:100
 msgid "Create an Account"
-msgstr "Join The Community"
+msgstr "Join the Community"
 
 #: bp-core/bp-core-template.php:3198
 #: bp-members/classes/class-bp-registration-theme-compat.php:108
