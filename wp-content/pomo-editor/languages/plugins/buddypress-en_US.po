@@ -4646,8 +4646,8 @@ msgstr ""
 #: bp-groups/bp-groups-template.php:4349 bp-members/bp-members-template.php:502
 msgid "Viewing %1$s - %2$s of %3$s member"
 msgid_plural "Viewing %1$s - %2$s of %3$s members"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Viewing %1$s - %2$s of %3$s partners"
+msgstr[1] "Viewing %1$s - %2$s of %3$s partners"
 
 #: bp-groups/bp-groups-template.php:4477
 #: bp-templates/bp-legacy/buddypress/groups/single/activity.php:10
@@ -5428,7 +5428,7 @@ msgstr ""
 
 #: bp-members/classes/class-bp-members-component.php:117
 msgid "Search Members..."
-msgstr ""
+msgstr "Search Partners..."
 
 #: bp-members/classes/class-bp-members-component.php:375
 msgid "You"
@@ -5473,7 +5473,7 @@ msgstr ""
 
 #: bp-members/classes/class-bp-registration-theme-compat.php:103
 msgid "Check Your Email To Activate Your Account!"
-msgstr "Check your email to activate your account."
+msgstr "Check your email for a message with an account activation link. If you have not received the email, check your spam folder. If you still cannot find the activation email, contact us at info@frankenreads.org."
 
 #: bp-members/classes/class-bp-registration-theme-compat.php:111
 msgid "Account Activated"
@@ -6785,7 +6785,7 @@ msgstr ""
 
 #: bp-templates/bp-legacy/buddypress/members/register.php:67
 msgid "Registering for this site is easy. Just fill in the fields below, and we'll get a new account set up for you in no time."
-msgstr "Complete the fields below and we will register an account for you."
+msgstr "Complete the fields below and we will register an account for you. Activating your account will list you on the Partners page, will subscribe you to our email list, and will allow you to submit events and message other partners via their profile page. "
 
 #: bp-templates/bp-legacy/buddypress/members/register.php:82
 msgid "Account Details"
