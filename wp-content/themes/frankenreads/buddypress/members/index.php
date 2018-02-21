@@ -15,6 +15,8 @@ do_action( 'bp_before_directory_members_page' ); ?>
 
 <div id="buddypress">
 
+<p id="partner-intro"><a href="../join">Join the Community</a> to become a partner listed on this page.</p>
+
 	<?php
 
 	/**
@@ -56,7 +58,7 @@ do_action( 'bp_before_directory_members_page' ); ?>
 
 	<form action="" method="post" id="members-directory-form" class="dir-form">
 
-		<div class="item-list-tabs" aria-label="<?php esc_attr_e( 'Members directory main navigation', 'buddypress' ); ?>" role="navigation">
+<!--		<div class="item-list-tabs" aria-label="<?php esc_attr_e( 'Members directory main navigation', 'buddypress' ); ?>" role="navigation">
 			<ul>
 				<li class="selected" id="members-all"><a href="<?php bp_members_directory_permalink(); ?>"><?php printf( __( 'All Members %s', 'buddypress' ), '<span>' . bp_get_total_member_count() . '</span>' ); ?></a></li>
 
@@ -73,9 +75,11 @@ do_action( 'bp_before_directory_members_page' ); ?>
 				 */
 				do_action( 'bp_members_directory_member_types' ); ?>
 
-			</ul>
-		</div><!-- .item-list-tabs -->
+			</ul> 
+		</div> --> 
+		<!-- .item-list-tabs -->
 
+<!--
 		<div class="item-list-tabs" id="subnav" aria-label="<?php esc_attr_e( 'Members directory secondary navigation', 'buddypress' ); ?>" role="navigation">
 			<ul>
 				<?php
@@ -114,10 +118,13 @@ do_action( 'bp_before_directory_members_page' ); ?>
 			/* translators: accessibility text */
 			_e( 'Members directory', 'buddypress' );
 		?></h2>
-
+-->	
 		<div id="members-dir-list" class="members dir-list">
 			<?php bp_get_template_part( 'members/members-loop' ); ?>
-		</div><!-- #members-dir-list -->
+		</div>
+		
+		
+		<!-- #members-dir-list -->
 
 		<?php
 

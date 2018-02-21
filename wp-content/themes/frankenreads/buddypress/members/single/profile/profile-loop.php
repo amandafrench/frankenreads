@@ -58,6 +58,13 @@ do_action( 'bp_before_profile_loop_content' ); ?>
 
 			/** This action is documented in bp-templates/bp-legacy/buddypress/members/single/profile/profile-wp.php */
 			do_action( 'bp_after_profile_field_content' ); ?>
+			
+	<?php
+		/**
+		 * Puts events on user profile
+		 *
+		 */
+	do_action( 'bpfr_get_post_on_profile' ); ?>			
 
 		<?php endif; ?>
 
@@ -67,7 +74,7 @@ do_action( 'bp_before_profile_loop_content' ); ?>
 
 	/** This action is documented in bp-templates/bp-legacy/buddypress/members/single/profile/profile-wp.php */
 	do_action( 'bp_profile_field_buttons' ); ?>
-
+	
 <?php endif; ?>
 
 <?php

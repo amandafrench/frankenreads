@@ -47,40 +47,28 @@ do_action( 'bp_before_members_loop' ); ?>
 	 */
 	do_action( 'bp_before_directory_members_list' ); ?>
 
-	<?php /** 
-	* Begin custom members table 
-	*/
-	?>
-	
-<table id="members-list" class="item-list" aria-live="assertive" aria-relevant="all">
-	<thead>
-	<tr class="table-row">
-    <th>Name</th>
-    <th>Organization</th>
-    <th>City</th>
-    <th>State, Province, Region</th>
-    <th>Country</th>
-    </tr>
-    </thead>
+	<ul id="members-list" class="item-list" aria-live="assertive" aria-relevant="all">
+
 	<?php while ( bp_members() ) : bp_the_member(); ?>
 
-		<tr class="item" <?php bp_member_class(); ?>>
+		<li <?php bp_member_class(); ?>>
 <!--			<div class="item-avatar">
 				<a href="<?php bp_member_permalink(); ?>"><?php bp_member_avatar(); ?></a>
 			</div>
--->		
-				<td class="partner-item-name">
+-->
+			<div class="item">
+				<span class="people-item">
 					<a href="<?php bp_member_permalink(); ?>"><?php bp_member_name(); ?></a>
 
 <!--					<?php if ( bp_get_member_latest_update() ) : ?>
 
-						<td class="update"> <?php bp_member_latest_update(); ?></td>
+						<span class="update"> <?php bp_member_latest_update(); ?></span>
 
 					<?php endif; ?>
 -->
-				</td>
+				</span>
 
-<!--				<div class="item-meta"><td class="activity" data-livestamp="<?php bp_core_iso8601_date( bp_get_member_last_active( array( 'relative' => false ) ) ); ?>"><?php bp_member_last_active(); ?></td></div>
+<!--				<div class="item-meta"><span class="activity" data-livestamp="<?php bp_core_iso8601_date( bp_get_member_last_active( array( 'relative' => false ) ) ); ?>"><?php bp_member_last_active(); ?></span></div>
 -->
 				<?php
 
@@ -101,19 +89,15 @@ do_action( 'bp_before_members_loop' ); ?>
 				  */
 				?>
 				
-				<td class="partner-item-org"><?php bp_member_profile_data( 'field=Organization'); ?></td>
+				<span class="people-item"><?php bp_member_profile_data( 'field=Organization'); ?></span>
 				
-				<td class="partner-item-city"><?php bp_member_profile_data( 'field=City'); ?></td>
+				<span class="people-item"><?php bp_member_profile_data( 'field=City'); ?></span>
 				
-				<td class="partner-item-state"><?php bp_member_profile_data( 'field=State, Province, or Region'); ?></td>
+				<span class="people-item"><?php bp_member_profile_data( 'field=State, Province, or Region'); ?></span>
 				
-				<td class="partner-item-country"><?php bp_member_profile_data( 'field=Country'); ?></td>
-
-		</tr>
-
-	<?php endwhile; ?>
-
-</table>						
+				<span class="people-item"><?php bp_member_profile_data( 'field=Country'); ?></span>
+				
+			</div>
 
 			<div class="action">
 
@@ -129,11 +113,11 @@ do_action( 'bp_before_members_loop' ); ?>
 			</div>
 
 			<div class="clear"></div>
-	
-	<?php /** 
-	* End custom members table 
-	*/
-	?>
+		</li>
+
+	<?php endwhile; ?>
+
+	</ul>
 
 	<?php
 

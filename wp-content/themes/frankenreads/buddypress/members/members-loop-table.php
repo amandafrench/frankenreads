@@ -52,16 +52,8 @@ do_action( 'bp_before_members_loop' ); ?>
 	*/
 	?>
 	
-<table id="members-list" class="item-list" aria-live="assertive" aria-relevant="all">
-	<thead>
-	<tr class="table-row">
-    <th>Name</th>
-    <th>Organization</th>
-    <th>City</th>
-    <th>State, Province, Region</th>
-    <th>Country</th>
-    </tr>
-    </thead>
+	<table id="members-list" class="item-list" aria-live="assertive" aria-relevant="all">
+
 	<?php while ( bp_members() ) : bp_the_member(); ?>
 
 		<tr class="item" <?php bp_member_class(); ?>>
@@ -69,7 +61,7 @@ do_action( 'bp_before_members_loop' ); ?>
 				<a href="<?php bp_member_permalink(); ?>"><?php bp_member_avatar(); ?></a>
 			</div>
 -->		
-				<td class="partner-item-name">
+				<td class="people-item">
 					<a href="<?php bp_member_permalink(); ?>"><?php bp_member_name(); ?></a>
 
 <!--					<?php if ( bp_get_member_latest_update() ) : ?>
@@ -101,19 +93,19 @@ do_action( 'bp_before_members_loop' ); ?>
 				  */
 				?>
 				
-				<td class="partner-item-org"><?php bp_member_profile_data( 'field=Organization'); ?></td>
+				<td class="people-item"><?php bp_member_profile_data( 'field=Organization'); ?></td>
 				
-				<td class="partner-item-city"><?php bp_member_profile_data( 'field=City'); ?></td>
+				<td class="people-item"><?php bp_member_profile_data( 'field=City'); ?></td>
 				
-				<td class="partner-item-state"><?php bp_member_profile_data( 'field=State, Province, or Region'); ?></td>
+				<td class="people-item"><?php bp_member_profile_data( 'field=State, Province, or Region'); ?></td>
 				
-				<td class="partner-item-country"><?php bp_member_profile_data( 'field=Country'); ?></td>
+				<td class="people-item"><?php bp_member_profile_data( 'field=Country'); ?></td>
 
 		</tr>
 
 	<?php endwhile; ?>
 
-</table>						
+	</table>						
 
 			<div class="action">
 
