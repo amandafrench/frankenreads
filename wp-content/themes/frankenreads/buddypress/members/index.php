@@ -78,8 +78,9 @@ do_action( 'bp_before_directory_members_page' ); ?>
 			</ul> 
 		</div> --> 
 		<!-- .item-list-tabs -->
+		
+<!-- REMOVE SORT TYPE DROPDOWN
 
-<!--
 		<div class="item-list-tabs" id="subnav" aria-label="<?php esc_attr_e( 'Members directory secondary navigation', 'buddypress' ); ?>" role="navigation">
 			<ul>
 				<?php
@@ -98,7 +99,7 @@ do_action( 'bp_before_directory_members_page' ); ?>
 						<option value="newest"><?php _e( 'Newest Registered', 'buddypress' ); ?></option>
 
 						<?php if ( bp_is_active( 'xprofile' ) ) : ?>
-							<option value="alphabetical"><?php _e( 'Alphabetical', 'buddypress' ); ?></option>
+							<option value="alphabetical"><?php _e( 'Alphabetical by Name', 'buddypress' ); ?></option>
 						<?php endif; ?>
 
 						<?php
@@ -113,12 +114,13 @@ do_action( 'bp_before_directory_members_page' ); ?>
 				</li>
 			</ul>
 		</div>
+REMOVE SORT TYPE DROPDOWN -->
 
 		<h2 class="bp-screen-reader-text"><?php
 			/* translators: accessibility text */
 			_e( 'Members directory', 'buddypress' );
 		?></h2>
--->	
+	
 		<div id="members-dir-list" class="members dir-list">
 			<?php bp_get_template_part( 'members/members-loop' ); ?>
 		</div>

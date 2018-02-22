@@ -71,6 +71,15 @@ add_action ( 'bp_after_profile_field_content', 'bpfr_get_post_on_profile' );
 
 /* End Add Partner's Events to Profile */
 
+/** Add custom sort to dropdown
+ *
+add_action( 'bp_members_directory_order_options', 'frankenreads_add_sorting_options' );
+function frankenreads_add_sorting_options() { ?>
+<option value="country">Country</option>
+<?php
+}
+
+*/ 
 
 /**
  * Sort Partners by Country
@@ -97,6 +106,7 @@ class BP_Custom_User_Ids {
         $custom_ids = $wpdb->get_col("SELECT user_id FROM {$wpdb->prefix}bp_xprofile_data  WHERE field_id = 11 ORDER BY value ASC");
  
         return $custom_ids;
+        
     }   
      
     function custom_members_query( $query_array ) {
