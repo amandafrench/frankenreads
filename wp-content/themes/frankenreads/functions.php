@@ -72,6 +72,58 @@ add_action ( 'bp_after_profile_field_content', 'bpfr_get_post_on_profile' );
 /* End Add Partner's Events to Profile */
 
 
+/**
+ * Sort Partners by Country
+ *
+**/
+
+class BP_Custom_User_Ids {
+ 
+    private $custom_ids = array();
+ 
+    public function __construct() {
+ 
+        $this->custom_ids = $this->get_custom_ids();
+         
+        add_action( 'bp_pre_user_query_construct',  array( $this, 'custom_members_query' ), 1, 1 );
+        add_filter( 'bp_get_total_member_count',    array( $this, 'custom_members_count' ), 1, 1 );
+     
+    }
+     
+    private function get_custom_ids() {
+        global $wpdb;
+ 
+        // collection based on an xprofile field
+        $custom_ids = $wpdb->get_col("SELECT user_id FROM {$wpdb->prefix}bp_xprofile_data  WHERE field_id = 11 ORDER BY value ASC");
+ 
+        return $custom_ids;
+    }   
+     
+    function custom_members_query( $query_array ) {
+ 
+        $query_array->query_vars['user_ids'] = $this->custom_ids;
+                 
+        //in case there are other items like widgets using the members loop on the members page
+        remove_action( 'bp_pre_user_query_construct', array( $this, 'custom_members_query' ), 1, 1 );
+ 
+    }   
+     
+    function custom_members_count ( $count ) {
+ 
+        $new_count = count( $this->custom_ids );
+        return $count - $new_count; 
+ 
+    }
+}
+ 
+function custom_user_ids( ) { 
+ 
+    new BP_Custom_User_Ids ();
+ 
+}
+add_action( 'bp_before_directory_members', 'custom_user_ids' );
+
+
 
 
 
