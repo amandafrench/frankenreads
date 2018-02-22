@@ -69,6 +69,9 @@ function bpfr_get_post_on_profile() {
 }
 add_action ( 'bp_after_profile_field_content', 'bpfr_get_post_on_profile' );
 
+/* End Add Partner's Events to Profile */
+
+
 /* Exclude administrators from Partners List */
 
 add_action('bp_ajax_querystring','bpdev_exclude_users',20,2);
@@ -106,14 +109,140 @@ function bpdev_get_admin_user_ids(){
    return $administrators;
 }
 
+/**
+ * Sort Partners by Country
+ *
+**/
 
-/* End Add Partner's Events to Profile */
+class BP_Custom_User_Ids {
+ 
+    private $custom_ids = array();
+ 
+    public function __construct() {
+ 
+        $this->custom_ids = $this->get_custom_ids();
+         
+        add_action( 'bp_pre_user_query_construct',  array( $this, 'custom_members_query' ), 1, 1 );
+        add_filter( 'bp_get_total_member_count',    array( $this, 'custom_members_count' ), 1, 1 );
+     
+    }
+     
+    private function get_custom_ids() {
+        global $wpdb;
+ 
+        // collection based on an xprofile field
+        $custom_ids = $wpdb->get_col("SELECT user_id FROM {$wpdb->prefix}bp_xprofile_data  WHERE field_id = 11 ORDER BY value ASC");
+ 
+        return $custom_ids;
+    }   
+     
+    function custom_members_query( $query_array ) {
+ 
+        $query_array->query_vars['user_ids'] = $this->custom_ids;
+                 
+        //in case there are other items like widgets using the members loop on the members page
+        remove_action( 'bp_pre_user_query_construct', array( $this, 'custom_members_query' ), 1, 1 );
+ 
+    }   
+     
+    function custom_members_count ( $count ) {
+ 
+        $new_count = count( $this->custom_ids );
+        return $count - $new_count; 
+ 
+    }
+}
+ 
+function custom_user_ids( ) { 
+ 
+    new BP_Custom_User_Ids ();
+ 
+}
+add_action( 'bp_before_directory_members', 'custom_user_ids' );
 
+
+
+ 
+ /*
+ function xfield_member_filter( $field_name, $field_value = '' ) {
+  
+  if ( empty( $field_name ) )
+    return '';
+  
+  global $wpdb;
+  
+  $field_id = xprofile_get_field_id_from_name( $field_name ); 
+
+  if ( !empty( $field_id ) ) 
+    $query = "SELECT user_id, value FROM " . $wpdb->prefix . "bp_xprofile_data WHERE field_id = " . $field_id . " ORDER BY value" ;
+  else
+   return '';
+  // var_dump($query); die;
+  if ( $field_value != '' ) 
+    $query .= " AND value LIKE '%" . $field_value . "%'";
+  
+  $custom_ids = $wpdb->get_col( $query );
+  
+  if ( !empty( $custom_ids ) ) {
+    // convert the array to a csv string
+    $custom_ids_str = 'include=' . implode(",", $custom_ids);
+    return $custom_ids_str;
+  }
+  else
+   return '';
+}
+
+*/
 
 /*
-function alphabetize_by_country_and_state( $bp_user_query ) {
-    if ( 'alphabetical' == $bp_user_query->query_vars['type'] )
-        $bp_user_query->uid_clauses['orderby'] = "ORDER BY substring_index(u.Country, ' ', -1)";
+function alphabetize_by_last_name( $bp_user_query ) {
+  ;
+  if ( 'alphabetical' == $bp_user_query->query_vars['type'] ) {
+    $bp_user_query->uid_clauses['orderby'] = "ORDER BY FIELD(u.ID," . $bp_user_query->query_vars['include'] . ")";  
+    $bp_user_query->uid_clauses['order'] = "";  
+    var_dump($bp_user_query);
+  }
 }
-add_action ( 'bp_pre_user_query', 'alphabetize_by_country_and_state' );
+add_action ( 'bp_pre_user_query', 'alphabetize_by_last_name' );
+
 */
+
+/* Sort by Xprofile Field originally Last Name at Graduation - works but breaks user count 
+
+function sort_by_country( $bp_user_query ) {
+	// Only run this if one of our custom options is selected
+	if ( in_array( $bp_user_query->query_vars['type'], array( 'alphabetical') ) ) {
+		global $wpdb;
+
+		// Adjust SELECT
+		$bp_user_query->uid_clauses['select'] = "
+			SELECT wp_users.id
+                        FROM wp_users 
+                        LEFT JOIN wp_bp_xprofile_data ON (wp_bp_xprofile_data.user_id                    
+                        = wp_users.ID)";
+
+		// Adjust WHERE
+		$bp_user_query->uid_clauses['where'] = "WHERE wp_bp_xprofile_data.field_id = 11 ";
+
+		// Adjust ORDER BY
+	        $bp_user_query->uid_clauses['orderby'] = "ORDER by wp_bp_xprofile_data.value";	
+	}			
+} 
+add_action( 'bp_pre_user_query', 'sort_by_country' );
+
+*/ 
+
+/* Sort by Last Name -- works but only on wp_usermeta 
+
+function alphabetize_by_country( $bp_user_query ) {
+    if ( 'alphabetical' == $bp_user_query->query_vars['type'] )
+        $bp_user_query->uid_clauses['orderby'] = "ORDER BY substring_index(u.display_name, ' ', -1)";
+}
+
+add_action ( 'bp_pre_user_query', 'alphabetize_by_country' );
+
+*/
+
+
+
+
