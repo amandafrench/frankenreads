@@ -144,9 +144,9 @@ add_filter( 'bp_core_signup_send_validation_email_message', 'custom_buddypress_a
 function custom_buddypress_activation_message( $message, $user_id, $activate_url ) {
     add_filter( 'wp_mail_content_type', 'set_bp_message_content_type' );
     $user = get_userdata( $user_id );
-    return 'Hi <strong>' . $user->user_login . '</strong>,
-<p>
-Thanks for registering on the Frankenreads site! To complete the activation of your account please <a href="' . $activate_url . '">click here</a>.</p>
+    return '<p>Hi <strong>' . $user->user_login . '</strong>,</p>
+
+<p>Thanks for registering on the Frankenreads site! Please <a href="' . $activate_url . '">click this link to activate your account</a>.</p>
 
 <p>Once you activate your account, you will automatically be listed on <a href="http://frankenreads.org/partners">our Partners page</a> and will automatically be subscribed to our email list. We plan to send updates no more than monthly up until late summer of 2018, as Frankenweek (October 24-31) approaches.</p> 
 
@@ -160,8 +160,7 @@ Thanks for registering on the Frankenreads site! To complete the activation of y
 
 <p>Amanda French<br />
 Frankenreads Community Manager</p>
-
-}
+'; }
 
 
 
