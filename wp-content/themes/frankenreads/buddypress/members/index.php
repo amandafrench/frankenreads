@@ -15,8 +15,6 @@ do_action( 'bp_before_directory_members_page' ); ?>
 
 <div id="buddypress">
 
-<p id="partner-intro"><a href="../join">Join the Community</a> to become a partner listed on this page.</p>
-
 	<?php
 
 	/**
@@ -47,6 +45,9 @@ do_action( 'bp_before_directory_members_page' ); ?>
 		<?php bp_get_template_part( 'common/search/dir-search-form' ); ?>
 
 	<?php endif; ?>
+
+<p id="partner-intro"><a href="../join">Join the Community</a> to become a partner listed on this page. Click on someone's name to see their events or to message them.</p>
+
 
 	<?php
 	/**
