@@ -46,7 +46,7 @@ do_action( 'bp_before_directory_members_page' ); ?>
 
 	<?php endif; ?>
 
-<p id="partner-intro"><a href="../join">Join the Community</a> to become a partner listed on this page. Click on someone's name to see their events or to message them.</p>
+<p id="partner-intro"><a href="../join">Join the Community</a> to become a partner listed on this page. Click on someone's name to see that person's events. If you are logged in, you can also send them a message, which they will receive by email if their settings allow.</p>
 
 
 	<?php
