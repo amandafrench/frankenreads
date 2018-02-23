@@ -4646,8 +4646,8 @@ msgstr ""
 #: bp-groups/bp-groups-template.php:4349 bp-members/bp-members-template.php:502
 msgid "Viewing %1$s - %2$s of %3$s member"
 msgid_plural "Viewing %1$s - %2$s of %3$s members"
-msgstr[0] "Viewing %1$s - %2$s of %3$s partners"
-msgstr[1] "Viewing %1$s - %2$s of %3$s partners"
+msgstr[0] "Partner: %3$s "
+msgstr[1] "Partners: %3$s "
 
 #: bp-groups/bp-groups-template.php:4477
 #: bp-templates/bp-legacy/buddypress/groups/single/activity.php:10
