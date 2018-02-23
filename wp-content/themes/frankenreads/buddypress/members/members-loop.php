@@ -19,8 +19,7 @@ do_action( 'bp_before_members_loop' ); ?>
 	<p class="current-member-type"><?php bp_current_member_type_message() ?></p>
 <?php endif; ?>
 
-
-<?php if ( bp_has_members( bp_ajax_querystring( 'members' ) . '&per_page=500' . '&populate_extras&type=alphabetical' . '&exclude=1,2,3,4,6') ) : ?>
+<?php if ( bp_has_members( bp_ajax_querystring( 'members' ) . '&per_page=500' . '&exclude=1,2,3,4,6' . '&type=alphabetical') ) : ?>
 
 	<div id="pag-top" class="pagination">
 
@@ -52,7 +51,7 @@ do_action( 'bp_before_members_loop' ); ?>
 	*/
 	?>
 	
-<table id="members-list" class="item-list" aria-live="assertive" aria-relevant="all">
+<table id="members-list" class="tablesorter {sortlist:[[4,0], [3,0], [2,0], [1,0], [0,0]]}" aria-live="assertive" aria-relevant="all">
 	<thead>
 	<tr class="table-row">
     <th>Name</th>
