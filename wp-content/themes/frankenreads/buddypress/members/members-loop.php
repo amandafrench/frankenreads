@@ -27,18 +27,10 @@ do_action( 'bp_before_members_loop' ); ?>
 
 			<?php bp_members_pagination_count(); ?>
 				
-			<?php 		
-			$unique_orgs = $wpdb->get_row("SELECT COUNT(DISTINCT value) FROM `wp_bp_xprofile_data` WHERE `field_id` = 8");
-			foreach ( $unique_orgs as $o )
-			echo "<br />Organizations: "; print_r($o); echo " ";
-			?>
-
-			<?php 		
-			$unique_countries = $wpdb->get_row("SELECT COUNT(DISTINCT value) FROM `wp_bp_xprofile_data` WHERE `field_id` = 11");
-			foreach ( $unique_countries as $c )
-			echo "<br />Countries: "; print_r($c); echo " ";												
-			?>
-
+			<?php bpfr_unique_org_count() ?>
+			
+			<?php bpfr_unique_country_count() ?>
+			
 		</div>
 
 		<div class="pagination-links" id="member-dir-pag-top">

@@ -71,6 +71,26 @@ add_action ( 'bp_after_profile_field_content', 'bpfr_get_post_on_profile' );
 
 /* End Add Partner's Events to Profile */
 
+/* Add partner org and country counts */
+
+function bpfr_unique_org_count() {
+			global $wpdb; 
+			$unique_orgs = $wpdb->get_row("SELECT COUNT(DISTINCT value) FROM `wp_bp_xprofile_data` WHERE `field_id` = 8");
+			foreach ( $unique_orgs as $o )
+			echo "<br />Total organizations: "; print_r($o); echo " ";			
+}
+add_action( 'before-members-loop', 'bpfr_unique_org_org_count' );
+
+function bpfr_unique_country_count() {
+			global $wpdb; 
+			$unique_countries = $wpdb->get_row("SELECT COUNT(DISTINCT value) FROM `wp_bp_xprofile_data` WHERE `field_id` = 11");
+			foreach ( $unique_countries as $c )
+			echo "<br />Total countries: "; print_r($c); echo " ";												
+}			
+add_action( 'before-members-loop', 'bpfr_unique_country_count' );
+			
+/* 	End add partner org and country counts */
+		
 
 
 
