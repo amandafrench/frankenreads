@@ -98,11 +98,11 @@ function fr_tribe_events_count() {
 	global $wpdb;
 	$count_events = wp_count_posts( 'tribe_events' );
 	$published_events = $count_events->publish;
-	echo "<h2>Total approved events: "; print_r($published_events);
-	echo "</h2>";
+	echo "<p class=\"eventcount\">Total approved events: "; print_r($published_events);
+	echo "</p>";
 }
 
-add_action( 'tribe_events_after_the_title', 'fr_tribe_events_count' );
+add_action( 'tribe_events_bar_before_template', 'fr_tribe_events_count' );
 
 /* End add total number of Events to Events page */ 
 

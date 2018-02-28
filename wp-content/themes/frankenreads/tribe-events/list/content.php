@@ -28,13 +28,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php do_action( 'tribe_events_before_the_title' ); ?>
 	<h2 class="tribe-events-page-title"><?php echo tribe_get_events_title() ?></h2>
 	<?php do_action( 'tribe_events_after_the_title' ); ?>
-	
-	
-	<?php fr_tribe_events_count(); ?>
 
 	<!-- Notices -->
 	<?php tribe_the_notices(); ?>
-
+	
 	<!-- List Header -->
 	<?php do_action( 'tribe_events_before_header' ); ?>
 	<div id="tribe-events-header" <?php tribe_events_the_header_attributes() ?>>
@@ -46,6 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
 	</div>
 	<!-- #tribe-events-header -->
+
 	<?php do_action( 'tribe_events_after_header' ); ?>
 
 
