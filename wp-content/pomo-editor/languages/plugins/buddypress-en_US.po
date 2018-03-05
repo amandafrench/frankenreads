@@ -8533,8 +8533,8 @@ msgstr ""
 msgctxt "Group members pagination in group admin"
 msgid "Viewing %1$s - %2$s of %3$s member"
 msgid_plural "Viewing %1$s - %2$s of %3$s members"
-msgstr[0] "Viewing %1$s - %2$s of %3$s partner"
-msgstr[1] "Viewing %1$s - %2$s of %3$s partners"
+msgstr[0] ""
+msgstr[1] ""
 
 #: bp-groups/bp-groups-adminbar.php:67
 msgctxt "Group WP Admin Bar manage links"
