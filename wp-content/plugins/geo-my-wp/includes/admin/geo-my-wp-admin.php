@@ -32,6 +32,12 @@ class GMW_Admin {
 		add_action( 'admin_menu', 			 array( $this, 'admin_menu' ), 12 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
+		// v3.0 release notice
+		add_action( 'admin_init', array( $this, 'v3_release_notice_dismiss' ) );
+		if ( get_option( 'gmw_v3_release_admin_notice' ) == false ) {
+			add_action( 'admin_notices', array( $this, 'v3_release_notice' ) );
+		}
+
 		//"GMW Form" button
 		if ( self::add_form_button_pages() ) {
 			add_action( 'media_buttons', array( $this, 'add_form_button' ), 25 );
@@ -69,6 +75,33 @@ class GMW_Admin {
 		//Rickey's credit
 		add_action( 'form_editor_tab_start', array( $this, 'rickey_messick_credit' ), 10, 4 );
 		add_action( 'form_editor_tab_end',   array( $this, 'rickey_messick_credit' ), 10, 4 );
+	}
+
+	public function v3_release_notice_dismiss() {
+
+		if ( ! empty( $_POST['gmw_3_admin_notice_dismiss'] ) ) {
+			
+			update_option( 'gmw_v3_release_admin_notice', 1 );
+
+			wp_safe_redirect( esc_url( $_SERVER['REQUEST_URI'] ) );
+		}
+	}
+
+	public function v3_release_notice() {
+		?>
+		<div class="notice notice-info is-dismissible">
+			<p>The official release of GEO my WP 3.0 is set to March 31, 2018.</p>
+			<p> Version 3.0 is a major update. It is highly recomended to test it before updating it on your production site. </p>
+			<p>You can read more about version 3.0, and download the latest beta vesion from <a href="https://geomywp.com/geo-my-wp-3-0-beta-7/" target="_blank">here</a>.</p>
+			<p>
+				<form method="post">
+					<a class="button button button-primary" href="https://geomywp.com/geo-my-wp-3-0-beta-7/" target="_blank">Download v3.0 beta</a>
+					<input type="submit" class="button button button-secondary" value="Dismiss" />
+					<input type="hidden" name="gmw_3_admin_notice_dismiss" value="dismiss" />
+				</form>
+			</p>
+		</div>
+		<?php
 	}
 
     /**

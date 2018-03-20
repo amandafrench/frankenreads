@@ -3,9 +3,9 @@ Contributors: ninjew
 Donate link: www.paypal.me/fitoussi
 Tags: Geo-location, Geolocation, proximity search, zipcode search, radius search, store locator, Geolocate posts, address search, search distance, google v3 , Google maps, get directions, search locations, Geolocate, GEO, members locator, Geolocate memebrs, mapping, mapping software, latitude, longitude, locations finder, map creator.
 Requires at least: 4.5
-Tested up to: 4.8.2
+Tested up to: 4.9.5
 Buddypress: 2.7
-Stable tag: 2.7.1
+Stable tag: 2.7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -129,6 +129,12 @@ For screenshots please visit [GEO my WP](http://www.geomywp.com)
 == Other Notes ==
 
 == Changelog ==
+
+
+= 2.7.2 =
+
+* Fix: minor bug fix.
+* Added GEO my WP v3.0 release notice. The official release of GEO my WP 3.0 is set to March 31, 2018. Version 3.0 is a major update and it is highly recomended to test it before updating it on your production site. You can read more about version 3.0, and download the latest beta vesion from <a href="https://geomywp.com/geo-my-wp-3-0-beta-7/" target="_blank">here</a>.
 
 = 2.7.1 =
 

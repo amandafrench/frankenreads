@@ -173,7 +173,25 @@ function seed_csp4_head() {
 		}
 
 
-    <?php }
+    <?php } ?>
+
+    
+    <?php if ( !empty( $bg_image ) ): ;?>
+    	<?php if ( isset( $bg_cover ) && in_array( '1', $bg_cover ) ) : ?>
+    html {
+	height: 100%;
+	overflow: hidden;
+	}
+	body
+	{
+	height:100%;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	}
+	<?php endif; ?>
+	<?php endif; ?>
+
+    <?php 
 
 	$output .= ob_get_clean();
 
