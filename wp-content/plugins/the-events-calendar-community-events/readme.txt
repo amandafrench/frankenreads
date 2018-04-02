@@ -4,8 +4,8 @@ Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tr
 Tags: widget, events, simple, tooltips, grid, month, list, calendar, event, venue, community, registration, api, dates, date, plugin, posts, sidebar, template, theme, time, google maps, google, maps, conference, workshop, concert, meeting, seminar, summit, forum, shortcode, The Events Calendar, The Events Calendar PRO
 Donate link: http://m.tri.be/29
 Requires at least: 4.5
-Tested up to: 4.9
-Stable tag: 4.5.9
+Tested up to: 4.9.4
+Stable tag: 4.5.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -151,6 +151,12 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.5.10] 2018-03-28 =
+
+* Feature - Added updater class to enable changes on future updates [84675]
+* Fix - Prevented errors under PHP 7.2 in relation to the use of `create_function` [100037]
+* Fix - Restored the ability of community organizers to email the attendee list, even if they are blocked from accessing the admin environment (thanks to mindaji in our forums for reporting this) [99979]
 
 = [4.5.9] 2018-02-14 =
 

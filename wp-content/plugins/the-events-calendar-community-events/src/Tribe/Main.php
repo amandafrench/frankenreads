@@ -18,7 +18,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		/**
 		 * The current version of Community Events
 		 */
-		const VERSION = '4.5.9';
+		const VERSION = '4.5.10';
 
 		/**
 		 * required The Events Calendar Version
@@ -364,6 +364,8 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 			add_filter( 'tribe_events_multiple_organizer_template', array( $this, 'overwrite_multiple_organizers_template' ) );
 
 			add_action( 'plugins_loaded', array( $this, 'register_resources' ) );
+
+			add_action( 'admin_init', array( $this, 'run_updates' ), 10, 0 );
 
 			// Binding the Implementations needs to happen to plugins_loaded
 			$this->bind_implementations();
@@ -919,7 +921,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 			if ( ! is_admin() ) {
 				// disable title shortcode
 				add_shortcode( 'tribe_community_events', '__return_null' );
-				add_shortcode( 'tribe_community_events_title', create_function( '', 'return apply_filters( "tribe_ce_submit_event_page_title", __( "Submit an Event", "tribe-events-community" ) );' ) );
+				add_shortcode( 'tribe_community_events_title', tribe_callback( 'community.templates', 'tribe_community_events_title' ) ) ;
 				add_filter( 'the_title', 'do_shortcode' );
 
 				if ( $this->isTcePage() ) {
@@ -2740,6 +2742,15 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 				return;
 			}
 
+			// Make sure the action to send the email comes from the FE
+			if (
+				'email' === tribe_get_request_var( 'action' )
+				&& 'tickets-attendees' === tribe_get_request_var( 'page' )
+				&& tribe_get_request_var( 'event_id' )
+			) {
+				return;
+			}
+
 			// Redirect user to appropriate location
 			wp_safe_redirect( wp_validate_redirect( trailingslashit( $this->blockRolesRedirect ), home_url() ) );
 			exit;
@@ -3119,6 +3130,23 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 			// Set up the Integrations manager.
 			tribe_singleton( 'community.integrations', 'Tribe__Events__Community__Integrations__Manager' );
 			tribe_singleton( 'community.integrations.divi', 'Tribe__Events__Community__Integrations__Divi', array( 'hooks' ) );
+		}
+
+		/**
+		 * Make necessary database updates on admin_init
+		 *
+		 * @since 4.5.10
+		 *
+		 */
+		public function run_updates() {
+			if ( ! class_exists( 'Tribe__Events__Updater' ) ) {
+				return; // core needs to be updated for compatibility
+			}
+
+			$updater = new Tribe__Events__Community__Updater( self::VERSION );
+			if ( $updater->update_required() ) {
+				$updater->do_updates();
+			}
 		}
 	}
 }

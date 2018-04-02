@@ -68,5 +68,25 @@ if ( ! class_exists( 'Tribe__Events__Community__Templates' ) ) {
 		public static function instance() {
 			return tribe( 'community.templates' );
 		}
+
+
+		/**
+		 * Hook into 'tribe_community_events_title' to avoid PHP 7.2 deprecated notices with `create_function`
+		 *
+		 * @since 4.5.10
+		 *
+		 * @return mixed|void
+		 */
+		public function tribe_community_events_title() {
+			/**
+			 * Replace the CE submit event page title.
+			 *
+			 * @since 4.5.10
+			 *
+			 * @return string
+			 */
+			return apply_filters( 'tribe_ce_submit_event_page_title', __( 'Submit an Event', 'tribe-events-community' ) );
+		}
+
 	}
 }

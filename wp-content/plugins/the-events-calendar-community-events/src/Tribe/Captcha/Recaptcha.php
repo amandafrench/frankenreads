@@ -186,7 +186,7 @@ class Tribe__Events__Community__Captcha__Recaptcha
 		if ( $error ) {
 			$errorpart = '&amp;error=' . $error;
 		}
-		return '<script type="text/javascript" src="' . esc_url( $server . '/challenge?k=' . $pubkey . $errorpart ) . '"></script>
+		return '<script src="' . esc_url( $server . '/challenge?k=' . $pubkey . $errorpart ) . '"></script>
 
 			<noscript>
 			<iframe src="' . esc_url( $server . '/noscript?k=' . $pubkey . $errorpart ) . '" height="300" width="500" frameborder="0"></iframe><br/>
