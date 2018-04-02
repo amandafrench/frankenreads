@@ -931,7 +931,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 				return;
 			}
 
-			$min_version = ( true == FUSION_BUILDER_DEV_MODE ) ? '.min' : '';
+			$min_version = ( true == FUSION_BUILDER_DEV_MODE ) ? '' : '.min';
 			wp_enqueue_style( 'fusion-builder-shortcodes', FUSION_BUILDER_PLUGIN_URL . 'css/fusion-shortcodes' . $min_version . '.css', array(), FUSION_BUILDER_VERSION );
 
 			if ( fusion_library()->get_option( 'use_animate_css' ) ) {
