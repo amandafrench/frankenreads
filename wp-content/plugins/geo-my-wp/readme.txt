@@ -1,102 +1,72 @@
 === GEO my Wordpress ===
-Contributors: ninjew
-Donate link: www.paypal.me/fitoussi
-Tags: Geo-location, Geolocation, proximity search, zipcode search, radius search, store locator, Geolocate posts, address search, search distance, google v3 , Google maps, get directions, search locations, Geolocate, GEO, members locator, Geolocate memebrs, mapping, mapping software, latitude, longitude, locations finder, map creator.
-Requires at least: 4.5
+Contributors: ninjew, Eyal Fitoussi
+Donate link: http://geomywp.com/
+Tags: Geolocation, Dirctory, Store Locator, Geolocator, Geotagging, Geocode, Mapping, Proximity search, Zipcode, Geolocate posts, Address search, Distance, Google maps, Directions, Locations, Geo, Members locator, Geolocate memebrs, Latitude, Longitude, Coordinates, Locations finder, Map creator.
+Requires at least: 4.3
 Tested up to: 4.9.5
-Buddypress: 2.7
-Stable tag: 2.7.2
+Buddypress: 2.8
+Stable tag: 3.0
+Requires PHP: 5.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Using Google's API tools GEO my WP provides an advance proximity search for any post type or buddypress's members based on a given address and radius.
+Advanced geolocation, mapping, and proximity search plugin. Geotag post types and BuddyPress members, and create advanced proximity search forms.
 
 == Description ==
 
-GEO my WP is the complete GEO solution for your Wordpress project. 
-Using google API tool GEO my WP let you add location to any of your post types, pages or BuddyPress members. After adding your locations you can create an advance search form including radius values, units (miles and kilometers) and custom taxonomies for post types or profile fields for Buddypress. Results will be displayed based on the address entered and the chosen radius ordered by the distance.
-Together with other great features like auto locating user's current location, displaying driving distance, "get directions" link, google map with markers of the location and much more, GEO my WP just might be the coolest GEO tool for WordPress.
+Welcome to the ultimate geolocation, mapping, and proximity search solution for Wordpress.
 
-= Key features of GEO my WP =
+Using GEO my WP plugin, and the powerful features of Google Maps API, you can easily geotag any of your post types, BuddyPress members and other components. Create unlimited advenced, proximity serach forms to search and find any of the geotagged components of your site. 
 
-* Works with posts, post types and pages - Add location to any of your post, post types or pages.
-* Works with Buddypress - Buddypress members can add their location.
-* GEO my WP let you search by city, zip code or any given form of address.
-* Use auto locator to get user's current location.
-* Use the auto locator to automatically display results near user's location.
-* Search within any radius chosen from a dropdown menu.
-* For post types - Use categories (custom taxonomies) to filter results.
-* For Buddypress - Use profile fields for complex results filtering.
-* Search by miles or kilometers
-* Display Google map with the markers of the locations and information window for each marker.
-* Display the exact driving distance using Google's API.
-* "Get directions" link opens a new window with the driving directions to the location.
-* Pagination - choose the number of results per page.
+With GEO my WP, creating a real estate, events, directory, classifieds, social networking and any other type of location based website is a simple task.
 
-= General settings =
+Visit [GEO my WP website](https://geomywp.com) form more information.
 
-* User friendly backend where each feature and setting documented.
-* Enter your Google API key
-* Choose your region.
-* Choose if automatically gets user's current location when first visits the site.
-* Choose autolocator icon or add your own.
-* Choose the Post types where you want to add location.
-* Choose the theme color that will control the Title, links and address in the results.
+Check out the [live demo](demo.geomywp.com).
 
-= "New/Update" page in admin area: =
+== Key features of GEO my WP ==
 
-* Address fields are automatically created for the chosen post types.
-* Meta boxes for phone number, fax number, email address and website that will show in results and in map's information windows.
-* Meta boxes for opening days & hours.
-* Make address fields mandatory to make sure that users enter an address when creating a new post.
-* 5 different way to enter address and lat/long:
-* Autolocate the current location.
-* Autocomplete input fields that get results from google.
-* Drag and drop marker on the map to choose the location.
-* Enter address manually and return lat/long
-* Enter lat/long manually and return the address
+* Post Types Locator
+* Buddypress Members Locator
+* Advanced location form
+* Advanced Proxmity Search Forms Builder
+* Mashup Maps
+* Single Location widget and shortcode
+* Current Location Shortcode and Widget
+* Powered By Google Maps API
+* Theme Flexibility
+* Developer Friendly
 
-= Buddypress =
+= Post Types Locator = 
+Add geographic location to any of the registered post types of your site. Display post location on a map, and create proximity search forms to search and find posts based on address, distance categories and more.
 
-* Add new "location" tab to member's profile page. 
-* Members can easily add their location.
-* Create an advance search form to locate members near a certain address.
+= Buddypress Members Locator = 
+Let the Buddypress members of your site to easily add location to their profile. Let them search and find other members near them or near any address using an advanced proximity search form.
 
-= Shortcodes =
+= Advanced Location Form = 
+Add location to your posts, Buddypress members, and other component, using the advanced location form that GEO my WP provides. Drag the marker to the location on a map, pick from suggested results using Google address autocomplete while typing an address, enter coordinates, or manually enter the address fields. This is as flexiable and accurate as it get get.
 
-* Shortcode for single location - displays map of a single location.
-* Shortcode for user's location- display the user's location everywhere on the template. Can choose between zipcode or city. and can choose if to display user's name when logged in.
+= Advanced Forms Builder = 
+Create unlimited mashup maps and proximity search forms to search and find post types, BuddyPress members, and other components, based on an address, distance, categories, profile fields and more.
 
-Forms builder in the admin settings make it easier to build you own forms; And you can build as many as you wish.
+= Mashup Maps = 
+Create unlimited mashup maps to display the location of your post types, BuddyPress members and other components.
 
-* Choose between post type or buddypress shortcose. 
-* Post type Forms accept single or multiple post types that will appear in a dropdown menu.
-* For single post type you can add the categories of the post type to filter results.
-* For buddypress you can choose any or all profile fields to filter results.
-* Choose between Miles, Kilometers or both in a dropdown.
-* Choose the radius values.
-* Results output - Display Post only, map only or both.
-* Display Google's map with markers and define its height and width.
-* Choose between autozoom the map (show all markers) or manually choose the zoom value.
-* Choose map type: ROADMAP,SATELLITE,HYBRID and TERRAIN
-* Show/hide exact driving distance.
-* Show/hide "get directions" link.
-* Number of results per page.
-* Show/hide feature image
-* Show/hide excerpt and number of words.
-* Different results styling to choose from.
-* and more.....
+= Powered By Google Maps API = 
+GEO my WP takes full advantage of the powerfull features of Google Maps API. Allows for simple and accurate geolocation using Google maps, address autocomplete, auto-locator and more.
 
-= Widgets =
+= Single Location widget and shortcode =
+Display map and location details of a single component, such as post or Buddypress memebr, any where on a page using shortcode or widget. 
 
-* Search form widget to display any search from in the sidebar.
-* User's location widget to displays the user's location in the sidebar.
-* Buddypress Member's location.
+= Current Location Shortcode and Widget =
+Present the visitors of your site with a location form which allows them to add their current location.
+Once added, the visitor's current location will be saved and can be used with the different features of GEO my WP. Such as setting your proximity search forms to display locations nearby the visitor's location.
 
-= Languages =
-GEO my WP is currently available in the following languages:
+= Theme Flexibility = 
+Why limit yourself to a specific theme? Being a shortcode based plugin, GEO my WP has no limits and you can use it with any WordPress theme.
 
-* German ( by [Frank Winter](http://www.socialmedia4all.net) )
+= Developer Friendly = 
+Yes, GEO my WP is already a powerfull plugin out of the box. However, together with its many action hooks and filters, the options are limitless.
 
 == Installation ==
 
@@ -116,96 +86,41 @@ GEO my WP is currently available in the following languages:
 * Go to Plugins screen and find the newly uploaded Plugin in the list.
 * Click Activate Plugin to activate it.
 
-for detailed installation and setup guied click <a href="http://geomywp.com" >here</a>
+for detailed installation and setup guied see the [documentation](docs.geomywp.com).
 
 == Frequently Asked Questions ==
 
-= For questions, bugs report and suggestions please visit [GEO my WP Furom](http://geomywp.com/support/forums/) =
+* For questions, bugs report and suggestions please visit [GEO my WP Furom](https://geomywp.com/support/forums/)
 
 == Screenshots ==
 
-For screenshots please visit [GEO my WP](http://www.geomywp.com)
-
-== Other Notes ==
+1. GEO my WP Core Extensions
+2. Settings Page - General Settings Tab
+3. Settings Page - Posts Locator Tab
+4. Form Builder - Page Load Results Tab 1
+5. Form Builder - Page Load Results Tab 2
+6. Form Builder - Search Form Tab 1
+7. Form Builder - Search Form Tab 2
+8. Form Builder - Search Form Tab 3
+9. Form Builder - Form Submission Tab 
+10. Form Builder - Search Results Tab 1
+11. Form Builder - Search Results Tab 2
+12. Form Builder - Results Map Tab.
+13. Location form ( Location Tab ) - Edit Post Page 
+14. Location form ( Address Tab ) - Edit Post Page 2
+15. Location form - Buddypress Member Profile Page
+16. Posts Locator Search Form 1
+17. Posts Locator Search Form 2
+18. Posts Locator Search Form - Address Autocomplete
+19. Current Location Shortcode Without Location
+20. Current Location Shortcode With Location
+21. Single Location Shortcode
 
 == Changelog ==
 
+= 3.0 =
 
-= 2.7.2 =
-
-* Fix: minor bug fix.
-* Added GEO my WP v3.0 release notice. The official release of GEO my WP 3.0 is set to March 31, 2018. Version 3.0 is a major update and it is highly recomended to test it before updating it on your production site. You can read more about version 3.0, and download the latest beta vesion from <a href="https://geomywp.com/geo-my-wp-3-0-beta-7/" target="_blank">here</a>.
-
-= 2.7.1 =
-
-* Fix: remove PHP 7.0 errors.
-* Fix: "Save Changes" button doesn't show in Map Icons tab of Location tab in Members Profile page.
-* Tweak: Minify location tab JS file.
-* Fix: contact info doesn't show properly in AJAX powered info-window.
-
-= 2.7 =
-
-* Fix: issue with slashes when saving addresses that has double quotation marks.
-* Fix: Member search query fails with BuddyPress 2.8 and higher.
-* Fix: stripslashes in address field.
-* Fix: issues with license key activation.
-* Fix: Item ID does not pass to the license activation causes activation to fail.
-* Fix: Include full address value in item object to prevent showing N/A instead of the address in some cases.
-* Update: license updater system. Improves automatic updates and license keys activation. 
-* Update: sanitize address fields.
-* Tweak: added support for multiselect_custom_taxonomy field of the plugin Buddypress Xprofile Custom Fields Type ( special thanks to Miguel López <miguel@donmik.com> the author of Buddypress Xprofile Custom Fields Type plugin ).
-* New: Members Locator's search form and search results template files for Kleo theme.
-
-= 2.6.6.3 =
-
-* Fix: single location map error.
-* Remove PHP warnings.
-
-= 2.6.6.2 =
-
-* Security patch.
-
-= 2.6.6.1 =
-
-* Remove debugging text
-
-= 2.6.6 =
-
-* Fix: Per page feature not working on page load results.
-* Fix: issue with marker clusters not zooming in all the way when multiple markers are on the same exact location.
-* Fix: spread markers that are on the same exact location. This should overcome the issue where multiple markers that are on the same exact location are not showing properly by slightly moving them from their original location.
-* Filters: new filters allow to modify the activity update arguments and text.
-* Tweak: added support for Buddypress Xprofile Custom Fields Type plugin. At the moment this only supports the "select_custom_post_type" field as a beta test. The support for other fields might be added in future version.
-
-= 2.6.5 =
-
-* Fix: marker clusters images.
-* Fix: Issue with
-* Fix: Single Location get directions link.
-* Fix: Markers Cluster Images link
-* Update Markers Cluster library
-
-= 2.6.4 =
-
-* Fix: Custom Zoom level issue..
-* Tweak: Pass item_id to the license updater.
-* Tweak: remove street_number and street_name field when updating user location. This is a temporary solution to prevent issues for installation that memebrs database table was not updated properly. This will be fixed in the next major update of GEO my WP.
-
-= 2.6.3 =
-
-* Fix: per page function.
-* Fix: verify if info-window content is false || null to prevent errors.
-* Fix: remove warning in "Forms" page when no forms exist.
-* Fix: Street name and Street number switched when updating post type location.
-
-= 2.6.2.2 =
-
-* Fix: Allow decimals for radius values.
-
-= 2.6.2.1 =
-
-* Fix: issue with pagination not working properly.
-* Fix: Members Locator get no results due to missing 'feature' column in database
+Version 3.0 is a major release. It is highly recomended that you read [this post](http://geomywp.com/geo-my-wp-3-0-beta-7/) before updating. You should also test this version on a staging enviroment before updating on your live site.
 
 = 2.6.2 =
 
@@ -300,7 +215,7 @@ For screenshots please visit [GEO my WP](http://www.geomywp.com)
 - Improved structure of search forms and search results Stylesheet
 - Added missing space when displaying taxonomies in search results
 - Improve "Gray" search forms and results template files.
-- New, responsive search form and results templates: Purple for "Posts Locator" and "Yellow" for "Members locatorÓ.
+- New, responsive search form and results templates: Purple for "Posts Locator" and "Yellow" for "Members locatorî.
 
 = 2.4.1 = 
 
@@ -508,5 +423,7 @@ Below are some of the major changes in this version:
 = 1.0 =
 * Initial release
 
-
 == Upgrade Notice ==
+
+= 3.0 =
+This is a major release. You should not update before reading this post http://geomywp.com/geo-my-wp-3-0-beta-7/ before updagin.

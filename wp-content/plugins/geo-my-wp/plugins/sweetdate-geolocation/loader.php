@@ -1,46 +1,142 @@
 <?php
-//make sure Sweet-date theme existsand active
-$active_theme = wp_get_theme();
-if ( $active_theme->get('Name') != 'Sweetdate' && $active_theme->get('Template') !=  'Sweetdate' && $active_theme->get('Template') != 'sweetdate' ) {
-
-	function gmw_sd_sw_deactivated_admin_notice() {
-		?>
-    <div class="error">
-    	<p><?php _e( 'Sweet-date Geolocation add-on requires Sweet-date theme to be installed and activated.', 'GMW' ); ?></p>
-    </div>  
-    <?php
-	}
-    return add_action( 'admin_notices', 'gmw_sd_sw_deactivated_admin_notice' );
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-//make sure BuddyPress is activated
-if ( !class_exists( 'BuddyPress' ) ) {
-
-	function gmw_sd_bp_deactivated_admin_notice() {
-		?>
-    <div class="error">
-    	<p><?php _e( 'Sweet-date Geolocation add-on requires BuddyPress plugin version 2.0 or higher in order to work.', 'GMW' ); ?></p>
-    </div>  
-    <?php
-	}
-    return add_action( 'admin_notices', 'gmw_sd_bp_deactivated_admin_notice' );
+if ( ! class_exists( 'GMW_Addon' ) ) {
+    return;
 }
 
-function gmw_sweetdate_geolocation_init() {
-	
-	define( 'GMW_SD_PATH', GMW_PATH . '/plugins/sweetdate-geolocation/' );
-	define( 'GMW_SD_URL', GMW_URL . '/plugins/sweetdate-geolocation/' );
-		
-	//admin settings
-	if ( is_admin() && !defined( 'DOING_AJAX' ) ) {
-		include( 'includes/admin/geo-my-wp-sd-admin.php' );
-		new GMW_SD_Admin;
+/**
+ * Current Location addon
+ * 
+ */
+class GMW_Sweetdate_Geolcation_Addon extends GMW_Addon {
+    
+    /**
+     * Slug 
+     * 
+     * @var string
+     */
+    public $slug = "sweetdate_geolocation";
+
+    /**
+     * Name
+     * 
+     * @var string
+     */
+    public $name = "Sweet Date Geolocation";
+
+     /**
+     * Description
+     * 
+     * @var string
+     */
+    public $description = "Enhance the Sweet Date theme with geolocation features.";
+
+    /**
+     * prefix
+     * 
+     * @var string
+     */
+    public $prefix = "sdate_geo";
+
+    // version
+    public $version = GMW_VERSION;
+     
+    /**
+     * Path
+     * 
+     * @var [type]
+     */
+    public $full_path = __FILE__;
+    
+    /**
+     * Is core add-on
+     * 
+     * @var boolean
+     */
+    public $is_core = true;
+    
+    private static $instance = null;
+
+    /**
+     * Create new instance 
+     * 
+     * @return [type] [description]
+     */
+    public static function get_instance() {
+
+        if ( self::$instance == null ) {
+            self::$instance = new self;
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * required extensions
+     * @var array
+     */
+    public function required() {
+
+        return array( 
+            'theme' => array(
+                'template' => 'sweetdate',
+                'notice'   => sprintf( __( 'Sweet Date Geolocation extension requires the Sweet Date theme version 2.9 order higher. The theme can be purchased separately from <a href="%s" target="_blank">here</a>.' ), 'https://themeforest.net/item/sweet-date-more-than-a-wordpress-dating-theme/4994573?ref=GEOmyWP', 'geo-my-wp' ),
+                'version' => '2.9'
+            ),
+            'addons' => array(
+                array(
+                    'slug'    => 'members_locator',
+                    'notice'  => __( 'Sweet Date Geolocation extension requires the Members Locator core extension.', 'geo-my-wp' )
+                )
+            )
+        );
+    }
+
+    /**
+     * Register scripts
+     * 
+     * @return [type] [description]
+     */
+    public function enqueue_scripts() {
+        if ( ! IS_ADMIN ) {
+    	   wp_register_script( 'gmw-sdate-geo', GMW_SDATE_GEO_URL . '/assets/js/gmw.sd.min.js', array( 'jquery', 'gmw' ), GMW_VERSION, true );
+        } 
+    }
+
+    /**
+     * Run on BuddyPress init
+     * 
+     * @return void
+     */
+    public function pre_init() {
+        
+        parent::pre_init();
+        
+    	add_action( 'bp_init', array( $this, 'sweetdate_geolocation_init' ), 20 );
 	}
-	
-	//include members query only on members page
-	if ( bp_current_component() == 'members' ) {
-		include( 'includes/geo-my-wp-sd-class.php' );
-		new GMW_SD_Class_Query;
-	}
+
+	/**
+	 * Load add-on
+	 * 
+	 * @return [type] [description]
+	 */
+    public function sweetdate_geolocation_init() {
+
+    	//admin settings
+		if ( is_admin() ) {
+			include( 'includes/admin/class-gmw-sweet-date-admin-settings.php' );
+			new GMW_Sweet_Date_Admin_Settings;
+		}
+
+		//include members query only on members page
+		if ( bp_current_component() == 'members' && gmw_get_option( 'sweet_date','enabled', '' ) != '' ) {
+			include( 'includes/class-gmw-sweet-date-geolocation.php' );
+			new GMW_Sweet_Date_Geolocation;
+		}
+    }
 }
-add_action( 'bp_init', 'gmw_sweetdate_geolocation_init', 20 );
+GMW_Addon::register( 'GMW_Sweetdate_Geolcation_Addon' );
