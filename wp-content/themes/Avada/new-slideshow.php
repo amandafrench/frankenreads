@@ -88,10 +88,9 @@ $video = get_post_meta( get_the_ID(), 'pyre_video', true );
 
 				// Masonry layout, get the element orientation class.
 				$element_orientation_class = '';
-				$responsive_images_columns = Avada()->settings->get( 'blog_grid_columns' );
+				$responsive_images_columns = Avada()->settings->get( 'blog_archive_grid_columns' );
 				if ( 'masonry' === $layout && has_post_thumbnail() ) {
-					$post_thumbnail_attachment = wp_get_attachment_image_src( $thumbnail_id, 'full' );
-					$element_orientation_class = Avada()->images->get_element_orientation_class( $post_thumbnail_attachment );
+					$element_orientation_class = Avada()->images->get_element_orientation_class( $thumbnail_id );
 
 					// Check if we have a landscape image, then it has to stretch over 2 cols.
 					if ( 'fusion-element-landscape' === $element_orientation_class ) {
@@ -103,7 +102,7 @@ $video = get_post_meta( get_the_ID(), 'pyre_video', true );
 					array(
 						'layout' => strtolower( $layout ),
 						'columns' => $responsive_images_columns,
-						'gutter_width' => Avada()->settings->get( 'blog_grid_column_spacing' ),
+						'gutter_width' => Avada()->settings->get( 'blog_archive_grid_column_spacing' ),
 					)
 				);
 			} elseif ( 'Timeline' === $layout ) {

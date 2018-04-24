@@ -1,51 +1,51 @@
 /* global fusionBuilderConfig */
 jQuery( document ).ready( function() {
 
-    jQuery( '#fusion-builder-import-file' ).on( 'change', FusionPrepareUpload );
+	jQuery( '#fusion-builder-import-file' ).on( 'change', FusionPrepareUpload );
 
-    jQuery( '.fusion-builder-import-data' ).on( 'click', FusionUploadFiles );
+	jQuery( '.fusion-builder-import-data' ).on( 'click', FusionUploadFiles );
 
-    function FusionPrepareUpload( event ) {
-        if ( '' !== jQuery( this ).val() ) {
-            jQuery( '.fusion-builder-import-data' ).prop( 'disabled', false );
-        } else {
-            jQuery( '.fusion-builder-import-data' ).prop( 'disabled', true );
-        }
-        window.fusionBuilderImporterFiles = event.target.files;
-    }
+	function FusionPrepareUpload( event ) {
+		if ( '' !== jQuery( this ).val() ) {
+			jQuery( '.fusion-builder-import-data' ).prop( 'disabled', false );
+		} else {
+			jQuery( '.fusion-builder-import-data' ).prop( 'disabled', true );
+		}
+		window.fusionBuilderImporterFiles = event.target.files;
+	}
 
-    function FusionUploadFiles( event ) {
+	function FusionUploadFiles( event ) {
 
 		var data,
-		    inputField;
+			inputField;
 
-        if ( event ) {
-            event.stopPropagation();
-            event.preventDefault();
-        }
+		if ( event ) {
+			event.stopPropagation();
+			event.preventDefault();
+		}
 
-        data = new FormData();
-        inputField = jQuery( '#fusion-builder-import-file' );
+		data = new FormData();
+		inputField = jQuery( '#fusion-builder-import-file' );
 
-        jQuery.each( window.fusionBuilderImporterFiles, function( key, value ) {
-            data.append( key, value );
-        } );
+		jQuery.each( window.fusionBuilderImporterFiles, function( key, value ) {
+			data.append( key, value );
+		} );
 
-        data.append( 'action', 'fusion_builder_importer' );
-        data.append( 'fusion_import_nonce', fusionBuilderConfig.fusion_import_nonce );
+		data.append( 'action', 'fusion_builder_importer' );
+		data.append( 'fusion_import_nonce', fusionBuilderConfig.fusion_import_nonce );
 
-        jQuery.ajax( {
-            type: 'POST',
-            url: fusionBuilderConfig.ajaxurl,
-            dataType: 'json',
-            contentType: false,
-            processData: false,
-            data: data,
-            cache: false,
-            complete: function() {
-                inputField.val( '' );
-                jQuery( '.fusion-builder-import-success' ).show();
-            }
-        } );
-    }
+		jQuery.ajax( {
+			type: 'POST',
+			url: fusionBuilderConfig.ajaxurl,
+			dataType: 'json',
+			contentType: false,
+			processData: false,
+			data: data,
+			cache: false,
+			complete: function() {
+				inputField.val( '' );
+				jQuery( '.fusion-builder-import-success' ).show();
+			}
+		} );
+	}
 } );

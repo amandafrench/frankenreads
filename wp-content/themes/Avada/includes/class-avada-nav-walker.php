@@ -336,7 +336,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 						$middle_logo_menu_top_level_elements++;
 					}
 
-					$top_level_menu_items_count = count( $middle_logo_menu_top_level_elements );
+					$top_level_menu_items_count = $middle_logo_menu_top_level_elements;
 
 					if ( 0 === $top_level_menu_items_count ) {
 						$this->middle_logo_menu_break_point = $middle_logo_menu_top_level_elements / 2;
@@ -485,7 +485,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 					if ( ! empty( $this->menu_megamenu_thumbnail ) ) {
 						$title_enhance = '<span class="fusion-megamenu-icon fusion-megamenu-thumbnail">' . $this->menu_megamenu_thumbnail . '</span>';
 					} elseif ( ! empty( $this->menu_megamenu_icon ) ) {
-						$title_enhance = '<span class="fusion-megamenu-icon"><i class="fa glyphicon ' . avada_font_awesome_name_handler( $this->menu_megamenu_icon ) . '"></i></span>';
+						$title_enhance = '<span class="fusion-megamenu-icon"><i class="glyphicon ' . avada_font_awesome_name_handler( $this->menu_megamenu_icon ) . '"></i></span>';
 					} elseif ( 'disabled' === $this->menu_megamenu_title ) {
 						$title_enhance = '<span class="fusion-megamenu-bullet"></span>';
 					}
@@ -577,8 +577,15 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 
 				// Check if we need to set an image.
 				$icon_wrapper_class = 'fusion-megamenu-icon';
-				if ( 0 === $depth && $this->menu_style ) {
-					$icon_wrapper_class = ( $is_rtl ) ? 'button-icon-divider-right' : 'button-icon-divider-left';
+
+				if ( 0 === $depth ) {
+					if ( $is_rtl && 'left' === Avada()->settings->get( 'menu_icon_position' ) ) {
+						$icon_wrapper_class .= ' fusion-megamenu-icon-left';
+					}
+
+					if ( $this->menu_style ) {
+						$icon_wrapper_class = ( $is_rtl ) ? 'button-icon-divider-right' : 'button-icon-divider-left';
+					}
 				}
 
 				$icon = '';
@@ -590,7 +597,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				if ( ! empty( $this->menu_megamenu_thumbnail ) && 'enabled' === $this->menu_megamenu_status ) {
 					$icon = '<span class="' . $icon_wrapper_class . ' fusion-megamenu-image">' . $this->menu_megamenu_thumbnail . '</span>';
 				} elseif ( ! empty( $this->menu_megamenu_icon ) ) {
-					$icon = '<span class="' . $icon_wrapper_class . '"><i class="fa glyphicon ' . $this->menu_megamenu_icon . '"></i></span>';
+					$icon = '<span class="' . $icon_wrapper_class . '"><i class="glyphicon ' . avada_font_awesome_name_handler( $this->menu_megamenu_icon ) . '"></i></span>';
 				} elseif ( 0 !== $depth && 'enabled' === $this->menu_megamenu_status ) {
 					$icon = '<span class="fusion-megamenu-bullet"></span>';
 				}

@@ -87,16 +87,16 @@ class Fusion_Image_Resizer {
 			// Remove the upload path base directory from the attachment URL.
 			$attachment_url = str_replace( $upload_dir_paths_baseurl . '/', '', $attachment_url );
 
-			// Run a custom database query to get the attachment ID from the modified attachment URL. @codingStandardsIgnoreLine
-			$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = '%s' AND wposts.post_type = 'attachment'", $attachment_url ) );
+			// Run a custom database query to get the attachment ID from the modified attachment URL.
+			$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = %s AND wposts.post_type = 'attachment'", $attachment_url ) );
 
 			// If the image contains -\d+x\d part as original file name, the above did not yield an attachment ID, so let's try with the original name.
 			if ( ! $attachment_id ) {
 				// Remove the upload path base directory from the attachment URL.
 				$attachment_url = str_replace( $upload_dir_paths_baseurl . '/', '', $url );
 
-				// Run a custom database query to get the attachment ID from the modified attachment URL. @codingStandardsIgnoreLine
-				$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = '%s' AND wposts.post_type = 'attachment'", $attachment_url ) );
+				// Run a custom database query to get the attachment ID from the modified attachment URL.
+				$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = %s AND wposts.post_type = 'attachment'", $attachment_url ) );
 			}
 
 			$wpml_object_id = apply_filters( 'wpml_object_id', $attachment_id, 'attachment' );

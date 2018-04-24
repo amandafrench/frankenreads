@@ -61,8 +61,8 @@ class Avada_Upgrade_530 extends Avada_Upgrade_Abstract {
 	private function migrate_nav_typography_settings() {
 		$options = get_option( $this->option_name, array() );
 
-		$options['nav_typography']['font-size'] = $options['nav_font_size'];
-		$options['nav_typography']['color']     = $options['menu_first_color'];
+		$options['nav_typography']['font-size'] = ( isset( $options['nav_font_size'] ) ) ? $options['nav_font_size'] : '14px';
+		$options['nav_typography']['color']     = ( isset( $options['menu_first_color'] ) ) ? $options['menu_first_color'] : '#333333';
 
 		unset( $options['nav_font_size'] );
 		unset( $options['menu_first_color'] );
@@ -108,7 +108,7 @@ class Avada_Upgrade_530 extends Avada_Upgrade_Abstract {
 	private function migrate_sliding_bar_settings() {
 		$options = get_option( $this->option_name, array() );
 
-		$options['slidingbar_border'] = $options['slidingbar_top_border'];
+		$options['slidingbar_border'] = ( isset( $options['slidingbar_top_border'] ) ) ? $options['slidingbar_top_border'] : '35px';
 
 		unset( $options['slidingbar_top_border'] );
 

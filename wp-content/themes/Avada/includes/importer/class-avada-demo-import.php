@@ -194,32 +194,26 @@ class Avada_Demo_Import {
 
 			$import_stages = array();
 			if ( isset( $_POST['importStages'] ) ) {
-				// @codingStandardsIgnoreLine
-				$import_stages = wp_unslash( $_POST['importStages'] );
+				$import_stages = wp_unslash( $_POST['importStages'] ); // WPCS: sanitization ok.
 			}
 
 			$this->demo_type = 'classic';
-			// @codingStandardsIgnoreLine
-			if ( isset( $_POST['demoType'] ) && '' !== trim( wp_unslash( $_POST['demoType'] ) ) ) {
-				// @codingStandardsIgnoreLine
-				$this->demo_type = wp_unslash( $_POST['demoType'] );
+			if ( isset( $_POST['demoType'] ) && '' !== sanitize_text_field( wp_unslash( $_POST['demoType'] ) ) ) {
+				$this->demo_type = sanitize_text_field( wp_unslash( $_POST['demoType'] ) );
 			}
 
 			$this->fetch_attachments = false;
-			// @codingStandardsIgnoreLine
-			if ( isset( $_POST['fetchAttachments'] ) && 'true' === trim( wp_unslash( $_POST['fetchAttachments'] ) ) ) {
+			if ( isset( $_POST['fetchAttachments'] ) && 'true' === sanitize_text_field( wp_unslash( $_POST['fetchAttachments'] ) ) ) {
 				$this->fetch_attachments = true;
 			}
 
 			$this->import_content_types = array();
 			if ( isset( $_POST['contentTypes'] ) && is_array( $_POST['contentTypes'] ) ) {
-				// @codingStandardsIgnoreLine
-				$this->import_content_types = wp_unslash( $_POST['contentTypes'] );
+				$this->import_content_types = wp_unslash( $_POST['contentTypes'] ); // WPCS: sanitization ok.
 			}
 
 			$this->import_all = false;
-			// @codingStandardsIgnoreLine
-			if ( isset( $_POST['allImport'] ) && 'true' === trim( wp_unslash( $_POST['allImport'] ) ) ) {
+			if ( isset( $_POST['allImport'] ) && 'true' === sanitize_text_field( wp_unslash( $_POST['allImport'] ) ) ) {
 				$this->import_all = true;
 			}
 
@@ -588,7 +582,6 @@ class Avada_Demo_Import {
 			// Import WooCommerce if WooCommerce Exists.
 			if ( class_exists( 'WooCommerce' ) && $this->shop_demo ) {
 				foreach ( $this->woopages as $woo_page_name => $woo_page_title ) {
-					// @codingStandardsIgnoreLine
 					$woopage = get_page_by_title( $woo_page_title );
 					if ( isset( $woopage ) && $woopage->ID ) {
 						update_option( $woo_page_name, $woopage->ID ); // Front Page.
@@ -724,19 +717,14 @@ class Avada_Demo_Import {
 
 		if ( $menus ) {
 			if ( 'classic' === $this->demo_type ) {
-				// @codingStandardsIgnoreLine
 				$opmenu = get_page_by_title( 'One Page Parallax' );
 			} elseif ( 'landing_product' === $this->demo_type ) {
-				// @codingStandardsIgnoreLine
 				$opmenu = get_page_by_title( 'Homepage' );
 			} elseif ( 'technology' === $this->demo_type ) {
-				// @codingStandardsIgnoreLine
 				$opmenu = get_page_by_title( 'Technology' );
 			} elseif ( 'wedding' === $this->demo_type ) {
-				// @codingStandardsIgnoreLine
 				$opmenu = get_page_by_title( 'Home' );
 			} elseif ( 'resume' === $this->demo_type ) {
-				// @codingStandardsIgnoreLine
 				$opmenu = get_page_by_title( 'Home' );
 			}
 			foreach ( $menus as $menu ) { // Assign menus to theme locations.
@@ -901,12 +889,8 @@ class Avada_Demo_Import {
 				$import = new LS_ImportUtil( $filepath );
 			}
 
-			// Get all sliders
-			// Table name.
-			$table_name = $wpdb->prefix . 'layerslider';
-
 			// Get sliders.
-			$sliders = $wpdb->get_results( "SELECT * FROM $table_name WHERE flag_hidden = '0' AND flag_deleted = '0' ORDER BY date_c ASC" );
+			$sliders = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}layerslider WHERE flag_hidden = '0' AND flag_deleted = '0' ORDER BY date_c ASC" );
 			$slides = array();
 			if ( ! empty( $sliders ) ) {
 				foreach ( $sliders as $key => $item ) {
@@ -924,7 +908,6 @@ class Avada_Demo_Import {
 
 			// Assign LayerSlider.
 			if ( 'classic' == $this->demo_type ) {
-				// @codingStandardsIgnoreLine
 				$lspage = get_page_by_title( 'Layer Slider' );
 				if ( isset( $lspage ) && $lspage->ID && $slides_array['Avada Full Width'] ) {
 					update_post_meta( $lspage->ID, 'pyre_slider', $slides_array['Avada Full Width'] );
@@ -1017,7 +1000,7 @@ class Avada_Demo_Import {
 	private function import_general_data() {
 
 		// Menus are imported with the rest of the content.
-		// Set reading options. @codingStandardsIgnoreLine
+		// Set reading options.
 		$homepage = get_page_by_title( $this->homepage_title );
 		if ( isset( $homepage ) && $homepage->ID ) {
 			update_option( 'show_on_front', 'page' );

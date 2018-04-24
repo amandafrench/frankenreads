@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'AVADA_VERSION' ) ) {
-	define( 'AVADA_VERSION', '5.4.2' );
+	define( 'AVADA_VERSION', '5.5' );
 }
 
 /**
@@ -104,7 +104,6 @@ if ( ! fusion_doing_ajax() ) {
  *
  * @return object Avada
  */
-// @codingStandardsIgnoreLine
 function Avada() {
 	return Avada::get_instance();
 }
@@ -180,9 +179,9 @@ if ( ! is_admin() && class_exists( 'bbPress' ) ) {
 
 /**
  * Instantiate Avada_EventsCalendar
- * We only need to do this on the frontend if Events Calendar is installed
+ * We only need to do this on the frontend if Events Calendar is installed or on customizer preview.
  */
-if ( ! is_admin() && class_exists( 'Tribe__Events__Main' ) ) {
+if ( ( ! is_admin() || is_customize_preview() ) && class_exists( 'Tribe__Events__Main' ) ) {
 	new Avada_EventsCalendar();
 }
 
@@ -200,8 +199,7 @@ if ( false !== strpos( $http_referer, 'avada_options' ) ) {
 	$load_avadaredux   = true;
 	$load_avada_gfonts = true;
 }
-// @codingStandardsIgnoreLine WordPress.VIP.ValidatedSanitizedInput.InputNotValidated
-$avadaredux_export = ( isset( $_GET['action'] ) && 'fusionredux_link_options-fusion_options' === $_GET['action'] && '' !== $_GET['secret'] ) ? true : false;
+$avadaredux_export = ( isset( $_GET['action'] ) && 'fusionredux_link_options-fusion_options' === $_GET['action'] && isset( $_GET['secret'] ) && '' !== $_GET['secret'] ) ? true : false;
 if ( $avadaredux_export ) {
 	$load_avadaredux   = true;
 	$load_avada_gfonts = false;
@@ -325,6 +323,11 @@ function avada_font_awesome_name_handler( $icon ) {
 			$fa_icon = 'fa-' . $old_icons[ str_replace( 'fa-', '', $icon ) ];
 		}
 	}
+
+	if ( false === strpos( str_replace( ' fa-fw', '', trim( $fa_icon ) ), ' ' ) ) {
+		$fa_icon = ' fa ' . $fa_icon;
+	}
+
 	return $fa_icon;
 }
 
@@ -365,7 +368,7 @@ function avada_admin_notice() {
 	<?php if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 && Avada_Admin_Notices::is_admin_notice_active( 'old-php-notice' ) ) : ?>
 		<div id="low-php-version-error" avada-data-dismissible="old-php-notice" class="notice notice-error is-dismissible">
 			<?php /* translators: Link to WordPress requirements page. */ ?>
-			<p><?php esc_attr_e( 'Your server runs an old version of PHP 5.2. To ensure optimal performance and security we strongly encourage you to update your system soon. Avada will end support for PHP 5.2 and below when Avada 6.0 is released.', 'Avada' ); ?></p>
+			<p><?php esc_attr_e( 'Your server runs an old version of PHP, below 5.3. To ensure optimal performance and security we strongly encourage you to update your system soon. Avada will require PHP 5.3 or higher when Avada 6.0 is released.', 'Avada' ); ?></p>
 		</div>
 	<?php endif; ?>
 
@@ -411,83 +414,6 @@ if ( function_exists( 'rev_slider_shortcode' ) ) {
 function avada_disable_revslider_notice() {
 	update_option( 'revslider-valid-notice', 'false' );
 }
-
-/**
- * Woo Products Shortcode Recode.
- *
- * @param  array $atts The attributes.
- * @return string
- */
-function avada_woo_product( $atts ) {
-	global $woocommerce_loop;
-
-	if ( empty( $atts ) ) {
-		return;
-	}
-
-	$args = array(
-		'post_type'       => 'product',
-		'posts_per_page'  => 1,
-		'no_found_rows'   => 1,
-		'post_status'     => 'publish',
-		'columns'         => 1,
-	);
-
-	$args['tax_query'][] = WC()->query->get_tax_query();
-
-	if ( isset( $atts['sku'] ) && '' !== $atts['sku'] ) {
-		$args['meta_query'][] = array(
-			'key'     => '_sku',
-			'value'   => $atts['sku'],
-			'compare' => '=',
-		);
-	}
-
-	if ( isset( $atts['id'] ) ) {
-		$args['p'] = $atts['id'];
-	}
-
-	ob_start();
-
-	if ( isset( $args['columns'] ) && 1 < $args['columns'] ) {
-		$woocommerce_loop['columns'] = $args['columns'];
-	}
-
-	$products = fusion_cached_query( $args );
-	?>
-	<?php if ( $products->have_posts() ) : ?>
-
-		<?php woocommerce_product_loop_start(); ?>
-
-			<?php while ( $products->have_posts() ) : ?>
-				<?php $products->the_post(); ?>
-				<?php fusion_wc_get_template_part( 'content', 'product' ); ?>
-
-			<?php endwhile; // End of the loop. ?>
-
-		<?php woocommerce_product_loop_end(); ?>
-
-	<?php
-	endif;
-
-	wp_reset_postdata();
-
-	return '<div class="woocommerce">' . ob_get_clean() . '</div>';
-}
-
-/**
- * Changes the default WooCommerce product shortcode
- * with a customized Avada version.
- */
-function remove_product_shortcode() {
-	if ( class_exists( 'WooCommerce' ) ) {
-		// First remove the shortcode.
-		remove_shortcode( 'product' );
-		// Then recode it.
-		add_shortcode( 'product', 'avada_woo_product' );
-	}
-}
-add_action( 'wp_loaded', 'remove_product_shortcode' );
 
 /**
  * Support email login on my account dropdown.

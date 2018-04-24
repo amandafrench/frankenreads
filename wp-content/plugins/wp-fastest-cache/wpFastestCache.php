@@ -3,7 +3,7 @@
 Plugin Name: WP Fastest Cache
 Plugin URI: http://wordpress.org/plugins/wp-fastest-cache/
 Description: The simplest and fastest WP Cache system
-Version: 0.8.7.8
+Version: 0.8.7.9
 Author: Emre Vona
 Author URI: http://tr.linkedin.com/in/emrevona
 Text Domain: wp-fastest-cache
@@ -85,8 +85,11 @@ GNU General Public License for more details.
 		private $systemMessage = "";
 		private $options = array();
 		public $noscript = "";
+		public $content_url = "";
 
 		public function __construct(){
+			$this->set_content_url();
+			
 			$optimize_image_ajax_requests = array("wpfc_revert_image_ajax_request", 
 												  "wpfc_statics_ajax_request",
 												  "wpfc_optimize_image_ajax_request",
@@ -186,6 +189,8 @@ GNU General Public License for more details.
 				}
 
 				if(is_admin()){
+					add_action('wp_loaded', array($this, "load_column"));
+					
 					if(defined('DOING_AJAX') && DOING_AJAX){
 						//do nothing
 					}else{
@@ -203,7 +208,6 @@ GNU General Public License for more details.
 
 							add_action('plugins_loaded', array($this, 'wpfc_load_plugin_textdomain'));
 							add_action('wp_loaded', array($this, "load_admin_toolbar"));
-							add_action('wp_loaded', array($this, "load_column"));
 
 							$this->admin();
 						}
@@ -262,6 +266,8 @@ GNU General Public License for more details.
 			if (!defined('WPFC_WP_CONTENT_URL')) {
 				define("WPFC_WP_CONTENT_URL", $content_url);
 			}
+
+			$this->content_url = $content_url;
 		}
 
 		public function clear_cache_on_kksr_rate($id){
@@ -1015,22 +1021,25 @@ GNU General Public License for more details.
 				return false;
 			}
 
-			if(preg_match("/cat|tag/", $term->taxonomy)){
-				$url = get_term_link($term->term_id, $term->taxonomy);
+			//if(preg_match("/cat|tag|store|listing/", $term->taxonomy)){}
 
-				if(preg_match("/^http/", $url)){
-					$path = preg_replace("/https?\:\/\/[^\/]+/i", "", $url);
-					$path = trim($path, "/");
+			$url = get_term_link($term->term_id, $term->taxonomy);
 
-					// to remove the cache of tag/cat
-					@unlink($this->getWpContentDir()."/cache/all/".$path."/index.html");
-					@unlink($this->getWpContentDir()."/cache/wpfc-mobile-cache/".$path."/index.html");
+			if(preg_match("/^http/", $url)){
+				$path = preg_replace("/https?\:\/\/[^\/]+/i", "", $url);
+				$path = trim($path, "/");
 
-					// to remove the cache of the pages
-					$this->rm_folder_recursively($this->getWpContentDir()."/cache/all/".$path."/page");
-					$this->rm_folder_recursively($this->getWpContentDir()."/cache/wpfc-mobile-cache/".$path."/page");
-				}
+				// to remove the cache of tag/cat
+				@unlink($this->getWpContentDir()."/cache/all/".$path."/index.html");
+				@unlink($this->getWpContentDir()."/cache/wpfc-mobile-cache/".$path."/index.html");
+
+				// to remove the cache of the pages
+				$this->rm_folder_recursively($this->getWpContentDir()."/cache/all/".$path."/page");
+				$this->rm_folder_recursively($this->getWpContentDir()."/cache/wpfc-mobile-cache/".$path."/page");
 			}
+
+
+
 		}
 
 		public function deleteHomePageCache($log = true){
@@ -1043,6 +1052,10 @@ GNU General Public License for more details.
 				if($site_url_path){
 					@unlink($this->getWpContentDir()."/cache/all/".$site_url_path."/index.html");
 					@unlink($this->getWpContentDir()."/cache/wpfc-mobile-cache/".$site_url_path."/index.html");
+
+					//to clear pagination of homepage cache
+					$this->rm_folder_recursively($this->getWpContentDir()."/cache/all/".$site_url_path."/page");
+					$this->rm_folder_recursively($this->getWpContentDir()."/cache/wpfc-mobile-cache/".$site_url_path."/page");
 				}
 			}
 
@@ -1052,11 +1065,20 @@ GNU General Public License for more details.
 				if($home_url_path){
 					@unlink($this->getWpContentDir()."/cache/all/".$home_url_path."/index.html");
 					@unlink($this->getWpContentDir()."/cache/wpfc-mobile-cache/".$home_url_path."/index.html");
+
+					//to clear pagination of homepage cache
+					$this->rm_folder_recursively($this->getWpContentDir()."/cache/all/".$home_url_path."/page");
+					$this->rm_folder_recursively($this->getWpContentDir()."/cache/wpfc-mobile-cache/".$home_url_path."/page");
 				}
 			}
 
 			@unlink($this->getWpContentDir()."/cache/all/index.html");
 			@unlink($this->getWpContentDir()."/cache/wpfc-mobile-cache/index.html");
+
+			//to clear pagination of homepage cache
+			$this->rm_folder_recursively($this->getWpContentDir()."/cache/all/page");
+			$this->rm_folder_recursively($this->getWpContentDir()."/cache/wpfc-mobile-cache/page");
+
 
 			if($log){
 				if($this->isPluginActive("wp-fastest-cache-premium/wpFastestCachePremium.php")){
@@ -1128,6 +1150,8 @@ GNU General Public License for more details.
 			}
 
 			if($created_tmpWpfc && $cache_deleted && $minifed_deleted){
+				do_action('wpfc_delete_cache');
+				
 				$this->systemMessage = array("All cache files have been deleted","success");
 
 				if($this->isPluginActive("wp-fastest-cache-premium/wpFastestCachePremium.php")){

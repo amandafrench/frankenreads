@@ -68,6 +68,29 @@ function avada_options_section_contact( $sections ) {
 						),
 						'active_callback' => array( 'Avada_Options_Conditionals', 'is_contact' ),
 					),
+					'contact_form_privacy_checkbox' => array(
+						'label'       => esc_html__( 'Display Data Privacy Confirmation Box', 'Avada' ),
+						'description' => esc_html__( 'Turn on to display a checkbox and custom label that has to be checked in order to confirm data privacy terms and that the form can be sent.', 'Avada' ),
+						'id'          => 'contact_form_privacy_checkbox',
+						'default'     => '0',
+						'type'        => 'switch',
+						'active_callback' => array( 'Avada_Options_Conditionals', 'is_contact' ),
+					),
+					'contact_form_privacy_label' => array(
+						'label'           => esc_html__( 'Data Privacy Checkbox Label', 'Avada' ),
+						'description'     => esc_html__( 'Enter the contents that should be displayed as label for the data privacy checkbox. Can contain HTML.', 'Avada' ),
+						'id'              => 'contact_form_privacy_label',
+						'default'         => 'By checking this box, you confirm that you have read and are agreeing to our terms of use regarding the storage of the data submitted through this form.',
+						'type'            => 'textarea',
+						'required'        => array(
+							array(
+								'setting'  => 'contact_form_privacy_checkbox',
+								'operator' => '=',
+								'value'    => '1',
+							),
+						),
+						'active_callback' => array( 'Avada_Options_Conditionals', 'is_contact' ),
+					),
 					'contact_form_options_info_2' => array(
 						'label'           => esc_html__( 'ReCaptcha', 'Avada' ),
 						'description'     => '',

@@ -42,9 +42,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			addCustomColumn: function( event ) {
 				var thisModel,
-				    layoutID,
-				    isGlobal,
-				    title;
+					layoutID,
+					isGlobal,
+					title;
 
 				if ( event ) {
 					event.preventDefault();
@@ -108,12 +108,12 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			addColumns: function( event ) {
 
 				var that,
-				    $layoutEl,
-				    layout,
-				    layoutElementsNum,
-				    thisView,
-				    defaultParams,
-				    value;
+					$layoutEl,
+					layout,
+					layoutElementsNum,
+					thisView,
+					defaultParams,
+					value;
 
 				if ( event ) {
 					event.preventDefault();
@@ -132,13 +132,13 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 				_.each( layout, function( element, index ) {
 					var params = {},
-					    updateContent,
-					    columnAttributes;
+						updateContent,
+						columnAttributes;
 
 					// Process default parameters from shortcode
 					_.each( defaultParams, function( param )  {
 						if ( _.isObject( param.value ) ) {
-							value = param['default'];
+							value = param.default;
 						} else {
 							value = param.value;
 						}
@@ -188,12 +188,12 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			addCustomSection: function( event ) {
 				var thisModel  = this.model,
-				    parentID   = this.model.get( 'parent' ),
-				    parentView = FusionPageBuilderViewManager.getView( parentID ),
-				    layoutID,
-				    isGlobal,
-				    title,
-				    targetContainer;
+					parentID   = this.model.get( 'parent' ),
+					parentView = FusionPageBuilderViewManager.getView( parentID ),
+					layoutID,
+					isGlobal,
+					title,
+					targetContainer;
 
 				targetContainer = parentView.$el.prev( '.fusion_builder_container' );
 				FusionPageBuilderApp.targetContainerCID = targetContainer.find( '.fusion-builder-data-cid' ).data( 'cid' );
@@ -251,15 +251,15 @@ var FusionPageBuilder = FusionPageBuilder || {};
 						FusionPageBuilderEvents.trigger( 'fusion-columns-added' );
 						FusionPageBuilderEvents.trigger( 'fusion-element-cloned' );
 					}
-				});
+				} );
 			},
 
 			addNextPage: function( event ) {
 				var parentID   = this.model.get( 'parent' ),
-				    parentView = FusionPageBuilderViewManager.getView( parentID ),
-				    targetContainer,
-				    moduleID,
-				    params = {};
+					parentView = FusionPageBuilderViewManager.getView( parentID ),
+					targetContainer,
+					moduleID,
+					params = {};
 
 				if ( event ) {
 					event.preventDefault();
@@ -292,6 +292,6 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 		} );
 
-	});
+	} );
 
-} )( jQuery );
+} ( jQuery ) );

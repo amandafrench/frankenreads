@@ -55,10 +55,20 @@ function fusion_builder_map( $module ) {
 					$dynamic_description = $fusion_settings->get_default_description( $setting, $subset, $type, $reset, $param );
 					$dynamic_description = apply_filters( 'fusion_builder_option_dynamic_description', $dynamic_description, $shortcode, $param['param_name'] );
 				}
+
+				$options_label = apply_filters( 'fusion_options_label', esc_html( 'Element Options', 'Fusion-Builder' ) );
+
 				if ( 'hide_on_mobile' === $param['param_name'] ) {
-					$link = '<a href="' . $fusion_settings->get_setting_link( 'visibility_small' ) . '" target="_blank" rel="noopener noreferrer">' . apply_filters( 'fusion_options_label', esc_html( 'Element Options', 'Fusion-Builder' ) ) . '</a>';
+					$link                 = '<a href="' . $fusion_settings->get_setting_link( 'visibility_small' ) . '" target="_blank" rel="noopener noreferrer">' . $options_label . '</a>';
 					$param['description'] = $param['description'] . sprintf( __( '  Each of the 3 sizes has a custom width setting on the Fusion Builder Elements tab in the %s.', 'fusion-builder' ), $link );
 				}
+
+				if ( 'element_content' === $param['param_name'] && ( 'fusion_syntax_highlighter' === $shortcode || 'fusion_code' === $shortcode ) ) {
+					$code_block_option    = ( $fusion_settings->get( 'disable_code_block_encoding' ) ) ? 'On' : 'Off';
+					$link                 = '<a href="' . $fusion_settings->get_setting_link( 'disable_code_block_encoding' ) . '" target="_blank" rel="noopener noreferrer">' . $code_block_option . '</a>';
+					$param['description'] = $param['description'] . '<br/>' . sprintf( __( 'IMPORTANT: Please make sure that the "Code Block Encoding" setting in %1$s is enabled in order for the code to appear correctly on the frontend. Currently set to %2$s.', 'fusion-builder' ), $options_label, $link );
+				}
+
 				$param['description'] = apply_filters( 'fusion_builder_option_description', $param['description'] . $dynamic_description, $shortcode, $param['param_name'] );
 			}
 

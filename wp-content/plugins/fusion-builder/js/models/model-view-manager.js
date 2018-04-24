@@ -6,7 +6,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 	$( document ).ready( function() {
 
 		var fusionElements          = [],
-		    fusionGeneratorElements = [];
+			fusionGeneratorElements = [];
 
 		// Loop over all available elements and add them to Fusion Builder.
 		// Ignore elements tagged with 'hide_from_builder' attribute.
@@ -41,18 +41,18 @@ var FusionPageBuilder = FusionPageBuilder || {};
 		//Sort elements alphabetically
 		fusionElements.sort( function( a, b ) {
 			var titleA = a.title.toLowerCase(),
-			    titleB = b.title.toLowerCase();
+				titleB = b.title.toLowerCase();
 
 			return ( ( titleA < titleB ) ? -1 : ( ( titleA > titleB ) ? 1 : 0 ) );
-		});
+		} );
 
 		// Sort generator elements alphabetically
 		fusionGeneratorElements.sort( function( a, b ) {
 			var titleA = a.title.toLowerCase(),
-			    titleB = b.title.toLowerCase();
+				titleB = b.title.toLowerCase();
 
 			return ( ( titleA < titleB ) ? -1 : ( ( titleA > titleB ) ? 1 : 0 ) );
-		});
+		} );
 
 		FusionPageBuilder.ViewManager = Backbone.Model.extend( {
 			defaults: {
@@ -71,7 +71,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			getChildViews: function( parentID ) {
 				var views      = this.get( 'views' ),
-				    childViews = {};
+					childViews = {};
 
 				_.each( views, function( view, key ) {
 					if ( parentID === view.model.attributes.parent ) {
@@ -99,7 +99,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			removeView: function( cid ) {
 				var views    = this.get( 'views' ),
-				    updatedViews = {};
+					updatedViews = {};
 
 				_.each( views, function( value, key ) {
 					if ( key != cid ) { // jshint ignore:line
@@ -117,7 +117,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			countElementsByType: function( elementType ) {
 				var views = this.get( 'views' ),
-				    num   = 0;
+					num   = 0;
 
 				_.each( views, function( view ) {
 					if ( view.model.attributes.type === elementType ) {
@@ -134,4 +134,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 	} );
 
-} )( jQuery );
+} ( jQuery ) );

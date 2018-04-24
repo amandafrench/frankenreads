@@ -73,6 +73,8 @@ class Avada_Init {
 		// Add contact methods for author page.
 		add_filter( 'user_contactmethods', array( $this, 'modify_contact_methods' ) );
 
+		add_filter( 'wpcf7_form_response_output', array( $this, 'modify_wpcf7_notices' ), 10, 4 );
+
 		if ( ! is_admin() ) {
 			add_filter( 'pre_get_posts', array( $this, 'modify_search_filter' ) );
 		}
@@ -431,6 +433,24 @@ class Avada_Init {
 		$profile_fields['author_custom']   = 'Custom Message (Author Page)';
 
 		return $profile_fields;
+	}
+
+	/**
+	 * Modifies the HTML for WPCF7 notices.
+	 *
+	 * @access public
+	 * @since 5.5
+	 * @param string            $output              The HTML.
+	 * @param string            $class               The CSS classes that will be added to the element.
+	 * @param string            $content             The notice content.
+	 * @param WPCF7_ContactForm $contact_form_object An instance of the WPCF7_ContactForm object.
+	 * @return string                                Notice HTML.
+	 */
+	public function modify_wpcf7_notices( $output, $class, $content, $contact_form_object ) {
+		if ( shortcode_exists( 'fusion_alert' ) ) {
+			return do_shortcode( '[fusion_alert class="' . $class . '" type="custom"]' . $content . '[/fusion_alert]' );
+		}
+		return $output;
 	}
 
 	/**

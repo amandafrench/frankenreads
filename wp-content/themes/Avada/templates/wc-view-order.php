@@ -10,8 +10,8 @@
  * @since      5.1
  */
 
-// The $order_id is inherited from the Avada_Woocommerce::view_order() method. @codingStandardsIgnoreLine Squiz.PHP.DisallowMultipleAssignments.Found
-if ( ! $order = wc_get_order( $order_id ) ) { // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.Found
+// The $order_id is inherited from the Avada_Woocommerce::view_order() method.
+if ( ! $order = wc_get_order( $order_id ) ) {
 	return;
 }
 
@@ -33,6 +33,8 @@ $show_downloads        = $order->has_downloadable_item() && $order->is_download_
 		</thead>
 		<tbody>
 			<?php
+			do_action( 'woocommerce_order_details_before_order_table_items', $order );
+
 			foreach ( $order_items as $item_id => $item ) :
 				$product           = apply_filters( 'woocommerce_order_item_product', $item->get_product(), $item );
 				$purchase_note     = ( $product ) ? $product->get_purchase_note() : '';
@@ -86,7 +88,7 @@ $show_downloads        = $order->has_downloadable_item() && $order->is_download_
 				<?php endif; ?>
 			<?php endforeach; ?>
 
-			<?php do_action( 'woocommerce_order_items_table', $order ); ?>
+			<?php do_action( 'woocommerce_order_details_after_order_table_items', $order ); ?>
 		</tbody>
 		<tfoot>
 			<?php foreach ( $order->get_order_item_totals() as $key => $total ) : ?>

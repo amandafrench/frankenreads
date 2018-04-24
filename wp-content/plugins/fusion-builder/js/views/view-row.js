@@ -35,7 +35,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			sortableColumns: function() {
 				var thisEl     = this,
-				    selectedEl = thisEl.$el.find( '.fusion-builder-row-container' );
+					selectedEl = thisEl.$el.find( '.fusion-builder-row-container' );
 
 				selectedEl.sortable( {
 					helper: 'clone',
@@ -46,9 +46,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 					update: function( event, ui ) {
 						var elementCID = ui.item.data( 'cid' ),
-						    model      = thisEl.collection.find( function( model ) {
+							model      = thisEl.collection.find( function( model ) {
 								return model.get( 'cid' ) === elementCID;
-						    } );
+							} );
 
 						// Moved column within the same section/row
 						if ( model.get( 'parent' ) === thisEl.model.attributes.cid && $( ui.item ).closest( event.target ).length ) {
@@ -118,4 +118,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			}
 		} );
 	} );
-} )( jQuery );
+} ( jQuery ) );

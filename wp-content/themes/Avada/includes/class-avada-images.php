@@ -295,10 +295,8 @@ class Avada_Images extends Fusion_Images {
 			$height = apply_filters( 'avada_set_placeholder_image_height', '150' );
 			$width  = '1500px';
 		} else {
-			// @codingStandardsIgnoreStart
 			@$height = $_wp_additional_image_sizes[ $featured_image_size ]['height'];
 			@$width  = $_wp_additional_image_sizes[ $featured_image_size ]['width'] . 'px';
-			// @codingStandardsIgnoreEnd
 		}
 		?>
 		<div class="fusion-placeholder-image" data-origheight="<?php echo esc_attr( $height ); ?>" data-origwidth="<?php echo esc_attr( $width ); ?>" style="height:<?php echo esc_attr( $height ); ?>px;width:<?php echo esc_attr( $width ); ?>;"></div>

@@ -511,7 +511,7 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 				if ( $this->args['hover_type'] ) {
 					$attr['class'] = 'hover-type-' . $this->args['hover_type'];
 				}
-				$attr['aria-label'] = get_the_title();
+				$attr['aria-label'] = the_title_attribute( array( 'echo' => false ) );
 
 				return $attr;
 
@@ -552,6 +552,8 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
  * @since 1.0
  */
 function fusion_element_recent_posts() {
+	global $pagenow;
+
 	fusion_builder_map(
 		array(
 			'name'       => esc_attr__( 'Recent Posts', 'fusion-builder' ),
@@ -631,7 +633,7 @@ function fusion_element_recent_posts() {
 					'heading'     => esc_attr__( 'Categories', 'fusion-builder' ),
 					'description' => esc_attr__( 'Select a category or leave blank for all.', 'fusion-builder' ),
 					'param_name'  => 'cat_slug',
-					'value'       => fusion_builder_shortcodes_categories( 'category' ),
+					'value'       => ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ? fusion_builder_shortcodes_categories( 'category' ) : array(),
 					'default'     => '',
 					'dependency'  => array(
 						array(
@@ -646,7 +648,7 @@ function fusion_element_recent_posts() {
 					'heading'     => esc_attr__( 'Exclude Categories', 'fusion-builder' ),
 					'description' => esc_attr__( 'Select a category to exclude.', 'fusion-builder' ),
 					'param_name'  => 'exclude_cats',
-					'value'       => fusion_builder_shortcodes_categories( 'category' ),
+					'value'       => ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ? fusion_builder_shortcodes_categories( 'category' ) : array(),
 					'default'     => '',
 					'dependency'  => array(
 						array(
@@ -661,7 +663,7 @@ function fusion_element_recent_posts() {
 					'heading'     => esc_attr__( 'Tags', 'fusion-builder' ),
 					'description' => esc_attr__( 'Select a tag or leave blank for all.', 'fusion-builder' ),
 					'param_name'  => 'tag_slug',
-					'value'       => fusion_builder_shortcodes_tags( 'post_tag' ),
+					'value'       => ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ? fusion_builder_shortcodes_tags( 'post_tag' ) : array(),
 					'default'     => '',
 					'dependency'  => array(
 						array(
@@ -676,7 +678,7 @@ function fusion_element_recent_posts() {
 					'heading'     => esc_attr__( 'Exclude Tags', 'fusion-builder' ),
 					'description' => esc_attr__( 'Select a tag to exclude.', 'fusion-builder' ),
 					'param_name'  => 'exclude_tags',
-					'value'       => fusion_builder_shortcodes_tags( 'post_tag' ),
+					'value'       => ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ? fusion_builder_shortcodes_tags( 'post_tag' ) : array(),
 					'default'     => '',
 					'dependency'  => array(
 						array(

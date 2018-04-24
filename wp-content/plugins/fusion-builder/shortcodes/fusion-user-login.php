@@ -256,7 +256,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 					$html .= '</' . $main_container . '>';
 					$html .= '</div>';
 				} else {
-					$html .= do_shortcode( '[fusion_alert type="general" border_size="1px" box_shadow="yes"]' . esc_attr__( 'You are already signed up.', 'fusion-builder' ) . '[/fusion_alert]' );
+					$html .= do_shortcode( '[fusion_alert type="general"]' . esc_attr__( 'You are already signed up.', 'fusion-builder' ) . '[/fusion_alert]' );
 				}
 
 				return $html;
@@ -322,7 +322,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 					$html .= '</div>';
 
 				} else {
-					$html .= do_shortcode( '[fusion_alert type="general" border_size="1px" box_shadow="yes"]' . esc_attr__( 'You are already signed in.', 'fusion-builder' ) . '[/fusion_alert]' );
+					$html .= do_shortcode( '[fusion_alert type="general"]' . esc_attr__( 'You are already signed in.', 'fusion-builder' ) . '[/fusion_alert]' );
 				}
 
 				return $html;
@@ -705,7 +705,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 						}
 					}
 
-					return do_shortcode( '[fusion_alert type="' . $notice_type . '" border_size="1px" box_shadow="yes"]' . $notices . '[/fusion_alert]' );
+					return do_shortcode( '[fusion_alert type="' . $notice_type . '"]' . $notices . '[/fusion_alert]' );
 				}
 				return '';
 			}

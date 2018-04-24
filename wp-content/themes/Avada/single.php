@@ -18,10 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php $post_pagination = get_post_meta( $post->ID, 'pyre_post_pagination', true ); ?>
 	<?php if ( ( Avada()->settings->get( 'blog_pn_nav' ) && 'no' !== $post_pagination ) || ( ! Avada()->settings->get( 'blog_pn_nav' ) && 'yes' === $post_pagination ) ) : ?>
 		<div class="single-navigation clearfix">
-			<div class="fusion-single-navigation-wrapper">
-				<?php previous_post_link( '%link', esc_attr__( 'Previous', 'Avada' ) ); ?>
-				<?php next_post_link( '%link', esc_attr__( 'Next', 'Avada' ) ); ?>
-			</div>
+			<?php previous_post_link( '%link', esc_attr__( 'Previous', 'Avada' ) ); ?>
+			<?php next_post_link( '%link', esc_attr__( 'Next', 'Avada' ) ); ?>
 		</div>
 	<?php endif; ?>
 
@@ -29,16 +27,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php the_post(); ?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'post' ); ?>>
 			<?php $full_image = ''; ?>
-			<?php if ( 'above' == Avada()->settings->get( 'blog_post_title' ) ) : ?>
+			<?php if ( 'above' === Avada()->settings->get( 'blog_post_title' ) ) : ?>
 				<?php if ( 'below_title' === Avada()->settings->get( 'blog_post_meta_position' ) ) : ?>
 					<div class="fusion-post-title-meta-wrap">
 				<?php endif; ?>
-				<?php echo avada_render_post_title( $post->ID, false, '', '2' ); // WPCS: XSS ok. ?>
+				<?php $title_size = ( false === avada_is_page_title_bar_enabled( $post->ID ) ? '1' : '2' ); ?>
+				<?php echo avada_render_post_title( $post->ID, false, '', $title_size ); // WPCS: XSS ok. ?>
 				<?php if ( 'below_title' === Avada()->settings->get( 'blog_post_meta_position' ) ) : ?>
 					<?php echo avada_render_post_metadata( 'single' ); // WPCS: XSS ok. ?>
 					</div>
 				<?php endif; ?>
-			<?php elseif ( 'disabled' == Avada()->settings->get( 'blog_post_title' ) && Avada()->settings->get( 'disable_date_rich_snippet_pages' ) && Avada()->settings->get( 'disable_rich_snippet_title' ) ) : ?>
+			<?php elseif ( 'disabled' === Avada()->settings->get( 'blog_post_title' ) && Avada()->settings->get( 'disable_date_rich_snippet_pages' ) && Avada()->settings->get( 'disable_rich_snippet_title' ) ) : ?>
 				<span class="entry-title" style="display: none;"><?php the_title(); ?></span>
 			<?php endif; ?>
 
@@ -49,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php
 						Avada()->images->set_grid_image_meta(
 							array(
-								'layout' => strtolower( 'large' ),
+								'layout'  => strtolower( 'large' ),
 								'columns' => '1',
 							)
 						);
@@ -104,11 +103,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php endif; ?>
 			<?php endif; ?>
 
-			<?php if ( 'below' == Avada()->settings->get( 'blog_post_title' ) ) : ?>
+			<?php if ( 'below' === Avada()->settings->get( 'blog_post_title' ) ) : ?>
 				<?php if ( 'below_title' === Avada()->settings->get( 'blog_post_meta_position' ) ) : ?>
 					<div class="fusion-post-title-meta-wrap">
 				<?php endif; ?>
-				<?php echo avada_render_post_title( $post->ID, false, '', '2' ); // WPCS: XSS ok. ?>
+				<?php $title_size = ( false === avada_is_page_title_bar_enabled( $post->ID ) ? '1' : '2' ); ?>
+				<?php echo avada_render_post_title( $post->ID, false, '', $title_size ); // WPCS: XSS ok. ?>
 				<?php if ( 'below_title' === Avada()->settings->get( 'blog_post_meta_position' ) ) : ?>
 					<?php echo avada_render_post_metadata( 'single' ); // WPCS: XSS ok. ?>
 					</div>
@@ -120,7 +120,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 
 			<?php if ( ! post_password_required( $post->ID ) ) : ?>
-				<?php if ( '' === Avada()->settings->get( 'blog_post_meta_position' ) || 'below_article' === Avada()->settings->get( 'blog_post_meta_position' ) ) : ?>
+				<?php if ( '' === Avada()->settings->get( 'blog_post_meta_position' ) || 'below_article' === Avada()->settings->get( 'blog_post_meta_position' ) || 'disabled' === Avada()->settings->get( 'blog_post_title' ) ) : ?>
 					<?php echo avada_render_post_metadata( 'single' ); // WPCS: XSS ok. ?>
 				<?php endif; ?>
 				<?php do_action( 'avada_before_additional_post_content' ); ?>
@@ -132,7 +132,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php the_author_posts_link(); ?>
 						<?php /* translators: The link. */ ?>
 						<?php $title = sprintf( __( 'About the Author: %s', 'Avada' ), ob_get_clean() ); ?>
-						<?php Avada()->template->title_template( $title, '3' ); ?>
+						<?php $title_size = ( false === avada_is_page_title_bar_enabled( $post->ID ) ? '2' : '3' ); ?>
+						<?php Avada()->template->title_template( $title, $title_size ); ?>
 						<div class="about-author-container">
 							<div class="avatar">
 								<?php echo get_avatar( get_the_author_meta( 'email' ), '72' ); ?>

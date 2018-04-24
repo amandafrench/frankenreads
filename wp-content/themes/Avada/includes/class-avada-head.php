@@ -69,9 +69,7 @@ class Avada_Head {
 	 * @since 5.0.0
 	 */
 	public function render_title() {
-		echo '<title>';
 		wp_title( '' );
-		echo '</title>';
 	}
 
 	/**

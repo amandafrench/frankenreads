@@ -544,13 +544,17 @@ if ( ! function_exists( 'avada_nav_woo_cart' ) ) {
 					if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
 						$items .= '<div class="fusion-menu-cart-item">';
 						$items .= '<a href="' . $product_link . '">';
-							$items .= get_the_post_thumbnail( $thumbnail_id, 'recent-works-thumbnail' );
-							// Check needed for pre Woo 2.7 versions only.
-							$item_name = method_exists( $_product, 'get_name' ) ? $_product->get_name() : $cart_item['data']->post->post_title;
-							$items .= '<div class="fusion-menu-cart-item-details">';
-								$items .= '<span class="fusion-menu-cart-item-title">' . $item_name . '</span>';
-								$items .= '<span class="fusion-menu-cart-item-quantity">' . $cart_item['quantity'] . ' x ' . WC()->cart->get_product_subtotal( $cart_item['data'], 1 ) . '</span>';
-							$items .= '</div>';
+						$items .= get_the_post_thumbnail( $thumbnail_id, 'recent-works-thumbnail' );
+						// Check needed for pre Woo 2.7 versions only.
+						$item_name = method_exists( $_product, 'get_name' ) ? $_product->get_name() : $cart_item['data']->post->post_title;
+						$items .= '<div class="fusion-menu-cart-item-details">';
+						$items .= '<span class="fusion-menu-cart-item-title">' . $item_name . '</span>';
+						$product_price = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
+						if ( '' !== $product_price ) {
+							$product_price = ' x ' . $product_price;
+						}
+						$items .= '<span class="fusion-menu-cart-item-quantity">' . $cart_item['quantity'] . $product_price . '</span>';
+						$items .= '</div>';
 						$items .= '</a>';
 						$items .= '</div>';
 					}
@@ -1044,7 +1048,7 @@ function avada_revslider_styles() {
 			$query_id = md5( maybe_serialize( $params ) );
 			$test = wp_cache_get( $query_id, 'avada_revslider_styles' );
 			if ( false === $test ) {
-				$test = $wpdb->get_var( $wpdb->prepare( 'SELECT handle FROM ' . $table_name . ' WHERE handle = %s', $handle ) );
+				$test = $wpdb->get_var( $wpdb->prepare( "SELECT handle FROM {$wpdb->prefix}revslider_css WHERE handle = %s", $handle ) );
 				wp_cache_set( $query_id, $test, 'avada_revslider_styles' );
 			}
 
@@ -1068,6 +1072,66 @@ function avada_revslider_styles() {
 	} // End if().
 }
 
+if ( ! function_exists( 'avada_sliders_container' ) ) {
+	/**
+	 * Renders the slider container with slider and fallback image.
+	 *
+	 * @since 5.5
+	 * @return void
+	 */
+	function avada_sliders_container() {
+		$queried_object_id = get_queried_object_id();
+		?>
+
+		<div id="sliders-container">
+			<?php
+			$slider_page_id = '';
+			$is_archive = false;
+
+			if ( ! is_search() ) {
+				$slider_page_id = '';
+				if ( ( ! is_home() && ! is_front_page() && ! is_archive() && isset( $queried_object_id ) ) || ( ! is_home() && is_front_page() && isset( $queried_object_id ) ) ) {
+					$slider_page_id = $queried_object_id;
+				}
+				if ( is_home() && ! is_front_page() ) {
+					$slider_page_id = get_option( 'page_for_posts' );
+				}
+				if ( class_exists( 'WooCommerce' ) && is_shop() ) {
+					$slider_page_id = get_option( 'woocommerce_shop_page_id' );
+				}
+				if ( ! is_home() && ! is_front_page() && ( is_archive() || Avada_Helper::bbp_is_topic_tag() ) && isset( $queried_object_id ) && ( ! ( class_exists( 'WooCommerce' ) && is_shop() ) ) ) {
+					$slider_page_id = $queried_object_id;
+					$is_archive = true;
+					avada_slider( $slider_page_id, $is_archive );
+				}
+				if ( ( 'publish' === get_post_status( $slider_page_id ) && ! post_password_required() && ! is_archive() && ! Avada_Helper::bbp_is_topic_tag() ) || ( 'publish' === get_post_status( $slider_page_id ) && ! post_password_required() && ( class_exists( 'WooCommerce' ) && is_shop() ) ) || ( current_user_can( 'read_private_pages' ) && in_array( get_post_status( $slider_page_id ), array( 'private', 'draft', 'pending', 'future' ) ) ) ) {
+					$is_archive = ( is_archive() || Avada_Helper::bbp_is_topic_tag() ) && ! ( class_exists( 'WooCommerce' ) && is_shop() );
+					avada_slider( $slider_page_id, $is_archive );
+				}
+			}
+			?>
+		</div>
+		<?php
+		$slider_fallback = get_post_meta( $slider_page_id, 'pyre_fallback', true );
+		$slider_fallback_alt_attr = '';
+		$slider_type = Avada_Helper::get_slider_type( $slider_page_id, $is_archive );
+		?>
+		<?php if ( $slider_fallback && $slider_type && 'no' !== $slider_type ) : ?>
+			<?php
+			$slider_fallback_image_data = Avada()->images->get_attachment_data_from_url( $slider_fallback );
+			if ( $slider_fallback_image_data ) {
+				$slider_fallback_alt_attr = $slider_fallback_image_data['alt'];
+			}
+			?>
+			<div id="fallback-slide">
+				<img src="<?php echo esc_url( $slider_fallback ); ?>" alt="<?php echo esc_attr( $slider_fallback_alt_attr ); ?>" />
+			</div>
+		<?php
+		endif;
+	}
+}
+
+
 if ( ! function_exists( 'avada_header_template' ) ) {
 	/**
 	 * Avada Header Template Function.
@@ -1077,7 +1141,7 @@ if ( ! function_exists( 'avada_header_template' ) ) {
 	 * @return void
 	 */
 	function avada_header_template( $slider_position = 'Below', $is_archive = false ) {
-		$page_id = get_queried_object_id();
+		$page_id = Avada()->fusion_library->get_page_id();
 
 		$reverse_position = ( 'Below' == $slider_position ) ? 'Above' : 'Below';
 

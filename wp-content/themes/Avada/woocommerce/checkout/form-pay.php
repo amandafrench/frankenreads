@@ -76,7 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									?>
 								</div>
 							</td>
-							<td class="product-total"><?php echo $order->get_formatted_line_subtotal( $item ); ?></td><?php // @codingStandardsIgnoreLine ?>
+							<td class="product-total"><?php echo $order->get_formatted_line_subtotal( $item ); ?></td>
 						</tr>
 					<?php endforeach; ?>
 				<?php endif; ?>
@@ -91,8 +91,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php else : ?>
 							<tr>
 						<?php endif; ?>
-							<th scope="row"><?php echo $total['label']; ?></th><?php // @codingStandardsIgnoreLine ?>
-							<td class="product-total"><?php echo $total['value']; ?></td><?php // @codingStandardsIgnoreLine ?>
+							<th scope="row"><?php echo $total['label']; ?></th>
+							<td class="product-total"><?php echo $total['value']; ?></td>
 						</tr>
 						<?php $i++; ?>
 					<?php endforeach; ?>
@@ -109,7 +109,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								wc_get_template( 'checkout/payment-method.php', array( 'gateway' => $gateway ) );
 							}
 						} else {
-							echo '<li class="woocommerce-notice woocommerce-notice--info woocommerce-info">' . apply_filters( 'woocommerce_no_available_payment_methods_message', __( 'Sorry, it seems that there are no available payment methods for your location. Please contact us if you require assistance or wish to make alternate arrangements.', 'woocommerce' ) ) . '</li>'; // @codingStandardsIgnoreLine
+							echo '<li class="woocommerce-notice woocommerce-notice--info woocommerce-info">' . apply_filters( 'woocommerce_no_available_payment_methods_message', __( 'Sorry, it seems that there are no available payment methods for your location. Please contact us if you require assistance or wish to make alternate arrangements.', 'woocommerce' ) ) . '</li>';
 						}
 					?>
 				</ul>
@@ -120,7 +120,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<?php do_action( 'woocommerce_pay_order_before_submit' ); ?>
 
-				<?php echo apply_filters( 'woocommerce_pay_order_button_html', '<button type="submit" class="button alt" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '">' . esc_html( $order_button_text ) . '</button>' ); // @codingStandardsIgnoreLine ?>
+				<?php echo apply_filters( 'woocommerce_pay_order_button_html', '<button type="submit" class="button alt" id="place_order" value="' . esc_attr( $order_button_text ) . '" data-value="' . esc_attr( $order_button_text ) . '">' . esc_html( $order_button_text ) . '</button>' ); ?>
 				<?php do_action( 'woocommerce_pay_order_after_submit' ); ?>
 
 				<?php wc_get_template( 'checkout/terms.php' ); ?>

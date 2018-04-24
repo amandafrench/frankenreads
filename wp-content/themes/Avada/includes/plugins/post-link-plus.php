@@ -1,5 +1,4 @@
 <?php
-// @codingStandardsIgnoreFile
 // Do not allow directly accessing this file.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit( 'Direct script access denied.' );
@@ -311,6 +310,7 @@ function fusion_adjacent_post_link_plus( $args = '', $format = '%link &raquo;', 
 	// default to sorting on menu_order.
 	if ( function_exists( 'initCPTO' ) ) {
 		$defaults['order_by'] = 'menu_order';
+		$previous = ( $previous ) ? false : true;
 	}
 
 	$r = wp_parse_args( $args, $defaults );

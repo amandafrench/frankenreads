@@ -5,16 +5,16 @@ jQuery( document ).ready( function() {
 		jQuery( '#pyre_demo_slider' ).val( '' );
 		jQuery( '#pyre_slider_type' ).val( 'no' ).trigger( 'change' );
 		jQuery( '.fusion-builder-slider-helper' ).slideUp( 300 );
-	});
+	} );
 	jQuery( '#pyre_slider_type, #pyre_slider, #pyre_wooslider, #pyre_revslider, #pyre_elasticslider, #pyre_demo_slider' ).on( 'change', function() {
 		var $sliderType    = jQuery( '#pyre_slider_type' ).val(),
-		    $layerSlider   = jQuery( '#pyre_slider' ).val(),
-		    $revSlider     = jQuery( '#pyre_revslider' ).val(),
-		    $wooSlider     = jQuery( '#pyre_wooslider' ).val(),
-		    $elasticSlider = jQuery( '#pyre_elasticslider' ).val(),
-		    $demoSlider    = jQuery( '#pyre_demo_slider' ).val();
+			$layerSlider   = jQuery( '#pyre_slider' ).val(),
+			$revSlider     = jQuery( '#pyre_revslider' ).val(),
+			$wooSlider     = jQuery( '#pyre_wooslider' ).val(),
+			$elasticSlider = jQuery( '#pyre_elasticslider' ).val(),
+			$demoSlider    = jQuery( '#pyre_demo_slider' ).val();
 
-		jQuery.ajax({
+		jQuery.ajax( {
 			type: 'post',
 			dataType: 'json',
 			url: ajaxurl,
@@ -41,6 +41,6 @@ jQuery( document ).ready( function() {
 					jQuery( '.fusion-builder-slider-helper' ).remove();
 				}
 			}
-		});
-	});
-});
+		} );
+	} );
+} );

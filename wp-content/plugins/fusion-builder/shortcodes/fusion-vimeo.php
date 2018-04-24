@@ -74,6 +74,10 @@ if ( fusion_is_element_enabled( 'fusion_vimeo' ) ) {
 					$id = $matches[3];
 				}
 
+				if ( false === strpos( $api_params, 'autopause' ) ) {
+					$api_params .= '&autopause=0';
+				}
+
 				$html  = '<div ' . FusionBuilder::attributes( 'vimeo-shortcode' ) . '>';
 				$html .= '<div ' . FusionBuilder::attributes( 'vimeo-shortcode-video-sc' ) . '>';
 				$html .= '<iframe src="https://player.vimeo.com/video/' . $id . '?autoplay=0' . $api_params . '" width="' . $width . '" height="' . $height . '" allowfullscreen title="vimeo' . $id . '"></iframe>';

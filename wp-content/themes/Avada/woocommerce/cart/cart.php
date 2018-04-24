@@ -44,7 +44,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 			<?php
 			foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 				$_product   = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-				$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );		
+				$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
 
 				if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
 					$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
@@ -63,8 +63,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 										printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail );
 									}
 								?>
-							</span>			
-							
+							</span>
+
 							<div class="product-info">
 								<?php
 								if ( ! $product_permalink ) {
@@ -72,14 +72,14 @@ do_action( 'woocommerce_before_cart' ); ?>
 								} else {
 									echo apply_filters( 'woocommerce_cart_item_name', sprintf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $_product->get_name() ), $cart_item, $cart_item_key );
 								}
-								
+
 								// Meta data.
 								echo wc_get_formatted_cart_item_data( $cart_item );
-		
+
 								// Backorder notification.
 								if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $cart_item['quantity'] ) ) {
 									echo '<p class="backorder_notification">' . esc_html__( 'Available on backorder', 'woocommerce' ) . '</p>';
-								}								
+								}
 								?>
 							</div>
 						</td>
@@ -88,7 +88,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 							<?php
 								echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
 							?>
-						</td>					
+						</td>
 
 						<td class="product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'woocommerce' ); ?>"><?php
 							if ( $_product->is_sold_individually() ) {
@@ -110,11 +110,10 @@ do_action( 'woocommerce_before_cart' ); ?>
 								echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key );
 							?>
 						</td>
-						
-						<?php // ThemeFusion edit for Avada theme: customize item removal. ?>						
+
+						<?php // ThemeFusion edit for Avada theme: customize item removal. ?>
 						<td class="product-remove">
 							<?php
-								// @codingStandardsIgnoreLine
 								echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf(
 									'<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
 									esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
@@ -123,7 +122,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 									esc_attr( $_product->get_sku() )
 								), $cart_item_key );
 							?>
-						</td>						
+						</td>
 
 					</tr>
 					<?php

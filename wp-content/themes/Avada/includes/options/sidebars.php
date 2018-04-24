@@ -345,7 +345,7 @@ function avada_options_section_sidebars( $sections ) {
 				),
 			),
 			'woocommerce_products_sidebars_section' => ( Avada::$is_updating || class_exists( 'WooCommerce' ) ) ? array(
-				'label'           => esc_html__( 'Woocommerce Products', 'Avada' ),
+				'label'           => esc_html__( 'WooCommerce Products', 'Avada' ),
 				'id'              => 'woocommerce_products_sidebars_section',
 				'icon'            => true,
 				'type'            => 'sub-section',
@@ -378,7 +378,7 @@ function avada_options_section_sidebars( $sections ) {
 						'active_callback' => array( 'Avada_Options_Conditionals', 'is_woo' ),
 					),
 					'woo_sidebar_position' => array(
-						'label'           => esc_html__( 'Global Woocommerce Sidebar Position', 'Avada' ),
+						'label'           => esc_html__( 'Global WooCommerce Sidebar Position', 'Avada' ),
 						'description'     => esc_html__( 'Controls the position of sidebar 1 for all WooCommerce products and archive pages. If sidebar 2 is selected, it will display on the opposite side.', 'Avada' ),
 						'id'              => 'woo_sidebar_position',
 						'default'         => 'Right',
@@ -407,7 +407,7 @@ function avada_options_section_sidebars( $sections ) {
 						'type'        => 'custom',
 					),
 					'woocommerce_archive_sidebar' => array(
-						'label'           => esc_html__( 'Woocommerce Archive Sidebar 1', 'Avada' ),
+						'label'           => esc_html__( 'WooCommerce Archive Sidebar 1', 'Avada' ),
 						'description'     => esc_html__( 'Select sidebar 1 that will display on the WooCommerce archive pages.', 'Avada' ),
 						'id'              => 'woocommerce_archive_sidebar',
 						'default'         => 'None',
@@ -416,7 +416,7 @@ function avada_options_section_sidebars( $sections ) {
 						'active_callback' => array( 'Avada_Options_Conditionals', 'is_woo' ),
 					),
 					'woocommerce_archive_sidebar_2' => array(
-						'label'           => esc_html__( 'Woocommerce Archive Sidebar 2', 'Avada' ),
+						'label'           => esc_html__( 'WooCommerce Archive Sidebar 2', 'Avada' ),
 						'description'     => esc_html__( 'Select sidebar 2 that will display on the WooCommerce archive pages. Sidebar 2 can only be used if sidebar 1 is selected.', 'Avada' ),
 						'id'              => 'woocommerce_archive_sidebar_2',
 						'default'         => 'None',
@@ -459,7 +459,7 @@ function avada_options_section_sidebars( $sections ) {
 						'description' => esc_html__( 'Controls the position of sidebar 1 for all Events Calendar posts and archive pages. If sidebar 2 is selected, it will display on the opposite side.', 'Avada' ),
 						'id'          => 'ec_sidebar_pos',
 						'default'     => 'Right',
-						'type'        => 'select',
+						'type'        => 'radio-buttonset',
 						'choices'     => array(
 							'Left'  => esc_html__( 'Left', 'Avada' ),
 							'Right' => esc_html__( 'Right', 'Avada' ),
@@ -475,7 +475,7 @@ function avada_options_section_sidebars( $sections ) {
 				'type'            => 'sub-section',
 				'fields'          => array(
 					'bbpress_global_sidebar' => array(
-						'label'       => esc_html__( 'Activate Global Sidebar For bbpress/BuddyPress', 'Avada' ),
+						'label'       => esc_html__( 'Activate Global Sidebar For bbPress/BuddyPress', 'Avada' ),
 						'description' => esc_html__( 'Turn on if you want to use the same sidebars on all bbPress/BuddyPress pages. Forums index page, profile page and search page does not need this option checked to display the sidebars selected below.', 'Avada' ),
 						'id'          => 'bbpress_global_sidebar',
 						'default'     => '0',

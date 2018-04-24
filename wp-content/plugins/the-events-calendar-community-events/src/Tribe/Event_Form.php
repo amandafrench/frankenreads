@@ -57,6 +57,7 @@ class Tribe__Events__Community__Event_Form {
 		$edit_template = $this->get_template_path();
 		$this->setup_hooks();
 		ob_start();
+		tribe_doing_frontend( true );
 		do_action( 'tribe_events_community_form', $this->event_id, $this->event, $edit_template );
 		$output = ob_get_clean();
 		$this->clear_hooks();

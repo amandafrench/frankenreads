@@ -136,7 +136,6 @@ class Avada_Scripts {
 				'avada-scrollspy',
 				$js_folder_url . '/general/avada-scrollspy.js',
 				$js_folder_path . '/general/avada-scrollspy.js',
-				// @codingStandardsIgnoreLine
 				( ! is_page_template( 'blank.php' ) && 'no' != fusion_get_page_option( 'display_header', $page_id ) ) ? array( 'avada-header', 'fusion-waypoints', 'bootstrap-scrollspy' ) : array( 'fusion-waypoints', 'bootstrap-scrollspy' ),
 				self::$version,
 				true,
@@ -482,6 +481,7 @@ class Avada_Scripts {
 					'sticky_header_shrinkage'    => Avada()->settings->get( 'header_sticky_shrinkage' ),
 					'nav_height'                 => (int) Avada()->settings->get( 'nav_height' ),
 					'nav_highlight_border'       => ( 'bar' === Avada()->settings->get( 'menu_highlight_style' ) ) ? (int) Avada()->settings->get( 'nav_highlight_border' ) : '0',
+					'nav_highlight_style'        => Avada()->settings->get( 'menu_highlight_style' ),
 					'logo_margin_top'            => ( '' !== Avada()->settings->get( 'logo', 'url' ) || '' !== Avada()->settings->get( 'logo_retina', 'url' ) ) ? Avada()->settings->get( 'logo_margin', 'top' ) : '0px',
 					'logo_margin_bottom'         => ( '' !== Avada()->settings->get( 'logo', 'url' ) || '' !== Avada()->settings->get( 'logo_retina', 'url' ) ) ? Avada()->settings->get( 'logo_margin', 'bottom' ) : '0px',
 					'layout_mode'                => strtolower( $layout ),
@@ -603,6 +603,18 @@ class Avada_Scripts {
 					'woocommerce_shop_page_columns'   => Avada()->settings->get( 'woocommerce_shop_page_columns' ),
 					'woocommerce_checkout_error'      => esc_attr__( 'Not all fields have been filled in correctly.', 'Avada' ),
 					'woocommerce_single_gallery_size' => Fusion_Sanitize::number( Avada()->settings->get( 'woocommerce_single_gallery_size' ) ),
+					'related_products_heading_size'   => ( false === avada_is_page_title_bar_enabled( get_the_ID() ) ? '2' : '3' ),
+				),
+			),
+			array(
+				'avada-bbpress',
+				'avadaBbpressVars',
+				array(
+					'alert_box_text_align'     => Avada()->settings->get( 'alert_box_text_align' ),
+					'alert_box_text_transform' => Avada()->settings->get( 'alert_box_text_transform' ),
+					'alert_box_dismissable'    => Avada()->settings->get( 'alert_box_dismissable' ),
+					'alert_box_shadow'         => Avada()->settings->get( 'alert_box_shadow' ),
+					'alert_border_size'        => Avada()->settings->get( 'alert_border_size' ),
 				),
 			),
 			array(
@@ -663,9 +675,10 @@ class Avada_Scripts {
 
 		if ( Avada()->settings->get( 'status_fontawesome' ) ) {
 			if ( 'off' === Avada()->settings->get( 'css_cache_method' ) ) {
-				wp_enqueue_style( 'fusion-font-awesome', FUSION_LIBRARY_URL . '/assets/fonts/fontawesome/font-awesome.css', array(), self::$version );
+				wp_enqueue_style( 'fontawesome', FUSION_LIBRARY_URL . '/assets/fonts/fontawesome/font-awesome.min.css', array(), self::$version );
 			}
-			wp_enqueue_style( 'avada-IE-fontawesome', FUSION_LIBRARY_URL . '/assets/fonts/fontawesome/font-awesome.css', array(), self::$version );
+
+			wp_enqueue_style( 'avada-IE-fontawesome', FUSION_LIBRARY_URL . '/assets/fonts/fontawesome/font-awesome.min.css', array(), self::$version );
 			wp_style_add_data( 'avada-IE-fontawesome', 'conditional', 'lte IE 9' );
 		}
 
@@ -706,16 +719,16 @@ class Avada_Scripts {
 
 		if ( 'off' !== Avada()->settings->get( 'css_cache_method' ) ) {
 			if ( Avada()->settings->get( 'status_fontawesome' ) ) {
-				// Stylesheet ID: fusion-font-awesome. @codingStandardsIgnoreLine
+				// Stylesheet ID: fusion-font-awesome.
 				$font_awesome_css = @file_get_contents( FUSION_LIBRARY_PATH . '/assets/fonts/fontawesome/font-awesome.min.css' );
 
 				$font_url = FUSION_LIBRARY_URL . '/assets/fonts/fontawesome';
 				$font_url = str_replace( array( 'http://', 'https://' ), '//', $font_url );
-				$styles .= str_replace( 'url(fontawesome-webfont', 'url(' . $font_url . '/fontawesome-webfont', $font_awesome_css );
+				$styles .= str_replace( 'url(./webfonts', 'url(' . $font_url . '/webfonts', $font_awesome_css );
 
 			}
 			if ( is_rtl() ) {
-				// Stylesheet ID: avada-rtl. @codingStandardsIgnoreLine
+				// Stylesheet ID: avada-rtl.
 				$styles .= @file_get_contents( Avada::$template_dir_path . '/assets/css/rtl.min.css' );
 			}
 		}

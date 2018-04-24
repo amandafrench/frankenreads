@@ -16,13 +16,17 @@
 		icon_type = 'fa-check-circle';
 	}
 	if ( params.type == 'notice' ) {
-		icon_type = 'fa-lg fa-cog';
+		icon_type = 'fa fa-lg fa-cog';
 	}
 	if ( params.type == 'custom' ) {
 		icon_type = params.icon;
 	}
+
+	if ( 'undefined' !== typeof icon_type && -1 === icon_type.trim().indexOf( ' ' ) ) {
+		icon_type = 'fa ' + icon_type;
+	}
 	#>
 
-	<span class="fusion-module-icon fa fa-lg {{ icon_type }}"></span> {{{ element_content }}}
+	<span class="fusion-module-icon fa-lg {{ icon_type }}"></span> {{{ element_content }}}
 
 </script>

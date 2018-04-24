@@ -487,7 +487,7 @@ class Avada_Breadcrumbs {
 			$post_ancestor     = get_post( $post_ancestor_id );
 
 			if ( isset( $post_ancestor->post_title ) && isset( $post_ancestor->ID ) ) {
-				$ancestors_markup .= $this->get_single_breadcrumb_markup( apply_filters( 'the_title', $post_ancestor->post_title ), get_permalink( $post_ancestor->ID ) );
+				$ancestors_markup .= $this->get_single_breadcrumb_markup( apply_filters( 'the_title', $post_ancestor->post_title, $post_ancestor->ID ), get_permalink( $post_ancestor->ID ) );
 			}
 		}
 

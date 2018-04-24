@@ -109,7 +109,7 @@ function avada_options_section_advanced( $sections ) {
 					),
 					'disable_code_block_encoding' => array(
 						'label'       => esc_html__( 'Code Block Encoding', 'Avada' ),
-						'description' => esc_html__( 'Turn on to enable encoding in the Fusion Builder code block element.', 'Avada' ),
+						'description' => esc_html__( 'Turn on to enable encoding in the Fusion Builder code block and syntax highlighting elements.', 'Avada' ),
 						'id'          => 'disable_code_block_encoding',
 						'default'     => '1',
 						'type'        => 'switch',
@@ -295,7 +295,7 @@ function avada_options_section_advanced( $sections ) {
 						'default'     => '',
 						'type'        => 'text',
 					),
-					'js_compiler_note' => ( 'no' != get_transient( 'fusion_dynamic_js_readable' ) ) ? array() : array(
+					'js_compiler_note' => ( apply_filters( 'fusion_compiler_js_file_is_readable', get_transient( 'fusion_dynamic_js_readable' ) ) ) ? array() : array(
 						'label'       => '',
 						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> JS Compiler is disabled. File does not exist or access is restricted.', 'Avada' ) . '</div>',
 						'id'          => 'js_compiler_note',

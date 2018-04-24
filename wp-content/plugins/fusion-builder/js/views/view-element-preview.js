@@ -19,6 +19,6 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 				return this;
 			}
-		});
-	});
-} )( jQuery );
+		} );
+	} );
+} ( jQuery ) );

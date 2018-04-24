@@ -1695,7 +1695,7 @@ class Fusion_Builder_Migrate {
 					$position_change = 0;
 					$positions = array();
 
-					// Get all positions of [fullwidth shortcode. @codingStandardsIgnoreLine
+					// Get all positions of [fullwidth shortcode.
 					while ( ( $last_pos = strpos( $content, $needle, $last_pos + 1 ) ) !== false ) {
 						$positions[] = $last_pos;
 					}
@@ -1810,7 +1810,6 @@ class Fusion_Builder_Migrate {
 		// Get all positions of self enclosing shortcode beginnings.
 		if ( '' !== $content ) {
 			foreach ( self::$self_enclosing_shortcodes as $key => $needle ) {
-				// @codingStandardsIgnoreLine
 				while ( ( $last_pos = strpos( $content, '[' . $needle, $last_pos + 1 ) ) !== false ) {
 
 					$allowed_chars = array( ' ', ']' );
@@ -1889,7 +1888,7 @@ class Fusion_Builder_Migrate {
 		$position_change = 0;
 		$positions = array();
 
-		// Get all positions of [fusion_builder_row shortcode. @codingStandardsIgnoreLine
+		// Get all positions of [fusion_builder_row shortcode.
 		while ( ( $last_pos = strpos( $content, $needle, $last_pos + 1 ) ) !== false ) {
 			$positions[] = $last_pos;
 		}
@@ -1920,7 +1919,7 @@ class Fusion_Builder_Migrate {
 			$outside_column_element_close_position = 0;
 			$element_position_change = 0;
 
-			// Get all positions for shortcode opening tag "[". @codingStandardsIgnoreLine
+			// Get all positions for shortcode opening tag "[".
 			while ( ( $row_last_pos = strpos( $row_content, $element_needle, $row_last_pos + 1 ) ) !== false ) {
 				$element_positions[] = $row_last_pos;
 			}
@@ -2088,7 +2087,7 @@ class Fusion_Builder_Migrate {
 		$section_opened = false;
 		$column_opened = false;
 
-		// Get all positions for shortcode opening tag "[". @codingStandardsIgnoreLine
+		// Get all positions for shortcode opening tag "[".
 		while ( ( $last_pos = strpos( $content, $element_needle, $last_pos + 1 ) ) !== false ) {
 			$element_positions[] = $last_pos;
 		}
@@ -2663,7 +2662,7 @@ class Fusion_Builder_Migrate {
 							$position_change = 0;
 							$positions = array();
 
-							// Get all positions of [fullwidth shortcode. @codingStandardsIgnoreLine
+							// Get all positions of [fullwidth shortcode.
 							while ( false !== ( $last_pos = strpos( $widget_content, $needle, $last_pos + 1 ) ) ) {
 								$positions[] = $last_pos;
 							}
@@ -2695,7 +2694,7 @@ class Fusion_Builder_Migrate {
 							$positions = array();
 							$row_open = false;
 
-							// Get all positions of opening and closing column tag. @codingStandardsIgnoreLine
+							// Get all positions of opening and closing column tag.
 							while ( ( $last_pos = strpos( $widget_content, $needle, $last_pos + 1 ) ) !== false ) {
 								$positions[] = $last_pos;
 							}
@@ -2870,7 +2869,7 @@ class Fusion_Builder_Migrate {
 		$position_change = 0;
 		$positions       = array();
 
-		// Get all positions of [fullwidth shortcode. @codingStandardsIgnoreLine
+		// Get all positions of [fullwidth shortcode.
 		while ( ( $last_pos = strpos( $content, $needle, $last_pos + 1 ) ) !== false ) {
 			$positions[] = $last_pos;
 		}

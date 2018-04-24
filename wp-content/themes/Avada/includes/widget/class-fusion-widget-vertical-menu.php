@@ -90,6 +90,8 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 			$nav_menu = ! empty( $instance['nav_menu'] ) ? wp_get_nav_menu_object( $instance['nav_menu'] ) : false;
 
 			if ( ! $nav_menu ) {
+				echo $after_widget; // WPCS: XSS ok.
+
 				return;
 			}
 
@@ -119,6 +121,8 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 			$parent_page = ( ! empty( $instance['parent_page'] ) || '0' != $instance['parent_page'] ) ? $instance['parent_page'] : false;
 
 			if ( ! $parent_page ) {
+				echo $after_widget; // WPCS: XSS ok.
+
 				return;
 			}
 

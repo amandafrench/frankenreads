@@ -455,7 +455,7 @@ if ( fusion_is_element_enabled( 'fusion_button' ) ) {
 
 				$attr = array();
 
-				$attr['class'] = 'fa ' . FusionBuilder::font_awesome_name_handler( $this->args['icon'] );
+				$attr['class'] = FusionBuilder::font_awesome_name_handler( $this->args['icon'] );
 
 				if ( 'yes' !== $this->args['icon_divider'] ) {
 					$attr['class'] .= ' button-icon-' . $this->args['icon_position'];

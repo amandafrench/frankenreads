@@ -48,15 +48,6 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 			private $image_data = false;
 
 			/**
-			 * Regular size images check.
-			 *
-			 * @access private
-			 * @since 1.0
-			 * @var null|int|string
-			 */
-			private $regular_images_found = false;
-
-			/**
 			 * Constructor.
 			 *
 			 * @access public
@@ -86,17 +77,19 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 
 				$defaults = FusionBuilder::set_shortcode_defaults(
 					array(
-						'hide_on_mobile'        => fusion_builder_default_visibility( 'string' ),
-						'class'                 => '',
-						'id'                    => '',
-						'image_ids'             => '',
-						'columns'               => ( '' !== $fusion_settings->get( 'gallery_columns' ) ) ? intval( $fusion_settings->get( 'gallery_columns' ) ) : 3,
-						'hover_type'            => ( '' !== $fusion_settings->get( 'gallery_hover_type' ) ) ? strtolower( $fusion_settings->get( 'gallery_hover_type' ) ) : 'none',
-						'lightbox_content'      => ( '' !== $fusion_settings->get( 'gallery_lightbox_content' ) ) ? strtolower( $fusion_settings->get( 'gallery_lightbox_content' ) ) : '',
-						'lightbox'              => $fusion_settings->get( 'status_lightbox' ),
-						'column_spacing'        => ( '' !== $fusion_settings->get( 'gallery_column_spacing' ) ) ? strtolower( $fusion_settings->get( 'gallery_column_spacing' ) ) : '',
-						'picture_size'          => ( '' !== $fusion_settings->get( 'gallery_picture_size' ) ) ? strtolower( $fusion_settings->get( 'gallery_picture_size' ) ) : '',
-						'layout'                => ( '' !== $fusion_settings->get( 'gallery_layout' ) ) ? strtolower( $fusion_settings->get( 'gallery_layout' ) ) : 'grid',
+						'hide_on_mobile'               => fusion_builder_default_visibility( 'string' ),
+						'class'                        => '',
+						'id'                           => '',
+						'image_ids'                    => '',
+						'columns'                      => ( '' !== $fusion_settings->get( 'gallery_columns' ) ) ? intval( $fusion_settings->get( 'gallery_columns' ) ) : 3,
+						'hover_type'                   => ( '' !== $fusion_settings->get( 'gallery_hover_type' ) ) ? strtolower( $fusion_settings->get( 'gallery_hover_type' ) ) : 'none',
+						'lightbox_content'             => ( '' !== $fusion_settings->get( 'gallery_lightbox_content' ) ) ? strtolower( $fusion_settings->get( 'gallery_lightbox_content' ) ) : '',
+						'lightbox'                     => $fusion_settings->get( 'status_lightbox' ),
+						'column_spacing'               => ( '' !== $fusion_settings->get( 'gallery_column_spacing' ) ) ? strtolower( $fusion_settings->get( 'gallery_column_spacing' ) ) : '',
+						'picture_size'                 => ( '' !== $fusion_settings->get( 'gallery_picture_size' ) ) ? strtolower( $fusion_settings->get( 'gallery_picture_size' ) ) : '',
+						'layout'                       => ( '' !== $fusion_settings->get( 'gallery_layout' ) ) ? strtolower( $fusion_settings->get( 'gallery_layout' ) ) : 'grid',
+						'gallery_masonry_grid_ratio'   => $fusion_settings->get( 'masonry_grid_ratio' ),
+						'gallery_masonry_width_double' => $fusion_settings->get( 'masonry_width_double' ),
 					), $args
 				);
 				$defaults = apply_filters( 'fusion_builder_default_args', $defaults, 'fusion_gallery' );
@@ -143,19 +136,16 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 						$element_orientation_class = '';
 						$responsive_images_columns = $this->args['columns'];
 						if ( 'masonry' === $this->args['layout'] && $this->image_data ) {
-							$post_thumbnail_attachment = wp_get_attachment_image_src( $this->image_data['id'], 'full' );
 
 							// Get the correct image orientation class.
-							$element_orientation_class = $fusion_library->images->get_element_orientation_class( $post_thumbnail_attachment );
+							$element_orientation_class = $fusion_library->images->get_element_orientation_class( $this->image_data['id'], array(), $this->args['gallery_masonry_grid_ratio'], $this->args['gallery_masonry_width_double'] );
 							$element_base_padding  = $fusion_library->images->get_element_base_padding( $element_orientation_class );
 							$this->image_data['orientation_class'] = $element_orientation_class;
 							$this->image_data['element_base_padding'] = $element_base_padding;
 
 							// Check if we have a landscape image, then it has to stretch over 2 cols.
-							if ( 'fusion-element-landscape' === $element_orientation_class ) {
+							if ( false !== strpos( $element_orientation_class, 'fusion-element-landscape' ) ) {
 								$responsive_images_columns = $this->args['columns'] / 2;
-							} else {
-								$this->regular_images_found = true;
 							}
 						}
 
@@ -232,16 +222,20 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 				$attr['class'] .= ' fusion-columns-total-' . $this->total_num_of_columns;
 				$attr['class'] .= ' fusion-gallery-layout-' . $this->args['layout'];
 
-				if ( true === $this->regular_images_found ) {
-					$attr['class'] .= ' fusion-masonry-has-vertical';
-				}
-
 				if ( $this->args['column_spacing'] ) {
 					$margin = ( -1 ) * (int) $this->args['column_spacing'];
 					$attr['style'] = 'margin:' . $margin . 'px;';
 				}
 
 				$attr = fusion_builder_visibility_atts( $this->args['hide_on_mobile'], $attr );
+
+				if ( $this->args['class'] ) {
+					$attr['class'] .= ' ' . $this->args['class'];
+				}
+
+				if ( $this->args['id'] ) {
+					$attr['id'] = $this->args['id'];
+				}
 
 				return $attr;
 			}
@@ -267,7 +261,7 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 
 					// If portrait it requires more spacing.
 					$column_offset = ' - ' . $this->args['column_spacing'];
-					if ( 'fusion-element-portrait' === $this->image_data['orientation_class'] ) {
+					if ( false !== strpos( $this->image_data['orientation_class'], 'fusion-element-portrait' ) ) {
 						$column_offset = '';
 					}
 
@@ -404,7 +398,7 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 							'gallery_columns' => array(
 								'type'        => 'slider',
 								'label'       => esc_attr__( 'Number of Columns', 'fusion-builder' ),
-								'description' => esc_attr__( 'Set the number of columns per row.', 'fusion-builder' ),
+								'description' => __( 'Set the number of columns per row. <strong>IMPORTANT:</strong> Masonry layout does not work with 1 column.', 'fusion-builder' ),
 								'id'          => 'gallery_columns',
 								'default'     => 3,
 								'min'         => 1,
@@ -412,8 +406,8 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 								'step'        => 1,
 							),
 							'gallery_column_spacing' => array(
-								'label'       => esc_attr__( 'Gallery Column Spacing', 'fusion-builder' ),
-								'description' => esc_attr__( 'Controls the column spacing for gallery elements.', 'fusion-builder' ),
+								'label'       => esc_attr__( 'Column Spacing', 'fusion-builder' ),
+								'description' => esc_attr__( 'Controls the column spacing for gallery images.', 'fusion-builder' ),
 								'id'          => 'gallery_column_spacing',
 								'default'     => '10',
 								'type'        => 'slider',
@@ -541,7 +535,7 @@ function fusion_element_gallery() {
 				array(
 					'type'        => 'range',
 					'heading'     => esc_attr__( 'Number of Columns', 'fusion-builder' ),
-					'description' => esc_attr__( 'Set the number of columns per row.', 'fusion-builder' ),
+					'description' => __( 'Set the number of columns per row. <strong>IMPORTANT:</strong> Masonry layout does not work with 1 column.', 'fusion-builder' ),
 					'param_name'  => 'columns',
 					'value'       => '',
 					'min'         => '1',
@@ -552,7 +546,7 @@ function fusion_element_gallery() {
 				array(
 					'type'        => 'range',
 					'heading'     => esc_attr__( 'Column Spacing', 'fusion-builder' ),
-					'description' => esc_attr__( 'Insert the amount of spacing between gallery images without "px". ex: 7.', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls the column spacing for gallery images.', 'fusion-builder' ),
 					'param_name'  => 'column_spacing',
 					'value'       => '10',
 					'min'         => '0',
@@ -564,6 +558,42 @@ function fusion_element_gallery() {
 							'element'  => 'columns',
 							'value'    => '1',
 							'operator' => '!=',
+						),
+					),
+				),
+				array(
+					'type'        => 'range',
+					'heading'     => esc_attr__( 'Masonry Image Aspect Ratio', 'fusion-builder' ),
+					'description' => __( 'Set the ratio to decide when an image should become landscape (ratio being width : height) and portrait (ratio being height : width). <strong>IMPORTANT:</strong> The value of "1.0" represents a special case, which will use the auto calculated ratios like in versions prior to Avada 5.5.', 'fusion-builder' ),
+					'param_name'  => 'gallery_masonry_grid_ratio',
+					'value'       => '',
+					'min'         => '1',
+					'max'         => '4',
+					'step'        => '0.1',
+					'default'     => $fusion_settings->get( 'masonry_grid_ratio' ),
+					'dependency'  => array(
+						array(
+							'element'  => 'layout',
+							'value'    => 'masonry',
+							'operator' => '==',
+						),
+					),
+				),
+				array(
+					'type'        => 'range',
+					'heading'     => esc_attr__( 'Masonry 2x2 Width', 'fusion-builder' ),
+					'description' => __( 'This option decides when a square 1x1 image should become 2x2. This will not apply to images that highly favor landscape or portrait layouts. <strong>IMPORTANT:</strong> There is a “Masonry Image Layout” setting for every image in the WP media library that allows you to manually set how an image will appear (1x1, landscape, portrait or 2x2), regardless of the original ratio. In pixels.', 'fusion-builder' ),
+					'param_name'  => 'gallery_masonry_width_double',
+					'value'       => '',
+					'min'         => '200',
+					'max'         => '5120',
+					'step'        => '1',
+					'default'     => $fusion_settings->get( 'masonry_width_double' ),
+					'dependency'  => array(
+						array(
+							'element'  => 'layout',
+							'value'    => 'masonry',
+							'operator' => '==',
 						),
 					),
 				),

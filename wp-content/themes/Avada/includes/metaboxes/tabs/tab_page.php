@@ -32,8 +32,8 @@ if ( 'product' === $screen->post_type ) {
 		esc_attr__( 'Use 100% Width Page', 'Avada' ),
 		array(
 			'default' => esc_attr__( 'Default', 'Avada' ),
-			'no'      => esc_attr__( 'No', 'Avada' ),
 			'yes'     => esc_attr__( 'Yes', 'Avada' ),
+			'no'      => esc_attr__( 'No', 'Avada' ),
 		),
 		/* translators: Additional description (defaults). */
 		sprintf( esc_html__( 'Choose to set this post to 100&#37; browser width. %s', 'Avada' ), Avada()->settings->get_default_description( 'product_width_100', '', 'yesno' ) )
@@ -56,7 +56,8 @@ if ( 'page' === $screen->post_type ) {
 			'no'  => esc_attr__( 'No', 'Avada' ),
 
 		),
-		esc_html__( 'Disable the 1st featured image on page.', 'Avada' )
+		esc_html__( 'Disable the 1st featured image on page.', 'Avada' ),
+		'no'
 	);
 }
 

@@ -4,7 +4,7 @@ Donate link: http://profiles.wordpress.org/emrevona/
 Tags: cache, performance, wp-cache, total cache, super cache
 Requires at least: 3.3
 Tested up to: 4.9
-Stable tag: 0.8.7.8
+Stable tag: 0.8.7.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,16 @@ Wpfc does not support Wordpress Multisite yet.
 18. Database Cleanup
 
 == Changelog ==
+
+= 0.8.7.9 =
+* refactoring of delete_cache_of_term()
+* <strong>[FEATURE]</strong> exclude archives
+* to delete cache of pagination after new post
+* to add do_action() for deleteCache()
+* to shorten the url of the minified and combined sources
+* to fix excluding googleanalytics problem
+* to create cache for mobile user-agents when mobile option is disabled
+* <strong>[FEATURE]</strong> Compatible with WeePie Cookie Allow
 
 = 0.8.7.8 =
 * to check <title> for 404 if the header return 200

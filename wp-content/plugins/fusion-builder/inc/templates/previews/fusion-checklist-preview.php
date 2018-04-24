@@ -23,6 +23,10 @@
 					shortcode_icon = params.icon;
 				}
 
+				if ( -1 === shortcode_icon.trim().indexOf( ' ' ) ) {
+					shortcode_icon = 'fa ' + shortcode_icon;
+				}
+
 				if ( /<[a-z][\s\S]*>/i.test( shortcode_content ) ) {
 					shortcode_content = jQuery.parseHTML( shortcode_content );
 					shortcode_content = jQuery(shortcode_content).text();
@@ -31,7 +35,7 @@
 				}
 
 				#>
-				<li><# if ( shortcode_icon !== '' ) { #><span class="fa fusion-checklist-preview-icon {{ shortcode_icon }}"></span><# } #> {{ shortcode_content }}</li>
+				<li><# if ( shortcode_icon !== '' ) { #><span class="fusion-checklist-preview-icon {{ shortcode_icon }}"></span><# } #> {{ shortcode_content }}</li>
 			<#
 			}
 

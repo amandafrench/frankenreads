@@ -41,10 +41,10 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 					update: function( event, ui ) {
 						var $moduleBlock = $( ui.item ),
-						    moduleCID    = ui.item.data( 'cid' ),
-						    model        = thisEl.collection.find( function( model ) {
+							moduleCID    = ui.item.data( 'cid' ),
+							model        = thisEl.collection.find( function( model ) {
 								return model.get( 'cid' ) === moduleCID;
-						    } );
+							} );
 
 						// If column is empty add before "Add Element" button
 						if ( $( ui.item ).closest( event.target ).length && 1 === $( event.target ).find( '.fusion_module_block' ).length ) {
@@ -70,13 +70,13 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			showSettings: function( event ) {
 				var modalView,
-				    viewSettings = {
+					viewSettings = {
 						model: this.model,
 						collection: this.collection,
 						attributes: {
 							'data-modal_view': 'element_settings'
 						}
-				    };
+					};
 
 				if ( event ) {
 					event.preventDefault();
@@ -89,7 +89,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			removeColumn: function( event ) {
 				var modules,
-				    parentCID;
+					parentCID;
 
 				if ( event ) {
 					event.preventDefault();
@@ -120,7 +120,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			cloneColumn: function( event ) {
 				var columnAttributes = $.extend( true, {}, this.model.attributes ),
-				    $thisColumn;
+					$thisColumn;
 
 				if ( event ) {
 					event.preventDefault();
@@ -137,9 +137,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				$thisColumn = this.$el;
 				$thisColumn.find( '.fusion_builder_column_element' ).each( function() {
 					var $thisModule,
-					    moduleCID,
-					    module,
-					    elementAttributes;
+						moduleCID,
+						module,
+						elementAttributes;
 
 					// Standard element
 					if ( $( this ).hasClass( 'fusion_module_block' ) ) {
@@ -153,7 +153,6 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 						// Clone model attritubes
 						elementAttributes         = $.extend( true, {}, module.attributes );
-
 						elementAttributes.created = 'manually';
 						elementAttributes.cid     = FusionPageBuilderViewManager.generateCid();
 						elementAttributes.parent  = columnAttributes.cid;
@@ -176,8 +175,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			addModule: function( event ) {
 				var view,
-				    $eventTarget,
-				    $addModuleButton;
+					$eventTarget,
+					$addModuleButton;
 
 				if ( event ) {
 					event.preventDefault();
@@ -208,8 +207,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			columnSizeDialog: function( event ) {
 				var leftPosition = this.$el.position().left,
-				    modelWidth = this.$el.parents( '.fusion-builder-row-container-inner' ).width(),
-				    columnSizeWidth = 240;
+					modelWidth = this.$el.parents( '.fusion-builder-row-container-inner' ).width(),
+					columnSizeWidth = 240;
 
 				if ( event ) {
 					event.preventDefault();
@@ -224,20 +223,20 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			columnSize: function( event ) {
 				var $thisEl = $( event.currentTarget ),
 
-				    // Get current column size
-				    size = this.model.get( 'layout' ),
+					// Get current column size
+					size = this.model.get( 'layout' ),
 
-				    // New column size
-				    newSize = $thisEl.attr( 'data-column-size' ),
+					// New column size
+					newSize = $thisEl.attr( 'data-column-size' ),
 
-				    // Fraction size
-				    fractionSize = '';
+					// Fraction size
+					fractionSize = '';
 
 				if ( event ) {
 					event.preventDefault();
 				}
 
-				if ( 'undefined' !== typeof ( newSize ) ) {
+				if ( 'undefined' !== typeof newSize ) {
 
 					// Set new size
 					this.model.set( 'layout', newSize );
@@ -264,4 +263,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			}
 		} );
 	} );
-} )( jQuery );
+} ( jQuery ) );

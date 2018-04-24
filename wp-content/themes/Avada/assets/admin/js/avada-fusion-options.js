@@ -2,13 +2,13 @@
 jQuery( document ).ready( function() {
 
 	var $rangeSlider,
-	    $i,
-	    fusionPageOptions;
+		$i,
+		fusionPageOptions;
 
-	jQuery( '.pyre_field select:not(.hidden-sidebar)' ).select2({
+	jQuery( '.pyre_field select:not(.hidden-sidebar)' ).select2( {
 		minimumResultsForSearch: 10,
 		dropdownCssClass: 'avada-select2'
-	});
+	} );
 
 	jQuery( '.pyre_field.avada-buttonset a' ).on( 'click', function( e ) {
 		var $radiosetcontainer;
@@ -18,34 +18,34 @@ jQuery( document ).ready( function() {
 		$radiosetcontainer.find( '.ui-state-active' ).removeClass( 'ui-state-active' );
 		jQuery( this ).addClass( 'ui-state-active' );
 		$radiosetcontainer.find( '.button-set-value' ).val( $radiosetcontainer.find( '.ui-state-active' ).data( 'value' ) ).trigger( 'change' );
-	});
+	} );
 
 	jQuery( '.pyre_field.avada-color input' ).each( function() {
 		var self = jQuery( this ),
-		    $defaultReset = self.parents( '.pyre_metabox_field' ).find( '.pyre-default-reset' );
+			$defaultReset = self.parents( '.pyre_metabox_field' ).find( '.pyre-default-reset' );
 
 		// Picker with default.
 		if ( jQuery( this ).data( 'default' ) &&  jQuery( this ).data( 'default' ).length ) {
-			 jQuery( this ).wpColorPicker( {
+			jQuery( this ).wpColorPicker( {
 				change: function( event, ui ) {
 					colorChange( ui.color.toString(), self, $defaultReset );
 				},
 				clear: function( event ) {
 					colorClear( event, self );
 				},
-				palettes: ['#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B']
+				palettes: [ '#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B' ]
 			} );
 
 			// Make it so the reset link also clears color.
 			$defaultReset.on( 'click', 'a', function( event ) {
 				event.preventDefault();
 				colorClear( event, self );
-			});
+			} );
 
 		// Picker without default.
 		} else {
 			jQuery( this ).wpColorPicker( {
-				palettes: ['#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B']
+				palettes: [ '#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B' ]
 			} );
 		}
 
@@ -53,7 +53,7 @@ jQuery( document ).ready( function() {
 		if ( true !== jQuery( this ).data( 'alpha' ) ) {
 			jQuery( this ).wpColorPicker().change();
 		}
-	});
+	} );
 
 	function avadaCheckDependency( $currentValue, $desiredValue, $comparison ) {
 		if ( '==' === $comparison || '=' === $comparison ) {
@@ -91,29 +91,29 @@ jQuery( document ).ready( function() {
 		$container.find( 'span' ).each( function() {
 
 			var $value = jQuery( this ).data( 'value' ),
-			    $comparison = jQuery( this ).data( 'comparison' ),
-			    $field = jQuery( this ).data( 'field' );
+				$comparison = jQuery( this ).data( 'comparison' ),
+				$field = jQuery( this ).data( 'field' );
 
 			$passed = avadaCheckDependency( jQuery( '#pyre_' + $field ).val(), $value, $comparison );
 			return $passed;
-		});
+		} );
 		if ( $passed ) {
-			 $container.parents( '.pyre_metabox_field' ).fadeIn( 300 );
+			$container.parents( '.pyre_metabox_field' ).fadeIn( 300 );
 		} else {
-			 $container.parents( '.pyre_metabox_field' ).hide();
+			$container.parents( '.pyre_metabox_field' ).hide();
 		}
 	}
 
 	jQuery( '.avada-dependency' ).each( function() {
 		avadaLoopDependencies( jQuery( this ) );
-	});
+	} );
 	jQuery( '[id*="pyre"]' ).on( 'change', function() {
 		var $id = jQuery( this ).attr( 'id' ),
-		    $field = $id.replace( 'pyre_', '' );
+			$field = $id.replace( 'pyre_', '' );
 		jQuery( 'span[data-field="' + $field + '"]' ).each( function() {
 			avadaLoopDependencies( jQuery( this ).parents( '.avada-dependency' ) );
-		});
-	});
+		} );
+	} );
 
 	function createSlider( $slide, $targetId, $rangeInput, $min, $max, $step, $value, $decimals, $rangeDefault, $hiddenValue, $defaultValue, $direction ) {
 
@@ -126,11 +126,11 @@ jQuery( document ).ready( function() {
 					'min': $min,
 					'max': $max
 				},
-				format: wNumb({
+				format: wNumb( {
 					decimals: $decimals
-				})
-		    }),
-		    $notFirst = false;
+				} )
+			} ),
+			$notFirst = false;
 
 		// Check if default is currently set.
 		if ( $rangeDefault && '' === $hiddenValue.val() ) {
@@ -144,7 +144,7 @@ jQuery( document ).ready( function() {
 				$rangeSlider[$slide].noUiSlider.set( $defaultValue );
 				$hiddenValue.val( '' );
 				jQuery( this ).parent().addClass( 'checked' );
-			});
+			} );
 		}
 
 		// On slider move, update input
@@ -161,7 +161,7 @@ jQuery( document ).ready( function() {
 			} else {
 				jQuery( '#slider' + $targetId ).trigger( 'fusion-changed' );
 			}
-		});
+		} );
 
 		// On manual input change, update slider position
 		$rangeInput.on( 'keyup', function( values, handle ) {
@@ -173,7 +173,7 @@ jQuery( document ).ready( function() {
 			if ( this.value !== $rangeSlider[$slide].noUiSlider.get() ) {
 				$rangeSlider[$slide].noUiSlider.set( this.value );
 			}
-		});
+		} );
 	}
 
 	$rangeSlider = jQuery( '.pyre_field.avada-range .fusion-slider-container' );
@@ -195,21 +195,21 @@ jQuery( document ).ready( function() {
 		$rangeSlider.each( function() {
 
 			var $targetId     = jQuery( this ).data( 'id' ),
-			    $rangeInput   = jQuery( this ).prev( '.fusion-slider-input' ),
-			    $min          = jQuery( this ).data( 'min' ),
-			    $max          = jQuery( this ).data( 'max' ),
-			    $step         = jQuery( this ).data( 'step' ),
-			    $direction    = jQuery( this ).data( 'direction' ),
-			    $value        = $rangeInput.val(),
-			    $decimals     = $step.countDecimals(),
-			    $rangeDefault = ( jQuery( this ).parents( '.pyre_metabox_field' ).find( '.fusion-range-default' ).length ) ? jQuery( this ).parents( '.pyre_metabox_field' ).find( '.fusion-range-default' ) : false,
-			    $hiddenValue  = ( $rangeDefault ) ? jQuery( this ).parent().find( '.fusion-hidden-value' ) : false,
-			    $defaultValue = ( $rangeDefault ) ? jQuery( this ).parents( '.pyre_metabox_field' ).find( '.fusion-range-default' ).data( 'default' ) : false;
+				$rangeInput   = jQuery( this ).prev( '.fusion-slider-input' ),
+				$min          = jQuery( this ).data( 'min' ),
+				$max          = jQuery( this ).data( 'max' ),
+				$step         = jQuery( this ).data( 'step' ),
+				$direction    = jQuery( this ).data( 'direction' ),
+				$value        = $rangeInput.val(),
+				$decimals     = $step.countDecimals(),
+				$rangeDefault = ( jQuery( this ).parents( '.pyre_metabox_field' ).find( '.fusion-range-default' ).length ) ? jQuery( this ).parents( '.pyre_metabox_field' ).find( '.fusion-range-default' ) : false,
+				$hiddenValue  = ( $rangeDefault ) ? jQuery( this ).parent().find( '.fusion-hidden-value' ) : false,
+				$defaultValue = ( $rangeDefault ) ? jQuery( this ).parents( '.pyre_metabox_field' ).find( '.fusion-range-default' ).data( 'default' ) : false;
 
 			createSlider( $i, $targetId, $rangeInput, $min, $max, $step, $value, $decimals, $rangeDefault, $hiddenValue, $defaultValue, $direction );
 
 			$i++;
-		});
+		} );
 
 	}
 
@@ -281,15 +281,15 @@ jQuery( document ).ready( function() {
 					post_id: jQuery( this ).data( 'post_id' ),
 					post_type: jQuery( this ).data( 'post_type' ),
 					options_title: jQuery( '#fusion-new-page-options-name' ).val()
-			    },
-			    poDialog = jQuery( '#avada-po-dialog' );
+				},
+				poDialog = jQuery( '#avada-po-dialog' );
 
 			e.preventDefault();
 
 			if ( '' === jQuery( '#fusion-new-page-options-name' ).val().trim() ) {
 				poDialog.html( avadaPOMessages.saveTitleWarning );
 
-				jQuery( '#' + poDialog.attr( 'id' ) ).dialog({
+				jQuery( '#' + poDialog.attr( 'id' ) ).dialog( {
 					dialogClass: 'avada-po-dialog',
 					resizable: false,
 					draggable: false,
@@ -302,7 +302,7 @@ jQuery( document ).ready( function() {
 							jQuery( this ).dialog( 'close' );
 						}
 					}
-				});
+				} );
 
 				return;
 			}
@@ -336,7 +336,7 @@ jQuery( document ).ready( function() {
 					fusion_po_nonce: jQuery( '#fusion-page-options-nonce' ).val(),
 					post_id: jQuery( '#fusion-saved-page-options-select' ).data( 'post_id' ),
 					saved_post_id: jQuery( '#fusion-saved-page-options-select' ).val()
-			    };
+				};
 
 			e.preventDefault();
 
@@ -356,11 +356,11 @@ jQuery( document ).ready( function() {
 
 		deleteSaved: function( e ) {
 			var savedPostID = jQuery( '#fusion-saved-page-options-select' ).val(),
-			    data        = {
+				data        = {
 					action: 'fusion_page_options_delete',
 					fusion_po_nonce: jQuery( '#fusion-page-options-nonce' ).val(),
 					saved_post_id: savedPostID
-			    };
+				};
 
 			e.preventDefault();
 
@@ -381,8 +381,8 @@ jQuery( document ).ready( function() {
 
 		prepareUpload: function( e ) {
 			var file = e.target.files,
-			    data = new FormData(),
-			    poDialog = jQuery( '#avada-po-dialog' );
+				data = new FormData(),
+				poDialog = jQuery( '#avada-po-dialog' );
 
 			jQuery( '#fusion-page-options-loader' ).show();
 
@@ -395,7 +395,7 @@ jQuery( document ).ready( function() {
 				if ( 'json' !== value.name.substr( value.name.lastIndexOf( '.' ) + 1 ) ) {
 					poDialog.html( avadaPOMessages.importJSONWarning );
 
-					jQuery( '#' + poDialog.attr( 'id' ) ).dialog({
+					jQuery( '#' + poDialog.attr( 'id' ) ).dialog( {
 						dialogClass: 'avada-po-dialog',
 						resizable: false,
 						draggable: false,
@@ -408,13 +408,13 @@ jQuery( document ).ready( function() {
 								jQuery( this ).dialog( 'close' );
 							}
 						}
-					});
+					} );
 					return false;
 				}
 				data.append( 'po_file_upload', value );
-			});
+			} );
 
-			jQuery.ajax({
+			jQuery.ajax( {
 				url: ajaxurl,
 				type: 'POST',
 				data: data,
@@ -427,7 +427,7 @@ jQuery( document ).ready( function() {
 					jQuery( '#fusion-page-options-loader' ).hide();
 				}
 
-			});
+			} );
 		},
 
 		showHideButtons: function() {
@@ -447,7 +447,7 @@ jQuery( document ).ready( function() {
 
 	};
 
-	function updatePOPanel ( customFields ) {
+	function updatePOPanel( customFields ) {
 
 		jQuery.each( customFields, function( id, value ) {
 			var $el;
@@ -483,7 +483,7 @@ jQuery( document ).ready( function() {
 				$el.trigger( 'change' );
 			}
 
-		});
+		} );
 	}
 
 	fusionPageOptions.init();
@@ -495,4 +495,4 @@ jQuery( document ).ready( function() {
 			jQuery( '#pyre_tab_avada_page_options' ).addClass( 'fusion-options-changed' );
 		}
 	);
-});
+} );

@@ -172,10 +172,13 @@ class Avada_Helper {
 	/**
 	 * Check if we're in an events archive.
 	 *
+	 * @access public
+	 * @static
+	 * @param int|null $post_id The post ID.
 	 * @return bool
 	 */
-	public static function is_events_archive() {
-		if ( is_post_type_archive( 'tribe_events' ) || ( self::tribe_is_event() && is_archive() ) ) {
+	public static function is_events_archive( $post_id = null ) {
+		if ( is_post_type_archive( 'tribe_events' ) || ( self::tribe_is_event( $post_id ) && is_archive() ) ) {
 			return true;
 		}
 		return false;
@@ -402,22 +405,17 @@ class Avada_Helper {
 	}
 
 	/**
-	 * Check if we're on an Event page.
+	 * Check if we're on an Event post.
 	 *
 	 * @static
 	 * @access public
 	 * @since 5.1.0
-	 * @param int|false $id The page ID.
+	 * @param int|null $post_id The post ID.
 	 * @return bool
 	 */
-	public static function tribe_is_event( $id = false ) {
-
+	public static function tribe_is_event( $post_id = null ) {
 		if ( function_exists( 'tribe_is_event' ) ) {
-			if ( false === $id ) {
-				return (bool) tribe_is_event();
-			} else {
-				return (bool) tribe_is_event( $id );
-			}
+			return tribe_is_event( $post_id );
 		}
 		return false;
 

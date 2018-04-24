@@ -223,11 +223,11 @@ if ( fusion_is_element_enabled( 'fusion_testimonials' ) ) {
 
 					if ( 'image' === $this->child_args['avatar'] && $this->child_args['image'] ) {
 
-						$image_id = $fusion_library->images->get_attachment_id_from_url( $this->child_args['image'] );
-						$this->child_args['alt'] = '';
-						if ( $image_id ) {
-							$this->child_args['alt'] = get_post_field( '_wp_attachment_image_alt', $image_id );
-						}
+						$image_data = $fusion_library->images->get_attachment_data_from_url( $this->child_args['image'] );
+
+						$this->child_args['image_width']  = ( $image_data && $image_data['width'] ) ? $image_data['width'] : '';
+						$this->child_args['image_height'] = ( $image_data && $image_data['height'] ) ? $image_data['height'] : '';
+						$this->child_args['image_alt']    = ( $image_data && $image_data['alt'] ) ? $image_data['alt'] : '';
 
 						$pic = sprintf( '<img %s />', FusionBuilder::attributes( 'testimonials-shortcode-image' ) );
 					}
@@ -297,11 +297,11 @@ if ( fusion_is_element_enabled( 'fusion_testimonials' ) ) {
 
 				if ( 'image' === $this->child_args['avatar'] && $this->child_args['image'] ) {
 
-					$image_id = $fusion_library->images->get_attachment_id_from_url( $this->child_args['image'] );
-					$this->child_args['alt'] = '';
-					if ( $image_id ) {
-						$this->child_args['alt'] = get_post_field( '_wp_attachment_image_alt', $image_id );
-					}
+					$image_data = $fusion_library->images->get_attachment_data_from_url( $this->child_args['image'] );
+
+					$this->child_args['image_width']  = ( $image_data && $image_data['width'] ) ? $image_data['width'] : '';
+					$this->child_args['image_height'] = ( $image_data && $image_data['height'] ) ? $image_data['height'] : '';
+					$this->child_args['image_alt']    = ( $image_data && $image_data['alt'] ) ? $image_data['alt'] : '';
 
 					$pic = sprintf( '<img %s />', FusionBuilder::attributes( 'testimonials-shortcode-image' ) );
 				}
@@ -381,6 +381,7 @@ if ( fusion_is_element_enabled( 'fusion_testimonials' ) ) {
 			public function quote_attr() {
 				return array(
 					'style' => 'background-color:' . $this->parent_args['backgroundcolor'] . ';color:' . $this->parent_args['textcolor'] . ';',
+					'class' => 'fusion-clearfix',
 				);
 			}
 
@@ -441,14 +442,16 @@ if ( fusion_is_element_enabled( 'fusion_testimonials' ) ) {
 			public function image_attr() {
 
 				$attr = array(
-					'class' => 'testimonial-image',
-					'src'   => $this->child_args['image'],
-					'alt'   => $this->child_args['alt'],
+					'class'  => 'testimonial-image',
+					'src'    => $this->child_args['image'],
+					'width'  => $this->child_args['image_width'],
+					'height' => $this->child_args['image_height'],
+					'alt'    => $this->child_args['image_alt'],
 				);
 
-				if ( 'image' === $this->child_args['avatar'] ) {
+				if ( $this->child_args['image_border_radius'] ) {
 					$attr['style'] = sprintf(
-						'-webkit-border-radius: %s;-moz-border-radius: %s;border-radius: %s;',
+						'-webkit-border-radius:%s;-moz-border-radius:%s;border-radius:%s;',
 						$this->child_args['image_border_radius'], $this->child_args['image_border_radius'], $this->child_args['image_border_radius']
 					);
 				}

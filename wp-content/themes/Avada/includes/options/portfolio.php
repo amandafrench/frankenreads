@@ -67,8 +67,8 @@ function avada_options_section_portfolio( $sections ) {
 						),
 					),
 					'portfolio_archive_columns' => array(
-						'label'       => esc_html__( 'Portfolio Archive Columns', 'Avada' ),
-						'description' => __( 'Controls the amount of columns for portfolio archive pages.', 'Avada' ),
+						'label'       => esc_html__( 'Portfolio Archive Number of Columns', 'Avada' ),
+						'description' => __( 'Set the number of columns per row for portfolio archive pages. With Carousel layout this specifies the maximum amount of columns. <strong>IMPORTANT:</strong> Masonry layout does not work with 1 column.', 'Avada' ),
 						'id'          => 'portfolio_archive_columns',
 						'default'     => 1,
 						'type'        => 'slider',
@@ -80,7 +80,7 @@ function avada_options_section_portfolio( $sections ) {
 					),
 					'portfolio_archive_column_spacing' => array(
 						'label'       => esc_html__( 'Portfolio Archive Column Spacing', 'Avada' ),
-						'description' => esc_html__( 'Controls the column spacing for archive pages.', 'Avada' ),
+						'description' => esc_html__( 'Controls the column spacing for portfolio items for archive pages.', 'Avada' ),
 						'id'          => 'portfolio_archive_column_spacing',
 						'default'     => '20',
 						'type'        => 'slider',

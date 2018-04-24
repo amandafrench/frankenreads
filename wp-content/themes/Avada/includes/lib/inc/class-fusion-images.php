@@ -51,9 +51,18 @@ class Fusion_Images {
 	 *
 	 * @static
 	 * @access public
-	 * @var array
+	 * @var float
 	 */
 	public static $masonry_grid_ratio;
+
+	/**
+	 * Width used for masonry 2x2 calculations.
+	 *
+	 * @static
+	 * @access public
+	 * @var int
+	 */
+	public static $masonry_width_double;
 
 	/**
 	 * Constructor.
@@ -61,11 +70,17 @@ class Fusion_Images {
 	 * @access  public
 	 */
 	public function __construct() {
+		global $fusion_settings;
 
-		self::$grid_image_meta = array();
-		self::$grid_accepted_widths = array( '200', '400', '600', '800', '1200' );
+		if ( ! $fusion_settings ) {
+			$fusion_settings = Fusion_Settings::get_instance();
+		}
+
+		self::$grid_image_meta        = array();
+		self::$grid_accepted_widths   = array( '200', '400', '600', '800', '1200' );
 		self::$supported_grid_layouts = array( 'masonry', 'grid', 'timeline', 'large', 'portfolio_full', 'related-posts' );
-		self::$masonry_grid_ratio = 0.8;
+		self::$masonry_grid_ratio     = $fusion_settings->get( 'masonry_grid_ratio' );
+		self::$masonry_width_double   = $fusion_settings->get( 'masonry_width_double' );
 
 		add_filter( 'max_srcset_image_width', array( $this, 'set_max_srcset_image_width' ) );
 		add_filter( 'wp_calculate_image_srcset', array( $this, 'set_largest_image_size' ), '10', '5' );
@@ -75,6 +90,10 @@ class Fusion_Images {
 		add_action( 'delete_attachment', array( $this, 'delete_resized_images' ) );
 		add_filter( 'wpseo_sitemap_urlimages', array( $this, 'extract_img_src_for_yoast' ), '10', '2' );
 		add_filter( 'fusion_library_image_base_size_width', array( $this, 'fb_adjust_grid_image_base_size' ), 20, 4 );
+		add_filter( 'fusion_masonry_element_class', array( $this, 'adjust_masonry_element_class' ), 10, 2 );
+		add_filter( 'attachment_fields_to_edit', array( $this, 'add_image_meta_fields' ), 10, 2 );
+		add_filter( 'attachment_fields_to_save', array( $this, 'save_image_meta_fields' ), 10, 2 );
+		add_action( 'admin_head', array( $this, 'style_image_meta_fields' ) );
 	}
 
 	/**
@@ -508,10 +527,12 @@ class Fusion_Images {
 
 		$attachment_data['id'] = $attachment_id;
 
-		$attachment_src = wp_get_attachment_image_src( $attachment_id, $size );
-		$attachment_data['url'] = esc_url( $attachment_src[0] );
-		$attachment_data['width'] = esc_attr( $attachment_src[1] );
-		$attachment_data['height'] = esc_attr( $attachment_src[2] );
+		if ( 'none' !== $size ) {
+			$attachment_src = wp_get_attachment_image_src( $attachment_id, $size );
+			$attachment_data['url'] = esc_url( $attachment_src[0] );
+			$attachment_data['width'] = esc_attr( $attachment_src[1] );
+			$attachment_data['height'] = esc_attr( $attachment_src[2] );
+		}
 
 		$attachment_data['alt'] = esc_attr( get_post_field( '_wp_attachment_image_alt', $attachment_id ) );
 		$attachment_data['caption'] = wp_get_attachment_caption( $attachment_id );
@@ -603,28 +624,55 @@ class Fusion_Images {
 	 * Returns element orientation class, based on width and height ratio of an attachment image.
 	 *
 	 * @since 1.1
-	 * @param array $attachment An image attachment array.
-	 * @param int   $ratio      The aspect ratio threshold.
-	 * @return string           Orientation class.
+	 * @param int   $attachment_id ID of attachment image.
+	 * @param array $attachment    An image attachment array.
+	 * @param float $ratio         The aspect ratio threshold.
+	 * @param int   $width_double  Width above which 2x2 content should be displayed.
+	 * @return string              Orientation class.
 	 */
-	public function get_element_orientation_class( $attachment = array(), $ratio = false ) {
+	public function get_element_orientation_class( $attachment_id = '', $attachment = array(), $ratio = false, $width_double = false ) {
 		$element_class = 'fusion-element-grid';
-		$ratio = $ratio ? $ratio : self::$masonry_grid_ratio;
+		$ratio         = $ratio ? $ratio : self::$masonry_grid_ratio;
+		$width_double  = $width_double ? $width_double : self::$masonry_width_double;
+
+		if ( empty( $attachment ) && '' !== $attachment_id ) {
+			$attachment = wp_get_attachment_image_src( $attachment_id, 'full' );
+		}
 
 		if ( isset( $attachment[1] ) && isset( $attachment[2] ) ) {
 
-			$lower_limit = ( $ratio / 2 ) + ( $ratio / 4 );
-			$upper_limit = ( $ratio * 2 ) - ( $ratio / 2 );
+			// Fallback to legacy calcs of Avada 5.4.2 or earlier.
+			if ( '1.0' === $ratio ) {
+				$fallback_ratio = 0.8;
+				$lower_limit = ( $fallback_ratio / 2 ) + ( $fallback_ratio / 4 );
+				$upper_limit = ( $fallback_ratio * 2 ) - ( $fallback_ratio / 2 );
 
-			// Landscape image.
-			if ( $lower_limit > $attachment[2] / $attachment[1] ) {
-				$element_class = 'fusion-element-landscape';
-			} else if ( $upper_limit < $attachment[2] / $attachment[1] ) {
-				$element_class = 'fusion-element-portrait';
+				if ( $lower_limit > $attachment[2] / $attachment[1] ) {
+					// Landscape image.
+					$element_class = 'fusion-element-landscape';
+				} elseif ( $upper_limit < $attachment[2] / $attachment[1] ) {
+					// Portrait image.
+					$element_class = 'fusion-element-portrait';
+				} elseif ( $attachment[1] > $width_double ) {
+					// 2x2 image.
+					$element_class = 'fusion-element-landscape fusion-element-portrait';
+				}
+			} else {
+				if ( $ratio < $attachment[1] / $attachment[2] ) {
+					// Landscape image.
+					$element_class = 'fusion-element-landscape';
+
+				} elseif ( $ratio < $attachment[2] / $attachment[1] ) {
+					// Portrait image.
+					$element_class = 'fusion-element-portrait';
+				} elseif ( $attachment[1] > $width_double ) {
+					// 2x2 image.
+					$element_class = 'fusion-element-landscape fusion-element-portrait';
+				}
 			}
 		}
 
-		return $element_class;
+		return apply_filters( 'fusion_masonry_element_class', $element_class, $attachment_id );
 	}
 
 	/**
@@ -635,7 +683,7 @@ class Fusion_Images {
 	 * @return int|float.
 	 */
 	public function get_element_base_padding( $element_orientation_class = '' ) {
-		$fusion_element_grid_padding = self::$masonry_grid_ratio;
+		$fusion_element_grid_padding = 0.8;
 
 		$masonry_element_padding = array(
 			'fusion-element-grid'      => $fusion_element_grid_padding,
@@ -649,6 +697,87 @@ class Fusion_Images {
 
 		return $fusion_element_grid_padding;
 	}
+
+	/**
+	 * Filters element orientation class, based on image meta.
+	 *
+	 * @since 1.5
+	 * @param string $element_class Orientation class.
+	 * @param int    $attachment_id ID of attachment image.
+	 * @return string               Orientation class.
+	 */
+	public function adjust_masonry_element_class( $element_class, $attachment_id = '' ) {
+
+		if ( '' !== $attachment_id && '' !== get_post_meta( $attachment_id, 'fusion_masonry_element_layout', true ) ) {
+			$element_class = get_post_meta( $attachment_id, 'fusion_masonry_element_layout', true );
+		}
+
+		return $element_class;
+	}
+
+	/**
+	 * Add Image meta fields
+	 *
+	 * @param  array  $form_fields Fields to include in attachment form.
+	 * @param  object $post        Attachment record in database.
+	 * @return array  $form_fields Modified form fields.
+	 */
+	public function add_image_meta_fields( $form_fields, $post ) {
+
+		if ( wp_attachment_is_image( $post->ID ) ) {
+			$image_layout = '' !== get_post_meta( $post->ID, 'fusion_masonry_element_layout', true ) ? sanitize_text_field( get_post_meta( $post->ID, 'fusion_masonry_element_layout', true ) ) : '';
+
+			$form_fields['fusion_masonry_element_layout'] = array(
+				'label' => __( 'Masonry Image Layout', 'Avada' ),
+				'input' => 'html',
+				'html'  => '<select name="attachments[' . $post->ID . '][fusion_masonry_element_layout]" id="attachments[' . $post->ID . '][fusion_masonry_element_layout]"">
+					    <option value="">' . esc_html__( 'Default', 'Avada' ) . '</option>
+						<option value="fusion-element-grid" ' . selected( 'fusion-element-grid', $image_layout, false ) . '>' . esc_html__( '1x1', 'Avada' ) . '</option>
+						<option value="fusion-element-landscape" ' . selected( 'fusion-element-landscape', $image_layout, false ) . '>' . esc_html__( 'Landscape', 'Avada' ) . '</option>
+						<option value="fusion-element-portrait" ' . selected( 'fusion-element-portrait', $image_layout, false ) . '>' . esc_html__( 'Portrait', 'Avada' ) . '</option>
+						<option value="fusion-element-landscape fusion-element-portrait" ' . selected( 'fusion-element-landscape fusion-element-portrait', $image_layout, false ) . '>' . esc_html__( '2x2', 'Avada' ) . '</option>
+					</select>',
+				'helps' => __( 'Set layout which will be used when image is displayed in masonry.', 'Avada' ),
+			);
+		}
+
+		return $form_fields;
+	}
+
+	/**
+	 * Save values of Photographer Name and URL in media uploader
+	 *
+	 * @param  array $post       The post data for database.
+	 * @param  array $attachment Attachment fields from $_POST form.
+	 * @return array $post       Modified post data.
+	 */
+	public function save_image_meta_fields( $post, $attachment ) {
+
+		if ( wp_attachment_is_image( $post['ID'] ) ) {
+			if ( isset( $attachment['fusion_masonry_element_layout'] ) ) {
+				if ( '' !== $attachment['fusion_masonry_element_layout'] ) {
+					update_post_meta( $post['ID'], 'fusion_masonry_element_layout', $attachment['fusion_masonry_element_layout'] );
+				} else {
+					delete_post_meta( $post['ID'], 'fusion_masonry_element_layout' );
+				}
+			}
+		}
+
+		return $post;
+	}
+
+	/**
+	 * Style image meta fields.
+	 */
+	public function style_image_meta_fields() {
+		global $pagenow;
+
+		if ( 'post.php' === $pagenow && wp_attachment_is_image( get_the_ID() ) ) {
+			echo '<style type="text/css">.compat-field-fusion_masonry_element_layout th, .compat-field-fusion_masonry_element_layout td{display: block;}.compat-field-fusion_masonry_element_layout th{padding-bottom: 10px;}</style>';
+		}
+
+	}
+
 }
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

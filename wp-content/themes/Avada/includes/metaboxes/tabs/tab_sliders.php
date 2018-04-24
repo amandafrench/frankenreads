@@ -31,11 +31,8 @@ global $wpdb;
 $slides_array[0] = esc_html__( 'Select a slider', 'Avada' );
 if ( class_exists( 'LS_Sliders' ) ) {
 
-	// Table name.
-	$table_name = $wpdb->prefix . 'layerslider';
-
 	// Get sliders.
-	$sliders = $wpdb->get_results( "SELECT * FROM $table_name WHERE flag_hidden = '0' AND flag_deleted = '0' ORDER BY date_c ASC" );
+	$sliders = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}layerslider WHERE flag_hidden = '0' AND flag_deleted = '0' ORDER BY date_c ASC" );
 
 	if ( ! empty( $sliders ) ) {
 		foreach ( $sliders as $key => $item ) {

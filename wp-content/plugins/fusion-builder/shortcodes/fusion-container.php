@@ -85,6 +85,7 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 				FusionBuilder::set_shortcode_defaults(
 					array(
 						'admin_label'                           => '',
+						'is_nested'                             => '0', // Variable that simply checks if the current container is a nested one (e.g. from FAQ or blog element).
 						'hide_on_mobile'                        => fusion_builder_default_visibility( 'string' ),
 						'id'                                    => '',
 						'class'                                 => '',
@@ -217,7 +218,7 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 					if ( 'youtube' == $video_url['type'] ) {
 						$outer_html .= "<div style='visibility: hidden' id='video-" . ( $parallax_id++ ) . "' data-youtube-video-id='" . $video_url['id'] . "' data-mute='" . $video_mute . "' data-loop='" . ( 'yes' == $video_loop ? 1 : 0 ) . "' data-loop-adjustment='" . $video_loop_refinement . "' data-video-aspect-ratio='" . $video_aspect_ratio . "'><div class='fusion-container-video-bg' id='video-" . ( $parallax_id++ ) . "-inner'></div></div>";
 					} elseif ( 'vimeo' == $video_url['type'] ) {
-						$outer_html .= '<div id="video-' . $parallax_id . '" data-vimeo-video-id="' . $video_url['id'] . '" data-mute="' . $video_mute . '" data-video-aspect-ratio="' . $video_aspect_ratio . '" style="visibility:hidden;"><iframe id="video-iframe-' . $parallax_id . '" class="fusion-container-video-bg" src="//player.vimeo.com/video/' . $video_url['id'] . '?api=1&player_id=video-iframe-' . ( $parallax_id++ ) . '&html5=1&autopause=0&autoplay=1&badge=0&byline=0&loop=' . ( 'yes' == $video_loop ? '1' : '0' ) . '&title=0" frameborder="0"></iframe></div>';
+						$outer_html .= '<div id="video-' . $parallax_id . '" data-vimeo-video-id="' . $video_url['id'] . '" data-mute="' . $video_mute . '" data-video-aspect-ratio="' . $video_aspect_ratio . '" style="visibility:hidden;"><iframe id="video-iframe-' . $parallax_id . '" class="fusion-container-video-bg" src="//player.vimeo.com/video/' . $video_url['id'] . '?html5=1&autopause=0&autoplay=1&badge=0&byline=0&autopause=0&loop=' . ( 'yes' == $video_loop ? '1' : '0' ) . '&title=0' . ( 'yes' === $video_mute ? '&muted=1' : '' ) . '" frameborder="0"></iframe></div>';
 					}
 				} else {
 					$video_attributes = 'preload="auto" autoplay';
@@ -410,7 +411,7 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 					$classes .= ' hundred-percent-height-center-content';
 				}
 
-				if ( 'yes' === $hundred_percent_height_scroll ) {
+				if ( 'yes' === $hundred_percent_height_scroll && ! $is_nested ) {
 
 					if ( 1 === $this->scroll_section_element_counter ) {
 						$this->scroll_section_counter++;
@@ -437,7 +438,7 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 				$classes .= ' non-hundred-percent-height-scrolling';
 			}
 
-			if ( $global_container_count === $this->container_counter || 'no' === $hundred_percent_height_scroll || 'no' === $hundred_percent_height ) {
+			if ( ( $global_container_count === $this->container_counter || 'no' === $hundred_percent_height_scroll || 'no' === $hundred_percent_height ) && ! $is_nested ) {
 
 				if ( 1 < $this->scroll_section_element_counter ) {
 					$scroll_navigation_position = ( 'Right' === $fusion_settings->get( 'header_position' ) || is_rtl() ) ? 'scroll-navigation-left' : 'scroll-navigation-right';
@@ -455,7 +456,7 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 			}
 
 			// Visibility classes.
-			if ( 'no' === $hundred_percent_height_scroll ) {
+			if ( 'no' === $hundred_percent_height || 'no' === $hundred_percent_height_scroll ) {
 				$classes = fusion_builder_visibility_atts( $hide_on_mobile, $classes );
 			}
 
@@ -479,7 +480,7 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 				$output = '<div id="' . $menu_anchor . '">' . $output . '</div>';
 			}
 
-			if ( 'yes' === $hundred_percent_height_scroll && 'yes' === $hundred_percent_height ) {
+			if ( 'yes' === $hundred_percent_height_scroll && 'yes' === $hundred_percent_height && ! $is_nested ) {
 
 				// Custom CSS ID.
 				$css_id = ( '' !== $css_id ) ? ' id="' . esc_attr( $css_id ) . '"' : '';
@@ -487,7 +488,7 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 				$output = '<div' . $css_id . ' class="fusion-scroll-section-element' . $active_class . '"' . $data_attr . '>' . $output . '</div>';
 			}
 
-			if ( $global_container_count === $this->container_counter && 'yes' === $hundred_percent_height_scroll && 'yes' === $hundred_percent_height ) {
+			if ( $global_container_count === $this->container_counter && 'yes' === $hundred_percent_height_scroll && 'yes' === $hundred_percent_height && ! $is_nested ) {
 				$output = $output . $scroll_section_container;
 			} else {
 				$output = $scroll_section_container . $output;
@@ -496,7 +497,9 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 			$fusion_fwc_type = array();
 			$columns         = 0;
 
-			$this->container_counter++;
+			if ( ! $is_nested ) {
+				$this->container_counter++;
+			}
 
 			return $output;
 		}
@@ -1053,6 +1056,7 @@ function fusion_builder_add_section() {
 				array(
 					'type'        => 'radio_button_set',
 					'heading'     => esc_attr__( 'Mute Video', 'fusion-builder' ),
+					'description' => esc_attr__( 'IMPORTANT: In some modern browsers, videos with sound won\'t be auto played, and thus won\'t show as container background when not muted.', 'fusion-builder' ),
 					'param_name'  => 'video_mute',
 					'value'       => array(
 						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),

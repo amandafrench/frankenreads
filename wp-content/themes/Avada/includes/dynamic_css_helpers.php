@@ -117,8 +117,6 @@ function avada_get_body_typography_elements() {
 		'.gform_wrapper .gfield_description',
 		'.fusion-footer-widget-area ul',
 		'#slidingbar-area ul',
-		'.fusion-tabs-widget .tab-holder .news-list li .post-holder a',
-		'.fusion-tabs-widget .tab-holder .news-list li .post-holder .meta',
 		'.fusion-blog-layout-timeline .fusion-timeline-date',
 		'.post-content blockquote',
 		'.review blockquote q',
@@ -129,7 +127,6 @@ function avada_get_body_typography_elements() {
 		'body',
 		'.post .post-content',
 		'.post-content blockquote',
-		'#wrapper .fusion-tabs-widget .tab-holder .news-list li .post-holder .meta',
 		'.sidebar .jtwt',
 		'#wrapper .meta',
 		'.review blockquote div',
@@ -150,8 +147,6 @@ function avada_get_body_typography_elements() {
 		'.sidebar .widget_links li',
 		'.sidebar .widget_layered_nav li',
 		'.sidebar .widget_product_categories li',
-		'body .sidebar .fusion-tabs-widget .tab-holder .tabs li a',
-		'.sidebar .fusion-tabs-widget .tab-holder .tabs li a',
 		'.fusion-main-menu .fusion-custom-menu-item-contents',
 
 	);
@@ -341,6 +336,7 @@ function avada_get_h3_typography_elements() {
 		'.project-content h3',
 		'.fusion-modal h3',
 		'.fusion-widget-area h3',
+		'.fusion-author .fusion-author-title',
 	);
 
 	// CSS classes that inherit h3 color.
@@ -354,6 +350,7 @@ function avada_get_h3_typography_elements() {
 		'.fusion-post-content h3',
 		'.fusion-modal h3',
 		'.fusion-widget-area h3',
+		'.fusion-author .fusion-author-title',
 	);
 
 	return $typography_elements;
@@ -373,7 +370,7 @@ function avada_get_h4_typography_elements() {
 		'.post-content h4',
 		'.fusion-rollover .fusion-rollover-content .fusion-rollover-title',
 		'.fusion-carousel-title',
-		'#wrapper .fusion-tabs-widget .tab-holder .tabs li a',
+		'.fusion-tabs-widget .fusion-tabs-nav ul li a',
 		'#reviews #comments > h2',
 		'.fusion-accordian .panel-title',
 		'.fusion-sharing-box h4',
@@ -389,7 +386,8 @@ function avada_get_h4_typography_elements() {
 		'.share-box h4',
 		'.fusion-title h4',
 		'.title h4',
-		'#wrapper .fusion-tabs-widget .tab-holder .tabs li a',
+		'.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li a',
+		'.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-widget-content .fusion-date-box',
 		'.fusion-accordian .panel-title a',
 		'.fusion-carousel-title',
 		'.fusion-tabs .nav-tabs > li .fusion-tab-heading',
@@ -405,13 +403,13 @@ function avada_get_h4_typography_elements() {
 		'.fusion-megamenu-title',
 		'.fusion-accordian .panel-title',
 		'.fusion-carousel-title',
-		'#wrapper .fusion-tabs-widget .tab-holder .tabs li a',
+		'.fusion-tabs-widget .fusion-tabs-nav ul li a',
 		'.share-box h4',
 		'.project-content .project-info h4',
 		'.fusion-image-wrapper .fusion-rollover .fusion-rollover-content .fusion-rollover-title',
 		'.fusion-image-wrapper .fusion-rollover .fusion-rollover-content .fusion-rollover-title a',
 		'.fusion-modal h4',
-		'.fusion-content-widget-area h4',
+		'.fusion-widget-area h4',
 		'.fusion-title h4',
 	);
 
@@ -493,6 +491,121 @@ function avada_get_h6_typography_elements() {
 		'.fusion-modal h6',
 		'.fusion-widget-area h6',
 		'.fusion-title h6',
+	);
+
+	return $typography_elements;
+}
+
+/**
+ * CSS classes that inherit Avada's post title typography settings.
+ *
+ * @return array
+ */
+function avada_get_post_title_typography_elements() {
+	$typography_elements = array();
+
+	// CSS classes that inherit post title size.
+	$typography_elements['size'] = array(
+		'#wrapper #main .post > h2.fusion-post-title',
+		'#wrapper #main .post > .fusion-post-title-meta-wrap > h2.fusion-post-title',
+		'#wrapper #main .fusion-post-content > .blog-shortcode-post-title',
+		'#wrapper #main .fusion-post-content > h2.fusion-post-title',
+		'#wrapper #main .fusion-portfolio-content > h2.fusion-post-title',
+		'#wrapper .fusion-events-shortcode .fusion-events-meta h2',
+		'#wrapper #main .post > h1.fusion-post-title',
+		'#wrapper #main .post > .fusion-post-title-meta-wrap > h1.fusion-post-title',
+		'#wrapper #main .fusion-post-content > h1.fusion-post-title',
+		'#wrapper #main .fusion-portfolio-content > h1.fusion-post-title',
+		'#wrapper .fusion-events-shortcode .fusion-events-meta h1',
+		'.single-product #main .product h1.product_title',
+		'.single-product #main .product h2.product_title',
+	);
+	// CSS classes that inherit post title color.
+	$typography_elements['color'] = array(
+		'#wrapper #main .post > h2.fusion-post-title',
+		'#wrapper #main .post > .fusion-post-title-meta-wrap > h2.fusion-post-title',
+		'#wrapper #main .fusion-post-content > .blog-shortcode-post-title',
+		'#wrapper #main .fusion-post-content > h2.fusion-post-title',
+		'#wrapper #main .fusion-portfolio-content > h2.fusion-post-title',
+		'#wrapper .fusion-events-shortcode .fusion-events-meta h2',
+		'#wrapper #main .post > h1.fusion-post-title',
+		'#wrapper #main .post > .fusion-post-title-meta-wrap > h1.fusion-post-title',
+		'#wrapper #main .fusion-post-content > h1.fusion-post-title',
+		'#wrapper #main .fusion-portfolio-content > h1.fusion-post-title',
+		'#wrapper .fusion-events-shortcode .fusion-events-meta h1',
+	);
+	// CSS classes that inherit post title font family.
+	$typography_elements['family'] = array(
+		'#wrapper #main .post > h2.fusion-post-title',
+		'#wrapper #main .post > .fusion-post-title-meta-wrap > h2.fusion-post-title',
+		'#wrapper #main .fusion-post-content > .blog-shortcode-post-title',
+		'#wrapper #main .fusion-post-content > h2.fusion-post-title',
+		'#wrapper #main .fusion-portfolio-content > h2.fusion-post-title',
+		'#wrapper .fusion-events-shortcode .fusion-events-meta h2',
+		'#wrapper #main .post > h1.fusion-post-title',
+		'#wrapper #main .post > .fusion-post-title-meta-wrap > h1.fusion-post-title',
+		'#wrapper #main .fusion-post-content > h1.fusion-post-title',
+		'#wrapper #main .fusion-portfolio-content > h1.fusion-post-title',
+		'#wrapper .fusion-events-shortcode .fusion-events-meta h1',
+		'.single-product #main .product h1.product_title',
+		'.single-product #main .product h2.product_title',
+	);
+
+	return $typography_elements;
+}
+
+/**
+ * CSS classes that inherit Avada's post title extras typography settings.
+ *
+ * @return array
+ */
+function avada_get_post_title_extras_typography_elements() {
+	$typography_elements = array();
+
+	// CSS classes that inherit post title extra size.
+	$typography_elements['size'] = array(
+		'#wrapper #main .about-author .fusion-title h3',
+		'#wrapper #main #comments .fusion-title h3',
+		'#wrapper #main #respond .fusion-title h3',
+		'#wrapper #main .related-posts .fusion-title h3',
+		'#wrapper #main .related.products .fusion-title h3',
+		'#wrapper #main .about-author .fusion-title h2',
+		'#wrapper #main #comments .fusion-title h2',
+		'#wrapper #main #respond .fusion-title h2',
+		'#wrapper #main .related-posts .fusion-title h2',
+		'#wrapper #main .related.products .fusion-title h2',
+		'.single-product .woocommerce-tabs h3',
+		'.single-product .woocommerce-tabs h2',
+	);
+	// CSS classes that inherit post title extra color.
+	$typography_elements['color'] = array(
+		'#wrapper #main .about-author .fusion-title h3',
+		'#wrapper #main #comments .fusion-title h3',
+		'#wrapper #main #respond .fusion-title h3',
+		'#wrapper #main .related-posts .fusion-title h3',
+		'#wrapper #main .related.products .fusion-title h3',
+		'#wrapper #main .about-author .fusion-title h2',
+		'#wrapper #main #comments .fusion-title h2',
+		'#wrapper #main #respond .fusion-title h2',
+		'#wrapper #main .related-posts .fusion-title h2',
+		'#wrapper #main .related.products .fusion-title h2',
+		'.single-product .woocommerce-tabs h3',
+		'.single-product .woocommerce-tabs h2',
+	);
+	// CSS classes that inherit post title extra font family.
+	$typography_elements['family'] = array(
+		'#wrapper #main .about-author .fusion-title h3',
+		'#wrapper #main #comments .fusion-title h3',
+		'#wrapper #main #respond .fusion-title h3',
+		'#wrapper #main .related-posts .fusion-title h3',
+		'#wrapper #main .related.products .fusion-title h3',
+		'#wrapper #main .about-author .fusion-title h2',
+		'#wrapper #main #comments .fusion-title h2',
+		'#wrapper #main #respond .fusion-title h2',
+		'#wrapper #main .related-posts .fusion-title h2',
+		'#wrapper #main .related.products .fusion-title h2',
+		'.single-product .woocommerce-tabs h3',
+		'.single-product .woocommerce-tabs h2',
 	);
 
 	return $typography_elements;

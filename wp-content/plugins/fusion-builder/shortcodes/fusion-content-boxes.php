@@ -204,16 +204,16 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 				$this->row_counter       = 1;
 				$this->transparent_child = false;
 
-				preg_match_all( '/(\[fusion_content_box (.*?)\](.*?)\[\/fusion_content_box\])/s', $content, $matches );
-				$this->total_num_of_columns = count( $matches[0] );
+				preg_match_all( '/\[fusion_content_box (.*?)\]/s', $content, $matches );
+
+				if ( is_array( $matches ) && ! empty( $matches ) ) {
+					$this->total_num_of_columns = count( $matches[0] );
+				}
 
 				$this->num_of_columns = $columns;
 				if ( ! $columns || empty( $columns ) ) {
-					$this->num_of_columns = 1;
-					if ( is_array( $matches ) && ! empty( $matches ) ) {
-						$this->num_of_columns = count( $matches[0] );
-						$this->num_of_columns = max( 6, $this->num_of_columns );
-					}
+					$this->num_of_columns = $this->total_num_of_columns;
+					$this->num_of_columns = max( 6, $this->num_of_columns );
 				} elseif ( $columns > 6 ) {
 					$this->num_of_columns = 6;
 				}
@@ -441,6 +441,9 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 					$defaults['link_target']            = $this->parent_args['link_target'];
 				}
 
+				// Make sure original child animation type is accessible, for later check on column-wrapper attributes.
+				$defaults['animation_type_original'] = ( isset( $args['animation_type'] ) ) ? $args['animation_type'] : '';
+
 				extract( $defaults );
 
 				$this->child_args = $defaults;
@@ -610,15 +613,15 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 					$border_color = '#f6f6f6';
 				}
 
-				if ( intval( $this->column_counter ) % intval( $this->num_of_columns ) == 1 ) {
+				if ( 1 === $this->column_counter % $this->num_of_columns ) {
 					$attr['class'] .= ' content-box-column-first-in-row';
 				}
 
-				if ( intval( $this->column_counter ) == intval( $this->total_num_of_columns ) ) {
+				if ( $this->column_counter === $this->total_num_of_columns ) {
 					$attr['class'] .= ' content-box-column-last';
 				}
 
-				if ( intval( $this->num_of_columns ) == $this->row_counter ) {
+				if ( $this->num_of_columns === $this->row_counter ) {
 					$attr['class'] .= ' content-box-column-last-in-row';
 				}
 
@@ -695,9 +698,9 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 					$attr['style'] .= 'color:' . $this->child_args['textcolor'] . ';';
 				}
 
-				if ( isset( $this->child_args['animation_type'] ) ) {
+				if ( isset( $this->child_args['animation_type_original'] ) ) {
 
-					if ( '' === $this->child_args['animation_type'] ) {
+					if ( '' === $this->child_args['animation_type_original'] ) {
 
 						$animations = FusionBuilder::animations(
 							array(
@@ -1016,7 +1019,7 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 					}
 				} elseif ( $this->child_args['icon'] ) {
 
-					$attr['class'] = 'fa fontawesome-icon ' . FusionBuilder::font_awesome_name_handler( $this->child_args['icon'] );
+					$attr['class'] = 'fontawesome-icon ' . FusionBuilder::font_awesome_name_handler( $this->child_args['icon'] );
 
 					// Set parent values if child values are unset to get downwards compatibility.
 					if ( ! $this->child_args['circle'] ) {
@@ -2166,23 +2169,14 @@ function fusion_element_content_boxes() {
 					),
 				),
 				array(
-					'type'        => 'select',
+					'type'        => 'range',
 					'heading'     => esc_attr__( 'Speed of Animation', 'fusion-builder' ),
 					'description' => esc_attr__( 'Type in speed of animation in seconds (0.1 - 1).', 'fusion-builder' ),
 					'param_name'  => 'animation_speed',
-					'value'       => array(
-						'1'   => '1',
-						'0.1' => '0.1',
-						'0.2' => '0.2',
-						'0.3' => '0.3',
-						'0.4' => '0.4',
-						'0.5' => '0.5',
-						'0.6' => '0.6',
-						'0.7' => '0.7',
-						'0.8' => '0.8',
-						'0.9' => '0.9',
-					),
-					'default'     => '0.3',
+					'min'         => '0.1',
+					'max'         => '1',
+					'step'        => '0.1',
+					'value'       => '0.3',
 					'dependency'  => array(
 						array(
 							'element'  => 'animation_type',
@@ -2614,17 +2608,7 @@ function fusion_element_content_box() {
 					'heading'     => esc_attr__( 'Animation Type', 'fusion-builder' ),
 					'description' => esc_attr__( 'Select the type of animation to use on the element.', 'fusion-builder' ),
 					'param_name'  => 'animation_type',
-					'value'       => array(
-						''           => esc_attr__( 'Default', 'fusion-builder' ),
-						'none'       => esc_attr__( 'None', 'fusion-builder' ),
-						'bounce'     => esc_attr__( 'Bounce', 'fusion-builder' ),
-						'fade'       => esc_attr__( 'Fade', 'fusion-builder' ),
-						'flash'      => esc_attr__( 'Flash', 'fusion-builder' ),
-						'rubberBand' => esc_attr__( 'Rubberband', 'fusion-builder' ),
-						'shake'      => esc_attr__( 'Shake', 'fusion-builder' ),
-						'slide'      => esc_attr__( 'Slide', 'fusion-builder' ),
-						'zoom'       => esc_attr__( 'Zoom', 'fusion-builder' ),
-					),
+					'value'       => fusion_builder_available_animations(),
 					'default'     => '',
 					'group'       => esc_attr__( 'Animation', 'fusion-builder' ),
 				),

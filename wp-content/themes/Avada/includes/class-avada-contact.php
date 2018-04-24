@@ -69,6 +69,14 @@ class Avada_Contact {
 	public $message = '';
 
 	/**
+	 * Data privacy confirmation checkbox text.
+	 *
+	 * @access public
+	 * @var int
+	 */
+	public $data_privacy_confirmation = 0;
+
+	/**
 	 * Has the email been sent?
 	 *
 	 * @access public
@@ -88,6 +96,10 @@ class Avada_Contact {
 			$this->process_subject();
 			$this->process_email();
 			$this->process_message();
+
+			if ( Avada()->settings->get( 'contact_form_privacy_checkbox' ) ) {
+				$this->process_data_privacy_confirmation();
+			}
 			$this->process_recaptcha();
 
 			if ( ! $this->has_error ) {
@@ -122,7 +134,7 @@ class Avada_Contact {
 	 */
 	private function process_name() {
 		$post_contact_name = ( isset( $_POST['contact_name'] ) ) ? sanitize_text_field( wp_unslash( $_POST['contact_name'] ) ) : ''; // WPCS: CSRF ok.
-		if ( '' == $post_contact_name || esc_html__( 'Name (required)', 'Avada' ) == $post_contact_name ) {
+		if ( '' === $post_contact_name || esc_attr__( 'Name (required)', 'Avada' ) === $post_contact_name ) {
 			$this->has_error = true;
 		} else {
 			$this->name = $post_contact_name;
@@ -146,10 +158,10 @@ class Avada_Contact {
 	 */
 	private function process_email() {
 		$email = ( isset( $_POST['email'] ) ) ? trim( sanitize_email( wp_unslash( $_POST['email'] ) ) ) : ''; // WPCS: CSRF ok.
-		$pattern = '/^(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){255,})(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){65,}@)(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22))(?:\\.(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-+[a-z0-9]+)*\\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-+[a-z0-9]+)*)|(?:\\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\\]))$/iD';
-		if ( '' == $email || esc_html__( 'Email (required)', 'Avada' ) == $email ) {
+
+		if ( '' === $email || esc_attr__( 'Email (required)', 'Avada' ) === $email ) {
 			$this->has_error = true;
-		} elseif ( 0 === preg_match( $pattern, $email ) ) {
+		} elseif ( false === filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
 			$this->has_error = true;
 		} else {
 			$this->email = trim( $email );
@@ -167,10 +179,27 @@ class Avada_Contact {
 		} else {
 			$message = ( isset( $_POST['msg'] ) ) ? wp_unslash( $_POST['msg'] ) : ''; // WPCS: CSRF ok sanitization ok.
 		}
-		if ( '' == $message || esc_html__( 'Message', 'Avada' ) == $message ) {
+		if ( '' === $message || esc_attr__( 'Message', 'Avada' ) === $message ) {
 			$this->has_error = true;
 		} else {
 			$this->message = ( function_exists( 'stripslashes' ) ) ? stripslashes( $message ) : $message;
+		}
+	}
+
+	/**
+	 * Check privacy data checkbox.
+	 *
+	 * @since 5.5
+	 * @access private
+	 * @return void
+	 */
+	private function process_data_privacy_confirmation() {
+		$data_privacy_confirmation = ( isset( $_POST['data_privacy_confirmation'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data_privacy_confirmation'] ) ) : 0; // WPCS: CSRF ok.
+
+		if ( ! $data_privacy_confirmation ) {
+			$this->has_error = true;
+		} else {
+			$this->data_privacy_confirmation = (int) $data_privacy_confirmation;
 		}
 	}
 
@@ -201,11 +230,11 @@ class Avada_Contact {
 	 * @access private
 	 */
 	private function send_email() {
-		$options = get_option( Avada::get_option_name() );
 		$name    = esc_html( $this->name );
 		$email   = sanitize_email( $this->email );
 		$subject = wp_filter_kses( $this->subject );
 		$message = wp_filter_kses( $this->message );
+		$data_privacy_confirmation = ( $this->data_privacy_confirmation ) ? esc_html__( 'confirmed', 'Avada' ) : '';
 
 		if ( function_exists( 'stripslashes' ) ) {
 			$subject = stripslashes( $subject );
@@ -214,7 +243,7 @@ class Avada_Contact {
 
 		$message = html_entity_decode( $message );
 
-		$email_to = $options['email_address'];
+		$email_to = Avada()->settings->get( 'email_address' );
 		/* translators: The name. */
 		$body  = sprintf( esc_attr__( 'Name: %s', 'Avada' ), " $name \n\n" );
 		/* translators: The email. */
@@ -222,7 +251,12 @@ class Avada_Contact {
 		/* translators: The subject. */
 		$body .= sprintf( esc_attr__( 'Subject: %s', 'Avada' ), " $subject \n\n" );
 		/* translators: The comments. */
-		$body .= sprintf( esc_attr__( 'Comments: %s', 'Avada' ), "\n $message" );
+		$body .= sprintf( esc_attr__( 'Message: %s', 'Avada' ), "\n$message \n\n" );
+
+		if ( Avada()->settings->get( 'contact_form_privacy_checkbox' ) ) {
+			/* translators: The data privacy terms. */
+			$body .= sprintf( esc_attr__( 'Data Privacy Terms: %s', 'Avada' ), " $data_privacy_confirmation" );
+		}
 
 		$headers = 'Reply-To: ' . $name . ' <' . $email . '>' . "\r\n";
 
@@ -230,11 +264,18 @@ class Avada_Contact {
 
 		$this->email_sent = true;
 
-		if ( true == $this->email_sent ) {
-			$_POST['contact_name'] = '';
-			$_POST['email']        = '';
-			$_POST['url']          = '';
-			$_POST['msg']          = '';
+		if ( $this->email_sent ) {
+			$_POST['contact_name']              = '';
+			$_POST['email']                     = '';
+			$_POST['url']                       = '';
+			$_POST['msg']                       = '';
+			$_POST['data_privacy_confirmation'] = 0;
+
+			$this->name    = '';
+			$this->email   = '';
+			$this->subject = '';
+			$this->message = '';
+			$this->data_privacy_confirmation = 0;
 		}
 	}
 }

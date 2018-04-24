@@ -58,7 +58,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				} else {
 					columnIds = this.$el.find( '.fusion-table-builder .fusion-builder-table thead tr th' ).map( function() {
 						return $( this ).data( 'th-id' );
-					}).get();
+					} ).get();
 
 					columnID = Math.max.apply( Math, columnIds ) + 1;
 				}
@@ -99,7 +99,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					columnID = $( event.currentTarget ).data( 'column-id' );
 					columnIds = this.$el.find( '.fusion-table-builder .fusion-builder-table thead tr th' ).map( function() {
 						return $( this ).data( 'th-id' );
-					}).get();
+					} ).get();
 
 					newColumnID = Math.max.apply( Math, columnIds ) + 1;
 				}
@@ -140,10 +140,10 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			addTableRow: function() {
 				var columns   = 0,
-				    td        = '',
-				    lastRowID = ( 'undefined' !== typeof this.$el.find( '.fusion-table-builder .fusion-builder-table tbody tr:last-child' ).data( 'tr-id' ) ) ? this.$el.find( '.fusion-table-builder .fusion-builder-table tbody tr:last-child' ).data( 'tr-id' ) : 0,
-				    newRowID  = lastRowID + 1,
-				    i;
+					td        = '',
+					lastRowID = ( 'undefined' !== typeof this.$el.find( '.fusion-table-builder .fusion-builder-table tbody tr:last-child' ).data( 'tr-id' ) ) ? this.$el.find( '.fusion-table-builder .fusion-builder-table tbody tr:last-child' ).data( 'tr-id' ) : 0,
+					newRowID  = lastRowID + 1,
+					i;
 
 				if ( 1 > this.$el.find( '.fusion-table-builder .fusion-builder-table thead tr th' ).length ) {
 					return;
@@ -152,7 +152,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				// Count columns
 				this.$el.find( '.fusion-table-builder .fusion-builder-table thead tr th' ).each( function() {
 					columns = columns + 1;
-				});
+				} );
 
 				for ( i = 1; i <= columns; i++ ) {
 					td += '<td class="td-' + i + '" data-td-id="' + i + '" ><input type="text" placeholder="' + fusionBuilderText.enter_text + '" value="" /><span class="fa fusiona-trash-o fusion-builder-table-delete-row" title="' + fusionBuilderText.delete_row + '" data-row-id="' + newRowID + '" /></td>';
@@ -176,10 +176,10 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			addButton: function( event ) {
 
 				var defaultParams,
-				    params,
+					params,
 					elementType,
-				    value,
-				    elementID;
+					value,
+					elementID;
 
 				if ( event ) {
 					event.preventDefault();
@@ -201,7 +201,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				// Process default parameters from shortcode
 				_.each( defaultParams, function( param )  {
 					if ( _.isObject( param.value ) ) {
-						value = param['default'];
+						value = param.default;
 					} else {
 						value = param.value;
 					}
@@ -220,4 +220,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 	} );
 
-} )( jQuery );
+} ( jQuery ) );

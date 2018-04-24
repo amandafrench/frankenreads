@@ -20,8 +20,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			initialize: function() {
 				var functionName,
-				    params,
-				    processedParams;
+					params,
+					processedParams;
 
 				this.listenTo( FusionPageBuilderEvents, 'fusion-modal-view-removed', this.removeElement );
 
@@ -42,45 +42,48 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			render: function() {
 				var $thisEl = this.$el,
-				    content = '',
-				    view,
-				    $contentTextarea,
-				    $contentTextareaOption,
-				    $colorPicker,
-				    $uploadButton,
-				    $iconPicker,
-				    $multiselect,
-				    $checkboxbuttonset,
-				    $radiobuttonset,
-				    $value,
-				    $id,
-				    $container,
-				    $search,
-				    viewCID,
-				    $checkboxsetcontainer,
-				    $radiosetcontainer,
-				    $visibility,
-				    $choice,
-				    $rangeSlider,
-				    $i,
-				    thisModel,
-				    $selectField,
-				    textareaID,
-				    allowGenerator = false,
-				    $dimensionField,
-				    codeBlockId,
-				    $codeBlock,
-				    codeElement,
-				    that = this,
-				    $textField,
-				    $placeholderText,
-				    $theContent,
-				    fixSettingsLvl = false,
-				    parentAtts,
-				    $linkButton,
-				    $dateTimePicker,
-				    $multipleImages,
-				    fetchIds = [];
+					content = '',
+					view,
+					$contentTextarea,
+					$contentTextareaOption,
+					$colorPicker,
+					$uploadButton,
+					$iconPicker,
+					$multiselect,
+					$checkboxbuttonset,
+					$radiobuttonset,
+					$value,
+					$id,
+					$container,
+					$search,
+					viewCID,
+					$checkboxsetcontainer,
+					$radiosetcontainer,
+					$visibility,
+					$choice,
+					$rangeSlider,
+					$i,
+					thisModel,
+					$selectField,
+					textareaID,
+					allowGenerator = false,
+					$dimensionField,
+					codeBlockId,
+					$codeBlock,
+					codeElement,
+					that = this,
+					$textField,
+					$placeholderText,
+					$theContent,
+					fixSettingsLvl = false,
+					parentAtts,
+					$linkButton,
+					$dateTimePicker,
+					$multipleImages,
+					fetchIds = [],
+					codeMirrorJSON,
+					parentValues,
+					codeBlockLang;
 
 				thisModel = this.model;
 
@@ -93,6 +96,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				if ( 'undefined' !== typeof thisModel.get && 'undefined' !== typeof thisModel.get( 'allow_generator' ) && true === thisModel.get( 'allow_generator' ) ) {
 					FusionPageBuilderApp.allowShortcodeGenerator = true;
 				}
+
+				// Set parentValues for dependencies on child.
+				parentValues = 'undefined' !== typeof this.model.get( 'parent_values' ) ? this.model.get( 'parent_values' ) : false;
 
 				this.$el.html( this.template( { atts: this.model.attributes } ) );
 
@@ -133,24 +139,25 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				if ( $colorPicker.length ) {
 					$colorPicker.each( function() {
 						var self          = $( this ),
-						    $defaultReset = self.parents( '.fusion-builder-option' ).find( '.fusion-builder-default-reset' );
+							$defaultReset = self.parents( '.fusion-builder-option' ).find( '.fusion-builder-default-reset' ),
+							parentValue   = 'undefined' !== typeof parentValues && 'undefined' !== typeof parentValues[ self.attr( 'id' ) ] ? parentValues[ self.attr( 'id' ) ] : false;
 
 						// Picker with default.
 						if ( $( this ).data( 'default' ) && $( this ).data( 'default' ).length ) {
 							$( this ).wpColorPicker( {
 								change: function( event, ui ) {
-									that.colorChange( ui.color.toString(), self, $defaultReset );
+									that.colorChange( ui.color.toString(), self, $defaultReset, parentValue );
 								},
 								clear: function( event ) {
-									that.colorClear( event, self );
+									that.colorClear( event, self, parentValue );
 								}
 							} );
 
 							// Make it so the reset link also clears color.
 							$defaultReset.on( 'click', 'a', function( event ) {
 								event.preventDefault();
-								that.colorClear( event, self );
-							});
+								that.colorClear( event, self, parentValue );
+							} );
 
 						// Picker without default.
 						} else {
@@ -169,7 +176,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				if ( $multipleImages.length ) {
 					$multipleImages.each( function() {
 						var $multipleImageContainer = jQuery( this ),
-						    ids;
+							ids;
 
 						$multipleImageContainer.html( '' );
 
@@ -189,28 +196,34 @@ var FusionPageBuilder = FusionPageBuilder || {};
 									fetchIds.push( id );
 								}
 							}
-						});
+						} );
 
 						// Fetch attachments if neccessary.
 						if ( 0 < fetchIds.length ) {
-							wp.media.query({ post__in: fetchIds, posts_per_page: fetchIds.length }).more().then( function( response ) { // jshint ignore:line
+							wp.media.query( { post__in: fetchIds, posts_per_page: fetchIds.length } ).more().then( function( response ) { // jshint ignore:line
 								that.renderAttachments( ids, $multipleImageContainer );
-							});
+							} );
 						} else {
 							that.renderAttachments( ids, $multipleImageContainer );
 						}
-					});
+					} );
 				}
 				if ( $codeBlock.length ) {
 					$codeBlock.each( function() {
-						codeBlockId = $( this ).attr( 'id' );
-						codeElement = $thisEl.find( '#' + codeBlockId );
+						codeBlockId   = $( this ).attr( 'id' );
+						codeElement   = $thisEl.find( '#' + codeBlockId );
+						codeBlockLang = $( this ).data( 'language' );
 
-						FusionPageBuilderApp.codeEditor = CodeMirror.fromTextArea( codeElement[0], {
-							lineNumbers: true,
-							lineWrapping: true,
-							autofocus: true
-						} );
+						// Get wp.CodeMirror object json.
+						codeMirrorJSON = $thisEl.find( '.' + codeBlockId ).val();
+						codeMirrorJSON = jQuery.parseJSON( codeMirrorJSON );
+						codeMirrorJSON.lineNumbers = true;
+
+						if ( 'undefined' !== typeof codeBlockLang && 'default' !== codeBlockLang ) {
+							codeMirrorJSON.mode = 'text/' + codeBlockLang;
+						}
+
+						FusionPageBuilderApp.codeEditor = wp.CodeMirror.fromTextArea( codeElement[0], codeMirrorJSON );
 
 						// Refresh editor after initialization
 						setTimeout( function() {
@@ -218,7 +231,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 							FusionPageBuilderApp.codeEditor.focus();
 						}, 100 );
 
-					});
+					} );
 				}
 
 				if ( $dimensionField.length ) {
@@ -230,15 +243,15 @@ var FusionPageBuilder = FusionPageBuilder || {};
 								( ( jQuery( this ).parents( '.single-builder-dimension' ).find( 'div:nth-child(3) input' ).val().length ) ? jQuery( this ).parents( '.single-builder-dimension' ).find( 'div:nth-child(3) input' ).val() : '0px' ) + ' ' +
 								( ( jQuery( this ).parents( '.single-builder-dimension' ).find( 'div:nth-child(4) input' ).val().length ) ? jQuery( this ).parents( '.single-builder-dimension' ).find( 'div:nth-child(4) input' ).val() : '0px' )
 							);
-						});
-					});
+						} );
+					} );
 				}
 
 				if ( $selectField.length ) {
-					$selectField.chosen({
+					$selectField.chosen( {
 						width: '100%',
 						disable_search_threshold: 10
-					});
+					} );
 				}
 
 				if ( $uploadButton.length ) {
@@ -246,12 +259,16 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				}
 
 				if ( $iconPicker.length ) {
-					$value     = $iconPicker.find( '.fusion-iconpicker-input' ).val();
-					$id        = $iconPicker.find( '.fusion-iconpicker-input' ).attr( 'id' );
-					$container = $iconPicker.find( '.icon_select_container' );
-					$search    = $iconPicker.find( '.fusion-icon-search' );
+					$iconPicker.each( function() {
+						var $picker = jQuery( this );
 
-					FusionPageBuilderApp.fusion_builder_iconpicker( $value, $id, $container, $search );
+						$value     = $picker.find( '.fusion-iconpicker-input' ).val();
+						$id        = $picker.find( '.fusion-iconpicker-input' ).attr( 'id' );
+						$container = $picker.find( '.icon_select_container' );
+						$search    = $picker.find( '.fusion-icon-search' );
+
+						FusionPageBuilderApp.fusion_builder_iconpicker( $value, $id, $container, $search );
+					} );
 				}
 
 				if ( $multiselect.length ) {
@@ -265,11 +282,11 @@ var FusionPageBuilder = FusionPageBuilder || {};
 							$placeholderText = fusionBuilderText.select_categories_or_leave_blank_for_none;
 						}
 
-						jQuery( this ).chosen({
+						jQuery( this ).chosen( {
 							width: '100%',
 							placeholder_text_multiple: $placeholderText
 						} );
-					});
+					} );
 				}
 
 				if ( $checkboxbuttonset.length ) {
@@ -292,8 +309,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 						jQuery( this ).toggleClass( 'ui-state-active' );
 						$checkboxsetcontainer.find( '.button-set-value' ).val( $checkboxsetcontainer.find( '.ui-state-active' ).map( function( _, el ) {
 							return jQuery( el ).data( 'value' );
-						}).get() );
-					});
+						} ).get() );
+					} );
 				}
 
 				if ( $radiobuttonset.length ) {
@@ -303,7 +320,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 						$radiosetcontainer.find( '.ui-state-active' ).removeClass( 'ui-state-active' );
 						jQuery( this ).addClass( 'ui-state-active' );
 						$radiosetcontainer.find( '.button-set-value' ).val( $radiosetcontainer.find( '.ui-state-active' ).data( 'value' ) ).trigger( 'change' );
-					});
+					} );
 				}
 
 				function createSlider( $slide, $targetId, $rangeInput, $min, $max, $step, $value, $decimals, $rangeDefault, $hiddenValue, $defaultValue, $direction ) {
@@ -317,11 +334,11 @@ var FusionPageBuilder = FusionPageBuilder || {};
 								'min': $min,
 								'max': $max
 							},
-							format: wNumb({
+							format: wNumb( {
 								decimals: $decimals
-							})
-					    }),
-					    $notFirst = false;
+							} )
+						} ),
+						$notFirst = false;
 
 					// Check if default is currently set.
 					if ( $rangeDefault && '' === $hiddenValue.val() ) {
@@ -335,7 +352,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 							$rangeSlider[$slide].noUiSlider.set( $defaultValue );
 							$hiddenValue.val( '' );
 							jQuery( this ).parent().addClass( 'checked' );
-						});
+						} );
 					}
 
 					// On slider move, update input
@@ -347,10 +364,10 @@ var FusionPageBuilder = FusionPageBuilder || {};
 						$notFirst = true;
 						jQuery( this.target ).closest( '.fusion-slider-container' ).prev().val( values[handle] ).trigger( 'change' );
 						$thisEl.find( '#' + $targetId ).trigger( 'change' );
-					});
+					} );
 
-					// On manual input change, update slider position
-					$rangeInput.on( 'keyup', function( values, handle ) {
+					// On manual input change, update slider position.
+					$rangeInput.on( 'blur', function( values, handle ) {
 
 						// If slider already has value, do nothing.
 						if ( this.value === $rangeSlider[$slide].noUiSlider.get() ) {
@@ -361,8 +378,15 @@ var FusionPageBuilder = FusionPageBuilder || {};
 							$hiddenValue.val( values[handle] );
 						}
 
-						$rangeSlider[$slide].noUiSlider.set( this.value );
-					});
+						if ( $min <= this.value && $max >= this.value ) {
+							$rangeSlider[$slide].noUiSlider.set( this.value );
+						} else if ( $min > this.value ) {
+							$rangeSlider[$slide].noUiSlider.set( $min );
+						} else if ( $max < this.value ) {
+							$rangeSlider[$slide].noUiSlider.set( $max );
+						}
+
+					} );
 				}
 
 				if ( $rangeSlider.length ) {
@@ -382,21 +406,34 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					$rangeSlider.each( function() {
 
 						var $targetId     = jQuery( this ).data( 'id' ),
-						    $rangeInput   = jQuery( this ).prev( '.fusion-slider-input' ),
-						    $min          = jQuery( this ).data( 'min' ),
-						    $max          = jQuery( this ).data( 'max' ),
-						    $step         = jQuery( this ).data( 'step' ),
-						    $direction    = jQuery( this ).data( 'direction' ),
-						    $value        = $rangeInput.val(),
-						    $decimals     = $step.countDecimals(),
-						    $rangeDefault = ( jQuery( this ).parents( '.fusion-builder-option' ).find( '.fusion-range-default' ).length ) ? jQuery( this ).parents( '.fusion-builder-option' ).find( '.fusion-range-default' ) : false,
-						    $hiddenValue  = ( $rangeDefault ) ? jQuery( this ).parent().find( '.fusion-hidden-value' ) : false,
-						    $defaultValue = ( $rangeDefault ) ? jQuery( this ).parents( '.fusion-builder-option' ).find( '.fusion-range-default' ).data( 'default' ) : false;
+							$rangeInput   = jQuery( this ).prev( '.fusion-slider-input' ),
+							$min          = jQuery( this ).data( 'min' ),
+							$max          = jQuery( this ).data( 'max' ),
+							$step         = jQuery( this ).data( 'step' ),
+							$direction    = jQuery( this ).data( 'direction' ),
+							$value        = $rangeInput.val(),
+							$decimals     = $step.countDecimals(),
+							$rangeDefault = ( jQuery( this ).parents( '.fusion-builder-option' ).find( '.fusion-range-default' ).length ) ? jQuery( this ).parents( '.fusion-builder-option' ).find( '.fusion-range-default' ) : false,
+							$hiddenValue  = ( $rangeDefault ) ? jQuery( this ).parent().find( '.fusion-hidden-value' ) : false,
+							$defaultValue = ( $rangeDefault ) ? jQuery( this ).parents( '.fusion-builder-option' ).find( '.fusion-range-default' ).data( 'default' ) : false;
+
+						// Check if parent has another value set to override TO default.
+						if ( 'undefined' !== typeof parentValues && 'undefined' !== typeof parentValues[ $targetId ] && $rangeDefault ) {
+
+							//  Set default values to new value.
+							jQuery( this ).parents( '.fusion-builder-option' ).find( '.fusion-range-default' ).data( 'default', parentValues[ $targetId ] );
+							$defaultValue = parentValues[ $targetId ];
+
+							// If no current value is set, also update $value as representation on load.
+							if ( ! $hiddenValue || '' === $hiddenValue.val() ) {
+								$value = $defaultValue;
+							}
+						}
 
 						createSlider( $i, $targetId, $rangeInput, $min, $max, $step, $value, $decimals, $rangeDefault, $hiddenValue, $defaultValue, $direction );
 
 						$i++;
-					});
+					} );
 
 				}
 
@@ -467,7 +504,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 										if ( $theContent === jQuery( '#' + textareaID ).data( 'placeholder' ) ) {
 											window.tinyMCE.get( textareaID ).setContent( '' );
 										}
-									});
+									} );
 								}
 
 							}, 100 );
@@ -492,7 +529,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 										if ( $theContent === jQuery( '#' + textareaID ).data( 'placeholder' ) ) {
 											window.tinyMCE.get( textareaID ).setContent( '' );
 										}
-									});
+									} );
 								}
 
 							}, 100 );
@@ -506,7 +543,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				// Attachment upload alert.
 				this.$el.find( '.uploadattachment .fusion-builder-upload-button' ).on( 'click', function() {
 					alert( fusionBuilderText.to_add_images );
-				});
+				} );
 
 				setTimeout( function() {
 					$thisEl.find( 'select, input, textarea, radio' ).filter( ':eq(0)' ).not( '[data-placeholder]' ).focus();
@@ -517,7 +554,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 				// Check option dependencies
 				if ( 'undefined' !== typeof this.model && 'undefined' !== typeof this.model.get ) {
-					FusionPageBuilderApp.checkOptionDependency( fusionAllElements[ this.model.get( 'element_type' ) ], this.$el );
+					FusionPageBuilderApp.checkOptionDependency( fusionAllElements[ this.model.get( 'element_type' ) ], this.$el, parentValues );
 				}
 
 				return this;
@@ -530,8 +567,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				this.remove();
 			},
 
-			colorChange: function( value, self, defaultReset ) {
-				var defaultColor = self.data( 'default' );
+			colorChange: function( value, self, defaultReset, customDefault ) {
+				var defaultColor = ( customDefault ) ? customDefault : self.data( 'default' );
 
 				if ( value === defaultColor ) {
 					defaultReset.addClass( 'checked' );
@@ -546,8 +583,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				}
 			},
 
-			colorClear: function( event, self ) {
-				var defaultColor = self.data( 'default' );
+			colorClear: function( event, self, customDefault ) {
+				var  defaultColor = ( customDefault ) ? customDefault : self.data( 'default' );
 
 				if ( null !== defaultColor ) {
 					self.val( defaultColor );
@@ -559,7 +596,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			renderAttachments: function( ids, $multipleImageContainer ) {
 				var $imageHTML,
-				    attachment;
+					attachment;
 
 				if ( 0 < ids.length ) {
 					jQuery.each( ids, function( index, id ) {
@@ -571,9 +608,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 							$imageHTML += '</div>';
 							$multipleImageContainer.append( $imageHTML );
 						}
-					});
+					} );
 				}
 			}
 		} );
 	} );
-} )( jQuery );
+} ( jQuery ) );

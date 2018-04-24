@@ -6,21 +6,55 @@ var FusionDelay = ( function() {
 		clearTimeout( timer );
 		timer = setTimeout( callback, ms );
 	};
-})();
+}() );
 
 function fusionIconPicker( value, id, container, search ) {
-	var icons  = fusionMenuConfig.fontawesomeicons,
-	    output = '';
+	var icons       = fusionMenuConfig.fontawesomeicons,
+		output      = jQuery( '.fusion-icons-rendered' ).html(),
+		oldIconName = '';
 
-	jQuery.each( icons, function( icon ) {
-		var selectedClass = '';
+	if ( ! container.children().length ) {
 
-		if ( value === icon ) {
-			selectedClass = 'selected-element';
+		if ( 'undefined' !== typeof value && '' !== value ) {
+			value = value.split( ' ' );
+
+			// Legacy FontAwesome 4.x icon, so we need check if it needs to be updated.
+			if ( 'undefined' === typeof value[1] ) {
+				value[1] = 'fas';
+
+				if ( 'undefined' !== typeof window['fusion-fontawesome-free-shims'] ) {
+					oldIconName = value[0].substr( 3 );
+
+					jQuery.each( window['fusion-fontawesome-free-shims'], function( i, shim ) {
+
+							if ( shim[0] === oldIconName ) {
+
+								// Update icon name.
+								if ( null !== shim[2] ) {
+									value[0] = 'fa-' + shim[2];
+								}
+
+								// Update icon subset.
+								if ( null !== shim[1] ) {
+									value[1] = shim[1];
+								}
+								return false;
+							}
+					} );
+
+					// Update form field with new values.
+					jQuery( container ).parent().find( '.fusion-iconpicker-input' ).attr( 'value', value[0] + ' ' + value[1] );
+				}
+			}
 		}
-		output += '<span class="icon_preview icon-' + icon + ' ' + selectedClass + '"><i class="fa ' + icon + '" data-name="' + icon + '"></i></span>';
-	} );
-	jQuery( container ).append( output );
+
+		$( container ).append( output );
+
+		if ( 2 === value.length ) {
+			$( container ).find( '.' + value[0] + '.' + value[1] ).parent().addClass( 'selected-element' );
+		}
+
+	}
 
 	// Icon Search bar
 	jQuery( search ).on( 'change paste keyup', function() {
@@ -30,18 +64,23 @@ function fusionIconPicker( value, id, container, search ) {
 			if ( thisEl.val() ) {
 				value = thisEl.val().toLowerCase();
 
-				_.each( icons, function( icon ) {
-					name = icon.toLowerCase(); // jshint ignore:line
+				if ( 3 > value.length ) {
+					return;
+				}
 
-					if ( name.search( value ) !== -1 ) {
-						jQuery( '.icon_select_container .icon-' + name ).show();
+				_.each( $( container ).find( 'i' ), function( icon ) {
+					name    = $( icon ).data( 'name' ).toLowerCase(); // jshint ignore:line
+					altName = 'undefined' !== typeof $( icon ).data( 'alt-name' ) ? $( icon ).data( 'alt-name' ).toLowerCase() : ''; // jshint ignore:line
+
+					if ( -1 !== name.search( value ) || -1 !== altName.search( value ) ) {
+						$( icon ).parent().css( 'display', 'inline-block' );
 					} else {
-						jQuery( '.icon_select_container .icon-' + name ).hide();
+						$( icon ).parent().css( 'display', 'none' );
 					}
 				} );
 
 			} else {
-				jQuery( '.icon_select_container .icon_preview' ).show();
+				$( container ).find( '.icon_preview' ).css( 'display', 'inline-block' );
 			}
 		}, 500 );
 	} );
@@ -50,13 +89,19 @@ function fusionIconPicker( value, id, container, search ) {
 	jQuery( container ).find( 'span' ).off();
 	jQuery( container ).find( 'span' ).on( 'click', function( e ) {
 
-		var iconWithPrefix,
-		    fontName;
+		var fontName,
+			subset = 'fas',
+			$i     = jQuery( this ).find( 'i' );
 
 		e.preventDefault();
 
-		iconWithPrefix  = jQuery( this ).find( 'i' ).attr( 'class' );
-		fontName		= jQuery( this ).find( 'i' ).attr( 'data-name' );
+		fontName = 'fa-' + jQuery( this ).find( 'i' ).attr( 'data-name' );
+
+		if ( $i.hasClass( 'fab' ) ) {
+			subset = 'fab';
+		} else if ( $i.hasClass( 'far' ) ) {
+			subset = 'far';
+		}
 
 		if ( jQuery( this ).hasClass( 'selected-element' ) ) {
 			jQuery( this ).find( 'i' ).parent().parent().find( '.selected-element' ).removeClass( 'selected-element' );
@@ -65,15 +110,16 @@ function fusionIconPicker( value, id, container, search ) {
 		} else {
 			jQuery( this ).find( 'i' ).parent().parent().find( '.selected-element' ).removeClass( 'selected-element' );
 			jQuery( this ).find( 'i' ).parent().addClass( 'selected-element' );
-			jQuery( this ).find( 'i' ).parent().parent().parent().find( '.fusion-iconpicker-input' ).attr( 'value', fontName ).trigger( 'change' );
+			jQuery( this ).find( 'i' ).parent().parent().parent().find( '.fusion-iconpicker-input' ).attr( 'value', fontName + ' ' + subset ).trigger( 'change' );
 		}
 	} );
+
 }
 
 jQuery( window ).load( function() {
 
 	var $wrapEl,
-	    itemWrapEl;
+		itemWrapEl;
 
 	if ( jQuery( 'body' ).hasClass( 'widgets-php' ) ) {
 		$wrapEl =  jQuery( 'body' ).hasClass( 'widgets_access' ) ? jQuery( '.editwidget' ) : jQuery( '.widget-liquid-right' );
@@ -89,17 +135,19 @@ jQuery( window ).load( function() {
 	// On open.
 	$wrapEl.on( 'click', '.fusion-menu-option-trigger', function( event ) {
 		var $value       = jQuery( this ).parent().find( '.fusion-iconpicker-input' ).val(),
-		    $id          = jQuery( this ).parent().find( '.fusion-iconpicker-input' ).attr( 'id' ),
-		    $container   = jQuery( this ).parent().find( '.icon_select_container' ),
-		    $search      = jQuery( this ).parent().find( '.fusion-icon-search' ),
-		    $options     = jQuery( this ).parent().find( '.fusion-options-holder' ),
-		    $holder      = jQuery( this ).parents( '.menu-item-settings' ),
-		    $modal       = jQuery( this ).parent().find( '.fusion-builder-modal-settings-container' ),
-		    $colorPicker = jQuery( this ).parent().find( '.fusion-builder-color-picker-hex' ),
-		    $clone;
+			$id          = jQuery( this ).parent().find( '.fusion-iconpicker-input' ).attr( 'id' ),
+			$container   = jQuery( this ).parent().find( '.icon_select_container' ),
+			$search      = jQuery( this ).parent().find( '.fusion-icon-search' ),
+			$options     = jQuery( this ).parent().find( '.fusion-options-holder' ),
+			$holder      = jQuery( this ).parents( '.menu-item-settings' ),
+			$modal       = jQuery( this ).parent().find( '.fusion-builder-modal-settings-container' ),
+			$colorPicker = jQuery( this ).parent().find( '.fusion-builder-color-picker-hex' ),
+			$clone;
 
 		event.preventDefault();
-		fusionIconPicker( $value, $id, $container, $search );
+		if ( 'undefined' !== typeof $id ) {
+			fusionIconPicker( $value, $id, $container, $search );
+		}
 
 		jQuery( $holder ).addClass( 'fusion-active' );
 		jQuery( this ).parent().find( '.fusion_builder_modal_overlay' ).show();
@@ -115,30 +163,30 @@ jQuery( window ).load( function() {
 			$radiosetcontainer.find( '.ui-state-active' ).removeClass( 'ui-state-active' );
 			jQuery( this ).addClass( 'ui-state-active' );
 			$radiosetcontainer.find( '.button-set-value' ).val( $radiosetcontainer.find( '.ui-state-active' ).data( 'value' ) ).trigger( 'change' );
-		});
+		} );
 
 		// Save as a backup.
 		$clone = jQuery( $options ).clone( true, true );
 		jQuery( '.fusion-menu-clone' ).append( $clone );
 
 		// Select field functionality.
-		jQuery( $modal ).find( '.fusion-builder-option select' ).selectWoo({
+		jQuery( $modal ).find( '.fusion-builder-option select' ).selectWoo( {
 			minimumResultsForSearch: 10,
 			dropdownCssClass: 'avada-select2',
 			width: '100%'
-		});
+		} );
 		if ( $colorPicker.length ) {
 			$colorPicker.each( function() {
 				jQuery( this ).wpColorPicker( {
-					palettes: ['#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B']
+					palettes: [ '#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B' ]
 				} );
-			});
+			} );
 		}
 
 		if ( '.widget-inside' === itemWrapEl  && 'auto' !== jQuery( this ).closest( '.widget' ).css( 'z-index' ) ) {
 			jQuery( this ).closest( '.widget' ).css( 'z-index', '99999' );
 		}
-	});
+	} );
 
 	// On cancel.
 	$wrapEl.on( 'click', '.fusion-builder-modal-close', function( event ) {
@@ -159,7 +207,7 @@ jQuery( window ).load( function() {
 		jQuery( 'body' ).removeClass( 'fusion_builder_no_scroll' );
 		jQuery( '.fusion-menu-clone' ).html( '' );
 
-	});
+	} );
 
 	// On outside click.
 	$wrapEl.on( 'click', itemWrapEl + ' .fusion_builder_modal_overlay', function( event ) {
@@ -179,7 +227,7 @@ jQuery( window ).load( function() {
 		jQuery( '.fusion_builder_modal_overlay' ).hide();
 		jQuery( 'body' ).removeClass( 'fusion_builder_no_scroll' );
 		jQuery( '.fusion-menu-clone' ).html( '' );
-	});
+	} );
 
 	// On save,
 	$wrapEl.on( 'click', '.fusion-builder-modal-save', function( event ) {
@@ -196,5 +244,32 @@ jQuery( window ).load( function() {
 		jQuery( '.fusion_builder_modal_overlay' ).hide();
 		jQuery( 'body' ).removeClass( 'fusion_builder_no_scroll' );
 		jQuery( '.fusion-menu-clone' ).html( '' );
-	});
-});
+	} );
+} );
+
+
+jQuery( document ).ready( function() {
+
+	( function initIconPicker() {
+			var icons  = fusionMenuConfig.fontawesomeicons,
+				output = '<div class="fusion-icons-rendered" style="height:0px; overflow:hidden;">';
+
+			_.each( icons, function( icon, key ) {
+				output += '<span class="icon_preview icon-' + icon[0] + '"><i class="' + icon[0] + ' ' + icon[1] + '" data-name="' + icon[0].substr( 3 ) + '"></i></span>';
+			} );
+			output += '</div>';
+			$( 'body' ).append( output );
+
+			if ( 'undefined' !== typeof window['fusion-fontawesome-free-shims'] ) {
+				_.each( window['fusion-fontawesome-free-shims'], function( shim, key ) {
+
+					if ( null !== shim[0] && null !== shim[2] ) {
+							$( '.fusion-icons-rendered' ).find( 'i.fa-' + shim[2] ).attr( 'data-alt-name', shim[0] );
+					}
+
+				} );
+			}
+
+		} () );
+
+} );

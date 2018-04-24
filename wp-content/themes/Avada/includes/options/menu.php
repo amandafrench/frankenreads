@@ -427,39 +427,6 @@ function avada_options_section_menu( $sections ) {
 						'default'     => '#a0ce4e',
 						'type'        => 'color',
 					),
-					'nav_dropdown_font_size' => array(
-						'label'       => esc_html__( 'Main Menu Dropdown Font Size', 'Avada' ),
-						'description' => esc_html__( 'Controls the font size for main menu dropdown text.', 'Avada' ),
-						'id'          => 'nav_dropdown_font_size',
-						'default'     => '13px',
-						'type'        => 'dimension',
-						'choices'     => array(
-							'units' => array( 'px', 'em' ),
-						),
-						'class'       => 'fusion-or-gutter',
-						'required'    => array(
-							array(
-								'setting'  => 'header_position',
-								'operator' => '!=',
-								'value'    => 'Top',
-							),
-							array(
-								'setting'  => 'header_layout',
-								'operator' => '!=',
-								'value'    => 'v6',
-							),
-						),
-					),
-					'side_nav_font_size' => array(
-						'label'       => esc_html__( 'Side Navigation Font Size', 'Avada' ),
-						'description' => esc_html__( 'Controls the font size for the menu text when using the side navigation page template.', 'Avada' ),
-						'id'          => 'side_nav_font_size',
-						'default'     => '14px',
-						'type'        => 'dimension',
-						'choices'     => array(
-							'units' => array( 'px', 'em' ),
-						),
-					),
 					'menu_text_align' => array(
 						'label'       => esc_html__( 'Main Menu Text Align', 'Avada' ),
 						'description' => esc_html__( 'Controls the main menu text alignment for top headers 4-5 and side headers.', 'Avada' ),
@@ -508,6 +475,39 @@ function avada_options_section_menu( $sections ) {
 								'operator' => '!=',
 								'value'    => 'v6',
 							),
+						),
+					),
+					'nav_dropdown_font_size' => array(
+						'label'       => esc_html__( 'Main Menu Dropdown Font Size', 'Avada' ),
+						'description' => esc_html__( 'Controls the font size for main menu dropdown text.', 'Avada' ),
+						'id'          => 'nav_dropdown_font_size',
+						'default'     => '13px',
+						'type'        => 'dimension',
+						'choices'     => array(
+							'units' => array( 'px', 'em' ),
+						),
+						'class'       => 'fusion-or-gutter',
+						'required'    => array(
+							array(
+								'setting'  => 'header_position',
+								'operator' => '!=',
+								'value'    => 'Top',
+							),
+							array(
+								'setting'  => 'header_layout',
+								'operator' => '!=',
+								'value'    => 'v6',
+							),
+						),
+					),
+					'side_nav_font_size' => array(
+						'label'       => esc_html__( 'Side Navigation Font Size', 'Avada' ),
+						'description' => esc_html__( 'Controls the font size for the menu text when using the side navigation page template.', 'Avada' ),
+						'id'          => 'side_nav_font_size',
+						'default'     => '14px',
+						'type'        => 'dimension',
+						'choices'     => array(
+							'units' => array( 'px', 'em' ),
 						),
 					),
 				),

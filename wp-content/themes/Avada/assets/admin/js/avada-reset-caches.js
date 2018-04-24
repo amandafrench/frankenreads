@@ -2,8 +2,8 @@
 function fusionResetCaches( e ) { // jshint ignore:line
 	var data = {
 			action: 'avada_reset_all_caches'
-	    },
-	    confirm = window.confirm( avadaReduxResetCaches.confirm );
+		},
+		confirm = window.confirm( avadaReduxResetCaches.confirm );
 
 	e.preventDefault();
 

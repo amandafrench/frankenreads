@@ -1,10 +1,29 @@
+<?php
+global $fusion_settings;
+if ( ! $fusion_settings ) {
+	$fusion_settings = Fusion_Settings::get_instance();
+}
+
+$column_min_width_default = $fusion_settings->get( 'text_column_min_width' );
+$column_spacing_default = $fusion_settings->get( 'text_column_spacing' );
+$rule_style_default = $fusion_settings->get( 'text_rule_style' );
+$rule_size_default = $fusion_settings->get( 'text_rule_size' );
+$rule_color_default = $fusion_settings->get( 'text_rule_color' );
+?>
+
 <script type="text/template" id="fusion-builder-block-module-text-preview-template">
 
 	<#
 	var
 	content = params.element_content,
 	text_block      = jQuery.parseHTML( content ),
-	text_block_html = '';
+	text_block_html = '',
+	columnMinWidth = '',
+	columnSpacing = '',
+	ruleStyle = '',
+	ruleSize = '',
+	ruleColor = '',
+	style = '';
 
 	jQuery(text_block).each(function() {
 
@@ -27,8 +46,55 @@
 			text_block_html += jQuery(this).outerHTML();
 		}
 	});
+
+	if ( 1 < parseInt( params.columns ) ) {
+
+		jQuery.each( [ '-webkit-', '-moz-', '' ], function( index, value ) {
+
+			style += ' ' + value + 'column-count:' +  params.columns + ';';
+
+			columnMinWidth = params.column_min_width;
+			if ( '' === columnMinWidth ) {
+				columnMinWidth = '<?php echo esc_attr( $column_min_width_default ); ?>';
+			}
+			style +=  ' ' + value + 'column-width:' + columnMinWidth + ';';
+
+			columnSpacing = params.column_spacing;
+			if ( '' === columnSpacing ) {
+				columnSpacing = '<?php echo esc_attr( $column_spacing_default ); ?>';
+			}
+			style += ' ' + value + 'column-gap:' + columnSpacing + ';';
+
+			ruleStyle = params.rule_style;
+			if ( 'default' === ruleStyle ) {
+				ruleStyle = '<?php echo esc_attr( $rule_style_default ); ?>';
+			}
+
+			ruleSize = params.rule_size;
+			if ( '' === ruleSize ) {
+				ruleSize = '<?php echo esc_attr( $rule_size_default ); ?>';
+			}
+
+			ruleColor = params.rule_color;
+			if ( '' === ruleColor ) {
+				ruleColor = '<?php echo esc_attr( $rule_color_default ); ?>';
+			}
+
+			if  ( 'none' !== ruleStyle ) {
+				style += ' ' + value + 'column-rule:' + ruleSize + 'px ' + ruleStyle + ' ' + ruleColor + ';';
+			}
+		});
+
+		if ( style ) {
+			style += ' text-align:initial;';
+		}
+	}
 	#>
 
-	{{{ text_block_html }}}
+	<# if ( style ) { #>
+		<div class="fusion-text-block-styles" style="{{style}}">{{ text_block_html }}</div>
+	<# } else { #>
+		{{ text_block_html }}
+	<# } #>
 
 </script>

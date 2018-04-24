@@ -767,6 +767,11 @@ function avada_options_section_header( $sections ) {
 								'operator' => '!=',
 								'value'    => 'v6',
 							),
+							array(
+								'setting'  => 'header_layout',
+								'operator' => '!=',
+								'value'    => 'v7',
+							),
 						),
 					),
 					'header_sticky_bg_color' => array(

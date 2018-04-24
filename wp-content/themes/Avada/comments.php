@@ -24,12 +24,13 @@ do_action( 'avada_before_comments' );
 	<?php return; ?>
 <?php endif; ?>
 
+<?php $title_size = ( false === avada_is_page_title_bar_enabled( get_the_ID() ) ? '2' : '3' ); ?>
 <?php if ( have_comments() ) : ?>
 
 	<div id="comments" class="comments-container">
 		<?php ob_start(); ?>
 		<?php comments_number( esc_html__( 'No Comments', 'Avada' ), esc_html__( 'One Comment', 'Avada' ), '% ' . esc_html__( 'Comments', 'Avada' ) ); ?>
-		<?php Avada()->template->title_template( ob_get_clean(), '3' ); ?>
+		<?php Avada()->template->title_template( ob_get_clean(), $title_size ); ?>
 
 		<?php if ( function_exists( 'the_comments_navigation' ) ) : ?>
 			<?php the_comments_navigation(); ?>
@@ -69,6 +70,8 @@ do_action( 'avada_before_comments' );
 		'comment_field'        => '<div id="comment-textarea"><label class="screen-reader-text" for="comment">' . esc_attr__( 'Comment', 'Avada' ) . '</label><textarea name="comment" id="comment" cols="45" rows="8" aria-required="true" required="required" tabindex="0" class="textarea-comment" placeholder="' . esc_html__( 'Comment...', 'Avada' ) . '"></textarea></div>',
 		'title_reply'          => esc_html__( 'Leave A Comment', 'Avada' ),
 		'title_reply_to'       => esc_html__( 'Leave A Comment', 'Avada' ),
+		'title_reply_before'   => '<h' . $title_size . ' id="reply-title" class="comment-reply-title">',
+		'title_reply_after'    => '</h' . $title_size . '>',
 		/* translators: Opening and closing link tags. */
 		'must_log_in'          => '<p class="must-log-in">' . sprintf( esc_html__( 'You must be %1$slogged in%2$s to post a comment.', 'Avada' ), '<a href="' . wp_login_url( apply_filters( 'the_permalink', get_permalink() ) ) . '">', '</a>' ) . '</p>',
 		/* translators: %1$s: The username. %2$s and %3$s: Opening and closing link tags. */

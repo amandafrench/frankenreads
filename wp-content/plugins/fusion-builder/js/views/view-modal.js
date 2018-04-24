@@ -36,13 +36,13 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			render: function() {
 				var view,
-				    viewSettings = {
+					viewSettings = {
 						model: this.model,
 						collection: this.collection,
 						view: this.options.view
-				    },
-				    customSettingsViewName,
-				    $container;
+					},
+					customSettingsViewName,
+					$container;
 
 				// TODO: checked column
 				if ( 'undefined' !== typeof this.model && 'undefined' !== typeof this.model.get( 'view' ) && ( 'row_inner' === this.model.get( 'element_type' ) || 'fusion_builder_row' === this.model.get( 'element_type' ) ) && this.model.get( 'parent' ) !== this.model.get( 'view' ).$el.data( 'cid' ) ) {
@@ -103,7 +103,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 				$container.append( view.render().el );
 
-				if ( $( '.fusion_builder_modal_overlay' ).length < 1 && $( '.fusion_builder_modal_inner_row_overlay' ).length < 1 ) {
+				if ( 1 > $( '.fusion_builder_modal_overlay' ).length && 1 > $( '.fusion_builder_modal_inner_row_overlay' ).length ) {
 					$( 'body' ).addClass( 'fusion_builder_no_scroll' ).append( '<div class="fusion_builder_modal_overlay"></div>' );
 				}
 
@@ -123,14 +123,14 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			closeModal: function( event ) {
 
 				var parentID,
-				    parentView,
-				    params,
-				    defaultParams,
-				    value,
-				    attributes,
-				    editorID,
-				    sortableCID,
-				    sortableUIView;
+					parentView,
+					params,
+					defaultParams,
+					value,
+					attributes,
+					editorID,
+					sortableCID,
+					sortableUIView;
 
 				if ( event ) {
 					event.preventDefault();
@@ -217,7 +217,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 							// Process default parameters from shortcode
 							_.each( defaultParams, function( param ) {
-								value = ( _.isObject( param.value ) ) ? param['default'] : param.value;
+								value = ( _.isObject( param.value ) ) ? param.default : param.value;
 								params[ param.param_name ] = value;
 							} );
 
@@ -263,11 +263,11 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			saveSettings: function( event ) {
 
 				var attributes,
-				    generatedShortcode,
-				    editorID,
-				    functionName,
-				    sortableUIView,
-				    sortableCID;
+					generatedShortcode,
+					editorID,
+					functionName,
+					sortableUIView,
+					sortableCID;
 
 				if ( event ) {
 					event.preventDefault();
@@ -290,7 +290,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					FusionPageBuilderApp.MultiElementChildSettings = false;
 				}
 
-				attributes = { params: ({}) };
+				attributes = { params: ( {} ) };
 
 				// Preserve container admin label
 				if ( 'fusion_builder_container' === this.model.get( 'element_type' ) ) {
@@ -306,8 +306,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 				this.$el.find( 'input, select, textarea, #fusion_builder_content_main, #fusion_builder_content_main_child, #generator_element_content, #generator_multi_child_content, #element_content' ).not( ':input[type=button], .fusion-icon-search, .category-search-field, .fusion-builder-table input, .fusion-builder-table textarea, .single-builder-dimension .fusion-builder-dimension input, .fusion-hide-from-atts' ).each( function() {
 					var $thisEl = $( this ),
-					    settingValue,
-					    name;
+						settingValue,
+						name;
 
 					// Multi element
 					if ( $thisEl.is( '#generator_element_content' ) ||
@@ -352,6 +352,11 @@ var FusionPageBuilder = FusionPageBuilder || {};
 						settingValue = FusionPageBuilderApp.base64Encode( settingValue );
 					}
 
+					// Encode code field type.
+					if ( $thisEl.hasClass( 'fusion-builder-code-block' ) && 1 === Number( FusionPageBuilderApp.disable_encoding ) ) {
+						settingValue = FusionPageBuilderApp.base64Encode( settingValue );
+					}
+
 					if ( 'infobox_content' === name ) {
 						settingValue = _.escape( settingValue );
 					}
@@ -371,11 +376,6 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					if ( 'function' === typeof FusionPageBuilderApp[ functionName ] ) {
 						attributes = FusionPageBuilderApp[ functionName ]( attributes, this );
 					}
-				}
-
-				// Base64 encode for Code Block element
-				if ( 'fusion_code' === this.model.get( 'element_type' ) && 1 === Number( FusionPageBuilderApp.disable_encoding ) ) {
-					attributes.params.element_content = FusionPageBuilderApp.base64Encode( attributes.params.element_content );
 				}
 
 				// Generator active
@@ -543,7 +543,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			},
 
 			removeOverlay: function() {
-				if ( $( '.fusion_builder_modal_overlay' ).length && $( '.fusion-builder-modal-settings-container' ).length < 2 ) {
+				if ( $( '.fusion_builder_modal_overlay' ).length && 2 > $( '.fusion-builder-modal-settings-container' ).length ) {
 					$( '.fusion_builder_modal_overlay' ).remove();
 					$( 'body' ).removeClass( 'fusion_builder_no_scroll' );
 				}
@@ -551,11 +551,11 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			generatePreview: function() {
 				var elementType = this.model.get( 'element_type' ),
-				    viewSettings,
-				    view,
-				    previewView,
-				    params,
-				    emptySectionText;
+					viewSettings,
+					view,
+					previewView,
+					params,
+					emptySectionText;
 
 				// Change empty section desc depending on bg image param.
 				if ( 'fusion_builder_container' === elementType ) {
@@ -589,8 +589,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			elementSearchFilter: function() {
 				var thisEl = this.$el,
-				    name,
-				    value;
+					name,
+					value;
 
 				thisEl.find( '.fusion-elements-filter' ).on( 'change paste keyup', function() {
 
@@ -606,7 +606,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 								name += ' recent works';
 							}
 
-							if ( name.search( value ) !== -1 ) {
+							if ( -1 !== name.search( value ) ) {
 								$( this ).show();
 							} else {
 								$( this ).hide();
@@ -622,4 +622,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			}
 		} );
 	} );
-} )( jQuery );
+} ( jQuery ) );

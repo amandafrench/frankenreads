@@ -128,8 +128,7 @@ class Avada_Page_Options {
 			return;
 		}
 
-		// @codingStandardsIgnoreLine WordPress.VIP.ValidatedSanitizedInput.InputNotSanitized
-		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'] ) ) {
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) ) ) {
 			die();
 		}
 
@@ -208,7 +207,6 @@ class Avada_Page_Options {
 
 		$content_json = $this->wp_filesystem->get_contents( $json_file_path );
 
-		// @codingStandardsIgnoreLine
 		$custom_fields = json_decode( $content_json, true );
 		if ( $custom_fields ) {
 

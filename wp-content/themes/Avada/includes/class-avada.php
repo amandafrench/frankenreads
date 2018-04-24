@@ -439,6 +439,10 @@ class Avada {
 					$data     = json_decode( $response, true );
 				}
 
+				if ( ! is_array( $data ) ) {
+					return array();
+				}
+
 				$plugins = array();
 				foreach ( $data as $plugin ) {
 					if ( $plugin['premium'] ) {

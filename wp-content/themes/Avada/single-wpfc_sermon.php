@@ -18,10 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 <section id="content" <?php Avada()->layout->add_class( 'content_class' ); ?> <?php Avada()->layout->add_style( 'content_style' ); ?>>
 	<?php if ( Avada()->settings->get( 'blog_pn_nav' ) ) : ?>
 		<div class="single-navigation clearfix">
-			<div class="fusion-single-navigation-wrapper">
-				<?php previous_post_link( '%link', esc_html__( 'Previous', 'Avada' ) ); ?>
-				<?php next_post_link( '%link', esc_html__( 'Next', 'Avada' ) ); ?>
-			</div>
+			<?php previous_post_link( '%link', esc_html__( 'Previous', 'Avada' ) ); ?>
+			<?php next_post_link( '%link', esc_html__( 'Next', 'Avada' ) ); ?>
 		</div>
 	<?php endif; ?>
 
@@ -30,7 +28,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'post' ); ?>>
 			<?php $full_image = ''; ?>
 			<?php if ( 'above' == Avada()->settings->get( 'blog_post_title' ) ) : ?>
-				<?php echo avada_render_post_title( $post->ID, false, '', '2' ); // WPCS: XSS ok. ?>
+				<?php $title_size = ( false === avada_is_page_title_bar_enabled( $post->ID ) ? '1' : '2' ); ?>
+				<?php echo avada_render_post_title( $post->ID, false, '', $title_size ); // WPCS: XSS ok. ?>
 			<?php elseif ( 'disabled' == Avada()->settings->get( 'blog_post_title' ) && Avada()->settings->get( 'disable_date_rich_snippet_pages' ) && Avada()->settings->get( 'disable_rich_snippet_title' ) ) : ?>
 				<span class="entry-title" style="display: none;"><?php the_title(); ?></span>
 			<?php endif; ?>
@@ -91,7 +90,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php endif; ?>
 			<?php endif; ?>
 			<?php if ( 'below' == Avada()->settings->get( 'blog_post_title' ) ) : ?>
-				<?php echo avada_render_post_title( $post->ID, false, '', '2' ); // WPCS: XSS ok. ?>
+				<?php $title_size = ( false === avada_is_page_title_bar_enabled( $post->ID ) ? '1' : '2' ); ?>
+				<?php echo avada_render_post_title( $post->ID, false, '', $title_size ); // WPCS: XSS ok. ?>
 			<?php endif; ?>
 			<div class="post-content">
 				<?php echo Avada()->sermon_manager->get_sermon_content(); // WPCS: XSS ok. ?>
@@ -102,6 +102,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php if ( Avada()->settings->get( 'social_sharing_box' ) ) : ?>
 
 					<?php
+					$title = the_title_attribute(
+						array(
+							'echo' => false,
+							'post' => $post->ID,
+						)
+					);
+
 					$sharingbox_social_icon_options = array(
 						'sharingbox'        => 'yes',
 						'icon_colors'       => Avada()->settings->get( 'sharing_social_links_icon_color' ),
@@ -110,8 +117,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						'icon_boxed_radius' => Fusion_Sanitize::size( Avada()->settings->get( 'sharing_social_links_boxed_radius' ) ),
 						'tooltip_placement' => Avada()->settings->get( 'sharing_social_links_tooltip_placement' ),
 						'linktarget'        => Avada()->settings->get( 'social_icons_new' ),
-						'title'             => wp_strip_all_tags( get_the_title( $post->ID ), true ),
-						'description'       => wp_strip_all_tags( get_the_title( $post->ID ), true ),
+						'title'             => $title,
+						'description'       => $title,
 						'link'              => get_permalink( $post->ID ),
 						'pinterest_image'   => ( $full_image ) ? $full_image[0] : '',
 					);
@@ -129,7 +136,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php the_author_posts_link(); ?>
 						<?php /* translators: The link. */ ?>
 						<?php $title = sprintf( __( 'About the Author: %s', 'Avada' ), ob_get_clean() ); ?>
-						<?php Avada()->template->title_template( $title, '3' ); ?>
+						<?php $title_size = ( false === avada_is_page_title_bar_enabled( get_the_ID() ) ? '2' : '3' ); ?>
+						<?php Avada()->template->title_template( $title, $title_size ); ?>
 						<div class="about-author-container">
 							<div class="avatar">
 								<?php echo get_avatar( get_the_author_meta( 'email' ), '72' ); ?>

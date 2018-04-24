@@ -256,16 +256,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 															<?php if ( true === $required ) : ?>
 																<li>
 																	<span class="required-plugin-name">
-																		<?php echo esc_html( $plugin_dependencies[ $slug ]['name'] ); ?>
+																		<?php echo isset( $plugin_dependencies[ $slug ] ) ? esc_html( $plugin_dependencies[ $slug ]['name'] ) : esc_html( $slug ); ?>
 																	</span>
 
 																		<?php
 																		$label  = __( 'Install', 'Avada' );
 																		$status = 'install';
-																		if ( $plugin_dependencies[ $slug ]['active'] ) {
+																		if ( isset( $plugin_dependencies[ $slug ] ) && $plugin_dependencies[ $slug ]['active'] ) {
 																			$label  = __( 'Active', 'Avada' );
 																			$status = 'active';
-																		} elseif ( $plugin_dependencies[ $slug ]['installed'] ) {
+																		} elseif ( isset( $plugin_dependencies[ $slug ] ) && $plugin_dependencies[ $slug ]['installed'] ) {
 																			$label  = __( 'Activate', 'Avada' );
 																			$status = 'activate';
 																		}

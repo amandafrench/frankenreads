@@ -31,7 +31,7 @@ $container_class = 'fusion-posts-container ';
 $wrapper_class = 'fusion-blog-layout-' . $blog_layout . '-wrapper ';
 
 if ( 'grid' === $blog_layout || 'masonry' === $blog_layout ) {
-	$container_class .= 'fusion-blog-layout-grid fusion-blog-layout-grid-' . Avada()->settings->get( 'blog_grid_columns' ) . ' isotope ';
+	$container_class .= 'fusion-blog-layout-grid fusion-blog-layout-grid-' . Avada()->settings->get( 'blog_archive_grid_columns' ) . ' isotope ';
 
 	if ( 'masonry' === $blog_layout ) {
 		$container_class .= 'fusion-blog-layout-' . $blog_layout . ' ';
@@ -135,8 +135,8 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 			// Masonry layout, get the element orientation class.
 			$element_orientation_class = '';
 			if ( 'masonry' === $blog_layout ) {
-				$masonry_cloumns = Avada()->settings->get( 'blog_grid_columns' );
-				$masonry_columns_spacing = Avada()->settings->get( 'blog_grid_column_spacing' );
+				$masonry_cloumns = Avada()->settings->get( 'blog_archive_grid_columns' );
+				$masonry_columns_spacing = Avada()->settings->get( 'blog_archive_grid_column_spacing' );
 				$responsive_images_columns = $masonry_cloumns;
 				$masonry_attributes = array();
 				$element_base_padding = 0.8;
@@ -151,11 +151,11 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 				}
 
 				// Get the correct image orientation class.
-				$element_orientation_class = Avada()->images->get_element_orientation_class( $post_thumbnail_attachment );
+				$element_orientation_class = Avada()->images->get_element_orientation_class( get_post_thumbnail_id() );
 				$element_base_padding  = Avada()->images->get_element_base_padding( $element_orientation_class );
 
 				$masonry_column_offset = ' - ' . ( (int) $masonry_columns_spacing / 2 ) . 'px';
-				if ( 'fusion-element-portrait' === $element_orientation_class ) {
+				if ( false !== strpos( $element_orientation_class, 'fusion-element-portrait' ) ) {
 					$masonry_column_offset = '';
 				}
 
@@ -166,21 +166,26 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 					'0' != Fusion_Color::new_color( Avada()->settings->get( 'timeline_color' ) )->alpha ) {
 
 					$masonry_column_offset = ' - ' . ( (int) $masonry_columns_spacing / 2 ) . 'px';
-					if ( 'fusion-element-portrait' === $element_orientation_class ) {
+					if ( false !== strpos( $element_orientation_class, 'fusion-element-portrait' ) ) {
 						$masonry_column_offset = ' + 4px';
 					}
 
 					$masonry_column_spacing = ( (int) $masonry_columns_spacing - 2 ) . 'px';
-					if ( 'fusion-element-landscape' === $element_orientation_class ) {
+					if ( false !== strpos( $element_orientation_class, 'fusion-element-landscape' ) ) {
 						$masonry_column_spacing = ( (int) $masonry_columns_spacing - 6 ) . 'px';
 					}
 				}
 
-				// Calculate the correct size of the image wrapper container, based on orientation and column spacing.
-				$masonry_attribute_style .= 'padding-top:calc((100% + ' . $masonry_column_spacing . ') * ' . $element_base_padding . $masonry_column_offset . ');';
+				// Check if a featured image is set and also that not a video with no featured image.
+				$post_video = get_post_meta( get_the_ID(), 'pyre_video', true );
+				if ( ! empty( $post_thumbnail_attachment ) || ! $post_video ) {
+
+					// Calculate the correct size of the image wrapper container, based on orientation and column spacing.
+					$masonry_attribute_style .= 'padding-top:calc((100% + ' . $masonry_column_spacing . ') * ' . $element_base_padding . $masonry_column_offset . ');';
+				}
 
 				// Check if we have a landscape image, then it has to stretch over 2 cols.
-				if ( 'fusion-element-landscape' === $element_orientation_class ) {
+				if ( false !== strpos( $element_orientation_class, 'fusion-element-landscape' ) ) {
 					$responsive_images_columns = $masonry_cloumns / 2;
 				}
 

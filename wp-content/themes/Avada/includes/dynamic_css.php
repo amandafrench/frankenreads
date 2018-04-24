@@ -89,6 +89,16 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	 */
 	$h6_typography_elements = apply_filters( 'avada_h6_typography_elements', avada_get_h6_typography_elements() );
 
+	/**
+	 * An array of all the elements that will be targeter from the post title typography settings
+	 */
+	$post_title_typography_elements = apply_filters( 'avada_post_title_typography_elements', avada_get_post_title_typography_elements() );
+
+	/**
+	 * An array of all the elements that will be targeter from the post title typography settings
+	 */
+	$post_title_extras_typography_elements = apply_filters( 'avada_post_title_extras_typography_elements', avada_get_post_title_extras_typography_elements() );
+
 	$footer_headings_typography_elements = array(
 		'.fusion-footer-widget-area h3',
 		'.fusion-footer-widget-area .widget-title',
@@ -117,13 +127,17 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.single-navigation a[rel="next"]:after',
 		'.project-content .project-info .project-info-box a',
 		'.fusion-content-widget-area .widget li a',
-		'.fusion-content-widget-area .widget .recentcomments',
+		'.fusion-content-widget-area .widget .recentcomments a',
 		'.fusion-content-widget-area .widget_categories li',
 		'#main .post h2 a',
 		'.about-author .title a',
 		'.shop_attributes tr th',
 		'.fusion-rollover a',
 		'.fusion-load-more-button',
+		'.pagination .pagination-prev:before',
+		'.pagination .pagination-next:after',
+		'.fusion-hide-pagination-text .pagination-prev:before',
+		'.fusion-hide-pagination-text .pagination-next:after',
 	);
 	if ( class_exists( 'bbPress' ) ) {
 		$link_color_elements[] = '.bbp-forum-header a.bbp-forum-permalink';
@@ -205,7 +219,6 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	}
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'content_bg_color' ) );
 
-	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'content_bg_color' ) );
 	if ( 'Boxed' === Avada()->settings->get( 'layout' ) || 'boxed' === get_post_meta( $c_page_id, 'pyre_page_bg_layout', true ) ) {
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'bg_color' ) );
 	}
@@ -346,7 +359,6 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
 
 	$elements = array(
-		'#wrapper .fusion-tabs-widget .tab-holder .tabs li.active a',
 		'#wrapper .post-content blockquote',
 		'.comment-text blockquote',
 		'.progress-bar-content',
@@ -371,6 +383,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$elements[] = '.woocommerce-pagination .current';
 	}
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
+
+	$css['global']['.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li.active a']['border-top-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
 
 	$css['global']['#wrapper .side-nav li.current_page_item a']['border-right-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
 	$css['global']['#wrapper .side-nav li.current_page_item a']['border-left-color']  = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
@@ -438,6 +452,46 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	}
 
 	if ( Avada()->settings->get( 'slidingbar_widgets' ) ) {
+		$sliding_bar_position = Avada()->settings->get( 'slidingbar_position' );
+
+		if ( 'right' === $sliding_bar_position || 'left' === $sliding_bar_position ) {
+			$sliding_bar_width = $sliding_bar_width_original = Fusion_Sanitize::size( str_replace( '%', 'vw', Avada()->settings->get( 'slidingbar_width' ) ), 'px' );
+			$sliding_bar_closed_position = '-' . $sliding_bar_width;
+			$sliding_bar_toggle_width = 0;
+
+			if ( false !== strpos( $sliding_bar_width, 'vw' ) ) {
+				// Add 20px to the actual toggle width to account for the scroll bar.
+				if ( 'triangle' === Avada()->settings->get( 'slidingbar_toggle_style' ) ) {
+					$sliding_bar_toggle_width = 56;
+				} else if ( 'rectangle' === Avada()->settings->get( 'slidingbar_toggle_style' ) ) {
+					$sliding_bar_toggle_width = 55;
+				} else if ( 'circle' === Avada()->settings->get( 'slidingbar_toggle_style' ) ) {
+					$sliding_bar_toggle_width = 85;
+				}
+
+				if ( $sliding_bar_toggle_width ) {
+					$sliding_bar_closed_position = 'calc(' . $sliding_bar_toggle_width . 'px - ' . $sliding_bar_width . ')';
+					$sliding_bar_width = 'calc(' . $sliding_bar_width . ' - ' . $sliding_bar_toggle_width . 'px)';
+				}
+			}
+
+			$elements = array(
+				'.fusion-sliding-bar-position-right .fusion-sliding-bar',
+				'.fusion-sliding-bar-position-left .fusion-sliding-bar',
+			);
+			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['width'] = $sliding_bar_width;
+
+			$css['global'][ '.fusion-sliding-bar-position-' . $sliding_bar_position ][ $sliding_bar_position ] = $sliding_bar_closed_position;
+
+			$sliding_bar_content_padding_container = ' .fusion-sliding-bar-content-wrapper';
+		} else {
+			$sliding_bar_content_padding_container = ' .fusion-sliding-bar';
+		}
+
+		$css['global'][ '.fusion-sliding-bar-position-' . $sliding_bar_position . $sliding_bar_content_padding_container ]['padding-top']    = Fusion_Sanitize::size( Avada()->settings->get( 'slidingbar_content_padding', 'top' ) );
+		$css['global'][ '.fusion-sliding-bar-position-' . $sliding_bar_position . $sliding_bar_content_padding_container ]['padding-right']  = Fusion_Sanitize::size( Avada()->settings->get( 'slidingbar_content_padding', 'right' ) );
+		$css['global'][ '.fusion-sliding-bar-position-' . $sliding_bar_position . $sliding_bar_content_padding_container ]['padding-bottom'] = Fusion_Sanitize::size( Avada()->settings->get( 'slidingbar_content_padding', 'bottom' ) );
+		$css['global'][ '.fusion-sliding-bar-position-' . $sliding_bar_position . $sliding_bar_content_padding_container ]['padding-left']   = Fusion_Sanitize::size( Avada()->settings->get( 'slidingbar_content_padding', 'left' ) );
 
 		$elements = array(
 			'.fusion-sliding-bar',
@@ -455,18 +509,21 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 		$css['global']['.fusion-sliding-bar-position-bottom.fusion-sliding-bar-toggle-triangle .fusion-sb-toggle']['border-bottom-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_bg_color' ) );
 
-		$css['global']['#wrapper #slidingbar-area .fusion-tabs-widget .tab-holder .tabs li']['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_bg_color' ) );
+		$css['global']['.fusion-sliding-bar-area .fusion-tabs-widget .fusion-tabs-nav ul li']['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_bg_color' ) );
+
+		$css['global']['.fusion-sliding-bar-area .fusion-tabs-widget .fusion-tabs-clean .fusion-tabs-nav ul']['border'] = '1px solid ' . Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_divider_color' ) );
+		$css['global']['.fusion-sliding-bar-area .fusion-tabs-widget .fusion-tabs-clean .fusion-tabs-nav ul li']['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_divider_color' ) );
 
 		if ( Avada()->settings->get( 'slidingbar_border' ) ) {
 			$css['global']['#slidingbar-area']['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_bg_color' ) );
 
-			if ( 'top' === Avada()->settings->get( 'slidingbar_position' ) ) {
+			if ( 'top' === $sliding_bar_position ) {
 				$css['global']['.fusion-header-wrapper']['margin-top']   = '3px';
 				$css['global']['.admin-bar p.woocommerce-store-notice']['padding-top'] = '13px';
 			}
 		}
 
-		if ( 'bottom' === Avada()->settings->get( 'slidingbar_position' ) && ! Avada()->settings->get( 'slidingbar_sticky' ) ) {
+		if ( 'bottom' === $sliding_bar_position && ! Avada()->settings->get( 'slidingbar_sticky' ) ) {
 			$css['global']['body']['position']   = 'relative';
 		}
 
@@ -495,7 +552,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_link_color_hover' ) );
 
-		$css['global']['#slidingbar-area .fusion-tabs-widget .tab-holder .tabs li.active a']['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_link_color_hover' ) );
+		$css['global']['.fusion-sliding-bar-area .fusion-tabs-widget .fusion-tabs-nav ul li.active a']['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_link_color_hover' ) );
 	}
 
 	$elements = array(
@@ -525,7 +582,10 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 	$css['global']['.fusion-footer-widget-area']['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'footer_bg_color' ) );
 
-	$css['global']['#wrapper .fusion-footer-widget-area .fusion-tabs-widget .tab-holder .tabs li']['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'footer_bg_color' ) );
+	$css['global']['.fusion-footer-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li']['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'footer_bg_color' ) );
+
+	$css['global']['.fusion-footer-widget-area .fusion-tabs-widget .fusion-tabs-clean .fusion-tabs-nav ul']['border'] = '1px solid ' . Fusion_Sanitize::color( Avada()->settings->get( 'footer_divider_color' ) );
+	$css['global']['.fusion-footer-widget-area .fusion-tabs-widget .fusion-tabs-clean .fusion-tabs-nav ul li']['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'footer_divider_color' ) );
 
 	$css['global']['.fusion-footer-widget-area']['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'footer_border_color' ) );
 	$css['global']['.fusion-footer-widget-area']['border-top-width'] = intval( Avada()->settings->get( 'footer_border_size' ) ) . 'px';
@@ -653,7 +713,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 	$css['global']['#wrapper .side-nav li a']['font-size'] = Fusion_Sanitize::size( Avada()->settings->get( 'side_nav_font_size' ) );
 
-	$css['global']['.sidebar .widget h4']['font-size'] = Fusion_Sanitize::size( Avada()->settings->get( 'sidew_font_size' ) );
+	$css['global']['.sidebar .widget .widget-title']['font-size'] = Fusion_Sanitize::size( Avada()->settings->get( 'sidew_font_size' ) );
 	$css['global'][ $nav_typography_elements ]['font-family']    = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'nav_typography' ) );
 	$elements = array(
 		'.fusion-main-menu-cart .fusion-widget-cart-number',
@@ -673,7 +733,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 	if ( class_exists( 'Tribe__Events__Main' ) ) {
 		$elements = array(
-			'.single-tribe_events .sidebar .widget h4',
+			'.single-tribe_events .sidebar .widget .widget-title',
 			'.single-tribe_events .sidebar .tribe-events-single-section-title',
 			'.single-tribe_events .sidebar .tribe-events-tickets-title',
 		);
@@ -705,31 +765,43 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	);
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['max-width'] = Fusion_Sanitize::size( Avada()->settings->get( 'site_width' ) );
 
-	$elements = array(
-		'#wrapper #main .post > h2.fusion-post-title',
-		'#wrapper #main .post > .fusion-post-title-meta-wrap > h2.fusion-post-title',
-		'#wrapper #main .fusion-post-content > .blog-shortcode-post-title',
-		'#wrapper #main .fusion-post-content > h2.fusion-post-title',
-		'#wrapper #main .fusion-portfolio-content > h2.fusion-post-title',
-		'#wrapper .fusion-events-shortcode .fusion-events-meta h2',
-	);
-	if ( class_exists( 'WooCommerce' ) ) {
-		$elements[] = '.single-product .product .product_title';
-	}
-	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['font-size']   = Fusion_Sanitize::size( Avada()->settings->get( 'post_titles_font_size' ) );
-	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['line-height'] = Fusion_Sanitize::size( Avada()->settings->get( 'post_titles_font_lh' ) );
+	// Post title.
+	if ( isset( $post_title_typography_elements['family'] ) ) {
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_typography_elements['family'] ) ]['font-family']    = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'post_title_typography' ) );
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_typography_elements['family'] ) ]['font-weight']    = intval( Avada()->settings->get( 'post_title_typography', 'font-weight' ) );
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_typography_elements['family'] ) ]['line-height']    = Fusion_Sanitize::size( Avada()->settings->get( 'post_title_typography', 'line-height' ) );
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'post_title_typography', 'letter-spacing' ), 'px' );
 
-	$elements = array(
-		'#wrapper #main .about-author .fusion-title h3',
-		'#wrapper #main #comments .fusion-title h3',
-		'#wrapper #main #respond .fusion-title h3',
-		'#wrapper #main .related-posts .fusion-title h3',
-		'#wrapper #main .related.products .fusion-title h3',
-	);
-	if ( class_exists( 'WooCommerce' ) ) {
-		$elements[] = '.single-product .woocommerce-tabs h3';
+		$font_style = Avada()->settings->get( 'post_title_typography', 'font-style' );
+		if ( ! empty( $font_style ) ) {
+			$css['global'][ $dynamic_css_helpers->implode( $post_title_typography_elements['family'] ) ]['font-style'] = esc_attr( Avada()->settings->get( 'post_title_typography', 'font-style' ) );
+		}
 	}
-	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['font-size']   = Fusion_Sanitize::size( Avada()->settings->get( 'post_titles_extras_font_size' ) );
+	if ( isset( $post_title_typography_elements['size'] ) ) {
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_typography_elements['size'] ) ]['font-size']      = Fusion_Sanitize::size( Avada()->settings->get( 'post_title_typography', 'font-size' ) );
+	}
+	if ( isset( $post_title_typography_elements['color'] ) ) {
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_typography_elements['color'] ) ]['color']         = Fusion_Sanitize::color( Avada()->settings->get( 'post_title_typography', 'color' ) );
+	}
+
+	// Post title extras.
+	if ( isset( $post_title_extras_typography_elements['family'] ) ) {
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_extras_typography_elements['family'] ) ]['font-family']    = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'post_titles_extras_typography' ) );
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_extras_typography_elements['family'] ) ]['font-weight']    = intval( Avada()->settings->get( 'post_titles_extras_typography', 'font-weight' ) );
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_extras_typography_elements['family'] ) ]['line-height']    = Fusion_Sanitize::size( Avada()->settings->get( 'post_titles_extras_typography', 'line-height' ) );
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_extras_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'post_titles_extras_typography', 'letter-spacing' ), 'px' );
+
+		$font_style = Avada()->settings->get( 'post_titles_extras_typography', 'font-style' );
+		if ( ! empty( $font_style ) ) {
+			$css['global'][ $dynamic_css_helpers->implode( $post_title_extras_typography_elements['family'] ) ]['font-style'] = esc_attr( Avada()->settings->get( 'post_titles_extras_typography', 'font-style' ) );
+		}
+	}
+	if ( isset( $post_title_extras_typography_elements['size'] ) ) {
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_extras_typography_elements['size'] ) ]['font-size']      = Fusion_Sanitize::size( Avada()->settings->get( 'post_titles_extras_typography', 'font-size' ) );
+	}
+	if ( isset( $post_title_extras_typography_elements['color'] ) ) {
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_extras_typography_elements['color'] ) ]['color']         = Fusion_Sanitize::color( Avada()->settings->get( 'post_titles_extras_typography', 'color' ) );
+	}
 
 	$css['global']['.ei-title h2']['font-size']   = Fusion_Sanitize::size( Avada()->settings->get( 'es_title_font_size' ) );
 	$css['global']['.ei-title h3']['font-size']   = Fusion_Sanitize::size( Avada()->settings->get( 'es_caption_font_size' ) );
@@ -764,6 +836,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.fusion-recent-posts .columns .column .meta',
 		'.post .single-line-meta',
 		'.fusion-carousel-meta',
+		'.widget_recent_entries .post-date',
 	);
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['font-size'] = Fusion_Sanitize::size( Avada()->settings->get( 'meta_font_size' ) );
 
@@ -832,6 +905,12 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 	$css['global'][ $dynamic_css_helpers->implode( $link_color_elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'link_color' ) );
 
+	$elements = array(
+		'.pagination .pagination-prev:hover:before',
+		'.pagination .pagination-next:hover:after',
+	);
+	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
+
 	if ( class_exists( 'bbPress' ) ) {
 		$link_color_rgb   = fusion_hex2rgb( Fusion_Sanitize::color( Avada()->settings->get( 'link_color' ) ) );
 		$link_color_hover = 'rgba(' . $link_color_rgb[0] . ',' . $link_color_rgb[1] . ',' . $link_color_rgb[2] . ',0.8)';
@@ -897,7 +976,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'.slidingbar-area a',
 			'.slidingbar-area .widget li a:before',
 			' #slidingbar-area .jtwt .jtwt_tweet a',
-			'#wrapper #slidingbar-area .fusion-tabs-widget .tab-holder .tabs li a',
+			'#slidingbar-area .fusion-tabs-widget .fusion-tabs-nav ul li a',
+			'.fusion-sliding-bar-area .fusion-tabs-widget .fusion-tabs-widget-content .fusion-date-box',
 			'#slidingbar-area .fusion-accordian .panel-title a',
 		);
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'slidingbar_link_color' ) );
@@ -906,14 +986,14 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	}
 
 	$elements = array(
-		'.sidebar .widget h4',
+		'.sidebar .widget .widget-title',
 		'.sidebar .widget .heading h4',
 	);
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'sidebar_heading_color' ) );
 
 	if ( class_exists( 'Tribe__Events__Main' ) ) {
 		$elements = array(
-			'.single-tribe_events .sidebar .widget h4',
+			'.single-tribe_events .sidebar .widget .widget-title',
 			'.single-tribe_events .sidebar .widget .heading h4',
 			'.single-tribe_events .sidebar .tribe-events-single-section-title',
 			'.single-tribe_events .sidebar .tribe-events-tickets-title',
@@ -932,7 +1012,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'.single-tribe_events .fusion-content-widget-area .widget li a',
 			'.single-tribe_events .fusion-content-widget-area .widget .recentcomments',
 			'.single-tribe_events .fusion-content-widget-area .widget_categories li',
-			'.single-tribe_events #wrapper .fusion-tabs-widget .tab-holder',
+			'.single-tribe_events .fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-classic',
+			'.single-tribe_events .fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-widget-content .fusion-tabs-widget-items li',
 			'.single-tribe_events .sidebar .tagcloud a',
 			'.single-tribe_events .sidebar .tribe-events-meta-group dd',
 			'.single-tribe_events .sidebar .tribe-mini-calendar-event',
@@ -996,8 +1077,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.fusion-footer-widget-area a',
 		'.fusion-footer-widget-area .widget li a:before',
 		'.fusion-footer-widget-area .jtwt .jtwt_tweet a',
-		'#wrapper .fusion-footer-widget-area .fusion-tabs-widget .tab-holder .tabs li a',
-		'.fusion-footer-widget-area .fusion-tabs-widget .tab-holder .news-list li .post-holder a',
+		'.fusion-footer-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li a',
+		'.fusion-footer-widget-area .fusion-tabs-widget .fusion-tabs-widget-content .fusion-date-box',
+		'.fusion-footer-widget-area .fusion-tabs-widget .fusion-tabs-widget-content .post-holder a',
 		'.fusion-footer-widget-area .fusion-accordian .panel-title a',
 	);
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'footer_link_color' ) );
@@ -1007,7 +1089,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.fusion-footer-widget-area .widget a:hover',
 		'.fusion-footer-widget-area .widget li a:hover:before',
 		'.fusion-footer-widget-area .widget li.recentcomments:hover:before',
-		'.fusion-footer-widget-area .fusion-tabs-widget .tab-holder .news-list li .post-holder a:hover',
+		'.fusion-footer-widget-area .fusion-tabs-widget .fusion-tabs-widget-content .post-holder a:hover',
 		'.fusion-footer-widget-area .fusion-accordian .panel-title a:hover',
 		'#wrapper .fusion-footer-widget-area .jtwt .jtwt_tweet a:hover',
 	);
@@ -1016,7 +1098,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global']['.fusion-footer-widget-area .tagcloud a:hover']['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'footer_link_color_hover' ) );
 
 	$elements = array(
-		'#wrapper .fusion-footer-widget-area .fusion-tabs-widget .tab-holder .tabs li.active a',
+		'.fusion-footer-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li.active a',
 		'#wrapper .fusion-footer-widget-area .fusion-tabs.classic .nav-tabs > li.active .tab-link',
 		'#wrapper .fusion-footer-widget-area .fusion-tabs.classic .nav-tabs > li.active .tab-link:focus',
 		'#wrapper .fusion-footer-widget-area .fusion-tabs.classic .nav-tabs > li.active .tab-link:hover',
@@ -1100,8 +1182,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 		$elements = array(
 			'#slidingbar-area .tagcloud a',
-			'#wrapper #slidingbar-area .fusion-tabs-widget .tab-holder',
-			'#wrapper #slidingbar-area .fusion-tabs-widget .tab-holder .news-list li',
+			'.fusion-sliding-bar-area .fusion-tabs-widget .fusion-tabs-classic',
+			'.fusion-sliding-bar-area .fusion-tabs-widget .fusion-tabs-widget-content .fusion-tabs-widget-items li',
 			'#slidingbar-area .fusion-accordian .fusion-panel',
 		);
 
@@ -1137,8 +1219,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.fusion-footer-widget-area .widget_product_categories li',
 		'.fusion-footer-widget-area ul li',
 		'.fusion-footer-widget-area .tagcloud a',
-		'#wrapper .fusion-footer-widget-area .fusion-tabs-widget .tab-holder',
-		'#wrapper .fusion-footer-widget-area .fusion-tabs-widget .tab-holder .news-list li',
+		'.fusion-footer-widget-area .fusion-tabs-widget .fusion-tabs-classic',
+		'.fusion-footer-widget-area .fusion-tabs-widget .fusion-tabs-widget-content .fusion-tabs-widget-items li',
 		'.fusion-footer-widget-area .fusion-accordian .fusion-panel',
 	);
 
@@ -1179,6 +1261,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.avada-select-parent select',
 		'.avada-select .select2-container .select2-choice',
 		'.avada-select .select2-container .select2-choice2',
+		'.select2-container--default .select2-selection--single',
+		'.select2-dropdown',
 		'select',
 		'#wrapper .search-table .search-field input',
 	);
@@ -1256,6 +1340,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.chzn-container-single .chzn-single',
 		'.chzn-container .chzn-drop',
 		'.avada-select-parent select',
+		'.select2-container--default .select2-selection--single .select2-selection__rendered',
+		'.select2-results__option',
 		'#wrapper .search-table .search-field input',
 	);
 	if ( class_exists( 'GFForms' ) ) {
@@ -1395,6 +1481,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.avada-select .select2-container .select2-choice',
 		'.avada-select .select2-container .select2-choice .select2-arrow',
 		'.avada-select .select2-container .select2-choice2 .select2-arrow',
+		'.select2-container--default .select2-selection--single',
+		'.select2-container--default .select2-search--dropdown .select2-search__field',
+		'.select2-dropdown',
 	);
 	if ( defined( 'ICL_SITEPRESS_VERSION' || class_exists( 'SitePress' ) ) ) {
 		$elements[] = '#lang_sel_click a.lang_sel_sel';
@@ -1450,6 +1539,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	}
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'form_border_color' ) );
 
+	$css['global']['.select2-container--default .select2-selection--single .select2-selection__arrow b']['border-top-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'form_border_color' ) );
+	$css['global']['.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b']['border-bottom-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'form_border_color' ) );
+
 	$elements = array(
 		'.input-text:not(textarea)',
 		'input[type="text"]',
@@ -1467,6 +1559,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.searchform .search-table .search-field input',
 		'.avada-select-parent select',
 		'.avada-select .select2-container .select2-choice',
+		'.select2-container--default .select2-selection--single',
+		'.select2-container--default .select2-selection--single .select2-selection__arrow',
 		'.fusion-login-box .fusion-login-form input[type=text]',
 		'.fusion-login-box .fusion-login-form input[type=password]',
 	);
@@ -1528,7 +1622,11 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['width']       = Fusion_Sanitize::size( Avada()->settings->get( 'form_input_height' ) );
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['line-height'] = Fusion_Sanitize::size( Avada()->settings->get( 'form_input_height' ) );
 
-	$css['global']['.select2-container .select2-choice > .select2-chosen']['line-height'] = Fusion_Sanitize::size( Avada()->settings->get( 'form_input_height' ) );
+	$elements = array(
+		'.select2-container--default .select2-selection--single .select2-selection__rendered',
+		'.select2-container .select2-choice > .select2-chosen',
+	);
+	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['line-height'] = Fusion_Sanitize::size( Avada()->settings->get( 'form_input_height' ) );
 
 	$elements = array( '.select-arrow', '.select2-arrow' );
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'form_border_color' ) );
@@ -1674,19 +1772,13 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global']['.single-tribe_events #main .sidebar.fusion-sticky-sidebar .fusion-sidebar-inner-content']['padding'] = $sticky_padding;
 	}
 
-	$elements = array(
-		'body .fusion-content-widget-area .fusion-tabs-widget .tab-hold .tabs li.active a',
-		'body .fusion-content-widget-area .fusion-tabs-widget .tab-holder .tabs li.active a',
-	);
-	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-top-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
-
 	$css['global']['.fusion-single-sharing-box']['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'social_bg_color' ) );
 	if ( 'transparent' === Avada()->settings->get( 'social_bg_color' ) || 0 === Fusion_Color::new_color( Avada()->settings->get( 'social_bg_color' ) )->alpha ) {
 		$css['global']['.fusion-single-sharing-box']['padding'] = '0';
 	}
 
 	// Blog Archive Masonry content positioning.
-	$masonry_content_position = Avada()->settings->get( 'blog_grid_column_spacing' ) / 2;
+	$masonry_content_position = Avada()->settings->get( 'blog_archive_grid_column_spacing' ) / 2;
 	$masonry_color = Fusion_Color::new_color( Avada()->settings->get( 'timeline_bg_color' ) );
 	$masonry_css = $masonry_color->to_css( 'rgba' );
 	if ( 0 === $masonry_color->alpha ) {
@@ -1913,11 +2005,13 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 	} // End if().
 
-	if ( Avada()->settings->get( 'blog_grid_column_spacing' ) || '0' === Avada()->settings->get( 'blog_grid_column_spacing' ) ) {
+	$blog_archive_grid_column_spacing = Avada()->settings->get( 'blog_archive_grid_column_spacing' );
+	$blog_archive_grid_column_spacing_half = intval( $blog_archive_grid_column_spacing / 2 );
+	if ( $blog_archive_grid_column_spacing || '0' === $blog_archive_grid_column_spacing ) {
 
-		$css['global']['#posts-container .fusion-blog-layout-grid']['margin'] = '-' . intval( Avada()->settings->get( 'blog_grid_column_spacing' ) / 2 ) . 'px -' . intval( Avada()->settings->get( 'blog_grid_column_spacing' ) / 2 ) . 'px 0 -' . intval( Avada()->settings->get( 'blog_grid_column_spacing' ) / 2 ) . 'px';
+		$css['global']['#posts-container .fusion-blog-layout-grid']['margin'] = '-' . $blog_archive_grid_column_spacing_half . 'px -' . $blog_archive_grid_column_spacing_half . 'px 0 -' . $blog_archive_grid_column_spacing_half . 'px';
 
-		$css['global']['#posts-container .fusion-blog-layout-grid .fusion-post-grid']['padding'] = intval( Avada()->settings->get( 'blog_grid_column_spacing' ) / 2 ) . 'px';
+		$css['global']['#posts-container .fusion-blog-layout-grid .fusion-post-grid']['padding'] = $blog_archive_grid_column_spacing_half . 'px';
 
 	}
 
@@ -2369,7 +2463,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	}
 
 	if ( 'Top' !== Avada()->settings->get( 'header_position' ) || 'v6' !== Avada()->settings->get( 'header_layout' ) ) {
-		$bar_width = ( 'bar' === Avada()->settings->get( 'menu_highlight_style' ) && 'v6' !== Avada()->settings->get( 'header_layout' ) ) ? intval( Avada()->settings->get( 'nav_highlight_border' ) ) : 0;
+		$bar_width = ( 'bar' === Avada()->settings->get( 'menu_highlight_style' ) ) ? intval( Avada()->settings->get( 'nav_highlight_border' ) ) : 0;
 		$css['global']['.fusion-main-menu > ul > li > a']['height'] = intval( Avada()->settings->get( 'nav_height' ) ) . 'px';
 		$css['global']['.fusion-main-menu > ul > li > a']['line-height'] = ( intval( Avada()->settings->get( 'nav_height' ) ) - $bar_width ) . 'px';
 	}
@@ -2941,7 +3035,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'.rtl .fusion-header-v7 .fusion-main-menu > ul > li',
 		);
 
-		if ( 0 != Avada()->settings->get( 'nav_padding' ) ) {
+		if ( 0 != Avada()->settings->get( 'nav_padding' ) && 'background' !== Avada()->settings->get( 'menu_highlight_style' ) ) {
 			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['padding-left'] = intval( Avada()->settings->get( 'nav_padding' ) ) . 'px';
 		}
 
@@ -3295,7 +3389,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global']['.fusion-is-sticky .fusion-main-menu > ul > li > a']['font-size'] = Fusion_Sanitize::size( Avada()->settings->get( 'header_sticky_nav_font_size' ) );
 	}
 
-	if ( is_rtl() ) {
+	if ( is_rtl() && 'background' !== Avada()->settings->get( 'menu_highlight_style' ) ) {
 		$css['global']['.rtl .fusion-is-sticky .fusion-main-menu > ul > li']['padding-left'] = intval( Avada()->settings->get( 'header_sticky_nav_padding' ) ) . 'px';
 	}
 
@@ -3411,7 +3505,11 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	 * Single Post Slideshow.
 	 */
 	if ( Avada()->settings->get( 'slideshow_smooth_height' ) || ( get_post_meta( 'auto' === $c_page_id, 'pyre_fimg_width', true ) && 'half' === get_post_meta( $c_page_id, 'pyre_width', true ) ) ) {
-		$css['global']['.fusion-flexslider.fusion-post-slideshow']['overflow'] = 'hidden';
+		$elements = array(
+			'.fusion-post-slider.fusion-flexslider',
+			'.fusion-post-slideshow.fusion-flexslider',
+		);
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['overflow'] = 'hidden';
 	}
 
 	if ( class_exists( 'WooCommerce' ) ) {
@@ -3857,7 +3955,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css[ $five_columns_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width'] = '33.3333333333% !important';
 
 		$elements = $dynamic_css_helpers->map_selector( $elements, '.fusion-element-landscape' );
-		$css[ $five_columns_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width']  = '66% !important';
+		$css[ $five_columns_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width']  = '66.6666666666% !important';
 
 		// Four Column Breakpoint.
 		$elements = array(
@@ -3892,10 +3990,10 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'.fusion-portfolio-six .fusion-portfolio-post',
 			'.fusion-grid-6 .fusion-grid-column',
 		);
-		$css[ $three_columns_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width'] = '33.33% !important';
+		$css[ $three_columns_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width'] = '33.3333333333% !important';
 
 		$elements = $dynamic_css_helpers->map_selector( $elements, '.fusion-element-landscape' );
-		$css[ $three_columns_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width']  = '66% !important';
+		$css[ $three_columns_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width']  = '66.6666666666% !important';
 
 		$elements = array(
 			'.fusion-blog-layout-grid-5 .fusion-post-grid',
@@ -3963,7 +4061,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width'] = '33.3333333333% !important';
 
 		$elements = $dynamic_css_helpers->map_selector( $elements, '.fusion-element-landscape' );
-		$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width']  = '66% !important';
+		$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width']  = '66.6666666666% !important';
 
 		$elements = array(
 			'.fusion-blog-layout-grid-5 .fusion-post-grid',
@@ -4283,12 +4381,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['z-index']  = '10000';
 
 			if ( 'boxed' === fusion_get_option( 'layout', 'page_bg_layout', $c_page_id ) ) {
-				if ( $site_width_percent ) {
-					$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['width'] = Fusion_Sanitize::size( Avada()->settings->get( 'site_width' ) );
-				} else {
-					$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['width']       = '100%';
-					$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['max-width'] = Fusion_Sanitize::size( Avada()->settings->get( 'site_width' ) );
-				}
+				$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['width']     = '100%';
+				$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['max-width'] = Fusion_Sanitize::size( Avada()->settings->get( 'site_width' ) );
 			} else {
 				$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['left']     = '0';
 				$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['right']    = '0';
@@ -4784,6 +4878,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css[ $mobile_menu_media_query ]['.fusion-mobile-menu-design-flyout.fusion-header-v7 .fusion-main-menu']['float']   = 'left';
 		$css[ $mobile_menu_media_query ]['.fusion-mobile-menu-design-flyout.fusion-header-v7 .fusion-main-menu']['width']   = 'auto';
 
+		$css[ $mobile_menu_media_query ]['.fusion-mobile-menu-design-flyout.fusion-header-v7.fusion-flyout-active .fusion-main-menu']['z-index'] = '99999';
+		$css[ $mobile_menu_media_query ]['.fusion-mobile-menu-design-flyout.fusion-flyout-active .fusion-logo']['z-index'] = '99999';
+
 		$css[ $mobile_menu_media_query ]['.fusion-mobile-menu-design-flyout.fusion-header-v7 .fusion-main-menu.fusion-sticky-menu']['display'] = 'none';
 
 		if ( class_exists( 'SitePress' ) ) {
@@ -4821,7 +4918,12 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			);
 			$css[ $content_min_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['right'] = '9px';
 
-			$css[ $content_min_media_query ]['.no-overflow-y .fusion-sliding-bar-position-right:not(.open)']['right'] = '-291px';
+			if ( Avada()->settings->get( 'slidingbar_widgets' ) && 'right' === $sliding_bar_position ) {
+				$sliding_bar_toggle_width += 9;
+				$sliding_bar_closed_position = 'calc(' . $sliding_bar_toggle_width . 'px - ' . $sliding_bar_width_original . ')';
+
+				$css[ $content_min_media_query ]['.no-overflow-y .fusion-sliding-bar-position-right:not(.open)']['right'] = $sliding_bar_closed_position;
+			}
 		}
 
 		$css[ $content_min_media_query ]['.ilightbox-holder.supportTouch div.ilightbox-container']['overflow'] = 'visible';
@@ -4993,11 +5095,11 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			$css[ $content_media_query ]['.fusion-page-title-row']['display']     = 'flex';
 			$css[ $content_media_query ]['.fusion-page-title-row']['align-items'] = 'center';
 			$css[ $content_media_query ]['.fusion-page-title-row']['width']       = '100%';
-			$css[ $content_media_query ]['.fusion-page-title-row']['min-height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada()->settings->get( 'page_title_mobile_height' ) ), '-20px' ) );
+			$css[ $content_media_query ]['.fusion-page-title-row']['min-height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada()->settings->get( 'page_title_mobile_height' ) ), '-10px' ) );
 
 			// Special case for IE10/IE11.
-			$css[ $content_media_query ]['.ua-ie-11 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada()->settings->get( 'page_title_mobile_height' ) ), '-20px' ) );
-			$css[ $content_media_query ]['.ua-ie-10 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada()->settings->get( 'page_title_mobile_height' ) ), '-20px' ) );
+			$css[ $content_media_query ]['.ua-ie-11 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada()->settings->get( 'page_title_mobile_height' ) ), '-10px' ) );
+			$css[ $content_media_query ]['.ua-ie-10 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada()->settings->get( 'page_title_mobile_height' ) ), '-10px' ) );
 			$css[ $content_media_query ]['.ua-ie-11 .fusion-page-title-wrapper']['height']  = 'auto';
 			$css[ $content_media_query ]['.ua-ie-10 .fusion-page-title-wrapper']['height']  = 'auto';
 
@@ -5014,11 +5116,11 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			if ( 'auto' !== get_post_meta( $c_page_id, 'pyre_page_title_mobile_height', true ) ) {
 
 				$css[ $content_media_query ]['.fusion-body .fusion-page-title-bar']['min-height'] = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( get_post_meta( $c_page_id, 'pyre_page_title_mobile_height', true ) ), '-10px' ) );
-				$css[ $content_media_query ]['.fusion-page-title-row']['min-height']              = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( get_post_meta( $c_page_id, 'pyre_page_title_mobile_height', true ) ), '-20px' ) );
+				$css[ $content_media_query ]['.fusion-page-title-row']['min-height']              = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( get_post_meta( $c_page_id, 'pyre_page_title_mobile_height', true ) ), '-10px' ) );
 
 				// Special case for IE10/IE11.
-				$css[ $content_media_query ]['.ua-ie-11 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( get_post_meta( $c_page_id, 'pyre_page_title_mobile_height', true ) ), '-20px' ) );
-				$css[ $content_media_query ]['.ua-ie-10 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( get_post_meta( $c_page_id, 'pyre_page_title_mobile_height', true ) ), '-20px' ) );
+				$css[ $content_media_query ]['.ua-ie-11 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( get_post_meta( $c_page_id, 'pyre_page_title_mobile_height', true ) ), '-10px' ) );
+				$css[ $content_media_query ]['.ua-ie-10 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( get_post_meta( $c_page_id, 'pyre_page_title_mobile_height', true ) ), '-10px' ) );
 
 				$css[ $content_media_query ]['.fusion-page-title-row']['display']     = 'flex';
 				$css[ $content_media_query ]['.fusion-page-title-row']['align-items'] = 'center';
@@ -5039,11 +5141,11 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			if ( 'auto' !== Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'page_title_mobile_height' ) ) {
 
 				$css[ $content_media_query ]['.fusion-body .fusion-page-title-bar']['min-height'] = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'page_title_mobile_height' ) ), '-10px' ) );
-				$css[ $content_media_query ]['.fusion-page-title-row']['min-height']              = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'page_title_mobile_height' ) ), '-20px' ) );
+				$css[ $content_media_query ]['.fusion-page-title-row']['min-height']              = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'page_title_mobile_height' ) ), '-10px' ) );
 
 				// Special case for IE10/IE11.
-				$css[ $content_media_query ]['.ua-ie-11 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'page_title_mobile_height' ) ), '-20px' ) );
-				$css[ $content_media_query ]['.ua-ie-10 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'page_title_mobile_height' ) ), '-20px' ) );
+				$css[ $content_media_query ]['.ua-ie-11 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'page_title_mobile_height' ) ), '-10px' ) );
+				$css[ $content_media_query ]['.ua-ie-10 .fusion-page-title-row']['height']  = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'page_title_mobile_height' ) ), '-10px' ) );
 
 				$css[ $content_media_query ]['.fusion-page-title-row']['display']             = 'flex';
 				$css[ $content_media_query ]['.fusion-page-title-row']['align-items']         = 'center';
@@ -5065,10 +5167,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'.fusion-body .fusion-blog-layout-medium-alternate .fusion-post-content',
 			'.fusion-body .fusion-blog-layout-medium-alternate .has-post-thumbnail .fusion-post-content',
 		);
-		$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['float']       = 'none';
-		$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['clear']       = 'both';
 		$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['margin']      = '0';
 		$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['padding-top'] = '20px';
+		$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['flex']        = '1 0 100%';
 
 		// # Author Page - Info.
 		$css[ $content_media_query ]['.fusion-author .fusion-social-networks']['display'] = 'block';
@@ -5573,6 +5674,32 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 		$css[ $content_media_query ]['.no-mobile-slidingbar.mobile-logo-pos-left .mobile-menu-icons']['margin-right'] = '0';
 
+		// Sliding bar position already set above for sliding bar desktop calcs.
+		if ( Avada()->settings->get( 'slidingbar_widgets' ) && Avada()->settings->get( 'mobile_slidingbar_widgets' ) && ( 'right' === $sliding_bar_position || 'left' === $sliding_bar_position ) ) {
+
+			// On mobile for left/right sliding bar the width should be 100vw - triangle toggle width.
+			$sliding_bar_width = '100vw';
+			$sliding_bar_closed_position = '-' . $sliding_bar_width;
+			$sliding_bar_toggle_width = '56px'; // 20px added for scroll bar.
+
+			if ( 'menu' === Avada()->settings->get( 'slidingbar_toggle_style' ) ) {
+				$sliding_bar_toggle_width = '0';
+			}
+
+			if ( $sliding_bar_toggle_width ) {
+				$sliding_bar_closed_position = 'calc(' . $sliding_bar_toggle_width . ' - ' . $sliding_bar_width . ')';
+				$sliding_bar_width = 'calc(' . $sliding_bar_width . ' - ' . $sliding_bar_toggle_width . ')';
+			}
+
+			$elements = array(
+				'.fusion-sliding-bar-position-right .fusion-sliding-bar',
+				'.fusion-sliding-bar-position-left .fusion-sliding-bar',
+			);
+			$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width'] = $sliding_bar_width;
+
+			$css[ $content_media_query ][ '.fusion-sliding-bar-position-' . $sliding_bar_position ][ $sliding_bar_position ] = $sliding_bar_closed_position;
+		}
+
 		if ( is_rtl() ) {
 			$css[ $content_media_query ]['.rtl.no-mobile-slidingbar.mobile-logo-pos-right .mobile-menu-icons']['margin-left'] = '0';
 		}
@@ -5781,6 +5908,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css[ $six_fourty_media_query ]['.fusion-body .fusion-blog-layout-medium .fusion-post-slideshow']['margin'] = '0 0 20px 0';
 		$css[ $six_fourty_media_query ]['.fusion-body .fusion-blog-layout-medium .fusion-post-slideshow']['height'] = 'auto';
 		$css[ $six_fourty_media_query ]['.fusion-body .fusion-blog-layout-medium .fusion-post-slideshow']['width']  = 'auto';
+		$css[ $six_fourty_media_query ]['.fusion-body .fusion-blog-layout-medium .fusion-post-slideshow']['flex']  = '1 0 100%';
+
+		$css[ $six_fourty_media_query ]['.fusion-body .fusion-blog-layout-medium .fusion-post-content']['flex']   = '0 1 100%';
 
 		// Blog large alternate layout.
 		$css[ $six_fourty_media_query ]['.fusion-blog-layout-large-alternate .fusion-date-and-formats']['margin-bottom'] = '35px';
@@ -6491,7 +6621,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-page-title-row']['display']    = 'table';
 			$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-page-title-row']['width']      = '100%';
 			$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-page-title-row']['height']     = '100%';
-			$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-page-title-row']['min-height'] = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada()->settings->get( 'page_title_mobile_height' ) ), '-20px' ) );
+			$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-page-title-row']['min-height'] = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada()->settings->get( 'page_title_mobile_height' ) ), '-10px' ) );
 
 			$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-page-title-wrapper']['display']        = 'table-cell';
 			$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-page-title-wrapper']['vertical-align'] = 'middle';
@@ -6603,11 +6733,9 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$ipad_portrait[ $ipad_portrait_media_query ]['#wrapper .ei-slider']['width']  = '100% !important';
 		$ipad_portrait[ $ipad_portrait_media_query ]['#wrapper .ei-slider']['height'] = '200px !important';
 
-		$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['float']       = 'none';
-		$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['width']       = 'calc(100% - 95px) !important';
-		$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['margin']      = '0 0 0 95px !important';
+		$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['flex']        = '1 0 100%';
+		$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['width']       = '100%';
 		$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['padding-top'] = '20px';
-		$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['clear']       = 'both';
 
 		$ipad_portrait[ $ipad_portrait_media_query ]['.popup']['display'] = 'none !important';
 
@@ -7107,72 +7235,6 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	} // End if().
 
 	if ( 'Boxed' === Avada()->settings->get( 'layout' ) || 'boxed' === get_post_meta( $c_page_id, 'pyre_page_bg_layout', true ) ) {
-		$elements_with_html = array(
-			'html',
-			'body',
-		);
-		$elements_without_html = array(
-			'body',
-		);
-		if ( 'framed' === Avada()->settings->get( 'scroll_offset' ) ) {
-			$elements_with_html = array(
-				'.fusion-top-frame',
-				'.fusion-sides-frame',
-				'.fusion-bottom-frame',
-			);
-			$elements_without_html = array(
-				'.fusion-top-frame',
-				'.fusion-sides-frame',
-				'.fusion-bottom-frame',
-			);
-		}
-		$elements = $elements_with_html;
-		$background_color = ( get_post_meta( $c_page_id, 'pyre_page_bg_color', true ) ) ? get_post_meta( $c_page_id, 'pyre_page_bg_color', true ) : Fusion_Sanitize::color( Avada()->settings->get( 'bg_color' ) );
-		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Sanitize::color( $background_color );
-
-		$alpha = 1;
-		if ( class_exists( 'Fusion_Color' ) ) {
-			$alpha = Fusion_Color::new_color( $background_color )->alpha;
-		}
-
-		if ( 1 > $alpha ) {
-			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-blend-mode'] = 'overlay';
-		}
-
-		$elements = $elements_without_html;
-		if ( get_post_meta( $c_page_id, 'pyre_page_bg', true ) ) {
-
-			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-image']  = 'url("' . Fusion_Sanitize::css_asset_url( get_post_meta( $c_page_id, 'pyre_page_bg', true ) ) . '")';
-			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-repeat'] = get_post_meta( $c_page_id, 'pyre_page_bg_repeat', true );
-
-			if ( 'yes' === get_post_meta( $c_page_id, 'pyre_page_bg_full', true ) ) {
-
-				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-attachment'] = 'fixed';
-				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-position']   = 'center center';
-				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-size']       = 'cover';
-
-			}
-		} elseif ( '' !== Avada()->settings->get( 'bg_image', 'url' ) ) {
-
-			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-image']  = 'url("' . Fusion_Sanitize::css_asset_url( Avada()->settings->get( 'bg_image', 'url' ) ) . '")';
-			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-repeat'] = esc_attr( Avada()->settings->get( 'bg_repeat' ) );
-
-			if ( Avada()->settings->get( 'bg_full' ) ) {
-
-				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-attachment'] = 'fixed';
-				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-position']   = 'center center';
-				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-size']       = 'cover';
-
-			}
-		}
-
-		if ( Avada()->settings->get( 'bg_pattern_option' ) && Avada()->settings->get( 'bg_pattern' ) && ! ( get_post_meta( $c_page_id, 'pyre_page_bg_color', true ) || get_post_meta( $c_page_id, 'pyre_page_bg', true ) ) ) {
-
-			$elements = $elements_with_html;
-			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-image']  = 'url("' . Fusion_Sanitize::css_asset_url( Avada::$template_dir_url . '/assets/images/patterns/' . esc_attr( Avada()->settings->get( 'bg_pattern' ) ) . '.png' ) . '")';
-			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-repeat'] = 'repeat';
-
-		}
 
 		$elements = array(
 			'#wrapper',
@@ -7205,6 +7267,73 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 		}
 	} // End if().
+
+	// For page BG #6326.
+	$elements_with_html = array(
+		'html',
+		'body',
+	);
+
+	$elements_without_html = array(
+		'body',
+	);
+
+	if ( 'framed' === Avada()->settings->get( 'scroll_offset' ) && ( 'Boxed' === Avada()->settings->get( 'layout' ) || 'boxed' === get_post_meta( $c_page_id, 'pyre_page_bg_layout', true ) ) ) {
+		$elements_with_html = array(
+			'.fusion-top-frame',
+			'.fusion-sides-frame',
+			'.fusion-bottom-frame',
+		);
+		$elements_without_html = array(
+			'.fusion-top-frame',
+			'.fusion-sides-frame',
+			'.fusion-bottom-frame',
+		);
+	}
+
+	$elements = $elements_with_html;
+	$background_color = ( get_post_meta( $c_page_id, 'pyre_page_bg_color', true ) ) ? get_post_meta( $c_page_id, 'pyre_page_bg_color', true ) : Avada()->settings->get( 'bg_color' );
+	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Sanitize::color( $background_color );
+	$alpha = 1;
+	if ( class_exists( 'Fusion_Color' ) ) {
+		$alpha = Fusion_Color::new_color( $background_color )->alpha;
+	}
+	if ( 1 > $alpha ) {
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-blend-mode'] = 'overlay';
+	}
+
+	$elements = $elements_without_html;
+	if ( get_post_meta( $c_page_id, 'pyre_page_bg', true ) ) {
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-image']  = 'url("' . Fusion_Sanitize::css_asset_url( get_post_meta( $c_page_id, 'pyre_page_bg', true ) ) . '")';
+		if ( 'default' !== get_post_meta( $c_page_id, 'pyre_page_bg_repeat', true ) ) {
+			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-repeat'] = get_post_meta( $c_page_id, 'pyre_page_bg_repeat', true );
+		} else {
+			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-repeat'] = esc_attr( Avada()->settings->get( 'bg_repeat' ) );
+		}
+
+		if ( 'yes' === get_post_meta( $c_page_id, 'pyre_page_bg_full', true ) || ( Avada()->settings->get( 'bg_full' ) && 'default' === get_post_meta( $c_page_id, 'pyre_page_bg_full', true ) ) ) {
+			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-attachment'] = 'fixed';
+			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-position']   = 'center center';
+			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-size']       = 'cover';
+		}
+	} elseif ( '' !== Avada()->settings->get( 'bg_image', 'url' ) ) {
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-image']  = 'url("' . Fusion_Sanitize::css_asset_url( Avada()->settings->get( 'bg_image', 'url' ) ) . '")';
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-repeat'] = esc_attr( Avada()->settings->get( 'bg_repeat' ) );
+
+		if ( Avada()->settings->get( 'bg_full' ) ) {
+
+			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-attachment'] = 'fixed';
+			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-position']   = 'center center';
+			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-size']       = 'cover';
+		}
+	}
+
+	if ( Avada()->settings->get( 'bg_pattern_option' ) && Avada()->settings->get( 'bg_pattern' ) && ! ( get_post_meta( $c_page_id, 'pyre_page_bg_color', true ) || get_post_meta( $c_page_id, 'pyre_page_bg', true ) ) ) {
+
+		$elements = $elements_with_html;
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-image']  = 'url("' . Fusion_Sanitize::css_asset_url( Avada::$template_dir_url . '/assets/images/patterns/' . esc_attr( Avada()->settings->get( 'bg_pattern' ) ) . '.png' ) . '")';
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-repeat'] = 'repeat';
+	} // Ends page BG #6326.
 
 	if ( 'Wide' !== Avada()->settings->get( 'layout' ) || 'boxed' === get_post_meta( $c_page_id, 'pyre_page_bg_layout', true ) ) {
 
@@ -7736,7 +7865,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	}
 
 	if ( 'wide' === get_post_meta( $c_page_id, 'pyre_page_bg_layout', true ) && get_post_meta( $c_page_id, 'pyre_wide_page_bg_color', true ) ) {
-		$elements = array( 'html', 'body', '#wrapper' );
+		$elements = array( '#wrapper' );
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = get_post_meta( $c_page_id, 'pyre_wide_page_bg_color', true );
 	}
 
@@ -7767,9 +7896,13 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'#main',
 		);
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-image']  = 'url("' . Fusion_Sanitize::css_asset_url( get_post_meta( $c_page_id, 'pyre_wide_page_bg', true ) ) . '")';
-		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-repeat'] = get_post_meta( $c_page_id, 'pyre_wide_page_bg_repeat', true );
+		if ( 'default' !== get_post_meta( $c_page_id, 'pyre_wide_page_bg_repeat', true ) ) {
+			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-repeat'] = get_post_meta( $c_page_id, 'pyre_wide_page_bg_repeat', true );
+		} else {
+			$css['global']['#main']['background-repeat'] = esc_attr( Avada()->settings->get( 'content_bg_repeat' ) );
+		}
 
-		if ( 'yes' === get_post_meta( $c_page_id, 'pyre_wide_page_bg_full', true ) ) {
+		if ( 'yes' === get_post_meta( $c_page_id, 'pyre_wide_page_bg_full', true ) || ( Avada()->settings->get( 'content_bg_full' ) && 'default' === get_post_meta( $c_page_id, 'pyre_wide_page_bg_full', true ) ) ) {
 
 			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-attachment'] = 'fixed';
 			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-position']   = 'center center';
@@ -7884,8 +8017,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	}
 
 	if ( ( 'content_only' === $page_title_option && ( 'default' === get_post_meta( $c_page_id, 'pyre_page_title', true ) || ! get_post_meta( $c_page_id, 'pyre_page_title', true ) ) ) || 'yes_without_bar' === get_post_meta( $c_page_id, 'pyre_page_title', true ) ) {
-		$css['global']['.fusion-page-title-bar']['background'] = 'none';
-		$css['global']['.fusion-page-title-bar']['border']     = 'none';
+		$css['global']['.fusion-body .fusion-page-title-bar']['background'] = 'none';
+		$css['global']['.fusion-body .fusion-page-title-bar']['border']     = 'none';
 	}
 
 	$css['global']['.width-100 .nonhundred-percent-fullwidth']['margin-left']  = $hundredplr_padding_negative_margin;

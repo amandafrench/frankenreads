@@ -93,8 +93,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="avada-admin-toggle-icon avada-plus"></span>
 		</div>
 		<div class="avada-admin-toggle-content">
-			<?php /* translators: "Plugins" link. */ ?>
-			<?php printf( esc_attr__( 'Avada can be used by itself without any additional plugins it includes. However, to utilize all the features Avada offers, Fusion Core and Fusion Builder plugins must be installed and activated. They are considered required plugins. The recommended plugins are either premium plugins we bundle with Avada (Slider Revolution / Layer Slider) or free plugins that we offer design integration for (WooCommerce or The Events Calendar). All of these can be installed on the %s tab.', 'Avada' ), '<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-plugins' ) ) . '">Plugins</a>' ); ?><br/><br/>
+			<?php
+			printf(
+				/* translators: %1$s is the "Plugins" link. %2$s is the link to the documentation page. (link text: "Avada's Required, Included & Recommended Plugins"). */
+				esc_attr__( 'Avada can be used by itself without any additional plugins it includes. However, to utilize all the features Avada offers, Fusion Core and Fusion Builder plugins must be installed and activated. They are considered required plugins. The recommended plugins are either premium plugins we bundle with Avada (Fusion White Label Branding, Convert Plus, ACF Pro, Slider Revolution & Layer Slider) or free plugins that we offer design integration for (WooCommerce,  The Events Calendar or bbPress). All of these can be installed on the %1$s tab. For more information, please see this article in our documentation: %2$s.', 'Avada' ),
+				'<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-plugins' ) ) . '">Plugins</a>',
+				'<a href="' . esc_url( 'https://theme-fusion.com/avada-doc/install-update/plugin-installation/' ) . '" target="_blank">' . esc_attr__( "Avada's Required, Included & Recommended Plugins", 'Avada' ) . '</a>'
+			);
+			?>
+			<br/><br/>
 		</div>
 	</div>
 

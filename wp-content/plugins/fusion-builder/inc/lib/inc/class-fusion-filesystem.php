@@ -50,17 +50,23 @@ class Fusion_Filesystem {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param string $file The file path relative to wp-content/uploads.
+	 * @param string $file   The file name.
+	 * @param string $folder The folder-name (if any).
 	 */
-	public function __construct( $file ) {
+	public function __construct( $file = '', $folder = '' ) {
 
 		// Set the $wp_filesystem property.
 		$this->wp_filesystem = Fusion_Helper::init_filesystem();
-		// Set the $file property.
-		$this->set_file( $file );
-		// Set the $path property.
-		$this->set_path();
 
+		// Apply the filter for the folder-name.
+		$folder = apply_filters( 'fusion_compiler_filesystem_folder_name', $folder );
+
+		if ( $file || $folder ) {
+			// Set the $file property.
+			$this->set_file( $file, $folder );
+			// Set the $path property.
+			$this->set_path();
+		}
 	}
 
 	/**
@@ -68,16 +74,19 @@ class Fusion_Filesystem {
 	 *
 	 * @access private
 	 * @since 1.0.0
-	 * @param string $file The file path relative to wp-content/uploads.
+	 * @param string $file   The filename.
+	 * @param string $folder The folder in which the file should go.
 	 * @return void
 	 */
-	private function set_file( $file ) {
-
-		// Get the upload directory for this site.
-		$upload_dir = wp_upload_dir();
+	private function set_file( $file, $folder = '' ) {
 
 		// Remove '/' from the beginning of the string.
-		$this->file = ltrim( $file, '/' );
+		$file = ltrim( $file, '/' );
+		if ( $folder ) {
+			$folder = ltrim( $folder, '/' );
+		}
+		$this->file = ltrim( wp_normalize_path( $folder . '/' . $file ), '/' );
+		$this->file = apply_filters( 'fusion_compiler_filesystem_filename', $this->file );
 
 	}
 
@@ -93,8 +102,8 @@ class Fusion_Filesystem {
 		// Get the upload directory for this site.
 		$upload_dir = wp_upload_dir();
 
-		// Build the bath.
-		$this->path = wp_normalize_path( $upload_dir['basedir'] . '/' . $this->file );
+		// Build the path.
+		$this->path = wp_normalize_path( $this->get_root_path() . '/' . $this->file );
 
 	}
 
@@ -106,9 +115,7 @@ class Fusion_Filesystem {
 	 * @return string
 	 */
 	public function get_path() {
-
 		return $this->path;
-
 	}
 
 	/**
@@ -195,14 +202,54 @@ class Fusion_Filesystem {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param Bool $strip_protocol Strip protocols from the URL.
 	 * @return string
 	 */
-	public function get_url( $strip_protocol = true ) {
+	public function get_url() {
+
+		$url       = trailingslashit( $this->get_root_url() ) . $this->file;
+		$timestamp = ( file_exists( $this->path ) ) ? '?timestamp=' . filemtime( $this->path ) : '';
+
+		$scheme = null;
+		// We use get_option() instead of site_url() or get_site_url() because these dedicated functions
+		// use set_url_scheme to set the protocol and we need to check what is actually saved in the db.
+		if ( false !== strpos( 'https://', get_option( 'siteurl' ) ) ) {
+			$scheme = 'https';
+		}
+		$url = set_url_scheme( $url, $scheme );
+
+		return $url . $timestamp;
+	}
+
+	/**
+	 * Gets the root folder path.
+	 * Other paths are built based on this.
+	 *
+	 * @since 1.5
+	 * @access public
+	 * @return string
+	 */
+	public function get_root_path() {
+		// Get the upload directory for this site.
+		$upload_dir = wp_upload_dir();
+		// Return the path.
+		return apply_filters( 'fusion_compiler_filesystem_root_path', untrailingslashit( wp_normalize_path( $upload_dir['basedir'] ) ) );
+	}
+
+	/**
+	 * Gets the root folder url.
+	 * Other urls are built based on this.
+	 *
+	 * @since 1.5
+	 * @access public
+	 * @return string
+	 */
+	public function get_root_url() {
 
 		// Get the upload directory for this site.
 		$upload_dir = wp_upload_dir();
-		$url = trailingslashit( $upload_dir['baseurl'] ) . $this->file;
+
+		// The URL.
+		$url = trailingslashit( $upload_dir['baseurl'] );
 		// Take care of domain mapping.
 		// When using domain mapping we have to make sure that the URL to the file
 		// does not include the original domain but instead the mapped domain.
@@ -213,15 +260,6 @@ class Fusion_Filesystem {
 				$url = str_replace( $original_domain, $mapped_domain, $url );
 			}
 		}
-
-		if ( true === $strip_protocol ) {
-			// Set correct URL scheme.
-			// Make sure we don't have any issues with sites using HTTPS/SSL.
-			$url = set_url_scheme( $url );
-		}
-
-		$timestamp = ( file_exists( $this->path ) ) ? '?timestamp=' . filemtime( $this->path ) : '';
-
-		return $url . $timestamp;
+		return apply_filters( 'fusion_compiler_filesystem_root_url', untrailingslashit( esc_url_raw( $url ) ) );
 	}
 }

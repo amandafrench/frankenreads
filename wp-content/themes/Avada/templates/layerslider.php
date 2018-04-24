@@ -15,8 +15,8 @@ global $wpdb;
 // Get slider.
 $ls_table_name = $wpdb->prefix . 'layerslider';
 
-if ( $wpdb->get_var( "SHOW TABLES LIKE '$ls_table_name'" ) === $ls_table_name ) {
-	$ls_slider     = $wpdb->get_row( "SELECT * FROM $ls_table_name WHERE id = " . (int) $id . ' ORDER BY date_c DESC LIMIT 1', ARRAY_A );
+if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $ls_table_name ) ) === $ls_table_name ) {
+	$ls_slider     = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}layerslider WHERE id = %d ORDER BY date_c DESC LIMIT 1", (int) $id ), ARRAY_A );
 	$ls_slider     = json_decode( $ls_slider['data'], true );
 	?>
 	<style type="text/css">
@@ -35,4 +35,5 @@ if ( $wpdb->get_var( "SHOW TABLES LIKE '$ls_table_name'" ) === $ls_table_name ) 
 	</div>
 <?php
 }
-?>
+
+/* Omit closing PHP tag to avoid "Headers already sent" issues. */

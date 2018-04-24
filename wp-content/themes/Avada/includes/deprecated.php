@@ -3,7 +3,6 @@
  * This file contains functions that have been deprecated.
  * They will still work, but it we recommend you switch to the new methods instead.
  *
- * @codingStandardsIgnoreFile
  * @author     ThemeFusion
  * @copyright  (c) Copyright by ThemeFusion
  * @link       http://theme-fusion.com

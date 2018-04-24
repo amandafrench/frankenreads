@@ -18,7 +18,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		/**
 		 * The current version of Community Events
 		 */
-		const VERSION = '4.5.10';
+		const VERSION = '4.5.11';
 
 		/**
 		 * required The Events Calendar Version
@@ -210,6 +210,15 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 
 		/** @var Tribe__Events__Community__Event_Form */
 		public $form;
+
+		/**
+		 * A meta field to help us track if an event's "Submitted" email alert has already been sent.
+		 *
+		 * @since TBD
+		 *
+		 * @var string
+		 */
+		private static $submission_email_sent_meta_key = '_tribe_community_submitted_email_sent';
 
 		/**
 		 * Holds the multisite default options values for CE.
@@ -921,7 +930,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 			if ( ! is_admin() ) {
 				// disable title shortcode
 				add_shortcode( 'tribe_community_events', '__return_null' );
-				add_shortcode( 'tribe_community_events_title', tribe_callback( 'community.templates', 'tribe_community_events_title' ) ) ;
+				add_shortcode( 'tribe_community_events_title', array( $this, 'ugly_urls_events_page_title' ) );
 				add_filter( 'the_title', 'do_shortcode' );
 
 				if ( $this->isTcePage() ) {
@@ -944,6 +953,24 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 				}
 			}
 
+		}
+
+		/**
+		 * Returns a filterable page title for the "Submit" page.
+		 *
+		 * @since TBD
+		 *
+		 * @return string
+		 */
+		public function ugly_urls_events_page_title() {
+			/**
+			 * Allows for filtering the "Submit" page's title.
+			 *
+			 * @since TBD
+			 *
+			 * @param string $title
+			 */
+			return apply_filters( 'tribe_ce_submit_event_page_title', __( 'Submit an Event', 'tribe-events-community' ) );
 		}
 
 		public function notice_permalinks() {
@@ -1412,29 +1439,45 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		 * Send email alert to email list when an event is submitted.
 		 *
 		 * @param int $tribe_event_id The event ID.
-		 * @return void
+		 * @return boolean
 		 *
 		 * @since 1.0
 		 */
 		public function sendEmailAlerts( $tribe_event_id ) {
-			$post = get_post( intval( $tribe_event_id ) );
+			$post         = get_post( intval( $tribe_event_id ) );
+			$already_sent = get_post_meta( $tribe_event_id, self::$submission_email_sent_meta_key, true );
+
+			if ( tribe_is_truthy( $already_sent ) ) {
+				return false;
+			}
 
 			$subject = sprintf( '[%s] ' . __( 'Community Events Submission', 'tribe-events-community' ) . ':', wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ) ) . ' "' . $post->post_title . '"';
 
 			// Get Message HTML from Email Template
 			ob_start();
 			include Tribe__Events__Templates::getTemplateHierarchy( 'community/email-template' );
+
 			$message = ob_get_clean();
+			$headers  = array( 'Content-Type: text/html' );
+			$h        = implode( "\r\n", $headers ) . "\r\n";
 
-			$headers = array( 'Content-Type: text/html' );
-			$h = implode( "\r\n", $headers ) . "\r\n";
+			if ( ! is_array( $this->emailAlertsList ) ) {
+				return false;
+			}
 
-			if ( is_array( $this->emailAlertsList ) ) {
-				foreach ( $this->emailAlertsList as $email ) {
-					wp_mail( trim( $email ), $subject, $message, $h );
+			$sent_all = true;
+
+			foreach ( $this->emailAlertsList as $email ) {
+				$sent_one = wp_mail( trim( $email ), $subject, $message, $h );
+
+				if ( ! $sent_one ) {
+					$sent_all = false;
 				}
 			}
 
+			update_post_meta( $tribe_event_id, self::$submission_email_sent_meta_key, 'yes' );
+
+			return $sent_all;
 		}
 
 		/**

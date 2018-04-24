@@ -111,13 +111,13 @@ class Fusion_Dynamic_CSS_File {
 		$fusion_library = Fusion::get_instance();
 		$page_id        = ( $fusion_library->get_page_id() ) ? $fusion_library->get_page_id() : 'global';
 
-		$file_name = "fusion-styles/fusion{$blog_id}-{$page_id}.css";
+		$file_name = "fusion{$blog_id}-{$page_id}.min.css";
 
 		if ( 'filename' === $target ) {
 			return $file_name;
 		}
 
-		$file = new Fusion_Filesystem( $file_name );
+		$file = new Fusion_Filesystem( $file_name, 'fusion-styles' );
 
 		// Return the path or the URL
 		// depending on the $target we have defined when calling this method.
@@ -140,7 +140,7 @@ class Fusion_Dynamic_CSS_File {
 		// The CSS.
 		$css      = $this->dynamic_css->make_css();
 		$filename = $this->file( 'filename' );
-		$file     = new Fusion_Filesystem( $filename );
+		$file     = new Fusion_Filesystem( $filename, 'fusion-styles' );
 
 		if ( false === $file->write_file( $css ) ) {
 			return false;
@@ -179,7 +179,8 @@ class Fusion_Dynamic_CSS_File {
 	 */
 	private function can_write() {
 
-		$file = new Fusion_Filesystem( $this->file( 'filename' ) );
+		$file = new Fusion_Filesystem( $this->file( 'filename' ), 'fusion-styles' );
+
 		return $file->is_writable();
 
 	}

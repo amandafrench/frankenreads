@@ -50,6 +50,20 @@ function avada_options_section_sliding_bar( $sections ) {
 					),
 				),
 			),
+			'slidingbar_open_on_load' => array(
+				'label'       => esc_html__( 'Sliding Bar Open On Page Load', 'Avada' ),
+				'description' => esc_html__( 'Turn on to have the sliding bar open when the page loads.', 'Avada' ),
+				'id'          => 'slidingbar_open_on_load',
+				'default'     => '0',
+				'type'        => 'switch',
+				'required'    => array(
+					array(
+						'setting'  => 'slidingbar_widgets',
+						'operator' => '==',
+						'value'    => '1',
+					),
+				),
+			),
 			'slidingbar_position' => array(
 				'label'       => esc_html__( 'Sliding Bar Position', 'Avada' ),
 				'description' => esc_html__( 'Controls the position of the sliding bar to be in the top, right, bottom or left of the site.', 'Avada' ),
@@ -67,6 +81,30 @@ function avada_options_section_sliding_bar( $sections ) {
 						'setting'  => 'slidingbar_widgets',
 						'operator' => '==',
 						'value'    => '1',
+					),
+				),
+			),
+			'slidingbar_width' => array(
+				'label'       => esc_html__( 'Sliding Bar Width', 'Avada' ),
+				'description' => esc_html__( 'Controls the width of the sliding bar on left/right layouts.', 'Avada' ),
+				'id'          => 'slidingbar_width',
+				'default'     => '300px',
+				'type'        => 'dimension',
+				'required'    => array(
+					array(
+						'setting'  => 'slidingbar_widgets',
+						'operator' => '==',
+						'value'    => '1',
+					),
+					array(
+						'setting'  => 'slidingbar_position',
+						'operator' => '!=',
+						'value'    => 'top',
+					),
+					array(
+						'setting'  => 'slidingbar_position',
+						'operator' => '!=',
+						'value'    => 'bottom',
 					),
 				),
 			),
@@ -94,23 +132,9 @@ function avada_options_section_sliding_bar( $sections ) {
 					),
 				),
 			),
-			'slidingbar_open_on_load' => array(
-				'label'       => esc_html__( 'Sliding Bar Open On Page Load', 'Avada' ),
-				'description' => esc_html__( 'Turn on to have the sliding bar open when the page loads.', 'Avada' ),
-				'id'          => 'slidingbar_open_on_load',
-				'default'     => '0',
-				'type'        => 'switch',
-				'required'    => array(
-					array(
-						'setting'  => 'slidingbar_widgets',
-						'operator' => '==',
-						'value'    => '1',
-					),
-				),
-			),
 			'slidingbar_widgets_columns' => array(
 				'label'       => esc_html__( 'Number of Sliding Bar Columns', 'Avada' ),
-				'description' => esc_html__( 'Controls the number of columns in the sliding bar. On left/right layouts, the widget areas will displayed below each other.', 'Avada' ),
+				'description' => esc_html__( 'Controls the number of columns in the sliding bar.', 'Avada' ),
 				'id'          => 'slidingbar_widgets_columns',
 				'default'     => '2',
 				'type'        => 'slider',
@@ -119,6 +143,59 @@ function avada_options_section_sliding_bar( $sections ) {
 					'max'  => '6',
 					'step' => '1',
 				),
+				'required'    => array(
+					array(
+						'setting'  => 'slidingbar_widgets',
+						'operator' => '==',
+						'value'    => '1',
+					),
+				),
+			),
+			'slidingbar_column_alignment' => array(
+				'label'       => esc_html__( 'Sliding Bar Column Alignment', 'Avada' ),
+				'description' => esc_html__( 'Allows your sliding bar columns to be stacked (one above the other) or floated (side by side) when using the left or right position.', 'Avada' ),
+				'id'          => 'slidingbar_column_alignment',
+				'default'     => 'stacked',
+				'type'        => 'radio-buttonset',
+				'choices'     => array(
+					'stacked'  => esc_html__( 'Stacked', 'Avada' ),
+					'floated'  => esc_html__( 'Floated', 'Avada' ),
+				),
+				'required'    => array(
+					array(
+						'setting'  => 'slidingbar_widgets',
+						'operator' => '==',
+						'value'    => '1',
+					),
+					array(
+						'setting'  => 'slidingbar_position',
+						'operator' => '!=',
+						'value'    => 'top',
+					),
+					array(
+						'setting'  => 'slidingbar_position',
+						'operator' => '!=',
+						'value'    => 'bottom',
+					),
+				),
+			),
+			'slidingbar_content_padding' => array(
+				'label'       => esc_html__( 'Sliding Bar Content Padding', 'Avada' ),
+				'description' => esc_html__( 'Controls the top/right/bottom/left paddings of the sliding bar area.', 'Avada' ),
+				'id'          => 'slidingbar_content_padding',
+				'default'     => array(
+					'top'     => '60px',
+					'bottom'  => '60px',
+					'left'    => '30px',
+					'right'   => '30px',
+				),
+				'choices'     => array(
+					'top'     => true,
+					'bottom'  => true,
+					'left'    => true,
+					'right'   => true,
+				),
+				'type'        => 'spacing',
 				'required'    => array(
 					array(
 						'setting'  => 'slidingbar_widgets',
