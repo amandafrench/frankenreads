@@ -210,6 +210,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				}
 				if ( $codeBlock.length ) {
 					$codeBlock.each( function() {
+						if ( 'undefined' === typeof wp.CodeMirror ) {
+							return;
+						}
 						codeBlockId   = $( this ).attr( 'id' );
 						codeElement   = $thisEl.find( '#' + codeBlockId );
 						codeBlockLang = $( this ).data( 'language' );

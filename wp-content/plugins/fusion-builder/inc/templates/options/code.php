@@ -1,4 +1,9 @@
-<?php $settings = wp_enqueue_code_editor( array() ); ?>
+<?php
+$settings = array();
+if ( function_exists( 'wp_enqueue_code_editor' ) ) {
+	$settings = wp_enqueue_code_editor( array() );
+}
+?>
 <textarea
 	name="{{ param.param_name }}"
 	id="{{ param.param_name }}"
