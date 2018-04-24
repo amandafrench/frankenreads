@@ -241,7 +241,7 @@ if ( fusion_is_element_enabled( 'fusion_separator' ) ) {
 			 */
 			public function icon_attr() {
 				return array(
-					'class' => 'fa ' . FusionBuilder::font_awesome_name_handler( $this->args['icon'] ),
+					'class' => FusionBuilder::font_awesome_name_handler( $this->args['icon'] ),
 					'style' => 'color:' . $this->args['sep_color'] . ';',
 				);
 			}

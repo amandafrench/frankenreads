@@ -4,7 +4,7 @@
 Plugin Name: Fusion Builder
 Plugin URI: http://www.theme-fusion.com
 Description: ThemeFusion Page Builder Plugin
-Version: 1.4.2
+Version: 1.5
 Author: ThemeFusion
 Author URI: http://www.theme-fusion.com
 */
@@ -21,7 +21,7 @@ if ( ! defined( 'FUSION_BUILDER_DEV_MODE' ) ) {
 
 // Plugin version.
 if ( ! defined( 'FUSION_BUILDER_VERSION' ) ) {
-	define( 'FUSION_BUILDER_VERSION', '1.4.2' );
+	define( 'FUSION_BUILDER_VERSION', '1.5' );
 }
 // Plugin Folder Path.
 if ( ! defined( 'FUSION_BUILDER_PLUGIN_DIR' ) ) {
@@ -391,6 +391,9 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 			require_once FUSION_BUILDER_PLUGIN_DIR . 'inc/helpers.php';
 			if ( function_exists( 'fusion_builder_auto_activate_element' ) ) {
 				fusion_builder_auto_activate_element( 'fusion_gallery' );
+				fusion_builder_auto_activate_element( 'fusion_syntax_highlighter' );
+				fusion_builder_auto_activate_element( 'fusion_chart' );
+				fusion_builder_auto_activate_element( 'fusion_image_before_after' );
 				if ( class_exists( 'Convert_Plug' ) ) {
 					fusion_builder_auto_activate_element( 'fusion_convert_plus' );
 				}
@@ -443,7 +446,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 		 */
 		public function admin_styles() {
 
-			$font_url = FUSION_BUILDER_PLUGIN_URL . 'assets/fonts/fonts';
+			$font_url = FUSION_LIBRARY_URL . '/assets/fonts/icomoon-admin';
 			$font_url = str_replace( array( 'http://', 'https://' ), '//', $font_url );
 			?>
 			<style type="text/css">
@@ -625,6 +628,11 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 				return $post_id;
 			}
 
+			// Make sure we delete, necessary for slashses.
+			if ( isset( $_POST['_fusion_builder_custom_css'] ) && '' === $_POST['_fusion_builder_custom_css'] ) {
+				delete_post_meta( $post_id, '_fusion_builder_custom_css' );
+			}
+
 			if ( isset( $_POST['fusion_use_builder'] ) ) {
 				update_post_meta( $post_id, 'fusion_builder_status', sanitize_text_field( $_POST['fusion_use_builder'] ) );
 			} else {
@@ -660,7 +668,9 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 		public function fusion_calculate_containers( $content ) {
 			global $global_container_count;
 
-			$global_container_count = substr_count( $content, '[fusion_builder_container' );
+			if ( ! $global_container_count ) {
+				$global_container_count = substr_count( $content, '[fusion_builder_container' );
+			}
 
 			return $content;
 		}
@@ -947,7 +957,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 
 			// Font-awesome CSS.
 			if ( fusion_library()->get_option( 'status_fontawesome' ) ) {
-				wp_enqueue_style( 'fusion-font-awesome', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/fontawesome/font-awesome' . $min_version . '.css', array(), FUSION_BUILDER_VERSION );
+				wp_enqueue_style( 'fontawesome', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/fontawesome/font-awesome.css', array(), FUSION_BUILDER_VERSION );
 			}
 
 		}
@@ -993,12 +1003,12 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 				}
 
 				// Stylesheet ID: fusion-font-awesome.
-				if ( fusion_library()->get_option( 'status_fontawesome' ) ) {
+				if ( fusion_library()->get_option( 'status_fontawesome' ) && ! class_exists( 'Avada' ) ) {
 					// @codingStandardsIgnoreLine
 					$font_awesome_styles = @file_get_contents( FUSION_BUILDER_PLUGIN_DIR . 'inc/lib/assets/fonts/fontawesome/font-awesome.min.css' );
 					$font_awesome_url    = set_url_scheme( FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/fontawesome/' );
 
-					$styles .= str_replace( 'url(fontawesome-webfont', 'url(' . $font_awesome_url . 'fontawesome-webfont', $font_awesome_styles );
+					$styles .= str_replace( 'url(./webfonts', 'url(' . $font_awesome_url . '/webfonts', $font_awesome_styles );
 				}
 			}
 			return $styles . $original_styles;
@@ -1063,8 +1073,16 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 				'fusion-video',
 				self::$js_folder_url . '/general/fusion-video.js',
 				self::$js_folder_path . '/general/fusion-video.js',
-				array( 'jquery', 'froogaloop', 'fusion-video-general' ),
+				array( 'jquery', 'vimeo-player', 'fusion-video-general' ),
 				'1',
+				true
+			);
+			Fusion_Dynamic_JS::register_script(
+				'fusion-chartjs',
+				self::$js_folder_url . '/library/Chart.js',
+				self::$js_folder_path . '/library/Chart.js',
+				array(),
+				'2.7.1',
 				true
 			);
 		}
@@ -1097,7 +1115,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 
 			// Load icons if Avada is not installed / active.
 			if ( ! class_exists( 'Avada' ) ) {
-				wp_enqueue_style( 'fusion-font-icomoon', FUSION_BUILDER_PLUGIN_URL . 'assets/fonts/icomoon.css', false, FUSION_BUILDER_VERSION, 'all' );
+				wp_enqueue_style( 'fusion-font-icomoon', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/icomoon-admin/icomoon.css', false, FUSION_BUILDER_VERSION, 'all' );
 			}
 
 			if ( ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) && post_type_supports( $typenow, 'editor' ) ) {
@@ -1139,10 +1157,11 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 				wp_enqueue_script( 'wnumb-js', FUSION_BUILDER_PLUGIN_URL . 'js/wNumb.js', array( 'jquery' ), '1.0.2', true );
 
 				// FontAwesome.
-				wp_enqueue_style( 'fusion-font-awesome', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/fontawesome/font-awesome.css', false, FUSION_BUILDER_VERSION, 'all' );
+				wp_enqueue_style( 'fontawesome', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/fontawesome/font-awesome.css', array(), FUSION_BUILDER_VERSION );
+				wp_enqueue_script( 'fontawesome-shim-script', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/fontawesome/js/fa-v4-shims.js', array(), FUSION_BUILDER_VERSION );
 
 				// Icomoon font.
-				wp_enqueue_style( 'fusion-font-icomoon', FUSION_BUILDER_PLUGIN_URL . 'assets/fonts/icomoon.css', false, FUSION_BUILDER_VERSION, 'all' );
+				wp_enqueue_style( 'fusion-font-icomoon', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/icomoon-admin/icomoon.css', false, FUSION_BUILDER_VERSION, 'all' );
 				wp_enqueue_style( 'fusion-chosen-css', FUSION_BUILDER_PLUGIN_URL . 'assets/css/chosen.css', false, FUSION_BUILDER_VERSION, 'all' );
 
 				// Chosen js.
@@ -1751,6 +1770,10 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 					$fa_icon = 'fa-' . $icon;
 				} else {
 					$fa_icon = $icon;
+				}
+
+				if ( false === strpos( trim( $fa_icon ), ' ' ) ) {
+					$fa_icon = ' fa ' . $fa_icon;
 				}
 			} else {
 				$fa_icon = '';

@@ -83,7 +83,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 				$term_details = get_term_by( 'slug', $term, 'slide-page' );
 
 				if ( ! $term_details ) {
-					return do_shortcode( '[fusion_alert type="error"  border_size="1px" box_shadow="yes"]Incorrect slider name. Please make sure to use a valid slider slug.[/fusion_alert]' );
+					return do_shortcode( '[fusion_alert type="error"]Incorrect slider name. Please make sure to use a valid slider slug.[/fusion_alert]' );
 				}
 
 				$slider_settings = get_option( 'taxonomy_' . $term_details->term_id, array() );

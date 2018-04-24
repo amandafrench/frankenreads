@@ -66,7 +66,7 @@ function fusion_element_options_loop( $params ) {
 				<# option_value = ( 'undefined' !== typeof( atts.added ) || '' === atts.params[param.param_name] || 'undefined' === typeof(atts.params[param.param_name]) ) ? param.default : atts.params[param.param_name]; #>
 			<# }; #>
 
-			<# if ( param.type == 'raw_textarea' ) {
+			<# if ( 'raw_textarea' == param.type ) {
 				try {
 					if ( FusionPageBuilderApp.base64Encode( FusionPageBuilderApp.base64Decode( option_value ) ) === option_value ) {
 						option_value = FusionPageBuilderApp.base64Decode( option_value );
@@ -76,7 +76,8 @@ function fusion_element_options_loop( $params ) {
 				}
 			} #>
 
-			<# if ( 'fusion_code' === atts.element_type && 1 === Number( FusionPageBuilderApp.disable_encoding ) ) {
+			<# if ( 'code' === param.type && 1 === Number( FusionPageBuilderApp.disable_encoding ) && 'undefined' !== typeof option_value ) {
+				console.log( option_value );
 				if ( FusionPageBuilderApp.base64Encode( FusionPageBuilderApp.base64Decode( option_value ) ) === option_value ) {
 					option_value = FusionPageBuilderApp.base64Decode( option_value );
 				}
@@ -127,7 +128,7 @@ function fusion_element_options_loop( $params ) {
 					);
 					?>
 					<?php
-						$fields = apply_filters( 'fusion_builder_fields', $field_types );
+						$fields  = apply_filters( 'fusion_builder_fields', $field_types );
 					?>
 					<?php foreach ( $fields as $field_type ) : ?>
 						<?php if ( is_array( $field_type ) && ! empty( $field_type ) ) : ?>

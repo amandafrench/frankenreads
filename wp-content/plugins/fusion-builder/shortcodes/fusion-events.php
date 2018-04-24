@@ -147,14 +147,21 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 							$img_class = ( has_post_thumbnail( get_the_ID() ) ) ? '' : 'fusion-events-placeholder';
 
 							if ( $thumb_url ) {
-								$thumb_img = '<img class="' . $img_class . '" src="' . $thumb_url . '" alt="' . esc_attr( get_the_title( get_the_ID() ) ) . '" />';
+								$title = the_title_attribute(
+									array(
+										'echo' => false,
+										'post' => get_the_ID(),
+									)
+								);
+
+								$thumb_img = '<img class="' . $img_class . '" src="' . $thumb_url . '" alt="' . $title . '" />';
 								if ( has_post_thumbnail( get_the_ID() ) && 'auto' == $picture_size ) {
 									$thumb_img = get_the_post_thumbnail( get_the_ID(), 'full' );
 								}
 								$thumb_bg = '<span class="tribe-events-event-image" style="background-image: url(' . $thumb_url . '); -webkit-background-size: cover; background-size: cover; background-position: center center;"></span>';
 							}
 							$html .= '<div class="fusion-events-thumbnail hover-type-' . $fusion_settings->get( 'ec_hover_type' ) . '">';
-							$html .= '<a href="' . get_the_permalink() . '" class="url" rel="bookmark" aria-label="' . get_the_title() . '">';
+							$html .= '<a href="' . get_the_permalink() . '" class="url" rel="bookmark" aria-label="' . the_title_attribute( array( 'echo' => false ) ) . '">';
 
 							if ( $thumb_url ) {
 								$html .= ( 'auto' == $picture_size ) ? $thumb_img : $thumb_bg;

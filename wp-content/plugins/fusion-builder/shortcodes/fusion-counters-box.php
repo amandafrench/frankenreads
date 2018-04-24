@@ -260,7 +260,7 @@ if ( fusion_is_element_enabled( 'fusion_counters_box' ) ) {
 			public function icon_attr() {
 
 				$attr = array(
-					'class' => 'counter-box-icon fa fontawesome-icon ' . FusionBuilder::font_awesome_name_handler( $this->child_args['icon'] ),
+					'class' => 'counter-box-icon fontawesome-icon ' . FusionBuilder::font_awesome_name_handler( $this->child_args['icon'] ),
 					'style' => 'font-size:' . $this->parent_args['icon_size'] . 'px;',
 				);
 

@@ -19,15 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Fusion_Product_Registration {
 
 	/**
-	 * The option group name.
-	 *
-	 * @access private
-	 * @since 1.0.0
-	 * @var string
-	 */
-	private $option_group_slug = 'fusion_registration';
-
-	/**
 	 * The option name.
 	 *
 	 * @access private
@@ -35,33 +26,6 @@ class Fusion_Product_Registration {
 	 * @var string
 	 */
 	private $option_name = 'fusion_registration';
-
-	/**
-	 * The option array.
-	 *
-	 * @access private
-	 * @since 1.0.0
-	 * @var array
-	 */
-	private $option;
-
-	/**
-	 * The Envato token.
-	 *
-	 * @access private
-	 * @since 1.0.0
-	 * @var string
-	 */
-	private $token;
-
-	/**
-	 * Whether the token is valid and for the specified product or not.
-	 *
-	 * @access private
-	 * @since 1.0.0
-	 * @var array
-	 */
-	private $registered = array();
 
 	/**
 	 * The arguments that are used in the constructor.
@@ -121,20 +85,14 @@ class Fusion_Product_Registration {
 		$this->args       = $args;
 		$this->product_id = sanitize_key( $args['name'] );
 
-		self::init_globals();
-
 		if ( isset( $args['bundled'] ) ) {
 			$this->add_bundled_product( $args['bundled'] );
 		}
-
-		// Register the settings.
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
 
 		// Instantiate the updater.
 		if ( null === $this->updater ) {
 			$this->updater = new Fusion_Updater( $this );
 		}
-
 	}
 
 	/**
@@ -166,65 +124,6 @@ class Fusion_Product_Registration {
 	public function get_bundled() {
 
 		return self::$bundled;
-
-	}
-
-	/**
-	 * Initialize the variables.
-	 *
-	 * @access private
-	 * @since 1.0.0
-	 * @return void
-	 */
-	private function init_globals() {
-
-		$this->token  = false;
-		$this->option = get_option( $this->option_name );
-		if ( isset( $this->option[ $this->product_id ] ) && isset( $this->option[ $this->product_id ]['token'] ) ) {
-			$this->token = $this->option[ $this->product_id ]['token'];
-		}
-		$this->registered = get_option( 'fusion_registered' );
-
-	}
-
-	/**
-	 * Returns the option name.
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return string The option name.
-	 */
-	public function get_option_name() {
-
-		return $this->option_name;
-
-	}
-
-	/**
-	 * Returns the option group name.
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return string The option group name.
-	 */
-	public function get_option_group_slug() {
-
-		return $this->option_group_slug;
-
-	}
-
-	/**
-	 * Sets a new token.
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @param string $token A new token.
-	 * @return void
-	 */
-	public function set_token( $token ) {
-
-		$this->token = $token;
-
 	}
 
 	/**
@@ -232,17 +131,19 @@ class Fusion_Product_Registration {
 	 *
 	 * @access public
 	 * @since 1.0.0
+	 * @param string $product_id The product-ID.
 	 * @return string The current token.
 	 */
-	public function get_token() {
-
-		if ( null === $this->token || ! $this->token ) {
-			if ( ! empty( $this->option ) && is_array( $this->option ) && isset( $this->option[ $this->product_id ] ) && isset( $this->option[ $this->product_id ]['token'] ) ) {
-				return $this->option[ $this->product_id ]['token'];
-			}
+	public function get_token( $product_id = '' ) {
+		if ( '' === $product_id ) {
+			$product_id = $this->product_id;
 		}
-		return $this->token;
 
+		$option = get_option( $this->option_name );
+		if ( ! empty( $option ) && is_array( $option ) && isset( $option[ $product_id ] ) && isset( $option[ $product_id ]['token'] ) ) {
+			return $option[ $product_id ]['token'];
+		}
+		return '';
 	}
 
 	/**
@@ -255,47 +156,6 @@ class Fusion_Product_Registration {
 	public function get_args() {
 
 		return $this->args;
-
-	}
-
-	/**
-	 * Registers the setting field(s) for the registration form.
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function register_settings() {
-
-		// Setting.
-		register_setting(
-			$this->get_option_group_slug(),
-			$this->option_name,
-			array( $this, 'check_registration' )
-		);
-
-		// Token setting.
-		add_settings_field(
-			'token',
-			esc_attr__( 'Token', 'Avada' ),
-			array( $this, 'render_token_setting_callback' ),
-			$this->get_option_group_slug()
-		);
-
-	}
-
-	/**
-	 * Renders the token settings field.
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function render_token_setting_callback() {
-		?>
-		<input type="text" name="<?php esc_attr( "{$this->option_name}[{$this->product_id}][token]" ); ?>" class="widefat" value="<?php echo esc_html( $this->get_token() ); ?>" autocomplete="off">
-		<?php
-
 	}
 
 	/**
@@ -311,7 +171,6 @@ class Fusion_Product_Registration {
 			$this->envato_api = new Fusion_Envato_API( $this );
 		}
 		return $this->envato_api;
-
 	}
 
 	/**
@@ -320,50 +179,45 @@ class Fusion_Product_Registration {
 	 *
 	 * @access public
 	 * @since 1.0.0
-	 * @param string $new_value The new token to check.
 	 */
-	public function check_registration( $new_value ) {
+	public function check_registration() {
 
-		$this->init_globals();
+		// Sanity check. No need to do anything if we're not saving the form.
+		if ( isset( $_POST['fusion_registration'] ) && isset( $_POST['fusion_registration'][ $this->product_id ] ) && isset( $_POST['_wpnonce'] ) ) {
 
-		// Get the old value.
-		$old_value   = false;
-		$old_setting = get_option( $this->get_option_name(), false );
-		if ( is_array( $old_setting ) && isset( $old_setting[ $this->product_id ] ) && isset( $old_setting[ $this->product_id ]['token'] ) ) {
-			$old_value = $old_setting[ $this->product_id ]['token'];
-		}
-		if ( false === $old_value || empty( $old_value ) ) {
-			$old_value = array();
-			$old_value[ $this->product_id ] = array(
-				'token' => '',
-			);
-		}
+			// Security check.
+			check_admin_referer( $this->option_name . '_' . $this->product_id );
 
-		// Check that the new value is properly formatted.
-		if ( is_array( $new_value ) && isset( $new_value[ $this->product_id ]['token'] ) ) {
+			// Get the saved products.
+			$saved_products = get_option( $this->option_name, array() );
+
+			// Get the fusion_registered option.
+			$registered = get_option( 'fusion_registered' );
+
+			// The new token.
+			$token = sanitize_text_field( wp_unslash( $_POST['fusion_registration'][ $this->product_id ]['token'] ) );
+			$token = trim( $token );
+
 			// If token field is empty, copy is not registered.
-			$this->registered[ $this->product_id ] = false;
-			if ( ! empty( $new_value[ $this->product_id ]['token'] ) && 32 === strlen( $new_value[ $this->product_id ]['token'] ) ) {
-				// Remove spaces from the beginning and end of the token.
-				$new_value[ $this->product_id ]['token'] = trim( $new_value[ $this->product_id ]['token'] );
+			$registered[ $this->product_id ] = false;
+			if ( ! empty( $token ) && 32 === strlen( $token ) ) {
+
 				// Check if new token is valid.
-				$this->registered[ $this->product_id ] = $this->product_exists( $new_value[ $this->product_id ]['token'] );
+				$registered[ $this->product_id ] = $this->product_exists( $token );
 			}
-		} else {
-			$new_value[ $this->product_id ] = array(
-				'token' => '',
+
+			// Update saved product option.
+			$saved_products[ $this->product_id ] = array(
+				'token' => $token,
 			);
+			update_option( $this->option_name, $saved_products );
+
+			// Check the token scopes and update the option accordingly.
+			$registered['scopes'][ $this->product_id ] = $this->envato_api()->get_token_scopes( $saved_products[ $this->product_id ]['token'] );
+
+			// Update the 'fusion_registered' option.
+			update_option( 'fusion_registered', $registered );
 		}
-
-		// Check the token scopes and update the option accordingly.
-		$this->registered['scopes'] = $this->envato_api()->get_token_scopes( $new_value[ $this->product_id ]['token'] );
-
-		// Update the 'fusion_registered' option.
-		update_option( 'fusion_registered', $this->registered );
-
-		// Return the new value.
-		return $new_value;
-
 	}
 
 	/**
@@ -390,6 +244,7 @@ class Fusion_Product_Registration {
 
 		// If a WP Error object is returned we need to check if API is down.
 		if ( is_wp_error( $products ) ) {
+
 			// 401 ( unauthorized ) and 403 ( forbidden ) mean the token is invalid, apart from that Envato API is down.
 			if ( 401 !== $products->get_error_code() && 403 !== $products->get_error_code() && '' !== $products->get_error_message() ) {
 				set_site_transient( 'fusion_envato_api_down', true, 600 );
@@ -422,17 +277,21 @@ class Fusion_Product_Registration {
 	 */
 	public function is_registered() {
 
+		// Get the option.
+		$registered = get_option( 'fusion_registered' );
+
 		// Is the product registered?
-		if ( isset( $this->registered[ $this->product_id ] ) && true === $this->registered[ $this->product_id ] ) {
+		if ( isset( $registered[ $this->product_id ] ) && true === $registered[ $this->product_id ] ) {
 			return true;
 		}
+
 		// Is the Envato API down?
 		if ( get_site_transient( 'fusion_envato_api_down' ) ) {
 			return true;
 		}
+
 		// Fallback to false.
 		return false;
-
 	}
 
 	/**
@@ -452,18 +311,33 @@ class Fusion_Product_Registration {
 		if ( isset( self::$bundled[ $this->product_id ] ) ) {
 			return;
 		}
+
+		// Check registration.
+		$this->check_registration();
+
+		// Get the current token.
+		$token = $this->get_token( $this->product_id );
+
+		// Is the product registered?
+		$is_registered = $this->is_registered( $this->product_id );
+
+		// Get the fusion_registered option.
+		$registered = get_option( 'fusion_registered' );
+		if ( ! isset( $registered['scopes'] ) ) {
+			$registered['scopes'] = array();
+		}
 		?>
 		<div class="fusion-library-important-notice registration-form-container">
-			<?php if ( $this->is_registered() ) : ?>
+			<?php if ( $is_registered ) : ?>
 				<p class="about-description"><?php esc_attr_e( 'Congratulations! Your product is registered now.', 'Avada' ); ?></p>
 			<?php else : ?>
 				<p class="about-description"><?php esc_attr_e( 'Please enter your Envato token to complete registration.', 'Avada' ); ?></p>
 			<?php endif; ?>
 			<div class="fusion-library-registration-form">
-				<form id="fusion-library_product_registration" method="post" action="options.php">
+				<form id="fusion-library_product_registration" method="post">
 					<?php $show_form = true; ?>
 					<?php if ( isset( self::$bundled[ $this->product_id ] ) ) : ?>
-						<?php if ( ! $this->get_token() ) : ?>
+						<?php if ( ! $token ) : ?>
 							<?php $show_form = false; ?>
 							<p style="width:100%;max-width:100%;">
 								<?php
@@ -486,13 +360,9 @@ class Fusion_Product_Registration {
 							</p>
 						<?php endif; ?>
 					<?php endif; ?>
-					<?php
-					$invalid_token = false;
-					$token = $this->get_token();
-					settings_fields( $this->get_option_group_slug() );
-					?>
+					<?php $invalid_token = false; ?>
 					<?php if ( $token && ! empty( $token ) ) : ?>
-						<?php if ( $this->is_registered() ) : ?>
+						<?php if ( $is_registered ) : ?>
 							<span class="dashicons dashicons-yes fusion-library-icon-key<?php echo ( ! $show_form ) ? ' toggle-hidden hidden' : ''; ?>"></span>
 						<?php else : ?>
 							<?php $invalid_token = true; ?>
@@ -502,6 +372,7 @@ class Fusion_Product_Registration {
 						<span class="dashicons dashicons-admin-network fusion-library-icon-key<?php echo ( ! $show_form ) ? ' toggle-hidden hidden' : ''; ?>"></span>
 					<?php endif; ?>
 					<input <?php echo ( ! $show_form ) ? 'class="toggle-hidden hidden" ' : ''; ?>type="text" name="<?php echo esc_attr( "{$this->option_name}[{$this->product_id}][token]" ); ?>" value="<?php echo esc_attr( $token ); ?>" />
+					<?php wp_nonce_field( $this->option_name . '_' . $this->product_id ); ?>
 					<?php
 					$button_classes = array( 'primary', 'large', 'fusion-library-large-button', 'fusion-library-register' );
 					if ( ! $show_form ) {
@@ -524,11 +395,11 @@ class Fusion_Product_Registration {
 				<?php elseif ( $token && ! empty( $token ) ) : ?>
 					<?php
 					// If the token scopes don't exist, make sure we create them and save them.
-					if ( ! isset( $this->registered['scopes'] ) || ! is_array( $this->registered['scopes'] ) ) {
-						$this->registered['scopes'] = $this->envato_api()->get_token_scopes();
-						update_option( 'fusion_registered', $this->registered );
+					if ( ! isset( $registered['scopes'][ $this->product_id ] ) || ! is_array( $registered['scopes'] ) ) {
+						$registered['scopes'][ $this->product_id ] = $this->envato_api()->get_token_scopes();
+						update_option( 'fusion_registered', $registered );
 					}
-					$scopes_ok = $this->envato_api()->check_token_scopes( $this->registered['scopes'] );
+					$scopes_ok = $this->envato_api()->check_token_scopes( $registered['scopes'][ $this->product_id ] );
 					?>
 					<?php if ( ! $scopes_ok ) : ?>
 						<p class="error-invalid-token">
@@ -537,7 +408,7 @@ class Fusion_Product_Registration {
 					<?php endif; ?>
 				<?php endif; ?>
 
-				<?php if ( ! $this->is_registered() ) : ?>
+				<?php if ( ! $is_registered ) : ?>
 
 					<div <?php echo ( ! $show_form ) ? 'class="toggle-hidden hidden" ' : ''; ?>style="font-size:17px;line-height:27px;margin-top:1em;padding-top:1em">
 						<hr>

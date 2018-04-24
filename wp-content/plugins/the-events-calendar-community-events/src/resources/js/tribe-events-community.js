@@ -86,7 +86,6 @@ var tribe_community_events = tribe_community_events || {};
 				var viewport_width = obj.$window.width();
 
 				if ( viewport_width <= 568 ) {
-					obj.$datepickers.prop( 'type', 'date' );
 					obj.$datepickers.on( 'change.tribe', obj.on_change_datepicker ).trigger( 'change' );
 
 					// Look for a Tribe fork of jQuery Timepicker to prevent conflicts; load the default if not found.
@@ -129,6 +128,7 @@ var tribe_community_events = tribe_community_events || {};
 		var $other     = obj.$datepickers.not( $field );
 		var type       = 'start';
 		var instance   = $( this ).data( 'datepicker' );
+
 		var date       = $.datepicker.parseDate( instance.settings.dateFormat || $.datepicker._defaults.dateFormat, $field.val(), instance.settings );
 		var other_date = $.datepicker.parseDate( instance.settings.dateFormat || $.datepicker._defaults.dateFormat, $other.val(), instance.settings );
 

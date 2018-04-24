@@ -39,8 +39,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			addCustomModule: function( event ) {
 				var layoutID,
-				    title,
-				    isGlobal;
+					title,
+					isGlobal;
 
 				if ( event ) {
 					event.preventDefault();
@@ -95,12 +95,12 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			addModule: function( event ) {
 				var $thisEl,
-				    label,
-				    params,
-				    multi,
-				    type,
-				    name,
-				    allowGenerator;
+					label,
+					params,
+					multi,
+					type,
+					name,
+					allowGenerator;
 
 				if ( event ) {
 					event.preventDefault();
@@ -148,14 +148,14 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			addNestedColumns: function( event, appendAfter ) {
 				var moduleID,
-				    that,
-				    $layoutEl,
-				    layout,
-				    layoutElementsNum,
-				    thisView,
-				    defaultParams,
-				    params,
-				    value;
+					that,
+					$layoutEl,
+					layout,
+					layoutElementsNum,
+					thisView,
+					defaultParams,
+					params,
+					value;
 
 				if ( event ) {
 					event.preventDefault();
@@ -187,7 +187,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				// Process default parameters from shortcode
 				_.each( defaultParams, function( param )  {
 					if ( _.isObject( param.value ) ) {
-						value = param['default'];
+						value = param.default;
 					} else {
 						value = param.value;
 					}
@@ -203,7 +203,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 							layout: element,
 							view: thisView,
 							params: params
-					    };
+						};
 
 					that.collection.add( [ columnAttributes ] );
 
@@ -224,4 +224,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			}
 		} );
 	} );
-} )( jQuery );
+} ( jQuery ) );

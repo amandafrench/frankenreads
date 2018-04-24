@@ -209,22 +209,18 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 					$content = str_replace( '/>', $img_classes . $img_styles . '/>', $content );
 				}
 
-				if ( class_exists( 'Avada' ) && property_exists( Avada(), 'images' ) ) {
-					Avada()->images->set_grid_image_meta(
-						array(
-							'layout' => 'large',
-							'columns' => '1',
-						)
-					);
-				}
+				$fusion_library->images->set_grid_image_meta(
+					array(
+						'layout' => 'large',
+						'columns' => '1',
+					)
+				);
 
 				if ( function_exists( 'wp_make_content_images_responsive' ) ) {
 					$content = wp_make_content_images_responsive( $content );
 				}
 
-				if ( class_exists( 'Avada' ) && property_exists( Avada(), 'images' ) ) {
-					Avada()->images->set_grid_image_meta( array() );
-				}
+				$fusion_library->images->set_grid_image_meta( array() );
 
 				// Set the lightbox image to the dedicated link if it is set.
 				if ( $lightbox_image ) {
@@ -255,7 +251,7 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 							$wrapper_classes .= ' imageframe-' . $this->imageframe_counter;
 						}
 					} else {
-						$wrapper_classes = 'element-bottomshadow image-frame-shadow-' . $this->imageframe_counter;
+						$wrapper_classes = 'element-bottomshadow fusion-image-frame-bottomshadow image-frame-shadow-' . $this->imageframe_counter;
 						$element_styles  = '';
 						$element_styles  = '<style scoped="scoped">.element-bottomshadow.image-frame-shadow-' . $this->imageframe_counter . '{';
 						if ( 'left' === $align ) {

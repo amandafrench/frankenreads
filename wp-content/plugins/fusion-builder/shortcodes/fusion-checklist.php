@@ -85,14 +85,17 @@ if ( fusion_is_element_enabled( 'fusion_checklist' ) ) {
 
 				$defaults = FusionBuilder::set_shortcode_defaults(
 					array(
-						'hide_on_mobile' => fusion_builder_default_visibility( 'string' ),
-						'class'          => '',
-						'id'             => '',
+
 						'circle'         => strtolower( $fusion_settings->get( 'checklist_circle' ) ),
 						'circlecolor'    => $fusion_settings->get( 'checklist_circle_color' ),
+						'class'          => '',
+						'divider'        => $fusion_settings->get( 'checklist_divider' ),
+						'divider_color'  => $fusion_settings->get( 'checklist_divider_color' ),
+						'hide_on_mobile' => fusion_builder_default_visibility( 'string' ),
 						'icon'           => 'fa-check',
 						'iconcolor'      => $fusion_settings->get( 'checklist_icons_color' ),
-						'size'           => '13px',
+						'id'             => '',
+						'size'           => $fusion_settings->get( 'checklist_item_size' ),
 					), $args
 				);
 
@@ -156,6 +159,10 @@ if ( fusion_is_element_enabled( 'fusion_checklist' ) ) {
 				$attr['class'] = 'fusion-checklist fusion-checklist-' . $this->checklist_counter;
 
 				$attr = fusion_builder_visibility_atts( $this->parent_args['hide_on_mobile'], $attr );
+
+				if ( 'yes' === $this->parent_args['divider'] ) {
+					$attr['class'] .= ' fusion-checklist-divider';
+				}
 
 				$font_size = str_replace( 'px', '', $this->parent_args['size'] );
 				$line_height = $font_size * 1.7;
@@ -222,6 +229,10 @@ if ( fusion_is_element_enabled( 'fusion_checklist' ) ) {
 				$attr = array();
 
 				$attr['class'] = 'fusion-li-item';
+
+				if ( 'yes' === $this->parent_args['divider'] ) {
+					$attr['style'] = 'border-bottom-color:' . $this->parent_args['divider_color'];
+				}
 
 				return $attr;
 
@@ -299,7 +310,7 @@ if ( fusion_is_element_enabled( 'fusion_checklist' ) ) {
 				}
 
 				return array(
-					'class' => 'fusion-li-icon fa ' . $icon,
+					'class' => 'fusion-li-icon ' . $icon,
 					'style' => 'color:' . $iconcolor . ';',
 				);
 			}
@@ -312,6 +323,10 @@ if ( fusion_is_element_enabled( 'fusion_checklist' ) ) {
 			 * @return array $sections Checklist settings.
 			 */
 			public function add_options() {
+				global $fusion_settings;
+				if ( ! $fusion_settings ) {
+					$fusion_settings = Fusion_Settings::get_instance();
+				}
 
 				return array(
 					'checklist_shortcode_section' => array(
@@ -345,6 +360,38 @@ if ( fusion_is_element_enabled( 'fusion_checklist' ) ) {
 										'setting'  => 'checklist_circle',
 										'operator' => '!=',
 										'value'    => '0',
+									),
+								),
+							),
+							'checklist_item_size' => array(
+								'label'       => esc_attr__( 'Item Size', 'fusion-builder' ),
+								'description' => esc_attr__( 'Controls the size of the list items.', 'fusion-builder' ),
+								'id'          => 'checklist_item_size',
+								'default'     => '14px',
+								'type'        => 'dimension',
+							),
+							'checklist_divider' => array(
+								'label'       => esc_attr__( 'Divider Lines', 'fusion-builder' ),
+								'description' => esc_attr__( 'Choose if a divider line shows between each list item.', 'fusion-builder' ),
+								'id'          => 'checklist_divider',
+								'default'     => 'no',
+								'type'        => 'radio-buttonset',
+								'choices'     => array(
+									'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+									'no'  => esc_attr__( 'No', 'fusion-builder' ),
+								),
+							),
+							'checklist_divider_color' => array(
+								'label'       => esc_html__( 'Divider Line Color', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the color of the divider lines.', 'fusion-builder' ),
+								'id'          => 'checklist_divider_color',
+								'default'     => $fusion_settings->get( 'sep_color' ),
+								'type'        => 'color-alpha',
+								'required'    => array(
+									array(
+										'setting'  => 'checklist_divider',
+										'operator' => '==',
+										'value'    => 'yes',
 									),
 								),
 							),
@@ -435,7 +482,34 @@ function fusion_element_checklist() {
 					'heading'     => esc_attr__( 'Item Size', 'fusion-builder' ),
 					'description' => esc_attr__( "Select the list item's size. In pixels (px), ex: 13px.", 'fusion-builder' ),
 					'param_name'  => 'size',
-					'value'       => '13px',
+					'value'       => '',
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Divider Lines', 'fusion-builder' ),
+					'description' => esc_attr__( 'Choose if a divider line shows between each list item.', 'fusion-builder' ),
+					'param_name'  => 'divider',
+					'default'     => '',
+					'value'       => array(
+						''    => esc_attr__( 'Default', 'fusion-builder' ),
+						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+						'no'  => esc_attr__( 'No', 'fusion-builder' ),
+					),
+				),
+				array(
+					'type'        => 'colorpickeralpha',
+					'heading'     => esc_attr__( 'Divider Line Color', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls the color of the divider lines.', 'fusion-builder' ),
+					'param_name'  => 'divider_color',
+					'value'       => '',
+					'default'     => $fusion_settings->get( 'checklist_divider_color' ),
+					'dependency'  => array(
+						array(
+							'element'  => 'divider',
+							'value'    => 'no',
+							'operator' => '!=',
+						),
+					),
 				),
 				array(
 					'type'        => 'checkbox_button_set',

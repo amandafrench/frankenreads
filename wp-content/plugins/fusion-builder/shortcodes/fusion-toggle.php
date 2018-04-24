@@ -261,7 +261,7 @@ if ( fusion_is_element_enabled( 'fusion_accordion' ) ) {
 					FusionBuilder::attributes( 'fusion-toggle-heading' ),
 					$title,
 					FusionBuilder::attributes( 'toggle-shortcode-collapse' ),
-					FusionBuilder::attributes( 'panel-body toggle-content' ),
+					FusionBuilder::attributes( 'panel-body toggle-content fusion-clearfix' ),
 					do_shortcode( $content )
 				);
 

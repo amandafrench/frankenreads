@@ -132,31 +132,33 @@ class Fusion_Builder_Dynamic_CSS extends Fusion_Dynamic_CSS {
 
 		}
 
-		// General - Events info notice.
+		// FIXME: Block below should get revisited as it might not be needed at all.
+		// General notice incl. Events.
 		$elements = array(
 			'.fusion-alert.alert-info',
-			'.tribe-events-notices.alert-info',
+			'.tribe-events-notices',
 		);
 
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = $info_background_color;
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = $info_accent_color;
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = $info_accent_color;
 
-		// Error - Events error notice.
+		// Error notice.
 		$css['global']['.alert-danger']['background-color'] = $danger_background_color;
 		$css['global']['.alert-danger']['border-color'] = $danger_accent_color;
 		$css['global']['.alert-danger']['color'] = $danger_accent_color;
 
-		// Success - Events success notice.
+		// Success notice.
 		$css['global']['.alert-success']['background-color'] = $success_background_color;
 		$css['global']['.alert-success']['border-color'] = $success_accent_color;
 		$css['global']['.alert-success']['color'] = $success_accent_color;
 
-		// Warning - Events warning notice.
+		// Warning notice.
 		$css['global']['.alert-warning']['background-color'] = $warning_background_color;
 		$css['global']['.alert-warning']['border-color'] = $warning_accent_color;
 		$css['global']['.alert-warning']['color'] = $warning_accent_color;
 
+		// End FIXME.
 		$css = array_replace_recursive( $css, $original_css );
 
 		return apply_filters( 'avada_dynamic_css_array', $css );

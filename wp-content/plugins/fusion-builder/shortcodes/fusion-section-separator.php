@@ -409,7 +409,7 @@ if ( fusion_is_element_enabled( 'fusion_section_separator' ) ) {
 			public function icon_attr() {
 
 				$attr = array(
-					'class' => 'section-separator-icon icon fa ' . FusionBuilder::font_awesome_name_handler( $this->args['icon'] ),
+					'class' => 'section-separator-icon icon ' . FusionBuilder::font_awesome_name_handler( $this->args['icon'] ),
 					'style' => 'color:' . $this->args['icon_color'] . ';',
 				);
 
@@ -705,7 +705,7 @@ function fusion_element_section_separator() {
 				array(
 					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Background Color of the Section Separator', 'fusion-builder' ),
-					'description' => esc_attr__( 'Controls the background color of the section separator style. Leave empty for default value of #f6f6f6.', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls the background color of the section separator style.', 'fusion-builder' ),
 					'param_name'  => 'backgroundcolor',
 					'value'       => '',
 					'default'     => $fusion_settings->get( 'section_sep_bg' ),

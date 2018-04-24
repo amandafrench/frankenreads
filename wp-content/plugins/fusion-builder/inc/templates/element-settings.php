@@ -1,13 +1,14 @@
 <script type="text/template" id="fusion-builder-block-module-settings-template">
 	<div class="fusion-builder-modal-top-container">
-		<# if ( typeof( fusionAllElements[atts.element_type] ) !== 'undefined' ) { #>
-				<h2>{{ fusionAllElements[atts.element_type].name }}</h2>
+		<# elementData = fusionAllElements[atts.element_type]; #>
+		<# if ( 'undefined' !== typeof elementData ) { #>
+				<h2>{{ elementData.name }}</h2>
 		<# }; #>
 		<div class="fusion-builder-modal-close fusiona-plus2"></div>
 		<#  group_options = {}, group_options['general'] = {}; #>
 
 		<!-- Move options to groups -->
-		<# _.each( fusionAllElements[atts.element_type].params, function(param) { #>
+		<# _.each( elementData.params, function(param) { #>
 			<# if ( typeof( param.group ) !== 'undefined' ) {  #>
 				<# var group_tag = param.group.toLowerCase().replace(/ /g, '-'); #>
 				<# if ( typeof( group_options[group_tag] ) == 'undefined' ) {
@@ -54,8 +55,8 @@
 	} #>
 
 	<div class="fusion-builder-main-settings fusion-builder-main-settings-full <# if ( Object.keys(group_options).length > 1 ) { #>has-group-options<# } #>{{ advanced_module_class }}">
-		<# if ( typeof( fusionAllElements[atts.element_type] ) !== 'undefined' ) { #>
-			<# if ( _.isObject ( fusionAllElements[atts.element_type].params ) ) { #>
+		<# if ( 'undefined' !== typeof elementData ) { #>
+			<# if ( _.isObject ( elementData.params ) ) { #>
 
 				<!-- If there is more than one group found show tabs -->
 				<# if ( Object.keys(group_options).length > 1 ) { #>
@@ -84,15 +85,19 @@
 		<# }; #>
 
 		<!-- Show create new subelement button -->
-		<# if ( fusionAllElements[atts.element_type].multi !== 'undefined' && fusionAllElements[atts.element_type].multi == 'multi_element_parent' ) {  #>
+		<# if ( elementData.multi !== 'undefined' && elementData.multi == 'multi_element_parent' ) {  #>
 
-			<# element_child = fusionAllElements[atts.element_type].element_child #>
+			<# element_child = elementData.element_child #>
 
 			<div class="fusion-builder-option-advanced-module-settings" data-element_type="{{ element_child }}">
 				<div class="fusion-builder-option-advanced-module-settings-content">
 
-					<h3>{{ fusionBuilderText.add_edit_items }}</h3>
-					<p>{{ fusionBuilderText.sortable_items_info }}</p>
+					<#
+					addEditItems      = 'undefined' !== typeof elementData.add_edit_items ? elementData.add_edit_items : fusionBuilderText.add_edit_items;
+					sortableItemsInfo = 'undefined' !== typeof elementData.sortable_items_info ? elementData.sortable_items_info : fusionBuilderText.sortable_items_info;
+					#>
+					<h3>{{ addEditItems }}</h3>
+					<p>{{ sortableItemsInfo }}</p>
 
 					<ul class="fusion-builder-sortable-options"></ul>
 					<a href="#" class="fusion-builder-add-multi-child"><span class="fusiona-plus"></span> {{ fusionAllElements[element_child].name }}</a>

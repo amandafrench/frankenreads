@@ -171,16 +171,15 @@ if ( 'no_text' !== $portfolio_text_layout ) {
 						$post_thumbnail_attachment = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
 						$masonry_attribute_style = 'background-image:url(' . $post_thumbnail_attachment[0] . ');';
 					} else {
-						$post_thumbnail_attachment = array();
 						$masonry_attribute_style = 'background-color:#f6f6f6;';
 					}
 
 					// Get the correct image orientation class.
-					$element_orientation_class = $fusion_library->images->get_element_orientation_class( $post_thumbnail_attachment );
+					$element_orientation_class = $fusion_library->images->get_element_orientation_class( get_post_thumbnail_id() );
 					$element_base_padding  = $fusion_library->images->get_element_base_padding( $element_orientation_class );
 
 					$masonry_column_offset = ' - ' . ( (int) $portfolio_column_spacing / 2 ) . 'px';
-					if ( 'fusion-element-portrait' === $element_orientation_class ) {
+					if ( false !== strpos( $element_orientation_class, 'fusion-element-portrait' ) ) {
 						$masonry_column_offset = '';
 					}
 
@@ -193,12 +192,12 @@ if ( 'no_text' !== $portfolio_text_layout ) {
 					) {
 
 						$masonry_column_offset = ' - ' . ( (int) $portfolio_column_spacing / 2 ) . 'px';
-						if ( 'fusion-element-portrait' === $element_orientation_class ) {
+						if ( false !== strpos( $element_orientation_class, 'fusion-element-portrait' ) ) {
 							$masonry_column_offset = ' + 4px';
 						}
 
 						$masonry_column_spacing = ( (int) $portfolio_column_spacing - 4 ) . 'px';
-						if ( 'fusion-element-landscape' === $element_orientation_class ) {
+						if ( false !== strpos( $element_orientation_class, 'fusion-element-landscape' ) ) {
 							$masonry_column_spacing = ( (int) $portfolio_column_spacing - 10 ) . 'px';
 						}
 					}
@@ -207,7 +206,7 @@ if ( 'no_text' !== $portfolio_text_layout ) {
 					$masonry_attribute_style .= 'padding-top:calc((100% + ' . $masonry_column_spacing . ') * ' . $element_base_padding . $masonry_column_offset . ');';
 
 					// Check if we have a landscape image, then it has to stretch over 2 cols.
-					if ( 'fusion-element-landscape' === $element_orientation_class ) {
+					if ( false !== strpos( $element_orientation_class, 'fusion-element-landscape' ) ) {
 						$responsive_images_columns = $portfolio_columns_int / 2;
 					}
 

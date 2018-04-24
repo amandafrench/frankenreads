@@ -254,7 +254,7 @@ if ( fusion_is_element_enabled( 'fusion_postslider' ) ) {
 						$alt   = get_post_meta( get_post_thumbnail_id(), '_wp_attachment_image_alt', true );
 
 						$image_output = '<img src="' . $image . '" alt="' . $alt . '" />';
-						$link_output  = '<a href="' . get_permalink() . '" aria-label="' . get_the_title() . '">' . $image_output . '</a>';
+						$link_output  = '<a href="' . get_permalink() . '" aria-label="' . the_title_attribute( array( 'echo' => false ) ) . '">' . $image_output . '</a>';
 						$title        = '<h2><a href="' . get_permalink() . '">' . get_the_title() . '</a></h2>';
 						$container    = '<div ' . FusionBuilder::attributes( 'flexslider-shortcode-title-container' ) . '>' . $title . '</div>';
 
@@ -311,7 +311,7 @@ if ( fusion_is_element_enabled( 'fusion_postslider' ) ) {
 						$alt   = get_post_meta( get_post_thumbnail_id(), '_wp_attachment_image_alt', true );
 
 						$image_output = '<img src="' . $image . '" alt="' . $alt . '" />';
-						$link_output  = '<a href="' . get_permalink() . '" aria-label="' . get_the_title() . '">' . $image_output . '</a>';
+						$link_output  = '<a href="' . get_permalink() . '" aria-label="' . the_title_attribute( array( 'echo' => false ) ) . '">' . $image_output . '</a>';
 						$title        = '<h2><a href="' . get_permalink() . '">' . get_the_title() . '</a></h2>';
 						$excerpt      = fusion_builder_get_post_content( '', 'yes', $this->args['excerpt'], true );
 						$container    = '<div ' . FusionBuilder::attributes( 'flexslider-shortcode-title-container' ) . '><div ' . FusionBuilder::attributes( 'excerpt-container' ) . '>' . $title . $excerpt . '</div></div>';
@@ -337,7 +337,7 @@ if ( fusion_is_element_enabled( 'fusion_postslider' ) ) {
 			 */
 			public function attr() {
 
-				$attr['class'] = 'fusion-flexslider fusion-flexslider-loading flexslider-' . $this->args['layout'];
+				$attr['class'] = 'fusion-post-slider fusion-flexslider fusion-flexslider-loading flexslider-' . $this->args['layout'];
 
 				$attr = fusion_builder_visibility_atts( $this->args['hide_on_mobile'], $attr );
 

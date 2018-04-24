@@ -48,9 +48,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			addChildElement: function( event ) {
 
 				var params = {},
-				    defaultParams,
-				    value,
-				    allowGenerator;
+					defaultParams,
+					value,
+					allowGenerator;
 
 				if ( event ) {
 					event.preventDefault();
@@ -63,7 +63,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				// Process default parameters from shortcode
 				_.each( defaultParams, function( param )  {
 					if ( _.isObject( param.value ) ) {
-						value = param['default'];
+						value = param.default;
 					} else {
 						value = param.value;
 					}
@@ -117,12 +117,12 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			generateMultiElementChildSortables: function( content, moduleType, fixSettingsLvl, parentAtts ) {
 				var thisEl        = this,
-				    shortcodeTags = jQuery.map( fusionMultiElements, function( val, i ) { // jshint ignore:line
+					shortcodeTags = jQuery.map( fusionMultiElements, function( val, i ) { // jshint ignore:line
 						return val;
-				    }).join( '|' ),
-				    regExp      = window.wp.shortcode.regexp( shortcodeTags ),
-				    innerRegExp = FusionPageBuilderApp.regExpShortcode( shortcodeTags ),
-				    matches     = content.match( regExp );
+					} ).join( '|' ),
+					regExp      = window.wp.shortcode.regexp( shortcodeTags ),
+					innerRegExp = FusionPageBuilderApp.regExpShortcode( shortcodeTags ),
+					matches     = content.match( regExp );
 
 				if ( '' !== content ) {
 					this.$add_sortable_item.removeClass( 'fusion-builder-add-sortable-initial' );
@@ -130,24 +130,24 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 				_.each( matches, function( shortcode ) {
 					var shortcodeElement     = shortcode.match( innerRegExp ),
-					    shortcodeName        = shortcodeElement[2],
-					    shortcodeAttributes  = '' !== shortcodeElement[3] ? window.wp.shortcode.attrs( shortcodeElement[3] ) : '',
-					    shortcodeContent     = shortcodeElement[5],
-					    elementName          = '',
-					    moduleCID            = FusionPageBuilderViewManager.generateCid(), // jshint ignore:line
-					    prefixedAttributes   = { params: ( {}) },
+						shortcodeName        = shortcodeElement[2],
+						shortcodeAttributes  = '' !== shortcodeElement[3] ? window.wp.shortcode.attrs( shortcodeElement[3] ) : '',
+						shortcodeContent     = shortcodeElement[5],
+						elementName          = '',
+						moduleCID            = FusionPageBuilderViewManager.generateCid(), // jshint ignore:line
+						prefixedAttributes   = { params: ( {} ) },
 
-					    // TODO: check if needed.  Commented out for FB item 420.
-					    //shortcodesInContent = 'undefined' !== typeof shortcodeContent && '' !== shortcodeContent && shortcodeContent.match( regExp ),
+						// TODO: check if needed.  Commented out for FB item 420.
+						//shortcodesInContent = 'undefined' !== typeof shortcodeContent && '' !== shortcodeContent && shortcodeContent.match( regExp ),
 
-					    // Check if shortcode allows generator
-					    allowGenerator = 'undefined' !== typeof fusionAllElements[ shortcodeName ].allow_generator ? fusionAllElements[ shortcodeName ].allow_generator : '',
-					    moduleSettings,
-					    key,
-					    prefixedKey,
-					    dependencyOption,
-					    dependencyOptionValue,
-					    moduleContent;
+						// Check if shortcode allows generator
+						allowGenerator = 'undefined' !== typeof fusionAllElements[ shortcodeName ].allow_generator ? fusionAllElements[ shortcodeName ].allow_generator : '',
+						moduleSettings,
+						key,
+						prefixedKey,
+						dependencyOption,
+						dependencyOptionValue,
+						moduleContent;
 
 					if ( 'undefined' !== typeof shortcodeAttributes.named && 'undefined' !== typeof shortcodeAttributes.named.title && shortcodeAttributes.named.title.length ) {
 						elementName = shortcodeAttributes.named.title;
@@ -178,7 +178,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					// Remove HTML tags but keep quotation marks etc.
 					elementName = jQuery( '<div/>' ).html( elementName ).text();
 					elementName = jQuery( '<div/>' ).html( elementName ).text();
-					elementName = ( elementName && elementName.length  > 15 ) ? elementName.substring( 0, 15 ) + '...' : elementName;
+					elementName = ( elementName && 15  < elementName.length ) ? elementName.substring( 0, 15 ) + '...' : elementName;
 
 					moduleSettings = {
 						type: 'element',
@@ -255,4 +255,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			}
 		} );
 	} );
-} )( jQuery );
+} ( jQuery ) );

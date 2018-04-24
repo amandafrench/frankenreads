@@ -89,15 +89,19 @@ $border_width = $fusion_settings->get( 'button_border_width' );
 	} else {
 		var button_icon = 'no-icon';
 	}
+
+	if ( 'undefined' !== typeof button_icon && -1 === button_icon.trim().indexOf( ' ' ) ) {
+		button_icon = 'fa ' + button_icon;
+	}
 	#>
 
 	<# if ( 'custom' === params.color || 'default' === params.color ) { #>
 
-		<a class="fusion-button button-default button-{{ button_shape }} button-{{ button_type }} button-{{ button_size }}" style="background: {{ button_background }}; border: {{ border_width }} solid {{ accent_color }}; color: {{ accent_color }}"><span class="fusion-button-text"><span class="fusion-module-icon fa {{ button_icon }}"></span>{{{ params.element_content }}}</span></a>
+		<a class="fusion-button button-default button-{{ button_shape }} button-{{ button_type }} button-{{ button_size }}" style="background: {{ button_background }}; border: {{ border_width }} solid {{ accent_color }}; color: {{ accent_color }}"><span class="fusion-button-text"><span class="fusion-module-icon {{ button_icon }}"></span>{{{ params.element_content }}}</span></a>
 
 	<# } else { #>
 
-		<a class="fusion-button button-default button-{{ button_shape }} button-{{ button_type }} button-{{ button_size }} button-{{ button_color }}"><span class="fusion-button-text"><span class="fusion-module-icon fa {{ button_icon }}"></span>{{{ params.element_content }}}</span></a>
+		<a class="fusion-button button-default button-{{ button_shape }} button-{{ button_type }} button-{{ button_size }} button-{{ button_color }}"><span class="fusion-button-text"><span class="fusion-module-icon {{ button_icon }}"></span>{{{ params.element_content }}}</span></a>
 
 	<# }#>
 </script>

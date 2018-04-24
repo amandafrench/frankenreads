@@ -9,11 +9,11 @@ jQuery( document ).ready( function() {
 				'',
 				'table-1',
 				'table-2'
-		    ),
-		    type = jQuery( '#fusion_table_type' ).val(),
-		    columns = jQuery( '#fusion_table_columns' ).val(),
-		    exampleTable = '<div class="' + types[type] + '"><table width="100%"><thead><tr>',
-		    i;
+			),
+			type = jQuery( '#fusion_table_type' ).val(),
+			columns = jQuery( '#fusion_table_columns' ).val(),
+			exampleTable = '<div class="' + types[type] + '"><table width="100%"><thead><tr>',
+			i;
 
 		// Add table headers
 		for ( i = 0; i < columns; i++ ) {
@@ -36,5 +36,5 @@ jQuery( document ).ready( function() {
 
 		}, 100 );
 
-	});
-});
+	} );
+} );

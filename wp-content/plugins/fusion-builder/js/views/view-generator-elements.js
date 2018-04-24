@@ -30,14 +30,14 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			addElement: function( event ) {
 				var $thisEl,
-				    title,
-				    label,
-				    params,
-				    multi,
-				    type,
-				    selection,
-				    defaultParams,
-				    elementSettings;
+					title,
+					label,
+					params,
+					multi,
+					type,
+					selection,
+					defaultParams,
+					elementSettings;
 
 				if ( event ) {
 					event.preventDefault();
@@ -67,7 +67,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				_.each( defaultParams, function( param )  {
 					var value;
 					if ( _.isObject( param.value ) ) {
-						value = param['default'];
+						value = param.default;
 					} else {
 						value = param.value;
 					}
@@ -105,17 +105,17 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			addColumns: function( event ) {
 				var that,
-				    $layoutEl,
-				    layout,
-				    layoutElementsNum,
-				    thisView,
-				    defaultParams,
-				    params,
-				    value,
-				    columnModel,
-				    generatedShortcode = '[fusion_builder_row_inner]',
-				    elementType        = 'fusion_builder_column_inner',
-				    closingTag         = '[/fusion_builder_row_inner]';
+					$layoutEl,
+					layout,
+					layoutElementsNum,
+					thisView,
+					defaultParams,
+					params,
+					value,
+					columnModel,
+					generatedShortcode = '[fusion_builder_row_inner]',
+					elementType        = 'fusion_builder_column_inner',
+					closingTag         = '[/fusion_builder_row_inner]';
 
 				if ( ! FusionPageBuilderApp.builderActive && jQuery( event.target ).parents( '#builder-regular-columns' ).length ) {
 					generatedShortcode = '';
@@ -141,7 +141,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				// Process default parameters from shortcode
 				_.each( defaultParams, function( param )  {
 					if ( _.isObject( param.value ) ) {
-						value = param['default'];
+						value = param.default;
 					} else {
 						value = param.value;
 					}
@@ -151,7 +151,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				_.each( layout, function( element, index ) {
 
 					var updateContent,
-					    columnAttributes;
+						columnAttributes;
 
 					params.type = element;
 
@@ -184,9 +184,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			addContainer: function( event ) {
 				var elementID,
-				    defaultParams,
-				    params,
-				    value;
+					defaultParams,
+					params,
+					value;
 
 				if ( event ) {
 					event.preventDefault();
@@ -201,7 +201,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				// Process default parameters from shortcode
 				_.each( defaultParams, function( param ) {
 					if ( _.isObject( param.value ) ) {
-						value = param['default'];
+						value = param.default;
 					} else {
 						value = param.value;
 					}
@@ -221,4 +221,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 	} );
 
-} )( jQuery );
+} ( jQuery ) );

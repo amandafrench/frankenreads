@@ -46,7 +46,7 @@ if ( fusion_is_element_enabled( 'fusion_products_slider' ) ) {
 			 * @return string          HTML output
 			 */
 			public function render( $args, $content = '' ) {
-				global $woocommerce, $fusion_settings;
+				global $woocommerce, $fusion_library, $fusion_settings;
 
 				$defaults = FusionBuilder::set_shortcode_defaults(
 					array(
@@ -154,8 +154,8 @@ if ( fusion_is_element_enabled( 'fusion_products_slider' ) ) {
 							$in_cart = in_array( $id, $items_in_cart, true );
 							$image   = $price_tag = $terms = '';
 
-							if ( class_exists( 'Avada' ) && property_exists( Avada(), 'images' ) && 'auto' === $picture_size ) {
-								Avada()->images->set_grid_image_meta(
+							if ( 'auto' === $picture_size ) {
+								$fusion_library->images->set_grid_image_meta(
 									array(
 										'layout' => 'grid',
 										'columns' => $columns,
@@ -193,8 +193,8 @@ if ( fusion_is_element_enabled( 'fusion_products_slider' ) ) {
 								$image .= '</div>';
 							}
 
-							if ( class_exists( 'Avada' ) && property_exists( Avada(), 'images' ) && 'auto' === $picture_size ) {
-								Avada()->images->set_grid_image_meta( array() );
+							if ( 'auto' === $picture_size ) {
+								$fusion_library->images->set_grid_image_meta( array() );
 							}
 
 							if ( $in_cart ) {

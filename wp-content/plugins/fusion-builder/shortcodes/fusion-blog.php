@@ -93,15 +93,6 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 			protected $args;
 
 			/**
-			 * Regular size images check.
-			 *
-			 * @access private
-			 * @since 1.0
-			 * @var null|int|string
-			 */
-			private $regular_images_found = false;
-
-			/**
 			 * Constructor.
 			 *
 			 * @access public
@@ -157,10 +148,10 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 						'hide_on_mobile'            => fusion_builder_default_visibility( 'string' ),
 						'class'                     => '',
 						'id'                        => '',
-						'blog_grid_column_spacing'  => '40',
+						'blog_grid_column_spacing'  => $fusion_settings->get( 'blog_grid_column_spacing' ),
 						'blog_grid_padding'         => $fusion_settings->get( 'blog_grid_padding' ),
 						'equal_heights'             => 'no',
-						'blog_grid_columns'         => '3',
+						'blog_grid_columns'         => $fusion_settings->get( 'blog_grid_columns' ),
 						'pull_by'                   => '',
 						'cat_slug'                  => '',
 						'tag_slug'                  => '',
@@ -193,6 +184,8 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 						'taxonomy'                  => 'category',
 						'thumbnail'                 => 'yes',
 						'title_link'                => 'yes',
+						'blog_masonry_grid_ratio'   => $fusion_settings->get( 'masonry_grid_ratio' ),
+						'blog_masonry_width_double' => $fusion_settings->get( 'masonry_width_double' ),
 
 						'excerpt_words'            => '50', // Deprecated.
 						'title'                    => '',   // Deprecated.
@@ -282,14 +275,14 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				$defaults['show_title']      = ( 'yes' === $defaults['show_title'] );
 				$defaults['title_link']      = ( 'yes' === $defaults['title_link'] );
 
-				if ( $defaults['excerpt_length'] || '0' === $defaults['excerpt_length'] ) {
-					$defaults['excerpt_words'] = $defaults['excerpt_length'];
+				if ( isset( $args['excerpt_words'] ) && ! isset( $args['excerpt_length'] ) ) {
+					$defaults['excerpt_length'] = $args['excerpt_words'];
 				}
 
 				// Combine meta info into one variable.
 				$defaults['meta_info_combined'] = $defaults['meta_all'] * ( $defaults['meta_author'] + $defaults['meta_date'] + $defaults['meta_categories'] + $defaults['meta_tags'] + $defaults['meta_comments'] + $defaults['meta_link'] );
 				// Create boolean that holds info whether content should be excerpted.
-				$defaults['is_zero_excerpt'] = ( 'yes' === $defaults['excerpt'] && $defaults['excerpt_words'] < 1 ) ? 1 : 0;
+				$defaults['is_zero_excerpt'] = ( 'yes' === $defaults['excerpt'] && $defaults['excerpt_length'] < 1 ) ? 1 : 0;
 
 				if ( 'tag' !== $defaults['pull_by'] ) {
 					// Check for cats to exclude; needs to be checked via exclude_cats param
@@ -601,7 +594,9 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					} else {
 						$output .= '<div class="fusion-clearfix"></div>';
 					}
-					return $output;
+
+					return apply_filters( 'fusion_builder_blog_pagination_html', $output, $pages, $range, $current_query, $blog_global_pagination );
+
 					// Needed for Theme check.
 					ob_start();
 					posts_nav_link();
@@ -689,10 +684,6 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 
 					if ( 'masonry' === $this->args['layout'] ) {
 						$attr['class'] .= ' fusion-blog-layout-masonry';
-
-						if ( true == $this->regular_images_found ) {
-							$attr['class'] .= ' fusion-blog-layout-masonry-has-vertical';
-						}
 					}
 
 					if ( 'grid' === $this->args['layout'] ) {
@@ -823,8 +814,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					// Get the element orientation class.
 					$element_orientation_class = '';
 					if ( has_post_thumbnail() ) {
-						$post_thumbnail_attachment = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-						$element_orientation_class = $fusion_library->images->get_element_orientation_class( $post_thumbnail_attachment );
+						$element_orientation_class = $fusion_library->images->get_element_orientation_class( get_post_thumbnail_id(), array(), $this->args['blog_masonry_grid_ratio'], $this->args['blog_masonry_width_double'] );
 					}
 
 					$extra_classes[] = $element_orientation_class;
@@ -915,11 +905,11 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				}
 
 				// Get the correct image orientation class.
-				$element_orientation_class = $fusion_library->images->get_element_orientation_class( $post_thumbnail_attachment );
+				$element_orientation_class = $fusion_library->images->get_element_orientation_class( get_post_thumbnail_id(), $post_thumbnail_attachment, $this->args['blog_masonry_grid_ratio'], $this->args['blog_masonry_width_double'] );
 				$element_base_padding  = $fusion_library->images->get_element_base_padding( $element_orientation_class );
 
 				$masonry_column_offset = ' - ' . ( (int) $this->args['blog_grid_column_spacing'] / 2 ) . 'px';
-				if ( 'fusion-element-portrait' === $element_orientation_class ) {
+				if ( false !== strpos( $element_orientation_class, 'fusion-element-portrait' ) ) {
 					$masonry_column_offset = '';
 				}
 
@@ -931,24 +921,27 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					'0' != Fusion_Color::new_color( $this->args['grid_element_color'] )->alpha ) {
 
 					$masonry_column_offset = ' - ' . ( (int) $this->args['blog_grid_column_spacing'] / 2 ) . 'px';
-					if ( 'fusion-element-portrait' === $element_orientation_class ) {
+					if ( false !== strpos( $element_orientation_class, 'fusion-element-portrait' ) ) {
 						$masonry_column_offset = ' + 4px';
 					}
 
 					$masonry_column_spacing = ( (int) $this->args['blog_grid_column_spacing'] - 2 ) . 'px';
-					if ( 'fusion-element-landscape' === $element_orientation_class ) {
+					if ( false !== strpos( $element_orientation_class, 'fusion-element-landscape' ) ) {
 						$masonry_column_spacing = ( (int) $this->args['blog_grid_column_spacing'] - 6 ) . 'px';
 					}
 				}
 
-				// Calculate the correct size of the image wrapper container, based on orientation and column spacing.
-				$masonry_attribute_style .= 'padding-top:calc((100% + ' . $masonry_column_spacing . ') * ' . $element_base_padding . $masonry_column_offset . ');';
+				// Check if a featured image is set and also that not a video with no featured image.
+				$post_video = apply_filters( 'fusion_builder_post_video', $this->post_id );
+				if ( ! empty( $post_thumbnail_attachment ) || ! $post_video ) {
+
+					// Calculate the correct size of the image wrapper container, based on orientation and column spacing.
+					$masonry_attribute_style .= 'padding-top:calc((100% + ' . $masonry_column_spacing . ') * ' . $element_base_padding . $masonry_column_offset . ');';
+				}
 
 				// Check if we have a landscape image, then it has to stretch over 2 cols.
-				if ( 'fusion-element-landscape' === $element_orientation_class ) {
+				if ( false !== strpos( $element_orientation_class, 'fusion-element-landscape' ) ) {
 					$responsive_images_columns = $this->args['blog_grid_columns'] / 2;
-				} else {
-					$this->regular_images_found = true;
 				}
 
 				// Set the masonry attributes to use them in the first featured image function.
@@ -1461,7 +1454,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 			public function loop_content() {
 
 				if ( 'hide' !== $this->args['excerpt'] ) {
-					$content = fusion_builder_get_post_content( '', $this->args['excerpt'], $this->args['excerpt_words'], $this->args['strip_html'] );
+					$content = fusion_builder_get_post_content( '', $this->args['excerpt'], $this->args['excerpt_length'], $this->args['strip_html'] );
 
 					echo '<div class="fusion-post-content-container">' . $content . '</div>'; // WPCS: XSS ok.
 				}
@@ -1583,13 +1576,13 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					'.fusion-blog-layout-grid-5 .fusion-post-grid',
 				);
 				$css[ $five_columns_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width'] = '33.3333333333% !important';
-				$css[ $five_columns_media_query ]['.fusion-blog-layout-grid-5 .fusion-element-landscape']['width'] = '66% !important';
+				$css[ $five_columns_media_query ]['.fusion-blog-layout-grid-5 .fusion-element-landscape']['width'] = '66.6666666666% !important';
 
 				$elements = array(
 					'.fusion-blog-layout-grid-4 .fusion-post-grid',
 				);
 				$css[ $five_columns_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width'] = '33.3333333333% !important';
-				$css[ $five_columns_media_query ]['.fusion-blog-layout-grid-4 .fusion-element-landscape']['width'] = '66% !important';
+				$css[ $five_columns_media_query ]['.fusion-blog-layout-grid-4 .fusion-element-landscape']['width'] = '66.6666666666% !important';
 
 				// Four Column Breakpoint.
 				$elements = array(
@@ -1612,8 +1605,8 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				$elements = array(
 					'.fusion-blog-layout-grid-6 .fusion-post-grid',
 				);
-				$css[ $three_columns_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width'] = '33.33% !important';
-				$css[ $three_columns_media_query ]['.fusion-blog-layout-grid-6 .fusion-element-landscape']['width'] = '66% !important';
+				$css[ $three_columns_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width'] = '33.3333333333% !important';
+				$css[ $three_columns_media_query ]['.fusion-blog-layout-grid-6 .fusion-element-landscape']['width'] = '66.6666666666% !important';
 
 				$elements = array(
 					'.fusion-blog-layout-grid-5 .fusion-post-grid',
@@ -1648,7 +1641,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					'.fusion-blog-layout-grid-6 .fusion-post-grid',
 				);
 				$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width'] = '33.3333333333% !important';
-				$css[ $ipad_portrait_media_query ]['.fusion-blog-layout-grid-6 .fusion-element-landscape']['width'] = '66% !important';
+				$css[ $ipad_portrait_media_query ]['.fusion-blog-layout-grid-6 .fusion-element-landscape']['width'] = '66.6666666666% !important';
 
 				$elements = array(
 					'.fusion-blog-layout-grid-5 .fusion-post-grid',
@@ -1664,10 +1657,9 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					'.fusion-blog-layout-medium-alternate .fusion-post-content',
 					'.fusion-blog-layout-medium-alternate .has-post-thumbnail .fusion-post-content',
 				);
-				$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['float']       = 'none';
-				$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['clear']       = 'both';
 				$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['margin']      = '0';
 				$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['padding-top'] = '20px';
+				$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['flex']        = '1 0 100%';
 
 				$elements = array(
 					'.fusion-blog-layout-large .fusion-meta-info .fusion-alignleft',
@@ -1681,10 +1673,12 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				$css[ $six_fourty_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width']   = '100%';
 
 				// Blog medium layout.
-				$css[ $six_fourty_media_query ]['.fusion-blog-layout-medium .fusion-post-slideshow']['float']  = 'none';
 				$css[ $six_fourty_media_query ]['.fusion-blog-layout-medium .fusion-post-slideshow']['margin'] = '0 0 20px 0';
 				$css[ $six_fourty_media_query ]['.fusion-blog-layout-medium .fusion-post-slideshow']['height'] = 'auto';
 				$css[ $six_fourty_media_query ]['.fusion-blog-layout-medium .fusion-post-slideshow']['width']  = 'auto';
+				$css[ $six_fourty_media_query ]['.fusion-blog-layout-medium .fusion-post-slideshow']['flex']   = '1 0 100%';
+
+				$css[ $six_fourty_media_query ]['.fusion-blog-layout-medium .fusion-post-content']['flex']   = '0 1 100%';
 
 				// Blog large alternate layout.
 				$css[ $six_fourty_media_query ]['.fusion-blog-layout-large-alternate .fusion-date-and-formats']['margin-bottom'] = '35px';
@@ -1693,9 +1687,10 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 
 				// Blog medium alternate layout.
 				$css[ $six_fourty_media_query ]['.fusion-blog-layout-medium-alternate .has-post-thumbnail .fusion-post-slideshow']['display']      = 'inline-block';
-				$css[ $six_fourty_media_query ]['.fusion-blog-layout-medium-alternate .has-post-thumbnail .fusion-post-slideshow']['float']        = 'none';
 				$css[ $six_fourty_media_query ]['.fusion-blog-layout-medium-alternate .has-post-thumbnail .fusion-post-slideshow']['margin-right'] = '0';
 				$css[ $six_fourty_media_query ]['.fusion-blog-layout-medium-alternate .has-post-thumbnail .fusion-post-slideshow']['max-width']    = '197px';
+
+				$css[ $six_fourty_media_query ]['.fusion-blog-layout-medium .fusion-post-content']['flex']   = '0 1 100%';
 
 				// Blog grid layout.
 				$css[ $six_fourty_media_query ]['.fusion-blog-layout-grid .fusion-post-grid']['position'] = 'static';
@@ -1717,8 +1712,8 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				);
 				$css[ $six_fourty_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['display'] = 'none';
 
-				$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['float']      = 'none';
-				$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['width']      = '100% !important';
+				$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['flex']       = '1 0 100%';
+				$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['width']      = '100%';
 				$ipad_portrait[ $ipad_portrait_media_query ]['.fusion-blog-layout-medium-alternate .fusion-post-content']['margin-top'] = '20px';
 
 				if ( $fusion_settings->get( 'slideshow_smooth_height' ) ) {
@@ -1833,10 +1828,18 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = $fusion_library->sanitize->color( fusion_library()->get_option( 'primary_color' ) );
 				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = $fusion_library->sanitize->color( fusion_library()->get_option( 'primary_color' ) );
 
+				$elements = array(
+					'.fusion-blog-pagination .pagination .pagination-prev:before',
+					'.fusion-blog-pagination .pagination .pagination-next:after',
+				);
+				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = $fusion_library->sanitize->color( fusion_library()->get_option( 'link_color' ) );
+
 				$css['global']['.fusion-blog-pagination .pagination a.inactive:hover, .fusion-hide-pagination-text .fusion-blog-pagination .pagination .pagination-next:hover, .fusion-hide-pagination-text .fusion-blog-pagination .pagination .pagination-prev:hover']['border-color'] = $fusion_library->sanitize->color( fusion_library()->get_option( 'primary_color' ) );
 				$css['global']['.fusion-blog-pagination .pagination a.inactive, .fusion-hide-pagination-text .fusion-blog-pagination .pagination .pagination-next, .fusion-hide-pagination-text .fusion-blog-pagination .pagination .pagination-prev']['border-color'] = $fusion_library->sanitize->color( $fusion_settings->get( 'sep_color' ) );
 				$elements = array(
 					'.fusion-date-and-formats .fusion-format-box',
+					'.fusion-blog-pagination .pagination .pagination-prev:hover:before',
+					'.fusion-blog-pagination .pagination .pagination-next:hover:after',
 				);
 				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = $fusion_library->sanitize->color( fusion_library()->get_option( 'primary_color' ) );
 				$elements = array(
@@ -1875,16 +1878,9 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 						'default'     => '',
 						'type'        => 'accordion',
 						'fields'      => array(
-							'dates_box_color' => array(
-								'label'       => esc_attr__( 'Blog Date Box Color', 'fusion-builder' ),
-								'description' => esc_attr__( 'Controls the color of the date box in blog alternate and recent posts layouts.', 'fusion-builder' ),
-								'id'          => 'dates_box_color',
-								'default'     => '#eef0f2',
-								'type'        => 'color-alpha',
-							),
 							'blog_grid_columns' => array(
-								'label'       => esc_attr__( 'Grid Layout Columns', 'fusion-builder' ),
-								'description' => esc_html__( 'Controls the amount of columns for the grid layout when using it for the assigned blog page in "settings > reading" or blog archive pages or search results page.', 'fusion-builder' ),
+								'label'       => esc_attr__( 'Number of Columns', 'fusion-builder' ),
+								'description' => __( 'Set the number of columns per row for grid and masonry layout. <strong>IMPORTANT:</strong> Masonry layout does not work with 1 column.', 'fusion-builder' ),
 								'id'          => 'blog_grid_columns',
 								'default'     => 3,
 								'type'        => 'slider',
@@ -1895,8 +1891,8 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 								),
 							),
 							'blog_grid_column_spacing' => array(
-								'label'       => esc_attr__( 'Grid Layout Column Spacing', 'fusion-builder' ),
-								'description' => esc_html__( 'Controls the amount of spacing between columns for the grid layout when using it for the assigned blog page in "settings > reading" or blog archive pages or search results page.', 'fusion-builder' ),
+								'label'       => esc_attr__( 'Column Spacing', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the column spacing for blog posts for grid and masonry layout.', 'fusion-builder' ),
 								'id'          => 'blog_grid_column_spacing',
 								'default'     => '40',
 								'type'        => 'slider',
@@ -1956,6 +1952,13 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 										'value'    => 'yes',
 									),
 								),
+							),
+							'dates_box_color' => array(
+								'label'       => esc_attr__( 'Blog Date Box Color', 'fusion-builder' ),
+								'description' => esc_attr__( 'Controls the color of the date box in blog alternate and recent posts layouts.', 'fusion-builder' ),
+								'id'          => 'dates_box_color',
+								'default'     => '#eef0f2',
+								'type'        => 'color-alpha',
 							),
 						),
 					),
@@ -2062,7 +2065,7 @@ function fusion_blog_redirect_canonical( $redirect_url ) {
  * @since 1.0
  */
 function fusion_element_blog() {
-	global $fusion_settings;
+	global $fusion_settings, $pagenow;
 
 	fusion_builder_map(
 		array(
@@ -2090,10 +2093,11 @@ function fusion_element_blog() {
 				),
 				array(
 					'type'        => 'range',
-					'heading'     => esc_attr__( 'Grid Layout # of Columns', 'fusion-builder' ),
-					'description' => esc_attr__( 'Set the number of columns per row.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Number of Columns', 'fusion-builder' ),
+					'description' => __( 'Set the number of columns per row. <strong>IMPORTANT:</strong> Masonry layout does not work with 1 column.', 'fusion-builder' ),
 					'param_name'  => 'blog_grid_columns',
-					'value'       => '3',
+					'value'       => '',
+					'default'     => $fusion_settings->get( 'blog_grid_columns' ),
 					'min'         => '1',
 					'max'         => '6',
 					'step'        => '1',
@@ -2128,9 +2132,10 @@ function fusion_element_blog() {
 				array(
 					'type'        => 'range',
 					'heading'     => esc_attr__( 'Column Spacing', 'fusion-builder' ),
-					'description' => esc_attr__( 'Insert the amount of spacing between blog posts.', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls the column spacing for blog posts.', 'fusion-builder' ),
 					'param_name'  => 'blog_grid_column_spacing',
-					'value'       => '40',
+					'value'       => '',
+					'default'     => $fusion_settings->get( 'blog_grid_column_spacing' ),
 					'min'         => '0',
 					'step'        => '1',
 					'max'         => '300',
@@ -2159,6 +2164,42 @@ function fusion_element_blog() {
 							'element'  => 'layout',
 							'value'    => 'timeline',
 							'operator' => '!=',
+						),
+					),
+				),
+				array(
+					'type'        => 'range',
+					'heading'     => esc_attr__( 'Masonry Image Aspect Ratio', 'fusion-builder' ),
+					'description' => __( 'Set the ratio to decide when an image should become landscape (ratio being width : height) and portrait (ratio being height : width). <strong>IMPORTANT:</strong> The value of "1.0" represents a special case, which will use the auto calculated ratios like in versions prior to Avada 5.5.', 'fusion-builder' ),
+					'param_name'  => 'blog_masonry_grid_ratio',
+					'value'       => '',
+					'min'         => '1',
+					'max'         => '4',
+					'step'        => '0.1',
+					'default'     => $fusion_settings->get( 'masonry_grid_ratio' ),
+					'dependency'  => array(
+						array(
+							'element'  => 'layout',
+							'value'    => 'masonry',
+							'operator' => '==',
+						),
+					),
+				),
+				array(
+					'type'        => 'range',
+					'heading'     => esc_attr__( 'Masonry 2x2 Width', 'fusion-builder' ),
+					'description' => __( 'This option decides when a square 1x1 image should become 2x2. This will not apply to images that highly favor landscape or portrait layouts. <strong>IMPORTANT:</strong> There is a “Masonry Image Layout” setting for every image in the WP media library that allows you to manually set how an image will appear (1x1, landscape, portrait or 2x2), regardless of the original ratio. In pixels.', 'fusion-builder' ),
+					'param_name'  => 'blog_masonry_width_double',
+					'value'       => '',
+					'min'         => '200',
+					'max'         => '5120',
+					'step'        => '1',
+					'default'     => $fusion_settings->get( 'masonry_width_double' ),
+					'dependency'  => array(
+						array(
+							'element'  => 'layout',
+							'value'    => 'masonry',
+							'operator' => '==',
 						),
 					),
 				),
@@ -2228,7 +2269,7 @@ function fusion_element_blog() {
 					'heading'     => esc_attr__( 'Categories', 'fusion-builder' ),
 					'description' => esc_attr__( 'Select a category or leave blank for all.', 'fusion-builder' ),
 					'param_name'  => 'cat_slug',
-					'value'       => fusion_builder_shortcodes_categories( 'category' ),
+					'value'       => ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ? fusion_builder_shortcodes_categories( 'category' ) : array(),
 					'default'     => '',
 					'dependency'  => array(
 						array(
@@ -2243,7 +2284,7 @@ function fusion_element_blog() {
 					'heading'     => esc_attr__( 'Exclude Categories', 'fusion-builder' ),
 					'description' => esc_attr__( 'Select a category to exclude.', 'fusion-builder' ),
 					'param_name'  => 'exclude_cats',
-					'value'       => fusion_builder_shortcodes_categories( 'category' ),
+					'value'       => ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ? fusion_builder_shortcodes_categories( 'category' ) : array(),
 					'default'     => '',
 					'dependency'  => array(
 						array(
@@ -2258,7 +2299,7 @@ function fusion_element_blog() {
 					'heading'     => esc_attr__( 'Tags', 'fusion-builder' ),
 					'description' => esc_attr__( 'Select a tag or leave blank for all.', 'fusion-builder' ),
 					'param_name'  => 'tag_slug',
-					'value'       => fusion_builder_shortcodes_tags( 'post_tag' ),
+					'value'       => ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ? fusion_builder_shortcodes_tags( 'post_tag' ) : array(),
 					'default'     => '',
 					'dependency'  => array(
 						array(
@@ -2273,7 +2314,7 @@ function fusion_element_blog() {
 					'heading'     => esc_attr__( 'Exclude Tags', 'fusion-builder' ),
 					'description' => esc_attr__( 'Select a tag to exclude.', 'fusion-builder' ),
 					'param_name'  => 'exclude_tags',
-					'value'       => fusion_builder_shortcodes_tags( 'post_tag' ),
+					'value'       => ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ? fusion_builder_shortcodes_tags( 'post_tag' ) : array(),
 					'default'     => '',
 					'dependency'  => array(
 						array(

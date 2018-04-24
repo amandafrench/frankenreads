@@ -248,7 +248,7 @@
 						<a class="tfs-scroll-down-indicator fusion-one-page-text-link" href="#main" style="opacity:0;color:<?php echo esc_attr( $slider_settings['slider_indicator_color'] ); ?>;"></a>
 					<?php endif; ?>
 					<?php if ( isset( $metadata['pyre_link_type'][0] ) && 'full' === $metadata['pyre_link_type'][0] && isset( $metadata['pyre_slide_link'][0] ) && $metadata['pyre_slide_link'][0] ) : ?>
-						<a href="<?php echo esc_url_raw( $metadata['pyre_slide_link'][0] ); ?>" class="overlay-link" <?php echo ( isset( $metadata['pyre_slide_target'][0] ) && 'yes' === $metadata['pyre_slide_target'][0] ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?> aria-label="<?php the_title(); ?>"></a>
+						<a href="<?php echo esc_url_raw( $metadata['pyre_slide_link'][0] ); ?>" class="overlay-link" <?php echo ( isset( $metadata['pyre_slide_target'][0] ) && 'yes' === $metadata['pyre_slide_target'][0] ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?> aria-label="<?php the_title_attribute(); ?>"></a>
 					<?php endif; ?>
 					<?php if ( isset( $metadata['pyre_preview_image'][0] ) && $metadata['pyre_preview_image'][0] && isset( $metadata['pyre_type'][0] ) && 'self-hosted-video' === $metadata['pyre_type'][0] ) : ?>
 						<div class="mobile_video_image" style="background-image: url('<?php echo esc_url_raw( Fusion_Sanitize::css_asset_url( $metadata['pyre_preview_image'][0] ) ); ?>');"></div>
@@ -283,7 +283,7 @@
 						<?php endif; ?>
 						<?php if ( isset( $metadata['pyre_type'][0] ) && isset( $metadata['pyre_vimeo_id'][0] ) && 'vimeo' === $metadata['pyre_type'][0] && $metadata['pyre_vimeo_id'][0] ) : ?>
 							<div style="position: absolute; top: 0; left: 0; <?php echo esc_attr( $video_zindex ); ?> width: 100%; height: 100%" data-mute="<?php echo esc_attr( $data_mute ); ?>" data-vimeo-video-id="<?php echo esc_attr( $metadata['pyre_vimeo_id'][0] ); ?>" data-video-aspect-ratio="<?php echo esc_attr( $aspect_ratio ); ?>">
-								<iframe src="https://player.vimeo.com/video/<?php echo esc_attr( $metadata['pyre_vimeo_id'][0] ); ?>?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&amp;badge=0<?php echo esc_attr( $vimeo_attributes ); ?>" height="100%" width="100%" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+								<iframe src="https://player.vimeo.com/video/<?php echo esc_attr( $metadata['pyre_vimeo_id'][0] ); ?>?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&amp;badge=0&amp;autopause=0<?php echo esc_attr( $vimeo_attributes ); ?>" height="100%" width="100%" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 							</div>
 						<?php endif; ?>
 					</div>

@@ -23,7 +23,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			render: function() {
 				this.$el.html( this.template( this.model.toJSON() ) );
 
-				this.$el.find( '#video-dialog' ).dialog({
+				this.$el.find( '#video-dialog' ).dialog( {
 					dialogClass: 'fusion-builder-dialog',
 					autoOpen: false,
 					modal: true,
@@ -43,9 +43,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			addContainer: function( event ) {
 
 				var moduleID,
-				    defaultParams,
-				    params,
-				    value;
+					defaultParams,
+					params,
+					value;
 
 				if ( event ) {
 					event.preventDefault();
@@ -62,7 +62,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				// Process default options for shortcode.
 				_.each( defaultParams, function( param )  {
 					if ( _.isObject( param.value ) ) {
-						value = param['default'];
+						value = param.default;
 					} else {
 						value = param.value;
 					}
@@ -71,9 +71,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					if ( 'dimension' === param.type && _.isObject( param.value ) ) {
 						_.each( param.value, function( value, name )  {
 							params[name] = value;
-						});
+						} );
 					}
-				});
+				} );
 
 				this.collection.add( [ {
 					type: 'fusion_builder_container',
@@ -101,4 +101,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			}
 		} );
 	} );
-} )( jQuery );
+} ( jQuery ) );

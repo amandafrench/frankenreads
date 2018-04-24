@@ -1908,6 +1908,7 @@ button.fusion-button.button-3d:active {
 .fusion-content-boxes.content-boxes-icon-on-side .heading-with-icon .content-box-heading {
   vertical-align: top;
 }
+.fusion-content-boxes.content-boxes-icon-on-side .heading-with-icon .fontawesome-icon,
 .fusion-content-boxes.content-boxes-icon-on-side .heading-with-icon .fa {
   margin-right: 20px;
 }
@@ -3191,7 +3192,6 @@ button.fusion-button.button-3d:active {
   margin-left: -20px;
   width: 40px;
   font-size: 20px;
-  font-family: FontAwesome;
   text-align: center;
 }
 .fusion-section-separator .section-separator-icon:after {

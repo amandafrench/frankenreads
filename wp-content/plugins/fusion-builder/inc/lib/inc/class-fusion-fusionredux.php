@@ -443,6 +443,9 @@ class Fusion_FusionRedux {
 					$args['validate_callback'] = 'fusion_fusionredux_validate_font_size';
 					/* translators: The description subtitle and an example value. */
 					$args['subtitle'] = sprintf( esc_attr__( '%1$s Enter value including CSS unit (px, em, rem), ex: %2$s.', 'Avada' ), $args['subtitle'], $field['default'] );
+				} elseif ( 'text_column_spacing' === $field['id'] ) {
+					/* translators: The description subtitle and an example value. */
+					$args['subtitle'] = sprintf( esc_attr__( '%1$s Enter value including any valid CSS unit besides %% which does not work for inline columns, ex: %2$s.', 'Avada' ), $args['subtitle'], $field['default'] );
 				} else {
 					/* translators: The description subtitle and an example value. */
 					$args['subtitle'] = sprintf( esc_attr__( '%1$s Enter value including any valid CSS unit, ex: %2$s.', 'Avada' ), $args['subtitle'], $field['default'] );

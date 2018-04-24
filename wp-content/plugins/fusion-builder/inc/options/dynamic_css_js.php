@@ -20,7 +20,7 @@ function fusion_builder_options_section_advanced( $sections ) {
 		'priority' => 25,
 		'icon'     => 'el-icon-puzzle',
 		'fields'   => array(
-			'js_compiler_note' => ( 'no' != get_transient( 'fusion_dynamic_js_readable' ) ) ? array() : array(
+			'js_compiler_note' => ( apply_filters( 'fusion_compiler_js_file_is_readable', get_transient( 'fusion_dynamic_js_readable' ) ) ) ? array() : array(
 				'label'       => '',
 				'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> JS Compiler is disabled. File does not exist or access is restricted.', 'fusion-builder' ) . '</div>',
 				'id'          => 'js_compiler_note',

@@ -34,15 +34,15 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			addNestedColumns: function( event ) {
 				var moduleID,
-				    that,
-				    $layoutEl,
-				    layout,
-				    layoutElementsNum,
-				    thisView,
-				    defaultParams,
-				    params,
-				    value,
-				    appendAfter;
+					that,
+					$layoutEl,
+					layout,
+					layoutElementsNum,
+					thisView,
+					defaultParams,
+					params,
+					value,
+					appendAfter;
 
 				if ( event ) {
 					event.preventDefault();
@@ -64,7 +64,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				// Process default parameters from shortcode
 				_.each( defaultParams, function( param )  {
 					if ( _.isObject( param.value ) ) {
-						value = param['default'];
+						value = param.default;
 					} else {
 						value = param.value;
 					}
@@ -81,7 +81,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 							view: thisView,
 							params: params,
 							appendAfter: appendAfter
-					    };
+						};
 
 					that.collection.add( [ columnAttributes ] );
 
@@ -108,4 +108,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			}
 		} );
 	} );
-} )( jQuery );
+} ( jQuery ) );

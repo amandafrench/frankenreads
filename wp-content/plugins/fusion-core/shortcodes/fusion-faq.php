@@ -331,9 +331,15 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 							$html .= '</div>';
 						}
 					}
-					ob_start();
-					the_content();
-					$html .= ob_get_clean();
+
+					$content = get_the_content();
+
+					// Nested containers are invalid for scrolling sections.
+					$content = str_replace( '[fusion_builder_container', '[fusion_builder_container is_nested="1"', $content );
+					$content = apply_filters( 'the_content', $content );
+					$content = str_replace( ']]>', ']]&gt;', $content );
+					$html .= $content;
+
 					$html .= '</div>';
 					$html .= '</div>';
 					$html .= '</div>';
@@ -609,7 +615,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
  * @since 1.0
  */
 function fusion_element_faq() {
-	global $fusion_settings;
+	global $fusion_settings, $pagenow;
 	fusion_builder_map(
 		array(
 			'name'       => esc_attr__( 'FAQ', 'fusion-core' ),
@@ -648,7 +654,7 @@ function fusion_element_faq() {
 					'heading'     => esc_attr__( 'Categories', 'fusion-core' ),
 					'description' => esc_attr__( 'Select categories to include or leave blank for all.', 'fusion-core' ),
 					'param_name'  => 'cats_slug',
-					'value'       => fusion_builder_shortcodes_categories( 'faq_category' ),
+					'value'       => ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ? fusion_builder_shortcodes_categories( 'faq_category' ) : array(),
 					'default'     => '',
 				),
 				array(
@@ -656,7 +662,7 @@ function fusion_element_faq() {
 					'heading'     => esc_attr__( 'Exclude Categories', 'fusion-core' ),
 					'description' => esc_attr__( 'Select categories to exclude.', 'fusion-core' ),
 					'param_name'  => 'exclude_cats',
-					'value'       => fusion_builder_shortcodes_categories( 'faq_category' ),
+					'value'       => ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ? fusion_builder_shortcodes_categories( 'faq_category' ) : array(),
 					'default'     => '',
 				),
 				array(

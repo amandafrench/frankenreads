@@ -4,10 +4,10 @@
  */
 ( function( $ ) {
 	var fusionHistoryManager = {},
-	    fusionCommands       = new Array( '[]' ),
-	    fusionCommandsStates = new Array( '[]' ), // History states
-	    maxSteps             = 25, // Maximum steps allowed/saved
-	    currStep             = 0; // Current Index of step
+		fusionCommands       = new Array( '[]' ),
+		fusionCommandsStates = new Array( '[]' ), // History states
+		maxSteps             = 25, // Maximum steps allowed/saved
+		currStep             = 0; // Current Index of step
 
 	// Is tracking on or off?
 	window.tracking = 'on';
@@ -35,7 +35,7 @@
 				currStep += 1; // Else increment index
 			}
 
-			if ( currStep > 1 ) {
+			if ( 1 < currStep ) {
 				$( '.fusion-builder-history-list li' ).removeClass( 'fusion-history-active-state' );
 				$( '.fusion-builder-history-list' ).prepend( '<li data-state-id="' + currStep + '" class="history-state-' + currStep + ' fusion-history-active-state"><span class="dashicons dashicons-arrow-right-alt2"></span>' + fusionHistoryState + '</li>' );
 			}
@@ -285,4 +285,4 @@
 		}
 	};
 
-})( jQuery );
+} ( jQuery ) );

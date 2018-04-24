@@ -74,8 +74,7 @@ $post_video = fusion_get_page_option( 'video', get_the_ID() );
 		<ul class="slides">
 			<?php if ( $post_video ) : ?>
 				<li>
-					<?php // @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
-					<div class="full-video"><?php echo $post_video; ?></div>
+					<div class="full-video"><?php echo $post_video; // WPCS: XSS ok. ?></div>
 				</li>
 			<?php endif; ?>
 
@@ -106,8 +105,7 @@ $post_video = fusion_get_page_option( 'video', get_the_ID() );
 			?>
 			<?php if ( has_post_thumbnail() ) : ?>
 				<?php $full_image      = wp_get_attachment_image_src( $thumbnail_id, 'full' ); ?>
-				<?php // @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
-				<li><?php echo fusion_render_first_featured_image_markup( $post->ID, $size, $permalink ); ?></li>
+				<li><?php echo fusion_render_first_featured_image_markup( $post->ID, $size, $permalink ); // WPCS: XSS ok. ?></li>
 			<?php endif; ?>
 
 			<?php $i = 2; ?>
@@ -129,16 +127,14 @@ $post_video = fusion_get_page_option( 'video', get_the_ID() );
 					<?php if ( is_array( $attachment_data ) ) : ?>
 						<li>
 							<div class="fusion-image-wrapper">
-								<a href="<?php the_permalink(); ?>" aria-label="<?php the_title(); ?>">
+								<a href="<?php the_permalink(); ?>" aria-label="<?php the_title_attribute(); ?>">
 									<?php
 									$image_markup = '<img src="' . $attachment_image[0] . '" alt="' . $attachment_data['alt'] . '" class="wp-image-' . $attachment_id . '" role="presentation"/>';
 									$image_markup = $fusion_library->images->edit_grid_image_src( $image_markup, $post->ID, $attachment_id, $size );
 									if ( function_exists( 'wp_make_content_images_responsive' ) ) {
-										// @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped
-										echo wp_make_content_images_responsive( $image_markup );
+										echo wp_make_content_images_responsive( $image_markup ); // WPCS: XSS ok.
 									} else {
-										// @codingStandardsIgnoreLine WordPress.XSS.EscapeOutput.OutputNotEscaped
-										echo $image_markup;
+										echo $image_markup; // WPCS: XSS ok.
 									}
 									?>
 								</a>

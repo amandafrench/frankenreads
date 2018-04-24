@@ -29,13 +29,13 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			render: function() {
 				this.$el.html( this.template( this.model.toJSON() ) );
 
-				if ( 'undefined' !== typeof ( this.model.attributes.params.admin_toggled ) && 'yes' === this.model.attributes.params.admin_toggled ) {
+				if ( 'undefined' !== typeof this.model.attributes.params.admin_toggled && 'yes' === this.model.attributes.params.admin_toggled ) {
 						this.$el.addClass( 'fusion-builder-section-folded' );
 						this.$el.find( 'span' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
 				}
 
 				// If global, make it.
-				if ( 'undefined' !== typeof ( this.model.attributes.params.fusion_global ) ) {
+				if ( 'undefined' !== typeof this.model.attributes.params.fusion_global ) {
 					FusionPageBuilderApp.addClassToElement( this.$el, 'fusion-global-container', this.model.attributes.params.fusion_global );
 				}
 
@@ -44,32 +44,32 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			saveElement: function( event ) {
 				var elementContent   = this.getContainerContent(),
-				    $mainContainer   = $( '#fusion_builder_main_container' ),
-				    elementName      = $( '#fusion-builder-save-element-input' ).val(),
-				    saveGlobal       = $( '#fusion_save_global' ).is( ':checked' ),
-				    layoutsContainer = $( '#fusion-builder-layouts-sections .fusion-page-layouts' ),
-				    emptyMessage     = $( '#fusion-builder-layouts-sections .fusion-empty-library-message' ),
-				    thisModel        = this.model,
-				    isDuplicate      = false,
-				    oldGLobalID      = null,
-				    params           = {};
+					$mainContainer   = $( '#fusion_builder_main_container' ),
+					elementName      = $( '#fusion-builder-save-element-input' ).val(),
+					saveGlobal       = $( '#fusion_save_global' ).is( ':checked' ),
+					layoutsContainer = $( '#fusion-builder-layouts-sections .fusion-page-layouts' ),
+					emptyMessage     = $( '#fusion-builder-layouts-sections .fusion-empty-library-message' ),
+					thisModel        = this.model,
+					isDuplicate      = false,
+					oldGLobalID      = null,
+					params           = {};
 
 				if ( event ) {
 					event.preventDefault();
 				}
 
-				if ( 'undefined' !== typeof ( this.model.attributes.params ) && 'undefined' !== typeof ( this.model.attributes.params.fusion_global ) &&  0 < $mainContainer.find( '[fusion-global-layout="' + this.model.attributes.params.fusion_global + '"]' ).length ) {
+				if ( 'undefined' !== typeof this.model.attributes.params && 'undefined' !== typeof this.model.attributes.params.fusion_global && 0 < $mainContainer.find( '[fusion-global-layout="' + this.model.attributes.params.fusion_global + '"]' ).length ) {
 
 					// Make a copy.
-					oldGLobalID     = this.model.attributes.params.fusion_global;
-					params          = this.model.get( 'params' );
+					oldGLobalID = this.model.attributes.params.fusion_global;
+					params      = this.model.get( 'params' );
 
 					// Remove temporarily and update model
 					delete params.fusion_global;
 					this.model.set( 'params', params );
 
 					// Get content.
-					elementContent   = this.getContainerContent();
+					elementContent = this.getContainerContent();
 
 					// Add it back.
 					params.fusion_global = oldGLobalID;
@@ -83,7 +83,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 						isDuplicate = true;
 						return false;
 					}
-				});
+				} );
 
 				if ( true === FusionPageBuilderApp.layoutIsSaving || true === isDuplicate ) {
 					return;
@@ -114,7 +114,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 							if ( saveGlobal ) {
 								thisModel.attributes.params.fusion_global = $( data.responseText ).attr( 'data-layout_id' );
 								$( 'div[data-cid="' + thisModel.get( 'cid' ) + '"]' ).closest( '.fusion_builder_container' ).addClass( 'fusion-global-container' );
-								$( 'div[data-cid="' + thisModel.get( 'cid' ) + '"]' ).attr( 'fusion-global-layout', $( data.responseText ).attr( 'data-layout_id' )  );
+								$( 'div[data-cid="' + thisModel.get( 'cid' ) + '"]' ).attr( 'fusion-global-layout', $( data.responseText ).attr( 'data-layout_id' ) );
 								$( 'div[data-cid="' + thisModel.get( 'cid' ) + '"]' ).append( '<div class="fusion-builder-global-tooltip"><span>' + fusionBuilderText.global_container + '</span></div>' );
 								FusionPageBuilderEvents.trigger( 'fusion-element-added' );
 								FusionPageBuilderApp.saveGlobal = true;
@@ -129,7 +129,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			getContainerContent: function( model, collection, options ) { // jshint ignore:line
 				var shortcode      = '',
-				    $thisContainer = this.$el.find( '.fusion-builder-section-content' );
+					$thisContainer = this.$el.find( '.fusion-builder-section-content' );
 
 				shortcode += FusionPageBuilderApp.generateElementShortcode( this.$el, true );
 
@@ -140,8 +140,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 					$thisRow.find( '.fusion-builder-column-outer' ).each( function() {
 						var $thisColumn = $( this ),
-						    $columnCID  = $thisColumn.data( 'cid' ),
-						    $columnView = FusionPageBuilderViewManager.getView( $columnCID );
+							$columnCID  = $thisColumn.data( 'cid' ),
+							$columnView = FusionPageBuilderViewManager.getView( $columnCID );
 
 						// Get column contents shortcode
 						shortcode += $columnView.getColumnContent( $thisColumn );
@@ -175,13 +175,13 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			showSettings: function( event ) {
 
 				var $modalView,
-				    $viewSettings = {
+					$viewSettings = {
 						model: this.model,
 						collection: this.collection,
 						attributes: {
 							'data-modal_view': 'element_settings'
 						}
-				    };
+					};
 
 				if ( event ) {
 					event.preventDefault();
@@ -198,8 +198,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			hideHundredPercentOption: function() {
 				var $currentTemplate = jQuery( '#page_template' ),
-				    $currentPortfolioWidth = jQuery( '#pyre_portfolio_width_100' ).val(),
-				    $option = jQuery( '.fusion_builder_container li[data-option-id="hundred_percent"]' );
+					$currentPortfolioWidth = jQuery( '#pyre_portfolio_width_100' ).val(),
+					$option = jQuery( '.fusion_builder_container li[data-option-id="hundred_percent"]' );
 
 				if ( '100-width.php' !== $currentTemplate.val() && 'yes' !== $currentPortfolioWidth ) {
 
@@ -213,9 +213,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			addContainer: function( event ) {
 
 				var elementID,
-				    defaultParams,
-				    params,
-				    value;
+					defaultParams,
+					params,
+					value;
 
 				if ( event ) {
 					event.preventDefault();
@@ -224,25 +224,25 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 				FusionPageBuilderApp.activeModal = 'container';
 
-				elementID      = FusionPageBuilderViewManager.generateCid();
+				elementID     = FusionPageBuilderViewManager.generateCid();
 				defaultParams = fusionAllElements.fusion_builder_container.params;
 				params        = {};
 
 				// Process default options for shortcode.
-				_.each( defaultParams, function( param )  {
+				_.each( defaultParams, function( param ) {
 					if ( _.isObject( param.value ) ) {
-						value = param['default'];
+						value = param.default;
 					} else {
 						value = param.value;
 					}
 					params[param.param_name] = value;
 
 					if ( 'dimension' === param.type && _.isObject( param.value ) ) {
-						_.each( param.value, function( value, name )  {
+						_.each( param.value, function( value, name ) {
 							params[name] = value;
-						});
+						} );
 					}
-				});
+				} );
 
 				this.collection.add( [ {
 					type: 'fusion_builder_container',
@@ -273,7 +273,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			cloneContainer: function( event ) {
 
 				var containerAttributes,
-				    $thisContainer;
+					$thisContainer;
 
 				if ( event ) {
 					event.preventDefault();
@@ -292,7 +292,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				$thisContainer.find( '.fusion-builder-row-content:not(.fusion_builder_row_inner .fusion-builder-row-content)' ).each( function() {
 
 					var thisRow = $( this ),
-					    rowCID  = thisRow.data( 'cid' ),
+						rowCID  = thisRow.data( 'cid' ),
 
 						// Get model from collection by cid.
 						row = FusionPageBuilderElements.find( function( model ) {
@@ -312,15 +312,15 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 						// Parse column elements
 						var thisColumn = $( this ),
-						    $columnCID = thisColumn.data( 'cid' ),
+							$columnCID = thisColumn.data( 'cid' ),
 
-						    // Get model from collection by cid
-						    column = FusionPageBuilderElements.find( function( model ) {
+							// Get model from collection by cid
+							column = FusionPageBuilderElements.find( function( model ) {
 								return model.get( 'cid' ) === $columnCID;
-						    } ),
+							} ),
 
-						    // Clone column
-						    columnAttributes = $.extend( true, {}, column.attributes );
+							// Clone column
+							columnAttributes = $.extend( true, {}, column.attributes );
 
 						columnAttributes.created = 'manually';
 						columnAttributes.cid     = FusionPageBuilderViewManager.generateCid();
@@ -334,12 +334,12 @@ var FusionPageBuilder = FusionPageBuilder || {};
 						thisColumn.children( '.fusion_module_block, .fusion_builder_row_inner' ).each( function() {
 
 							var thisElement,
-							    elementCID,
-							    element,
-							    elementAttributes,
-							    thisInnerRow,
-							    InnerRowCID,
-							    innerRowView;
+								elementCID,
+								element,
+								elementAttributes,
+								thisInnerRow,
+								InnerRowCID,
+								innerRowView;
 
 							// Regular element
 							if ( $( this ).hasClass( 'fusion_module_block' ) ) {
@@ -353,10 +353,10 @@ var FusionPageBuilder = FusionPageBuilder || {};
 								} );
 
 								// Clone model attritubes
-								elementAttributes = $.extend( true, {}, element.attributes );
+								elementAttributes         = $.extend( true, {}, element.attributes );
 								elementAttributes.created = 'manually';
-								elementAttributes.cid = FusionPageBuilderViewManager.generateCid();
-								elementAttributes.parent = columnAttributes.cid;
+								elementAttributes.cid     = FusionPageBuilderViewManager.generateCid();
+								elementAttributes.parent  = columnAttributes.cid;
 								elementAttributes.from    = 'fusion_builder_container';
 
 								FusionPageBuilderApp.collection.add( elementAttributes );
@@ -404,7 +404,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					}
 				} );
 
-				if ( FusionPageBuilderViewManager.countElementsByType( 'fusion_builder_container' ) > 1 ) {
+				if ( 1 < FusionPageBuilderViewManager.countElementsByType( 'fusion_builder_container' ) ) {
 
 				// If the only container is deleted show blank page layout
 				} else {
@@ -457,8 +457,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 				// Detect "enter" key
 				var code,
-				    model,
-				    input;
+					model,
+					input;
 
 				code = event.keyCode || event.which;
 
@@ -482,4 +482,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			}
 		} );
 	} );
-} )( jQuery );
+} ( jQuery ) );

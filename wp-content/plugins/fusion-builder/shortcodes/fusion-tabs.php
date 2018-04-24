@@ -276,7 +276,7 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 			public function icon_attr( $atts ) {
 				$index = $atts['index'];
 				$attr = array(
-					'class' => 'fa fontawesome-icon ' . FusionBuilder::font_awesome_name_handler( $this->tabs[ $index ]['icon'] ),
+					'class' => 'fontawesome-icon ' . FusionBuilder::font_awesome_name_handler( $this->tabs[ $index ]['icon'] ),
 				);
 
 				if ( '' !== $this->parent_args['icon_size'] ) {
@@ -323,7 +323,7 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 			public function tab_attr() {
 
 				$attr = array(
-					'class' => 'tab-pane fade',
+					'class' => 'tab-pane fade fusion-clearfix',
 				);
 
 				if ( ! isset( $this->active ) ) {
@@ -331,7 +331,7 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 				}
 
 				if ( ! $this->active ) {
-					$attr['class'] = 'tab-pane fade in active';
+					$attr['class'] = 'tab-pane fade fusion-clearfix in active';
 					$this->active = true;
 				}
 
@@ -608,6 +608,11 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 						'id'          => 'tabs_shortcode_section',
 						'type'        => 'accordion',
 						'fields'      => array(
+							'tabs_info' => array(
+								'id'      => 'social_links_info',
+								'type'    => 'raw',
+								'content' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> These tab global options control both the tab element and Avada tab widget, however the widget does not utilize icons.', 'fusion-builder' ) . '</div>',
+							),
 							'tabs_bg_color' => array(
 								'label'       => esc_html__( 'Tabs Background Color + Hover Color', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the color of the active tab, tab hover and content background.', 'fusion-builder' ),
@@ -617,7 +622,7 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 							),
 							'tabs_inactive_color' => array(
 								'label'       => esc_html__( 'Tabs Inactive Color', 'fusion-builder' ),
-								'description' => esc_html__( 'Controls the color of the inactive tabs.', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the color of the inactive tabs as well as the post date box layout for the Avada Tab Widget.', 'fusion-builder' ),
 								'id'          => 'tabs_inactive_color',
 								'default'     => '#ebeaea',
 								'type'        => 'color-alpha',

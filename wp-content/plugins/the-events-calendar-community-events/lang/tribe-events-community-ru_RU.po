@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Community Events package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-01-27 16:24:37+0000\n"
+"PO-Revision-Date: 2018-03-30 14:59:22+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -741,11 +741,11 @@ msgstr "Мероприятия Общества"
 
 #: src/Tribe/Main.php:2830
 msgid "Community: My %s"
-msgstr ""
+msgstr "Сообщество: Мои %s"
 
 #: src/Tribe/Main.php:2822
 msgid "Community: Submit %s"
-msgstr ""
+msgstr "Сообщество: Добавить %s"
 
 #: src/Tribe/Main.php:2591
 msgid "This template is also used for Community Events."

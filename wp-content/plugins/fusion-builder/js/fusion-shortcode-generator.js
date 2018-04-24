@@ -4,8 +4,8 @@
 	// Insert shortcode into post editor
 	fusionBuilderInsertIntoEditor = function( shortcode, editorID ) { // jshint ignore:line
 		var currentEditor = window.SCmoduleContentEditorMode, // jshint ignore:line
-		    editorArea,
-		    editor;
+			editorArea,
+			editor;
 
 		if ( 'tinymce' === window.SCmoduleContentEditorMode && ( '' === editorID || 'undefined' === typeof editorID ) ) {
 
@@ -55,14 +55,14 @@
 		}
 	};
 
-} )( jQuery );
+} ( jQuery ) );
 
 function openShortcodeGenerator( trigger ) { // jshint ignore:line
 
 	// Get editor id from event.trigger.  parent.parent
 
 	var view,
-	    editorArea = '#' + trigger.parent().parent().find( '.wp-editor-area' ).attr( 'id' );
+		editorArea = '#' + trigger.parent().parent().find( '.wp-editor-area' ).attr( 'id' );
 
 	window.cursorPosition = 0;
 	window.editorArea = editorArea;
@@ -98,9 +98,9 @@ function openShortcodeGenerator( trigger ) { // jshint ignore:line
 ( function( $, undefined ) {
 	$.fn.getCursorPosition = function() {
 		var el  = $( this ).get( 0 ),
-		    pos = 0,
-		    Sel,
-		    SelLength;
+			pos = 0,
+			Sel,
+			SelLength;
 
 		if ( 'selectionStart' in el ) {
 			pos = el.selectionStart;
@@ -113,4 +113,4 @@ function openShortcodeGenerator( trigger ) { // jshint ignore:line
 		}
 		return pos;
 	};
-})( jQuery );
+} ( jQuery ) );

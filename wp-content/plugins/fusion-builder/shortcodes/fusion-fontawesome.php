@@ -108,7 +108,7 @@ if ( fusion_is_element_enabled( 'fusion_fontawesome' ) ) {
 
 				$attr = fusion_builder_visibility_atts(
 					$this->args['hide_on_mobile'], array(
-						'class' => 'fa fontawesome-icon ' . FusionBuilder::font_awesome_name_handler( $this->args['icon'] ) . ' circle-' . $this->args['circle'],
+						'class' => 'fontawesome-icon ' . FusionBuilder::font_awesome_name_handler( $this->args['icon'] ) . ' circle-' . $this->args['circle'],
 					)
 				);
 

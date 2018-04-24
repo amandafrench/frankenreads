@@ -176,22 +176,18 @@ if ( fusion_is_element_enabled( 'fusion_person' ) ) {
 
 					$picture = '<img ' . FusionBuilder::attributes( 'person-shortcode-img' ) . ' />';
 
-					if ( class_exists( 'Avada' ) && property_exists( Avada(), 'images' ) ) {
-						Avada()->images->set_grid_image_meta(
-							array(
-								'layout' => 'large',
-								'columns' => '1',
-							)
-						);
-					}
+					$fusion_library->images->set_grid_image_meta(
+						array(
+							'layout' => 'large',
+							'columns' => '1',
+						)
+					);
 
 					if ( function_exists( 'wp_make_content_images_responsive' ) ) {
 						$picture = wp_make_content_images_responsive( $picture );
 					}
 
-					if ( class_exists( 'Avada' ) && property_exists( Avada(), 'images' ) ) {
-						Avada()->images->set_grid_image_meta( array() );
-					}
+					$fusion_library->images->set_grid_image_meta( array() );
 
 					if ( $pic_link ) {
 						$picture = '<a ' . FusionBuilder::attributes( 'person-shortcode-href' ) . '>' . $picture . '</a>';

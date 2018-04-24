@@ -72,19 +72,22 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 
 				$defaults = FusionBuilder::set_shortcode_defaults(
 					array(
-						'hide_on_mobile'      => fusion_builder_default_visibility( 'string' ),
-						'class'               => '',
-						'id'                  => '',
 						'accent_color'        => '',
-						'background_color'    => '',
-						'border_size'         => ( '' !== $fusion_settings->get( 'alert_border_size' ) ) ? intval( $fusion_settings->get( 'alert_border_size' ) . 'px' ) : 'no',
-						'box_shadow'          => ( '' !== $fusion_settings->get( 'alert_box_shadow' ) ) ? strtolower( $fusion_settings->get( 'alert_box_shadow' ) ) : 'no',
-						'icon'                => '',
-						'type'                => 'general',
-						'animation_type'      => '',
 						'animation_direction' => 'left',
-						'animation_speed'     => '',
 						'animation_offset'    => $fusion_settings->get( 'animation_offset' ),
+						'animation_speed'     => '',
+						'animation_type'      => '',
+						'background_color'    => '',
+						'border_size'         => $fusion_settings->get( 'alert_border_size' ),
+						'box_shadow'          => ( '' !== $fusion_settings->get( 'alert_box_shadow' ) ) ? strtolower( $fusion_settings->get( 'alert_box_shadow' ) ) : 'no',
+						'class'               => '',
+						'dismissable'         => $fusion_settings->get( 'alert_box_dismissable' ),
+						'hide_on_mobile'      => fusion_builder_default_visibility( 'string' ),
+						'icon'                => '',
+						'id'                  => '',
+						'text_align'          => $fusion_settings->get( 'alert_box_text_align' ),
+						'text_transform'      => $fusion_settings->get( 'alert_box_text_transform' ),
+						'type'                => 'general',
 					), $args
 				);
 				$defaults['border_size'] = FusionBuilder::validate_shortcode_attr_value( $defaults['border_size'], 'px' );
@@ -116,7 +119,7 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 					case 'notice':
 						$this->alert_class = 'warning';
 						if ( ! $icon || 'none' !== $icon ) {
-							$this->args['icon'] = $icon = 'fa-lg fa-cog';
+							$this->args['icon'] = $icon = 'fa-lg fa-cog fa';
 						}
 						break;
 					case 'blank':
@@ -128,7 +131,8 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 				}
 
 				$html = '<div ' . FusionBuilder::attributes( 'alert-shortcode' ) . '>';
-				$html .= '  <button ' . FusionBuilder::attributes( 'alert-shortcode-button' ) . '>&times;</button>';
+				$html .= ( 'yes' === $dismissable ) ? '<button ' . FusionBuilder::attributes( 'alert-shortcode-button' ) . '>&times;</button>' : '';
+				$html .= '<div class="fusion-alert-content-wrapper">';
 				if ( $icon && 'none' !== $icon ) {
 					$html .= '<span ' . FusionBuilder::attributes( 'alert-icon' ) . '>';
 					$html .= '<i ' . FusionBuilder::attributes( 'alert-shortcode-icon' ) . '></i>';
@@ -137,7 +141,8 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 				// Make sure the title text is not wrapped with an unattributed p tag.
 				$content = preg_replace( '!^<p>(.*?)</p>$!i', '$1', trim( $content ) );
 
-				$html .= do_shortcode( $content );
+				$html .= '<span class="fusion-alert-content">' . do_shortcode( $content ) . '</span>';
+				$html .= '</div>';
 				$html .= '</div>';
 
 				return $html;
@@ -158,9 +163,17 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 				$attr = array();
 				$args = array();
 
-				$attr['class'] = 'fusion-alert alert ' . $this->args['type'] . ' alert-dismissable alert-' . $this->alert_class;
+				$attr['class'] = 'fusion-alert alert ' . $this->args['type'] . ' alert-' . $this->alert_class . ' fusion-alert-' . $this->args['text_align'];
 
 				$attr = fusion_builder_visibility_atts( $this->args['hide_on_mobile'], $attr );
+
+				if ( 'capitalize' === $this->args['text_transform'] ) {
+					$attr['class'] .= ' fusion-alert-capitalize';
+				}
+
+				if ( 'yes' === $this->args['dismissable'] ) {
+					$attr['class'] .= ' alert-dismissable';
+				}
 
 				if ( 'yes' === $this->args['box_shadow'] ) {
 					$attr['class'] .= ' alert-shadow';
@@ -173,9 +186,10 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 				} else {
 					$background_color          = '' !== $fusion_settings->get( $this->alert_class . '_bg_color' ) ? strtolower( $fusion_settings->get( $this->alert_class . '_bg_color' ) ) : '#ffffff';
 					$accent_color              = fusion_auto_calculate_accent_color( $background_color );
+					$border_size               = FusionBuilder::validate_shortcode_attr_value( $fusion_settings->get( 'alert_border_size' ), 'px' );
 					$args['background_color']  = $background_color;
 					$args['accent_color']      = $accent_color;
-					$args['border_size']       = $this->args['border_size'];
+					$args['border_size']       = $border_size;
 				}
 
 				$attr['style']  = 'background-color:' . $args['background_color'] . ';';
@@ -220,7 +234,7 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 			 */
 			public function icon_attr() {
 				return array(
-					'class' => 'fa fa-lg ' . FusionBuilder::font_awesome_name_handler( $this->args['icon'] ),
+					'class' => 'fa-lg ' . FusionBuilder::font_awesome_name_handler( $this->args['icon'] ),
 				);
 			}
 
@@ -292,6 +306,40 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 								'default'     => '#fcf8e3',
 								'type'        => 'color',
 							),
+							'alert_box_text_align' => array(
+								'label'       => esc_attr__( 'Content Alignment', 'fusion-builder' ),
+								'description' => esc_attr__( 'Choose how the content should be displayed.', 'fusion-builder' ),
+								'id'          => 'alert_box_text_align',
+								'type'        => 'radio-buttonset',
+								'default'     => 'center',
+								'choices'     => array(
+									'left'   => esc_attr__( 'Left', 'fusion-builder' ),
+									'center' => esc_attr__( 'Center', 'fusion-builder' ),
+									'right'  => esc_attr__( 'Right', 'fusion-builder' ),
+								),
+							),
+							'alert_box_text_transform' => array(
+								'label'       => esc_attr__( 'Text Transform', 'fusion-builder' ),
+								'description' => esc_attr__( 'Choose how the text is displayed.', 'fusion-builder' ),
+								'id'          => 'alert_box_text_transform',
+								'default'     => 'capitalize',
+								'type'        => 'radio-buttonset',
+								'choices'     => array(
+									'normal'      => esc_attr__( 'Normal', 'fusion-builder' ),
+									'capitalize'  => esc_attr__( 'Capitalize', 'fusion-builder' ),
+								),
+							),
+							'alert_box_dismissable' => array(
+								'label'       => esc_attr__( 'Dismissable Box', 'fusion-builder' ),
+								'description' => esc_attr__( 'Select if the alert box should be dismissable.', 'fusion-builder' ),
+								'id'          => 'alert_box_dismissable',
+								'default'     => 'yes',
+								'type'        => 'radio-buttonset',
+								'choices'     => array(
+									'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+									'no'  => esc_attr__( 'No', 'fusion-builder' ),
+								),
+							),
 							'alert_box_shadow' => array(
 								'label'       => esc_attr__( 'Box Shadow', 'fusion-builder' ),
 								'description' => esc_attr__( 'Display a box shadow below the alert box.', 'fusion-builder' ),
@@ -304,11 +352,16 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 								),
 							),
 							'alert_border_size' => array(
-								'label'       => esc_attr__( 'Border Width', 'fusion-builder' ),
-								'description' => esc_attr__( 'Set the border width for alert boxes.', 'fusion-builder' ),
+								'label'       => esc_html__( 'Border Size', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the border size of the alert boxes.', 'fusion-builder' ),
 								'id'          => 'alert_border_size',
-								'default'     => '1px',
-								'type'        => 'text',
+								'default'     => '1',
+								'type'        => 'slider',
+								'choices'     => array(
+									'min'  => '0',
+									'max'  => '50',
+									'step' => '1',
+								),
 							),
 						),
 					),
@@ -346,7 +399,7 @@ function fusion_element_alert() {
 		array(
 			'name'            => esc_attr__( 'Alert', 'fusion-builder' ),
 			'shortcode'       => 'fusion_alert',
-			'icon'            => 'fa fa-lg fa-exclamation-triangle',
+			'icon'            => 'fusiona-exclamation-triangle',
 			'preview'         => FUSION_BUILDER_PLUGIN_DIR . 'inc/templates/previews/fusion-alert-preview.php',
 			'preview_id'      => 'fusion-builder-block-module-alert-preview-template',
 			'allow_generator' => true,
@@ -395,10 +448,10 @@ function fusion_element_alert() {
 				),
 				array(
 					'type'        => 'range',
-					'heading'     => esc_attr__( 'Border Width', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Border Size', 'fusion-builder' ),
 					'param_name'  => 'border_size',
-					'default'     => intval( $fusion_settings->get( 'alert_border_size' ) ),
-					'description' => esc_attr__( 'Custom setting only. Set the border width for custom alert boxes. In pixels.', 'fusion-builder' ),
+					'default'     => preg_replace( '/[a-z,%]/', '', $fusion_settings->get( 'alert_border_size' ) ),
+					'description' => esc_attr__( 'Custom setting only. Set the border size for custom alert boxes. In pixels.', 'fusion-builder' ),
 					'choices'     => array(
 						'min'  => '0',
 						'max'  => '20',
@@ -425,6 +478,43 @@ function fusion_element_alert() {
 							'value'    => 'custom',
 							'operator' => '==',
 						),
+					),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Content Alignment', 'fusion-builder' ),
+					'description' => esc_attr__( 'Choose how the content should be displayed.', 'fusion-builder' ),
+					'param_name'  => 'text_align',
+					'default'     => '',
+					'value'       => array(
+						''       => esc_attr__( 'Default', 'fusion-builder' ),
+						'left'   => esc_attr__( 'Left', 'fusion-builder' ),
+						'center' => esc_attr__( 'Center', 'fusion-builder' ),
+						'right'  => esc_attr__( 'Right', 'fusion-builder' ),
+					),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Text Transform', 'fusion-builder' ),
+					'description' => esc_attr__( 'Choose how the text is displayed.', 'fusion-builder' ),
+					'param_name'  => 'text_transform',
+					'default'     => '',
+					'value'       => array(
+						''            => esc_attr__( 'Default', 'fusion-builder' ),
+						'normal'      => esc_attr__( 'Normal', 'fusion-builder' ),
+						'capitalize'  => esc_attr__( 'Capitalize', 'fusion-builder' ),
+					),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Dismissable Box', 'fusion-builder' ),
+					'description' => esc_attr__( 'Select if the alert box should be dismissable.', 'fusion-builder' ),
+					'param_name'  => 'dismissable',
+					'default'     => '',
+					'value'       => array(
+						''    => esc_attr__( 'Default', 'fusion-builder' ),
+						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+						'no'  => esc_attr__( 'No', 'fusion-builder' ),
 					),
 				),
 				array(

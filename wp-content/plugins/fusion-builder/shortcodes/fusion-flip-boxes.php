@@ -56,6 +56,7 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 				add_filter( 'fusion_attr_flip-box-shortcode-heading-back', array( $this, 'heading_back_attr' ) );
 				add_filter( 'fusion_attr_flip-box-shortcode-grafix', array( $this, 'grafix_attr' ) );
 				add_filter( 'fusion_attr_flip-box-shortcode-icon', array( $this, 'icon_attr' ) );
+				add_filter( 'fusion_attr_flip-box-animation', array( $this, 'flip_box_animation_attr' ) );
 				add_shortcode( 'fusion_flip_box', array( $this, 'render_child' ) );
 
 			}
@@ -232,7 +233,7 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 				$back  = '<div ' . FusionBuilder::attributes( 'flip-box-shortcode-back-box' ) . '>' . $back_inner . '</div>';
 
 				$html  = '<div ' . FusionBuilder::attributes( 'flip-box-shortcode' ) . '>';
-				$html .= '<div class="fusion-flip-box">';
+				$html .= '<div ' . FusionBuilder::attributes( 'flip-box-animation' ) . '>';
 				$html .= '<div ' . FusionBuilder::attributes( 'flip-box-inner-wrapper' ) . '>';
 				$html .= $front . $back;
 				$html .= '</div></div></div>';
@@ -275,6 +276,38 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 
 				return $attr;
 
+			}
+
+			/**
+			 * Builds the animations attributes array.
+			 *
+			 * @access public
+			 * @since 1.5
+			 * @return array
+			 */
+			public function flip_box_animation_attr() {
+
+				$attr = array(
+					'class' => 'fusion-flip-box',
+				);
+
+				if ( $this->child_args['animation_type'] ) {
+					$animations = FusionBuilder::animations(
+						array(
+							'type'      => $this->child_args['animation_type'],
+							'direction' => $this->child_args['animation_direction'],
+							'speed'     => $this->child_args['animation_speed'],
+							'offset'    => $this->child_args['animation_offset'],
+						)
+					);
+
+					$attr = array_merge( $attr, $animations );
+
+					$attr['class'] .= ' ' . $attr['animation_class'];
+					unset( $attr['animation_class'] );
+				}
+
+				return $attr;
 			}
 
 			/**
@@ -401,7 +434,7 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 				if ( $this->child_args['image'] ) {
 					$attr['class'] = 'image';
 				} elseif ( $this->child_args['icon'] ) {
-					$attr['class'] = 'fa ' . FusionBuilder::font_awesome_name_handler( $this->child_args['icon'] );
+					$attr['class'] = FusionBuilder::font_awesome_name_handler( $this->child_args['icon'] );
 				}
 
 				if ( $this->child_args['icon_color'] ) {
@@ -418,22 +451,6 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 
 				if ( 'yes' == $this->child_args['icon_spin'] && 'none' !== $this->child_args['icon_spin'] ) {
 					$attr['class'] .= ' fa-spin';
-				}
-
-				if ( $this->child_args['animation_type'] && 'yes' != $this->child_args['icon_spin'] ) {
-					$animations = FusionBuilder::animations(
-						array(
-							'type'      => $this->child_args['animation_type'],
-							'direction' => $this->child_args['animation_direction'],
-							'speed'     => $this->child_args['animation_speed'],
-							'offset'    => $this->child_args['animation_offset'],
-						)
-					);
-
-					$attr = array_merge( $attr, $animations );
-
-					$attr['class'] .= ' ' . $attr['animation_class'];
-					unset( $attr['animation_class'] );
 				}
 
 				return $attr;
@@ -627,7 +644,7 @@ function fusion_element_flip_boxes() {
 					'heading'     => esc_attr__( 'Content', 'fusion-builder' ),
 					'description' => esc_attr__( 'Enter some content for this contentbox.', 'fusion-builder' ),
 					'param_name'  => 'element_content',
-					'value'       => '[fusion_flip_box title_front="' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '" title_back="' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '" text_front="' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '" background_color_front="" title_front_color="" text_front_color="" background_color_back="" title_back_color="" text_back_color="" border_size="" border_color="" border_radius="" icon="" icon_color="" circle="yes" circle_color="" circle_border_color="" icon_flip="" icon_rotate="" icon_spin="no" image="" image_width="35" image_height="35" animation_offset="" animation_type="" animation_direction="left" animation_speed="0.1"]' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '[/fusion_flip_box]',
+					'value'       => '[fusion_flip_box title_front="' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '" title_back="' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '" text_front="' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '" background_color_front="" title_front_color="" text_front_color="" background_color_back="" title_back_color="" text_back_color="" border_size="" border_color="" border_radius="" icon="" icon_color="" circle="" circle_color="" circle_border_color="" icon_flip="" icon_rotate="" icon_spin="no" image="" image_width="35" image_height="35" animation_offset="" animation_type="" animation_direction="left" animation_speed="0.1"]' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '[/fusion_flip_box]',
 				),
 				array(
 					'type'        => 'range',
@@ -663,7 +680,7 @@ function fusion_element_flip_boxes() {
 						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
 						'no'  => esc_attr__( 'No', 'fusion-builder' ),
 					),
-					'default'     => '',
+					'default'     => 'yes',
 				),
 				array(
 					'type'        => 'colorpickeralpha',
@@ -830,7 +847,7 @@ function fusion_element_flip_box() {
 				array(
 					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Background Color Frontside', 'fusion-builder' ),
-					'description' => esc_attr__( 'Controls the background color of the frontside.  NOTE: flip boxes must have background colors to work correctly in all browsers.', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls the background color of the frontside. IMPORTANT: Flip boxes must have background colors to work correctly in all browsers.', 'fusion-builder' ),
 					'param_name'  => 'background_color_front',
 					'value'       => '',
 					'default'     => $fusion_settings->get( 'flip_boxes_front_bg' ),
@@ -854,7 +871,7 @@ function fusion_element_flip_box() {
 				array(
 					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Background Color Backside', 'fusion-builder' ),
-					'description' => esc_attr__( 'Controls the background color of the backside.  NOTE: flip boxes must have background colors to work correctly in all browsers.', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls the background color of the backside. IMPORTANT: Flip boxes must have background colors to work correctly in all browsers.', 'fusion-builder' ),
 					'param_name'  => 'background_color_back',
 					'value'       => '',
 					'default'     => $fusion_settings->get( 'flip_boxes_back_bg' ),
@@ -1116,23 +1133,14 @@ function fusion_element_flip_box() {
 					),
 				),
 				array(
-					'type'        => 'select',
+					'type'        => 'range',
 					'heading'     => esc_attr__( 'Speed of Animation', 'fusion-builder' ),
 					'description' => esc_attr__( 'Type in speed of animation in seconds (0.1 - 1).', 'fusion-builder' ),
 					'param_name'  => 'animation_speed',
-					'value'       => array(
-						'1'   => '1',
-						'0.1' => '0.1',
-						'0.2' => '0.2',
-						'0.3' => '0.3',
-						'0.4' => '0.4',
-						'0.5' => '0.5',
-						'0.6' => '0.6',
-						'0.7' => '0.7',
-						'0.8' => '0.8',
-						'0.9' => '0.9',
-					),
-					'default'     => '0.1',
+					'min'         => '0.1',
+					'max'         => '1',
+					'step'        => '0.1',
+					'value'       => '0.1',
 					'group'       => esc_attr__( 'Animation', 'fusion-builder' ),
 					'dependency'  => array(
 						array(

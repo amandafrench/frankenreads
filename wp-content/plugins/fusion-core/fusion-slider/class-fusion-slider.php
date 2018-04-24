@@ -86,14 +86,15 @@ if ( ! class_exists( 'Fusion_Slider' ) ) {
 			register_taxonomy(
 				'slide-page', 'slide',
 				array(
-					'public'            => true,
-					'hierarchical'      => true,
-					'label'             => 'Slider',
-					'query_var'         => true,
-					'rewrite'           => true,
-					'show_in_nav_menus' => false,
-					'show_tagcloud'     => false,
-					'labels'            => array(
+					'public'             => true,
+					'hierarchical'       => true,
+					'label'              => 'Slider',
+					'query_var'          => true,
+					'rewrite'            => true,
+					'show_in_nav_menus'  => false,
+					'show_tagcloud'      => false,
+					'publicly_queryable' => false,
+					'labels'             => array(
 						'name'                       => __( 'Fusion Sliders', 'fusion-core' ),
 						'singular_name'              => __( 'Fusion Slider', 'fusion-core' ),
 						'menu_name'                  => __( 'Add or Edit Sliders', 'fusion-core' ),
@@ -138,9 +139,9 @@ if ( ! class_exists( 'Fusion_Slider' ) ) {
 
 				// Check if header is enabled.
 				if ( ! is_page_template( 'blank.php' ) && is_object( $post ) && 'no' !== fusion_get_page_option( 'display_header', $post->ID ) ) {
-					$dependencies = array( 'jquery', 'avada-header', 'modernizr', 'cssua', 'jquery-flexslider', 'fusion-flexslider', 'froogaloop', 'fusion-video-general', 'fusion-video-bg' );
+					$dependencies = array( 'jquery', 'avada-header', 'modernizr', 'cssua', 'jquery-flexslider', 'fusion-flexslider', 'vimeo-player', 'fusion-video-general', 'fusion-video-bg' );
 				} else {
-					$dependencies = array( 'jquery', 'modernizr', 'cssua', 'jquery-flexslider', 'fusion-flexslider', 'froogaloop', 'fusion-video-general', 'fusion-video-bg' );
+					$dependencies = array( 'jquery', 'modernizr', 'cssua', 'jquery-flexslider', 'fusion-flexslider', 'vimeo-player', 'fusion-video-general', 'fusion-video-bg' );
 				}
 
 				if ( $fusion_settings->get( 'typography_responsive' ) ) {
@@ -420,7 +421,7 @@ if ( ! class_exists( 'Fusion_Slider' ) ) {
 					} else {
 						// Initialize archive object.
 						$zip = new ZipArchive();
-						$zip->open( 'fusion_slider.zip', ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE );
+						$zip->open( $fs_dir . 'fusion_slider.zip', ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE );
 
 						foreach ( new DirectoryIterator( $fs_dir ) as $file ) {
 							if ( $file->isDot() ) {

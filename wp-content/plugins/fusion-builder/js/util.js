@@ -10,19 +10,20 @@ var FusionPageBuilder = FusionPageBuilder || {};
 	 */
 	FusionPageBuilder.template = _.memoize( function( html ) {
 		var compiled,
+
 			/*
 			 * Underscore's default ERB-style templates are incompatible with PHP
 			 * when asp_tags is enabled, so WordPress uses Mustache-inspired templating syntax.
 			 */
-		    options = {
-				evaluate:    /<#([\s\S]+?)#>/g,
+			options = {
+				evaluate: /<#([\s\S]+?)#>/g,
 				interpolate: /\{\{\{([\s\S]+?)\}\}\}/g,
-				escape:      /\{\{([^\}]+?)\}\}(?!\})/g
-		    };
+				escape: /\{\{([^\}]+?)\}\}(?!\})/g
+			};
 
 		return function( data ) {
 			compiled = compiled || _.template( html, null, options );
 			return compiled( data );
 		};
-	});
+	} );
 }( jQuery ) );

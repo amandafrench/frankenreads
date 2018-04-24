@@ -4,8 +4,8 @@ Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tr
 Tags: widget, events, simple, tooltips, grid, month, list, calendar, event, venue, community, registration, api, dates, date, plugin, posts, sidebar, template, theme, time, google maps, google, maps, conference, workshop, concert, meeting, seminar, summit, forum, shortcode, The Events Calendar, The Events Calendar PRO
 Donate link: http://m.tri.be/29
 Requires at least: 4.5
-Tested up to: 4.9.4
-Stable tag: 4.5.10
+Tested up to: 4.9.5
+Stable tag: 4.5.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -151,6 +151,12 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.5.11] 2018-04-18 =
+
+* Fix - Prevent multiple notification emails from being sent every time an already-submitted event is edited (thanks to @proactivedesign in the forums for flagging this bug!) [99244]
+* Fix - Fixed JavaScript error with datepickers on small viewport sizes [98861]
+* Tweak - Fixed some misalignment of buttons above Community Events' front-end "My Events" list in the Twenty Seventeen theme [99846]
 
 = [4.5.10] 2018-03-28 =
 

@@ -18,4 +18,4 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 	} );
 
-})( jQuery );
+} ( jQuery ) );

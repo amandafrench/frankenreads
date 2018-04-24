@@ -20,10 +20,10 @@ if ( 'undefined' !== typeof( tinymce ) ) {
 						// Open shortcode generator
 						openShortcodeGenerator( $( this ) );
 					}
-				});
+				} );
 			}
 		}
-	});
+	} );
 }
 
-})( jQuery );
+} ( jQuery ) );
