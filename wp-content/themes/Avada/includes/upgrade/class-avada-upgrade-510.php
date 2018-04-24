@@ -202,8 +202,7 @@ class Avada_Upgrade_510 extends Avada_Upgrade_Abstract {
 				)
 			);
 		}
-		$sql = "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_fusion_envato_api_down%'";
-		$wpdb->query( $sql );
+		$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_fusion_envato_api_down%'" );
 
 	}
 
@@ -218,8 +217,7 @@ class Avada_Upgrade_510 extends Avada_Upgrade_Abstract {
 		// Remove avada_dynamic_css_* transients.
 		// These will be auto-generated if needed as fusion_dynamic_css_*.
 		global $wpdb;
-		$sql = "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_avada_dynamic_css_%'";
-		$wpdb->query( $sql );
+		$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_avada_dynamic_css_%'" );
 
 		// Delete cached-css files.
 		$upload_dir    = wp_upload_dir();

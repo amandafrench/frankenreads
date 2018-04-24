@@ -5,10 +5,10 @@
 	jQuery( function() {
 
 		// Dimiss notice.
-		jQuery( 'div[avada-data-dismissible] button.notice-dismiss' ).click(function( event ) {
+		jQuery( 'div[avada-data-dismissible] button.notice-dismiss' ).click( function( event ) {
 			var $optionName,
-			    $data,
-			    $this = jQuery( this );
+				$data,
+				$this = jQuery( this );
 
 			event.preventDefault();
 

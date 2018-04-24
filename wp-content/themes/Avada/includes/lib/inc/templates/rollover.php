@@ -60,10 +60,10 @@ if ( 'default' === $display_post_title ) {
 // Set the link and the link text on the link icon to a custom url if set in page options. @codingStandardsIgnoreLine
 if ( null != $link_icon_url ) {
 	$icon_permalink = $link_icon_url;
-	$icon_permalink_title = $link_icon_url;
+	$icon_permalink_title = esc_url_raw( $link_icon_url );
 } else {
 	$icon_permalink = $post_permalink;
-	$icon_permalink_title = get_the_title( $post_id );
+	$icon_permalink_title = the_title_attribute( 'echo=0&post=' . $post_id );
 }
 
 if ( '' === $image_rollover_icons || 'default' === $image_rollover_icons ) {
@@ -252,6 +252,6 @@ $link_target = ( 'yes' === $link_icon_target || 'yes' === $post_links_target || 
 				</div>
 			<?php endif; ?>
 		<?php endif; ?>
-		<a class="fusion-link-wrapper" href="<?php echo esc_url_raw( $icon_permalink ); ?>"<?php echo $link_target; // WPCS: XSS ok. ?> aria-label="<?php the_title(); ?>"></a>
+		<a class="fusion-link-wrapper" href="<?php echo esc_url_raw( $icon_permalink ); ?>"<?php echo $link_target; // WPCS: XSS ok. ?> aria-label="<?php the_title_attribute(); ?>"></a>
 	</div>
 </div>

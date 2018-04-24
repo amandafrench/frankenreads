@@ -132,6 +132,7 @@ class Avada_Upgrade {
 			'540' => array( '5.4.0', false ),
 			'541' => array( '5.4.1', false ),
 			'542' => array( '5.4.2', false ),
+			'550' => array( '5.5.0', false ),
 		);
 
 		$upgraded = false;
@@ -409,12 +410,10 @@ class Avada_Upgrade {
 			delete_option( 'avada_previous_version' );
 			delete_option( Avada::get_option_name() );
 
-			// @codingStandardsIgnoreStart
 			var_dump( 'Current Version: ' . Avada::$version );
 			var_dump( 'DB Version: ' . get_option( 'avada_version', false ) );
 			var_dump( 'Previous Version: ' . get_option( 'avada_previous_version', array() ) );
 			var_dump( 'Update Notice: ' . get_user_meta( $current_user->ID, 'avada_update_notice', true ) );
-			// @codingStandardsEnd
 		}
 
 		return;

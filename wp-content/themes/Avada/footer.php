@@ -53,7 +53,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		/**
 		 * Check if boxed side header layout is used; if so close the #boxed-wrapper container.
 		 */
-		$page_bg_layout = ( $c_page_id ) ? get_post_meta( $c_page_id, 'pyre_page_bg_layout', true ) : 'default';
+		$page_bg_layout = 'default';
+		if ( $c_page_id && is_numeric( $c_page_id ) ) {
+			$fpo_page_bg_layout = get_post_meta( $c_page_id, 'pyre_page_bg_layout', true );
+			$page_bg_layout = ( $fpo_page_bg_layout ) ? $fpo_page_bg_layout : $page_bg_layout;
+		}
 		?>
 		<?php if ( ( ( 'Boxed' === Avada()->settings->get( 'layout' ) && 'default' === $page_bg_layout ) || 'boxed' === $page_bg_layout ) && 'Top' !== Avada()->settings->get( 'header_position' ) ) : ?>
 			</div> <!-- #boxed-wrapper -->

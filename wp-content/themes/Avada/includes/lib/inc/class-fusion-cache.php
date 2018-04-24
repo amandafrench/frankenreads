@@ -67,8 +67,14 @@ class Fusion_Cache {
 
 		// Delete file caches.
 		if ( true === $delete_cache['compiled_assets'] ) {
-			$delete_js_files  = $wp_filesystem->delete( $upload_dir['basedir'] . '/fusion-scripts', true, 'd' );
-			$delete_css_files = $wp_filesystem->delete( $upload_dir['basedir'] . '/fusion-styles', true, 'd' );
+			// Get the root path for compiled files.
+			$root_compiled_files_path = apply_filters( 'fusion_compiler_filesystem_root_path', $upload_dir['basedir'] );
+			// Get the foldername.
+			$styles_foldername  = apply_filters( 'fusion_compiler_filesystem_folder_name', 'fusion-styles' );
+			$scripts_foldername = apply_filters( 'fusion_compiler_filesystem_folder_name', 'fusion-scripts' );
+			// Delete folders.
+			$delete_js_files  = $wp_filesystem->delete( $root_compiled_files_path . '/' . $scripts_foldername, true, 'd' );
+			$delete_css_files = $wp_filesystem->delete( $root_compiled_files_path . '/' . $styles_foldername, true, 'd' );
 
 			// Delete cached CSS in the database.
 			update_option( 'fusion_dynamic_css_posts', array() );

@@ -56,6 +56,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			$fusion_builder_options_panel = $fusion_builder->get_fusion_builder_options_panel();
 			$fusion_builder_redux = $fusion_builder_options_panel->get_fusion_builder_redux();
 			add_filter( 'fusion_options_builder_soft_dependencies', array( $fusion_builder_redux, 'fusion_options_builder_soft_dependencies' ) );
+			add_filter( 'fusion_options_sliders_not_in_pixels', array( $fusion_builder_redux, 'fusion_options_sliders_not_in_pixels' ) );
 		}
 		parent::init_fusionredux();
 
@@ -399,9 +400,6 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			'header_social_links_font_size',
 			'footer_social_links_font_size',
 			'sharing_social_links_font_size',
-			'post_titles_font_size',
-			'post_titles_font_lh',
-			'post_titles_extras_font_size',
 			'woo_icon_font_size',
 		);
 		return array_unique( array_merge( $fields, $extra_fields ) );
@@ -419,7 +417,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 		$extra_fields = array(
 			'slidingbar_widgets_columns',
 			'footer_widgets_columns',
-			'blog_grid_columns',
+			'blog_archive_grid_columns',
 			'excerpt_length_blog',
 			'blog_excerpt_length',
 			'portfolio_archive_excerpt_length',
@@ -427,6 +425,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			'portfolio_archive_items',
 			'portfolio_excerpt_length',
 			'portfolio_items',
+			'portfolio_columns',
 			'posts_slideshow_number',
 			'slideshow_speed',
 			'tfes_interval',
@@ -447,6 +446,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			'typography_sensitivity',
 			'typography_factor',
 			'testimonials_speed',
+			'masonry_grid_ratio',
 		);
 		return array_unique( array_merge( $fields, $extra_fields ) );
 	}
@@ -510,11 +510,6 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 				'footer_link_color'                          => array( 'footer_widgets', 'footer_copyright' ),
 				'footer_link_color_hover'                    => array( 'footer_widgets', 'footer_copyright' ),
 				'copyright_font_size'                        => array( 'footer_copyright' ),
-				'boxed_mode_backgrounds_important_note_info' => array( 'layout' ),
-				'bg_image'                                   => array( 'layout' ),
-				'bg_color'                                   => array( 'layout' ),
-				'bg_pattern_option'                          => array( 'layout' ),
-				'bg_pattern'                                 => array( 'layout' ),
 				'image_rollover_direction'                   => array( 'image_rollover' ),
 				'image_rollover_icon_size'                   => array( 'image_rollover' ),
 				'link_image_rollover'                        => array( 'image_rollover' ),

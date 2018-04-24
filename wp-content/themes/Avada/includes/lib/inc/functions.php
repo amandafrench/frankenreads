@@ -590,7 +590,7 @@ if ( ! function_exists( 'fusion_extract_shortcode_contents' ) ) {
 		// Setup the array of all registered shortcodes.
 		$shortcodes = array_keys( $shortcode_tags );
 		$no_space_shortcodes = array( 'fusion_dropcap' );
-		$omitted_shortcodes  = array( 'fusion_code', 'fusion_imageframe', 'fusion_slide' );
+		$omitted_shortcodes  = array( 'fusion_code', 'fusion_imageframe', 'fusion_slide', 'fusion_syntax_highlighter' );
 
 		// Extract contents from all shortcodes recursively. @codingStandardsIgnoreLine
 		if ( in_array( $m[2], $shortcodes ) && ! in_array( $m[2], $omitted_shortcodes ) ) {
@@ -647,14 +647,36 @@ if ( ! function_exists( 'fusion_link_pages' ) ) {
 	function fusion_link_pages() {
 		wp_link_pages(
 			array(
-				'before'      => '<div class="page-links"><span class="page-links-title">' . esc_html__( 'Pages:', 'Avada' ) . '</span>',
+				'before'      => '<div class="page-links pagination"><span class="page-links-title">' . esc_html__( 'Pages:', 'Avada' ) . '</span>',
 				'after'       => '</div>',
 				'link_before' => '<span class="page-number">',
 				'link_after'  => '</span>',
+				'pagelink'    => '%',
 			)
 		);
 	}
 }
+
+if ( ! function_exists( 'fusion_link_pages_link' ) ) {
+	/**
+	 * Returns page link html.
+	 *
+	 * @since 5.5.0
+	 * @param string  $link WP page link html.
+	 * @param integer $i    WP page number.
+	 * @return string
+	 */
+	function fusion_link_pages_link( $link, $i ) {
+		global $page;
+
+		if ( $i == $page ) {
+			$link = '<span class="current">' . $i . '</span>';
+		}
+
+		return $link;
+	}
+}
+add_filter( 'wp_link_pages_link', 'fusion_link_pages_link', 99, 2 );
 
 if ( ! function_exists( 'fusion_cached_query' ) ) {
 	/**

@@ -46,7 +46,7 @@ final class Fusion_Dynamic_JS_File extends Fusion_Dynamic_JS_Compiler {
 		parent::__construct( $dynamic_js );
 
 		$this->filename = $this->get_filename();
-		$this->file     = new Fusion_Filesystem( $this->filename );
+		$this->file     = new Fusion_Filesystem( $this->filename, 'fusion-scripts' );
 		$no_file        = false;
 
 		if ( ! file_exists( $this->file->get_path() ) ) {
@@ -86,32 +86,38 @@ final class Fusion_Dynamic_JS_File extends Fusion_Dynamic_JS_Compiler {
 	 * @return bool
 	 */
 	public function js_file_is_readable() {
-		$upload_dir = wp_upload_dir();
-		$file_path  = $upload_dir['basedir'] . '/' . $this->get_filename();
+		// Get the file-path.
+		$file_path = $this->file->get_path();
+		// Check if the file is readable in the transient and apply the filter.
+		$is_readable = apply_filters( 'fusion_compiler_js_file_is_readable', get_transient( 'fusion_dynamic_js_readable' ) );
 
-		if ( is_readable( $file_path ) ) {
-			// Secondary check.
-			$fusion_dynamic_js_readable = get_transient( 'fusion_dynamic_js_readable' );
+		// If not readable, we need to do some extra checks.
+		if ( ! $is_readable ) {
 
-			if ( false === $fusion_dynamic_js_readable ) {
+			// Check if we can access the file via PHP.
+			$is_readable = (bool) ( is_readable( $file_path ) );
+
+			// If we could access the file via PHP, check that we can get the URL.
+			if ( $is_readable ) {
+
 				// Check for 403 / 500.
 				$response = wp_safe_remote_get(
-					$this->file->get_url( false ), array(
+					$this->file->get_url(), array(
 						'timeout' => 5,
 					)
 				);
 				$response_code = wp_remote_retrieve_response_code( $response );
 
-				if ( 200 !== $response_code ) {
-					set_transient( 'fusion_dynamic_js_readable', 'no' );
-					return false;
+				// Check if the response is ok.
+				$is_readable = ( 200 === $response_code );
+
+				// Cache readable only. No need to cache unreadable, it's false anyway.
+				if ( $is_readable ) {
+					set_transient( 'fusion_dynamic_js_readable', true );
 				}
-				set_transient( 'fusion_dynamic_js_readable', 'yes' );
-				return true;
 			}
-			return (bool) ( 'yes' === $fusion_dynamic_js_readable );
 		}
-		return false;
+		return apply_filters( 'fusion_compiler_js_file_is_readable', $is_readable );
 	}
 
 	/**
@@ -126,7 +132,7 @@ final class Fusion_Dynamic_JS_File extends Fusion_Dynamic_JS_Compiler {
 		$options['js_compiler'] = '0';
 
 		update_option( Fusion_Settings::get_option_name(), $options );
-		set_transient( 'fusion_dynamic_js_readable', 'no' );
+		add_filter( 'fusion_compiler_js_file_is_readable', '__return_false' );
 	}
 
 	/**
@@ -161,10 +167,14 @@ final class Fusion_Dynamic_JS_File extends Fusion_Dynamic_JS_Compiler {
 		}
 		$fusion = Fusion::get_instance();
 		$id     = (int) $fusion->get_page_id();
-		// @codingStandardsIgnoreLine
-		$id .= md5( $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . $_SERVER['REQUEST_URI'] );
-		if ( isset( $filenames[ $id ] ) ) {
-			return "fusion-scripts/{$filenames[ $id ]}.js";
+		if ( isset( $_SERVER['HTTP_HOST'] ) && isset( $_SERVER['PHP_SELF'] ) && isset( $_SERVER['REQUEST_URI'] ) ) {
+			$host = sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) );
+			$self = sanitize_text_field( wp_unslash( $_SERVER['PHP_SELF'] ) );
+			$uri  = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
+			$id .= md5( $host . $self . $uri );
+			if ( isset( $filenames[ $id ] ) ) {
+				return $filenames[ $id ] . '.min.js';
+			}
 		}
 
 		// Do not reorder files here to improve performace.
@@ -176,28 +186,20 @@ final class Fusion_Dynamic_JS_File extends Fusion_Dynamic_JS_Compiler {
 		$filenames[ $id ] = $filename;
 		set_transient( 'fusion_dynamic_js_filenames', $filenames, HOUR_IN_SECONDS );
 
-		return "fusion-scripts/{$filename}.js";
+		return $filename . '.min.js';
 
 	}
 
 	/**
-	 * Deletes all compiled JS files.
+	 * DEPRECATED. Deletes all compiled JS files.
 	 *
 	 * @static
 	 * @access public
 	 * @since 1.0.0
-	 * @return bool
+	 * @return void
 	 */
 	public static function delete_compiled_js() {
-
-		// Get the upload directory for this site.
-		$upload_dir = wp_upload_dir();
-
-		// Init the filesystem.
-		$wp_filesystem = Fusion_Helper::init_filesystem();
-
-		// Delete the folder.
-		return $wp_filesystem->delete( $upload_dir['basedir'] . '/fusion-scripts', true, 'd' );
+		/* Deprecated. Keeping this around in case someone is using it in a custom implementation. It won't do anything, but it won't throw errors or cause planes to crash either. */
 	}
 
 	/**

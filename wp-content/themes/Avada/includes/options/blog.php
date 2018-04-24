@@ -101,7 +101,7 @@ function avada_options_section_blog( $sections ) {
 					),
 					'blog_layout' => array(
 						'label'           => esc_html__( 'Blog Layout', 'Avada' ),
-						'description'     => esc_html__( 'Controls the layout for the assigned blog page in "settings > reading".', 'Avada' ),
+						'description'     => esc_html__( 'Controls the layout for the assigned blog page in "Settings > Reading".', 'Avada' ),
 						'id'              => 'blog_layout',
 						'default'         => 'Large',
 						'type'            => 'select',
@@ -153,10 +153,10 @@ function avada_options_section_blog( $sections ) {
 						'default'     => '#ebeaea',
 						'type'        => 'color-alpha',
 					),
-					'blog_grid_columns' => array(
-						'label'       => esc_html__( 'Grid/Masonry Layout Columns', 'Avada' ),
-						'description' => esc_html__( 'Controls the amount of columns for the grid and masonry layout when using it for the assigned blog page in "settings > reading" or blog archive pages or search results page.', 'Avada' ),
-						'id'          => 'blog_grid_columns',
+					'blog_archive_grid_columns' => array(
+						'label'       => esc_html__( 'Number of Columns', 'Avada' ),
+						'description' => __( 'Controls the amount of columns for grid and masonry layout when using it for the assigned blog page in "Settings > Reading" or blog archive pages or search results page. <strong>IMPORTANT:</strong> Masonry layout does not work with 1 column.', 'Avada' ),
+						'id'          => 'blog_archive_grid_columns',
 						'default'     => 3,
 						'type'        => 'slider',
 						'class'       => 'fusion-or-gutter',
@@ -188,10 +188,10 @@ function avada_options_section_blog( $sections ) {
 							),
 						),
 					),
-					'blog_grid_column_spacing' => array(
-						'label'       => esc_html__( 'Grid/Masonry Layout Column Spacing', 'Avada' ),
-						'description' => esc_html__( 'Controls the amount of spacing between columns for the grid and masonry layout when using it for the assigned blog page in "settings > reading" or blog archive pages or search results page.', 'Avada' ),
-						'id'          => 'blog_grid_column_spacing',
+					'blog_archive_grid_column_spacing' => array(
+						'label'       => esc_html__( 'Column Spacing', 'Avada' ),
+						'description' => esc_html__( 'Controls the column spacing for blog posts for grid and masonry layout when using it for the assigned blog page in "Settings > Reading" or blog archive pages or search results page.', 'Avada' ),
+						'id'          => 'blog_archive_grid_column_spacing',
 						'default'     => '40',
 						'type'        => 'slider',
 						'class'       => 'fusion-or-gutter',

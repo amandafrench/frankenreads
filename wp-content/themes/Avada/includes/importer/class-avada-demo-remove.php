@@ -58,14 +58,13 @@ class Avada_Demo_Remove {
 		if ( current_user_can( 'manage_options' ) ) {
 
 			$this->demo_type = 'classic';
-			// @codingStandardsIgnoreLine
-			if ( isset( $_POST['demoType'] ) && '' !== trim( $_POST['demoType'] ) ) {
-				// @codingStandardsIgnoreLine
-				$this->demo_type = $_POST['demoType'];
+			if ( isset( $_POST['demoType'] ) && '' !== sanitize_text_field( wp_unslash( $_POST['demoType'] ) ) ) {
+				$this->demo_type = sanitize_text_field( wp_unslash( $_POST['demoType'] ) );
 			}
-
-			// @codingStandardsIgnoreLine
-			$remove_stages = $_POST['removeStages'];
+			$remove_stages = array( '' );
+			if ( isset( $_POST['removeStages'] ) ) {
+				$remove_stages = wp_unslash( $_POST['removeStages'] ); // WPCS: sanitization ok.
+			}
 
 			if ( ! class_exists( 'Avada_Demo_Content_Tracker' ) ) {
 				include_once wp_normalize_path( Avada::$template_dir_path . '/includes/importer/class-avada-demo-content-tracker.php' );

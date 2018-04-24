@@ -57,7 +57,12 @@ if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 	do_action( 'avada_before_body_content' );
 
 	$boxed_side_header_right = false;
-	$page_bg_layout = ( $c_page_id ) ? get_post_meta( $c_page_id, 'pyre_page_bg_layout', true ) : 'default';
+	$page_bg_layout = 'default';
+	if ( $c_page_id && is_numeric( $c_page_id ) ) {
+		$fpo_page_bg_layout = get_post_meta( $c_page_id, 'pyre_page_bg_layout', true );
+		$page_bg_layout = ( $fpo_page_bg_layout ) ? $fpo_page_bg_layout : $page_bg_layout;
+	}
+
 	?>
 	<?php if ( ( ( 'Boxed' === Avada()->settings->get( 'layout' ) && ( 'default' === $page_bg_layout || '' == $page_bg_layout ) ) || 'boxed' === $page_bg_layout ) && 'Top' != Avada()->settings->get( 'header_position' ) ) : ?>
 		<div id="boxed-wrapper">
@@ -67,44 +72,14 @@ if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 	<?php endif; ?>
 	<div id="wrapper" class="<?php echo esc_attr( $wrapper_class ); ?>">
 		<div id="home" style="position:relative;top:-1px;"></div>
-		<?php avada_header_template( 'Below', is_archive() || Avada_Helper::bbp_is_topic_tag() ); ?>
+		<?php avada_header_template( 'Below', ( is_archive() || Avada_Helper::bbp_is_topic_tag() ) && ! ( class_exists( 'WooCommerce' ) && is_shop() ) ); ?>
 		<?php if ( 'Left' === Avada()->settings->get( 'header_position' ) || 'Right' === Avada()->settings->get( 'header_position' ) ) : ?>
 			<?php avada_side_header(); ?>
 		<?php endif; ?>
 
-		<div id="sliders-container">
-			<?php
-			$slider_page_id = '';
-			if ( ! is_search() ) {
-				$slider_page_id = '';
-				if ( ( ! is_home() && ! is_front_page() && ! is_archive() && isset( $object_id ) ) || ( ! is_home() && is_front_page() && isset( $object_id ) ) ) {
-					$slider_page_id = $object_id;
-				}
-				if ( is_home() && ! is_front_page() ) {
-					$slider_page_id = get_option( 'page_for_posts' );
-				}
-				if ( class_exists( 'WooCommerce' ) && is_shop() ) {
-					$slider_page_id = get_option( 'woocommerce_shop_page_id' );
-				}
-				if ( ! is_home() && ! is_front_page() && ( is_archive() || Avada_Helper::bbp_is_topic_tag() ) && isset( $object_id ) && ( ! ( class_exists( 'WooCommerce' ) && is_shop() ) ) ) {
-					$slider_page_id = $object_id;
-					avada_slider( $slider_page_id, true );
-				}
-				if ( ( 'publish' === get_post_status( $slider_page_id ) && ! post_password_required() && ! is_archive() && ! Avada_Helper::bbp_is_topic_tag() ) || ( 'publish' === get_post_status( $slider_page_id ) && ! post_password_required() && ( class_exists( 'WooCommerce' ) && is_shop() ) ) || ( current_user_can( 'read_private_pages' ) && in_array( get_post_status( $slider_page_id ), array( 'private', 'draft', 'pending', 'future' ) ) ) ) {
-					avada_slider( $slider_page_id, ( is_archive() || Avada_Helper::bbp_is_topic_tag() ) && ! ( class_exists( 'WooCommerce' ) && is_shop() ) );
-				}
-			}
-			?>
-		</div>
-		<?php
-		$slider_fallback = get_post_meta( $slider_page_id, 'pyre_fallback', true );
-		?>
-		<?php if ( $slider_fallback ) : ?>
-			<div id="fallback-slide">
-				<img src="<?php echo esc_url_raw( $slider_fallback ); ?>" alt="" />
-			</div>
-		<?php endif; ?>
-		<?php avada_header_template( 'Above', is_archive() || Avada_Helper::bbp_is_topic_tag() ); ?>
+		<?php avada_sliders_container(); ?>
+
+		<?php avada_header_template( 'Above', ( is_archive() || Avada_Helper::bbp_is_topic_tag() ) && ! ( class_exists( 'WooCommerce' ) && is_shop() ) ); ?>
 
 		<?php if ( has_action( 'avada_override_current_page_title_bar' ) ) : ?>
 			<?php do_action( 'avada_override_current_page_title_bar', $c_page_id ); ?>

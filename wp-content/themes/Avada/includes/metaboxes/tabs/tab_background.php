@@ -27,20 +27,7 @@ $this->radio_buttonset(
 );
 
 // Dependency check for boxed mode.
-$boxed_dependency = array(
-	array(
-		'field'      => 'page_bg_layout',
-		'value'      => 'wide',
-		'comparison' => '!=',
-	),
-);
-if ( 'Wide' == Avada()->settings->get( 'layout' ) ) {
-	$boxed_dependency[] = array(
-		'field'      => 'page_bg_layout',
-		'value'      => 'default',
-		'comparison' => '!=',
-	);
-}
+$boxed_dependency = array();
 
 $page_bg_color = Fusion_Color::new_color(
 	array(
@@ -50,9 +37,9 @@ $page_bg_color = Fusion_Color::new_color(
 );
 $this->color(
 	'page_bg_color',
-	esc_attr__( 'Background Color', 'Avada' ),
+	esc_attr__( 'Background Color For Page', 'Avada' ),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Controls the background color for the outer background. Hex code, ex: #000. %s', 'Avada' ), Avada()->settings->get_default_description( 'bg_color' ) ),
+	sprintf( esc_html__( 'Controls the background color for the page. When the color value is set to anything below 100&#37; opacity, the color will overlay the background image if one is uploaded. Hex code, ex: #000. %s', 'Avada' ), Avada()->settings->get_default_description( 'bg_color' ) ),
 	true,
 	$boxed_dependency,
 	$page_bg_color->color
@@ -60,9 +47,9 @@ $this->color(
 
 $this->upload(
 	'page_bg',
-	esc_attr__( 'Background Image for Outer Area', 'Avada' ),
+	esc_attr__( 'Background Image For Page', 'Avada' ),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_attr__( 'Select an image to use for the outer background. %s', 'Avada' ), Avada()->settings->get_default_description( 'bg_image', 'thumbnail' ) ),
+	sprintf( esc_attr__( 'Select an image to use for a full page background. %s', 'Avada' ), Avada()->settings->get_default_description( 'bg_image', 'url' ) ),
 	$boxed_dependency
 );
 
@@ -77,10 +64,12 @@ $this->radio_buttonset(
 	'page_bg_full',
 	esc_attr__( '100% Background Image', 'Avada' ),
 	array(
-		'no'  => esc_attr__( 'No', 'Avada' ),
-		'yes' => esc_attr__( 'Yes', 'Avada' ),
+		'default' => esc_attr__( 'Default', 'Avada' ),
+		'no'      => esc_attr__( 'No', 'Avada' ),
+		'yes'     => esc_attr__( 'Yes', 'Avada' ),
 	),
-	esc_html__( 'Choose to have the background image display at 100%.', 'Avada' ),
+	/* translators: Additional description (defaults). */
+	sprintf( esc_html__( 'Choose to have the background image display at 100&#37;. %s', 'Avada' ), Avada()->settings->get_default_description( 'bg_full', '', 'yesno' ) ),
 	'',
 	$boxed_dependency
 );
@@ -89,12 +78,14 @@ $this->select(
 	'page_bg_repeat',
 	esc_attr__( 'Background Repeat', 'Avada' ),
 	array(
+		'default'   => esc_attr__( 'Default', 'Avada' ),
 		'repeat'    => esc_attr__( 'Tile', 'Avada' ),
 		'repeat-x'  => esc_attr__( 'Tile Horizontally', 'Avada' ),
 		'repeat-y'  => esc_attr__( 'Tile Vertically', 'Avada' ),
 		'no-repeat' => esc_attr__( 'No Repeat', 'Avada' ),
 	),
-	esc_html__( 'Select how the background image repeats.', 'Avada' ),
+	/* translators: Additional description (defaults). */
+	sprintf( esc_html__( 'Select how the background image repeats. %s', 'Avada' ), Avada()->settings->get_default_description( 'bg_repeat', '', 'select' ) ),
 	$boxed_dependency
 );
 
@@ -109,7 +100,7 @@ $content_bg_color = Fusion_Color::new_color(
 );
 $this->color(
 	'wide_page_bg_color',
-	esc_attr__( 'Background Color', 'Avada' ),
+	esc_attr__( 'Background Color for Main Content Area', 'Avada' ),
 	/* translators: Additional description (defaults). */
 	sprintf( esc_html__( 'Controls the background color for the main content area. Hex code, ex: #000. %s', 'Avada' ), Avada()->settings->get_default_description( 'content_bg_color' ) ),
 	true,
@@ -121,7 +112,7 @@ $this->upload(
 	'wide_page_bg',
 	esc_attr__( 'Background Image for Main Content Area', 'Avada' ),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Select an image to use for the main content area. %s', 'Avada' ), Avada()->settings->get_default_description( 'content_bg_image', 'thumbnail' ) ),
+	sprintf( esc_html__( 'Select an image to use for the main content area. %s', 'Avada' ), Avada()->settings->get_default_description( 'content_bg_image', 'url' ) ),
 	$wide_dependency
 );
 
@@ -136,10 +127,12 @@ $this->radio_buttonset(
 	'wide_page_bg_full',
 	esc_html__( '100% Background Image', 'Avada' ),
 	array(
-		'no'  => esc_attr__( 'No', 'Avada' ),
-		'yes' => esc_attr__( 'Yes', 'Avada' ),
+		'default' => esc_attr__( 'Default', 'Avada' ),
+		'no'      => esc_attr__( 'No', 'Avada' ),
+		'yes'     => esc_attr__( 'Yes', 'Avada' ),
 	),
-	esc_html__( 'Choose to have the background image display at 100%.', 'Avada' ),
+	/* translators: Additional description (defaults). */
+	sprintf( esc_html__( 'Choose to have the background image display at 100&#37;. %s', 'Avada' ), Avada()->settings->get_default_description( 'content_bg_full', '', 'yesno' ) ),
 	'',
 	$wide_dependency
 );
@@ -148,12 +141,14 @@ $this->select(
 	'wide_page_bg_repeat',
 	esc_attr__( 'Background Repeat', 'Avada' ),
 	array(
+		'default'   => esc_attr__( 'Default', 'Avada' ),
 		'repeat'    => esc_attr__( 'Tile', 'Avada' ),
 		'repeat-x'  => esc_attr__( 'Tile Horizontally', 'Avada' ),
 		'repeat-y'  => esc_attr__( 'Tile Vertically', 'Avada' ),
 		'no-repeat' => esc_attr__( 'No Repeat', 'Avada' ),
 	),
-	esc_html__( 'Select how the background image repeats.', 'Avada' ),
+	/* translators: Additional description (defaults). */
+	sprintf( esc_html__( 'Select how the background image repeats. %s', 'Avada' ), Avada()->settings->get_default_description( 'content_bg_repeat', '', 'select' ) ),
 	$wide_dependency
 );
 

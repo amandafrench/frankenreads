@@ -67,7 +67,7 @@ if ( ! function_exists( 'avada_slider' ) ) {
 	 */
 	function avada_slider( $post_id, $is_archive = false ) {
 
-		$slider_type = avada_get_slider_type( $post_id, $is_archive );
+		$slider_type = Avada_Helper::get_slider_type( $post_id, $is_archive );
 		$slider      = avada_get_slider( $post_id, $slider_type, $is_archive );
 
 		if ( $slider ) {
@@ -195,7 +195,7 @@ if ( ! function_exists( 'avada_get_page_title_bar_contents' ) ) {
 				$title = esc_html__( 'Error 404 Page', 'Avada' );
 			}
 
-			if ( class_exists( 'Tribe__Events__Main' ) && ( ( Avada_Helper::tribe_is_event() && ! is_single() && ! is_home() ) || Avada_Helper::is_events_archive() || ( Avada_Helper::is_events_archive() && is_404() ) ) ) {
+			if ( class_exists( 'Tribe__Events__Main' ) && ( ( Avada_Helper::tribe_is_event( $post_id ) && ! is_single() && ! is_home() && ! is_tag() ) || Avada_Helper::is_events_archive( $post_id ) && ! is_tag() || ( Avada_Helper::is_events_archive( $post_id ) && is_404() ) ) ) {
 				$title = tribe_get_events_title();
 			} elseif ( is_archive() && ! Avada_Helper::is_bbpress() && ! is_search() ) {
 				if ( is_day() ) {
@@ -236,14 +236,24 @@ if ( ! function_exists( 'avada_get_page_title_bar_contents' ) ) {
 			$subtitle = Avada()->settings->get( 'blog_subtitle' );
 		}
 
+		// Which TO to check for.
+		$page_title_option = Avada()->settings->get( 'page_title_bar' );
+		if ( is_home() ) {
+			// Blog designated page.
+			$page_title_option = Avada()->settings->get( 'blog_show_page_title_bar' );
+		} elseif ( is_tag() || is_category() || is_author() || is_date() || is_singular( 'post' ) ) {
+			// Blog archive or post.
+			$page_title_option = Avada()->settings->get( 'blog_page_title_bar' );
+		}
+
 		if ( ! is_archive() && ! is_search() && ! ( is_home() && ! is_front_page() ) ) {
 			$page_title = get_post_meta( $post_id, 'pyre_page_title', true );
-			if ( 'no' == $page_title_text && ( 'yes' === $page_title || 'yes_without_bar' === $page_title || ( 'hide' !== Avada()->settings->get( 'page_title_bar' ) && 'no' !== $page_title ) ) ) {
+			if ( 'no' == $page_title_text && ( 'yes' === $page_title || 'yes_without_bar' === $page_title || ( 'hide' !== $page_title_option && 'no' !== $page_title ) ) ) {
 				$title    = '';
 				$subtitle = '';
 			}
 		} else {
-			if ( 'hide' != Avada()->settings->get( 'page_title_bar' ) && 'no' == $page_title_text ) {
+			if ( 'hide' != $page_title_option && 'no' == $page_title_text ) {
 				$title    = '';
 				$subtitle = '';
 			}
@@ -288,6 +298,50 @@ if ( ! function_exists( 'avada_current_page_title_bar' ) ) {
 		} else if ( 'hide' !== $page_title_option ) {
 			avada_page_title_bar( $page_title_bar_contents[0], $page_title_bar_contents[1], $page_title_bar_contents[2] );
 		}
+	}
+} // End if().
+
+if ( ! function_exists( 'avada_is_page_title_bar_enabled' ) ) {
+	/**
+	 * Check if page title bar is enabled.
+	 *
+	 * @param int $post_id The post ID.
+	 * @return bool
+	 */
+	function avada_is_page_title_bar_enabled( $post_id ) {
+		$page_title              = get_post_meta( $post_id, 'pyre_page_title', true );
+		$page_title_text         = get_post_meta( $post_id, 'pyre_page_title_text', true );
+		$is_title_bar_enabled    = false;
+
+		// Which TO to check for.
+		$page_title_option      = Avada()->settings->get( 'page_title_bar' );
+		$page_title_text_option = Avada()->settings->get( 'page_title_bar_text' );
+
+		if ( is_home() ) {
+
+			// Blog designated page.
+			$page_title_option = Avada()->settings->get( 'blog_show_page_title_bar' );
+		} elseif ( is_tag() || is_category() || is_author() || is_date() || is_singular( 'post' ) ) {
+
+			// Blog archive or post.
+			$page_title_option = Avada()->settings->get( 'blog_page_title_bar' );
+		}
+
+		// Check if archive or WooCommerce shop page.
+		if ( ( ! is_archive() || class_exists( 'WooCommerce' ) && is_shop() ) && ! is_search() ) {
+
+			// Check that combination of page option and TO means page title bar and text should show.
+			if ( ( 'yes' === $page_title || 'yes_without_bar' === $page_title || ( 'hide' !== $page_title_option && 'no' !== $page_title ) ) && ( 'yes' === $page_title_text || ( 'no' !== $page_title_text && '0' !== $page_title_text_option ) ) ) {
+					$is_title_bar_enabled = true;
+
+			}
+
+			// No page option to check for so just check that TO is not set to hide.
+		} else if ( 'hide' !== $page_title_option && '0' !== $page_title_text_option ) {
+			$is_title_bar_enabled = true;
+		}
+
+		return $is_title_bar_enabled;
 	}
 } // End if().
 

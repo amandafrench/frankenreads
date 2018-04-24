@@ -16,29 +16,29 @@
 
 			// Picker with default.
 			if ( jQuery( this ).data( 'default' ) &&  jQuery( this ).data( 'default' ).length ) {
-				 jQuery( this ).wpColorPicker( {
+				jQuery( this ).wpColorPicker( {
 					change: function( event, ui ) {
 						avadaTaxMeta.colorChange( ui.color.toString(), self, $defaultReset );
 					},
 					clear: function( event ) {
 						avadaTaxMeta.colorClear( event, self );
 					},
-					palettes: ['#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B']
+					palettes: [ '#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B' ]
 				} );
 
 				// Make it so the reset link also clears color.
 				$defaultReset.on( 'click', 'a', function( event ) {
 					event.preventDefault();
 					avadaTaxMeta.colorClear( event, self );
-				});
+				} );
 
 			// Picker without default.
 			} else {
 				jQuery( this ).wpColorPicker( {
-					palettes: ['#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B']
+					palettes: [ '#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B' ]
 				} );
 			}
-		});
+		} );
 	};
 
 	/**
@@ -94,12 +94,12 @@
 	 */
 	avadaTaxMeta.initMediaFrames = function() {
 		var frame,
-		    metaBox      = jQuery( '.avada-tax-img-field' ),
-		    addImgLink   = metaBox.find( '.avada-tax-image-upload' ),
-		    delImgLink   = metaBox.find( '.avada-tax-image-upload-clear' ),
-		    imgContainer = metaBox.find( '.avada-tax-image-preview' ),
-		    imgIdInput   = metaBox.find( '.avada-tax-image-url' ),
-		    pContainer   = '';
+			metaBox      = jQuery( '.avada-tax-img-field' ),
+			addImgLink   = metaBox.find( '.avada-tax-image-upload' ),
+			delImgLink   = metaBox.find( '.avada-tax-image-upload-clear' ),
+			imgContainer = metaBox.find( '.avada-tax-image-preview' ),
+			imgIdInput   = metaBox.find( '.avada-tax-image-url' ),
+			pContainer   = '';
 
 		// On image link click.
 		addImgLink.on( 'click', function( event ) {
@@ -114,12 +114,12 @@
 			}
 
 			// Create a new media frame.
-			frame = wp.media({
+			frame = wp.media( {
 				button: {
 					text: 'Use this media'
 				},
 				multiple: false
-			});
+			} );
 
 			// When an image is selected in the media frame.
 			frame.on( 'select', function() {
@@ -135,11 +135,11 @@
 
 				// Unhide the remove image link.
 				pContainer.find( delImgLink ).removeClass( 'hidden' );
-			});
+			} );
 
 			// Finally, open the modal on click.
 			frame.open();
-		});
+		} );
 
 		// Delete image link.
 		delImgLink.on( 'click', function( event ) {
@@ -158,7 +158,7 @@
 
 			// Delete the image id from the hidden input.
 			pContainer.find( imgIdInput ).val( '' ).trigger( 'change' );
-		});
+		} );
 	};
 
 	/**
@@ -182,7 +182,7 @@
 			// Verify response.
 			jQuery( $response ).find( 'response' ).each( function( i, e ) {
 				var termID;
-				if ( jQuery( e ).attr( 'action' ).indexOf( 'add-tag' ) > -1 ) {
+				if ( -1 < jQuery( e ).attr( 'action' ).indexOf( 'add-tag' ) ) {
 
 					// If new term added.
 					termID = jQuery( e ).find( 'term_id' );
@@ -190,7 +190,7 @@
 						avadaTaxMeta.clearFormFields();
 					}
 				}
-			});
+			} );
 		} catch ( err ) {}
 	};
 
@@ -213,7 +213,7 @@
 		jQuery.each( jQuery( '.avada-tax-meta-field select' ), function( i, item ) {
 			var $item = jQuery( item );
 			$item.val( $item.find( 'option:first' ).val() ).trigger( 'change' );
-		});
+		} );
 
 		// Update button set.
 		jQuery.each( jQuery( '.avada-tax-button-set a' ), function( i, item ) { // jshint ignore:line
@@ -222,7 +222,7 @@
 			$radiosetcontainer.find( '.ui-state-active' ).removeClass( 'ui-state-active' );
 			$radiosetcontainer.find( '.ui-button' ).first().addClass( 'ui-state-active' );
 			$radiosetcontainer.find( '.button-set-value' ).val( 'default' ).trigger( 'change' );
-		});
+		} );
 	};
 
 	/**
@@ -233,7 +233,7 @@
 	avadaTaxMeta.enableDependencies = function() {
 		jQuery( '.avada-tax-dependency' ).each( function() {
 			avadaTaxMeta.avadaTaxLoopDependencies( jQuery( this ) );
-		});
+		} );
 	};
 
 	/**
@@ -247,16 +247,16 @@
 		$container.find( 'span' ).each( function() {
 
 			var $value      = jQuery( this ).data( 'value' ),
-			    $comparison = jQuery( this ).data( 'comparison' ),
-			    $field      = jQuery( this ).data( 'field' );
+				$comparison = jQuery( this ).data( 'comparison' ),
+				$field      = jQuery( this ).data( 'field' );
 
 			$passed = avadaTaxMeta.avadaTaxCheckDependency( jQuery( '#' + $field ).val(), $value, $comparison );
 			return $passed;
-		});
+		} );
 		if ( $passed ) {
-			 $container.parents( '.avada-tax-meta-field' ).show();
+			$container.parents( '.avada-tax-meta-field' ).show();
 		} else {
-			 $container.parents( '.avada-tax-meta-field' ).hide();
+			$container.parents( '.avada-tax-meta-field' ).hide();
 		}
 	};
 
@@ -303,7 +303,7 @@
 		$radiosetcontainer.find( '.ui-state-active' ).removeClass( 'ui-state-active' );
 		jQuery( this ).addClass( 'ui-state-active' );
 		$radiosetcontainer.find( '.button-set-value' ).val( $radiosetcontainer.find( '.ui-state-active' ).data( 'value' ) ).trigger( 'change' );
-	});
+	} );
 
 	jQuery( 'div.avada-tax-header, tr.avada-tax-heading-edit' ).on( 'click', function() {
 		if ( jQuery( this ).find( 'span' ).hasClass( 'close' ) ) {
@@ -315,7 +315,7 @@
 		}
 
 		jQuery( this ).find( '.toggle-indicator' ).toggleClass( 'close' );
-	});
+	} );
 
 	// INIT stuff.
 	avadaTaxMeta.initColorPickers();
@@ -324,15 +324,15 @@
 
 	jQuery( '.avada-tax-meta-field' ).find( 'select, input' ).on( 'change', function() {
 		avadaTaxMeta.enableDependencies();
-	});
+	} );
 
-	jQuery( '.avada-tax-meta-field select:not(.hidden-sidebar)' ).selectWoo({
+	jQuery( '.avada-tax-meta-field select:not(.hidden-sidebar)' ).selectWoo( {
 		minimumResultsForSearch: 10,
 		dropdownCssClass: 'avada-select2',
 		allowClear: true
-	});
+	} );
 
-	jQuery( document ).ajaxComplete(function( event, xhr, settings ) {
+	jQuery( document ).ajaxComplete( function( event, xhr, settings ) {
 		avadaTaxMeta.onAjaxComplete( event, xhr, settings );
-	});
-})( jQuery );
+	} );
+}( jQuery ) );

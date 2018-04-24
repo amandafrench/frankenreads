@@ -148,6 +148,8 @@ if ( ! class_exists( 'Avada_Google_Fonts' ) ) {
 				'h4_typography',
 				'h5_typography',
 				'h6_typography',
+				'post_title_typography',
+				'post_titles_extras_typography',
 			);
 			foreach ( $fields as $field ) {
 				$this->generate_google_font( $field );

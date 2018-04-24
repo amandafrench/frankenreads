@@ -193,8 +193,7 @@ class PyreThemeFrameworkMetaboxes {
 			return;
 		}
 
-		// @codingStandardsIgnoreLine
-		$fusion_meta = array_intersect_key( $_POST, array_flip( preg_grep( '/^pyre_/', array_keys( $_POST ) ) ) );
+		$fusion_meta = array_intersect_key( $_POST, array_flip( preg_grep( '/^pyre_/', array_keys( $_POST ) ) ) ); // WPCS: CSRF ok.
 		foreach ( $fusion_meta as $key => $value ) {
 			update_post_meta( $post_id, $key, $value );
 		}

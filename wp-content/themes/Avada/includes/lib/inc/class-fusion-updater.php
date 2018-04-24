@@ -181,6 +181,10 @@ final class Fusion_Updater {
 		if ( class_exists( 'Avada' ) ) {
 			$plugins_info = Avada::get_bundled_plugins();
 			$bundled_plugins = $this->args['bundled'];
+
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once wp_normalize_path( ABSPATH . 'wp-admin/includes/plugin.php' );
+			}
 			$plugins = get_plugins();
 		}
 

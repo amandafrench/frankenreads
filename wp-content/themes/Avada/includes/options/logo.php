@@ -368,7 +368,7 @@ function avada_options_section_logo( $sections ) {
 				'fields'      => array(
 					'favicon' => array(
 						'label'       => esc_html__( 'Favicon', 'Avada' ),
-						'description' => esc_html__( 'Favicon for your website at 16px x 16px.', 'Avada' ),
+						'description' => esc_html__( 'Favicon for your website at 16px x 16px or 32px x 32px.', 'Avada' ),
 						'id'          => 'favicon',
 						'default'     => '',
 						'type'        => 'media',

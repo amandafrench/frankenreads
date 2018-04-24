@@ -15,7 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <section class="related-posts single-related-posts">
-	<?php Avada()->template->title_template( $main_heading, '3' ); ?>
+	<?php
+	$title_size = ( false === avada_is_page_title_bar_enabled( get_the_ID() ) ? '2' : '3' );
+	Avada()->template->title_template( $main_heading, $title_size );
+	?>
 
 	<?php
 	/**

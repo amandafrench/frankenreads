@@ -534,9 +534,13 @@ class Fusion_Dynamic_CSS {
 		if ( false === get_transient( 'fusion_css_cache_cleanup' ) ) {
 			$this->reset_all_caches();
 
-			// Delete cached-css files.
-			$upload_dir    = wp_upload_dir();
-			$folder_path   = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'fusion-styles';
+			// Get the root path for compiled files.
+			$upload_dir               = wp_upload_dir();
+			$root_compiled_files_path = apply_filters( 'fusion_compiler_filesystem_root_path', $upload_dir['basedir'] );
+			// Get the foldername.
+			$styles_foldername  = apply_filters( 'fusion_compiler_filesystem_folder_name', 'fusion-styles' );
+			// Delete the files/folders.
+			$folder_path   = $root_compiled_files_path . '/' . $styles_foldername;
 			$wp_filesystem = Fusion_Helper::init_filesystem();
 			$wp_filesystem->delete( $folder_path, true, 'd' );
 

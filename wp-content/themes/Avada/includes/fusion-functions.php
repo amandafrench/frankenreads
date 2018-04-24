@@ -368,7 +368,6 @@ if ( ! function_exists( 'fusion_rgb2hsl' ) ) {
 
 		$add      = strlen( $hex_color ) == 6 ? 2 : 1;
 		$aa       = 0;
-		// @codingStandardsIgnoreLine
 		$add_on   = 1 == $add ? ( $aa = 16 - 1 ) + 1 : 1;
 
 		$red         = round( ( hexdec( substr( $hex_color, 0, $add ) ) * $add_on + $aa ) / 255, 6 );

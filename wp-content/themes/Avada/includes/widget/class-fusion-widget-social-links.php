@@ -490,53 +490,6 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 
 		$instance = wp_parse_args( (array) $instance, $defaults );
 		?>
-		<script type="text/javascript">
-			jQuery( document ).ready( function() {
-				jQuery.fn.checkBoxedIcons = function() {
-					var color_type = jQuery( this ).val();
-					var boxed_icon = jQuery( this ).parents( 'form' ).find( '.fusion-social-icons-boxed' ).val();
-
-					if ( boxed_icon === 'No' ) {
-						jQuery( this ).parents( 'form' ).find('.avada-widget-boxed-icon-option-child').hide();
-						jQuery( this ).parents( 'form' ).find('.avada-widget-boxed-icon-background').hide();
-					} else {
-						jQuery( this ).parents( 'form' ).find('.avada-widget-boxed-icon-option-child').show();
-
-						if ( color_type === 'custom' ) {
-							jQuery( this ).parents( 'form' ).find('.avada-widget-boxed-icon-background').show();
-						}
-					}
-				};
-
-				jQuery.fn.checkColorType = function() {
-					var boxed_icon = jQuery( this ).val();
-					var color_type = jQuery( this ).parents( 'form' ).find( '.fusion-social-color-type' ).val();
-
-					if ( color_type === 'brand' ) {
-						jQuery( this ).parents( 'form' ).find('.avada-widget-color-type-option-child').hide();
-					} else {
-						jQuery( this ).parents( 'form' ).find('.avada-widget-color-type-option-child').show();
-
-						if ( boxed_icon === 'No' ) {
-							jQuery( this ).parents( 'form' ).find('.avada-widget-boxed-icon-background').hide();
-						}
-					}
-				};
-
-				jQuery( '.fusion-social-color-type' ).checkColorType();
-				jQuery( '.fusion-social-color-type' ).checkBoxedIcons();
-
-				jQuery( '.fusion-social-color-type' ).on( 'change', function() {
-					jQuery( this ).checkColorType();
-				});
-
-				jQuery( '.fusion-social-icons-boxed' ).on( 'change', function() {
-					jQuery( this ).checkBoxedIcons();
-				});
-
-			});
-		</script>
-
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
@@ -636,6 +589,57 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 			echo '</p>';
 
 		}
+		?>
+		<script type="text/javascript">
+			jQuery( document ).ready( function() {
+				jQuery.fn.checkBoxedIcons = function() {
+					var colorType = jQuery( this ).parents( 'form' ).find( '.fusion-social-color-type' ).val(),
+						boxedIcon = jQuery( this ).parents( 'form' ).find( '.fusion-social-icons-boxed' ).val();
+
+					if ( 'No' === boxedIcon ) {
+						jQuery( this ).parents( 'form' ).find( '.avada-widget-boxed-icon-option-child' ).hide();
+						jQuery( this ).parents( 'form' ).find( '.avada-widget-boxed-icon-background' ).hide();
+					} else {
+						jQuery( this ).parents( 'form' ).find( '.avada-widget-boxed-icon-option-child' ).show();
+
+						if ( 'custom' === colorType ) {
+							jQuery( this ).parents( 'form' ).find( '.avada-widget-boxed-icon-background' ).show();
+						}
+					}
+				};
+
+				jQuery.fn.checkColorType = function() {
+					var colorType = jQuery( this ).parents( 'form' ).find( '.fusion-social-color-type' ).val(),
+						boxedIcon = jQuery( this ).parents( 'form' ).find( '.fusion-social-icons-boxed' ).val();
+
+					if ( 'brand' === colorType ) {
+						jQuery( this ).parents( 'form' ).find( '.avada-widget-color-type-option-child' ).hide();
+					} else {
+						jQuery( this ).parents( 'form' ).find( '.avada-widget-color-type-option-child' ).show();
+
+						if ( 'No' === boxedIcon ) {
+							jQuery( this ).parents( 'form' ).find( '.avada-widget-boxed-icon-background' ).hide();
+						}
+					}
+				};
+
+				jQuery( '.fusion-social-color-type' ).each( function() {
+					jQuery( this ).checkColorType();
+				} );
+				jQuery( '.fusion-social-icons-boxed' ).each( function() {
+					jQuery( this ).checkBoxedIcons();
+				} );
+
+				jQuery( '.fusion-social-color-type' ).on( 'change', function() {
+					jQuery( this ).checkColorType();
+				});
+
+				jQuery( '.fusion-social-icons-boxed' ).on( 'change', function() {
+					jQuery( this ).checkBoxedIcons();
+				});
+			});
+		</script>
+		<?php
 	}
 }
 

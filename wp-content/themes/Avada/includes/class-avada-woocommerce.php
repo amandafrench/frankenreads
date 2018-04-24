@@ -166,6 +166,9 @@ class Avada_Woocommerce {
 		add_action( 'woocommerce_checkout_shipping', array( $this, 'checkout_shipping' ), 20 );
 		add_filter( 'woocommerce_enable_order_notes_field', array( $this, 'enable_order_notes_field' ) );
 
+		// Make sure that the single product shortcode does not use default column amount.
+		add_filter( 'shortcode_atts_product', array( $this, 'change_product_shortcode_atts' ), 20, 4 );
+
 		// Version sensitive hooks.
 		if ( version_compare( self::get_wc_version(), '3.3', '<' ) ) {
 			add_filter( 'woocommerce_template_path', array( $this, 'backwards_compatibility' ) );
@@ -467,17 +470,18 @@ class Avada_Woocommerce {
 	 * @return array The altered html markup.
 	 */
 	public function single_product_image_thumbnail_html( $html, $attachment_id ) {
-		global $post, $product;
+		global $post, $product, $fusion_library;
 
 		$attachment_count = count( $product->get_gallery_image_ids() );
 		$full_size_image = wp_get_attachment_image_src( $attachment_id, 'full' );
+		$attachment_data = $fusion_library->images->get_attachment_data( $attachment_id, 'none' );
 
 		$gallery = '[]';
 		if ( $attachment_count > 0 ) {
 			$gallery = '[product-gallery]';
 		}
 
-		$html = str_replace( '</div>', '<a class="avada-product-gallery-lightbox-trigger" href="' . esc_url( $full_size_image[0] ) . '" data-rel="iLightbox' . $gallery . '"></a></div>', $html );
+		$html = str_replace( '</div>', '<a class="avada-product-gallery-lightbox-trigger" href="' . esc_url( $full_size_image[0] ) . '" data-rel="iLightbox' . $gallery . '" alt="' . $attachment_data['alt'] . '" data-title="' . $attachment_data['title_attribute'] . '" data-caption="' . $attachment_data['caption_attribute'] . '"></a></div>', $html );
 
 		return $html;
 	}
@@ -839,7 +843,7 @@ class Avada_Woocommerce {
 				remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 				add_action( 'woocommerce_before_shop_loop', array( $this, 'catalog_ordering' ), 30 );
 
-				add_action( 'woocommerce_get_catalog_ordering_args', array( $this, 'get_catalog_ordering_args' ), 20 );
+				add_filter( 'woocommerce_get_catalog_ordering_args', array( $this, 'get_catalog_ordering_args' ), 20 );
 			}
 		}
 	}
@@ -889,7 +893,7 @@ class Avada_Woocommerce {
 
 		// Remove posts_clause filter, if default ordering is set to rating or popularity to make custom ordering work correctly.
 		if ( 'default' !== $pob ) {
-			if ( 'popularity' === $woo_default_catalog_orderby || 'rating' === $woo_default_catalog_orderby ) {
+			if ( false !== strpos( $woo_default_catalog_orderby, 'price' ) || 'popularity' === $woo_default_catalog_orderby || 'rating' === $woo_default_catalog_orderby ) {
 				WC()->query->remove_ordering_args();
 			}
 		}
@@ -908,8 +912,8 @@ class Avada_Woocommerce {
 				break;
 			case 'price':
 			case 'price-desc':
-				add_filter( 'posts_clauses', array( $this, 'order_by_price_post_clauses' ) );
-				add_action( 'wp', array( $this, 'remove_ordering_args_filters' ) );
+				$meta_key = '_price';
+				$orderby  = "meta_value_num ID";
 				break;
 			case 'popularity':
 				$meta_key = 'total_sales';
@@ -1115,7 +1119,6 @@ class Avada_Woocommerce {
 		$args = array(
 			'posts_per_page' => $number_of_columns,
 			'columns'        => $number_of_columns,
-			// @codingStandardsIgnoreLine
 			'orderby'        => 'rand',
 		);
 
@@ -1360,6 +1363,25 @@ class Avada_Woocommerce {
 
 			)
 		);
+	}
+
+	/**
+	 * Filters the single product shortcode and sets amount of columns to 1.
+	 *
+	 * @access public
+	 * @since 5.5
+	 * @param array  $out       The output array of shortcode attributes.
+	 * @param array  $pairs     The supported attributes and their defaults.
+	 * @param array  $atts      The user defined shortcode attributes.
+	 * @param string $shortcode The shortcode name.
+	 *
+	 * @return array $out The attribute output array.
+	 */
+	public function change_product_shortcode_atts( $out, $pairs, $atts, $shortcode ) {
+		if ( ! isset( $atts['columns'] ) ) {
+			$out['columns'] = '1';
+		}
+		return $out;
 	}
 
 }

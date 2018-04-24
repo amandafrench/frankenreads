@@ -14,6 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit( 'Direct script access denied.' );
 }
 
+if ( ! function_exists( 'get_plugins' ) ) {
+	require_once wp_normalize_path( ABSPATH . 'wp-admin/includes/plugin.php' );
+}
 $plugins           = Avada_TGM_Plugin_Activation::$instance->plugins;
 $installed_plugins = get_plugins();
 $wp_api_plugins    = get_site_transient( 'fusion_wordpress_org_plugins' );
@@ -25,6 +28,7 @@ if ( ! function_exists( 'plugins_api' ) ) {
 if ( ! $wp_api_plugins ) {
 	$wp_org_plugins = array(
 		'woocommerce'         => 'woocommerce/woocommerce.php',
+		'wordpress-seo'       => 'wordpress-seo/wp-seo.php',
 		'bbpress'             => 'bbpress/bbpress.php',
 		'the-events-calendar' => 'the-events-calendar/the-events-calendar.php',
 		'contact-form-7'      => 'contact-form-7/wp-contact-form-7',
@@ -47,16 +51,16 @@ if ( ! $wp_api_plugins ) {
 	 <div class="avada-important-notice">
 		<p class="about-description">
 			<?php /* translators: link attributes. */ ?>
-			<?php $premium_plugins_string = sprintf( __( 'Convert Plus, ACF Pro, Slider Revolution & Layer Slider are premium plugins that can be installed once your <a %1$s>product is registered</a>.', 'Avada' ), 'href="' . esc_url_raw( admin_url( 'admin.php?page=avada-registration' ) ) . '"' ); ?>
+			<?php $premium_plugins_string = sprintf( __( 'Fusion White Label Branding, Convert Plus, ACF Pro, Slider Revolution & Layer Slider are premium plugins that can be installed once your <a %1$s>product is registered</a>.', 'Avada' ), 'href="' . esc_url_raw( admin_url( 'admin.php?page=avada-registration' ) ) . '"' ); ?>
 			<?php if ( defined( 'ENVATO_HOSTED_SITE' ) && ENVATO_HOSTED_SITE ) : ?>
-				<?php $premium_plugins_string = __( 'Convert Plus, ACF Pro, Slider Revolution & Layer Slider are premium plugins included in Avada.', 'Avada' ); ?>
+				<?php $premium_plugins_string = __( 'Fusion White Label Branding, Convert Plus, ACF Pro, Slider Revolution & Layer Slider are premium plugins included in Avada.', 'Avada' ); ?>
 			<?php endif; ?>
 			<?php if ( false !== get_option( 'avada_previous_version' ) ) : ?>
 				<?php /* translators: %1$s: Premium plugins info. %2$s: URL. */ ?>
-				<?php printf( __( 'Fusion Core and Fusion Builder are required to use Avada. Fusion Builder can only be installed after Fusion Core is updated to version 3.0 or higher. %1$s Before updating premium plugins, please always make sure Avada is on the latest available version. The other plugins below offer design integration with Avada. You can manage the plugins from this tab. <a href="%2$s" target="_blank"> Subscribe to our newsletter</a> to be notified about new products coming in the future!', 'Avada' ), $premium_plugins_string, 'http://theme-fusion.us2.list-manage2.com/subscribe?u=4345c7e8c4f2826cc52bb84cd&id=af30829ace' ); // WPCS: XSS ok. ?>
+				<?php printf( __( 'Fusion Core and Fusion Builder are our premium plugins required to use Avada. Fusion Builder can only be installed after Fusion Core is updated to version 3.0 or higher. %1$s Before updating premium plugins, please always make sure Avada is on the latest available version. The other plugins below offer design integration with Avada. You can manage the plugins from this tab. <a href="%2$s" target="_blank"> Subscribe to our newsletter</a> to be notified about new products coming in the future!', 'Avada' ), $premium_plugins_string, 'http://theme-fusion.us2.list-manage2.com/subscribe?u=4345c7e8c4f2826cc52bb84cd&id=af30829ace' ); // WPCS: XSS ok. ?>
 			<?php else : ?>
 				<?php /* translators: %1$s: Premium plugins info. %2$s: URL. */ ?>
-				<?php printf( __( 'Fusion Core and Fusion Builder are required to use Avada. %1$s Before updating premium plugins, please always make sure Avada is on the latest available version. The other plugins below offer design integration with Avada. You can manage the plugins from this tab. <a href="%2$s" target="_blank">Subscribe to our newsletter</a> to be notified about new products coming in the future!', 'Avada' ), $premium_plugins_string, 'http://theme-fusion.us2.list-manage2.com/subscribe?u=4345c7e8c4f2826cc52bb84cd&id=af30829ace' ); // WPCS: XSS ok. ?>
+				<?php printf( __( 'Fusion Core and Fusion Builder are our premium plugins required to use Avada. %1$s Before updating premium plugins, please always make sure Avada is on the latest available version. The other plugins below offer design integration with Avada. You can manage the plugins from this tab. <a href="%2$s" target="_blank">Subscribe to our newsletter</a> to be notified about new products coming in the future!', 'Avada' ), $premium_plugins_string, 'http://theme-fusion.us2.list-manage2.com/subscribe?u=4345c7e8c4f2826cc52bb84cd&id=af30829ace' ); // WPCS: XSS ok. ?>
 			<?php endif; ?>
 		</p>
 	</div>

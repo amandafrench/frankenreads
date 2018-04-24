@@ -19,7 +19,7 @@
 
 	<?php $facebook_url = 'https://m.facebook.com/sharer.php?u=' . get_permalink(); ?>
 	<?php if ( ! avada_jetpack_is_mobile() ) : ?>
-		<?php $facebook_url = 'http://www.facebook.com/sharer.php?m2w&s=100&p&#91;url&#93;=' . get_permalink() . '&p&#91;title&#93;=' . wp_strip_all_tags( get_the_title(), true ); ?>
+		<?php $facebook_url = 'http://www.facebook.com/sharer.php?m2w&s=100&p&#91;url&#93;=' . get_permalink() . '&p&#91;title&#93;=' . the_title_attribute( array( 'echo' => false ) ); ?>
 	<?php endif; ?>
 
 	<ul class="social-share clearfix">
@@ -32,7 +32,7 @@
 			</a>
 		</li>
 		<li class="twitter">
-			<a href="https://twitter.com/share?text=<?php echo wp_strip_all_tags( get_the_title(), true ); // WPCS: XSS ok. ?>&amp;url=<?php echo rawurlencode( get_permalink() ); ?>" target="_blank"<?php echo $nofollow; // WPCS: XSS ok. ?>>
+			<a href="https://twitter.com/share?text=<?php the_title_attribute(); // WPCS: XSS ok. ?>&amp;url=<?php echo rawurlencode( get_permalink() ); ?>" target="_blank"<?php echo $nofollow; // WPCS: XSS ok. ?>>
 				<i class="fontawesome-icon medium circle-yes fusion-icon-twitter"></i>
 				<div class="fusion-woo-social-share-text">
 					<span><?php esc_attr_e( 'Tweet This Product', 'Avada' ); ?></span>
@@ -41,7 +41,7 @@
 		</li>
 		<li class="pinterest">
 			<?php $full_image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' ); ?>
-			<a href="http://pinterest.com/pin/create/button/?url=<?php echo rawurlencode( get_permalink() ); ?>&amp;description=<?php echo rawurlencode( wp_strip_all_tags( get_the_title(), true ) ); ?>&amp;media=<?php echo rawurlencode( $full_image[0] ); ?>" target="_blank"<?php echo $nofollow; // WPCS: XSS ok. ?>>
+			<a href="http://pinterest.com/pin/create/button/?url=<?php echo rawurlencode( get_permalink() ); ?>&amp;description=<?php echo rawurlencode( the_title_attribute( array( 'echo' => false ) ) ); ?>&amp;media=<?php echo rawurlencode( $full_image[0] ); ?>" target="_blank"<?php echo $nofollow; // WPCS: XSS ok. ?>>
 				<i class="fontawesome-icon medium circle-yes fusion-icon-pinterest"></i>
 				<div class="fusion-woo-social-share-text">
 					<span><?php esc_attr_e( 'Pin This Product', 'Avada' ); ?></span>
@@ -49,7 +49,7 @@
 			</a>
 		</li>
 		<li class="email">
-			<a href="mailto:?subject=<?php echo rawurlencode( html_entity_decode( wp_strip_all_tags( get_the_title(), true ), ENT_COMPAT, 'UTF-8' ) ); ?>&body=<?php echo esc_url_raw( get_permalink() ); ?>" target="_blank"<?php echo $nofollow; // WPCS: XSS ok. ?>>
+			<a href="mailto:?subject=<?php echo rawurlencode( html_entity_decode( the_title_attribute( array( 'echo' => false ) ), ENT_COMPAT, 'UTF-8' ) ); ?>&body=<?php echo esc_url_raw( get_permalink() ); ?>" target="_blank"<?php echo $nofollow; // WPCS: XSS ok. ?>>
 				<i class="fontawesome-icon medium circle-yes fusion-icon-mail"></i>
 				<div class="fusion-woo-social-share-text">
 					<span><?php echo esc_attr_e( 'Mail This Product', 'Avada' ); ?></span>

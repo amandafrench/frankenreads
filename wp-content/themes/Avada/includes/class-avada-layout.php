@@ -86,6 +86,8 @@ class Avada_Layout {
 	 * @return array
 	 */
 	public function sidebar_options() {
+		$post_id = Avada()->fusion_library->get_page_id();
+
 		if ( is_home() ) {
 			$sidebars = array(
 				'global'    => '1',
@@ -196,7 +198,7 @@ class Avada_Layout {
 			);
 		} // End if().
 
-		if ( Avada_Helper::is_events_archive() ) {
+		if ( Avada_Helper::is_events_archive( $post_id ) && ! is_tag() ) {
 			$sidebars = array(
 				'global'    => '1',
 				'sidebar_1' => Avada()->settings->get( 'ec_sidebar' ),
@@ -388,9 +390,10 @@ class Avada_Layout {
 			add_filter( 'fusion_sidebar_1_class', array( $this, 'side_nav_right_class' ) );
 		}
 
-		// Page has a single sidebar.
-		// @codingStandardsIgnoreLine
+		/*
+		Page has a single sidebar.
 		if ( Avada()->template->has_sidebar() && ! Avada()->template->double_sidebars() ) {}
+		*/
 
 		// Page has double sidebars.
 		if ( Avada()->template->double_sidebars() ) {

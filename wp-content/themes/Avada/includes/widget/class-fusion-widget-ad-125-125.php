@@ -49,6 +49,10 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 
 		extract( $args );
 
+		if ( ! isset( $instance['ad_125_link_target'] ) ) {
+			$instance['ad_125_link_target'] = '_self';
+		}
+
 		echo $before_widget; // WPCS: XSS ok.
 		?>
 
@@ -56,9 +60,15 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 			<?php $ads = array( 1, 2, 3, 4 ); ?>
 			<?php foreach ( $ads as $ad_count ) : ?>
 				<?php if ( $instance[ 'ad_125_img_' . $ad_count ] && $instance[ 'ad_125_link_' . $ad_count ] ) : ?>
+					<?php
+					$link_classes = 'fusion-image-link';
+					if ( isset( $instance[ 'ad_125_hover_type_' . $ad_count ] ) ) {
+						$link_classes .= ' hover-type-' . $instance[ 'ad_125_hover_type_' . $ad_count ];
+					}
+					?>
 					<div class="fusion-image-holder">
-						<a href="<?php echo esc_url_raw( $instance[ 'ad_125_link_' . $ad_count ] ); ?>">
-							<img src="<?php echo esc_url_raw( $instance[ 'ad_125_img_' . $ad_count ] ); ?>" alt="" width="123" height="123" />
+						<a class="<?php echo esc_attr( $link_classes ); ?>" href="<?php echo esc_url( $instance[ 'ad_125_link_' . $ad_count ] ); ?>" target="<?php echo esc_attr( $instance['ad_125_link_target'] ); ?>">
+							<img src="<?php echo esc_url( $instance[ 'ad_125_img_' . $ad_count ] ); ?>" alt="" width="123" height="123" />
 						</a>
 					</div>
 				<?php endif; ?>
@@ -86,14 +96,19 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 
 		$instance = $old_instance;
 
-		$instance['ad_125_img_1']  = isset( $new_instance['ad_125_img_1'] ) ? $new_instance['ad_125_img_1'] : '';
-		$instance['ad_125_link_1'] = isset( $new_instance['ad_125_link_1'] ) ? $new_instance['ad_125_link_1'] : '';
-		$instance['ad_125_img_2']  = isset( $new_instance['ad_125_img_2'] ) ? $new_instance['ad_125_img_2'] : '';
-		$instance['ad_125_link_2'] = isset( $new_instance['ad_125_link_2'] ) ? $new_instance['ad_125_link_2'] : '';
-		$instance['ad_125_img_3']  = isset( $new_instance['ad_125_img_3'] ) ? $new_instance['ad_125_img_3'] : '';
-		$instance['ad_125_link_3'] = isset( $new_instance['ad_125_link_3'] ) ? $new_instance['ad_125_link_3'] : '';
-		$instance['ad_125_img_4']  = isset( $new_instance['ad_125_img_4'] ) ? $new_instance['ad_125_img_4'] : '';
-		$instance['ad_125_link_4'] = isset( $new_instance['ad_125_link_4'] ) ? $new_instance['ad_125_link_4'] : '';
+		$instance['ad_125_img_1']         = isset( $new_instance['ad_125_img_1'] ) ? $new_instance['ad_125_img_1'] : '';
+		$instance['ad_125_link_1']        = isset( $new_instance['ad_125_link_1'] ) ? $new_instance['ad_125_link_1'] : '';
+		$instance['ad_125_hover_type_1']  = isset( $new_instance['ad_125_hover_type_1'] ) ? $new_instance['ad_125_hover_type_1'] : '';
+		$instance['ad_125_img_2']         = isset( $new_instance['ad_125_img_2'] ) ? $new_instance['ad_125_img_2'] : '';
+		$instance['ad_125_link_2']        = isset( $new_instance['ad_125_link_2'] ) ? $new_instance['ad_125_link_2'] : '';
+		$instance['ad_125_hover_type_2']  = isset( $new_instance['ad_125_hover_type_2'] ) ? $new_instance['ad_125_hover_type_2'] : '';
+		$instance['ad_125_img_3']         = isset( $new_instance['ad_125_img_3'] ) ? $new_instance['ad_125_img_3'] : '';
+		$instance['ad_125_link_3']        = isset( $new_instance['ad_125_link_3'] ) ? $new_instance['ad_125_link_3'] : '';
+		$instance['ad_125_hover_type_3']  = isset( $new_instance['ad_125_hover_type_3'] ) ? $new_instance['ad_125_hover_type_3'] : '';
+		$instance['ad_125_img_4']         = isset( $new_instance['ad_125_img_4'] ) ? $new_instance['ad_125_img_4'] : '';
+		$instance['ad_125_link_4']        = isset( $new_instance['ad_125_link_4'] ) ? $new_instance['ad_125_link_4'] : '';
+		$instance['ad_125_hover_type_4']  = isset( $new_instance['ad_125_hover_type_4'] ) ? $new_instance['ad_125_hover_type_4'] : '';
+		$instance['ad_125_link_target']   = isset( $new_instance['ad_125_link_target'] ) ? $new_instance['ad_125_link_target'] : '_self';
 
 		return $instance;
 
@@ -108,58 +123,108 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 	public function form( $instance ) {
 
 		$defaults = array(
-			'ad_125_img_1'  => '',
-			'ad_125_link_1' => '',
-			'ad_125_img_2'  => '',
-			'ad_125_link_2' => '',
-			'ad_125_img_3'  => '',
-			'ad_125_link_3' => '',
-			'ad_125_img_4'  => '',
-			'ad_125_link_4' => '',
+			'ad_125_img_1'        => '',
+			'ad_125_link_1'       => '',
+			'ad_125_hover_type_1' => '',
+			'ad_125_img_2'        => '',
+			'ad_125_link_2'       => '',
+			'ad_125_hover_type_2' => '',
+			'ad_125_img_3'        => '',
+			'ad_125_link_3'       => '',
+			'ad_125_hover_type_3' => '',
+			'ad_125_img_4'        => '',
+			'ad_125_link_4'       => '',
+			'ad_125_hover_type_4' => '',
+			'ad_125_link_target'  => '_self',
+
 		);
 
 		$instance = wp_parse_args( (array) $instance, $defaults );
 		?>
 
 		<?php /* translators: Number.*/ ?>
-		<p><strong><?php printf( esc_attr__( 'Ad %s', 'Avada' ), '1' ); ?></strong></p>
+		<p><strong><?php printf( esc_html__( 'Ad %s', 'Avada' ), '1' ); ?></strong></p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_1' ) ); ?>"><?php esc_attr_e( 'Image Ad Link:', 'Avada' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_1' ) ); ?>"><?php esc_html_e( 'Image Ad Link:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_1' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_img_1' ) ); ?>" value="<?php echo esc_attr( $instance['ad_125_img_1'] ); ?>" />
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_1' ) ); ?>"><?php esc_attr_e( 'Ad Link:', 'Avada' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_1' ) ); ?>"><?php esc_html_e( 'Ad Link:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_1' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_link_1' ) ); ?>" value="<?php echo esc_attr( $instance['ad_125_link_1'] ); ?>" />
 		</p>
-		<?php /* translators: Number.*/ ?>
-		<p><strong><?php printf( esc_attr__( 'Ad %s', 'Avada' ), '2' ); ?></strong></p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_2' ) ); ?>"><?php esc_attr_e( 'Image Ad Link:', 'Avada' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_hover_type_1' ) ); ?>"><?php esc_html_e( 'Image Hover Type:', 'Avada' ); ?></label>
+			<select id="<?php echo esc_attr( $this->get_field_id( 'ad_125_hover_type_1' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_hover_type_1' ) ); ?>" class="widefat" style="width:100%;">
+				<option value="" <?php echo ( '' === $instance['ad_125_hover_type_1'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'None', 'Avada' ); ?></option>
+				<option value="zoomin" <?php echo ( 'zoomin' === $instance['ad_125_hover_type_1'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Zoom In', 'Avada' ); ?></option>
+				<option value="zoomout" <?php echo ( 'zoomout' === $instance['ad_125_hover_type_1'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Zoon Out', 'Avada' ); ?></option>
+				<option value="liftup" <?php echo ( 'liftup' === $instance['ad_125_hover_type_1'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Lift Up', 'Avada' ); ?></option>
+			</select>
+		</p>
+		<?php /* translators: Number.*/ ?>
+		<p><strong><?php printf( esc_html__( 'Ad %s', 'Avada' ), '2' ); ?></strong></p>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_2' ) ); ?>"><?php esc_html_e( 'Image Ad Link:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_2' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_img_2' ) ); ?>" value="<?php echo esc_attr( $instance['ad_125_img_2'] ); ?>" />
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_2' ) ); ?>"><?php esc_attr_e( 'Ad Link:', 'Avada' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_2' ) ); ?>"><?php esc_html_e( 'Ad Link:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_2' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_link_2' ) ); ?>" value="<?php echo esc_attr( $instance['ad_125_link_2'] ); ?>" />
 		</p>
-		<?php /* translators: Number.*/ ?>
-		<p><strong><?php printf( esc_attr__( 'Ad %s', 'Avada' ), '3' ); ?></strong></p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_3' ) ); ?>"><?php esc_attr_e( 'Image Ad Link:', 'Avada' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_hover_type_2' ) ); ?>"><?php esc_html_e( 'Image Hover Type:', 'Avada' ); ?></label>
+			<select id="<?php echo esc_attr( $this->get_field_id( 'ad_125_hover_type_2' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_hover_type_2' ) ); ?>" class="widefat" style="width:100%;">
+				<option value="" <?php echo ( '' === $instance['ad_125_hover_type_2'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'None', 'Avada' ); ?></option>
+				<option value="zoomin" <?php echo ( 'zoomin' === $instance['ad_125_hover_type_2'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Zoom In', 'Avada' ); ?></option>
+				<option value="zoomout" <?php echo ( 'zoomout' === $instance['ad_125_hover_type_2'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Zoon Out', 'Avada' ); ?></option>
+				<option value="liftup" <?php echo ( 'liftup' === $instance['ad_125_hover_type_2'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Lift Up', 'Avada' ); ?></option>
+			</select>
+		</p>
+		<?php /* translators: Number.*/ ?>
+		<p><strong><?php printf( esc_html__( 'Ad %s', 'Avada' ), '3' ); ?></strong></p>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_3' ) ); ?>"><?php esc_html_e( 'Image Ad Link:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_3' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_img_3' ) ); ?>" value="<?php echo esc_attr( $instance['ad_125_img_3'] ); ?>" />
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_3' ) ); ?>"><?php esc_attr_e( 'Ad Link:', 'Avada' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_3' ) ); ?>"><?php esc_html_e( 'Ad Link:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_3' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_link_3' ) ); ?>" value="<?php echo esc_attr( $instance['ad_125_link_3'] ); ?>" />
 		</p>
-		<?php /* translators: Number.*/ ?>
-		<p><strong><?php printf( esc_attr__( 'Ad %s', 'Avada' ), '4' ); ?></strong></p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_4' ) ); ?>"><?php esc_attr_e( 'Image Ad Link:', 'Avada' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_hover_type_3' ) ); ?>"><?php esc_html_e( 'Image Hover Type:', 'Avada' ); ?></label>
+			<select id="<?php echo esc_attr( $this->get_field_id( 'ad_125_hover_type_3' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_hover_type_3' ) ); ?>" class="widefat" style="width:100%;">
+				<option value="" <?php echo ( '' === $instance['ad_125_hover_type_3'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'None', 'Avada' ); ?></option>
+				<option value="zoomin" <?php echo ( 'zoomin' === $instance['ad_125_hover_type_3'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Zoom In', 'Avada' ); ?></option>
+				<option value="zoomout" <?php echo ( 'zoomout' === $instance['ad_125_hover_type_3'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Zoon Out', 'Avada' ); ?></option>
+				<option value="liftup" <?php echo ( 'liftup' === $instance['ad_125_hover_type_3'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Lift Up', 'Avada' ); ?></option>
+			</select>
+		</p>
+		<?php /* translators: Number.*/ ?>
+		<p><strong><?php printf( esc_html__( 'Ad %s', 'Avada' ), '4' ); ?></strong></p>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_4' ) ); ?>"><?php esc_html_e( 'Image Ad Link:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'ad_125_img_4' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_img_4' ) ); ?>" value="<?php echo esc_attr( $instance['ad_125_img_4'] ); ?>" />
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_4' ) ); ?>"><?php esc_attr_e( 'Ad Link:', 'Avada' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_4' ) ); ?>"><?php esc_html_e( 'Ad Link:', 'Avada' ); ?></label>
 			<input class="widefat" type="text" id="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_4' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_link_4' ) ); ?>" value="<?php echo esc_attr( $instance['ad_125_link_4'] ); ?>" />
+		</p>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_hover_type_4' ) ); ?>"><?php esc_html_e( 'Image Hover Type:', 'Avada' ); ?></label>
+			<select id="<?php echo esc_attr( $this->get_field_id( 'ad_125_hover_type_4' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_hover_type_4' ) ); ?>" class="widefat" style="width:100%;">
+				<option value="" <?php echo ( '' === $instance['ad_125_hover_type_4'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'None', 'Avada' ); ?></option>
+				<option value="zoomin" <?php echo ( 'zoomin' === $instance['ad_125_hover_type_4'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Zoom In', 'Avada' ); ?></option>
+				<option value="zoomout" <?php echo ( 'zoomout' === $instance['ad_125_hover_type_4'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Zoon Out', 'Avada' ); ?></option>
+				<option value="liftup" <?php echo ( 'liftup' === $instance['ad_125_hover_type_4'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Lift Up', 'Avada' ); ?></option>
+			</select>
+		</p>
+		<p><strong><?php esc_html_e( 'General Options', 'Avada' ); ?></strong></p>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_target' ) ); ?>"><?php esc_html_e( 'Link Target:', 'Avada' ); ?></label>
+			<select id="<?php echo esc_attr( $this->get_field_id( 'ad_125_link_target' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'ad_125_link_target' ) ); ?>" class="widefat" style="width:100%;">
+				<option value="_self" <?php echo ( '_self' === $instance['ad_125_link_target'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( '_self', 'Avada' ); ?></option>
+				<option value="_blank" <?php echo ( '_blank' === $instance['ad_125_link_target'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( '_blank', 'Avada' ); ?></option>
+			</select>
 		</p>
 		<?php
 

@@ -1,5 +1,4 @@
 <?php
-// @codingStandardsIgnoreFile
 /**
  * Plugin installation and activation for WordPress themes.
  *
@@ -679,7 +678,6 @@ if ( ! class_exists( 'Avada_TGM_Plugin_Activation' ) ) {
 
 				global $tab, $body_id;
 				$body_id = 'plugin-information';
-				// @codingStandardsIgnoreLine
 				$tab     = 'plugin-information';
 
 				install_plugin_information();
@@ -3857,7 +3855,6 @@ if ( ! class_exists( 'TGMPA_Utils' ) ) {
 		 * @return bool
 		 */
 		protected static function emulate_filter_bool( $value ) {
-			// @codingStandardsIgnoreStart
 			static $true  = array(
 				'1',
 				'true', 'True', 'TRUE',
@@ -3872,7 +3869,6 @@ if ( ! class_exists( 'TGMPA_Utils' ) ) {
 				'no', 'No', 'NO',
 				'off', 'Off', 'OFF',
 			);
-			// @codingStandardsIgnoreEnd
 
 			if ( is_bool( $value ) ) {
 				return $value;

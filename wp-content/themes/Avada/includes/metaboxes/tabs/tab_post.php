@@ -18,10 +18,11 @@ $this->radio_buttonset(
 	'show_first_featured_image',
 	esc_attr__( 'Disable First Featured Image', 'Avada' ),
 	array(
-		'no'  => esc_attr__( 'No', 'Avada' ),
 		'yes' => esc_attr__( 'Yes', 'Avada' ),
+		'no'  => esc_attr__( 'No', 'Avada' ),
 	),
-	esc_html__( 'Disable the 1st featured image on single post pages.', 'Avada' )
+	esc_html__( 'Disable the 1st featured image on single post pages.', 'Avada' ),
+	'no'
 );
 
 $this->dimension(
@@ -45,8 +46,8 @@ $this->radio_buttonset(
 	esc_html__( 'Use 100% Width Page', 'Avada' ),
 	array(
 		'default'   => esc_attr__( 'Default', 'Avada' ),
-		'no'        => esc_attr__( 'No', 'Avada' ),
 		'yes'       => esc_attr__( 'Yes', 'Avada' ),
+		'no'        => esc_attr__( 'No', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
 	sprintf( esc_html__( 'Choose to set this post to 100&#37; browser width. %s', 'Avada' ), Avada()->settings->get_default_description( 'blog_width_100', '', 'yesno' ) )
@@ -84,10 +85,11 @@ if ( 'avada_faq' !== $screen->post_type ) {
 		'post_links_target',
 		esc_html__( 'Open Blog Links In New Window', 'Avada' ),
 		array(
-			'no'  => esc_attr__( 'No', 'Avada' ),
 			'yes' => esc_attr__( 'Yes', 'Avada' ),
+			'no'  => esc_attr__( 'No', 'Avada' ),
 		),
-		esc_html__( 'Choose to open the single post page link in a new window.', 'Avada' )
+		esc_html__( 'Choose to open the single post page link in a new window.', 'Avada' ),
+		'no'
 	);
 } // End if().
 

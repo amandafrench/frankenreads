@@ -391,19 +391,39 @@ function avada_add_fb_styling( $css ) {
 	if ( class_exists( 'FusionBuilder' ) ) {
 		$dynamic_css = Fusion_Dynamic_CSS::get_instance();
 		$dynamic_css_helpers = $dynamic_css->get_helpers();
-		$css['global']['#wrapper .fusion-date-and-formats .fusion-format-box, .tribe-mini-calendar-event .list-date .list-dayname']['background-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'dates_box_color' ) );
-		$css['global']['#wrapper .fusion-content-widget-area .fusion-tabs-widget .tabs-container']['background-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_bg_color' ) );
-		$css['global']['body .fusion-content-widget-area .fusion-tabs-widget .tab-hold .tabs li']['border-right'] = '1px solid ' . Fusion_Sanitize::color( $fusion_settings->get( 'tabs_bg_color' ) );
-		if ( is_rtl() ) {
-			$css['global']['body.rtl #wrapper .fusion-content-widget-area .fusion-tabs-widget .tab-hold .tabset li']['border-left-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_bg_color' ) );
-		}
-		$elements = array(
-			'body .fusion-content-widget-area .fusion-tabs-widget .tab-holder .tabs li a',
-			'.fusion-content-widget-area .fusion-tabs-widget .tab-holder .tabs li a',
-		);
-		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background']    = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_inactive_color' ) );
-		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-bottom'] = '0';
 
+		$css['global']['.tribe-mini-calendar-event .list-date .list-dayname']['background-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'dates_box_color' ) );
+
+		$css['global']['.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-widget-content']['background-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_bg_color' ) );
+		$css['global']['.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li']['border-right-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_bg_color' ) );
+		if ( is_rtl() ) {
+			$css['global']['.rtl .fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li']['border-left-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_bg_color' ) );
+		}
+
+		$css['global']['.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-clean .fusion-tabs-nav ul']['border'] = '1px solid ' . Fusion_Sanitize::color( $fusion_settings->get( 'tabs_border_color' ) );
+		$css['global']['.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-clean .fusion-tabs-nav ul li']['border-right-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_border_color' ) );
+		if ( is_rtl() ) {
+			$css['global']['.rtl .fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-clean .fusion-tabs-nav ul li']['border-left-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_border_color' ) );
+		}
+
+		$css['global']['.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li a']['border-top-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_inactive_color' ) );
+		$elements = array(
+			'.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li a',
+			'.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-widget-content .fusion-date-box',
+		);
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_inactive_color' ) );
+
+		$css['global']['.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li a:hover']['background'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_bg_color' ) );
+		$css['global']['.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li a:hover']['border-top-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_bg_color' ) );
+		$css['global']['.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-nav ul li.active a']['background'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_bg_color' ) );
+
+		$elements = array(
+			'.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-classic',
+			'.fusion-content-widget-area .fusion-tabs-widget .fusion-tabs-widget-content .fusion-tabs-widget-items li',
+		);
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_border_color' ) );
+
+		$css['global']['#wrapper .fusion-date-and-formats .fusion-format-box, .tribe-mini-calendar-event .list-date .list-dayname']['background-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'dates_box_color' ) );
 		$css['global']['.fusion-menu-item-button .menu-text']['border-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'button_accent_color' ) );
 		$css['global']['.fusion-menu-item-button:hover .menu-text']['border-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'button_accent_hover_color' ) );
 
@@ -461,19 +481,6 @@ function avada_add_fb_styling( $css ) {
 		$css['global']['.fusion-sharing-box .fusion-social-networks a']['font-size']                   = Fusion_Sanitize::size( $fusion_settings->get( 'sharing_social_links_font_size' ) );
 		$css['global']['.fusion-sharing-box .fusion-social-networks.boxed-icons a']['padding']         = Fusion_Sanitize::size( $fusion_settings->get( 'sharing_social_links_boxed_padding' ) );
 
-		$css['global']['body .fusion-content-widget-area .fusion-tabs-widget .tab-hold .tabs li a:hover']['background']    = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_bg_color' ) );
-		$elements = array(
-			'body .fusion-content-widget-area .fusion-tabs-widget .tab-hold .tabs li.active a',
-			'body .fusion-content-widget-area .fusion-tabs-widget .tab-holder .tabs li.active a',
-		);
-		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background']       = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_bg_color' ) );
-
-		$elements = array(
-			'#wrapper .fusion-content-widget-area .fusion-tabs-widget .tab-holder',
-			'.fusion-content-widget-area .fusion-tabs-widget .tab-holder .news-list li',
-		);
-		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'tabs_border_color' ) );
-
 		$elements = array( '.review blockquote q', '.post-content blockquote', '.checkout .payment_methods .payment_box' );
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'testimonial_bg_color' ) );
 
@@ -499,8 +506,6 @@ function avada_add_fb_styling( $css ) {
 		$elements = array(
 			'.fontawesome-icon',
 			'.fontawesome-icon.circle-yes',
-			'.post-content .error-menu li:before',
-			'.post-content .error-menu li:after',
 		);
 		if ( class_exists( 'WooCommerce' ) ) {
 			$elements[] = '.avada-myaccount-data .digital-downloads li:before';
@@ -540,7 +545,6 @@ function avada_add_fb_styling( $css ) {
 			'.fusion-content-widget-area .widget li a:before',
 			'.fusion-content-widget-area .widget .recentcomments',
 			'.fusion-content-widget-area .widget_categories li',
-			'#wrapper .fusion-tabs-widget .tab-holder',
 			'.commentlist .the-comment',
 			'.side-nav',
 			'#wrapper .side-nav li a',
@@ -675,15 +679,6 @@ function avada_add_fb_styling( $css ) {
 		);
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = Fusion_Sanitize::color( $fusion_settings->get( 'grid_separator_color' ) );
 
-		if ( $fusion_settings->get( 'checklist_icons_color' ) ) {
-			$elements = array(
-				'.fusion-body .error-menu li:before',
-				'.fusion-body .error-menu li:after',
-			);
-
-			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = $fusion_settings->get( 'checklist_circle_color' );
-			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = $fusion_settings->get( 'checklist_icons_color' );
-		}
 		if ( class_exists( 'Tribe__Events__Main' ) ) {
 			$elements = array(
 				'.tribe-countdown-timer',

@@ -426,6 +426,7 @@ span.avada-loader {
   padding: 5px;
   text-transform: uppercase;
   color: #fff;
+  font-size: 15px;
 }
 
 .plugin-required {
@@ -447,6 +448,12 @@ span.avada-loader {
 
 .update .plugin-required-premium {
 	top: 74px;
+}
+
+.avada-install-plugins .plugin-required,
+.avada-install-plugins .plugin-premium {
+	width: 73px;
+	text-align: center;
 }
 
 .avada-install-plugins .theme-browser .theme .theme-actions {
@@ -628,6 +635,12 @@ span.avada-loader {
   }
 }
 
+@media screen and ( min-height: 851px ){
+  #wpwrap .avada-demo-themes .theme-browser .theme-wrapper .demo-update-modal-inner .demo-modal-thumbnail {
+    height: 300px;
+  }
+}
+
 #wpwrap .avada-demo-themes .theme-browser .theme-wrapper .demo-update-modal-content{
   border-left: 1px solid #a8a8a8;
   border-right: 1px solid #a8a8a8;
@@ -706,7 +719,7 @@ span.avada-loader {
   text-decoration: none;
   font-size: 18px;
 
-  background-color: rgba(255, 255, 255, 0.5 );
+  background-color: rgba(255, 255, 255, 0.7 );
   border-top-left-radius: 3px;
 
   position: absolute;
@@ -719,7 +732,7 @@ span.avada-loader {
 
 .demo-modal-preview:hover{
 
-  background-color: rgba(255, 255, 255, 0.75 );
+  background-color: rgba(255, 255, 255, 0.9 );
 }
 
 #demo-modal-classic .demo-modal-preview {
@@ -1378,6 +1391,14 @@ span.avada-loader {
   float: right;
 }
 
+.rtl.avada_page_avada-plugins .theme-browser .theme .theme-screenshot img {
+	transform: translateX(6%);
+}
+
+.rtl.avada_page_avada-plugins #wpwrap .theme-browser .theme:hover .theme-wrapper .theme-screenshot img {
+    -webkit-transform: translateX(6%) scale(1.1);
+    transform: translateX(6%) scale(1.1);
+}
 
 /* Toggle */
 

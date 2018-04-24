@@ -7,6 +7,126 @@ This is why we highly recommend to stay up to date with each new theme version a
 
 
 -----------------------------------------------------------------------------------------
+Version 5.5 - April 23rd, 2018
+-----------------------------------------------------------------------------------------
+
+
+- NEW: 3 New Professionally Designed Demos
+- NEW: Fusion Builder Chart element for rendering 6 different chart types along with dozens of customization options
+- NEW: Fusion Builder Before / After and Image Switch element with various design styles, customization options and more
+- NEW: Fusion Builder Syntax Highlighter element for front end code rendering the way you want it, click to copy, style it your way
+- NEW: Fusion Builder Text element now allows to use split columns for running text and inline elements along with design options
+- NEW: Fusion Builder Checklist element now has an options to set divider lines and divider colors and a new Theme Option to set the item size
+- NEW: Fusion Builder Alert element has new options to align content (left/center/right) set text transform and to enable/disable the dismissal button
+- NEW: Avada Tabs widget now offers both clean and classic design styles to fit your site design consistently
+- NEW: Avada Tab Widget now offers a Post Design feature that allows you to display the featured image as a square / circle or no image with the date
+- NEW: Added image hover types and link targets to the Avada 125x125 Ads widget
+- NEW: Masonry layouts now support 2x2 images for extra large image rendering and more creative layouts
+- NEW: Masonry aspect ratio settings (1x1/landscape/portrait/2x2) have been added for image attachments to allow total control over every image
+- NEW: Integration of Font Awesome 5 which offers almost 300 more icons to use throughout the entire theme
+- NEW: Sliding bar now has padding options for all layouts along with a new width option and column layout options for the left/right layouts
+- NEW: Single post titles will automatically change to an H1 tag for better SEO when the page title bar is disabled
+- NEW: Single post extra section headings automatically changing to an H2 tag for better SEO when the page title bar is disabled
+- NEW: Added complete typography options (font family, size, weight, letter spacing, color, etc.) for post titles and single post page extra section headings
+- NEW: Boxed mode outer background image settings can also be used on wide layouts now and are called "Page Background" settings in Theme Options
+- NEW: Page Background settings now have full option overrides in Fusion Page Options
+- NEW: Changed to new Vimeo embed API and removed usage of deprecated Froogaloop library
+- NEW: Updated all premium bundled plugins to latest version as of release date
+- NEW: Added Yoast SEO plugin to our Avada plugins page since it is fully supported, recommended and easier to install
+- IMPROVEMENT: Image title and captions will now show in WooCommerce product image lightbox
+- IMPROVEMENT: The .min suffix is now added to all compiler created JS and CSS files to improve 3rd party compatibility
+- IMPROVEMENT: Added style integration for select2 drop downs
+- IMPROVEMENT: WooCommerce My Account menu dropdown no longer closes on username auto completion
+- IMPROVEMENT: Menu anchor scrolling for 100% height scrolling sections is now a lot smoother
+- IMPROVEMENT: Added support for The Events Calendar customizer options
+- IMPROVEMENT: Updated several descriptions to improve option explanations
+- IMPROVEMENT: Updated URL protocol check implementation of dynamic CSS files for better compatibility with CDNs
+- IMPROVEMENT: Alt attribute of slider fallback images is now auto pulled
+- IMPROVEMENT: Added auto line breaks for very long URLs without hyphens in The Events Calendar sidebars to prevent overflow
+- IMPROVEMENT: Dashboard performance is now optimized when using many tags or blog categories
+- IMPROVEMENT: Added filters to change alt tag of the site logo image, blog element pagination, and compiled CSS/JS files
+- IMPROVEMENT: Fusion Builder API - Icon picker option can now be used multiple times in one Fusion Builder element
+- IMPROVEMENT: Fusion Builder API - Custom heading and description can now be set for sortable parent/child Fusion Builder elements
+- FIXED: Blog medium layouts being incorrectly styled when using Fusion Builder in single posts and full post content on blog archive pages
+- FIXED: Logo doubled on mobiles when using header v7 and dedicated sticky menu
+- FIXED: Outer background image not being displayed correctly on archive pages when framed boxed layout is used
+- FIXED: Dedicated sticky menu not being visible on mobile sticky flyout menu
+- FIXED: Logo being behind overlay when mobile flyout menu is opened
+- FIXED: WooCommerce product sorting not working correctly in v3.3 when default sorting is set to price
+- FIXED: Overall price for product bundles not being correct in WooCommerce menu cart widget when using product bundles add-on
+- FIXED: WooCommerce woocommerce_order_details_after_order_table_items filter missing from our override
+- FIXED: WooCommerce single product shortcode using the WooCommerce default column amount setting
+- FIXED: WooCommerce product image zoom not working on touch screen devices when tapping the images on single products
+- FIXED: Displaying first feature image on pages being disabled by default in Fusion Page Options
+- FIXED: Boxed icon background color option not always showing in social links widget
+- FIXED: Link selector field missing posts under certain circumstances
+- FIXED: Selection of pre defined theme color schemes in Theme Options resetting menu typography options
+- FIXED: Navigation styling not respecting Theme Option styling settings when using the <nextpage> delimiter
+- FIXED: Sticky sidebars on mobile causing page jump when scrolling down to page footer
+- FIXED: Styling issue with element color pickers in RTL mode
+- FIXED: A few RTL styling issues on back end admin pages
+- FIXED: Fusion Builder sticky bar not always being correctly displayed on small screens and in one column view
+- FIXED: Custom ID and class in gallery element not being applied on front end
+- FIXED: Content boxes with vertical timeline layout and empty content area displaying timeline too long
+- FIXED: Isotope layout being messed up after AJAX complete when using The Events Calendar shortcode with photo view
+- FIXED: Previous/next navigation being incorrectly aligned on portfolio single post pages
+- FIXED: Previous/next navigation being incorrect when using recent versions of Post Types Order plugin
+- FIXED: Pagination using text display not having correct link color on the arrows
+- FIXED: Content boxes animation settings inheritance from parent to child not working correctly
+- FIXED: Flip boxes animation settings being restricted to icons only, which will be applied to full boxes now
+- FIXED: Smooth height not working on post slider element
+- FIXED: Google maps tooltips not closing for all markers when tooltips are set to be invisible on load
+- FIXED: JS error when using YouTube and Vimeo videos in two consecutive slides when using Fusion Slider
+- FIXED: Container element Vimeo background videos not correctly muted and autoplayed
+- FIXED: Check for deprecated excerpt length parameter in blog element being wrong which caused very old shortcodes to render excerpts incorrectly
+- FIXED: Fusion Slider loop issue when using YouTube video
+- FIXED: Fusion Slider taxonomy being publicly queryable
+- FIXED: Slider fallback images being added to the DOM even if no slider is shown
+- FIXED: Missing backend icons when Avada is active without Fusion Builder
+- FIXED: Font awesome element preview incorrectly displayed in Fusion Builder
+- FIXED: Flickering of flip boxes in IE11 browser
+- FIXED: Image elements with bottom shadow overflowing container in IE11 browser
+- FIXED: Person element image lift up hover effect leading to overflow in IE11 browser
+- FIXED: JS scripts added to text element being executed in text element preview
+- FIXED: Font weight explicitly applied to "bypostauthor" class which resulted in styling issue for certain fonts
+- FIXED: 100% height center content option not disabled on mobile even if 100% height is disabled
+- FIXED: Sliding bar positioning issue when using right positioning together with smooth scroll
+- FIXED: Auto update class not using function_exists check for get_plugins function which could cause potential errors
+- FIXED: Invalid HTML markup being added to vertical menu widget if no menu was selected
+- FIXED: Flickering issue in Theme Options when using search mode and hovering different tabs
+- FIXED: JS file loading issue on Avada FAQ admin page
+- FIXED: Recent posts element column rendering being incorrect
+- FIXED: A few db queries that were not properly prepared
+- FIXED: Bug in Fusion Builder custom CSS field that made deleting all contents when backslash is used impossible
+- FIXED: Top menu sub-menus on deeper levels showing siblings instead of navigating to the actual page when being clicked
+- FIXED: PHP 7.2 error notice regarding usage of count function on non array variable in class-avada-nav-walker.php
+- FIXED: PHP 7.2.2 notice thrown in the ThemeFusion news widget in WP backend
+- FIXED: Parent/child option dependencies not working correctly in some Fusion Builder elements
+- FIXED: Option dependencies for grid color settings in portfolio element not being correct in all cases
+- FIXED: Flip box element missing default for icon circle option
+- FIXED: Compatibility issue on variable WooCommerce products caused by AliDropship Woo Plugin
+- FIXED: Next/previous arrows in lightbox sometimes missing when lightbox was closed on first/last image and then reopened
+- FIXED: Slider positioning through Fusion Page Options not working correctly on main WooCommerce shop page
+- FIXED: Gallery isotope grid layouts messing blog/portfolio isotope layouts when used inside of them
+- FIXED: When CSS compiler is off Fusion Builder enqueued non minified shortcode, animation and lightbox style files instead of minified
+- FIXED: Menu being incorrectly resized after AJAX complete when sticky header is active and menu background style is used
+- FIXED: Font Awesome icons floating out of wrappers in tabs, toggle and testimonial elements
+- FIXED: Page background not being full page height when using 100% background image and sticky footer
+- FIXED: Added width and height attributes to testimonial element images
+- FIXED: One page scrolling from external page not working when anchor uses special chars
+- FIXED: Icons in icon picker of Avada Menu Options popup being duplicated when same item is opened several times
+- FIXED: H4 headings in footer and sidebars not inheriting all h4 typography settings of from Theme Options
+- FIXED: Post meta data not displaying at all when set to be below title and title was disabled
+- FIXED: Menu padding doubled on RTL sites when using background highlight style
+- FIXED: PHP warning caused by the_title filter in breadcrumb class being applied with only one parameters
+- FIXED: Portfolio load more button removal script hiding all load more buttons on page when portfolio is fully loaded
+- FIXED: Portfolio infinite scroll not always loading next posts correctly when using masonry layout
+- FIXED: Font awesome stylesheet being double enqueued
+- FIXED: Sub-pixel bug in masonry script to correct layout issues on certain setups
+- FIXED: Page title bar blog option not hiding bar correctly when retina image is used
+
+
+-----------------------------------------------------------------------------------------
 Version 5.4.2 - January 29th, 2018
 -----------------------------------------------------------------------------------------
 
@@ -365,6 +485,7 @@ Version 5.3 - November 20th, 2017
 - FIXED: Mega menu horizontal divider not respecting Theme Option menu separator color setting
 - FIXED: Events Calendar single post sidebar styling being incorrect
 - FIXED: Demo import fails if WooCommerce is activated from the demo popup
+- FIXED: Tag archives sometimes incorrectly identified as Events Calendar archives
 
 
 -----------------------------------------------------------------------------------------
@@ -2245,10 +2366,10 @@ Version 3.8.4 - May 1st, 2015
 - improved styles for checklist element when text falls in two lines
 
 
-
 -----------------------------------------------------------------------------------------
 Version 3.8.3 - April 18th, 2015
 -----------------------------------------------------------------------------------------
+
 
 - fixed issue of H2 font setting not working for post titles
 - bug with avada.po

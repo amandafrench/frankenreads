@@ -132,7 +132,7 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 								<div class="fusion-builder-option fusion-menu-style">
 									<div class="option-details">
 										<h3><?php esc_attr_e( 'Menu First Level Style', 'Avada' ); ?></h3>
-										<p class="description"><?php esc_attr_e( 'Select to use normal text (default) for the parent level menu item, or a button. Button styles are controlled in theme options > fusion builder elements.', 'Avada' ); ?></p>
+										<p class="description"><?php esc_attr_e( 'Select to use normal text (default) for the parent level menu item, or a button. Button styles are controlled in Theme Options > Fusion Builder Elements.', 'Avada' ); ?></p>
 									</div>
 									<div class="option-field fusion-builder-option-container">
 										<select id="<?php echo esc_attr( $name . '-' . $item_id ); ?>" class="widefat edit-menu-item-target" name="<?php echo esc_attr( $name ) . '[' . esc_attr( $item_id ) . ']'; ?>">
@@ -147,7 +147,7 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 								<div class="fusion-builder-option">
 									<div class="option-details">
 										<h3><?php esc_attr_e( 'Icon Select', 'Avada' ); ?></h3>
-										<p class="description"><?php esc_attr_e( 'Select an icon for your menu item. Icon styles can be controlled in theme options > main menu > main menu icons.', 'Avada' ); ?></p>
+										<p class="description"><?php esc_attr_e( 'Select an icon for your menu item. Icon styles can be controlled in Theme Options > Menu > Main Menu Icons.', 'Avada' ); ?></p>
 									</div>
 									<div class="option-field fusion-builder-option-container fusion-iconpicker">
 										<input type="text" class="fusion-icon-search" placeholder="Search Icons" />
@@ -321,7 +321,7 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 			<div class="fusion-builder-option field-megamenu-thumbnail">
 				<div class="option-details">
 					<h3><?php esc_attr_e( 'Mega Menu Thumbnail', 'Avada' ); ?></h3>
-					<p class="description"><?php esc_attr_e( 'Select an image to use as a thumbnail for the menu item. The size of the thumbnail can be controlled in theme options > main menu > main menu icons.', 'Avada' ); ?></p>
+					<p class="description"><?php esc_attr_e( 'Select an image to use as a thumbnail for the menu item. The size of the thumbnail can be controlled in Theme Options > Menu > Main Menu Icons.', 'Avada' ); ?></p>
 				</div>
 				<div class="option-field fusion-builder-option-container">
 					<div class="fusion-upload-image<?php echo ( isset( $item->fusion_megamenu_thumbnail ) && '' !== $item->fusion_megamenu_thumbnail ) ? ' fusion-image-set' : ''; ?>">

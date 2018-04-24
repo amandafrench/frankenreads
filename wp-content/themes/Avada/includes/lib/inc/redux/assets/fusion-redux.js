@@ -513,6 +513,7 @@ jQuery( window ).load(function() {
 			if ( '' !== $searchString && null !== $searchString && 'undefined' !== typeof $searchString && $searchString.length > 2 ) {
 				jQuery( '.fusionredux-sidebar .fusionredux-group-menu' ).find( 'li' ).removeClass( 'activeChild' ).removeClass( 'active' );
 				jQuery( '.fusionredux-sidebar .fusionredux-group-menu' ).find( '.submenu' ).hide();
+				jQuery( '.fusionredux-sidebar .fusionredux-group-menu' ).find( '.subsection' ).hide();
 
 			} else {
 				$tab = jQuery.cookie( 'fusionredux_current_tab' );
@@ -520,6 +521,7 @@ jQuery( window ).load(function() {
 				if ( jQuery( '#' + $tab + '_section_group_li' ).parents( '.hasSubSections' ).length ) {
 					jQuery( '#' + $tab + '_section_group_li' ).parents( '.hasSubSections' ).addClass( 'activeChild' );
 					jQuery( '#' + $tab + '_section_group_li' ).parents( '.hasSubSections' ).find( '.submenu' ).show();
+					jQuery( '#' + $tab + '_section_group_li' ).parents( '.hasSubSections' ).find( '.subsection' ).show();
 				}
 				jQuery( '#' + $tab + '_section_group_li' ).addClass( 'active' );
 			}

@@ -214,7 +214,7 @@ class Avada_Template {
 			$sidebar_2 = Avada()->settings->get( 'ppbress_sidebar_2' );
 		}
 
-		if ( class_exists( 'Tribe__Events__Main' ) && Avada_Helper::is_events_archive() ) {
+		if ( class_exists( 'Tribe__Events__Main' ) && Avada_Helper::is_events_archive( $c_page_id ) && ! is_tag() ) {
 			$sidebar_1 = Avada()->settings->get( 'ec_sidebar' );
 			$sidebar_2 = Avada()->settings->get( 'ec_sidebar_2' );
 		}
@@ -389,7 +389,7 @@ class Avada_Template {
 			}
 		}
 
-		if ( class_exists( 'Tribe__Events__Main' ) && Avada_Helper::is_events_archive() ) {
+		if ( class_exists( 'Tribe__Events__Main' ) && Avada_Helper::is_events_archive( $c_page_id ) && ! is_tag() ) {
 			$classes[] = 'tribe-filter-live';
 
 			if ( 'None' !== $sidebar_1 ) {

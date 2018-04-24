@@ -304,11 +304,11 @@ class Fusion_Scripts {
 
 			// Necessary?
 			array(
-				'froogaloop',
-				self::$js_folder_url . '/library/Froogaloop.js',
-				self::$js_folder_path . '/library/Froogaloop.js',
+				'vimeo-player',
+				self::$js_folder_url . '/library/vimeoPlayer.js',
+				self::$js_folder_path . '/library/vimeoPlayer.js',
 				array(),
-				'1',
+				'2.2.1',
 				true,
 			),
 			array(
@@ -349,7 +349,7 @@ class Fusion_Scripts {
 				'fusion-video-bg',
 				self::$js_folder_url . '/library/fusion-video-bg.js',
 				self::$js_folder_path . '/library/fusion-video-bg.js',
-				array(),
+				array( 'fusion-video-general', 'jquery-fitvids' ),
 				'1',
 				true,
 			),

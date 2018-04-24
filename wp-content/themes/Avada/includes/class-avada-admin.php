@@ -176,11 +176,14 @@ class Avada_Admin {
 		// Get the regular dashboard widgets array.
 		$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
 
-		// Backup and delete our new dashboard widget from the end of the array.
-		$avada_widget_backup = array(
-			'themefusion_news' => $normal_dashboard['themefusion_news'],
-		);
-		unset( $normal_dashboard['themefusion_news'] );
+		$avada_widget_backup = array();
+		if ( isset( $normal_dashboard['themefusion_news'] ) ) {
+			// Backup and delete our new dashboard widget from the end of the array.
+			$avada_widget_backup = array(
+				'themefusion_news' => $normal_dashboard['themefusion_news'],
+			);
+			unset( $normal_dashboard['themefusion_news'] );
+		}
 
 		// Merge the two arrays together so our widget is at the beginning.
 		$sorted_dashboard = array_merge( $avada_widget_backup, $normal_dashboard );
@@ -777,6 +780,7 @@ class Avada_Admin {
 			// Add script to check for fusion option slider changes.
 			if ( 'post-new.php' == $pagenow || 'edit.php' == $pagenow || 'post.php' == $pagenow ) {
 				wp_enqueue_script( 'slider_preview', trailingslashit( Avada::$template_dir_url ) . 'assets/admin/js/fusion-builder-slider-preview.js', array(), $version, true );
+				wp_enqueue_style( 'fusion-font-icomoon', FUSION_LIBRARY_URL . '/assets/fonts/icomoon-admin/icomoon.css', false, $version, 'all' );
 			}
 
 			if ( 'nav-menus.php' == $pagenow || 'widgets.php' == $pagenow ) {
@@ -796,10 +800,16 @@ class Avada_Admin {
 				wp_enqueue_script( 'jquery-color' );
 				wp_enqueue_script( 'wp-color-picker' );
 				wp_enqueue_style( 'wp-color-picker' );
+				wp_enqueue_style( 'fusion-font-icomoon', FUSION_LIBRARY_URL . '/assets/fonts/icomoon-admin/icomoon.css', false, $version, 'all' );
 				// ColorPicker Alpha Channel.
 				wp_enqueue_script( 'wp-color-picker-alpha', trailingslashit( Avada::$template_dir_url ) . 'assets/admin/js/wp-color-picker-alpha.js', array( 'wp-color-picker', 'jquery-color' ), $version );
-				wp_enqueue_style( 'fontawesome', FUSION_LIBRARY_URL . '/assets/fonts/fontawesome/font-awesome.css', array(), $version );
+
+				wp_enqueue_style( 'fontawesome', FUSION_LIBRARY_URL . '/assets/fonts/fontawesome/font-awesome.min.css', array(), $version );
+
+				wp_enqueue_script( 'fontawesome-shim-script', FUSION_LIBRARY_URL . '/assets/fonts/fontawesome/js/fa-v4-shims.js', array(), $version );
+
 				wp_enqueue_script( 'fusion-menu-options', trailingslashit( Avada::$template_dir_url ) . 'assets/admin/js/fusion-menu-options.js', array( 'selectwoo-js' ), $version, true );
+
 				wp_localize_script(
 					'fusion-menu-options', 'fusionMenuConfig', array(
 						'fontawesomeicons' => fusion_get_icons_array(),
@@ -854,8 +864,6 @@ class Avada_Admin {
 	public function faq_screen_scripts() {
 		$ver = Avada::get_theme_version();
 		wp_enqueue_style( 'avada_admin_css', trailingslashit( Avada::$template_dir_url ) . 'assets/admin/css/avada-admin.css', array(), $ver );
-		wp_enqueue_script( 'avada_admin_js', trailingslashit( Avada::$template_dir_url ) . 'assets/admin/js/avada-admin.js', array( 'tiptip_jquery', 'avada_zeroclipboard' ), $ver, true );
-		wp_localize_script( 'avada_admin_js', 'avadaAdminL10nStrings', $this->get_admin_script_l10n_strings() );
 	}
 
 	/**
@@ -922,6 +930,9 @@ class Avada_Admin {
 	 * @return  array
 	 */
 	public function plugin_link( $item ) {
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once wp_normalize_path( ABSPATH . 'wp-admin/includes/plugin.php' );
+		}
 		$installed_plugins = get_plugins();
 
 		$item['sanitized_plugin'] = $item['name'];

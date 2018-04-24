@@ -19,7 +19,7 @@ $more = false;
 ?>
 
 
-<div id="posts-container" class="fusion-blog-layout-grid fusion-blog-layout-grid-<?php echo Avada()->settings->get( 'blog_grid_columns' ); ?> isotope fusion-blog-pagination fusion-blog-archive fusion-clearfix">
+<div id="posts-container" class="fusion-blog-layout-grid fusion-blog-layout-grid-<?php echo Avada()->settings->get( 'blog_archive_grid_columns' ); ?> isotope fusion-blog-pagination fusion-blog-archive fusion-clearfix">
 
 	<?php while ( have_posts() ) : the_post(); ?>
 		<?php do_action( 'tribe_events_inside_before_loop' ); ?>
