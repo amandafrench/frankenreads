@@ -9,7 +9,7 @@
  * @since      2.0.0
  */
 
-( function( $ ) {
+( function() {
 
 	'use strict';
 
@@ -78,7 +78,7 @@
 		},
 
 		updateMegamenuFields: function() {
-			var parentLiItem = $( '.menu-item' );
+			var parentLiItem = jQuery( '.menu-item' );
 
 			parentLiItem.each( function( i ) {
 

@@ -536,7 +536,7 @@ function avada_options_section_footer( $sections ) {
 						'description' => esc_html__( 'Controls the text color of the footer font.', 'Avada' ),
 						'id'          => 'footer_text_color',
 						'default'     => '#8C8989',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'class'       => 'fusion-or-gutter',
 						'required'    => array(
 							array(
@@ -556,7 +556,7 @@ function avada_options_section_footer( $sections ) {
 						'description' => esc_html__( 'Controls the text color of the footer link font.', 'Avada' ),
 						'id'          => 'footer_link_color',
 						'default'     => '#BFBFBF',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'class'       => 'fusion-or-gutter',
 						'required'    => array(
 							array(
@@ -576,7 +576,7 @@ function avada_options_section_footer( $sections ) {
 						'description' => esc_html__( 'Controls the text hover color of the footer link font.', 'Avada' ),
 						'id'          => 'footer_link_color_hover',
 						'default'     => ( isset( $settings['primary_color'] ) && ! empty( $settings['primary_color'] ) ) ? $settings['primary_color'] : '#ffffff',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'class'       => 'fusion-or-gutter',
 						'required'    => array(
 							array(

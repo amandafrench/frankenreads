@@ -1162,13 +1162,8 @@ class Avada_Woocommerce {
 		global $woocommerce;
 		?>
 		<div class="woocommerce-content-box full-width clearfix">
-			<?php if ( 1 == $woocommerce->cart->get_cart_contents_count() ) : ?>
 				<?php /* translators: Number. */ ?>
-				<h2><?php printf( esc_attr__( 'You Have %d Item In Your Cart', 'Avada' ), $woocommerce->cart->get_cart_contents_count() ); // WPCS: XSS ok. ?></h2>
-			<?php else : ?>
-				<?php /* translators: Number. */ ?>
-				<h2><?php printf( esc_attr__( 'You Have %d Items In Your Cart', 'Avada' ), $woocommerce->cart->get_cart_contents_count() ); // WPCS: XSS ok. ?></h2>
-			<?php endif; ?>
+				<h2><?php printf( esc_attr( _n( 'You Have %d Item In Your Cart', 'You Have %d Items In Your Cart', $woocommerce->cart->get_cart_contents_count(), 'Avada' ) ), number_format_i18n( $woocommerce->cart->get_cart_contents_count() ) ); // WPCS: XSS ok. ?></h2>
 			<?php
 	}
 

@@ -425,7 +425,7 @@ function avada_options_section_menu( $sections ) {
 						'description' => esc_html__( 'Controls the color for main menu text hover, highlight bar and dropdown border.', 'Avada' ),
 						'id'          => 'menu_hover_first_color',
 						'default'     => '#a0ce4e',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 					),
 					'menu_text_align' => array(
 						'label'       => esc_html__( 'Main Menu Text Align', 'Avada' ),
@@ -462,7 +462,7 @@ function avada_options_section_menu( $sections ) {
 						'description' => esc_html__( 'Controls the color for main menu dropdown text.', 'Avada' ),
 						'id'          => 'menu_sub_color',
 						'default'     => '#333333',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'class'       => 'fusion-or-gutter',
 						'required'    => array(
 							array(
@@ -609,7 +609,7 @@ function avada_options_section_menu( $sections ) {
 						'description' => esc_html__( 'Controls the color of the flyout menu icons.', 'Avada' ),
 						'id'          => 'flyout_menu_icon_color',
 						'default'     => '#333333',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'class'       => 'fusion-gutter-and-or',
 						'required'    => array(
 							array(
@@ -634,7 +634,7 @@ function avada_options_section_menu( $sections ) {
 						'description' => esc_html__( 'Controls the hover color of the flyout menu icons.', 'Avada' ),
 						'id'          => 'flyout_menu_icon_hover_color',
 						'default'     => '#a0ce4e',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'class'       => 'fusion-gutter-and-or',
 						'required'    => array(
 							array(
@@ -1048,7 +1048,7 @@ function avada_options_section_menu( $sections ) {
 						'description' => esc_html__( 'Controls the color for secondary menu text.', 'Avada' ),
 						'id'          => 'snav_color',
 						'default'     => '#747474',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'class'       => 'fusion-or-gutter',
 						'required'    => array(
 							array(
@@ -1083,7 +1083,7 @@ function avada_options_section_menu( $sections ) {
 						'description' => esc_html__( 'Controls the color for secondary menu dropdown text.', 'Avada' ),
 						'id'          => 'header_top_menu_sub_color',
 						'default'     => '#747474',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'class'       => 'fusion-or-gutter',
 						'required'    => array(
 							array(
@@ -1118,7 +1118,7 @@ function avada_options_section_menu( $sections ) {
 						'description' => esc_html__( 'Controls the hover color for secondary menu dropdown text.', 'Avada' ),
 						'id'          => 'header_top_menu_sub_hover_color',
 						'default'     => '#333333',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'class'       => 'fusion-or-gutter',
 						'required'    => array(
 							array(

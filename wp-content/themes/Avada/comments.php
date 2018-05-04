@@ -29,7 +29,7 @@ do_action( 'avada_before_comments' );
 
 	<div id="comments" class="comments-container">
 		<?php ob_start(); ?>
-		<?php comments_number( esc_html__( 'No Comments', 'Avada' ), esc_html__( 'One Comment', 'Avada' ), '% ' . esc_html__( 'Comments', 'Avada' ) ); ?>
+		<?php comments_number( esc_html__( 'No Comments', 'Avada' ), esc_html__( 'One Comment', 'Avada' ), esc_html( _n( '% Comment', '% Comments', get_comments_number(), 'Avada' ) ) ); ?>
 		<?php Avada()->template->title_template( ob_get_clean(), $title_size ); ?>
 
 		<?php if ( function_exists( 'the_comments_navigation' ) ) : ?>

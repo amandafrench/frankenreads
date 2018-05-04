@@ -381,7 +381,7 @@ function avada_options_section_woocommerce( $sections ) {
 						'description'     => esc_html__( 'Controls the color of the text and icons in the WooCommerce order dropdowns.', 'Avada' ),
 						'id'              => 'woo_dropdown_text_color',
 						'default'         => '#333333',
-						'type'            => 'color',
+						'type'            => 'color-alpha',
 						'class'           => 'fusion-or-gutter',
 						'required'        => array(
 							array(

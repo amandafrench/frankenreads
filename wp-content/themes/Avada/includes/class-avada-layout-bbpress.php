@@ -135,15 +135,15 @@ class Avada_Layout_bbPress extends Avada_Layout {
 		<div class="search-page-search-form search-page-search-form-top">
 			<h2><?php esc_attr_e( 'Need a new search?', 'Avada' ); ?></h2>
 			<p><?php esc_attr_e( 'If you didn\'t find what you were looking for, try a new search!', 'Avada' ); ?></p>
-			<form role="search" method="get" class="bbp-search-form seach-form searchform" action="<?php bbp_search_url(); ?>">
-				<div class="search-table">
-					<label class="screen-reader-text hidden" for="bbp_search"><?php esc_attr_e( 'Search for:', 'bbpress' ); ?></label>
+			<form role="search" method="get" class="searchform bbp-search-form fusion-search-form" action="<?php bbp_search_url(); ?>">
+				<div class="fusion-search-form-content">
+					<label class="screen-reader-text hidden" for="bbp_search"><?php _e( 'Search for:', 'bbpress' ); ?></label>
 					<input type="hidden" name="action" value="bbp-search-request" />
-					<div class="search-field">
-						<input tabindex="<?php bbp_tab_index(); ?>" type="text" value="<?php echo esc_attr( bbp_get_search_terms() ); ?>" placeholder="<?php esc_attr_e( 'Search the Forum...', 'Avada' ); ?>" name="bbp_search" id="bbp_search" />
+					<div class="fusion-search-field search-field">
+						<input tabindex="<?php bbp_tab_index(); ?>" type="text" value="<?php echo esc_attr( bbp_get_search_terms() ); ?>" placeholder="<?php _e( 'Search the Forum...', 'Avada' ); ?>" name="bbp_search" id="bbp_search" />
 					</div>
-					<div class="search-button">
-						<input tabindex="<?php bbp_tab_index(); ?>" class="fusion-button button submit" type="submit" id="bbp_search_submit" value="&#xf002;" />
+					<div class="fusion-search-button search-button">
+						<input tabindex="<?php bbp_tab_index(); ?>" class="fusion-search-submit fusion-button button submit" type="submit" id="bbp_search_submit" value="&#xf002;" />
 					</div>
 				</div>
 			</form>

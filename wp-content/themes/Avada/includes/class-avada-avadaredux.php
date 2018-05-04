@@ -485,6 +485,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 				'breadcrumb_separator'                       => array( 'page_title_bar' ),
 				'breadcrumbs_font_size'                      => array( 'page_title_bar' ),
 				'breadcrumbs_text_color'                     => array( 'page_title_bar' ),
+				'breadcrumbs_text_hover_color'               => array( 'page_title_bar' ),
 				'breadcrumb_show_categories'                 => array( 'page_title_bar' ),
 				'breadcrumb_show_post_type_archive'          => array( 'page_title_bar' ),
 				'footer_widgets_columns'                     => array( 'footer_widgets' ),

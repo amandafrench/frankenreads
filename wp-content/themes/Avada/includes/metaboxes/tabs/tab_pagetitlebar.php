@@ -117,9 +117,9 @@ $this->radio_buttonset(
 		'right'   => esc_attr__( 'Right', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_attr__( 'Choose the title and subhead text alignment. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_alignment', '', 'select' ) ),
+	sprintf( esc_attr__( 'Choose the title and subhead text alignment. Breadcrumbs / search field will be on opposite side for left / right alignment and below the title for center alignment. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_alignment', '', 'select' ) ),
 	'',
-	$page_title_text_dependency
+	$page_title_dependency
 );
 
 $this->textarea(
@@ -167,7 +167,7 @@ $this->color(
 	esc_attr__( 'Page Title Font Color', 'Avada' ),
 	/* translators: Additional description (defaults). */
 	sprintf( esc_html__( 'Controls the text color of the page title fonts. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_color' ) ),
-	false,
+	true,
 	$page_title_text_dependency,
 	Avada()->settings->get( 'page_title_color' )
 );

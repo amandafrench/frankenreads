@@ -111,7 +111,7 @@ function avada_options_section_sidebars( $sections ) {
 						'description' => esc_html__( 'Controls the color of the sidebar widget heading text.', 'Avada' ),
 						'id'          => 'sidebar_heading_color',
 						'default'     => '#333333',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 					),
 				),
 			),

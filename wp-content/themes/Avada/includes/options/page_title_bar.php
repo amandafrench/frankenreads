@@ -200,7 +200,7 @@ function avada_options_section_page_title_bar( $sections ) {
 						'description' => esc_html__( 'Controls the text color of the page title fonts.', 'Avada' ),
 						'id'          => 'page_title_color',
 						'default'     => '#333333',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'required'    => array(
 							array(
 								'setting'  => 'page_title_bar',
@@ -238,7 +238,7 @@ function avada_options_section_page_title_bar( $sections ) {
 					),
 					'page_title_alignment' => array(
 						'label'       => esc_html__( 'Page Title Bar Text Alignment', 'Avada' ),
-						'description' => esc_html__( 'Controls the page title bar text alignment.', 'Avada' ),
+						'description' => esc_html__( 'Choose the title and subhead text alignment. Breadcrumbs / search field will be on opposite side for left / right alignment and below the title for center alignment.', 'Avada' ),
 						'id'          => 'page_title_alignment',
 						'default'     => 'left',
 						'type'        => 'radio-buttonset',
@@ -533,7 +533,21 @@ function avada_options_section_page_title_bar( $sections ) {
 						'description' => esc_html__( 'Controls the text color of the breadcrumbs font.', 'Avada' ),
 						'id'          => 'breadcrumbs_text_color',
 						'default'     => '#333333',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
+						'required'    => array(
+							array(
+								'setting'  => 'page_title_bar',
+								'operator' => '!=',
+								'value'    => 'hide',
+							),
+						),
+					),
+					'breadcrumbs_text_hover_color' => array(
+						'label'       => esc_html__( 'Breadcrumbs Text Hover Color', 'Avada' ),
+						'description' => esc_html__( 'Controls the text hover color of the breadcrumbs font.', 'Avada' ),
+						'id'          => 'breadcrumbs_text_hover_color',
+						'default'     => '#333333',
+						'type'        => 'color-alpha',
 						'required'    => array(
 							array(
 								'setting'  => 'page_title_bar',

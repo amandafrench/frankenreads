@@ -334,76 +334,72 @@ class Fusion_Sanitize {
 			}
 
 			// Trim the value.
-			$value = trim( $value );
+			$value          = trim( $value );
 			$values[ $key ] = $value;
 
 			// Detect if the value uses calc().
-			if ( false !== strpos( $value, 'calc(' ) ) {
+			if ( false !== strpos( $value, 'calc' ) ) {
 				$should_calc = true;
 			}
-			$unit = Fusion_Sanitize::get_unit( $value );
-			if ( ! empty( $unit ) ) {
+
+			// Add unit to the array of units used.
+			$unit = trim( Fusion_Sanitize::get_unit( $value ) );
+			if ( ! empty( $unit ) && ! in_array( $unit, $units ) ) {
 				$units[] = $unit;
 			}
+
+			// Add numeric value to the array of numerics.
 			$numerics[] = Fusion_Sanitize::number( $value );
 		}
 
+		// Make sure there's 1 instance of each unit in the array.
+		// We need that to figure out if we'll be using calc() or not below.
 		$units = array_unique( $units );
+
+		// If we're using more than one units then we should use calc().
 		if ( 1 < count( $units ) ) {
 			$should_calc = true;
 		}
 
+		// All values added use the same unit and no calc() is necessary.
+		// We simply need to return the numeric sum with the defined value.
 		if ( ! $should_calc ) {
+
 			// No units, so just return the sum of all values.
 			if ( 0 === count( $units ) ) {
 				return array_sum( $numerics );
 			}
+
 			// Add values and append the unit.
 			return array_sum( $numerics ) . $units[0];
 		}
 
 		// If we got this far then we need to use calc().
-		$result    = '';
-		$iteration = 0;
+		$result = '';
+		$i      = 0;
 		foreach ( $values as $value ) {
-			if ( false !== strpos( $value, 'calc(' ) ) {
-				// Remove parenthesis and calc.
-				$value       = trim( str_replace( array( 'calc', '(', ')' ), ' ', $value ) );
-				$split_value = explode( ' ', $value );
-				$combined    = '';
-				$split_value_iteration = 0;
-				foreach ( $split_value as $subvalue ) {
-					if ( 0 === $split_value_iteration ) {
-						if ( in_array( $subvalue, array( '+', '-', '*', '/' ), true ) ) {
-							continue;
-						}
-						$combined .= $subvalue;
-					} else {
-						$combined .= ' ' . $subvalue;
-					}
-					$split_value_iteration++;
-				}
-				if ( 0 === $iteration ) {
-					$result .= trim( $combined );
-				} else {
-					$result .= ' + ' . trim( $combined );
-				}
-			} else {
-				if ( 0 === $iteration ) {
-					$result .= $value;
-				} else {
-					$numeric_value = Fusion_Sanitize::number( $value );
-					if ( 0 < $numeric_value ) {
-						$result .= ' + ' . $value;
-					} else {
-						$pos_value  = 0 - $numeric_value; // 2 negatives = 1 positive.
-						$value_unit = Fusion_Sanitize::get_unit( $value );
-						$result    .= ' - ' . $pos_value . $value_unit;
-					}
-				}
-			}// End if().
-			$iteration++;
-		}// End foreach().
+			// Only add + if this is not the first item in the calculations.
+			if ( 0 < $i ) {
+				$result .= ' + ';
+			}
+			$i++;
+			if ( false !== strpos( $value, 'calc' ) ) {
+				// Remove calc but keep the parentheses. This fixes a browser bug in older versions of some browsers
+				// where nested calc values don't work. Leaving the parentheses has the exact same effect.
+				$result .= str_replace( 'calc', '', $value );
+				continue;
+			}
+
+			$result .= $value;
+		}
+
+		// Remove multiple spaces.
+		$result = str_replace( array( '     ', '    ', '   ', '  ' ), ' ', $result );
+		// A simple tweak to make sure that negative values are substracted.
+		$result = str_replace( '+ -', ' - ', $result );
+		// The above might have resulted is a couple of double-spaces, so make them single again.
+		$result = str_replace( '  ', ' ', $result );
+		// Put it all together and wrap it up.
 		return 'calc(' . $result . ')';
 	}
 

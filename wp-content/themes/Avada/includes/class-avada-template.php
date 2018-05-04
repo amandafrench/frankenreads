@@ -440,6 +440,8 @@ class Avada_Template {
 		$footer_fx_class .= str_replace( array( 'footer_area_', 'footer_', '_' ), array( '', '', '-' ), Avada()->settings->get( 'footer_special_effects' ) );
 		$classes[] = $footer_fx_class;
 
+		$classes[] = 'fusion-search-form-' . Avada()->settings->get( 'search_form_design' );
+
 		return $classes;
 	}
 

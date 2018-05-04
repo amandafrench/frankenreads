@@ -11,13 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit( 'Direct script access denied.' );
 }
 ?>
-<form role="search" class="searchform" method="get" action="<?php echo esc_url_raw( home_url( '/' ) ); ?>">
-	<div class="search-table">
-		<div class="search-field">
+<form role="search" class="searchform fusion-search-form" method="get" action="<?php echo esc_url_raw( home_url( '/' ) ); ?>">
+	<div class="fusion-search-form-content">
+		<div class="fusion-search-field search-field">
+			<label class="screen-reader-text" for="searchform"><?php esc_attr_e( 'Search for:', 'Avada' ); ?></label>
 			<input type="text" value="" name="s" class="s" placeholder="<?php esc_html_e( 'Search ...', 'Avada' ); ?>" required aria-required="true" aria-label="<?php esc_html_e( 'Search ...', 'Avada' ); ?>"/>
 		</div>
-		<div class="search-button">
-			<input type="submit" class="searchsubmit" value="&#xf002;" />
+		<div class="fusion-search-button search-button">
+			<input type="submit" class="fusion-search-submit searchsubmit" value="&#xf002;" />
 		</div>
 	</div>
 </form>

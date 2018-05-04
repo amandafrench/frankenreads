@@ -132,7 +132,7 @@ if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 		$row_css    = '';
 		$main_class = '';
 
-		if ( apply_filters( 'fusion_is_hundred_percent_template', $c_page_id, false ) ) {
+		if ( apply_filters( 'fusion_is_hundred_percent_template', false, $c_page_id ) ) {
 			$main_css = 'padding-left:0px;padding-right:0px;';
 			$hundredp_padding = get_post_meta( $c_page_id, 'pyre_hundredp_padding', true );
 			if ( Avada()->settings->get( 'hundredp_padding' ) && ! $hundredp_padding ) {

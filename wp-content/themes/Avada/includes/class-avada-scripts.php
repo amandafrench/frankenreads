@@ -659,8 +659,8 @@ class Avada_Scripts {
 		wp_enqueue_script( 'jquery' );
 
 		// The comment-reply script.
-		if ( is_singular() && get_option( 'thread_comments' ) ) {
-			wp_enqueue_script( 'comment-reply' );
+		if ( is_singular() && get_option( 'thread_comments' ) && comments_open() ) {
+			wp_enqueue_script( 'comment-reply', '', array(), false, true );
 		}
 
 		if ( function_exists( 'novagallery_shortcode' ) ) {

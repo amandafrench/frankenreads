@@ -477,6 +477,11 @@ class Avada_Admin {
 							delete_transient( '_bbp_activation_redirect' );
 						}
 
+						// Make sure events calendar welcome screen won't run after this.
+						if ( 'the-events-calendar' == $_GET['plugin'] ) {
+							delete_transient( '_tribe_events_activation_redirect' );
+						}
+
 						if ( ! is_wp_error( $result ) ) {
 							$response['message'] = 'plugin activated';
 							$response['error']  = false;

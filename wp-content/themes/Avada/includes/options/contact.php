@@ -514,7 +514,7 @@ function avada_options_section_contact( $sections ) {
 						'description'     => esc_html__( 'Custom styling setting only. Controls the info box text color.', 'Avada' ),
 						'id'              => 'map_infobox_text_color',
 						'default'         => ( 140 < fusion_get_brightness( $settings['map_overlay_color'] ) ) ? '#ffffff' : '#747474',
-						'type'            => 'color',
+						'type'            => 'color-alpha',
 						'active_callback' => array( 'Avada_Options_Conditionals', 'is_contact' ),
 						'required'    => array(
 							array(

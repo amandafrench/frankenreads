@@ -311,47 +311,51 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 					<div class="fusion-clearfix"></div>
 				<?php endif; ?>
 
+				<?php // Render post meta data according to layout. ?>
 				<?php if ( ( Avada()->settings->get( 'post_meta' ) && ( Avada()->settings->get( 'post_meta_author' ) || Avada()->settings->get( 'post_meta_date' ) || Avada()->settings->get( 'post_meta_cats' ) || Avada()->settings->get( 'post_meta_tags' ) || Avada()->settings->get( 'post_meta_comments' ) || Avada()->settings->get( 'post_meta_read' ) ) ) ) : ?>
-					<?php // Render post meta data according to layout. ?>
-					<div class="fusion-meta-info">
-						<?php if ( 'grid' === $blog_layout || 'masonry' === $blog_layout || 'timeline' === $blog_layout ) : ?>
-							<?php // Render read more for grid/timeline layouts. ?>
-							<div class="fusion-alignleft">
+					<?php if ( 'grid' === $blog_layout || 'masonry' === $blog_layout || 'timeline' === $blog_layout ) : ?>
+						<?php // Render read more for grid/timeline layouts. ?>
+						<?php if ( Avada()->settings->get( 'post_meta_comments' ) || Avada()->settings->get( 'post_meta_read' ) ) : ?>
+							<div class="fusion-meta-info">
 								<?php if ( Avada()->settings->get( 'post_meta_read' ) ) : ?>
 									<?php $link_target = ( 'yes' === fusion_get_page_option( 'link_icon_target', $post->ID ) || 'yes' === fusion_get_page_option( 'post_links_target', $post->ID ) ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>
-									<a href="<?php echo esc_url_raw( get_permalink() ); ?>" class="fusion-read-more"<?php echo $link_target; // WPCS: XSS ok. ?>>
-										<?php echo esc_textarea( apply_filters( 'avada_blog_read_more_link', esc_attr__( 'Read More', 'Avada' ) ) ); ?>
-									</a>
+									<div class="fusion-alignleft">
+										<a href="<?php echo esc_url_raw( get_permalink() ); ?>" class="fusion-read-more"<?php echo $link_target; // WPCS: XSS ok. ?>>
+											<?php echo esc_textarea( apply_filters( 'avada_blog_read_more_link', esc_attr__( 'Read More', 'Avada' ) ) ); ?>
+										</a>
+									</div>
 								<?php endif; ?>
-							</div>
 
-							<?php // Render comments for grid/timeline layouts. ?>
-							<div class="fusion-alignright">
+								<?php // Render comments for grid/timeline layouts. ?>
 								<?php if ( Avada()->settings->get( 'post_meta_comments' ) ) : ?>
-									<?php if ( ! post_password_required( $post->ID ) ) : ?>
-										<?php comments_popup_link( '<i class="fusion-icon-bubbles"></i>&nbsp;0', '<i class="fusion-icon-bubbles"></i>&nbsp;1', '<i class="fusion-icon-bubbles"></i>&nbsp;%' ); ?>
-									<?php else : ?>
-										<i class="fusion-icon-bubbles"></i>&nbsp;<?php esc_attr_e( 'Protected', 'Avada' ); ?>
-									<?php endif; ?>
+									<div class="fusion-alignright">
+										<?php if ( ! post_password_required( $post->ID ) ) : ?>
+											<?php comments_popup_link( '<i class="fusion-icon-bubbles"></i>&nbsp;0', '<i class="fusion-icon-bubbles"></i>&nbsp;1', '<i class="fusion-icon-bubbles"></i>&nbsp;%' ); ?>
+										<?php else : ?>
+											<i class="fusion-icon-bubbles"></i>&nbsp;<?php esc_attr_e( 'Protected', 'Avada' ); ?>
+										<?php endif; ?>
+									</div>
 								<?php endif; ?>
 							</div>
-						<?php else : ?>
+						<?php endif; ?>
+					<?php else : ?>
+						<div class="fusion-meta-info">
 							<?php // Render all meta data for medium and large layouts. ?>
 							<?php if ( 'large' === $blog_layout || 'medium' === $blog_layout ) : ?>
 								<?php echo avada_render_post_metadata( 'standard' ); // WPCS: XSS ok. ?>
 							<?php endif; ?>
 
 							<?php // Render read more for medium/large and medium/large alternate layouts. ?>
-							<div class="fusion-alignright">
-								<?php if ( Avada()->settings->get( 'post_meta_read' ) ) : ?>
-									<?php $link_target = ( 'yes' === fusion_get_page_option( 'link_icon_target', $post->ID ) || 'yes' === fusion_get_page_option( 'post_links_target', $post->ID ) ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>
+							<?php if ( Avada()->settings->get( 'post_meta_read' ) ) : ?>
+								<?php $link_target = ( 'yes' === fusion_get_page_option( 'link_icon_target', $post->ID ) || 'yes' === fusion_get_page_option( 'post_links_target', $post->ID ) ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>
+								<div class="fusion-alignright">
 									<a href="<?php echo esc_url_raw( get_permalink() ); ?>" class="fusion-read-more"<?php echo $link_target; // WPCS: XSS ok. ?>>
 										<?php echo esc_textarea( apply_filters( 'avada_read_more_name', esc_attr__( 'Read More', 'Avada' ) ) ); ?>
 									</a>
-								<?php endif; ?>
-							</div>
-						<?php endif; ?>
-					</div>
+								</div>
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
 				<?php elseif ( ! Avada()->settings->get( 'post_meta' ) ) : ?>
 					<?php echo fusion_render_rich_snippets_for_pages(); // WPCS: XSS ok. ?>
 				<?php endif; ?>

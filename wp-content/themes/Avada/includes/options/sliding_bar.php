@@ -290,7 +290,7 @@ function avada_options_section_sliding_bar( $sections ) {
 				'description' => esc_html__( 'Controls the color of the sliding bar toggle icon and of the close icon when using the main menu icon as toggle style.', 'Avada' ),
 				'id'          => 'slidingbar_toggle_icon_color',
 				'default'     => '#ffffff',
-				'type'        => 'color',
+				'type'        => 'color-alpha',
 				'required'    => array(
 					array(
 						'setting'  => 'slidingbar_widgets',
@@ -322,7 +322,7 @@ function avada_options_section_sliding_bar( $sections ) {
 				'description' => esc_html__( 'Controls the text color of the sliding bar heading font.', 'Avada' ),
 				'id'          => 'slidingbar_headings_color',
 				'default'     => '#dddddd',
-				'type'        => 'color',
+				'type'        => 'color-alpha',
 				'required'    => array(
 					array(
 						'setting'  => 'slidingbar_widgets',
@@ -336,7 +336,7 @@ function avada_options_section_sliding_bar( $sections ) {
 				'description' => esc_html__( 'Controls the text color of the sliding bar font.', 'Avada' ),
 				'id'          => 'slidingbar_text_color',
 				'default'     => '#8C8989',
-				'type'        => 'color',
+				'type'        => 'color-alpha',
 				'required'    => array(
 					array(
 						'setting'  => 'slidingbar_widgets',
@@ -350,7 +350,7 @@ function avada_options_section_sliding_bar( $sections ) {
 				'description' => esc_html__( 'Controls the text color of the sliding bar link font.', 'Avada' ),
 				'id'          => 'slidingbar_link_color',
 				'default'     => '#bfbfbf',
-				'type'        => 'color',
+				'type'        => 'color-alpha',
 				'required'    => array(
 					array(
 						'setting'  => 'slidingbar_widgets',
@@ -364,7 +364,7 @@ function avada_options_section_sliding_bar( $sections ) {
 				'description' => esc_html__( 'Controls the text hover color of the sliding bar link font.', 'Avada' ),
 				'id'          => 'slidingbar_link_color_hover',
 				'default'     => '#a0ce4e',
-				'type'        => 'color',
+				'type'        => 'color-alpha',
 				'required'    => array(
 					array(
 						'setting'  => 'slidingbar_widgets',

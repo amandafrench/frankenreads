@@ -782,11 +782,11 @@ class Avada_Layout {
 	/**
 	 * Checks is the current page is a 100% width page.
 	 *
-	 * @param integer|false $page_id A custom page ID.
 	 * @param bool          $value   The value from the filter.
+	 * @param integer|false $page_id A custom page ID.
 	 * @return bool
 	 */
-	public function is_hundred_percent_template( $page_id = false, $value = false ) {
+	public function is_hundred_percent_template( $value = false, $page_id = false ) {
 		if ( ! $page_id ) {
 			$fusion_library = Fusion::get_instance();
 			$page_id = $fusion_library->get_page_id();
@@ -803,7 +803,7 @@ class Avada_Layout {
 			$page_template = '100-width.php';
 		}
 
-		if ( ! Avada()->template->has_sidebar() &&
+		if (
 			( '100%' === fusion_library()->get_option( 'site_width' ) ||
 			( is_page_template( '100-width.php' ) && $page_id ) ||
 			is_page_template( 'blank.php' ) ||

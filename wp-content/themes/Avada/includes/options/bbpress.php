@@ -44,7 +44,7 @@ function avada_options_section_bbpress( $sections ) {
 				'description' => esc_html__( 'Controls the font color for the text in the forum header rows.', 'Avada' ),
 				'id'          => 'bbp_forum_header_font_color',
 				'default'     => '#747474',
-				'type'        => 'color',
+				'type'        => 'color-alpha',
 			),
 			'bbp_forum_border_color' => array(
 				'label'       => esc_html__( 'bbPress Forum Border Color', 'Avada' ),

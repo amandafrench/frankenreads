@@ -193,7 +193,7 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 										<p class="description"><?php esc_attr_e( 'Set the highlight label text color.', 'Avada' ); ?></p>
 									</div>
 									<div class="option-field fusion-builder-option-container pyre_field avada-color colorpicker">
-										<input type="text" id="edit-menu-item-megamenu-highlight-label-color-<?php echo esc_attr( $item_id ); ?>" class="edit-menu-item-highlight-label-color fusion-builder-color-picker-hex color-picker" name="menu-item-fusion-megamenu-highlight-label-color[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_highlight_label_color ); ?>" />
+										<input type="text" id="edit-menu-item-megamenu-highlight-label-color-<?php echo esc_attr( $item_id ); ?>" class="edit-menu-item-highlight-label-color fusion-builder-color-picker-hex color-picker" data-alpha="true" name="menu-item-fusion-megamenu-highlight-label-color[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_highlight_label_color ); ?>" />
 									</div>
 								</div>
 								<div class="fusion-builder-option field-menu-highlight-border-color">
@@ -202,7 +202,7 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 										<p class="description"><?php esc_attr_e( 'Set the highlight label border color.', 'Avada' ); ?></p>
 									</div>
 									<div class="option-field fusion-builder-option-container pyre_field avada-color colorpicker">
-										<input type="text" id="edit-menu-item-megamenu-highlight-label-border-color-<?php echo esc_attr( $item_id ); ?>" class="edit-menu-item-highlight-label-border-color fusion-builder-color-picker-hex color-picker" name="menu-item-fusion-megamenu-highlight-label-border-color[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_highlight_label_border_color ); ?>" />
+										<input type="text" id="edit-menu-item-megamenu-highlight-label-border-color-<?php echo esc_attr( $item_id ); ?>" class="edit-menu-item-highlight-label-border-color fusion-builder-color-picker-hex color-picker" data-alpha="true" name="menu-item-fusion-megamenu-highlight-label-border-color[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_highlight_label_border_color ); ?>" />
 									</div>
 								</div>
 								<div class="fusion-builder-option">

@@ -47,7 +47,7 @@ function avada_options_section_events_calendar( $sections ) {
 						'description' => esc_html__( 'Controls the color of text when primary color is the background.', 'Avada' ),
 						'id'          => 'primary_overlay_text_color',
 						'default'     => '#ffffff',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 					),
 					'ec_bar_bg_color' => array(
 						'label'       => esc_html__( 'Events Filter Bar Background Color', 'Avada' ),
@@ -61,7 +61,7 @@ function avada_options_section_events_calendar( $sections ) {
 						'description' => esc_html__( 'Controls the color of the event filter bar text.', 'Avada' ),
 						'id'          => 'ec_bar_text_color',
 						'default'     => '#747474',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 					),
 					'ec_calendar_heading_bg_color' => array(
 						'label'       => esc_html__( 'Events Monthly Calendar Heading Background Color', 'Avada' ),
@@ -89,7 +89,7 @@ function avada_options_section_events_calendar( $sections ) {
 						'description' => esc_html__( 'Controls the color of the tooltip text.', 'Avada' ),
 						'id'          => 'ec_tooltip_body_color',
 						'default'     => '#747474',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 					),
 					'ec_border_color' => array(
 						'label'       => esc_html__( 'Events Border Color', 'Avada' ),
@@ -212,7 +212,7 @@ function avada_options_section_events_calendar( $sections ) {
 						'description' => esc_html__( 'Controls the color of the sidebar widget heading for single event posts.', 'Avada' ),
 						'id'          => 'ec_sidebar_heading_color',
 						'default'     => '#333333',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 					),
 					'ec_text_font_size' => array(
 						'label'       => esc_html__( 'Events Sidebar Text Font Size', 'Avada' ),
@@ -231,14 +231,14 @@ function avada_options_section_events_calendar( $sections ) {
 						'description' => esc_html__( 'Controls the color of the text in the single event post sidebar.', 'Avada' ),
 						'id'          => 'ec_sidebar_text_color',
 						'default'     => '#747474',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 					),
 					'ec_sidebar_link_color' => array(
 						'label'       => esc_html__( 'Events Sidebar Link Color', 'Avada' ),
 						'description' => esc_html__( 'Controls the color of the link text in the single event post sidebar.', 'Avada' ),
 						'id'          => 'ec_sidebar_link_color',
 						'default'     => '#333333',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 					),
 					'ec_sidebar_divider_color' => array(
 						'label'       => esc_html__( 'Events Sidebar Divider Color', 'Avada' ),

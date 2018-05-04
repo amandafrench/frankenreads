@@ -1480,6 +1480,11 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
   max-height: 40px;
   height: auto;
 }
+@media (max-width: 782px) {
+  .wp-list-table #tf_thumbnail {
+    display: none;
+  }
+}
 .post-php .ui-widget-overlay {
   position: fixed;
   top: 0;

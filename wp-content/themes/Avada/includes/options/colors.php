@@ -123,7 +123,7 @@ function avada_options_section_colors( $sections ) {
 				'description' => esc_html__( 'Controls the main highlight color throughout the theme.', 'Avada' ),
 				'id'          => 'primary_color',
 				'default'     => '#a0ce4e',
-				'type'        => 'color',
+				'type'        => 'color-alpha',
 			),
 		),
 	);

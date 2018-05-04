@@ -158,6 +158,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$link_color_elements[] = '#tribe-events-content .tribe-events-sub-nav li a';
 		$link_color_elements[] = '.tribe-event-featured .recurringinfo .event-is-recurring';
 		$link_color_elements[] = '.event-is-recurring';
+
 	}
 	$link_color_elements = $dynamic_css_helpers->implode( $link_color_elements );
 
@@ -401,7 +402,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.table-2 table thead',
 		'.tagcloud a:hover',
 		'#toTop:hover',
-		'#wrapper .search-table .search-button input[type="submit"]:hover',
+		'.fusion-search-form-classic .searchform .fusion-search-form-content .fusion-search-button input[type="submit"]:hover',
 		'ul.arrow li:before',
 	);
 	if ( class_exists( 'bbPress' ) ) {
@@ -447,7 +448,6 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			'.tribe-grid-body .tribe-event-featured.tribe-events-week-allday-single',
 			'.tribe-grid-body .tribe-event-featured.tribe-events-week-hourly-single',
 		);
-
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
 	}
 
@@ -541,7 +541,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 		$elements = array(
 			'.slidingbar-area .tagcloud a:hover',
-			'#slidingbar-area .search-table .search-button input[type="submit"]:hover',
+			'.fusion-search-form-classic #slidingbar-area .searchform .fusion-search-form-content .fusion-search-button input[type="submit"]:hover',
 		);
 
 		if ( class_exists( 'WooCommerce' ) ) {
@@ -946,6 +946,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	);
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'breadcrumbs_text_color' ) );
 
+	$css['global']['.fusion-page-title-bar .fusion-breadcrumbs a:hover']['color'] = Fusion_Sanitize::color( Avada()->settings->get( 'breadcrumbs_text_hover_color' ) );
+
 	$elements = array(
 		'#slidingbar-area h3',
 		'#slidingbar-area .fusion-title > *',
@@ -1264,7 +1266,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.select2-container--default .select2-selection--single',
 		'.select2-dropdown',
 		'select',
-		'#wrapper .search-table .search-field input',
+		'.searchform .fusion-search-form-content .fusion-search-field input',
 	);
 	if ( defined( 'ICL_SITEPRESS_VERSION' || class_exists( 'SitePress' ) ) ) {
 		$elements[] = '#lang_sel_click a.lang_sel_sel';
@@ -1342,7 +1344,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.avada-select-parent select',
 		'.select2-container--default .select2-selection--single .select2-selection__rendered',
 		'.select2-results__option',
-		'#wrapper .search-table .search-field input',
+		'.searchform .fusion-search-form-content .fusion-search-field input',
+		'.fusion-search-form-clean .searchform .fusion-search-form-content .fusion-search-button input[type="submit"]',
 	);
 	if ( class_exists( 'GFForms' ) ) {
 		$elements[] = '.gform_wrapper .gfield input[type="text"]';
@@ -1477,7 +1480,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.avada-select-parent select',
 		'.avada-select-parent .select-arrow',
 		'select',
-		'#wrapper .search-table .search-field input',
+		'.searchform .fusion-search-form-content .fusion-search-field input',
 		'.avada-select .select2-container .select2-choice',
 		'.avada-select .select2-container .select2-choice .select2-arrow',
 		'.avada-select .select2-container .select2-choice2 .select2-arrow',
@@ -1539,6 +1542,56 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	}
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'form_border_color' ) );
 
+	$elements[] = '.fusion-search-form-classic .searchform .fusion-search-form-content';
+	$elements[] = 'input[type="tel"]';
+
+	if ( class_exists( 'WooCommerce' ) ) {
+		$elements[] = '.quantity';
+		$elements[] = '.fusion-body .tribe-events-tickets .quantity';
+	}
+
+	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-radius'] = Fusion_Sanitize::size( Avada()->settings->get( 'form_border_radius' ), 'px' );
+
+	if ( class_exists( 'WooCommerce' ) ) {
+		$elements[] = '.quantity .qty';
+		$elements[] = '.quantity .tribe-ticket-quantity';
+	}
+
+	$elements[] = '.select2-container .select2-selection .select2-selection__arrow';
+
+	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-width'] = Fusion_Sanitize::size( Avada()->settings->get( 'form_border_width' ), 'px' );
+
+	$arrow_elements = array(
+		'.select-arrow',
+		'.avada-select-parent .select-arrow',
+		'.gravity-select-parent .select-arrow',
+		'.wpcf7-select-parent .select-arrow',
+	);
+	$css['global'][ $dynamic_css_helpers->implode( $arrow_elements ) ]['bottom'] = Fusion_Sanitize::size( Avada()->settings->get( 'form_border_width' ), 'px' );
+
+	$form_elements = array(
+		'.fusion-search-form-classic #bbpress-forums .bbp-search-form #bbp_search',
+		'.fusion-search-form-classic .searchform .fusion-search-form-content .fusion-search-field input',
+	);
+
+	if ( is_rtl() ) {
+		$css['global'][ $dynamic_css_helpers->implode( $arrow_elements ) ]['border-top-right-radius'] = '0';
+		$css['global'][ $dynamic_css_helpers->implode( $arrow_elements ) ]['border-bottom-right-radius'] = '0';
+		$css['global'][ $dynamic_css_helpers->implode( $arrow_elements ) ]['left'] = Fusion_Sanitize::size( Avada()->settings->get( 'form_border_width' ), 'px' );
+
+		$css['global'][ $dynamic_css_helpers->implode( $form_elements ) ]['border-left'] = 'none';
+		$css['global'][ $dynamic_css_helpers->implode( $form_elements ) ]['border-top-left-radius'] = '0';
+		$css['global'][ $dynamic_css_helpers->implode( $form_elements ) ]['border-bottom-left-radius'] = '0';
+	} else {
+		$css['global'][ $dynamic_css_helpers->implode( $arrow_elements ) ]['border-top-left-radius'] = '0';
+		$css['global'][ $dynamic_css_helpers->implode( $arrow_elements ) ]['border-bottom-left-radius'] = '0';
+		$css['global'][ $dynamic_css_helpers->implode( $arrow_elements ) ]['right'] = Fusion_Sanitize::size( Avada()->settings->get( 'form_border_width' ), 'px' );
+
+		$css['global'][ $dynamic_css_helpers->implode( $form_elements ) ]['border-right'] = 'none';
+		$css['global'][ $dynamic_css_helpers->implode( $form_elements ) ]['border-top-right-radius'] = '0';
+		$css['global'][ $dynamic_css_helpers->implode( $form_elements ) ]['border-bottom-right-radius'] = '0';
+	}
+
 	$css['global']['.select2-container--default .select2-selection--single .select2-selection__arrow b']['border-top-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'form_border_color' ) );
 	$css['global']['.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b']['border-bottom-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'form_border_color' ) );
 
@@ -1556,7 +1609,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.chzn-container-single .chzn-single',
 		'.chzn-container .chzn-drop',
 		'select',
-		'.searchform .search-table .search-field input',
+		'.searchform .fusion-search-form-content .fusion-search-field input',
 		'.avada-select-parent select',
 		'.avada-select .select2-container .select2-choice',
 		'.select2-container--default .select2-selection--single',
@@ -1615,12 +1668,23 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$elements = array(
 		'.avada-select .select2-container .select2-choice .select2-arrow',
 		'.avada-select .select2-container .select2-choice2 .select2-arrow',
-		'.searchform .search-table .search-button input[type="submit"]',
-	);
+		'.searchform .fusion-search-form-content .fusion-search-button input[type="submit"]',
 
+	);
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['height']      = Fusion_Sanitize::size( Avada()->settings->get( 'form_input_height' ) );
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['width']       = Fusion_Sanitize::size( Avada()->settings->get( 'form_input_height' ) );
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['line-height'] = Fusion_Sanitize::size( Avada()->settings->get( 'form_input_height' ) );
+
+	$elements = array(
+		'.fusion-search-form-clean .searchform .fusion-search-form-content .fusion-search-field input',
+		'.fusion-search-form-clean #bbpress-forums .bbp-search-form #bbp_search',
+	);
+
+	if ( is_rtl() ) {
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['padding-right'] = Fusion_Sanitize::size( Avada()->settings->get( 'form_input_height' ) );
+	} else {
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['padding-left'] = Fusion_Sanitize::size( Avada()->settings->get( 'form_input_height' ) );
+	}
 
 	$elements = array(
 		'.select2-container--default .select2-selection--single .select2-selection__rendered',
@@ -3798,10 +3862,23 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'ec_tooltip_bg_color' ) );
 
 		$elements = array(
+			'.tribe-events-tooltip:after',
+			'.tribe-events-right .tribe-events-tooltip:after',
+		);
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-top-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'ec_tooltip_bg_color' ) );
+
+		$elements = array(
 			'.tribe-events-tooltip:before',
 			'.tribe-events-right .tribe-events-tooltip:before',
 		);
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-top-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'ec_tooltip_bg_color' ) );
+
+		$elements = array(
+			'.tribe-events-tooltip.tribe-events-tooltip-flipdown:before',
+			'.tribe-events-right .tribe-events-tooltip.tribe-events-tooltip-flipdown:before',
+		);
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-bottom-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) );
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-top-color']    = 'transparent';
 
 		$elements = array(
 			'.tribe-grid-body .tribe-events-tooltip:before',

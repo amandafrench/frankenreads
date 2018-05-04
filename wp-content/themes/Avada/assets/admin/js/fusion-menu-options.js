@@ -48,10 +48,10 @@ function fusionIconPicker( value, id, container, search ) {
 			}
 		}
 
-		$( container ).append( output );
+		jQuery( container ).append( output );
 
 		if ( 2 === value.length ) {
-			$( container ).find( '.' + value[0] + '.' + value[1] ).parent().addClass( 'selected-element' );
+			jQuery( container ).find( '.' + value[0] + '.' + value[1] ).parent().addClass( 'selected-element' );
 		}
 
 	}
@@ -68,19 +68,19 @@ function fusionIconPicker( value, id, container, search ) {
 					return;
 				}
 
-				_.each( $( container ).find( 'i' ), function( icon ) {
-					name    = $( icon ).data( 'name' ).toLowerCase(); // jshint ignore:line
-					altName = 'undefined' !== typeof $( icon ).data( 'alt-name' ) ? $( icon ).data( 'alt-name' ).toLowerCase() : ''; // jshint ignore:line
+				_.each( jQuery( container ).find( 'i' ), function( icon ) {
+					name    = jQuery( icon ).data( 'name' ).toLowerCase(); // jshint ignore:line
+					altName = 'undefined' !== typeof jQuery( icon ).data( 'alt-name' ) ? jQuery( icon ).data( 'alt-name' ).toLowerCase() : ''; // jshint ignore:line
 
 					if ( -1 !== name.search( value ) || -1 !== altName.search( value ) ) {
-						$( icon ).parent().css( 'display', 'inline-block' );
+						jQuery( icon ).parent().css( 'display', 'inline-block' );
 					} else {
-						$( icon ).parent().css( 'display', 'none' );
+						jQuery( icon ).parent().css( 'display', 'none' );
 					}
 				} );
 
 			} else {
-				$( container ).find( '.icon_preview' ).css( 'display', 'inline-block' );
+				jQuery( container ).find( '.icon_preview' ).css( 'display', 'inline-block' );
 			}
 		}, 500 );
 	} );
@@ -258,13 +258,13 @@ jQuery( document ).ready( function() {
 				output += '<span class="icon_preview icon-' + icon[0] + '"><i class="' + icon[0] + ' ' + icon[1] + '" data-name="' + icon[0].substr( 3 ) + '"></i></span>';
 			} );
 			output += '</div>';
-			$( 'body' ).append( output );
+			jQuery( 'body' ).append( output );
 
 			if ( 'undefined' !== typeof window['fusion-fontawesome-free-shims'] ) {
 				_.each( window['fusion-fontawesome-free-shims'], function( shim, key ) {
 
 					if ( null !== shim[0] && null !== shim[2] ) {
-							$( '.fusion-icons-rendered' ).find( 'i.fa-' + shim[2] ).attr( 'data-alt-name', shim[0] );
+							jQuery( '.fusion-icons-rendered' ).find( 'i.fa-' + shim[2] ).attr( 'data-alt-name', shim[0] );
 					}
 
 				} );

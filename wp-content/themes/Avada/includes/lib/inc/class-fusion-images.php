@@ -442,9 +442,9 @@ class Fusion_Images {
 	}
 
 	/**
-	 * Gets the attachment ID from the url.
+	 * Gets the attachment ID from the URL.
 	 *
-	 * @param string $attachment_url The url of the attachment.
+	 * @param string $attachment_url The URL of the attachment.
 	 * @return string The attachment ID
 	 */
 	public static function get_attachment_id_from_url( $attachment_url = '' ) {
@@ -467,8 +467,8 @@ class Fusion_Images {
 			// Remove the upload path base directory from the attachment URL.
 			$attachment_url = str_replace( $upload_dir_paths_baseurl . '/', '', $attachment_url );
 
-			// Run a custom database query to get the attachment ID from the modified attachment URL. @codingStandardsIgnoreLine
-			$attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = '%s' AND wposts.post_type = 'attachment'", $attachment_url ) );
+			// Get the actual attachment ID.
+			$attachment_id = attachment_url_to_postid( $attachment_url );
 			$wpml_object_id = apply_filters( 'wpml_object_id', $attachment_id, 'attachment' );
 			$attachment_id = $wpml_object_id ? $wpml_object_id : $attachment_id;
 		}
@@ -535,10 +535,18 @@ class Fusion_Images {
 		}
 
 		$attachment_data['alt'] = esc_attr( get_post_field( '_wp_attachment_image_alt', $attachment_id ) );
-		$attachment_data['caption'] = wp_get_attachment_caption( $attachment_id );
+
+		// Check for WP versions prior to 4.6.
+		if ( function_exists( 'wp_get_attachment_caption' ) ) {
+			$attachment_data['caption'] = wp_get_attachment_caption( $attachment_id );
+		} else {
+			$post = get_post( $attachment_id );
+
+			$attachment_data['caption'] = ( $post ) ? $post->post_excerpt : '';
+		}
 		$attachment_data['caption_attribute'] = esc_attr( strip_tags( $attachment_data['caption'] ) );
-		$attachment_data['title'] = get_the_title( $attachment_id );
-		$attachment_data['title_attribute'] = esc_attr( strip_tags( $attachment_data['title'] ) );
+		$attachment_data['title']             = get_the_title( $attachment_id );
+		$attachment_data['title_attribute']   = esc_attr( strip_tags( $attachment_data['title'] ) );
 
 		return $attachment_data;
 	}

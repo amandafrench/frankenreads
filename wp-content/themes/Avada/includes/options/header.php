@@ -632,7 +632,7 @@ function avada_options_section_header( $sections ) {
 						'description' => esc_html__( 'Controls the font color for the tagline text when using header 4.', 'Avada' ),
 						'id'          => 'tagline_font_color',
 						'default'     => '#747474',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'class'       => 'fusion-or-gutter',
 						'required'    => array(
 							array(
@@ -792,7 +792,7 @@ function avada_options_section_header( $sections ) {
 						'label'       => esc_html__( 'Sticky Header Menu Font Color', 'Avada' ),
 						'description' => esc_html__( 'Controls the color for main menu text in the sticky header.', 'Avada' ),
 						'id'          => 'header_sticky_menu_color',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'default'     => ( isset( $settings['nav_typography']['color'] ) && ! empty( $settings['nav_typography']['color'] ) ) ? $settings['nav_typography']['color'] : '#333333',
 						'required'    => array(
 							array(

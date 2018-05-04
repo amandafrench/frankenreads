@@ -68,7 +68,7 @@ function avada_options_section_typography( $sections ) {
 						'description' => esc_html__( 'Controls the color of all text links.', 'Avada' ),
 						'id'          => 'link_color',
 						'default'     => '#333333',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 					),
 				),
 			),

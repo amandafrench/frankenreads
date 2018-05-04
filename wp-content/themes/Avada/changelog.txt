@@ -7,6 +7,50 @@ This is why we highly recommend to stay up to date with each new theme version a
 
 
 -----------------------------------------------------------------------------------------
+Version 5.5.1 - May 02nd, 2018
+-----------------------------------------------------------------------------------------
+
+
+- NEW: Added new border width and border radius options for form fields
+- NEW: Added new "clean" design option for search forms across the site
+- NEW: Added new text transform option to button element
+- NEW: Added a Theme Option to set hover color for breadcrumb links
+- NEW: Added new layout (floated inputs) to login/registration elements
+- NEW: Added "remember me" checkbox option to login element
+- NEW: Added max width option to image element, to control the maximum space an image would take up
+- NEW: All option color pickers now support RGBA colors
+- IMPROVEMENT: Doubled the performance of get_attachment_id_from_url() function for better page load times
+- IMPROVEMENT: Removed a few not needed font awesome assets from package
+- IMPROVEMENT: Made sure that WP's native comment-reply.js is always loaded in footer
+- IMPROVEMENT: Updated several option descriptions and dependencies for better usability
+- IMPROVEMENT: Container element now supports all CSS units for margin and padding options
+- IMPROVEMENT: Added several UI improvements to the new chart element
+- FIXED: Issue with menu icons stored in old format leading to display issues after font awesome 5 update
+- FIXED: Incorrect parameter setup for fusion_is_hundred_percent_template filter
+- FIXED: The Events Calendar activation redirection kicking in, when activating plugin on demo install screen
+- FIXED: Tooltip arrow size and color on Events Calendar month view
+- FIXED: Variation thumbnail size in Avada's WooCommerce gallery
+- FIXED: Content box element horizontal timeline not being visible when boxes have non-transparent background
+- FIXED: Content box element custom image icons not being fully centered on layouts with icon on top
+- FIXED: Alignment option not working in image element, when bottom shadow styling is used
+- FIXED: RTL issues on the WooCommerce my-account login page and on cart page
+- FIXED: Display issue with the backend post table on screens below 782px
+- FIXED: Added several icons that previously were font awesome based to our system icon font
+- FIXED: Metadata container on blog archives not correctly removed when no metadata is displayed, causing some extra spacing
+- FIXED: Issue in value sanitation class, when using CSS calc() in options
+- FIXED: Modal element close icon not changing color correctly based on chosen background color
+- FIXED: Login/registration elements adding heading tag markup even if no heading is set
+- FIXED: Login/registration elements not respecting custom form field settings
+- FIXED: Several plural forms for string translations
+- FIXED: Compatibility issue with WP versions below 4.6 because of usage of wp_get_attachment_caption()
+- FIXED: Compatibility issue with WP versions below 4.9 because of usage of wp_enqueue_code_editor()
+- FIXED: Potential compatibility issue with other plugins in Avada's menu options script
+- FIXED: Column lift up hover effect being partially hidden, when using animated columns
+- FIXED: Mobile flyout menu causing gap when being closed while header is sticky and secondary header being used
+- FIXED: Animation offset default not correctly set for nested columns
+
+
+-----------------------------------------------------------------------------------------
 Version 5.5 - April 23rd, 2018
 -----------------------------------------------------------------------------------------
 

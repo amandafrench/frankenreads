@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'AVADA_VERSION' ) ) {
-	define( 'AVADA_VERSION', '5.5' );
+	define( 'AVADA_VERSION', '5.5.1' );
 }
 
 /**
@@ -314,11 +314,12 @@ if ( ! is_admin() && ( ! isset( $content_width ) || empty( $content_width ) ) ) 
  */
 function avada_font_awesome_name_handler( $icon ) {
 	$old_icons = Fusion_Data::old_icons();
-	$fa_icon   = ( 'fa-' !== substr( $icon, 0, 3 ) ) ? 'fa-' . $icon : $icon;
+
+	$fa_icon   = ( 'fa-' !== substr( $icon, 0, 3 ) && 'fa ' !== substr( $icon, 0, 3 ) ) ? 'fa-' . $icon : $icon;
 	if ( 'icon-' === substr( $icon, 0, 5 ) || 'fa=' !== substr( $icon, 0, 3 ) ) {
 		// Replace old prefix with new one.
 		$icon    = str_replace( 'icon-', 'fa-', $icon );
-		$fa_icon = ( 'fa-' !== substr( $icon, 0, 3 ) ) ? 'fa-' . $icon : $icon;
+		$fa_icon = ( 'fa-' !== substr( $icon, 0, 3 ) && 'fa ' !== substr( $icon, 0, 3 ) ) ? 'fa-' . $icon : $icon;
 		if ( array_key_exists( str_replace( 'fa-', '', $icon ), $old_icons ) ) {
 			$fa_icon = 'fa-' . $old_icons[ str_replace( 'fa-', '', $icon ) ];
 		}

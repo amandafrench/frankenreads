@@ -371,7 +371,7 @@ function avada_options_section_social_media( $sections ) {
 						'description' => esc_html__( 'Controls the color of the tagline text in the social sharing boxes.', 'Avada' ),
 						'id'          => 'sharing_box_tagline_text_color',
 						'default'     => '#333333',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 					),
 					'social_bg_color' => array(
 						'label'       => esc_html__( 'Sharing Box Background Color', 'Avada' ),
@@ -424,7 +424,7 @@ function avada_options_section_social_media( $sections ) {
 						'description' => esc_html__( 'Controls the color of the social icons in the social sharing boxes. This color will be used for all social icons.', 'Avada' ),
 						'id'          => 'sharing_social_links_icon_color',
 						'default'     => '#bebdbd',
-						'type'        => 'color',
+						'type'        => 'color-alpha',
 						'required'    => array(
 							array(
 								'setting'  => 'sharing_social_links_color_type',
