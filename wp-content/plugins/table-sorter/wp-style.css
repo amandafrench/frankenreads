@@ -7,11 +7,11 @@ table.tablesorter thead tr th {
 
 table.tablesorter thead tr th{    border: 1px solid #dad9c7; }
 
-table.tablesorter thead tr .tablesorter-headerAsc { 
+table.tablesorter thead tr th.tablesorter-headerAsc { 
     background-image: url(images/asc.gif); 
 }
 
-table.tablesorter thead tr .tablesorter-headerDesc { 
+table.tablesorter thead tr th.tablesorter-headerDesc { 
     background-image: url(images/desc.gif);
 }
 

@@ -16,8 +16,8 @@
 			</h2>
 
 			<div class="changelog">
-				<h3><?php _e( '1.0.16 maintenance Release', 'cbox' ); ?></h3>
-				<p><?php _e( 'The 1.0.16 release brings a number of plugins up to date, and improves compatibility with BuddyPress 2.9.', 'cbox' ) ?></p>
+				<h3><?php _e( '1.0.17 maintenance Release', 'cbox' ); ?></h3>
+				<p><?php _e( 'The 1.0.17 release brings a number of plugins up to date.', 'cbox' ) ?></p>
 			</div>
 
 			<div class="changelog">
@@ -26,34 +26,30 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>BuddyPress 2.9.1</li>
-						<li>bbPress 2.5.14</li>
-						<li>BuddyPress Docs 1.9.4</li>
-						<li>BuddyPress Group Email Subscription 3.7.2</li>
-						<li>BuddyPress Reply By Email 1.0-RC5</li>
-						<li>Invite Anyone 1.3.19</li>
+						<li>BuddyPress 2.9.4</li>
+						<li>BuddyPress Docs 2.0.1</li>
+						<li>BuddyPress Group Email Subscription 3.8.2</li>
+						<li>BuddyPress Groupblog 1.9.0</li>
+						<li>BP MPO Activity Filter 1.2.1</li>
+						<li>BP Reply By Email 1.0-RC6</li>
+						<li>CAC Featured Content 1.0.9</li>
+						<li>Invite Anyone 1.3.20</li>
 					</ul>
 
 				</div>
 			</div>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Theme Improvements', 'cbox' ); ?></h3>
 
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li><?php _e( 'Fix positioning of search interface on forum tag page.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fix positioning bug with certain widget titles.', 'cbox' ) ?></li>
-						<li><?php _e( 'Improve compatibility with BuddyPress 2.8+.', 'cbox' ) ?></li>
-						<li><?php _e( 'Improve compatibility with PHP 7.1+.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fix some PHP notices.', 'cbox' ) ?></li>
+						<li><?php esc_html_e( 'Add search form to Members directory and to Manage > Members page in groups.', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
@@ -62,7 +58,9 @@
 
 					<div class="last-feature">
 
-						<p>Security hardening for protection against certain upload vulnerabilities.</p>
+						<p><?php esc_html_e( 'Introduce new technique for setting plugin defaults at the time of CBOX setup.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fix bug that caused BuddyPress Notifications component not to be activated at CBOX setup.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fix bug that causes bbPress topic replies not to go through in certain cases.', 'cbox' ); ?></p>
 
 					</div>
 				</div>

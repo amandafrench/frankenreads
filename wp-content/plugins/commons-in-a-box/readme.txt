@@ -3,7 +3,7 @@ Contributors: cuny-academic-commons, boonebgorges, r-a-y
 Tags: commons, cuny, community, education, academic, buddypress
 Requires at least: 3.5
 Tested up to: 4.9
-Stable tag: 1.0.16.1
+Stable tag: 1.0.17
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -43,8 +43,12 @@ Yes! CBOX will take over the management of BuddyPress and some of your other Bud
 
 == Changelog ==
 
-= 1.0.16.1 =
-* Fixed problem with missing release files
+= 1.0.17 =
+* Update plugins: BuddyPress 2.9.4, BuddyPress Docs 2.0.1, BuddyPress Group Email Subscription 3.8.2, BuddyPress Groupblog 1.9.0, BP MPO Activity Filter 1.2.1, BP Reply By Email 1.0-RC6, CAC Featured Content 1.0.9, Invite Anyone 1.3.20
+* Introduce new technique for setting plugin defaults at the time of CBOX setup.
+* Fix bug that caused BuddyPress Notifications component not to be activated at CBOX setup.
+* Fix bug that causes bbPress topic replies not to go through in certain cases.
+* Theme improvements: Add search form to Members directory and to Manage > Members page in groups.
 
 = 1.0.16 =
 * Compatibility with WordPress 4.8 and BuddyPress 2.9

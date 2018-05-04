@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: farhan.noor
 Donate link: http://wpreloaded.com/table-sorter
-Tags: table, order, sort, sortable, tablesorter, tablepress, table press
-Requires at least: 3.0
+Tags: table, order, sorter, sortable, tablesorter, tablepress, table press, grid
+Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 2.1
+Stable tag: 2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,8 @@ Table Sorter turns standard HTML table (with THEAD and TBODY tags) into a sortab
 
 For complete documentation and demo, please visit <a href="http://wpreloaded.com/table-sorter" target="_blank">WP Table Sorter</a>  plugin support page. 
 
+**NOTE** This plugin works at code level hence do not provide any settings or options page.
+
 Happy coding!
 
 == Installation ==
@@ -32,6 +34,8 @@ This section describes how to install the plugin and get it working.
 3. Activate the plugin through the 'Plugins' menu in WordPress.
 
 == Changelog ==
+= 2.2 =
+* Added support for accented letters.
 
 = 2.1 =
 * Fixed issues, improved ui exprience.
