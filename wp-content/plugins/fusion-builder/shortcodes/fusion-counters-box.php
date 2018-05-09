@@ -453,7 +453,7 @@ if ( fusion_is_element_enabled( 'fusion_counters_box' ) ) {
 								'description' => esc_html__( 'Controls the color of the counter box body text.', 'fusion-builder' ),
 								'id'          => 'counter_box_body_color',
 								'default'     => '#747474',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'counter_box_body_size' => array(
 								'label'       => esc_html__( 'Counter Box Body Font Size', 'fusion-builder' ),
@@ -569,7 +569,7 @@ function fusion_element_counters_box() {
 					'default'     => '',
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Counter Box Body Font Color', 'fusion-builder' ),
 					'param_name'  => 'body_color',
 					'value'       => '',

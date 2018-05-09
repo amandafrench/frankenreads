@@ -23,7 +23,7 @@
 					shortcode_icon = params.icon;
 				}
 
-				if ( -1 === shortcode_icon.trim().indexOf( ' ' ) ) {
+				if ( 'undefined' !== typeof shortcode_icon && -1 === shortcode_icon.trim().indexOf( ' ' ) ) {
 					shortcode_icon = 'fa ' + shortcode_icon;
 				}
 

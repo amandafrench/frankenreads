@@ -79,6 +79,7 @@ if ( fusion_is_element_enabled( 'fusion_button' ) ) {
 						'size'                  => ( '' !== $fusion_settings->get( 'button_size' ) ) ? strtolower( $fusion_settings->get( 'button_size' ) ) : 'large',
 						'stretch'               => ( '' !== $fusion_settings->get( 'button_span' ) ) ? $fusion_settings->get( 'button_span' ) : 'no',
 						'target'                => '_self',
+						'text_transform'        => '',
 						'title'                 => '',
 						'type'                  => ( '' !== $fusion_settings->get( 'button_type' ) ) ? strtolower( $fusion_settings->get( 'button_type' ) ) : 'flat',
 						'alignment'             => '',
@@ -164,6 +165,7 @@ if ( fusion_is_element_enabled( 'fusion_button' ) ) {
 				$this->args = $defaults;
 
 				$style_tag = $styles = '';
+
 				// If its custom, default or a custom color scheme.
 				if ( ( 'custom' === $color || 'default' === $color || false !== strpos( $color, 'scheme-' ) ) && ( $bevel_color || $accent_color || $accent_hover_color || $border_width || $gradient_colors ) ) {
 
@@ -228,6 +230,10 @@ if ( fusion_is_element_enabled( 'fusion_button' ) ) {
 
 					if ( $text_color_styles ) {
 						$styles .= '.fusion-button.button-' . $this->button_counter . ' .fusion-button-text, .fusion-button.button-' . $this->button_counter . ' i {' . $text_color_styles . '}';
+					}
+
+					if ( $text_transform ) {
+						$styles .= '.fusion-button.button-' . $this->button_counter . ' .fusion-button-text {text-transform:' . $text_transform . ';}';
 					}
 
 					if ( $general_styles ) {
@@ -508,8 +514,8 @@ if ( fusion_is_element_enabled( 'fusion_button' ) ) {
 				$all_elements = array_merge( array( '.fusion-button' ), $main_elements );
 
 				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background'] = $fusion_library->sanitize->color( $fusion_settings->get( 'button_gradient_top_color' ) );
-				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['text-transform'] = 'uppercase';
-				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color']      = $fusion_library->sanitize->color( $fusion_settings->get( 'button_accent_color' ) );
+				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['text-transform'] = $fusion_settings->get( 'button_text_transform' );
+				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = $fusion_library->sanitize->color( $fusion_settings->get( 'button_accent_color' ) );
 				if ( $fusion_settings->get( 'button_gradient_top_color' ) != $fusion_settings->get( 'button_gradient_bottom_color' ) ) {
 					$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-image'][] = '-webkit-gradient( linear, left bottom, left top, from( ' . $fusion_library->sanitize->color( $fusion_settings->get( 'button_gradient_bottom_color' ) ) . ' ), to( ' . $fusion_library->sanitize->color( $fusion_settings->get( 'button_gradient_top_color' ) ) . ' ) )';
 					$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-image'][] = 'linear-gradient( to top, ' . $fusion_library->sanitize->color( $fusion_settings->get( 'button_gradient_bottom_color' ) ) . ', ' . $fusion_library->sanitize->color( $fusion_settings->get( 'button_gradient_top_color' ) ) . ' )';
@@ -778,6 +784,17 @@ if ( fusion_is_element_enabled( 'fusion_button' ) ) {
 									'letter-spacing' => '0',
 								),
 							),
+							'button_text_transform' => array(
+								'label'       => esc_attr__( 'Text Transform', 'fusion-builder' ),
+								'description' => esc_attr__( 'Choose how the text is displayed.', 'fusion-builder' ),
+								'id'          => 'button_text_transform',
+								'default'     => 'uppercase',
+								'type'        => 'radio-buttonset',
+								'choices'     => array(
+									'none'      => esc_attr__( 'Normal', 'fusion-builder' ),
+									'uppercase'  => esc_attr__( 'Uppercase', 'fusion-builder' ),
+								),
+							),
 							'button_gradient_top_color' => array(
 								'label'       => esc_html__( 'Button Gradient Top Color', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the top color of the button background.', 'fusion-builder' ),
@@ -904,6 +921,18 @@ function fusion_element_button() {
 					'param_name'  => 'element_content',
 					'value'       => esc_attr__( 'Button Text', 'fusion-builder' ),
 					'description' => esc_attr__( 'Add the text that will display on button.', 'fusion-builder' ),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Text Transform', 'fusion-builder' ),
+					'description' => esc_attr__( 'Choose how the text is displayed.', 'fusion-builder' ),
+					'param_name'  => 'text_transform',
+					'default'     => '',
+					'value'       => array(
+						''          => esc_attr__( 'Default', 'fusion-builder' ),
+						'none'      => esc_attr__( 'Normal', 'fusion-builder' ),
+						'uppercase' => esc_attr__( 'Uppercase', 'fusion-builder' ),
+					),
 				),
 				array(
 					'type'        => 'textfield',

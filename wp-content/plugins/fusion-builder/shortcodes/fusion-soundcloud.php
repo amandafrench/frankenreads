@@ -206,7 +206,7 @@ function fusion_element_soundcloud() {
 					'default'     => 'no',
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Select the color of the element.', 'fusion-builder' ),
 					'param_name'  => 'color',

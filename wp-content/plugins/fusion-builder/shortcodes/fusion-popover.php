@@ -196,7 +196,7 @@ if ( fusion_is_element_enabled( 'fusion_popover' ) ) {
 								'description' => esc_html__( 'Controls the color of the popover text.', 'fusion-builder' ),
 								'id'          => 'popover_text_color',
 								'default'     => '#747474',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'popover_placement' => array(
 								'label'       => esc_html__( 'Popover Position', 'fusion-builder' ),
@@ -298,7 +298,7 @@ function fusion_element_popover() {
 					'group'       => esc_attr__( 'Design', 'fusion-builder' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Popover Text Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Controls all the text color inside the popover box. Leave blank for theme option selection.', 'fusion-builder' ),
 					'param_name'  => 'textcolor',

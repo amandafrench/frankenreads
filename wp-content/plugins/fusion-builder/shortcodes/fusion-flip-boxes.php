@@ -531,14 +531,14 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 								'description' => esc_html__( 'Controls the color of the frontside heading.', 'fusion-builder' ),
 								'id'          => 'flip_boxes_front_heading',
 								'default'     => '#333333',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'flip_boxes_front_text' => array(
 								'label'       => esc_html__( 'Flip Box Text Color Frontside', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the color of the frontside text.', 'fusion-builder' ),
 								'id'          => 'flip_boxes_front_text',
 								'default'     => '#747474',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'flip_boxes_back_bg' => array(
 								'label'       => esc_html__( 'Flip Box Background Color Backside', 'fusion-builder' ),
@@ -552,14 +552,14 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 								'description' => esc_html__( 'Controls the color of the backside heading.', 'fusion-builder' ),
 								'id'          => 'flip_boxes_back_heading',
 								'default'     => '#eeeded',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'flip_boxes_back_text' => array(
 								'label'       => esc_html__( 'Flip Box Text Color Backside', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the color of the backside text.', 'fusion-builder' ),
 								'id'          => 'flip_boxes_back_text',
 								'default'     => '#ffffff',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'flip_boxes_border_size' => array(
 								'label'       => esc_html__( 'Flip Box Border Size', 'fusion-builder' ),

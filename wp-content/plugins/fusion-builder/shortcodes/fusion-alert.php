@@ -283,28 +283,28 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 								'description' => esc_attr__( 'Set the background color for general alert boxes.', 'fusion-builder' ),
 								'id'          => 'info_bg_color',
 								'default'     => '#ffffff',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'danger_bg_color' => array(
 								'label'       => esc_attr__( 'Error Background Color', 'fusion-builder' ),
 								'description' => esc_attr__( 'Set the background color for error alert boxes.', 'fusion-builder' ),
 								'id'          => 'danger_bg_color',
 								'default'     => '#f2dede',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'success_bg_color' => array(
 								'label'       => esc_attr__( 'Success Background Color', 'fusion-builder' ),
 								'description' => esc_attr__( 'Set the background color for success alert boxes.', 'fusion-builder' ),
 								'id'          => 'success_bg_color',
 								'default'     => '#dff0d8',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'warning_bg_color' => array(
 								'label'       => esc_attr__( 'Notice Background Color', 'fusion-builder' ),
 								'description' => esc_attr__( 'Set the background color for notice alert boxes.', 'fusion-builder' ),
 								'id'          => 'warning_bg_color',
 								'default'     => '#fcf8e3',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'alert_box_text_align' => array(
 								'label'       => esc_attr__( 'Content Alignment', 'fusion-builder' ),
@@ -326,7 +326,7 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 								'type'        => 'radio-buttonset',
 								'choices'     => array(
 									'normal'      => esc_attr__( 'Normal', 'fusion-builder' ),
-									'capitalize'  => esc_attr__( 'Capitalize', 'fusion-builder' ),
+									'capitalize'  => esc_attr__( 'Uppercase', 'fusion-builder' ),
 								),
 							),
 							'alert_box_dismissable' => array(
@@ -419,7 +419,7 @@ function fusion_element_alert() {
 					),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Accent Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Custom setting only. Set the border, text and icon color for custom alert boxes.', 'fusion-builder' ),
 					'param_name'  => 'accent_color',
@@ -433,7 +433,7 @@ function fusion_element_alert() {
 					),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Background Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Custom setting only. Set the background color for custom alert boxes.', 'fusion-builder' ),
 					'param_name'  => 'background_color',
@@ -502,7 +502,7 @@ function fusion_element_alert() {
 					'value'       => array(
 						''            => esc_attr__( 'Default', 'fusion-builder' ),
 						'normal'      => esc_attr__( 'Normal', 'fusion-builder' ),
-						'capitalize'  => esc_attr__( 'Capitalize', 'fusion-builder' ),
+						'capitalize'  => esc_attr__( 'Uppercase', 'fusion-builder' ),
 					),
 				),
 				array(

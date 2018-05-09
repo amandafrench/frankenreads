@@ -368,7 +368,7 @@ function fusion_element_progress() {
 					'type'             => 'dimension',
 					'remove_from_atts' => true,
 					'heading'          => esc_attr__( 'Progress Bar Height', 'fusion-builder' ),
-					'description'      => esc_attr__( 'Insert a height for the progress bar. Enter value including any valid CSS unit, ex: 10px. ', 'fusion-builder' ),
+					'description'      => esc_attr__( 'Insert a height for the progress bar. Enter value including any valid CSS unit, ex: 10px.', 'fusion-builder' ),
 					'param_name'       => 'dimensions',
 					'value'            => array(
 						'height' => '',

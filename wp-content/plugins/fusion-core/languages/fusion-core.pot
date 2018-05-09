@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Fusion Core package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Fusion Core 3.5\n"
+"Project-Id-Version: Fusion Core 3.5.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/fusion-core\n"
-"POT-Creation-Date: 2018-04-23 08:46:27+00:00\n"
+"POT-Creation-Date: 2018-05-04 18:33:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -931,8 +931,8 @@ msgstr ""
 #: shortcodes/fusion-portfolio.php:1233
 msgid ""
 "Controls if the featured image size is fixed (cropped) or auto (full image "
-"ratio) for portfolio elements. IMPORTANT: Fixed works best with a standard "
-"940px site width. Auto works best with larger site widths."
+"ratio) for portfolio elements. <strong>IMPORTANT:</strong> Fixed works best "
+"with a standard 940px site width. Auto works best with larger site widths."
 msgstr ""
 
 #: shortcodes/fusion-portfolio.php:1238 shortcodes/fusion-portfolio.php:1499

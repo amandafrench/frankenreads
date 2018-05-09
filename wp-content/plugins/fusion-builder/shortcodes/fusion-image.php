@@ -86,6 +86,7 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 						'lightbox_image'      => '',
 						'link'                => '',
 						'linktarget'          => '_self',
+						'max_width'           => '',
 						'style'               => '',
 						'stylecolor'          => '',
 						'image_id'            => '',
@@ -235,7 +236,7 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 
 				$html = '<span ' . FusionBuilder::attributes( 'image-shortcode' ) . '>' . $output . '</span>';
 
-				if ( 'liftup' === $hover_type || ( 'bottomshadow' === $style && ( 'zoomin' === $hover_type || 'zoomout' === $hover_type ) ) ) {
+				if ( 'liftup' === $hover_type || ( 'bottomshadow' === $style && ( 'none' === $hover_type || 'zoomin' === $hover_type || 'zoomout' === $hover_type ) ) ) {
 					if ( 'liftup' === $hover_type ) {
 						$wrapper_classes = 'imageframe-liftup';
 						$element_styles  = '';
@@ -261,7 +262,13 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 						}
 						$element_styles  .= 'display:inline-block}</style>';
 					}
-					$html = '<div ' . FusionBuilder::attributes( $wrapper_classes ) . '>' . $element_styles . $html . '</div>';
+
+					$wrapper_styles = '';
+					if ( $max_width ) {
+						$wrapper_styles = 'style="max-width:' . $max_width . ';"';
+					}
+
+					$html = '<div ' . FusionBuilder::attributes( $wrapper_classes ) . $wrapper_styles . '>' . $element_styles . $html . '</div>';
 				}
 
 				if ( 'center' === $align ) {
@@ -341,6 +348,10 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 					} elseif ( 'right' === $this->args['align'] ) {
 						$attr['style'] .= 'margin-left:25px;float:right;';
 					}
+				}
+
+				if ( $this->args['max_width'] && 'liftup' !== $this->args['hover_type'] && 'bottomshadow' !== $this->args['style'] ) {
+					$attr['style'] .= 'max-width:' . $this->args['max_width'] . ';';
 				}
 
 				if ( 'liftup' !== $this->args['hover_type'] ) {
@@ -519,6 +530,13 @@ function fusion_element_image() {
 					'param_name'  => 'image_id',
 					'value'       => '',
 					'hidden'      => true,
+				),
+				array(
+					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'Image Max Width', 'fusion-builder' ),
+					'description' => esc_attr__( 'Set the maximum width the image should take up. Enter value including any valid CSS unit, ex: 200px. Leave empty to use full image width.', 'fusion-builder' ),
+					'param_name'  => 'max_width',
+					'value'       => '',
 				),
 				array(
 					'type'        => 'radio_button_set',

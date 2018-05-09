@@ -274,30 +274,25 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 
 					// TO padding.
 					${$padding_name} = $fusion_settings->get( 'container_padding_default', $padding );
-					$is_hundred_percent_template = apply_filters( 'fusion_is_hundred_percent_template', $c_page_id, false );
+					$is_hundred_percent_template = apply_filters( 'fusion_is_hundred_percent_template', false, $c_page_id );
 					if ( $is_hundred_percent_template ) {
 						${$padding_name} = $fusion_settings->get( 'container_padding_100', $padding );
 					}
 				}
 
-				// Fall back to px if no unit is set.
-				if ( ${$padding_name} && false === strpos( ${$padding_name}, '%' ) && false === strpos( ${$padding_name}, 'px' ) ) {
-					${$padding_name} .= 'px';
-				}
-
 				// Add padding to style.
 				if ( ! empty( ${$padding_name} ) ) {
-					$style .= 'padding-' . $padding . ':' . esc_attr( fusion_builder_check_value( ${$padding_name} ) ) . ';';
+					$style .= 'padding-' . $padding . ':' . $fusion_library->sanitize->get_value_with_unit( ${$padding_name} ) . ';';
 				}
 			}
 
 			// Margin; for separator conversion only.
 			if ( ! empty( $margin_bottom ) ) {
-				$style .= 'margin-bottom: ' . esc_attr( fusion_builder_check_value( $margin_bottom ) ) . ';';
+				$style .= 'margin-bottom: ' . $fusion_library->sanitize->get_value_with_unit( $margin_bottom ) . ';';
 			}
 
 			if ( ! empty( $margin_top ) ) {
-				$style .= 'margin-top: ' . esc_attr( fusion_builder_check_value( $margin_top ) ) . ';';
+				$style .= 'margin-top: ' . $fusion_library->sanitize->get_value_with_unit( $margin_top ) . ';';
 			}
 
 			// Border.
@@ -1176,14 +1171,14 @@ function fusion_builder_add_section() {
 						'margin_bottom' => '',
 
 					),
-					'description' => esc_attr__( 'Spacing above and below the section. In pixels. Use a number without px.', 'fusion-builder' ),
+					'description' => esc_attr__( 'Spacing above and below the section. Enter values including any valid CSS unit, ex: 4%.', 'fusion-builder' ),
 					'group'       => esc_attr__( 'Design', 'fusion-builder' ),
 				),
 				array(
 					'type'             => 'dimension',
 					'remove_from_atts' => true,
 					'heading'          => esc_attr__( 'Padding', 'fusion-builder' ),
-					'description'      => esc_attr__( 'In pixels or percentage, ex: 10px or 10%.', 'fusion-builder' ) . $default,
+					'description'      => esc_attr__( 'Enter values including any valid CSS unit, ex: 10px or 10%.', 'fusion-builder' ) . $default,
 					'param_name'       => 'dimensions',
 					'value'            => array(
 						'padding_top'    => '',

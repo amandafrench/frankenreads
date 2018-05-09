@@ -25,8 +25,20 @@ var FusionPageBuilder = FusionPageBuilder || {};
 						rows      = this.$el.find( '.fusion-builder-table .fusion-table-row' ).length;
 
 				if ( ( 'pie' === chartType || 'doughnut' === chartType || 'polarArea' === chartType ) || ( ( 'bar' === chartType || 'horizontalBar' === chartType ) && 1 === rows ) ) {
+
+					// Update colors from 'Y' color pickers.
+					this.$el.find( '.fusion-builder-table thead tr:nth-child(2) .th-5 input[type="text"]' ).val( this.$el.find( '.fusion-builder-table .fusion-table-row.tr-1 .td-2 input[type="text"]' ).val() ).trigger( 'change' );
+					this.$el.find( '.fusion-builder-table thead tr:nth-child(3) .th-5 input[type="text"]' ).val( this.$el.find( '.fusion-builder-table .fusion-table-row.tr-1 .td-3 input[type="text"]' ).val() ).trigger( 'change' );
+					this.$el.find( '.fusion-builder-table thead tr:nth-child(4) .th-5 input[type="text"]' ).val( this.$el.find( '.fusion-builder-table .fusion-table-row.tr-1 .td-4 input[type="text"]' ).val() ).trigger( 'change' );
+
 					this.$el.find( '.fusion-builder-table' ).addClass( 'showX' ).removeClass( 'showY' );
 				} else {
+
+					// Update colors from 'X' color pickers.
+					this.$el.find( '.fusion-builder-table .fusion-table-row.tr-1 .td-2 input[type="text"]' ).val( this.$el.find( '.fusion-builder-table thead tr:nth-child(2) .th-5 input[type="text"]' ).val() ).trigger( 'change' );
+					this.$el.find( '.fusion-builder-table .fusion-table-row.tr-1 .td-3 input[type="text"]' ).val( this.$el.find( '.fusion-builder-table thead tr:nth-child(3) .th-5 input[type="text"]' ).val() ).trigger( 'change' );
+					this.$el.find( '.fusion-builder-table .fusion-table-row.tr-1 .td-4 input[type="text"]' ).val( this.$el.find( '.fusion-builder-table thead tr:nth-child(4) .th-5 input[type="text"]' ).val() ).trigger( 'change' );
+
 					this.$el.find( '.fusion-builder-table' ).removeClass( 'showX' ).addClass( 'showY' );
 				}
 

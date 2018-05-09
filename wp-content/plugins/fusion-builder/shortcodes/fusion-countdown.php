@@ -441,28 +441,28 @@ if ( fusion_is_element_enabled( 'fusion_countdown' ) ) {
 								'description' => esc_html__( 'Controls the color for the countdown timer text.', 'fusion-builder' ),
 								'id'          => 'countdown_counter_text_color',
 								'default'     => '#ffffff',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'countdown_heading_text_color' => array(
 								'label'       => esc_html__( 'Countdown Heading Text Color', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the color for the countdown headings.', 'fusion-builder' ),
 								'id'          => 'countdown_heading_text_color',
 								'default'     => '#ffffff',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'countdown_subheading_text_color' => array(
 								'label'       => esc_html__( 'Countdown Subheading Text Color', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the color for the countdown subheadings.', 'fusion-builder' ),
 								'id'          => 'countdown_subheading_text_color',
 								'default'     => '#ffffff',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'countdown_link_text_color' => array(
 								'label'       => esc_html__( 'Countdown Link Text Color', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the color for the countdown link text.', 'fusion-builder' ),
 								'id'          => 'countdown_link_text_color',
 								'default'     => '#ffffff',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'countdown_link_target' => array(
 								'label'       => esc_html__( 'Countdown Link Target', 'fusion-builder' ),
@@ -636,7 +636,7 @@ function fusion_element_countdown() {
 					'group'       => esc_attr__( 'Design', 'fusion-builder' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Countdown Text Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a text color for the countdown timer.', 'fusion-builder' ),
 					'param_name'  => 'counter_text_color',
@@ -653,7 +653,7 @@ function fusion_element_countdown() {
 					'placeholder' => true,
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Heading Text Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a text color for the countdown heading.', 'fusion-builder' ),
 					'param_name'  => 'heading_text_color',
@@ -670,7 +670,7 @@ function fusion_element_countdown() {
 					'placeholder' => true,
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Subheading Text Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a text color for the countdown subheading.', 'fusion-builder' ),
 					'param_name'  => 'subheading_text_color',
@@ -700,7 +700,7 @@ function fusion_element_countdown() {
 					),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Link Text Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a text color for the countdown link.', 'fusion-builder' ),
 					'param_name'  => 'link_text_color',

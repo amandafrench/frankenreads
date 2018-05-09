@@ -3,7 +3,7 @@
  * Plugin Name: Fusion Core
  * Plugin URI: http://theme-fusion.com
  * Description: ThemeFusion Core Plugin for ThemeFusion Themes
- * Version: 3.5
+ * Version: 3.5.1
  * Author: ThemeFusion
  * Author URI: http://theme-fusion.com
  *
@@ -33,7 +33,7 @@ if ( ! class_exists( 'FusionCore_Plugin' ) ) {
 		 * @since   1.0.0
 		 * @var  string
 		 */
-		const VERSION = '3.5';
+		const VERSION = '3.5.1';
 
 		/**
 		 * Instance of the class.

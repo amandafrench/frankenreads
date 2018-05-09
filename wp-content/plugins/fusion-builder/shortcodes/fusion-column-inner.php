@@ -103,6 +103,10 @@ if ( ! class_exists( 'FusionSC_ColumnInner' ) ) {
 				$border_size = FusionBuilder::validate_shortcode_attr_value( $border_size, 'px' );
 			}
 
+			if ( $padding ) {
+				$padding = $fusion_library->sanitize->get_value_with_unit( $padding );
+			}
+
 			// If there is no map of columns, we must use fallback method like 4.0.3.
 			if ( ( ! isset( $global_column_inner_array[ $content_id ] ) || ! array( $global_column_inner_array[ $content_id ] ) || 0 === count( $global_column_inner_array[ $content_id ] ) ) && 'no' !== $spacing ) {
 				$spacing = 'yes';
@@ -379,6 +383,10 @@ if ( ! class_exists( 'FusionSC_ColumnInner' ) ) {
 				$classes .= ' fusion-column-no-min-height';
 			}
 
+			if ( empty( $animation_offset ) ) {
+				$animation_offset = $fusion_settings->get( 'animation_offset' );
+			}
+
 			// Animation.
 			$animation = fusion_builder_animation_data( $animation_type, $animation_direction, $animation_speed, $animation_offset );
 			$classes .= $animation['class'];
@@ -406,16 +414,16 @@ if ( ! class_exists( 'FusionSC_ColumnInner' ) ) {
 					$additional_bg_image_div = '<div class="' . $wrapper_classes . '" style="content:\'\';z-index:-1;position:absolute;top:0;right:0;bottom:0;left:0;' . $background_image_style . '"  data-bg-url="' . $background_image . '"></div>';
 				}
 
-				$output =
-				'<div ' . ( ! empty( $id ) ? 'id="' . esc_attr( $id ) . '"' : '' ) . esc_attr( $animation['data'] ) . ' class="fusion-layout-column fusion_builder_column fusion_builder_column_' . $type . ' ' . esc_attr( $classes ) . ' ' . ( ! empty( $type ) ? esc_attr( $type ) : '' ) . '" ' . $style . '>
-					<div class="' . $wrapper_classes . '" style="' . $wrapper_style . $wrapper_style_bg . '"  data-bg-url="' . $background_image . '">
-						' . $inner_content
-						. $additional_bg_image_div . '
-
-					</div>
-				</div>';
+				$output  = '<div ' . ( ! empty( $id ) ? 'id="' . esc_attr( $id ) . '"' : '' ) . esc_attr( $animation['data'] ) . ' class="fusion-layout-column fusion_builder_column fusion_builder_column_' . $type . ' ' . esc_attr( $classes ) . ' ' . ( ! empty( $type ) ? esc_attr( $type ) : '' ) . '" ' . $style . '>';
+				$output .= '<div class="' . $wrapper_classes . '" style="' . $wrapper_style . $wrapper_style_bg . '"  data-bg-url="' . $background_image . '">';
+				$output .= $inner_content . $additional_bg_image_div;
+				$output .= '</div></div>';
 
 			} else {
+
+				if ( $animation['class'] && 'liftup' === $hover_type ) {
+					$classes .= ' fusion-column-hover-type-liftup';
+				}
 
 				// Background color fallback for IE and Edge.
 				$additional_bg_color_span = '';
@@ -608,7 +616,7 @@ function fusion_element_column_inner() {
 					'group'       => esc_attr__( 'Design', 'fusion-builder' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Border Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Controls the border color.', 'fusion-builder' ),
 					'param_name'  => 'border_color',

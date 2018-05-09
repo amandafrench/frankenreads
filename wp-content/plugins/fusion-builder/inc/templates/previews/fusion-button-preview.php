@@ -9,24 +9,12 @@ $size  = strtolower( $fusion_settings->get( 'button_size' ) );
 $shape = strtolower( $fusion_settings->get( 'button_shape' ) );
 $type  = strtolower( $fusion_settings->get( 'button_type' ) );
 $gradient_top = $gradient_bottom = $accent_color = $border_color = $border_width = '';
-/**
- * Determines if a color needs adjusting or not.
- *
- * @param string $color The color.
- * @return bool
- */
-function color_needs_adjustment( $color ) {
-	if ( '#ffffff' === $color || 'transparent' === $color || '0' === Fusion_Color::new_color( $color )->alpha ) {
-		return true;
-	}
 
-	return false;
-}
-
-$gradient_top = color_needs_adjustment( $fusion_settings->get( 'button_gradient_top_color' ) ) ? '#f8f8f8' : $fusion_settings->get( 'button_gradient_top_color' );
-$gradient_bottom = color_needs_adjustment( $fusion_settings->get( 'button_gradient_bottom_color' ) ) ? '#f8f8f8' : $fusion_settings->get( 'button_gradient_bottom_color' );
-$accent_color = color_needs_adjustment( $fusion_settings->get( 'button_accent_color' ) ) ? '#f8f8f8' : $fusion_settings->get( 'button_accent_color' );
+$gradient_top = fusion_color_needs_adjustment( $fusion_settings->get( 'button_gradient_top_color' ) ) ? '#f8f8f8' : $fusion_settings->get( 'button_gradient_top_color' );
+$gradient_bottom = fusion_color_needs_adjustment( $fusion_settings->get( 'button_gradient_bottom_color' ) ) ? '#f8f8f8' : $fusion_settings->get( 'button_gradient_bottom_color' );
+$accent_color = fusion_color_needs_adjustment( $fusion_settings->get( 'button_accent_color' ) ) ? '#f8f8f8' : $fusion_settings->get( 'button_accent_color' );
 $border_width = $fusion_settings->get( 'button_border_width' );
+$text_transform = $fusion_settings->get( 'button_text_transform' );
 ?>
 
 <script type="text/template" id="fusion-builder-block-module-button-preview-template">
@@ -93,15 +81,21 @@ $border_width = $fusion_settings->get( 'button_border_width' );
 	if ( 'undefined' !== typeof button_icon && -1 === button_icon.trim().indexOf( ' ' ) ) {
 		button_icon = 'fa ' + button_icon;
 	}
+
+	if ( '' === params.text_transform ) {
+		var text_transform = '<?php echo esc_attr( $text_transform ); ?>';
+	} else {
+		var text_transform = params.text_transform;
+	}
 	#>
 
 	<# if ( 'custom' === params.color || 'default' === params.color ) { #>
 
-		<a class="fusion-button button-default button-{{ button_shape }} button-{{ button_type }} button-{{ button_size }}" style="background: {{ button_background }}; border: {{ border_width }} solid {{ accent_color }}; color: {{ accent_color }}"><span class="fusion-button-text"><span class="fusion-module-icon {{ button_icon }}"></span>{{{ params.element_content }}}</span></a>
+		<a class="fusion-button button-default button-{{ button_shape }} button-{{ button_type }} button-{{ button_size }}" style="background: {{ button_background }}; border: {{ border_width }} solid {{ accent_color }}; color: {{ accent_color }}; text-transform: {{ text_transform }};"><span class="fusion-button-text"><span class="fusion-module-icon {{ button_icon }}"></span>{{{ params.element_content }}}</span></a>
 
 	<# } else { #>
 
-		<a class="fusion-button button-default button-{{ button_shape }} button-{{ button_type }} button-{{ button_size }} button-{{ button_color }}"><span class="fusion-button-text"><span class="fusion-module-icon {{ button_icon }}"></span>{{{ params.element_content }}}</span></a>
+		<a class="fusion-button button-default button-{{ button_shape }} button-{{ button_type }} button-{{ button_size }} button-{{ button_color }} text-transform: {{ text_transform }};"><span class="fusion-button-text"><span class="fusion-module-icon {{ button_icon }}"></span>{{{ params.element_content }}}</span></a>
 
 	<# }#>
 </script>

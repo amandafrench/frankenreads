@@ -262,7 +262,7 @@ function fusion_element_widget_area() {
 					'default'     => $fusion_settings->get( 'widget_area_title_color' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Backgound Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a background color for the widget area.', 'fusion-builder' ),
 					'param_name'  => 'background_color',

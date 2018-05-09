@@ -538,7 +538,7 @@ if ( fusion_is_element_enabled( 'fusion_testimonials' ) ) {
 								'description' => esc_html__( 'Controls the color of the testimonial text.', 'fusion-builder' ),
 								'id'          => 'testimonial_text_color',
 								'default'     => '#747474',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'testimonials_speed' => array(
 								'label'       => esc_html__( 'Testimonials Speed', 'fusion-builder' ),
@@ -644,7 +644,7 @@ function fusion_element_testimonials() {
 					'default'     => $fusion_settings->get( 'testimonial_bg_color' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Text Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Controls the text color. ', 'fusion-builder' ),
 					'param_name'  => 'textcolor',

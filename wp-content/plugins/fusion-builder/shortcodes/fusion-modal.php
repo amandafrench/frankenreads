@@ -76,12 +76,20 @@ if ( fusion_is_element_enabled( 'fusion_modal' ) ) {
 
 				extract( $defaults );
 
-				$this->args = $defaults;
+				$this->args  = $defaults;
 
-				$style = '';
+				$color_obj   = Fusion_Color::new_color( $background );
+				$style       = '<style type="text/css">';
+
 				if ( $border_color ) {
-					$style = '<style type="text/css">.modal-' . $this->modal_counter . ' .modal-header, .modal-' . $this->modal_counter . ' .modal-footer{border-color:' . $border_color . ';}</style>';
+					$style .= '.modal-' . $this->modal_counter . ' .modal-header, .modal-' . $this->modal_counter . ' .modal-footer{border-color:' . $border_color . ';}';
 				}
+
+				if ( 40 >= $color_obj->lightness ) {
+					$style .= '.modal-' . $this->modal_counter . ' .close{color:#ffffff; opacity:0.35}';
+				}
+
+				$style .= '</style>';
 
 				$html  = '<div ' . FusionBuilder::attributes( 'modal-shortcode' ) . '>';
 				$html .= $style;

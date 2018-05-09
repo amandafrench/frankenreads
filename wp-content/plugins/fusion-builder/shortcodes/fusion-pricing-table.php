@@ -510,14 +510,14 @@ if ( fusion_is_element_enabled( 'fusion_pricing_table' ) ) {
 								'description' => esc_html__( 'Controls the color of style 1 pricing table headings.', 'fusion-builder' ),
 								'id'          => 'full_boxed_pricing_box_heading_color',
 								'default'     => '#333333',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'sep_pricing_box_heading_color' => array(
 								'label'       => esc_html__( 'Pricing Box Style 2 Heading Color', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the color of style 2 pricing table headings.', 'fusion-builder' ),
 								'id'          => 'sep_pricing_box_heading_color',
 								'default'     => '#333333',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'pricing_box_color' => array(
 								'label'       => esc_html__( 'Pricing Box Color', 'fusion-builder' ),
@@ -633,7 +633,7 @@ function fusion_element_pricing_table() {
 					'default'     => $fusion_settings->get( 'pricing_divider_color' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Heading Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Set pricing table headings color.', 'fusion-builder' ),
 					'param_name'  => 'heading_color_style_1',
@@ -648,7 +648,7 @@ function fusion_element_pricing_table() {
 					),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Heading Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Set pricing table headings color.', 'fusion-builder' ),
 					'param_name'  => 'heading_color_style_2',
@@ -663,7 +663,7 @@ function fusion_element_pricing_table() {
 					),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Pricing Text Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Set pricing table price text color.', 'fusion-builder' ),
 					'param_name'  => 'pricing_color',
@@ -671,7 +671,7 @@ function fusion_element_pricing_table() {
 					'default'     => $fusion_settings->get( 'pricing_box_color' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Body Text Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Set pricing table body text color', 'fusion-builder' ),
 					'param_name'  => 'body_text_color',

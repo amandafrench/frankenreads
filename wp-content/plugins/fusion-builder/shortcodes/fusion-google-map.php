@@ -566,7 +566,7 @@ function fusion_element_google_map() {
 					'default' => 'default',
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Map Overlay Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Custom styling setting only. Pick any overlaying color for the map besides pure black or white. Works best with "roadmap" type.', 'fusion-builder' ),
 					'param_name'  => 'overlay_color',
@@ -612,7 +612,7 @@ function fusion_element_google_map() {
 					),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Info Box Text Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Custom styling setting only. Pick a color for the info box text.', 'fusion-builder' ),
 					'param_name'  => 'infobox_text_color',
@@ -631,7 +631,7 @@ function fusion_element_google_map() {
 					),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Info Box Background Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Custom styling setting only. Pick a color for the info box background.', 'fusion-builder' ),
 					'param_name'  => 'infobox_background_color',

@@ -1230,7 +1230,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 						'fields'      => array(
 							'portfolio_featured_image_size' => array(
 								'label'       => esc_attr__( 'Portfolio Featured Image Size', 'fusion-core' ),
-								'description' => esc_attr__( 'Controls if the featured image size is fixed (cropped) or auto (full image ratio) for portfolio elements. IMPORTANT: Fixed works best with a standard 940px site width. Auto works best with larger site widths.', 'fusion-core' ),
+								'description' => __( 'Controls if the featured image size is fixed (cropped) or auto (full image ratio) for portfolio elements. <strong>IMPORTANT:</strong> Fixed works best with a standard 940px site width. Auto works best with larger site widths.', 'fusion-core' ),
 								'id'          => 'portfolio_featured_image_size',
 								'default'     => 'full',
 								'type'        => 'radio-buttonset',

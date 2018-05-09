@@ -350,7 +350,7 @@ if ( fusion_is_element_enabled( 'fusion_syntax_highlighter' ) ) {
 								),
 							),
 							'syntax_highlighter_line_number_text_color' => array(
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 								'label'       => esc_attr__( 'Line Numbers Text Color', 'fusion-builder' ),
 								'description' => esc_attr__( 'Controls the color for line number text. If left empty, color from selected theme will be used.', 'fusion-builder' ),
 								'id'          => 'syntax_highlighter_line_number_text_color',
@@ -433,7 +433,7 @@ if ( fusion_is_element_enabled( 'fusion_syntax_highlighter' ) ) {
 								),
 							),
 							'syntax_highlighter_border_color' => array(
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 								'label'       => esc_attr__( 'Border Color', 'fusion-builder' ),
 								'description' => esc_attr__( 'Controls the border color.', 'fusion-builder' ),
 								'id'          => 'syntax_highlighter_border_color',
@@ -646,7 +646,7 @@ function fusion_element_syntax_highlighter() {
 					'group'       => esc_attr__( 'Design', 'fusion-builder' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Border Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Controls the border color.', 'fusion-builder' ),
 					'param_name'  => 'border_color',

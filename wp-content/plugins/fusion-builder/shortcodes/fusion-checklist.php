@@ -340,7 +340,7 @@ if ( fusion_is_element_enabled( 'fusion_checklist' ) ) {
 								'description' => esc_html__( 'Controls the color of the checklist icon.', 'fusion-builder' ),
 								'id'          => 'checklist_icons_color',
 								'default'     => '#ffffff',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'checklist_circle' => array(
 								'label'       => esc_html__( 'Checklist Circle', 'fusion-builder' ),
@@ -443,7 +443,7 @@ function fusion_element_checklist() {
 					'description' => esc_attr__( 'Global setting for all list items, this can be overridden individually. Click an icon to select, click again to deselect.', 'fusion-builder' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Checklist Icon Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Global setting for all list items.  Controls the color of the checklist icon.', 'fusion-builder' ),
 					'param_name'  => 'iconcolor',

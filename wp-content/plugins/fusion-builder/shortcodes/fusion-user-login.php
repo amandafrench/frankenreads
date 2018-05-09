@@ -86,6 +86,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 						'button_fullwidth'      => $fusion_settings->get( 'button_span' ),
 						'caption'               => '',
 						'caption_color'         => '',
+						'form_field_layout'     => $fusion_settings->get( 'user_login_form_field_layout' ),
 						'form_background_color' => $fusion_settings->get( 'user_login_form_background_color' ),
 						'heading'               => '',
 						'heading_color'         => '',
@@ -93,6 +94,9 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 						'lost_password_link'    => '',
 						'redirection_link'      => '',
 						'register_link'         => '',
+						'show_labels'           => $fusion_settings->get( 'user_login_form_show_labels' ),
+						'show_placeholders'     => $fusion_settings->get( 'user_login_form_show_placeholders' ),
+						'show_remember_me'      => $fusion_settings->get( 'user_login_form_show_remember_me' ),
 						'text_align'            => $fusion_settings->get( 'user_login_text_align' ),
 
 						'disable_form'          => '', // Only for demo usage.
@@ -100,6 +104,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 				);
 
 				$defaults['main_container'] = ( $defaults['disable_form'] ) ? 'div' : 'form';
+				$defaults['label_class'] = ( 'yes' === $defaults['show_labels'] ) ? 'fusion-login-label' : 'fusion-hidden-content';
 
 				return $defaults;
 			}
@@ -130,25 +135,30 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 				if ( ! is_user_logged_in() ) {
 					$user_login = ( isset( $_GET['log'] ) ) ? $_GET['log'] : '';
 
-					$html .= '<h3 class="fusion-login-heading">' . $heading . '</h3>';
-					$html .= '<div class="fusion-login-caption">' . $caption . '</div>';
+					$html .= ( $heading ) ? '<h3 class="fusion-login-heading">' . $heading . '</h3>' : '';
+					$html .= ( $caption ) ? '<div class="fusion-login-caption">' . $caption . '</div>' : '';
 
 					$html .= '<' . $main_container . ' ' . FusionBuilder::attributes( 'login-shortcode-form' ) . '>';
 
 					// Get the success/error notices.
 					$html .= $this->render_notices( $action );
 
+					$html .= '<div class="fusion-login-fields">';
 					$html .= '<div class="fusion-login-input-wrapper">';
-					$html .= '<label class="fusion-hidden-content" for="user_login">' . esc_attr__( 'Username', 'fusion-builder' ) . '</label>';
-					$html .= '<input type="text" name="log" placeholder="' . esc_attr__( 'Username', 'fusion-builder' ) . '" value="' . esc_attr( $user_login ) . '" size="20" class="fusion-login-username input-text" id="user_login" />';
+					$html .= '<label class="' . $label_class . '" for="user_login">' . esc_attr__( 'Username', 'fusion-builder' ) . '</label>';
+					$placeholder = ( 'yes' === $show_placeholders ) ? ' placeholder="' . esc_attr__( 'Username', 'fusion-builder' ) . '"' : '';
+					$html .= '<input type="text" name="log"' . $placeholder . ' value="' . esc_attr( $user_login ) . '" size="20" class="fusion-login-username input-text" id="user_login" />';
 					$html .= '</div>';
 
 					$html .= '<div class="fusion-login-input-wrapper">';
-					$html .= '<label class="fusion-hidden-content" for="user_pass">' . esc_attr__( 'Password', 'fusion-builder' ) . '</label>';
-					$html .= '<input type="password" name="pwd" placeholder="' . esc_attr__( 'Password', 'fusion-builder' ) . '" value="" size="20" class="fusion-login-password input-text" id="user_pass" />';
+					$html .= '<label class="' . $label_class . '" for="user_pass">' . esc_attr__( 'Password', 'fusion-builder' ) . '</label>';
+					$placeholder = ( 'yes' === $show_placeholders ) ? ' placeholder="' . esc_attr__( 'Password', 'fusion-builder' ) . '"' : '';
+					$html .= '<input type="password" name="pwd"' . $placeholder . ' value="" size="20" class="fusion-login-password input-text" id="user_pass" />';
+					$html .= '</div>';
 					$html .= '</div>';
 
-					$html .= '<div class="fusion-login-submit-wrapperr">';
+					$html .= '<div class="fusion-login-additional-content">';
+					$html .= '<div class="fusion-login-submit-wrapper">';
 					$html .= '<button ' . FusionBuilder::attributes( 'login-shortcode-button' ) . '>' . esc_attr__( 'Log in', 'fusion-builder' ) . '</button>';
 
 					// Set the query string for successful password reset.
@@ -160,12 +170,18 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 					$html .= '</div>';
 
 					$html .= '<div class="fusion-login-links">';
+
+					if ( 'yes' === $show_remember_me ) {
+						$html .= '<label class="fusion-login-remember-me"><input name="rememberme" type="checkbox" id="rememberme" value="forever" />' . esc_html__( 'Remember Me', 'fusion-builder' ) . '</label>';
+					}
+
 					if ( '' !== $lost_password_link ) {
 						$html .= '<a class="fusion-login-lost-passowrd" target="_self" href="' . $lost_password_link . '">' . esc_attr__( 'Lost password?', 'fusion-builder' ) . '</a>';
 					}
 					if ( '' !== $register_link ) {
 						$html .= '<a class="fusion-login-register" target="_self" href="' . $register_link . '">' . esc_attr__( 'Register', 'fusion-builder' ) . '</a>';
 					}
+					$html .= '</div>';
 					$html .= '</div>';
 
 					$html .= '</' . $main_container . '>';
@@ -211,33 +227,38 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 
 				if ( ! is_user_logged_in() ) {
 					$html .= '<div ' . FusionBuilder::attributes( 'login-shortcode' ) . '>' . $styles;
-					$html .= '<h3 class="fusion-login-heading">' . $heading . '</h3>';
-					$html .= '<div class="fusion-login-caption">' . $caption . '</div>';
+					$html .= ( $heading ) ? '<h3 class="fusion-login-heading">' . $heading . '</h3>' : '';
+					$html .= ( $caption ) ? '<div class="fusion-login-caption">' . $caption . '</div>' : '';
 
 					$html .= '<' . $main_container . ' ' . FusionBuilder::attributes( 'login-shortcode-form' ) . '>';
 
 					// Get the success/error notices.
 					$html .= $this->render_notices( $action );
 
+					$html .= '<div class="fusion-login-fields">';
 					$html .= '<div class="fusion-login-input-wrapper">';
-					$html .= '<label class="fusion-hidden-content" for="user_login">' . esc_attr__( 'Username', 'fusion-builder' ) . '</label>';
-					$html .= '<input type="text" name="user_login" placeholder="' . esc_attr__( 'Username', 'fusion-builder' ) . '" value="" size="20" class="fusion-login-username input-text" id="user_login" />';
+					$html .= '<label class="' . $label_class . '" for="user_login">' . esc_attr__( 'Username', 'fusion-builder' ) . '</label>';
+					$placeholder = ( 'yes' === $show_placeholders ) ? ' placeholder="' . esc_attr__( 'Username', 'fusion-builder' ) . '"' : '';
+					$html .= '<input type="text" name="user_login"' . $placeholder . ' value="" size="20" class="fusion-login-username input-text" id="user_login" />';
 					$html .= '</div>';
 
 					$html .= '<div class="fusion-login-input-wrapper">';
-					$html .= '<label class="fusion-hidden-content" for="user_pass">' . esc_attr__( 'Email', 'fusion-builder' ) . '</label>';
-					$html .= '<input type="text" name="user_email" placeholder="' . esc_attr__( 'Email', 'fusion-builder' ) . '" value="" size="20" class="fusion-login-email input-text" id="user_email" />';
+					$html .= '<label class="' . $label_class . '" for="user_pass">' . esc_attr__( 'Email', 'fusion-builder' ) . '</label>';
+					$placeholder = ( 'yes' === $show_placeholders ) ? ' placeholder="' . esc_attr__( 'Email', 'fusion-builder' ) . '"' : '';
+					$html .= '<input type="text" name="user_email"' . $placeholder . ' value="" size="20" class="fusion-login-email input-text" id="user_email" />';
 					$html .= '</div>';
 
 					/* Only added as honeypot for spambots. */
-					$html .= '<div class="fusion-login-input-wrapper">';
+					$html .= '<div class="fusion-login-input-wrapper fusion-hidden">';
 					$html .= '<label class="fusion-hidden-content" for="confirm_email">Please leave this field empty</label>';
 					$html .= '<input class="fusion-hidden-content" type="text" name="confirm_email" id="confirm_email" value="">';
 					$html .= '</div>';
+					$html .= '</div>';
 
-					$html .= '<p class="fusion-login-input-wrapper">' . esc_attr__( 'Registration confirmation will be e-mailed to you.', 'fusion-builder' ) . '</p>';
+					$html .= '<div class="fusion-login-additional-content">';
+					$html .= '<p class="fusion-login-registration-confirm fusion-login-input-wrapper">' . esc_attr__( 'Registration confirmation will be e-mailed to you.', 'fusion-builder' ) . '</p>';
 
-					$html .= '<div class="fusion-login-submit-wrapperr">';
+					$html .= '<div class="fusion-login-submit-wrapper">';
 					$html .= '<button ' . FusionBuilder::attributes( 'login-shortcode-button' ) . '>' . esc_attr__( 'Register', 'fusion-builder' ) . '</button>';
 
 					// Set the query string for successful password reset.
@@ -251,6 +272,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 						)
 					);
 
+					$html .= '</div>';
 					$html .= '</div>';
 
 					$html .= '</' . $main_container . '>';
@@ -288,8 +310,8 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 				if ( ! is_user_logged_in() ) {
 
 					$html .= '<div ' . FusionBuilder::attributes( 'login-shortcode' ) . '>' . $styles;
-					$html .= '<h3 class="fusion-login-heading">' . $heading . '</h3>';
-					$html .= '<div class="fusion-login-caption">' . $caption . '</div>';
+					$html .= ( $heading ) ? '<h3 class="fusion-login-heading">' . $heading . '</h3>' : '';
+					$html .= ( $caption ) ? '<div class="fusion-login-caption">' . $caption . '</div>' : '';
 
 					$html .= '<' . $main_container . ' ' . FusionBuilder::attributes( 'login-shortcode-form' ) . '>';
 
@@ -299,11 +321,12 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 					$html .= '<p class="fusion-login-input-wrapper">' . esc_attr__( 'Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.', 'fusion-builder' ) . '</p>';
 
 					$html .= '<div class="fusion-login-input-wrapper">';
-					$html .= '<label class="fusion-hidden-content" for="user_login">' . esc_attr__( 'Username or Email', 'fusion-builder' ) . '</label>';
-					$html .= '<input type="text" name="user_login" placeholder="' . esc_attr__( 'Username or Email', 'fusion-builder' ) . '" value="" size="20" class="fusion-login-username input-text" id="user_login" />';
+					$html .= '<label class="' . $label_class . '" for="user_login">' . esc_attr__( 'Username or Email', 'fusion-builder' ) . '</label>';
+					$placeholder = ( 'yes' === $show_placeholders ) ? ' placeholder="' . esc_attr__( 'Username or Email', 'fusion-builder' ) . '"' : '';
+					$html .= '<input type="text" name="user_login"' . $placeholder . 'value="" size="20" class="fusion-login-username input-text" id="user_login"/>';
 					$html .= '</div>';
 
-					$html .= '<div class="fusion-login-submit-wrapperr">';
+					$html .= '<div class="fusion-login-submit-wrapper">';
 					$html .= '<button ' . FusionBuilder::attributes( 'login-shortcode-button' ) . '>' . esc_attr__( 'Reset Password', 'fusion-builder' ) . '</button>';
 
 					// Set the query string for successful password reset.
@@ -752,7 +775,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 
 				$attr = fusion_builder_visibility_atts(
 					$this->args['hide_on_mobile'], array(
-						'class' => 'fusion-login-box fusion-login-box-' . $this->login_counter . ' fusion-login-box-' . $this->args['action'] . ' fusion-login-align-' . $this->args['text_align'],
+						'class' => 'fusion-login-box fusion-login-box-' . $this->login_counter . ' fusion-login-box-' . $this->args['action'] . ' fusion-login-align-' . $this->args['text_align'] . ' fusion-login-field-layout-' . $this->args['form_field_layout'],
 					)
 				);
 
@@ -840,7 +863,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 			 */
 			public function add_styling() {
 
-				global $fusion_library, $fusion_settings, $dynamic_css_helpers;
+				global $fusion_library, $fusion_settings, $dynamic_css_helpers, $content_media_query;
 
 				$main_elements = apply_filters( 'fusion_builder_element_classes', array( '.fusion-login-box' ), '.fusion-login-box' );
 
@@ -851,6 +874,18 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 					$elements = $dynamic_css_helpers->map_selector( $main_elements, '.fusion-login-box-submit' );
 					$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['float'] = 'none';
 				}
+
+				$elements = array(
+					'.fusion-login-box.fusion-login-field-layout-floated .fusion-login-fields',
+					'.fusion-login-box.fusion-login-field-layout-floated.fusion-login-align-textflow.fusion-login-box-login .fusion-login-additional-content',
+					'.fusion-login-box.fusion-login-field-layout-floated.fusion-login-align-textflow.fusion-login-box-register .fusion-login-additional-content',
+				);
+
+				$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['display'] = 'block';
+
+				$css[ $content_media_query ]['.fusion-login-box.fusion-login-field-layout-floated .fusion-login-links']['margin'] = '0 -10px';
+				$css[ $content_media_query ]['.fusion-login-box.fusion-login-field-layout-floated.fusion-login-align-textflow.fusion-login-box-register .fusion-login-registration-confirm']['margin'] = '0 0 20px 0';
+				$css[ $content_media_query ]['.fusion-login-box.fusion-login-field-layout-floated.fusion-login-align-textflow.fusion-login-box-login .fusion-login-submit-wrapper']['margin-bottom'] = '20px';
 
 				return $css;
 
@@ -881,6 +916,50 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 								'choices'     => array(
 									'textflow' => esc_html__( 'Text Flow', 'fusion-builder' ),
 									'center'   => esc_html__( 'Center', 'fusion-builder' ),
+								),
+							),
+							'user_login_form_field_layout' => array(
+								'label'       => esc_html__( 'User Login Form Field Layout', 'fusion-builder' ),
+								'description' => __( 'Choose if form fields should be stacked and full width, or if they should be floated. <strong>IMPORTANT:</strong> This option does only work for the login and the register form.', 'fusion-builder' ),
+								'id'          => 'user_login_form_field_layout',
+								'default'     => 'stacked',
+								'type'        => 'radio-buttonset',
+								'choices'     => array(
+									'stacked' => esc_html__( 'Stacked', 'fusion-builder' ),
+									'floated' => esc_html__( 'Floated', 'fusion-builder' ),
+								),
+							),
+							'user_login_form_show_labels' => array(
+								'label'       => esc_html__( 'User Login Show Labels', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls if the form field labels should be shown.', 'fusion-builder' ),
+								'id'          => 'user_login_form_show_labels',
+								'default'     => 'no',
+								'type'        => 'radio-buttonset',
+								'choices'     => array(
+									'yes' => esc_html__( 'Yes', 'fusion-builder' ),
+									'no'   => esc_html__( 'No', 'fusion-builder' ),
+								),
+							),
+							'user_login_form_show_placeholders' => array(
+								'label'       => esc_html__( 'User Login Show Placeholders', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls if the form field placeholders should be shown.', 'fusion-builder' ),
+								'id'          => 'user_login_form_show_placeholders',
+								'default'     => 'yes',
+								'type'        => 'radio-buttonset',
+								'choices'     => array(
+									'yes' => esc_html__( 'Yes', 'fusion-builder' ),
+									'no'   => esc_html__( 'No', 'fusion-builder' ),
+								),
+							),
+							'user_login_form_show_remember_me' => array(
+								'label'       => esc_html__( 'User Login Show Remember Me Checkbox', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls if the rember me checkbox should be displayed in the login form.', 'fusion-builder' ),
+								'id'          => 'user_login_form_show_remember_me',
+								'default'     => 'no',
+								'type'        => 'radio-buttonset',
+								'choices'     => array(
+									'yes' => esc_html__( 'Yes', 'fusion-builder' ),
+									'no'   => esc_html__( 'No', 'fusion-builder' ),
 								),
 							),
 							'user_login_form_background_color' => array(
@@ -942,6 +1021,18 @@ function fusion_element_login() {
 					'default'     => '',
 				),
 				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Form Field Layout', 'fusion-builder' ),
+					'description' => esc_attr__( 'Choose if form fields should be stacked and full width, or if they should be floated.', 'fusion-builder' ),
+					'param_name'  => 'form_field_layout',
+					'value'       => array(
+						''        => esc_attr__( 'Default', 'fusion-builder' ),
+						'stacked' => esc_attr__( 'Stacked', 'fusion-builder' ),
+						'floated' => esc_attr__( 'Floated', 'fusion-builder' ),
+					),
+					'default'     => '',
+				),
+				array(
 					'type'        => 'textfield',
 					'heading'     => esc_attr__( 'Heading', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a heading text.', 'fusion-builder' ),
@@ -950,7 +1041,7 @@ function fusion_element_login() {
 					'placeholder' => true,
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Heading Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a heading color.', 'fusion-builder' ),
 					'param_name'  => 'heading_color',
@@ -972,7 +1063,7 @@ function fusion_element_login() {
 					'placeholder' => true,
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Caption Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a caption color.', 'fusion-builder' ),
 					'param_name'  => 'caption_color',
@@ -984,6 +1075,30 @@ function fusion_element_login() {
 							'operator' => '!=',
 						),
 					),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Show Labels', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls if the form field labels should be shown.', 'fusion-builder' ),
+					'param_name'  => 'show_labels',
+					'value'       => array(
+						''    => esc_attr__( 'Default', 'fusion-builder' ),
+						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+						'no'  => esc_attr__( 'No', 'fusion-builder' ),
+					),
+					'default'     => '',
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Show Placeholders', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls if the form field placeholders should be shown.', 'fusion-builder' ),
+					'param_name'  => 'show_placeholders',
+					'value'       => array(
+						''    => esc_attr__( 'Default', 'fusion-builder' ),
+						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+						'no'  => esc_attr__( 'No', 'fusion-builder' ),
+					),
+					'default'     => '',
 				),
 				array(
 					'type'        => 'radio_button_set',
@@ -1006,12 +1121,24 @@ function fusion_element_login() {
 					'default'     => $fusion_settings->get( 'user_login_form_background_color' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Link Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a link color.', 'fusion-builder' ),
 					'param_name'  => 'link_color',
 					'value'       => '',
 					'default'     => $fusion_settings->get( 'link_color' ),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Show Remember Me Checkbox', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls if the rember me checkbox should be displayed in the login form.', 'fusion-builder' ),
+					'param_name'  => 'show_remember_me',
+					'value'       => array(
+						''    => esc_attr__( 'Default', 'fusion-builder' ),
+						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+						'no'  => esc_attr__( 'No', 'fusion-builder' ),
+					),
+					'default'     => '',
 				),
 				array(
 					'type'        => 'link_selector',
@@ -1100,7 +1227,7 @@ function fusion_element_lost_password() {
 					'placeholder' => true,
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Heading Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a heading color.', 'fusion-builder' ),
 					'param_name'  => 'heading_color',
@@ -1122,7 +1249,7 @@ function fusion_element_lost_password() {
 					'placeholder' => true,
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Caption Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a caption color.', 'fusion-builder' ),
 					'param_name'  => 'caption_color',
@@ -1134,6 +1261,30 @@ function fusion_element_lost_password() {
 							'operator' => '!=',
 						),
 					),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Show Labels', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls if the form field labels should be shown.', 'fusion-builder' ),
+					'param_name'  => 'show_labels',
+					'value'       => array(
+						''    => esc_attr__( 'Default', 'fusion-builder' ),
+						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+						'no'  => esc_attr__( 'No', 'fusion-builder' ),
+					),
+					'default'     => '',
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Show Placeholders', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls if the form field placeholders should be shown.', 'fusion-builder' ),
+					'param_name'  => 'show_placeholders',
+					'value'       => array(
+						''    => esc_attr__( 'Default', 'fusion-builder' ),
+						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+						'no'  => esc_attr__( 'No', 'fusion-builder' ),
+					),
+					'default'     => '',
 				),
 				array(
 					'type'        => 'radio_button_set',
@@ -1156,7 +1307,7 @@ function fusion_element_lost_password() {
 					'default'     => $fusion_settings->get( 'user_login_form_background_color' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Link Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a link color.', 'fusion-builder' ),
 					'param_name'  => 'link_color',
@@ -1228,6 +1379,18 @@ function fusion_element_register() {
 					'default'     => '',
 				),
 				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Form Field Layout', 'fusion-builder' ),
+					'description' => esc_attr__( 'Choose if form fields should be stacked and full width, or if they should be floated.', 'fusion-builder' ),
+					'param_name'  => 'form_field_layout',
+					'value'       => array(
+						''        => esc_attr__( 'Default', 'fusion-builder' ),
+						'stacked' => esc_attr__( 'Stacked', 'fusion-builder' ),
+						'floated' => esc_attr__( 'Floated', 'fusion-builder' ),
+					),
+					'default'     => '',
+				),
+				array(
 					'type'        => 'textfield',
 					'heading'     => esc_attr__( 'Heading', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a heading text.', 'fusion-builder' ),
@@ -1236,7 +1399,7 @@ function fusion_element_register() {
 					'placeholder' => true,
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Heading Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a heading color.', 'fusion-builder' ),
 					'param_name'  => 'heading_color',
@@ -1258,7 +1421,7 @@ function fusion_element_register() {
 					'placeholder' => true,
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Caption Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a caption color.', 'fusion-builder' ),
 					'param_name'  => 'caption_color',
@@ -1270,6 +1433,30 @@ function fusion_element_register() {
 							'operator' => '!=',
 						),
 					),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Show Labels', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls if the form field labels should be shown.', 'fusion-builder' ),
+					'param_name'  => 'show_labels',
+					'value'       => array(
+						''    => esc_attr__( 'Default', 'fusion-builder' ),
+						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+						'no'  => esc_attr__( 'No', 'fusion-builder' ),
+					),
+					'default'     => '',
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Show Placeholders', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls if the form field placeholders should be shown.', 'fusion-builder' ),
+					'param_name'  => 'show_placeholders',
+					'value'       => array(
+						''    => esc_attr__( 'Default', 'fusion-builder' ),
+						'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+						'no'  => esc_attr__( 'No', 'fusion-builder' ),
+					),
+					'default'     => '',
 				),
 				array(
 					'type'        => 'radio_button_set',
@@ -1292,7 +1479,7 @@ function fusion_element_register() {
 					'default'     => $fusion_settings->get( 'user_login_form_background_color' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Link Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose a link color.', 'fusion-builder' ),
 					'param_name'  => 'link_color',

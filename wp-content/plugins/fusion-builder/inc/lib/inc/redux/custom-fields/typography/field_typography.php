@@ -479,7 +479,7 @@ if ( ! class_exists( 'FusionReduxFramework_typography' ) ) {
 				echo '<div class="picker-wrapper">';
 				echo '<label>' . __( 'Font Color', 'Avada' ) . '</label>';
 				echo '<div id="' . $this->field['id'] . '_color_picker" class="colorSelector typography-color"><div style="background-color: ' . $this->value['color'] . '"></div></div>';
-				echo '<input data-default-color="' . $default . '" class="fusionredux-color fusionredux-typography-color ' . $this->field['class'] . '" original-title="' . __( 'Font color', 'Avada' ) . '" id="' . $this->field['id'] . '-color" name="' . $this->field['name'] . $this->field['name_suffix'] . '[color]' . '" type="text" value="' . $this->value['color'] . '" data-id="' . $this->field['id'] . '" />';
+				echo '<input data-default-color="' . $default . '" class="fusionredux-color fusionredux-typography-color ' . $this->field['class'] . '" original-title="' . __( 'Font color', 'Avada' ) . '" id="' . $this->field['id'] . '-color" name="' . $this->field['name'] . $this->field['name_suffix'] . '[color]' . '" type="text" data-alpha="true" value="' . $this->value['color'] . '" data-id="' . $this->field['id'] . '" />';
 				echo '</div>';
 			}
 

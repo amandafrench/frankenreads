@@ -448,7 +448,7 @@ if ( fusion_is_element_enabled( 'fusion_chart' ) ) {
 								'label'       => esc_attr__( 'Chart Gridline Color', 'fusion-builder' ),
 								'description' => esc_attr__( 'Controls the color of the chart background grid lines and values.', 'fusion-builder' ),
 								'id'          => 'chart_gridline_color',
-								'default'     => 'rgba(0, 0, 0, 0.1)',
+								'default'     => 'rgba(0,0,0,0.1)',
 								'type'        => 'color-alpha',
 							),
 						),

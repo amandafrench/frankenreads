@@ -718,7 +718,7 @@ function fusion_element_accordion() {
 					'type'        => 'range',
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Toggle Icon Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Set the color of icon in toggle box.', 'fusion-builder' ),
 					'param_name'  => 'icon_color',

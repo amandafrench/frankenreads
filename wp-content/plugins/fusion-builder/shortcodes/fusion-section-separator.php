@@ -643,7 +643,7 @@ function fusion_element_section_separator() {
 					),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Icon Color', 'fusion-builder' ),
 					'description' => '',
 					'param_name'  => 'icon_color',
@@ -682,7 +682,7 @@ function fusion_element_section_separator() {
 					),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => __( 'Border Color', 'fusion-builder' ),
 					'heading'     => esc_attr__( 'Border Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Controls the border color. ', 'fusion-builder' ),

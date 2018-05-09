@@ -460,7 +460,7 @@ if ( fusion_is_element_enabled( 'fusion_sharing' ) ) {
 								'description' => esc_html__( 'Controls the color of the tagline text in the social sharing boxes.', 'fusion-builder' ),
 								'id'          => 'sharing_box_tagline_text_color',
 								'default'     => '#333333',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'social_bg_color' => array(
 								'label'       => esc_html__( 'Sharing Box Background Color', 'fusion-builder' ),
@@ -513,7 +513,7 @@ if ( fusion_is_element_enabled( 'fusion_sharing' ) ) {
 								'description' => esc_html__( 'Controls the color of the social icons in the social sharing boxes. This color will be used for all social icons.', 'fusion-builder' ),
 								'id'          => 'sharing_social_links_icon_color',
 								'default'     => '#bebdbd',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 								'required'    => array(
 									array(
 										'setting'  => 'sharing_social_links_color_type',
@@ -694,7 +694,7 @@ function fusion_element_sharing_box() {
 					'value'       => esc_attr__( 'Share This Story, Choose Your Platform!', 'fusion-builder' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Tagline Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Controls the text color. Leave blank for theme option selection.', 'fusion-builder' ),
 					'param_name'  => 'tagline_color',

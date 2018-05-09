@@ -154,20 +154,6 @@ function fusion_builder_available_animations() {
 }
 
 /**
- * Check value type ( % or px ).
- *
- * @since 1.0
- * @param string $value The value we'll be checking.
- * @return string
- */
-function fusion_builder_check_value( $value ) {
-	if ( strpos( $value, '%' ) === false && strpos( $value, 'px' ) === false ) {
-		$value = $value . 'px';
-	}
-	return $value;
-}
-
-/**
  * Returns array of layerslider slide groups.
  *
  * @since 1.0
@@ -950,11 +936,11 @@ function fusion_builder_textdomain_strings() {
 		'legend_label'                                => esc_attr__( 'Legend Label', 'fusion-builder' ),
 		'x_axis_label'                                => esc_attr__( 'X Axis Label', 'fusion-builder' ),
 		'chart_bg_color_title'                        => esc_attr__( 'Chart Background Color', 'fusion-builder' ),
-		'chart_bg_color_desc'                         => sprintf( __( 'Controls the background of the chart. %s', 'fusion-builder' ), $fusion_settings->get_default_description( 'chart_bg_color', '', 'color-alpha', '', '' ) ),
+		'chart_bg_color_desc'                         => sprintf( __( 'Controls the background of the chart. %s', 'fusion-builder' ), $fusion_settings->get_default_description( 'chart_bg_color', '', 'color-alpha', true, '' ) ),
 		'chart_axis_text_color_title'                 => esc_attr__( 'Chart Axis Text Color', 'fusion-builder' ),
-		'chart_axis_text_color_desc'                  => sprintf( __( 'Controls the text color of the x-axis and y-axis. %s', 'fusion-builder' ), $fusion_settings->get_default_description( 'chart_axis_text_color', '', 'color-alpha', '', '' ) ),
+		'chart_axis_text_color_desc'                  => sprintf( __( 'Controls the text color of the x-axis and y-axis. %s', 'fusion-builder' ), $fusion_settings->get_default_description( 'chart_axis_text_color', '', 'color-alpha', true, '' ) ),
 		'chart_gridline_color_title'                  => esc_attr__( 'Chart Gridline Color', 'fusion-builder' ),
-		'chart_gridline_color_desc'                   => sprintf( __( 'Controls the color of the chart background grid lines and values. %s', 'fusion-builder' ), $fusion_settings->get_default_description( 'chart_gridline_color', '', 'color-alpha', '', '' ) ),
+		'chart_gridline_color_desc'                   => sprintf( __( 'Controls the color of the chart background grid lines and values. %s', 'fusion-builder' ), $fusion_settings->get_default_description( 'chart_gridline_color', '', 'color-alpha', true, '' ) ),
 		'chart_padding_title'                         => esc_attr__( 'Chart Padding Options', 'fusion-builder' ),
 		'chart_padding_desc'                          => esc_attr__( 'Controls the top/right/bottom/left padding of the chart.', 'fusion-builder' ),
 		'chart_options'                               => esc_attr__( 'Chart Options', 'fusion-builder' ),
@@ -1735,6 +1721,10 @@ function fusion_builder_map_descriptions( $shortcode, $param ) {
 		'theme-option' => 'button_border_width',
 		'type' => 'range',
 	);
+	$shortcode_option_map['text_transform']['fusion_button'] = array(
+		'theme-option' => 'button_text_transform',
+		'type' => 'select',
+	);
 
 	$shortcode_option_map['button_fullwidth']['fusion_login'] = array(
 		'theme-option' => 'button_span',
@@ -1748,7 +1738,6 @@ function fusion_builder_map_descriptions( $shortcode, $param ) {
 		'theme-option' => 'button_span',
 		'type' => 'yesno',
 	);
-
 	$shortcode_option_map['button_size']['fusion_tagline_box'] = array(
 		'theme-option' => 'button_size',
 		'type' => 'select',
@@ -2517,18 +2506,48 @@ function fusion_builder_map_descriptions( $shortcode, $param ) {
 		'theme-option' => 'user_login_text_align',
 		'type' => 'select',
 	);
+	$shortcode_option_map['form_field_layout']['fusion_login'] = array(
+		'theme-option' => 'user_login_form_field_layout',
+		'type' => 'select',
+	);
 	$shortcode_option_map['form_background_color']['fusion_login'] = array(
 		'theme-option' => 'user_login_form_background_color',
 		'reset' => true,
 	);
+	$shortcode_option_map['show_labels']['fusion_login'] = array(
+		'theme-option' => 'user_login_form_show_labels',
+		'type' => 'select',
+	);
+	$shortcode_option_map['show_placeholders']['fusion_login'] = array(
+		'theme-option' => 'user_login_form_show_placeholders',
+		'type' => 'select',
+	);
+	$shortcode_option_map['show_remember_me']['fusion_login'] = array(
+		'theme-option' => 'user_login_form_show_remember_me',
+		'type' => 'select',
+	);
+
 	$shortcode_option_map['text_align']['fusion_register'] = array(
 		'theme-option' => 'user_login_text_align',
+		'type' => 'select',
+	);
+	$shortcode_option_map['form_field_layout']['fusion_register'] = array(
+		'theme-option' => 'user_login_form_field_layout',
 		'type' => 'select',
 	);
 	$shortcode_option_map['form_background_color']['fusion_register'] = array(
 		'theme-option' => 'user_login_form_background_color',
 		'reset' => true,
 	);
+	$shortcode_option_map['show_labels']['fusion_register'] = array(
+		'theme-option' => 'user_login_form_show_labels',
+		'type' => 'select',
+	);
+	$shortcode_option_map['show_placeholders']['fusion_register'] = array(
+		'theme-option' => 'user_login_form_show_placeholders',
+		'type' => 'select',
+	);
+
 	$shortcode_option_map['text_align']['fusion_lost_password'] = array(
 		'theme-option' => 'user_login_text_align',
 		'type' => 'select',
@@ -2536,6 +2555,14 @@ function fusion_builder_map_descriptions( $shortcode, $param ) {
 	$shortcode_option_map['form_background_color']['fusion_lost_password'] = array(
 		'theme-option' => 'user_login_form_background_color',
 		'reset' => true,
+	);
+	$shortcode_option_map['show_labels']['fusion_lost_password'] = array(
+		'theme-option' => 'user_login_form_show_labels',
+		'type' => 'select',
+	);
+	$shortcode_option_map['show_placeholders']['fusion_lost_password'] = array(
+		'theme-option' => 'user_login_form_show_placeholders',
+		'type' => 'select',
 	);
 	$shortcode_option_map['link_color']['fusion_login'] = array( 'theme-option' => 'link_color' );
 	$shortcode_option_map['link_color']['fusion_register'] = array( 'theme-option' => 'link_color' );
@@ -3794,3 +3821,18 @@ function fusion_builder_wp_link_query_args( $query ) {
 }
 
 add_filter( 'wp_link_query_args', 'fusion_builder_wp_link_query_args' );
+
+/**
+ * Determines if a color needs adjusting or not.
+ *
+ * @since 1.6
+ * @param string $color The color.
+ * @return bool
+ */
+function fusion_color_needs_adjustment( $color ) {
+	if ( '#ffffff' === $color || 'transparent' === $color || '0' === Fusion_Color::new_color( $color )->alpha ) {
+		return true;
+	}
+
+	return false;
+}

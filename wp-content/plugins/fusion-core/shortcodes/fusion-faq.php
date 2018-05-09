@@ -822,7 +822,7 @@ function fusion_element_faq() {
 					'type'        => 'range',
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'FAQ Item Icon Color', 'fusion-core' ),
 					'description' => esc_attr__( 'Set the color of icon in toggle box.', 'fusion-core' ),
 					'param_name'  => 'icon_color',

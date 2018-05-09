@@ -461,6 +461,10 @@ if ( ! class_exists( 'FusionSC_Column' ) ) {
 
 			} else {
 
+				if ( $animation['class'] && 'liftup' === $hover_type ) {
+					$classes .= ' fusion-column-hover-type-liftup';
+				}
+
 				// Background color fallback for IE and Edge.
 				$additional_bg_color_span = '';
 				// @codingStandardsIgnoreLine
@@ -951,7 +955,7 @@ function fusion_element_column() {
 					'group'       => esc_attr__( 'Design', 'fusion-builder' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Border Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Controls the border color.', 'fusion-builder' ),
 					'param_name'  => 'border_color',
@@ -1011,7 +1015,7 @@ function fusion_element_column() {
 					'type'             => 'dimension',
 					'remove_from_atts' => true,
 					'heading'          => esc_attr__( 'Padding', 'fusion-builder' ),
-					'description'      => esc_attr__( 'In pixels (px), ex: 10px.', 'fusion-builder' ),
+					'description'      => esc_attr__( 'Enter values including any valid CSS unit, ex: 4%.', 'fusion-builder' ),
 					'param_name'       => 'padding',
 					'value'            => array(
 						'padding_top'    => '',
@@ -1025,7 +1029,7 @@ function fusion_element_column() {
 					'type'             => 'dimension',
 					'remove_from_atts' => true,
 					'heading'          => esc_attr__( 'Margin', 'fusion-builder' ),
-					'description'      => esc_attr__( 'In pixels (px), ex: 10px.', 'fusion-builder' ),
+					'description'      => esc_attr__( 'Enter values including any valid CSS unit, ex: 4%.', 'fusion-builder' ),
 					'param_name'       => 'dimension_margin',
 					'value'            => array(
 						'margin_top'    => '',

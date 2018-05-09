@@ -1480,14 +1480,14 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 								'description' => esc_html__( 'Controls the color of the title font.', 'fusion-builder' ),
 								'id'          => 'content_box_title_color',
 								'default'     => '#333333',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'content_box_body_color' => array(
 								'label'       => esc_html__( 'Content Box Body Font Color', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the color of the body font.', 'fusion-builder' ),
 								'id'          => 'content_box_body_color',
 								'default'     => '#747474',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'content_box_icon_size' => array(
 								'label'       => esc_html__( 'Content Box Icon Font Size', 'fusion-builder' ),
@@ -1506,7 +1506,7 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 								'description' => esc_html__( 'Controls the color of the content box icon.', 'fusion-builder' ),
 								'id'          => 'content_box_icon_color',
 								'default'     => '#ffffff',
-								'type'        => 'color',
+								'type'        => 'color-alpha',
 							),
 							'content_box_icon_circle' => array(
 								'label'       => esc_html__( 'Content Box Icon Background', 'fusion-builder' ),
@@ -1757,7 +1757,7 @@ function fusion_element_content_boxes() {
 					'value'       => '',
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Title Font Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Controls the color of the title font.  ex: #000.', 'fusion-builder' ),
 					'param_name'  => 'title_color',
@@ -1765,7 +1765,7 @@ function fusion_element_content_boxes() {
 					'default'     => $fusion_settings->get( 'content_box_title_color' ),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Body Font Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Controls the color of the body font.  ex: #000.', 'fusion-builder' ),
 					'param_name'  => 'body_color',
@@ -1824,7 +1824,7 @@ function fusion_element_content_boxes() {
 					'default'     => 'no',
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Icon Color', 'fusion-builder' ),
 					'description' => '',
 					'param_name'  => 'iconcolor',
@@ -2362,7 +2362,7 @@ function fusion_element_content_box() {
 					),
 				),
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Icon Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Controls the color of the icon. ', 'fusion-builder' ),
 					'param_name'  => 'iconcolor',

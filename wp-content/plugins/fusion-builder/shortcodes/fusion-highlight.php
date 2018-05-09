@@ -123,7 +123,7 @@ function fusion_element_highlight() {
 			'generator_only' => true,
 			'params'         => array(
 				array(
-					'type'        => 'colorpicker',
+					'type'        => 'colorpickeralpha',
 					'heading'     => esc_attr__( 'Highlight Color', 'fusion-builder' ),
 					'description' => esc_attr__( 'Pick a highlight color.', 'fusion-builder' ),
 					'param_name'  => 'color',
