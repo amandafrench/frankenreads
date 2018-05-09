@@ -68,21 +68,31 @@ private $model;
             <?php settings_fields('wdi_all_settings'); ?>
             <?php do_settings_sections('settings_wdi'); ?>
 							<div id="wdi_options_page_buttons_wrapper">
-							 <div id="wdi_reset_access_token" class="button button-secondary"><?php _e("Reset Access Token and Username","wd-instagram-feed")?></div>          
+        <div id="wdi_reset_access_token"
+             class="button button-secondary"><?php _e("Reset Primary Access Token", "wd-instagram-feed") ?></div>
 							 <?php submit_button(); ?>
 							</div>
 		</form>
-	            <style>
-								<?php if(!isset($wdi_options['wdi_access_token']) || empty($wdi_options['wdi_access_token'])){ ?>
-								body.instagram-feed-wd_page_wdi_settings table:nth-of-type(2){
-									display:none;
-								}
-                body.toplevel_page_wdi_settings table:nth-of-type(2){
-                  display:none;
-                }
+        <style>
+            <?php if(!isset($wdi_options['wdi_access_token']) || empty($wdi_options['wdi_access_token'])){ ?>
+            body.instagram-feed-wd_page_wdi_settings table:nth-of-type(2) {
+                display: none;
+            }
 
-                <?php } ?>
-	           </style>
+            body.toplevel_page_wdi_settings table:nth-of-type(2) {
+                display: none;
+            }
+
+            body.instagram-feed-wd_page_wdi_settings table:nth-of-type(3) {
+                display: none;
+            }
+
+            body.toplevel_page_wdi_settings table:nth-of-type(3) {
+                display: none;
+            }
+
+            <?php } ?>
+        </style>
 	            <script>
 		 	        jQuery(document).ready(function(){
 
@@ -139,7 +149,6 @@ private $model;
 		 	            });
 		 	        });
 	         	</script>
-
 		<?php
 	}
 }

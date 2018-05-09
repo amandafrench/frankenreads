@@ -186,7 +186,6 @@ class WDILibrary {
     }
   }
 
-
   public static function message($message, $type) {
     return '<div style="width:99%"><div class="' . $type . '"><p><strong>' . $message . '</strong></p></div></div>';
   }
@@ -389,6 +388,7 @@ class WDILibrary {
     <input type="hidden" id="search_or_not" name="search_or_not" value="<?php echo ((isset($_POST['search_or_not'])) ? esc_html($_POST['search_or_not']) : ''); ?>"/>
     <?php
   }
+
   public static function get_pagination_page($items_county, $x, $y){
     switch ($y) {
       case 1:
@@ -721,6 +721,7 @@ class WDILibrary {
         wdi_spider_frontend_ajax('<?php echo $form_id; ?>', '<?php echo $current_view; ?>', '<?php echo $id; ?>', '<?php echo $album_gallery_id; ?>', '', '<?php echo $type; ?>', 0, '', '', load_more);
       }
       jQuery(document).ready(function() {
+
         jQuery('.<?php echo $first_page; ?>').on('click', function() {
           wdi_spider_page_<?php echo $current_view; ?>(this, <?php echo $page_number; ?>, -2);
         });
@@ -976,6 +977,7 @@ class WDILibrary {
     }
   }
 
+
   public static function keep_only_self_user($feed_row){
     global $wdi_options;
 
@@ -986,10 +988,10 @@ class WDILibrary {
 
     $users = json_decode($feed_row['feed_users']);
     $new_users_list = array();
+    $users_list = self::get_users_list();
 
     foreach($users as $i=>$user) {
-
-      if(substr($user->username,0,1) === '#' || $user->username === $wdi_options['wdi_user_name']){
+        if(substr($user->username,0,1) === '#' || $user->username === $wdi_options['wdi_user_name'] || !empty($users_list[$user->username])){
         $new_users_list[] = $user;
       }
     }
@@ -1000,7 +1002,6 @@ class WDILibrary {
 
     return $feed_row;
   }
-
 
   /*
   * @return color if valid color, otherwise return false
@@ -1083,7 +1084,6 @@ class WDILibrary {
         }
   }
 
-
   public static function get_page_link($data){
     $page = WDILibrary::get('page');
     $url = add_query_arg(array( 'page' => $page, $data ), admin_url('admin.php'));
@@ -1114,6 +1114,45 @@ class WDILibrary {
     return json_encode($data);
   }
 
+  public static function add_auth_button($text = ""){
+    $new_url = urlencode(admin_url('admin.php?page=wdi_settings')) . '&response_type=token';
+    ?>
+      <a onclick="document.cookie = 'wdi_autofill=true'" class="wdi_sign_in_button"
+         href="https://api.instagram.com/oauth/authorize/?client_id=54da896cf80343ecb0e356ac5479d9ec&scope=basic+public_content&redirect_uri=http://api.web-dorado.com/instagram/?return_url=<?php echo $new_url; ?>">
+        <?php echo $text; ?>
+      </a>
+    <?php
+  }
+
+  public static function get_users_list(){
+    global $wdi_options;
+    $users_list = array();
+    if(!empty($wdi_options['wdi_authenticated_users_list'])){
+      $users_list = json_decode($wdi_options['wdi_authenticated_users_list'], true);
+      if(!is_array($users_list)){
+        $users_list = array();
+      }
+    }
+    return $users_list;
+  }
+
+  public static function get_user_access_token($users){
+    global $wdi_options;
+    $users_list = self::get_users_list();
+
+    foreach($users as $user) {
+      if(substr($user->username, 0, 1) === '#') {
+        continue;
+      }
+
+      if(!empty($users_list[$user->username])) {
+        return $users_list[$user->username]['access_token'];
+      }
+
+    }
+
+    return $wdi_options['wdi_access_token'];
+  }
   ////////////////////////////////////////////////////////////////////////////////////////
   // Private Methods                                                                    //
   ////////////////////////////////////////////////////////////////////////////////////////

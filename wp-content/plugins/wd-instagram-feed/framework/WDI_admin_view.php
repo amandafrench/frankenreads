@@ -18,6 +18,8 @@ class WDI_admin_view{
     $this->params=$this->merge_params($defaults,$initial_params);     
   }
  
+
+
   /**
   * Displays a link like button
   *
@@ -208,6 +210,29 @@ class WDI_admin_view{
    }
 
 
+  public function users_list($element){
+    global $wdi_options;
+
+    $readonly = isset($element['readonly']) ? 'readonly="' . esc_attr($element['readonly']) . '"' : '';
+    $input_size = isset($element["input_size"]) ? $element["input_size"] : $this->params["input_size"];
+    $optionname = WDI_OPT.'[' .$element['name']. ']';
+
+    ?>
+      <div class="wdwt_param" id="wdwt_wrap_<?php echo $element['name']; ?>">
+          <div class="block">
+            <?php WDILibrary::add_auth_button(''); ?>
+              <div class="wdi_more_token_template" style="display: none;">
+                  <input type="text" name="<?php echo $optionname . '[access_token][]'; ?>" class="wdi_more_access_token" disabled/>
+                  <input type="text" name="<?php echo $optionname . '[user_name][]'; ?>" class="wdi_more_user_name" disabled/>
+                  <input type="text" name="<?php echo $optionname . '[user_id][]'; ?>" class="wdi_more_user_id" disabled/>
+              </div>
+          </div>
+      </div>
+      <div style="text-align: right;font-style: italic;">
+          <p>Log out from the previous account before signing up.</p>
+      </div>
+    <?php
+  }
 
 
   /**
@@ -219,7 +244,6 @@ class WDI_admin_view{
   */
   
   public function input($element, $context = 'option', $opt_val = '', $meta=array()){
-      
       $readonly = isset($element['readonly'])? 'readonly="'.esc_attr($element['readonly']).'"' : '';
   
       if($context== 'meta'){

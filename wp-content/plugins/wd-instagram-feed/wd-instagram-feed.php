@@ -3,7 +3,7 @@
 Plugin Name: WD Instagram Feed
 Plugin URI: https://web-dorado.com/products/wordpress-instagram-feed-wd.html
 Description: WD Instagram Feed is a user-friendly tool for displaying user or hashtag-based feeds on your website. You can create feeds with one of the available layouts. It allows displaying image metadata, open up images in lightbox, download them and even share in social networking websites.
-Version: 1.3.1
+Version: 1.3.2
 Author: WebDorado
 Author URI: https://web-dorado.com/wordpress-plugins-bundle.html
 License: GPLv2 or later
@@ -21,7 +21,7 @@ define("WDI_META", "_".WDI_VAR."_meta");
 //define("wdi",'wdi');
 define('WDI_FEED_TABLE','wdi_feeds');
 define('WDI_THEME_TABLE','wdi_themes');
-define('WDI_VERSION','1.3.1');
+define('WDI_VERSION','1.3.2');
 define('WDI_IS_PRO','false');
 $wdi_minify = ((isset($_GET['wdi_no_minify']) && $_GET['wdi_no_minify'] == "true") ? false : true);
 define('WDI_MINIFY', $wdi_minify);
@@ -193,6 +193,10 @@ add_filter('wdi_sanitize_options', 'wdi_create_sample_feed');
 
 function wdi_create_sample_feed($new_options) {
 
+  if(empty($new_options['wdi_authenticated_users_list'])){
+    $new_options['wdi_authenticated_users_list'] = '[]';
+  }
+
   //submit wdi options
   if (!isset($_POST['option_page']) || $_POST['option_page'] != 'wdi_all_settings') {
     return $new_options;
@@ -279,11 +283,13 @@ function wdi_register_settings(){
   $settings = wdi_get_settings();
 
   //adding configure section
-  add_settings_section('wdi_configure_section',__('', "wd-instagram-feed"),'wdi_configure_section_callback','settings_wdi');
+  add_settings_section('wdi_configure_section',"",'wdi_configure_section_callback','settings_wdi');
+
+  //multiple accounts
+  add_settings_section('wdi_multiple_accounts_section',"",'wdi_multiple_accounts_section_callback','settings_wdi');
   
   //adding customize section
-
-  add_settings_section('wdi_customize_section', __('', "wd-instagram-feed"), 'wdi_customize_section_callback', 'settings_wdi');
+  add_settings_section('wdi_customize_section',"",'wdi_customize_section_callback','settings_wdi');
 
   //adding settings fileds form getted settings
   foreach($settings as $setting_name => $setting){
@@ -327,13 +333,13 @@ function WDI_instagram_menu() {
   if((!isset($wdi_options['wdi_access_token']) || empty($wdi_options['wdi_access_token'])) && $wdi_uninstall) {
     if( get_option( "wdi_subscribe_done" ) == 1 ) {
       $parent_slug = "wdi_feeds";
-      $settings_page = add_menu_page(__('Instagram Feed WD', "wd-instagram-feed"), __('Instagram Feed WD', "wd-instagram-feed"), $min_feeds_capability, 'wdi_settings', 'WDI_instagram_settings_page', $menu_icon);
+      $settings_page = add_menu_page(__('Instagram Feed WD', "wd-instagram-feed"), 'Instagram Feed WD', $min_feeds_capability, 'wdi_settings', 'WDI_instagram_settings_page', $menu_icon);
       add_submenu_page("wdi_settings", __('Settings', "wd-instagram-feed"), __('Settings', "wd-instagram-feed"), 'manage_options', 'wdi_settings', 'WDI_instagram_settings_page');
     }
   }else{
     if( get_option( "wdi_subscribe_done" ) == 1 ){
       $parent_slug = "wdi_feeds";
-      $settings_page = add_menu_page(__('Instagram Feed WD',"wd-instagram-feed"), __('Instagram Feed WD',"wd-instagram-feed"),$min_feeds_capability,'wdi_feeds','WDI_instagram_feeds_page',$menu_icon);
+      $settings_page = add_menu_page(__('Instagram Feed WD', "wd-instagram-feed"), 'Instagram Feed WD', $min_feeds_capability, 'wdi_feeds', 'WDI_instagram_feeds_page', $menu_icon);
     }
 
 

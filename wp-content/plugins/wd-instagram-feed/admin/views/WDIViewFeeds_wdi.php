@@ -667,25 +667,37 @@ public function genarateFeedViews()
   }
 
 
-  public function display_feed_users($feed_row)
-  {
+  public function display_feed_users($feed_row){
     global $wdi_options;
 
     $users = isset($feed_row['feed_users']) ? $feed_row['feed_users'] : "";
-
     $users = json_decode($users);
+
     if ($users === null) {
       $users = array();
     }
 
-
+    $token = WDILibrary::get_user_access_token($users);
     ?>
     <script>
       jQuery(document).ready(function ()
       {
+
+          var users_list = JSON.parse(wdi_options.wdi_authenticated_users_list);
+          if (typeof users_list !== 'object') {
+              users_list = {};
+          }
+
+          var usersnames = [wdi_options.wdi_user_name];
+          for(var i in users_list){
+              usersnames.push(users_list[i].user_name);
+          }
+
+        wdi_controller.users_list = users_list;
+        wdi_controller.usersnames = usersnames;
         wdi_controller.instagram = new WDIInstagram();
         wdi_controller.feed_users = [];
-        wdi_controller.instagram.addToken(<?php echo '"' . $wdi_options['wdi_access_token'] . '"'; ?>);
+        wdi_controller.instagram.addToken(<?php echo '"' . $token . '"'; ?>);
 
         wdi_controller.updateFeaturedImageSelect(<?php echo '"' . $wdi_options['wdi_user_name'] . '"'; ?>, 'add', 'selected');
 

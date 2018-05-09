@@ -1,4 +1,5 @@
 jQuery(document).ready(function() {
+
   jQuery("#wdi_reset_cache").click(function (e) {
     jQuery(".wdi_reset_cache_success").remove();
     e.preventDefault();
@@ -18,7 +19,8 @@ jQuery(document).ready(function() {
         }
       }
     });
-  })
+
+  });
 
 	/*Feeds page*/
 	wdi_controller.bindSaveFeedEvent();
@@ -35,6 +37,7 @@ jQuery(document).ready(function() {
 
 
 	if(jQuery('body').hasClass('instagram-feed-wd_page_wdi_settings')){
+        wdi_multiple_accounts_option_controller();
 		wdi_advanced_option_controller();
 	}
 
@@ -42,6 +45,7 @@ jQuery(document).ready(function() {
     wdi_show_hide_sections(jQuery(this));
   });
   wdi_show_hide_sections(false);
+
   function wdi_show_hide_sections(element) {
     if(element===false){
       var wdi_hide_show_sections_list = {
@@ -115,13 +119,52 @@ jQuery(document).ready(function() {
       element.removeClass("wdi_section_close");
       element.addClass("wdi_section_open");
     }
+    }
+
+});
+
+function wdi_multiple_accounts_option_controller(){
+    var $table = jQuery(jQuery('#wdi_user_id').closest('form').find('.form-table').get(1));
+    $table.addClass('wdi_multiple_accounts_section');
+    var html = '';
+    var users_list = JSON.parse(wdi_options.wdi_authenticated_users_list);
+
+    var index = 0;
+    for(var i in users_list){
+
+        html += "<tr data-multiple-account='" + index + "'>";
+        html += "<th>Access Token</th>";
+        html += '<td><input type="text" name="wdi_instagram_options[wdi_authenticated_users_list][access_token][]" size="53" required="" value="' + users_list[i].access_token + '"></td>';
+        html += "</tr>";
+
+        html += "<tr data-multiple-account='" + index + "' class='wdi_username_tr'>";
+        html += "<th>Username</th>";
+        html += '<td>' +
+			'<div class="wdi_input_wrapper"><input type="text" name="wdi_instagram_options[wdi_authenticated_users_list][user_name][]" size="53" required="" value="' + users_list[i].user_name + '"></div>' +
+			'<div class="wdi_remove_auth_user">Delete</div>' +
+			'</td>';
+        html += '<input type="hidden" name="wdi_instagram_options[wdi_authenticated_users_list][user_id][]" size="53" required="" value="' + users_list[i].user_id + '">';
+        html += "</tr>";
+        index++;
+	}
+
+    $table.append(html);
+
+
+    jQuery('.wdi_remove_auth_user').on('click', function (e) {
+        e.preventDefault();
+
+        var data = jQuery(this).closest('.wdi_username_tr').data('multiple-account');
+        jQuery(this).closest('.wdi_multiple_accounts_section').find('tr[data-multiple-account="' + data + '"]').remove();
+
+        return false;
+    });
 
 }
-});
 
 function wdi_advanced_option_controller() {
 
-	var $table = jQuery(jQuery('#wdi_user_id').closest('form').find('.form-table').get(1));
+	var $table = jQuery(jQuery('#wdi_user_id').closest('form').find('.form-table').get(2));
 	$table.addClass('wdi_advanced_option wdi_advanced_option_close');
 	var tr = "<tr class='wdi_advanced_option_head'><th>ADVANCED OPTIONS</th><td><div class='wdi_advanced_option_icon'></div></td></tr>";
 	$tr = jQuery(tr);
@@ -137,6 +180,7 @@ function wdi_advanced_option_controller() {
 		}
 	});
 }
+
 
 function wdi_controller() {};
 
@@ -167,7 +211,12 @@ wdi_controller.apiRedirected = function() {
 	}
 	var access_token = arr.join('.');
 	jQuery(document).ready(function() {
+        if (wdi_options.wdi_access_token === "") {
 		jQuery('#wdi_access_token').attr('value', access_token);
+        } else {
+            jQuery('.wdi_more_token_template .wdi_more_access_token').prop('disabled', false);
+            jQuery('.wdi_more_token_template .wdi_more_access_token').attr('value', access_token);
+        }
 	});
 
 	//if access token is getted then overwrite it
@@ -186,8 +235,20 @@ wdi_controller.apiRedirected = function() {
 wdi_controller.getUserInfo = function(access_token) {
 	this.instagram.getSelfInfo({
 		success: function(response) {
+
+
+            if (wdi_options.wdi_access_token === "") {
 			jQuery('#wdi_user_name').attr('value', response['data']['username']);
 			jQuery('#wdi_user_id').attr('value', response['data']['id']);
+            } else {
+                jQuery('.wdi_more_token_template .wdi_more_user_name').prop('disabled', false);
+                jQuery('.wdi_more_token_template .wdi_more_user_id').prop('disabled', false);
+
+                jQuery('.wdi_more_token_template .wdi_more_user_name').attr('value', response['data']['username']);
+                jQuery('.wdi_more_token_template .wdi_more_user_id').attr('value', response['data']['id']);
+            }
+
+
 			jQuery(document).trigger('wdi_settings_filled');
 		}
 	})
@@ -494,10 +555,28 @@ wdi_controller.makeInstagramUserRequest = function(user_input, ignoreConfirm) {
 	switch (input_type) {
 		case 'user':
 			{
-                if (user_input !== wdi_options.wdi_user_name) {
-                    alert("You can add only your username ( " + wdi_options.wdi_user_name + " )");
+
+                if(_this.feed_users.length > 0){
+                	for(var i in _this.feed_users){
+                		if(_this.feed_users[i].username[0] !== '#'){
+                            alert("You can add only one username");
+                            return false;
+						}
+					}
+				}
+
+				var token = '';
+                if(user_input === wdi_options.wdi_user_name){
+					token = wdi_options.wdi_access_token;
+				}else if (typeof _this.users_list[user_input] !== 'undefined'){
+                    token = _this.users_list[user_input].access_token;
+				}else{
+                    alert("You can add only your usernames ( " + _this.usersnames.join(', ') + " )");
                     return;
                 }
+
+				this.instagram.resetTokens();
+				this.instagram.addToken(token);
 
                 this.instagram.getSelfInfo({
                     success: function(response) {

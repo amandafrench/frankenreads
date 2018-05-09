@@ -72,13 +72,18 @@ class WDIViewImageBrowser_view{
 	public function pass_feed_data_to_js(){
 		global $wdi_options;
 		$feed_row = $this->model->get_feed_row();
+
+    $users = isset($feed_row['feed_users']) ? json_decode($feed_row['feed_users']) : null;
+    if($users === null) {
+      $users = array();
+    }
+
 		$wdi_feed_counter = $this->model->wdi_feed_counter;
-		$feed_row['access_token'] = $wdi_options['wdi_access_token'];
+    $feed_row['access_token'] = WDILibrary::get_user_access_token($users);
 		$feed_row['wdi_feed_counter'] = $wdi_feed_counter;
 
-
 		wp_localize_script("wdi_frontend", 'wdi_feed_'.$wdi_feed_counter,array('feed_row'=>$feed_row,'data'=>array(),'usersData'=>array(),'dataCount'=>0));
-        wp_localize_script("wdi_frontend", 'wdi_theme_' . $this->model->theme_row['id'], $this->model->theme_row);
+		wp_localize_script("wdi_frontend", 'wdi_theme_' . $this->model->theme_row['id'], $this->model->theme_row);
 		wp_localize_script("wdi_frontend", 'wdi_front',array('feed_counter'=>$wdi_feed_counter));
 	}
 

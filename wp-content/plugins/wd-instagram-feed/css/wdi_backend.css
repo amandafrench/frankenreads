@@ -291,6 +291,58 @@ border: 1px solid rgb(185, 185, 185);
 #login_with_instagram .wdi_edit_default_feed_button{
 	background-image: url('../images/edit_feed_button.png');
 	float: left;
+
+}
+
+#wdwt_wrap_wdi_authenticated_users_list{
+	display: inline-block;
+	width: 100%;
+}
+
+#wdwt_wrap_wdi_authenticated_users_list .wdi_sign_in_button{
+	background-image: url(../images/multiple_accounts.png);
+	background-repeat: no-repeat;
+	background-position: left top;
+	width: 228px;
+	height: 36px;
+	display: inline-block;
+	float: right;
+	margin-top: 2px;
+	padding-bottom: 5px;
+}
+
+.wdi_multiple_accounts_section tr:not(:first-child) th{
+	font-style: italic;
+}
+
+.wdi_multiple_accounts_section tr:not(:first-child) th,
+.wdi_multiple_accounts_section tr:not(:first-child) td{
+	padding-top: 2px;
+	padding-bottom: 0;
+	font-weight: 400;
+}
+
+.wdi_multiple_accounts_section tr:first-child th{
+	padding-bottom: 20px;
+}
+
+.wdi_multiple_accounts_section .wdi_username_tr td{
+	padding-bottom: 5px !important;
+}
+
+.wdi_multiple_accounts_section .wdi_input_wrapper{
+	width: 100%;
+	display: inline-block;
+}
+
+.wdi_multiple_accounts_section .wdi_remove_auth_user{
+	display: inline-block;
+	float: right;
+	color: #0075A5;
+	cursor: pointer;
+	font-weight: 300;
+	font-size: 14px;
+	margin-right: 3px;
 }
 
 #wdi_options_page_buttons_wrapper .submit {
@@ -1703,10 +1755,11 @@ border: 1px solid rgb(185, 185, 185);
 #wdi_reset_cache{
 	float: right;
 }
-body.toplevel_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(3){
-	display: none;
-}
-body.toplevel_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(4){
+
+
+body.toplevel_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(3),
+body.toplevel_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(4),
+body.toplevel_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(5){
 	display: none;
 }
 

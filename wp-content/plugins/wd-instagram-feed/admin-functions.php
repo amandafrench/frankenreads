@@ -499,10 +499,9 @@ function wdi_configure_section_callback(){
   ?>
   <div id="login_with_instagram">
 
-    <?php if (!isset($options['wdi_access_token']) || $options['wdi_access_token'] == ''){ ?>
-      <a onclick="document.cookie = 'wdi_autofill=true'" class="wdi_sign_in_button"
-         href="https://api.instagram.com/oauth/authorize/?client_id=54da896cf80343ecb0e356ac5479d9ec&scope=basic+public_content&redirect_uri=http://api.web-dorado.com/instagram/?return_url=<?php echo $new_url; ?>"></a>
-    <?php }
+    <?php if (!isset($options['wdi_access_token']) || $options['wdi_access_token'] == ''){
+        WDILibrary::add_auth_button();
+    }
     if (isset($options['wdi_access_token']) && $options['wdi_access_token'] != '' && $default_feed_permalink !== null) { ?>
       <a target="_blank" href="<?php echo $default_feed_permalink; ?>" class="wdi_default_feed_button"></a>
     <?php }
@@ -527,10 +526,13 @@ function wdi_configure_section_callback(){
   <?php
 }
 
-
 //Callback function for Settings Customize Section
-function wdi_customize_section_callback()
-{
+function wdi_customize_section_callback(){
+
+}
+
+//Callback function for Multiple accounts Section
+function wdi_multiple_accounts_section_callback(){
 
 }
 
@@ -565,6 +567,10 @@ function wdi_field_callback($element)
       $wdi_formBuilder->link_button($setting);
       break;
     }
+    case 'users_list':{
+      $wdi_formBuilder->users_list($setting);
+      break;
+    }
   }
 }
 
@@ -597,10 +603,54 @@ function wdi_sanitize_options($input)
         $output[$key] = esc_js(str_replace(array("\n", "\r"), "", $input[$key]));
         break;
       }
+          case 'users_list': {
+            global $wdi_options;
+
+            $users_list = array();
+            $option = $input['wdi_authenticated_users_list'];
+            //$saved_user_list = json_decode($wdi_options['wdi_authenticated_users_list'], true);
+
+            if(!empty($option['access_token'])) {
+
+              $user_count = count($option['access_token']);
+              for($i = 0; $i < $user_count; $i++) {
+
+                if(!empty($option['access_token'][$i]) &&
+                  !empty($option['user_name'][$i]) &&
+                  !empty($option['user_id'][$i])) {
+
+                  $user_name = $option['user_name'][$i];
+
+                  if($wdi_options['wdi_user_name'] === $user_name) {
+                    continue;
+                  }
+
+                  $users_list[$user_name] = array(
+                    'access_token' => $option['access_token'][$i],
+                    'user_name' => $user_name,
+                    'user_id' => $option['user_id'][$i],
+                  );
+                }
+
+              }
+            }
+
+            if(isset($users_list[$input['wdi_user_name']])){
+                unset($users_list[$input['wdi_user_name']]);
+            }
+
+            $output[$key] = json_encode($users_list);
+            break;
+          }
       default: {
         if (isset($input[$key])) {
+                    if(is_array($input[$key])){
+                      $output[$key] = strip_tags( stripslashes( json_encode($input[ $key ] ) ));
+                    }else{
           $output[$key] = strip_tags(stripslashes($input[$key]));
         }
+
+                }
         break;
       }
     }
@@ -619,6 +669,7 @@ function wdi_get_settings()
 
     'wdi_transient_time' => array('name'=>'wdi_transient_time','sanitize_type'=>'number','field_or_not'=>'','type'=>'input', 'input_type'=>'number', 'section'=>'wdi_configure_section', 'title'=>__('Check for new posts every (min)',"wd-instagram-feed"),'default'=>'' ,'value'=>60),
     'wdi_reset_cache' => array('name'=>'wdi_reset_cache','sanitize_type'=>'','field_or_not'=>'','type'=>'link_button', 'section'=>'wdi_configure_section', 'href'=>admin_url( 'admin.php?page=wdi_settings' ), 'title'=>__('Reset cache with Instagram data',"wd-instagram-feed"),'default'=>'', 'value'=>'Reset cache'),
+    'wdi_authenticated_users_list' => array('name' => 'wdi_authenticated_users_list','sanitize_type'=>'users_list','input_size'=>'53','type'=>'users_list','default'=>'[]','field_or_not'=>'field','section'=>'wdi_multiple_accounts_section','title'=>__('Multiple Instagram accounts ?',"wd-instagram-feed")),
 
     'wdi_custom_css' => array('name' => 'wdi_custom_css', 'sanitize_type' => 'css', 'type' => 'textarea', 'section' => 'wdi_customize_section', 'field_or_not' => 'field', 'default' => '', 'title' => __('Custom CSS', "wd-instagram-feed")),
     'wdi_custom_js' => array('name' => 'wdi_custom_js', 'sanitize_type' => 'css', 'type' => 'textarea', 'section' => 'wdi_customize_section', 'field_or_not' => 'field', 'default' => '', 'title' => __('Custom JavaScript', "wd-instagram-feed")),
@@ -649,6 +700,11 @@ function wdi_set_options_defaults()
   $options = wp_parse_args($options, $db_options);
   if (isset($options['wdi_plugin_uninstalled']) && $options['wdi_plugin_uninstalled'] == 'true') {
     $options['wdi_plugin_uninstalled'] = 'false';
+  }
+
+
+  if(empty($options['wdi_authenticated_users_list'])){
+    $options['wdi_authenticated_users_list'] = '[]';
   }
 
   add_option(WDI_OPT, $options, '', 'yes');

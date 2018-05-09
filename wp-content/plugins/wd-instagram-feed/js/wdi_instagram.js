@@ -137,6 +137,11 @@ function WDIInstagram(args)
     }
   }
 
+  this.resetTokens = function ()
+  {
+      _this.access_tokens = [];
+  }
+
   /**
    * Gets recent media based on tagname
    *

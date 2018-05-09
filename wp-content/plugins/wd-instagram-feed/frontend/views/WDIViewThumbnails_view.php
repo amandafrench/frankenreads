@@ -122,8 +122,15 @@ class WDIViewThumbnails_view
   {
     global $wdi_options;
     $feed_row = $this->model->get_feed_row();
+
+    $users = isset($feed_row['feed_users']) ? json_decode($feed_row['feed_users']) : null;
+    if($users === null) {
+      $users = array();
+    }
+
+    $feed_row = $this->model->get_feed_row();
     $wdi_feed_counter = $this->model->wdi_feed_counter;
-    $feed_row['access_token'] = $wdi_options['wdi_access_token'];
+    $feed_row['access_token'] = WDILibrary::get_user_access_token($users);
     $feed_row['wdi_feed_counter'] = $wdi_feed_counter;
 
 
