@@ -619,7 +619,7 @@
         }
 
         // Show more preview stuff
-        if ( $( '#' + mainID ).hasClass( 'typography-initialized' ) ) {
+        if ( family && $( '#' + mainID ).hasClass( 'typography-initialized' ) ) {
             var isPreviewSize = $( '#' + mainID + ' .typography-preview' ).data( 'preview-size' );
 
             if ( isPreviewSize == '0' ) {

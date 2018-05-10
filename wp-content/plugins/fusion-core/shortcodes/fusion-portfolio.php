@@ -105,10 +105,10 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 
 				if ( ! isset( $args['portfolio_layout_padding'] ) ) {
 					$padding_values = array();
-					$padding_values['top']    = ( isset( $args['padding_top'] ) && '' !== $args['padding_top'] ) ? $args['padding_top'] : Fusion_Sanitize::size( $fusion_settings->get( 'portfolio_archive_layout_padding', 'top' ) );
-					$padding_values['right']  = ( isset( $args['padding_right'] ) && '' !== $args['padding_right'] ) ? $args['padding_right'] : Fusion_Sanitize::size( $fusion_settings->get( 'portfolio_archive_layout_padding', 'right' ) );
-					$padding_values['bottom'] = ( isset( $args['padding_bottom'] ) && '' !== $args['padding_bottom'] ) ? $args['padding_bottom'] : Fusion_Sanitize::size( $fusion_settings->get( 'portfolio_archive_layout_padding', 'bottom' ) );
-					$padding_values['left']   = ( isset( $args['padding_left'] ) && '' !== $args['padding_left'] ) ? $args['padding_left'] : Fusion_Sanitize::size( $fusion_settings->get( 'portfolio_archive_layout_padding', 'left' ) );
+					$padding_values['top']    = ( isset( $args['padding_top'] ) && '' !== $args['padding_top'] ) ? $args['padding_top'] : Fusion_Sanitize::size( $fusion_settings->get( 'portfolio_layout_padding', 'top' ) );
+					$padding_values['right']  = ( isset( $args['padding_right'] ) && '' !== $args['padding_right'] ) ? $args['padding_right'] : Fusion_Sanitize::size( $fusion_settings->get( 'portfolio_layout_padding', 'right' ) );
+					$padding_values['bottom'] = ( isset( $args['padding_bottom'] ) && '' !== $args['padding_bottom'] ) ? $args['padding_bottom'] : Fusion_Sanitize::size( $fusion_settings->get( 'portfolio_layout_padding', 'bottom' ) );
+					$padding_values['left']   = ( isset( $args['padding_left'] ) && '' !== $args['padding_left'] ) ? $args['padding_left'] : Fusion_Sanitize::size( $fusion_settings->get( 'portfolio_layout_padding', 'left' ) );
 
 					$args['portfolio_layout_padding'] = implode( ' ', $padding_values );
 				}
@@ -1240,7 +1240,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 								),
 							),
 							'portfolio_columns' => array(
-								'label'       => esc_attr__( 'Number of Columns', 'fusion-core' ),
+								'label'       => esc_attr__( 'Number of Columns', 'fusion-builder' ),
 								'description' => __( 'Set the number of columns per row. With Carousel layout this specifies the maximum amount of columns. <strong>IMPORTANT:</strong> Masonry layout does not work with 1 column.', 'fusion-core' ),
 								'id'          => 'portfolio_columns',
 								'default'     => 3,
