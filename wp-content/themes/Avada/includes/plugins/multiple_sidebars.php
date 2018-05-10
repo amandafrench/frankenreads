@@ -690,7 +690,14 @@ class Sidebar_Generator {
 	 */
 	public static function get_sidebars() {
 
-		return get_option( 'sbg_sidebars' );
+		$sidebars = get_option( 'sbg_sidebars', array() );
+
+		// Check needed in case empty string (as wrongly converted false) is stored in var.
+		if ( empty( $sidebars ) ) {
+			$sidebars = array();
+		}
+
+		return $sidebars;
 
 	}
 
