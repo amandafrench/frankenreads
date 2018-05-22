@@ -237,6 +237,27 @@
 				// WeePie Cookie Allow: to create cache if the cookie named wpca_consent is set
 				if($this->isPluginActive('wp-cookie-allow/wp-cookie-allow.php')){
 					$wpca_settings_general = get_option('wpca_settings_general', array());
+
+					// check if settings are indexed by multilang locales
+					if($this->isPluginActive('sitepress-multilingual-cms/sitepress.php')){
+						$wpml_current_language = apply_filters('wpml_current_language', false);
+
+						if($wpml_current_language){
+							$wpml_languages = apply_filters('wpml_active_languages', NULL, 'orderby=id&order=desc');
+
+							if(isset($wpml_languages[$wpml_current_language]) && isset($wpml_languages[$wpml_current_language]['default_locale'])) {
+								$wpml_locale = $wpml_languages[$wpml_current_language]['default_locale'];
+
+								if(isset($wpca_settings_general[$wpml_locale])) {
+									$wpca_settings_general = $wpca_settings_general[$wpml_locale];
+									if(!is_array($wpca_settings_general)) {
+										$wpca_settings_general = array();
+									}
+								}
+							}
+						}
+					}
+
 					$wpca_enabled = (isset($wpca_settings_general['general_plugin_status']) && $wpca_settings_general['general_plugin_status'] == '1');
 
 					if($wpca_enabled){
@@ -457,11 +478,7 @@
 						$value->content = trim($value->content);
 						$value->content = trim($value->content, "/");
 
-						if($value->prefix == "googleanalytics"){
-							if(preg_match("/utm_(source|medium|campaign|content|term)/i", $request_url)){
-								return true;
-							}
-						}else if(preg_match("/^(homepage|category|tag|post|page|archive|attachment)$/", $value->prefix)){
+						if(preg_match("/^(homepage|category|tag|post|page|archive|attachment)$/", $value->prefix)){
 							if(preg_match('/<\!--WPFC_PAGE_TYPE_'.$value->prefix.'-->/i', $buffer)){
 								return true;
 							} 
@@ -490,9 +507,13 @@
 								return true;
 							}
 						}
+					}else if($value->prefix == "googleanalytics"){
+						if(preg_match("/utm_(source|medium|campaign|content|term)/i", $request_url)){
+							return true;
+						}
 					}
 				}
-
+				
 			}
 			return false;
 		}

@@ -4,7 +4,7 @@ Donate link: http://profiles.wordpress.org/emrevona/
 Tags: cache, performance, wp-cache, total cache, super cache
 Requires at least: 3.3
 Tested up to: 4.9
-Stable tag: 0.8.7.9
+Stable tag: 0.8.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,12 @@ Wpfc does not support Wordpress Multisite yet.
 18. Database Cleanup
 
 == Changelog ==
+
+= 0.8.8.0 =
+* to rename the text on admin bar
+* to move cdn functions to speed up wp fastest cache
+* check if settings are indexed by multilang locales for WeePie Cookie Allow
+* <strong>[FEATURE]</strong> to add Cloudflare integration
 
 = 0.8.7.9 =
 * refactoring of delete_cache_of_term()

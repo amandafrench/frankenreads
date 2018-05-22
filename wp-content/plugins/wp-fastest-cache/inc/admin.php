@@ -1229,7 +1229,10 @@
 											"rynofitness.com.au",
 											"margotickets.com",
 											"berkatan.com",
+											"tiikr.com",
+											"enderwaffle.com",
 											"yenihobiler.com",
+											"weensu.dk",
 											"hobiblogu.com",
 											"pembeportakal.com",
 											"artclinic.org",
@@ -1898,11 +1901,21 @@
 				    				<div class="meta"></div>
 				    			</div>
 
-				    			<div wpfc-cdn-name="photon" class="int-item">
+				    			<div wpfc-cdn-name="photon" class="int-item int-item-left">
 				    				<img src="<?php echo plugins_url("wp-fastest-cache/images/photoncdn.png"); ?>" />
 				    				<div class="app">
 				    					<div style="font-weight:bold;font-size:14px;">CDN by Photon</div>
 				    					<p>Wordpress Content Delivery Network Services</p>
+				    				</div>
+				    				<div class="meta"></div>
+				    			</div>
+
+
+				    			<div wpfc-cdn-name="cloudflare" class="int-item">
+				    				<img style="border-radius:50px;" src="<?php echo plugins_url("wp-fastest-cache/images/cloudflare.png"); ?>" />
+				    				<div class="app">
+				    					<div style="font-weight:bold;font-size:14px;">CDN by Cloudflare</div>
+				    					<p>CDN, DNS, DDoS protection and security</p>
 				    				</div>
 				    				<div class="meta"></div>
 				    			</div>

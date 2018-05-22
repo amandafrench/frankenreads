@@ -584,7 +584,7 @@ span.gmw-resize-map-toggle.gmw-icon-resize-small {
 		padding: 5px;
 		background: 0 0;
 		border: 0;
-		font-size: 18px;
+		font-size: 16px;
 		color: #888;
 		line-height: 20px;
 	}
@@ -1797,6 +1797,13 @@ div.gmw-current-location-wrapper div.gmw-cl-form-wrapper .gmw-cl-address-input-w
 
 div.gmw-current-location-wrapper div.gmw-cl-form-wrapper .gmw-cl-form-trigger {
 	font-size: 11px;
+	text-decoration: none;
+}
+
+div.gmw-current-location-wrapper div.gmw-cl-form-wrapper .gmw-cl-clear-location-trigger {
+	font-size: 11px;
+	float: right;
+	text-decoration: none;
 }
 
 div.gmw-current-location-wrapper div.gmw-cl-form-wrapper .gmw-cl-locator-trigger,
