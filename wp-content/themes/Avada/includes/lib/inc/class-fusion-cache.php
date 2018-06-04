@@ -28,10 +28,12 @@ class Fusion_Cache {
 	 */
 	public function reset_all_caches( $delete_cache = array() ) {
 
-		$all_caches = apply_filters( 'reset_all_caches',
+		$all_caches = apply_filters(
+			'reset_all_caches',
 			array(
 				'compiled_assets'  => true,
 				'fb_pages'         => true,
+				'gfonts'           => true,
 				'demo_data'        => true,
 				'po_export'        => true,
 				'transients'       => true,
@@ -92,6 +94,14 @@ class Fusion_Cache {
 			$delete_fb_pages = $wp_filesystem->delete( $upload_dir['basedir'] . '/fusion-page-options-export', true, 'd' );
 		}
 
+		if ( ! class_exists( 'Fusion_Settings' ) ) {
+			include_once 'class-fusion-settings.php';
+		}
+		$settings = Fusion_Settings::get_instance();
+		if ( true === $delete_cache['gfonts'] && 'cdn' === $settings->get( 'gfonts_load_method' ) ) {
+			$delete_gfonts = $wp_filesystem->delete( $upload_dir['basedir'] . '/fusion-gfonts', true, 'd' );
+		}
+
 		if ( true === $delete_cache['transients'] ) {
 			// Delete transients with dynamic names.
 			$dynamic_transients = array(
@@ -104,11 +114,13 @@ class Fusion_Cache {
 			);
 			global $wpdb;
 			foreach ( $dynamic_transients as $transient ) {
-				// @codingStandardsIgnoreLine
-				$wpdb->query( $wpdb->prepare(
-					"DELETE FROM $wpdb->options WHERE option_name LIKE %s",
-					$transient
-				) );
+				// @codingStandardsIgnoreLine WordPress.VIP.DirectDatabaseQuery.NoCaching
+				$wpdb->query( // WPCS: cache ok.
+					$wpdb->prepare(
+						"DELETE FROM $wpdb->options WHERE option_name LIKE %s",
+						$transient
+					)
+				);
 			}
 
 			// Cleanup other transients.
@@ -227,7 +239,8 @@ class Fusion_Cache {
 		// If we made varniship, let it sail.
 		$purgeme = ( isset( $varniship ) && null !== $varniship ) ? $varniship : $p['host'];
 
-		wp_remote_request( 'http://' . $purgeme,
+		wp_remote_request(
+			'http://' . $purgeme,
 			array(
 				'method'  => 'PURGE',
 				'headers' => array(
@@ -249,7 +262,6 @@ class Fusion_Cache {
 		if ( is_multisite() && is_main_site() ) {
 			$sites = get_sites();
 			foreach ( $sites as $site ) {
-				// @codingStandardsIgnoreLine
 				switch_to_blog( $site->blog_id );
 				$this->reset_all_caches();
 				restore_current_blog();

@@ -336,6 +336,8 @@ class Avada_GoogleMap {
 			}
 		} // End if().
 
+		$html = apply_filters( 'privacy_script_embed', $html, 'gmaps', true, self::$args['width'], self::$args['height'] );
+
 		return $html;
 
 	}

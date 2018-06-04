@@ -235,7 +235,7 @@ class Avada_Breadcrumbs {
 
 				// Taxonomy Archives.
 				if ( is_tag() ) { // If we have a tag archive, add the tag prefix.
-					$this->html_markup .= $this->tag_archive_prefix;
+					$this->html_markup .= $this->tag_archive_prefix . ' ';
 				}
 				$this->html_markup .= $this->get_taxonomies();
 				$this->html_markup .= $this->get_breadcrumb_leaf_markup( 'term' );

@@ -58,12 +58,14 @@ do_action( 'avada_before_comments' );
 	$aria_req  = ( $req ) ? " aria-required='true'" : '';
 	$html_req  = ( $req ) ? " required='required'" : '';
 	$html5     = ( 'html5' === current_theme_supports( 'html5', 'comment-form' ) ) ? 'html5' : 'xhtml';
+	$consent   = empty( $commenter['comment_author_email'] ) ? '' : ' checked="checked"';
 
 	$fields = array();
 
-	$fields['author'] = '<div id="comment-input"><input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" placeholder="' . esc_html__( 'Name (required)', 'Avada' ) . '" size="30"' . $aria_req . $html_req . ' aria-label="' . esc_attr__( 'Name', 'Avada' ) . '"/>';
-	$fields['email']  = '<input id="email" name="email" ' . ( $html5 ? 'type="email"' : 'type="text"' ) . ' value="' . esc_attr( $commenter['comment_author_email'] ) . '" placeholder="' . esc_html__( 'Email (required)', 'Avada' ) . '" size="30" ' . $aria_req . $html_req . ' aria-label="' . esc_attr__( 'Email', 'Avada' ) . '"/>';
-	$fields['url']    = '<input id="url" name="url" ' . ( $html5 ? 'type="url"' : 'type="text"' ) . ' value="' . esc_attr( $commenter['comment_author_url'] ) . '" placeholder="' . esc_html__( 'Website', 'Avada' ) . '" size="30" aria-label="' . esc_attr__( 'URL', 'Avada' ) . '" /></div>';
+	$fields['author']  = '<div id="comment-input"><input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" placeholder="' . esc_html__( 'Name (required)', 'Avada' ) . '" size="30"' . $aria_req . $html_req . ' aria-label="' . esc_attr__( 'Name', 'Avada' ) . '"/>';
+	$fields['email']   = '<input id="email" name="email" ' . ( $html5 ? 'type="email"' : 'type="text"' ) . ' value="' . esc_attr( $commenter['comment_author_email'] ) . '" placeholder="' . esc_html__( 'Email (required)', 'Avada' ) . '" size="30" ' . $aria_req . $html_req . ' aria-label="' . esc_attr__( 'Email', 'Avada' ) . '"/>';
+	$fields['url']     = '<input id="url" name="url" ' . ( $html5 ? 'type="url"' : 'type="text"' ) . ' value="' . esc_attr( $commenter['comment_author_url'] ) . '" placeholder="' . esc_html__( 'Website', 'Avada' ) . '" size="30" aria-label="' . esc_attr__( 'URL', 'Avada' ) . '" /></div>';
+	$fields['cookies'] = '<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"' . $consent . ' /><label for="wp-comment-cookies-consent">' . esc_html__( 'Save my name, email, and website in this browser for the next time I comment.', 'Avada' ) . '</label></p>';
 
 	$comments_args = array(
 		'fields'               => apply_filters( 'comment_form_default_fields', $fields ),

@@ -318,7 +318,7 @@ class Fusion_FusionRedux {
 			return;
 		}
 
-		// Ability to hide sections via a filter. @codingStandardsIgnoreLine
+		// Ability to hide sections via a filter.
 		if ( 'fusion_options' === $this->args['option_name'] && 1 == apply_filters( 'fusion_builder_hide_theme_section', $section['id'] ) ) {
 			return;
 		}
@@ -351,7 +351,7 @@ class Fusion_FusionRedux {
 			'highlight'  => ( isset( $subsection['highlight'] ) ) ? $subsection['highlight'] : '',
 		);
 
-		// Ability to hide sub sections via a filter. @codingStandardsIgnoreLine
+		// Ability to hide sub sections via a filter.
 		if ( 'fusion_options' === $this->args['option_name'] && 1 == apply_filters( 'fusion_builder_hide_theme_sub_section', $subsection['id'] ) ) {
 			return;
 		}
@@ -406,7 +406,7 @@ class Fusion_FusionRedux {
 			return;
 		}
 
-		// Ability to hide options via a filter. @codingStandardsIgnoreLine
+		// Ability to hide options via a filter.
 		if ( 'fusion_options' === $this->args['option_name'] && 1 == apply_filters( 'fusion_builder_hide_theme_option', $field['id'] ) ) {
 			return;
 		}
@@ -493,7 +493,6 @@ class Fusion_FusionRedux {
 			case 'slider':
 				$not_in_pixels = apply_filters( 'fusion_options_sliders_not_in_pixels', array() );
 
-				// @codingStandardsIgnoreLine
 				if ( ! in_array( $field['id'], $not_in_pixels ) ) {
 					$args['subtitle'] = $args['subtitle'] . ' ' . esc_attr__( 'In pixels.', 'Avada' );
 				}
@@ -562,7 +561,6 @@ class Fusion_FusionRedux {
 			case 'media':
 				$args['type'] = 'media';
 				if ( isset( $field['default'] ) && ! is_array( $field['default'] ) ) {
-					// @codingStandardsIgnoreLine
 					$args['default'] = ( '' == $field['default'] ) ? array() : $args['default'] = array( 'url' => $field['default'] );
 				}
 				$this->media_fields[ $field['id'] ] = $field;
@@ -723,17 +721,15 @@ class Fusion_FusionRedux {
 		if ( isset( $soft_dependencies[ $field['id'] ] ) && 'custom' !== $field['type'] ) {
 
 			$option_type = esc_attr__( 'Page', 'Avada' );
-			// @codingStandardsIgnoreLine
 			if ( array_key_exists( $field['id'], $builder_soft_dependencies ) ) {
 				$option_type = esc_attr__( 'Builder', 'Avada' );
 			}
 
 			/* translators: The option type. */
-			$correlation_link = '  <span class="fusion-hover-description"><a href="https://theme-fusion.com/avada-doc/options/how-options-work/" target="_blank" rel="noopener noreferrer">' . sprintf( __( 'This is a dependent option that always stays visible because other %s Options can utilize it.', 'Avada' ), $option_type ) . '</a></span>';
+			$correlation_link = '  <span class="fusion-hover-description"><a href="https://theme-fusion.com/documentation/avada/options/how-options-work/" target="_blank" rel="noopener noreferrer">' . sprintf( __( 'This is a dependent option that always stays visible because other %s Options can utilize it.', 'Avada' ), $option_type ) . '</a></span>';
 
 			$args['subtitle'] .= $correlation_link;
 			foreach ( $args['required'] as $key => $requirement ) {
-				// @codingStandardsIgnoreLine
 				if ( isset( $requirement[0] ) && in_array( $requirement[0], $soft_dependencies[ $field['id'] ] ) ) {
 					unset( $args['required'][ $key ] );
 				}
@@ -745,13 +741,11 @@ class Fusion_FusionRedux {
 
 		// Only process required arguments if we don't pass "disable_dependencies={$args['id']}" in the URL.
 		if ( $_GET && isset( $_GET['disable_dependencies'] ) ) {
-			// @codingStandardsIgnoreLine
 			if ( $_GET['disable_dependencies'] == $args['id'] ) {
 				$args['required'] = array();
 			}
 			if ( ! empty( $args['required'] ) ) {
 				foreach ( $args['required'] as $key => $requirement ) {
-					// @codingStandardsIgnoreLine
 					if ( isset( $requirement['setting'] ) && $_GET['disable_dependencies'] == $requirement['setting'] ) {
 						unset( $args['required'][ $key ] );
 					}
@@ -1042,33 +1036,35 @@ class Fusion_FusionRedux {
 	 */
 	public function add_config() {
 
-		$args = apply_filters( 'fusion_fusionredux_args', array(
-			'opt_name'             => $this->key,
-			'display_name'         => $this->args['display_name'],
-			'display_version'      => $this->ver,
-			'allow_sub_menu'       => true,
-			'menu_title'           => $this->args['menu_title'],
-			'page_title'           => $this->args['page_title'],
-			'async_typography'     => true,
-			'admin_bar'            => false,
-			'admin_bar_icon'       => 'dashicons-portfolio',
-			'admin_bar_priority'   => 50,
-			'global_variable'      => $this->args['global_variable'],
-			'update_notice'        => true,
-			'page_parent'          => $this->args['page_parent'],
-			'page_slug'            => $this->args['page_slug'],
-			'menu_type'            => $this->args['menu_type'],
-			'page_permissions'     => $this->args['page_permissions'],
-			'dev_mode'             => false,
-			'customizer'           => false,
-			'default_show'         => false,
-			'templates_path'       => dirname( __FILE__ ) . '/redux/panel_templates/',
-			'show_options_object'  => false,
-			'forced_dev_mode_off'  => true,
-			'footer_credit'        => ' ',
-			'allow_tracking'       => false,
-			'ajax_save'            => FUSION_AJAX_SAVE,
-		) );
+		$args = apply_filters(
+			'fusion_fusionredux_args', array(
+				'opt_name'             => $this->key,
+				'display_name'         => $this->args['display_name'],
+				'display_version'      => $this->ver,
+				'allow_sub_menu'       => true,
+				'menu_title'           => $this->args['menu_title'],
+				'page_title'           => $this->args['page_title'],
+				'async_typography'     => true,
+				'admin_bar'            => false,
+				'admin_bar_icon'       => 'dashicons-portfolio',
+				'admin_bar_priority'   => 50,
+				'global_variable'      => $this->args['global_variable'],
+				'update_notice'        => true,
+				'page_parent'          => $this->args['page_parent'],
+				'page_slug'            => $this->args['page_slug'],
+				'menu_type'            => $this->args['menu_type'],
+				'page_permissions'     => $this->args['page_permissions'],
+				'dev_mode'             => false,
+				'customizer'           => false,
+				'default_show'         => false,
+				'templates_path'       => dirname( __FILE__ ) . '/redux/panel_templates/',
+				'show_options_object'  => false,
+				'forced_dev_mode_off'  => true,
+				'footer_credit'        => ' ',
+				'allow_tracking'       => false,
+				'ajax_save'            => FUSION_AJAX_SAVE,
+			)
+		);
 		if ( class_exists( 'FusionRedux' ) ) {
 			FusionRedux::setArgs( $this->key, $args );
 		}

@@ -86,6 +86,17 @@ function avada_options_section_extra( $sections ) {
 							),
 						),
 					),
+					'avatar_shape' => array(
+						'label'       => esc_html__( 'Avatar Shape', 'Avada' ),
+						'description' => esc_html__( 'Set the shape for Avatars used in comments, author info and other areas.', 'Avada' ),
+						'id'          => 'avatar_shape',
+						'default'     => 'square',
+						'type'        => 'radio-buttonset',
+						'choices'     => array(
+							'square' => esc_html__( 'Square', 'Avada' ),
+							'circle' => esc_html__( 'Circle', 'Avada' ),
+						),
+					),
 					'comments_pages' => array(
 						'label'       => esc_html__( 'Comments on Pages', 'Avada' ),
 						'description' => esc_html__( 'Turn on to allow comments on regular pages.', 'Avada' ),

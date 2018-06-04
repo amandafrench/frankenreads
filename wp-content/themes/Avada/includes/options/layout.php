@@ -160,6 +160,13 @@ function avada_options_section_layout( $sections ) {
 				'type'        => 'dimension',
 				'choices'     => array( 'px', '%' ),
 			),
+			'sidebar_gutter' => array(
+				'label'       => esc_html__( 'Single Sidebar Gutter', 'Avada' ),
+				'description' => esc_html__( 'Controls the space between the main content and a single sidebar.', 'Avada' ),
+				'id'          => 'sidebar_gutter',
+				'default'     => ( isset( $settings['site_width'] ) && false !== strpos( $settings['site_width'], 'px' ) ) ? '80px' : '6%',
+				'type'        => 'dimension',
+			),
 			'dual_sidebar_layouts_info' => array(
 				'label'           => esc_html__( 'Dual Sidebar Layouts', 'Avada' ),
 				'description'     => '',
@@ -181,6 +188,13 @@ function avada_options_section_layout( $sections ) {
 				'default'     => '21%',
 				'type'        => 'dimension',
 				'choices'     => array( 'px', '%' ),
+			),
+			'dual_sidebar_gutter' => array(
+				'label'       => esc_html__( 'Dual Sidebar Gutter', 'Avada' ),
+				'description' => esc_html__( 'Controls the space between the main content and the sidebar when dual sidebars are present.', 'Avada' ),
+				'id'          => 'dual_sidebar_gutter',
+				'default'     => ( isset( $settings['site_width'] ) && false !== strpos( $settings['site_width'], 'px' ) ) ? '40px' : '3%',
+				'type'        => 'dimension',
 			),
 		),
 	);

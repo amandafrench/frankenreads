@@ -474,7 +474,6 @@ if ( ! function_exists( 'fusion_redux_validate_color_rgba' ) ) {
 		$sanitized_value = Fusion_Sanitize::color( $value );
 		$return['value'] = $sanitized_value;
 
-		// @codingStandardsIgnoreLine
 		if ( $value != $sanitized_value ) {
 			$error = true;
 			$field['msg'] = sprintf(
@@ -510,7 +509,6 @@ if ( ! function_exists( 'fusion_redux_validate_color_hex' ) ) {
 		}
 		$return['value'] = $sanitized_value;
 
-		// @codingStandardsIgnoreLine
 		if ( $value != $sanitized_value ) {
 			$error = true;
 			$field['msg'] = sprintf(

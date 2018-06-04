@@ -286,10 +286,11 @@ class Avada_Blog {
 
 		if ( is_home() ) {
 			$theme_options_blog_var = 'blog_layout';
-		} elseif ( is_archive() || is_author() ) {
-			$theme_options_blog_var = 'blog_archive_layout';
 		} elseif ( is_search() ) {
 			$theme_options_blog_var = 'search_layout';
+		} elseif ( is_archive() || is_author() ) {
+			$theme_options_blog_var = 'blog_archive_layout';
+
 		}
 
 		return str_replace( ' ', '-', strtolower( Avada()->settings->get( $theme_options_blog_var ) ) );

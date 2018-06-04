@@ -67,6 +67,7 @@ class Fusion_Widget_Flickr extends WP_Widget {
 		?>
 		<div id="fusion-<?php echo esc_attr( $args['widget_id'] ); ?>-images"></div>
 
+		<?php $consent_needed = class_exists( 'Avada_Privacy_Embeds' ) && Avada()->settings->get( 'privacy_embeds' ) && ! Avada()->privacy_embeds->get_consent( 'flickr' ); ?>
 		<?php if ( $screen_name && $number && $api ) : ?>
 
 			<script type="text/javascript">
@@ -103,8 +104,16 @@ class Fusion_Widget_Flickr extends WP_Widget {
 			</script>
 
 			<?php // @codingStandardsIgnoreStart ?>
-			<script type="text/javascript" src="https://api.flickr.com/services/rest/?format=json&amp;method=flickr.photos.search&amp;user_id=<?php echo $screen_name; ?>&amp;api_key=<?php echo $api; ?>&amp;media=photos&amp;per_page=<?php echo $number; ?>&amp;privacy_filter=1"></script>
-			<script type="text/javascript" src="https://api.flickr.com/services/rest/?format=json&amp;method=flickr.photos.search&amp;group_id=<?php echo $screen_name; ?>&amp;api_key=<?php echo $api; ?>&amp;media=photos&amp;per_page=<?php echo $number; ?>&amp;privacy_filter=1"></script>
+
+			<?php if ( $consent_needed ) : ?>
+				<?php echo Avada()->privacy_embeds->script_placeholder( 'flickr' ); ?>
+				<span data-privacy-script="true" data-privacy-type="flickr" class="fusion-hidden" data-privacy-src="https://api.flickr.com/services/rest/?format=json&amp;method=flickr.photos.search&amp;user_id=<?php echo $screen_name; ?>&amp;api_key=<?php echo $api; ?>&amp;media=photos&amp;per_page=<?php echo $number; ?>&amp;privacy_filter=1"></span>
+				<span data-privacy-script="true" data-privacy-type="flickr" class="fusion-hidden" data-privacy-src="https://api.flickr.com/services/rest/?format=json&amp;method=flickr.photos.search&amp;group_id=<?php echo $screen_name; ?>&amp;api_key=<?php echo $api; ?>&amp;media=photos&amp;per_page=<?php echo $number; ?>&amp;privacy_filter=1"></span>
+			<?php else : ?>
+				<script type="text/javascript" src="https://api.flickr.com/services/rest/?format=json&amp;method=flickr.photos.search&amp;user_id=<?php echo $screen_name; ?>&amp;api_key=<?php echo $api; ?>&amp;media=photos&amp;per_page=<?php echo $number; ?>&amp;privacy_filter=1"></script>
+				<script type="text/javascript" src="https://api.flickr.com/services/rest/?format=json&amp;method=flickr.photos.search&amp;group_id=<?php echo $screen_name; ?>&amp;api_key=<?php echo $api; ?>&amp;media=photos&amp;per_page=<?php echo $number; ?>&amp;privacy_filter=1"></script>
+			<?php endif; ?>
+
 			<?php // @codingStandardsIgnoreEnd ?>
 
 		<?php

@@ -382,6 +382,7 @@ class Avada_Init {
 	public function widget_init() {
 
 		register_widget( 'Fusion_Widget_Ad_125_125' );
+		register_widget( 'Fusion_Widget_Author' );
 		register_widget( 'Fusion_Widget_Contact_Info' );
 		register_widget( 'Fusion_Widget_Tabs' );
 		register_widget( 'Fusion_Widget_Recent_Works' );
@@ -430,6 +431,7 @@ class Avada_Init {
 		$profile_fields['author_linkedin'] = 'LinkedIn (Author Page)';
 		$profile_fields['author_dribble']  = 'Dribble (Author Page)';
 		$profile_fields['author_gplus']    = 'Google+ (Author Page)';
+		$profile_fields['author_whatsapp'] = 'WhatsApp (Author Page)';
 		$profile_fields['author_custom']   = 'Custom Message (Author Page)';
 
 		return $profile_fields;

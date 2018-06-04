@@ -84,7 +84,6 @@ if ( ! function_exists( 'fusion_get_mismatch_option' ) ) {
 		if ( $theme_option && $page_option && $post_id ) {
 			$page_option  = strtolower( fusion_get_page_option( $page_option, $post_id ) );
 			$theme_option = strtolower( fusion_library()->get_option( $theme_option ) );
-			// @codingStandardsIgnoreLine
 			$theme_option = ( 1 == $theme_option ) ? 0 : 1;
 
 			if ( 'default' !== $page_option && ! empty( $page_option ) ) {
@@ -162,7 +161,7 @@ if ( ! function_exists( 'fusion_render_post_metadata' ) ) {
 					$metadata .= sprintf( esc_attr__( 'By %s', 'Avada' ), '<span class="vcard"><span class="fn">' . $author_post_link . '</span></span>' );
 				} else {
 					/* translators: The author. */
-					$metadata .= sprintf( esc_attr__( 'By %s', 'Avada' ), '<span class="vcard"><span class="fn">' . $author_post_link . '</span></span>' );
+					$metadata .= sprintf( esc_attr__( 'By %s', 'Avada' ), '<span>' . $author_post_link . '</span>' );
 				}
 				$metadata .= '<span class="fusion-inline-sep">|</span>';
 			} else { // If author meta data won't be visible, render just the invisible author rich snippet.
@@ -248,7 +247,6 @@ if ( ! function_exists( 'fusion_calc_color_brightness' ) ) {
 	 */
 	function fusion_calc_color_brightness( $color ) {
 
-		// @codingStandardsIgnoreLine
 		if ( in_array( strtolower( $color ), array( 'black', 'navy', 'purple', 'maroon', 'indigo', 'darkslategray', 'darkslateblue', 'darkolivegreen', 'darkgreen', 'darkblue' ) ) ) {
 			$brightness_level = 0;
 		} elseif ( strpos( $color, '#' ) === 0 ) {
@@ -592,12 +590,11 @@ if ( ! function_exists( 'fusion_extract_shortcode_contents' ) ) {
 		$no_space_shortcodes = array( 'fusion_dropcap' );
 		$omitted_shortcodes  = array( 'fusion_code', 'fusion_imageframe', 'fusion_slide', 'fusion_syntax_highlighter' );
 
-		// Extract contents from all shortcodes recursively. @codingStandardsIgnoreLine
+		// Extract contents from all shortcodes recursively.
 		if ( in_array( $m[2], $shortcodes ) && ! in_array( $m[2], $omitted_shortcodes ) ) {
 			$pattern = get_shortcode_regex();
 			// Add space to the excerpt by shortcode, except for those who should stick together, like dropcap.
 			$space = ' ';
-			// @codingStandardsIgnoreLine
 			if ( in_array( $m[2], $no_space_shortcodes ) ) {
 				$space = '';
 			}
@@ -829,9 +826,10 @@ if ( ! function_exists( 'fusion_pagination' ) ) {
 	 * @param integer    $range           How many page numbers to display to either side of the current page.
 	 * @param string     $current_query   The current query.
 	 * @param bool       $infinite_scroll Whether we want infinite scroll or not.
+	 * @param bool       $is_element      Whether pagination is definitely only set for a specific element.
 	 * @return string                     The pagination markup.
 	 */
-	function fusion_pagination( $pages = '', $range = 1, $current_query = '', $infinite_scroll = false ) {
+	function fusion_pagination( $pages = '', $range = 1, $current_query = '', $infinite_scroll = false, $is_element = false ) {
 		global $paged, $wp_query;
 
 		if ( '' === $current_query ) {
@@ -853,7 +851,7 @@ if ( ! function_exists( 'fusion_pagination' ) ) {
 		$output       = '';
 
 		if ( 1 !== $pages ) {
-			if ( $infinite_scroll || ( 'Pagination' !== Avada()->settings->get( 'blog_pagination_type' ) && ( is_home() || is_search() || ( 'post' === get_post_type() && ( is_author() || is_archive() ) ) ) ) || ( 'pagination' !== Avada()->settings->get( 'portfolio_archive_pagination_type' ) && ( is_post_type_archive( 'avada_portfolio' ) || is_tax( 'portfolio_category' ) || is_tax( 'portfolio_skills' ) || is_tax( 'portfolio_tags' ) ) ) ) {
+			if ( $infinite_scroll || ( ! $is_element && ( 'Pagination' !== Avada()->settings->get( 'blog_pagination_type' ) && ( is_home() || is_search() || ( 'post' === get_post_type() && ( is_author() || is_archive() ) ) ) ) || ( 'pagination' !== Avada()->settings->get( 'portfolio_archive_pagination_type' ) && ( is_post_type_archive( 'avada_portfolio' ) || is_tax( 'portfolio_category' ) || is_tax( 'portfolio_skills' ) || is_tax( 'portfolio_tags' ) ) ) ) ) {
 				$output .= '<div class="fusion-infinite-scroll-trigger"></div>';
 				$output .= '<div class="pagination infinite-scroll clearfix" style="display:none;">';
 			} else {

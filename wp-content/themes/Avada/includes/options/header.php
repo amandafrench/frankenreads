@@ -545,6 +545,13 @@ function avada_options_section_header( $sections ) {
 						'type'        => 'color-alpha',
 						'default'     => '#ffffff',
 					),
+					'archive_header_bg_color' => array(
+						'label'       => esc_html__( 'Archive Header Background Color', 'Avada' ),
+						'description' => esc_html__( 'Controls the background color and opacity for the header on archive pages, search page and 404 page. For top headers, opacity set below 1 will remove the header height completely. For side headers, opacity set below 1 will display a color overlay.', 'Avada' ),
+						'id'          => 'archive_header_bg_color',
+						'type'        => 'color-alpha',
+						'default'     => '#ffffff',
+					),
 					'header_border_color' => array(
 						'label'       => esc_html__( 'Header Border Color', 'Avada' ),
 						'description' => esc_html__( 'Controls the border colors for the header. If using left or right header position it controls the menu divider lines.', 'Avada' ),

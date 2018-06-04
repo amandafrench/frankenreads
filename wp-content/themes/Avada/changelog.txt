@@ -1,9 +1,60 @@
 IMPORTANT:
 -----------------------------------------------------------------------------------------
 Please be sure to read the Important Update Notes before you update:
-http://theme-fusion.com/avada-doc/install-update/important-update-information/
+http://theme-fusion.com/documentation/avada/install-update/important-update-information/
 We are always proactive in preventing security issues, however nobody can assume they will never come up.
 This is why we highly recommend to stay up to date with each new theme version and plugins.
+
+
+-----------------------------------------------------------------------------------------
+Version 5.5.2 - May 22nd, 2018
+-----------------------------------------------------------------------------------------
+
+
+- NEW: GDPR feature: Added possibility to host Google fonts directly on your server
+- NEW: GDPR feature: Added new options to allow loading of all third party embeds only after user consent was given
+- NEW: GDPR feature: Added a new privacy element to give users the ability to manage their social media consents
+- NEW: GDPR feature: Added a new option to user registration element that allows for a custom message
+- NEW: GDPR feature: Added new Theme Option to add a consent checkbox with custom text to the Avada contact form
+- NEW: GDPR feature: Added the WP 4.9.6 native comment checkbox to the comment form template
+- NEW: Full support of WooCommerce 3.4
+- NEW: Support for WordPress 4.9.6
+- NEW: Added a new author widget, that can display all kinds of information of an author and also date of current post
+- NEW: Added options to set gutter width between sidebar and content area
+- NEW: Added new Theme Option to control the header color and transparency for archive pages
+- NEW: Added new Theme Options for the accent color of all alert box types
+- NEW: Added Whats App social icon to social sharing box and social icons in Theme Options
+- NEW: Added text alignment option (left/center/right) to blog element and archives
+- NEW: Added full pagination option and text alignment option (left/center/right) to recent posts element
+- NEW: Added new base font size option for bbPress that gives you control over main text site and auto calcs others
+- NEW: Added an option to display Avatar images in squares or circles throughout the site
+- NEW: Added "skip to content" link in header.php for better accessibility reasons, to easier get to main content
+- IMPROVEMENT: Updated several option descriptions and dependencies for better usability
+- IMPROVEMENT: IE specific stylesheet is now minified
+- IMPROVEMENT: Added new actions and filters for better customizability
+- IMPROVEMENT: Added notices to backend pages with information about data that is sent to ThemeFusion, when loading demos, plugins etc.
+- IMPROVEMENT: Added more keywords to the font awesome icon picker, for easier icon search
+- IMPROVEMENT: Increased performance for backend element preview for gallery element, by using thumbnails
+- IMPROVEMENT: Set protocol on redirect URL in user login element explicitly
+- UPDATED: Font awesome now is on version 5.0.13
+- UPDATED: Extended sub-pixel bug fix for masonry script to all grid layouts, to correct certain rounding errors
+- UPDATED: All links in Avada's backend reflect the new URLs on our server
+- FIXED: Added nonce check for saving Fusion Slider meta fields
+- FIXED: Nested columns as saved element not keeping the set options correctly
+- FIXED: Adding widget areas failing after a demo was imported and removed on a fresh install
+- FIXED: Aspect ratio of preview thumbnails in lightbox not being correct for horizontal layout
+- FIXED: Breadcrumbs "Tags:" prefix missing a white space before actual tags
+- FIXED: Issue with Google fonts not selectable in Theme Options after update, if no Google font was set prior to last update
+- FIXED: Font styles for fonts set to use normal not being correct, if body font uses non default styles
+- FIXED: Page Title Bar border color transparency not working correctly in all browsers
+- FIXED: Blog medium layouts not being displayed correctly in IE11
+- FIXED: Portfolio element text layout padding Theme Option not being correctly respected as global default
+- FIXED: Children in content box element having a custom icon width/height set by default, which defeats so parent inheritance
+- FIXED: Vimeo video JS script being loaded, even when disabled in Theme Options
+- FIXED: Vimeo video slides not always auto playing correctly
+- FIXED: Rich snippets check for author in post meta data not being correct
+- FIXED: Accessibility issue in the form field, with the label not being tied to the input
+- FIXED: Usage of deprecated function with latest gravity forms version
 
 
 -----------------------------------------------------------------------------------------
@@ -1369,7 +1420,7 @@ Over the years we have had several feature, functionality and improvement reques
 
 
 
-Avada 5.0 mainly focuses on the brand new Fusion Builder, which is absolutely amazing. At the same time, we are always looking towards the future and listening to our customer base to make constant improvements to our product. Avada 5.0 contains even more useful features that make your life easier and allow you to build what you want to build, without having to modify code. Below are the rest of the highlights in Avada 5.0. As always, it is important that you read through our important update notes before updating: http://theme-fusion.com/avada-doc/install-update/important-update-information/
+Avada 5.0 mainly focuses on the brand new Fusion Builder, which is absolutely amazing. At the same time, we are always looking towards the future and listening to our customer base to make constant improvements to our product. Avada 5.0 contains even more useful features that make your life easier and allow you to build what you want to build, without having to modify code. Below are the rest of the highlights in Avada 5.0. As always, it is important that you read through our important update notes before updating: http://theme-fusion.com/documentation/avada/install-update/important-update-information/
 
 
 - NEW: Several new professionally designed demos to easily import through our demo importer, or through Fusion Builder via single pages
@@ -1416,7 +1467,7 @@ Avada 5.0 mainly focuses on the brand new Fusion Builder, which is absolutely am
 - IMPROVEMENT: Use WP_Query instead of get_posts to allow Advanced Post Cache to cache the queries for a performance improvement
 - IMPROVEMENT: Enhanced integration for Avada users when using Fusion Builder, all element styling options are in Fusion Theme Options on the Fusion Builder Elements tab (formerly short code styling)
 - IMPROVEMENT: Woo 2.6.3 compatibility (patches were already made for 4.0.3 users)
-- IMPROVEMENT: Several new hooks added to the theme along with detailed documentation https://theme-fusion.com/avada-doc/special-features/avada-hooks-actions-and-filters/
+- IMPROVEMENT: Several new hooks added to the theme along with detailed documentation https://theme-fusion.com/documentation/avada/special-features/avada-hooks-actions-and-filters/
 - IMPROVEMENT: Avada patcher overall improvements for performance and reliability in certain server environments
 - IMPROVEMENT: Added additional check when accessing  HTTP_USER_AGENT
 - IMPROVEMENT: Portfolio filters now work for category names using special characters (ex: Hebrew language characters)

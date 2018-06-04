@@ -81,8 +81,8 @@ if ( ! $wp_api_plugins ) {
 					/* translators: %1$s = System Status text & link. %2$s: Plugin Installation text & link. %3$s: Support Dashboard text & link. */
 					esc_attr__( 'Please check on the %1$s page if wp_remote_get() is working. For more information you can check our documentation of the %2$s. If the issue persists, you can also get the plugins through our alternate method directly from the %3$s.', 'Avada' ),
 					'<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-system-status' ) ) . '" target="_blank">' . esc_attr__( 'System Status', 'Avada' ) . '</a>',
-					'<a href="https://theme-fusion.com/avada-doc/install-update/plugin-installation/" target="_blank">' . esc_attr__( 'Plugin Installation', 'Avada' ) . '</a>',
-					'<a href="https://theme-fusion.com/support-desk/" target="_blank">' . esc_attr__( 'Support Dashboard', 'Avada' ) . '</a>'
+					'<a href="https://theme-fusion.com/documentation/avada/install-update/plugin-installation/" target="_blank">' . esc_attr__( 'Plugin Installation', 'Avada' ) . '</a>',
+					'<a href="https://theme-fusion.com/documentation/avada/getting-started/support-desk/" target="_blank">' . esc_attr__( 'Support Dashboard', 'Avada' ) . '</a>'
 				);
 				?>
 			</p>

@@ -55,7 +55,7 @@ class Avada_Template {
 	 */
 	public function has_sidebar() {
 		// Get our extra body classes.
-		return ( in_array( 'has-sidebar', $this->body_classes ) );
+		return ( apply_filters( 'avada_has_sidebar', in_array( 'has-sidebar', $this->body_classes ), $this->body_classes, 'has-sidebar' ) );
 	}
 
 	/**
@@ -64,7 +64,7 @@ class Avada_Template {
 	public function double_sidebars() {
 
 		// Get our extra body classes.
-		return ( in_array( 'double-sidebars', $this->body_classes ) );
+		return ( apply_filters( 'avada_has_double_sidebars', in_array( 'double-sidebars', $this->body_classes ), $this->body_classes, 'double-sidebars' ) );
 	}
 
 	/**
@@ -440,7 +440,9 @@ class Avada_Template {
 		$footer_fx_class .= str_replace( array( 'footer_area_', 'footer_', '_' ), array( '', '', '-' ), Avada()->settings->get( 'footer_special_effects' ) );
 		$classes[] = $footer_fx_class;
 
-		$classes[] = 'fusion-search-form-' . Avada()->settings->get( 'search_form_design' );
+		$classes[] = 'fusion-search-form-' . esc_attr( Avada()->settings->get( 'search_form_design' ) );
+
+		$classes[] = 'fusion-avatar-' . esc_attr( Avada()->settings->get( 'avatar_shape' ) );
 
 		return $classes;
 	}

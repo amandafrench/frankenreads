@@ -94,7 +94,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								 */
 								?>
 								<h4 class="fusion-carousel-title">
-									<a href="<?php echo esc_url_raw( get_permalink( get_the_ID() ) ); ?>"_self><?php echo get_the_title(); ?></a>
+									<a class="fusion-related-posts-title-link" href="<?php echo esc_url_raw( get_permalink( get_the_ID() ) ); ?>"_self><?php echo get_the_title(); ?></a>
 								</h4>
 
 								<div class="fusion-carousel-meta">
