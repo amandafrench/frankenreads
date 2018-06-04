@@ -10,12 +10,12 @@ defined( 'WPINC' ) or die;
  * [your-theme]/tribe-events/community/modules/image.php
  *
  * @since  3.1
- * @version 4.5
+ * @version 4.5.12
  *
  */
 
 $upload_error = tribe( 'community.main' )->max_file_size_exceeded();
-$size_format  = size_format( wp_max_upload_size() );
+$size_format  = size_format( tribe( 'community.main' )->max_file_size_allowed() );
 $image_label  = sprintf( __( '%s Image', 'tribe-events-community' ), tribe_get_event_label_singular() );
 ?>
 

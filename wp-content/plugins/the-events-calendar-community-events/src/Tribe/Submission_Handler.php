@@ -107,7 +107,10 @@ class Tribe__Events__Community__Submission_Handler {
 		}
 
 		// Handles the Upload
-		if ( isset( $_FILES['event_image']['name'] ) && ! empty( $_FILES['event_image']['name'] ) ) {
+		if (
+			Tribe__Utils__Array::get( $_FILES, array( 'event_image', 'name' ) )
+			&& ( Tribe__Utils__Array::get( $_FILES, array( 'event_image', 'size' ) ) <= $this->community->max_file_size_allowed() )
+		) {
 			$attachment_id = $this->insert_attachment( 'event_image', $this->event_id, true, $this );
 
 			if ( false === $attachment_id ) {
