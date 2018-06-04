@@ -8,6 +8,7 @@
  */
 
 ?>
+<?php wp_nonce_field( 'fusion_core_meta_fields_nonce', 'fusion_core_meta_fields_nonce' ); ?>
 <tr class="form-field fusion-double-fields">
 	<th scope="row" valign="top"><label for="term_meta[slider_width]"><?php esc_attr_e( 'Slider Size', 'fusion-core' ); ?></label></th>
 	<td>
@@ -52,7 +53,9 @@
 	<th scope="row" valign="top"><label for="term_meta[slider_indicator_color]"><?php esc_attr_e( 'Slider Indicator Color', 'fusion-core' ); ?></label></th>
 	<td>
 		<input type="text" name="term_meta[slider_indicator_color]" id="slider_indicator_color" value="<?php echo ( isset( $term_meta['slider_indicator_color'] ) && esc_attr( $term_meta['slider_indicator_color'] ) ) ? esc_attr( $term_meta['slider_indicator_color'] ) : ''; ?>">
+		<?php /* translators: The default value. */ ?>
 		<?php $default = sprintf( esc_html__( 'Default: %s', 'fusion-core' ), '#fff' ); ?>
+		<?php /* translators: The default value text. */ ?>
 		<p class="description"><?php printf( esc_html__( 'Select a color for the slider indicator icon. Hex color code, ex: #fff. %s', 'fusion-core' ), '<strong>' . esc_attr( $default ) . '</strong>' ); ?></p>
 	</td>
 </tr>

@@ -26,7 +26,7 @@
 				<span class="fusion-builder-admin-toggle-icon fusion-plus"></span>
 			</div>
 			<div class="fusion-builder-admin-toggle-content">
-				<?php printf( __( 'Currently Fusion Builder is only offered with the Avada theme, so all support is handled through Avada\'s support center. <a href="%1$s" target="%2$s">Sign up at our support center with these steps</a>, then submit a ticket for any questions you have and our team of experts will gladly help you.', 'fusion-builder' ), 'https://theme-fusion.com/avada-doc/getting-started/avada-theme-support/', '_blank' ); // WPCS: XSS ok. ?>
+				<?php printf( __( 'Currently Fusion Builder is only offered with the Avada theme, so all support is handled through Avada\'s support center. <a href="%1$s" target="%2$s">Sign up at our support center with these steps</a>, then submit a ticket for any questions you have and our team of experts will gladly help you.', 'fusion-builder' ), 'https://theme-fusion.com/documentation/avada/getting-started/avada-theme-support/', '_blank' ); // WPCS: XSS ok. ?>
 			</div>
 		</div>
 
@@ -38,8 +38,8 @@
 			<div class="fusion-builder-admin-toggle-content">
 				<?php esc_attr_e( 'Fusion Builder has a complete set of documentation and growing video tutorial library. Both are stored on our company site in the support center, see the links below.', 'fusion-builder' ); ?>
 				<ul>
-					<li><?php printf( __( '<a href="%1$s" target="%2$s">Fusion Builder Documentation</a>', 'fusion-builder' ), 'https://theme-fusion.com/support/documentation/fusion-builder-documentation/', '_blank' ); // WPCS: XSS ok. ?></li>
-					<li><?php printf( __( '<a href="%1$s" target="%2$s">Fusion Builder Video Tutorials</a>', 'fusion-builder' ), 'https://theme-fusion.com/support/video-tutorials/fusion-builder-videos/', '_blank' ); // WPCS: XSS ok. ?></li>
+					<li><?php printf( __( '<a href="%1$s" target="%2$s">Fusion Builder Documentation</a>', 'fusion-builder' ), 'https://theme-fusion.com/support/', '_blank' ); // WPCS: XSS ok. ?></li>
+					<li><?php printf( __( '<a href="%1$s" target="%2$s">Fusion Builder Video Tutorials</a>', 'fusion-builder' ), 'https://theme-fusion.com/documentation/fusion-builder/videos/', '_blank' ); // WPCS: XSS ok. ?></li>
 				</ul>
 			</div>
 		</div>
@@ -84,7 +84,7 @@
 		</div>
 		<div class="fusion-builder-admin-toggle-content">
 			<?php esc_html_e( 'Fusion Builder single demo page import can only import the skeleton layout, not an exact replica as seen on a live demo. When importing a single demo page, the items that import are the page layout, page template, fusion page options and image placeholders.', 'fusion-builder' ); ?><br/><br/>
-			<?php printf( __( 'Items that will not import due to technical limitations are Fusion Theme Options, Custom Post Types and Sliders. Since some items do not import, you may see differences in style and layout but they can be easily changed through Avada\'s <a href="%1$s" target="%2$s">advanced options network</a>. If you wish to import everything from a demo, you can import the full demo on the Avada > Import Demos tab.', 'fusion-builder' ), 'https://theme-fusion.com/avada-doc/options/how-options-work/', '_blank' ); // WPCS: XSS ok. ?>
+			<?php printf( __( 'Items that will not import due to technical limitations are Fusion Theme Options, Custom Post Types and Sliders. Since some items do not import, you may see differences in style and layout but they can be easily changed through Avada\'s <a href="%1$s" target="%2$s">advanced options network</a>. If you wish to import everything from a demo, you can import the full demo on the Avada > Import Demos tab.', 'fusion-builder' ), 'https://theme-fusion.com/documentation/avada/options/how-options-work/', '_blank' ); // WPCS: XSS ok. ?>
 		</div>
 	</div>
 
@@ -104,7 +104,7 @@
 			<span class="fusion-builder-admin-toggle-icon fusion-plus"></span>
 		</div>
 		<div class="fusion-builder-admin-toggle-content">
-			<?php printf( __( 'Fusion Builder has been built for extendability and for future development. Add-ons are small extensions that provide extra features when using the Fusion Builder. Currently the available add-ons list is small, but developers across the marketplace are creating new ones. As they become available, you will see them displayed on the "Fusion Builder > Add-ons" tab. If you wish to create an add on, please see our <a href="%1$s" target="%2$s">developer documentation</a>.', 'fusion-builder' ), 'https://theme-fusion.com/support/documentation/fusion-builder-api-documentation/', '_blank' ); // WPCS: XSS ok. ?>
+			<?php printf( __( 'Fusion Builder has been built for extendability and for future development. Add-ons are small extensions that provide extra features when using the Fusion Builder. Currently the available add-ons list is small, but developers across the marketplace are creating new ones. As they become available, you will see them displayed on the "Fusion Builder > Add-ons" tab. If you wish to create an add on, please see our <a href="%1$s" target="%2$s">developer documentation</a>.', 'fusion-builder' ), 'https://theme-fusion.com/documentation/fusion-builder/api/', '_blank' ); // WPCS: XSS ok. ?>
 		</div>
 	</div>
 

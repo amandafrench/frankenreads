@@ -186,13 +186,12 @@ class Fusion_Featured_Image {
 	 * @return void.
 	 */
 	public function save_meta_box( $post_id ) {
-		// @codingStandardsIgnoreLine
-		if ( ! isset( $_POST[ $this->args['nonce_name'] ] ) || ! wp_verify_nonce( $_POST[ $this->args['nonce_name'] ], $this->args['nonce_action'] ) ) {
-				return;
+		if ( ! isset( $_POST[ $this->args['nonce_name'] ] ) || ! wp_verify_nonce( wp_unslash( $_POST[ $this->args['nonce_name'] ] ), $this->args['nonce_action'] ) ) { // WPCS: sanitization ok.
+			return;
 		}
 
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-				return;
+			return;
 		}
 
 		$value = '';

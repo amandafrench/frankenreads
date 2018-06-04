@@ -150,6 +150,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 						'id'                        => '',
 						'blog_grid_column_spacing'  => $fusion_settings->get( 'blog_grid_column_spacing' ),
 						'blog_grid_padding'         => $fusion_settings->get( 'blog_grid_padding' ),
+						'content_alignment'         => '',
 						'equal_heights'             => 'no',
 						'blog_grid_columns'         => $fusion_settings->get( 'blog_grid_columns' ),
 						'pull_by'                   => '',
@@ -631,6 +632,10 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 
 				if ( ! $this->args['thumbnail'] ) {
 					$attr['class'] .= ' fusion-blog-no-images';
+				}
+
+				if ( $this->args['content_alignment'] && ( 'grid' === $this->args['layout'] || 'masonry' === $this->args['layout'] || 'timeline' === $this->args['layout'] ) ) {
+					$attr['class'] .= ' fusion-blog-layout-' . $this->args['content_alignment'];
 				}
 
 				if ( $this->args['class'] ) {
@@ -1395,7 +1400,12 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 						ob_get_clean();
 					}
 
-					return '<div ' . FusionBuilder::attributes( 'fusion-alignright' ) . '>' . $comments . '</div>';
+					$comment_align_class = 'fusion-alignright';
+					if ( ( ! $this->args['meta_link'] || ! $this->args['meta_read'] ) && $this->args['content_alignment'] ) {
+						$comment_align_class = 'fusion-align' . $this->args['content_alignment'];
+					}
+
+					return '<div ' . FusionBuilder::attributes( $comment_align_class ) . '>' . $comments . '</div>';
 
 				}
 
@@ -1418,6 +1428,10 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 						$read_more_wrapper_class = 'fusion-alignright';
 						if ( 'grid' === $this->args['layout'] || 'masonry' === $this->args['layout'] || 'timeline' === $this->args['layout'] ) {
 							$read_more_wrapper_class = 'fusion-alignleft';
+
+							if ( $this->args['content_alignment'] && ! $this->args['meta_comments'] ) {
+								$read_more_wrapper_class = 'fusion-align' . $this->args['content_alignment'];
+							}
 						}
 
 						$link_target = '';
@@ -2395,6 +2409,41 @@ function fusion_element_blog() {
 							'element'  => 'title',
 							'value'    => 'yes',
 							'operator' => '==',
+						),
+					),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Content Alignment', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls the alignment of contents.', 'fusion-builder' ),
+					'param_name'  => 'content_alignment',
+					'default'     => '',
+					'value'       => array(
+						''       => esc_attr__( 'Text Flow', 'fusion-builder' ),
+						'left'   => esc_attr__( 'Left', 'fusion-builder' ),
+						'center' => esc_attr__( 'Center', 'fusion-builder' ),
+						'right'  => esc_attr__( 'Right', 'fusion-builder' ),
+					),
+					'dependency'  => array(
+						array(
+							'element'  => 'layout',
+							'value'    => 'medium',
+							'operator' => '!=',
+						),
+						array(
+							'element'  => 'layout',
+							'value'    => 'large',
+							'operator' => '!=',
+						),
+						array(
+							'element'  => 'layout',
+							'value'    => 'medium alternate',
+							'operator' => '!=',
+						),
+						array(
+							'element'  => 'layout',
+							'value'    => 'large alternate',
+							'operator' => '!=',
 						),
 					),
 				),

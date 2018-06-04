@@ -286,6 +286,8 @@ if ( fusion_is_element_enabled( 'fusion_map' ) ) {
 					}
 				}
 
+				$html = apply_filters( 'privacy_script_embed', $html, 'gmaps', true, $this->args['width'], $this->args['height'] );
+
 				return $html;
 
 			}
@@ -396,6 +398,8 @@ if ( fusion_is_element_enabled( 'fusion_map' ) ) {
 					// Return cached results.
 					$data = $coordinates;
 				}
+
+				$data = apply_filters( 'privacy_script_embed', $data, 'gmaps', false, false, false );
 
 				return $data;
 

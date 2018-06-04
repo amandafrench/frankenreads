@@ -52,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		 */
 		?>
 		<div class="full-video">
-			<?php echo get_post_meta( $post_id, 'pyre_video', true ); // WPCS: XSS ok. ?>
+			<?php echo apply_filters( 'privacy_iframe_embed', get_post_meta( $post_id, 'pyre_video', true ) ); // WPCS: XSS ok. ?>
 		</div>
 
 	<?php elseif ( $display_placeholder_image ) : ?>

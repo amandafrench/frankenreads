@@ -1569,13 +1569,19 @@ function WDIInstagram(args)
       data: {
         wdi_cache_name:cache_name,
         wdi_nonce:wdi_ajax.wdi_nonce,
+        WDI_MINIFY:wdi_ajax.WDI_MINIFY,
         action:"wdi_get_cache_data",
       },
       success: function(data){
-        if(data["success"] !== "false"){
-          if(typeof data["cache_data"] !== "undefined"){
+        if(data["wdi_debugging"]){
+          console.log(data["wdi_debugging_data"]);
+        }
+        if(data["success"]){
+          if(typeof data["cache_data"] !== "undefined" && data["cache_data"] !== null){
             var json_data = JSON.parse(data["cache_data"]);
             callback(json_data);
+          }else{
+            callback(false);
           }
         }else {
           callback(false);
@@ -1597,7 +1603,7 @@ function WDIInstagram(args)
         action:"wdi_set_cache_data"
       },
       success: function(data){
-        console.log(data);
+
       }
     });
   }

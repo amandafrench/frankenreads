@@ -345,6 +345,48 @@
   font-size: 12px;
   color: #777;
 }
+.fusionredux-container #fusionredux-form-wrapper .fusionredux-main .select3-container-multi .select3-choices {
+  padding: 0;
+  background: #fff;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  border: 1px solid #E7E7E7 !important;
+  outline: none;
+  box-shadow: none !important;
+}
+.fusionredux-container #fusionredux-form-wrapper .fusionredux-main .select3-container-multi .select3-search-field {
+  display: none;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+.fusionredux-container #fusionredux-form-wrapper .fusionredux-main .select3-container-multi .select3-search-field:first-child {
+  display: block;
+}
+.fusionredux-container #fusionredux-form-wrapper .fusionredux-main .select3-container-multi .select3-search-field input {
+  margin: 0;
+  height: 29px !important;
+  width: 100% !important;
+  border: none !important;
+}
+.fusionredux-container #fusionredux-form-wrapper .fusionredux-main .select3-container-multi .select3-search-choice {
+  margin: 3px !important;
+  line-height: normal;
+  border-radius: 0;
+  box-shadow: none;
+  background: #F4F2F2;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+.fusionredux-container #fusionredux-form-wrapper .fusionredux-main .select3-container-multi .select3-search-choice-close {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
 .fusionredux-container #fusionredux-form-wrapper .fusionredux-main .fusionredux-field[data-id="header_layout"] .fusionredux_field_th {
   padding-right: 60px !important;
   width: 50%;

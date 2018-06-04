@@ -184,12 +184,9 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 					$args['accent_color']      = $this->args['accent_color'];
 					$args['border_size']       = $this->args['border_size'];
 				} else {
-					$background_color          = '' !== $fusion_settings->get( $this->alert_class . '_bg_color' ) ? strtolower( $fusion_settings->get( $this->alert_class . '_bg_color' ) ) : '#ffffff';
-					$accent_color              = fusion_auto_calculate_accent_color( $background_color );
-					$border_size               = FusionBuilder::validate_shortcode_attr_value( $fusion_settings->get( 'alert_border_size' ), 'px' );
-					$args['background_color']  = $background_color;
-					$args['accent_color']      = $accent_color;
-					$args['border_size']       = $border_size;
+					$args['background_color']  = ( '' !== $fusion_settings->get( $this->alert_class . '_bg_color' ) ) ? strtolower( $fusion_settings->get( $this->alert_class . '_bg_color' ) ) : '#ffffff';
+					$args['accent_color']      = $fusion_settings->get( $this->alert_class . '_accent_color' );
+					$args['border_size']       = FusionBuilder::validate_shortcode_attr_value( $fusion_settings->get( 'alert_border_size' ), 'px' );
 				}
 
 				$attr['style']  = 'background-color:' . $args['background_color'] . ';';
@@ -285,11 +282,25 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 								'default'     => '#ffffff',
 								'type'        => 'color-alpha',
 							),
+							'info_accent_color' => array(
+								'label'       => esc_attr__( 'General Accent Color', 'fusion-builder' ),
+								'description' => esc_attr__( 'Set the accent color for general alert boxes.', 'fusion-builder' ),
+								'id'          => 'info_accent_color',
+								'default'     => '#808080',
+								'type'        => 'color-alpha',
+							),
 							'danger_bg_color' => array(
 								'label'       => esc_attr__( 'Error Background Color', 'fusion-builder' ),
 								'description' => esc_attr__( 'Set the background color for error alert boxes.', 'fusion-builder' ),
 								'id'          => 'danger_bg_color',
 								'default'     => '#f2dede',
+								'type'        => 'color-alpha',
+							),
+							'danger_accent_color' => array(
+								'label'       => esc_attr__( 'Error Accent Color', 'fusion-builder' ),
+								'description' => esc_attr__( 'Set the accent color for error alert boxes.', 'fusion-builder' ),
+								'id'          => 'danger_accent_color',
+								'default'     => '#a64242',
 								'type'        => 'color-alpha',
 							),
 							'success_bg_color' => array(
@@ -299,11 +310,25 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 								'default'     => '#dff0d8',
 								'type'        => 'color-alpha',
 							),
+							'success_accent_color' => array(
+								'label'       => esc_attr__( 'Success Accent Color', 'fusion-builder' ),
+								'description' => esc_attr__( 'Set the accent color for success alert boxes.', 'fusion-builder' ),
+								'id'          => 'success_accent_color',
+								'default'     => '#5ca340',
+								'type'        => 'color-alpha',
+							),
 							'warning_bg_color' => array(
 								'label'       => esc_attr__( 'Notice Background Color', 'fusion-builder' ),
 								'description' => esc_attr__( 'Set the background color for notice alert boxes.', 'fusion-builder' ),
 								'id'          => 'warning_bg_color',
 								'default'     => '#fcf8e3',
+								'type'        => 'color-alpha',
+							),
+							'warning_accent_color' => array(
+								'label'       => esc_attr__( 'Notice Accent Color', 'fusion-builder' ),
+								'description' => esc_attr__( 'Set the accent color for notice alert boxes.', 'fusion-builder' ),
+								'id'          => 'warning_accent_color',
+								'default'     => '#d9b917',
 								'type'        => 'color-alpha',
 							),
 							'alert_box_text_align' => array(

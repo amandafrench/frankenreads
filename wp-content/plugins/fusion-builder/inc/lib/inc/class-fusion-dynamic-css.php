@@ -278,9 +278,7 @@ class Fusion_Dynamic_CSS {
 	 */
 	public function reset_all_transients() {
 		global $wpdb;
-		$sql = "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_fusion_dynamic_css_%'";
-		// @codingStandardsIgnoreLine
-		$wpdb->query( $sql );
+		$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_fusion_dynamic_css_%'" ); // WPCS: cache ok.
 	}
 
 	/**
@@ -504,7 +502,6 @@ class Fusion_Dynamic_CSS {
 			$file_contents = $wp_filesystem->get_contents( $path );
 			// If it failed, try file_get_contents().
 			if ( ! $file_contents ) {
-				// @codingStandardsIgnoreLine
 				$file_contents = @file_get_contents( $path );
 			}
 			if ( $file_contents ) {

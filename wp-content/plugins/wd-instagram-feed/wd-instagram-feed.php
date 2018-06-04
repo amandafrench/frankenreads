@@ -3,7 +3,7 @@
 Plugin Name: WD Instagram Feed
 Plugin URI: https://web-dorado.com/products/wordpress-instagram-feed-wd.html
 Description: WD Instagram Feed is a user-friendly tool for displaying user or hashtag-based feeds on your website. You can create feeds with one of the available layouts. It allows displaying image metadata, open up images in lightbox, download them and even share in social networking websites.
-Version: 1.3.2
+Version: 1.3.3
 Author: WebDorado
 Author URI: https://web-dorado.com/wordpress-plugins-bundle.html
 License: GPLv2 or later
@@ -21,7 +21,7 @@ define("WDI_META", "_".WDI_VAR."_meta");
 //define("wdi",'wdi');
 define('WDI_FEED_TABLE','wdi_feeds');
 define('WDI_THEME_TABLE','wdi_themes');
-define('WDI_VERSION','1.3.2');
+define('WDI_VERSION','1.3.3');
 define('WDI_IS_PRO','false');
 $wdi_minify = ((isset($_GET['wdi_no_minify']) && $_GET['wdi_no_minify'] == "true") ? false : true);
 define('WDI_MINIFY', $wdi_minify);
@@ -78,17 +78,55 @@ function wdi_get_cache_data(){
     if(isset($_POST["wdi_cache_name"])){
       $transient_key = "wdi_cache_data_".md5($_POST["wdi_cache_name"]);
       $cache_data = get_transient($transient_key);
-      if(isset($cache_data) && $cache_data!=false){
-        echo json_encode(
+
+      if(isset($cache_data) && $cache_data!=false && isset($cache_data["cache_response"])){
+
+        $wdi_debugging = false;
+        $wdi_debugging_data = array();
+
+        if(isset($_POST["WDI_MINIFY"])&& $_POST["WDI_MINIFY"] === "false"){
+
+
+          $wdi_debugging = true;
+
+
+          $current_date = (date('Y-m-d H:i:s'));
+          $cache_date = $cache_data["wdi_debugging_data"]["cache_date"];
+          $wdi_transient_time = $cache_data["wdi_debugging_data"]["wdi_transient_time"];
+
+
+          $current_date_strtotime = strtotime($current_date);
+          $cache_date_strtotime = strtotime($cache_date);
+          $seconds_diff = $current_date_strtotime - $cache_date_strtotime;
+          $date_diff_min = $seconds_diff/60;
+
+
+
+
+          $wdi_debugging_data = array(
+            'current_date' => $current_date,
+            'cache_date' => $cache_date,
+            'date_diff_min' => $date_diff_min,
+            'transient_key' => $_POST["wdi_cache_name"],
+            'wdi_transient_time' => $wdi_transient_time,
+          );
+
+
+        }
+        $cache_data = stripslashes($cache_data["cache_response"]);
+        wdi_send_response(
           array(
-            "success"=>"true",
-            "cache_data"=>stripslashes($cache_data)
+            "success"=>true,
+            "wdi_debugging" => $wdi_debugging,
+            "wdi_debugging_data" => $wdi_debugging_data,
+            "cache_data"=>$cache_data
           )
         );
-        die;
+      }else{
+        wdi_send_response(array("success"=>false));
       }
     }
-    echo json_encode(array("success"=>"false"));die;
+    wdi_send_response(array("success"=>false));
   }
 }
 function wdi_set_cache_data(){
@@ -101,8 +139,10 @@ function wdi_set_cache_data(){
         $wdi_transient_time = 60;
       }
 
+      $cache_date = (date('Y-m-d H:i:s'));
 
       $wdi_cache_response = $_POST["wdi_cache_response"];
+
       $transient_key = "wdi_cache_data_".md5($_POST["wdi_cache_name"]);
       $expiration_time = $wdi_transient_time * 60;
 
@@ -111,9 +151,24 @@ function wdi_set_cache_data(){
         $wdi_cache_response = utf8_encode($wdi_cache_response);
       }
 
-      set_transient($transient_key, $wdi_cache_response, $expiration_time);
+      $data = array(
+        'cache_response' => $wdi_cache_response,
+        'wdi_debugging_data' => array(
+          'cache_date' => $cache_date,
+          'wdi_transient_time' => $wdi_transient_time,
+        ),
+      );
+      set_transient($transient_key, $data, $expiration_time);
+      wdi_send_response(array('success'=>true));
     }
+    wdi_send_response(array('success'=>false));
   }
+  wdi_send_response(array('success'=>false));
+}
+
+function wdi_send_response($data){
+  echo json_encode($data);
+  die;
 }
 
 
@@ -441,7 +496,8 @@ function wdi_load_scripts($hook){
       'ajax_url' => admin_url( 'admin-ajax.php' ),
       'uninstall_url' => $uninstall_url,
       'wdi_nonce' => wp_create_nonce("wdi_cache"),
-      'is_pro' => WDI_IS_PRO
+      'WDI_MINIFY'=>(WDI_MINIFY) ? 'true' : 'false',
+      'is_pro' => WDI_IS_PRO,
     ));
     wp_localize_script("wdi_admin", 'wdi_version',array('is_pro'=>WDI_IS_PRO));
     wp_localize_script("wdi_admin", 'wdi_messages',array(
@@ -952,4 +1008,20 @@ function wdi_filter_var_notice(){
 	    <p>Some functionality may be broken. Please enable PHP Filters extension or make sure you have PHP version not older than 5.2.</p>
     </div>";
   }
+}
+
+add_filter('wp_get_default_privacy_policy_content', 'wdi_privacy_policy');
+function wdi_privacy_policy($content){
+  $title = __('Instagram Feed WD', "wd-instagram-feed");
+
+  $pp_link = '<a target="_blank" href="https://instagram.com/legal/privacy">' . __('Privacy Policy', "wd-instagram-feed") . '</a>';
+  $text = __('Use this suggested text to inform visitors about privacy:', "wd-instagram-feed");
+  $text .= "<br/>";
+  $text .= sprintf(__('"Instagram Feed WD plugin uses Instagram API on website front end.  All the data received from Instagram via API is cached in WordPress database for some short period to provide front end optimization. You may request us to delete your Instagram data if it is accidentally cached in our website database with hashtag feed data. Instagram saves some cookies in browsers of website visitors via API data. These cookies are mostly used for security purposes. They are regulated under terms of Instagram’s %s."', "wd-instagram-feed"), $pp_link);
+  $text .= "<br/>";
+  $text .= __('Web-Dorado Disclaimer: The above text is for informational purposes only and is not a legal advice. You must not rely on it as an alternative to legal advice. You should contact your legal counsel to obtain advice with respect to your particular case.', "wd-instagram-feed");
+  $pp_text = '<h3>' . $title . '</h3>' . '<p class="wp-policy-help">' . $text . '</p>';
+
+  $content .= $pp_text;
+  return $content;
 }

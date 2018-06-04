@@ -148,9 +148,6 @@ class Fusion_Admin_Notice {
 		// Enqueue the script.
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
-		// Handle saving the data via ajax.
-		add_action( 'wp_ajax_fusion_dismiss_admin_notice', array( $this, 'dismiss_notice' ) );
-
 		// Mark as added.
 		self::$already_added_ids[] = $id;
 	}
@@ -249,41 +246,5 @@ class Fusion_Admin_Notice {
 			true
 		);
 		wp_localize_script( 'fusion-admin-notices', 'fusionAdminNoticesNonce', wp_create_nonce( 'fusion_admin_notice' ) );
-	}
-
-	/**
-	 * Save the data when dismissing the notice.
-	 *
-	 * @access public
-	 * @since 1.5
-	 * @return void
-	 */
-	public function dismiss_notice() {
-
-		check_ajax_referer( 'fusion_admin_notice', 'nonce' );
-
-		if ( ! empty( $_POST ) && isset( $_POST['data'] ) ) {
-			$option = '';
-			if ( isset( $_POST['data']['dismissOption'] ) ) {
-				$option = sanitize_text_field( wp_unslash( $_POST['data']['dismissOption'] ) );
-			} elseif ( isset( $_POST['data']['dismiss-option'] ) ) {
-				$option = sanitize_text_field( wp_unslash( $_POST['data']['dismiss-option'] ) );
-			}
-
-			$type = '';
-			if ( isset( $_POST['data']['dismissType'] ) ) {
-				$type = sanitize_text_field( wp_unslash( $_POST['data']['dismissType'] ) );
-			} elseif ( isset( $_POST['data']['dismiss-type'] ) ) {
-				$type = sanitize_text_field( wp_unslash( $_POST['data']['dismiss-type'] ) );
-			}
-
-			switch ( $type ) {
-				case 'user_meta':
-					update_user_meta( get_current_user_id(), $option, true );
-					break;
-			}
-		}
-
-		wp_die();
 	}
 }

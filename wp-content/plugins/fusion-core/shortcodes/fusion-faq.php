@@ -89,12 +89,12 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 				$defaults['icon_size']   = FusionBuilder::validate_shortcode_attr_value( $defaults['icon_size'], 'px' );
 				$defaults['cat_slugs']   = $defaults['cats_slug'];
 
-				// @codingStandardsIgnoreLine
 				extract( $defaults );
 
 				self::$args = $defaults;
 
-				$style_tag = $styles = '';
+				$style_tag = '';
+				$styles    = '';
 
 				if ( '1' == self::$args['boxed_mode'] || 'yes' === self::$args['boxed_mode'] ) {
 

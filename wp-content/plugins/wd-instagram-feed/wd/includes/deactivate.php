@@ -44,7 +44,7 @@
 				),				
 				4 => array(
 					'id'    => self::REASON_UPGRADING_TO_PAID_VERSION,
-					'text'  => __( 'Upgrading to premium version', $wd_options->prefix ),
+					'text'  => __( 'Upgrading to paid version', $wd_options->prefix ),	
 				),
 				5 => array(
 					'id'    => self::REASON_TEMPORARY_DEACTIVATION,

@@ -919,7 +919,7 @@ function fusion_builder_textdomain_strings() {
 		'to_add_images'                               => esc_attr__( 'To add images to this post or page for attachments layout, navigate to "Upload Files" tab in media manager and upload new images.', 'fusion-builder' ),
 		'importing_single_page'                       => esc_attr__( 'WARNING: Importing a single demo page will remove all other page content, fusion page options and page template. Fusion Theme Options and demo images are not imported. Click OK to continue or cancel to stop.', 'fusion-builder' ),
 		'content_error_title'                         => esc_attr__( 'Content Error', 'fusion-builder' ),
-		'content_error_description'                   => sprintf( __( 'Your page content could not be displayed as a Fusion Builder layout. Most likely that means, there is some invalid markup or shortcode in it. Please check the contents in the text editor. <a href="%s" target="_blank">See here for more information</a>.', 'fusion-builder' ), 'https://theme-fusion.com/fb-doc/technical/page-content-not-parsable-fusion-builder/' ),
+		'content_error_description'                   => sprintf( __( 'Your page content could not be displayed as a Fusion Builder layout. Most likely that means, there is some invalid markup or shortcode in it. Please check the contents in the text editor. <a href="%s" target="_blank">See here for more information</a>.', 'fusion-builder' ), 'https://theme-fusion.com/documentation/fusion-builder/technical/page-content-not-parsable-fusion-builder/' ),
 		'moved_container'                             => esc_attr__( 'Moved Container', 'fusion-builder' ),
 		'currency_before'                             => esc_attr__( 'Before', 'fusion-builder' ),
 		'currency_after'                              => esc_attr__( 'After', 'fusion-builder' ),
@@ -949,6 +949,7 @@ function fusion_builder_textdomain_strings() {
 		'chart_bars_note'                             => __( '<strong>IMPORTANT:</strong> If you are using a <span>Bar or Horizontal Bar Chart</span>, the table interface below and available options will change depending on the number of datasets added. This setup is needed in order to ensure maximum flexibility for your chart styling.', 'fusion-builder' ),
 		'add_chart_column'                            => esc_attr__( 'Add Value Column', 'fusion-builder' ),
 		'add_chart_row'                               => esc_attr__( 'Add Data Set', 'fusion-builder' ),
+		'user_login_register_note'                    => esc_attr__( 'Registration confirmation will be emailed to you.', 'fusion-builder' ),
 	);
 
 	return $text_strings;
@@ -1223,6 +1224,9 @@ function fusion_builder_get_social_networks( $defaults ) {
 	}
 	if ( $defaults['vk'] ) {
 		$social_links_array['vk'] = $defaults['vk'];
+	}
+	if ( $defaults['whatsapp'] ) {
+		$social_links_array['whatsapp'] = $defaults['whatsapp'];
 	}
 	if ( $defaults['xing'] ) {
 		$social_links_array['xing'] = $defaults['xing'];
@@ -3726,35 +3730,6 @@ if ( ! function_exists( 'fusion_get_fields_array' ) ) {
 			}
 		}
 		return $fields;
-	}
-}
-
-if ( ! function_exists( 'fusion_auto_calculate_accent_color' ) ) {
-	/**
-	 * Auto calculate accent color, based on provided background color.
-	 *
-	 * @since 1.1.6
-	 * @param  string $color color base value.
-	 * @return string
-	 */
-	function fusion_auto_calculate_accent_color( $color ) {
-		$color_obj = Fusion_Color::new_color( $color );
-
-		// Not black.
-		if ( 0 < $color_obj->lightness ) {
-			if ( 25 > $color_obj->lightness ) {
-
-				// Colors with very little lightness.
-				return $color_obj->getNew( 'lightness', $color_obj->lightness * 4 )->toCSS( 'rgba' );
-			} else if ( 50 > $color_obj->lightness ) {
-				return $color_obj->getNew( 'lightness', $color_obj->lightness * 2 )->toCSS( 'rgba' );
-			} else if ( 50 <= $color_obj->lightness ) {
-				return $color_obj->getNew( 'lightness', $color_obj->lightness / 2 )->toCSS( 'rgba' );
-			}
-		} else {
-			// // Black.
-			return $color_obj->getNew( 'lightness', 70 )->toCSS( 'rgba' );
-		}
 	}
 }
 

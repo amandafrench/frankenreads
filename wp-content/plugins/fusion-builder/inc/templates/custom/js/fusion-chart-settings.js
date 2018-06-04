@@ -21,8 +21,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			},
 
 			toggleAppearance: function() {
-				var chartType = this.$el.find( '#chart_type' ).val(),
-						rows      = this.$el.find( '.fusion-builder-table .fusion-table-row' ).length;
+				var chartType   = this.$el.find( '#chart_type' ).val(),
+						rows        = this.$el.find( '.fusion-builder-table .fusion-table-row' ).length,
+						datasetWrap = this.$el.find( '.fusion-table-builder-chart' );
 
 				if ( ( 'pie' === chartType || 'doughnut' === chartType || 'polarArea' === chartType ) || ( ( 'bar' === chartType || 'horizontalBar' === chartType ) && 1 === rows ) ) {
 
@@ -40,6 +41,15 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					this.$el.find( '.fusion-builder-table .fusion-table-row.tr-1 .td-4 input[type="text"]' ).val( this.$el.find( '.fusion-builder-table thead tr:nth-child(4) .th-5 input[type="text"]' ).val() ).trigger( 'change' );
 
 					this.$el.find( '.fusion-builder-table' ).removeClass( 'showX' ).addClass( 'showY' );
+				}
+
+				// Chart type is changed.
+				if ( ! jQuery( datasetWrap ).hasClass( 'fusion-chart-' + chartType ) ) {
+					jQuery.each( this.$el.find( '#chart_type option' ), function( index, elem ) {
+						jQuery( datasetWrap ).removeClass( 'fusion-chart-' + jQuery( elem ).val() );
+					} );
+
+					jQuery( datasetWrap ).addClass( 'fusion-chart-' + chartType );
 				}
 
 				if ( 'bar' === chartType || 'horizontalBar' === chartType ) {
