@@ -177,10 +177,10 @@ function wdi_load_frontend_scripts()
     }
 
   $wdi_token_error_flag = get_option("wdi_token_error_flag");
-
   wp_localize_script("wdi_frontend", 'wdi_ajax', array(
     'ajax_url' => admin_url('admin-ajax.php'),
-    'wdi_nonce' => wp_create_nonce("wdi_cache")
+    'wdi_nonce' => wp_create_nonce("wdi_cache"),
+    'WDI_MINIFY'=>(WDI_MINIFY) ? 'true' : 'false',
   ), WDI_VERSION);
   wp_localize_script("wdi_frontend", 'wdi_url', array('plugin_url' => WDI_URL . '/',
     'ajax_url' => admin_url('admin-ajax.php')), WDI_VERSION);
