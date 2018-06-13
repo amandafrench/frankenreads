@@ -23,6 +23,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function avada_options_section_advanced( $sections ) {
 
+	$embed_types = array();
+	if ( class_exists( 'Avada_Privacy_Embeds' ) ) {
+		$embed_types    = Avada()->privacy_embeds->get_embed_defaults( true );
+		$embed_defaults = array_keys( $embed_types );
+	}
+
 	$sections['advanced'] = array(
 		'label'    => esc_html__( 'Advanced', 'Avada' ),
 		'id'       => 'heading_advanced',
@@ -263,6 +269,101 @@ function avada_options_section_advanced( $sections ) {
 						'required'    => array(
 							array(
 								'setting'  => 'disable_date_rich_snippet_pages',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
+				),
+			),
+			'privacy' => array(
+				'label'       => esc_html__( 'Privacy', 'Avada' ),
+				'id'          => 'privacy_section',
+				'icon'        => true,
+				'type'        => 'sub-section',
+				'fields'      => array(
+					'privacy_note' => array(
+						'label'       => '',
+						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> The options in this section will help to easier comply with data privacy regulations, like the European GDPR. When the "Embeds Privacy" option is used, Avada will create a cookie with the name <b>"privacy_embeds"</b> on user clients browsing your site to manage and store user consent to load the different third party embeds. You may want to add information about this cookie to your privacy page.', 'Avada' ) . '</div>',
+						'id'          => 'privacy_note',
+						'type'        => 'custom',
+					),
+					'gfonts_load_method' => array(
+						'id'          => 'gfonts_load_method',
+						'label'       => esc_html__( 'Google Fonts Mode', 'Avada' ),
+						'description' => esc_html__( 'When set to "Local", the Google fonts set in Theme Options will be downloaded to your server. Set to "CDN" to use the Google CDN.', 'Avada' ),
+						'type'        => 'radio-buttonset',
+						'default'     => 'cdn',
+						'choices'     => array(
+							'local' => esc_attr__( 'Local', 'Avada' ),
+							'cdn'   => esc_attr__( 'CDN', 'Avada' ),
+						),
+					),
+					'privacy_embeds' => array(
+						'label'       => esc_html__( 'Embeds Privacy', 'Avada' ),
+						'description' => esc_html__( 'Turn on to prevent embeds from loading until user consent is given.', 'Avada' ),
+						'id'          => 'privacy_embeds',
+						'default'     => '0',
+						'type'        => 'switch',
+					),
+					'privacy_expiry' => array(
+						'label'       => esc_html__( 'Embeds Cookie Expiration', 'Avada' ),
+						'description' => esc_html__( 'Controls how long the consent cookie should be stored for.  In days.', 'Avada' ),
+						'id'          => 'privacy_expiry',
+						'default'     => '30',
+						'type'        => 'slider',
+						'choices'     => array(
+							'min'  => '1',
+							'max'  => '366',
+							'step' => '1',
+						),
+						'required'    => array(
+							array(
+								'setting'  => 'privacy_embeds',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
+					'privacy_embed_types' => array(
+						'label'       => esc_html__( 'Embed Types', 'Avada' ),
+						'description' => esc_html__( 'Select the types of embeds which you would like to require consent.', 'Avada' ),
+						'id'          => 'privacy_embed_types',
+						'default'     => $embed_defaults,
+						'type'        => 'select',
+						'multi'       => true,
+						'choices'     => $embed_types,
+						'required'    => array(
+							array(
+								'setting'  => 'privacy_embeds',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
+					'privacy_bg_color' => array(
+						'label'       => esc_html__( 'Embed Placeholder Background Color', 'Avada' ),
+						'description' => esc_html__( 'Controls the background color for the embed placeholders.', 'Avada' ),
+						'id'          => 'privacy_bg_color',
+						'type'        => 'color-alpha',
+						'default'     => 'rgba(0,0,0,0.1)',
+						'required'    => array(
+							array(
+								'setting'  => 'privacy_embeds',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
+					'privacy_color' => array(
+						'label'       => esc_html__( 'Embed Placeholder Text Color', 'Avada' ),
+						'description' => esc_html__( 'Controls the text color for the embed placeholders.', 'Avada' ),
+						'id'          => 'privacy_color',
+						'type'        => 'color-alpha',
+						'default'     => 'rgba(0,0,0,0.3)',
+						'required'    => array(
+							array(
+								'setting'  => 'privacy_embeds',
 								'operator' => '==',
 								'value'    => '1',
 							),

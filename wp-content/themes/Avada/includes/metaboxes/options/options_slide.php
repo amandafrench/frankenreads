@@ -315,13 +315,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	);
 	$this->textarea(
 		'button_1',
-		esc_html__( 'Button #1', 'Avada' ) . '<br/><a href="https://theme-fusion.com/fb-doc/elements/fusion-builder-elements-list/#fbel-buttons" target="_blank">' . esc_html__( 'Click here to view button option descriptions.', 'Avada' ) . '</a>',
+		esc_html__( 'Button #1', 'Avada' ) . '<br/><a href="https://theme-fusion.com/documentation/fusion-builder/elements/fusion-builder-elements-list/#fbel-buttons" target="_blank">' . esc_html__( 'Click here to view button option descriptions.', 'Avada' ) . '</a>',
 		esc_html__( 'Adjust the button shortcode parameters for the first button.', 'Avada' ),
 		'[fusion_button link="" color="default" size="" type="" shape="" target="_self" title="" gradient_colors="|" gradient_hover_colors="|" accent_color="" accent_hover_color="" bevel_color="" border_width="1px" shadow="" icon="" icon_divider="yes" icon_position="left" modal="" animation_type="0" animation_direction="down" animation_speed="0.1" class="" id=""]' . esc_html__( 'Button Text', 'Avada' ) . '[/fusion_button]'
 	);
 	$this->textarea(
 		'button_2',
-		esc_html__( 'Button #2', 'Avada' ) . '<br/><a href="https://theme-fusion.com/fb-doc/elements/fusion-builder-elements-list/#fbel-buttons" target="_blank">' . esc_html__( 'Click here to view button option descriptions.', 'Avada' ) . '</a>',
+		esc_html__( 'Button #2', 'Avada' ) . '<br/><a href="https://theme-fusion.com/documentation/fusion-builder/elements/fusion-builder-elements-list/#fbel-buttons" target="_blank">' . esc_html__( 'Click here to view button option descriptions.', 'Avada' ) . '</a>',
 		esc_html__( 'Adjust the button shortcode parameters for the second button.', 'Avada' ),
 		'[fusion_button link="" color="default" size="" type="" shape="" target="_self" title="" gradient_colors="|" gradient_hover_colors="|" accent_color="" accent_hover_color="" bevel_color="" border_width="1px" shadow="" icon="" icon_divider="yes" icon_position="left" modal="" animation_type="0" animation_direction="down" animation_speed="0.1" class="" id=""]' . esc_html__( 'Button Text', 'Avada' ) . '[/fusion_button]'
 	);

@@ -147,7 +147,6 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	if ( class_exists( 'WooCommerce' ) ) {
 		$link_color_elements[] = '.fusion-woo-featured-products-slider .price .amount';
 		$link_color_elements[] = '#main .product .product_title';
-		$link_color_elements[] = '.shop_table.order_details tr th';
 		$link_color_elements[] = '.widget_layered_nav li.chosen a';
 		$link_color_elements[] = '.widget_layered_nav li.chosen a:before';
 		$link_color_elements[] = '.widget_layered_nav_filters li.chosen a';
@@ -651,9 +650,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global'][ $footer_headings_typography_elements ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'footer_headings_typography', 'letter-spacing' ), 'px' );
 
 	$font_style = Avada()->settings->get( 'footer_headings_typography', 'font-style' );
-	if ( ! empty( $font_style ) ) {
-		$css['global'][ $footer_headings_typography_elements ]['font-style'] = esc_attr( $font_style );
-	}
+	$css['global'][ $footer_headings_typography_elements ]['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
 
 	if ( in_array( Avada()->settings->get( 'footer_special_effects' ), array( 'footer_sticky', 'footer_sticky_with_parallax_bg_image' ) ) ) {
 		$css['global']['html']['height'] = '100%';
@@ -690,9 +687,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $body_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'body_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'body_typography', 'font-style' );
-		if ( ! empty( $font_style ) ) {
-			$css['global'][ $dynamic_css_helpers->implode( $body_typography_elements['family'] ) ]['font-style'] = esc_attr( Avada()->settings->get( 'body_typography', 'font-style' ) );
-		}
+		$css['global'][ $dynamic_css_helpers->implode( $body_typography_elements['family'] ) ]['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
+		$css['global'][ $dynamic_css_helpers->implode( array( '.post-content blockquote', '.review blockquote q' ) ) ]['font-style']          = 'italic';
 	}
 	if ( isset( $body_typography_elements['line-height'] ) ) {
 		$css['global'][ $dynamic_css_helpers->implode( $body_typography_elements['line-height'] ) ]['line-height']    = Fusion_Sanitize::size( Avada()->settings->get( 'body_typography', 'line-height' ) );
@@ -727,9 +723,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global']['.fusion-menu-highlight-label']['border-radius'] = Fusion_Sanitize::size( Avada()->settings->get( 'main_nav_highlight_radius' ) );
 
 	$font_style = Avada()->settings->get( 'nav_typography', 'font-style' );
-	if ( ! empty( $font_style ) ) {
-		$css['global'][ $nav_typography_elements ]['font-style'] = esc_attr( Avada()->settings->get( 'nav_typography', 'font-style' ) );
-	}
+	$css['global'][ $nav_typography_elements ]['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
 
 	if ( class_exists( 'Tribe__Events__Main' ) ) {
 		$elements = array(
@@ -773,9 +767,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $post_title_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'post_title_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'post_title_typography', 'font-style' );
-		if ( ! empty( $font_style ) ) {
-			$css['global'][ $dynamic_css_helpers->implode( $post_title_typography_elements['family'] ) ]['font-style'] = esc_attr( Avada()->settings->get( 'post_title_typography', 'font-style' ) );
-		}
+		$css['global'][ $dynamic_css_helpers->implode( $post_title_typography_elements['family'] ) ]['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
 	}
 	if ( isset( $post_title_typography_elements['size'] ) ) {
 		$css['global'][ $dynamic_css_helpers->implode( $post_title_typography_elements['size'] ) ]['font-size']      = Fusion_Sanitize::size( Avada()->settings->get( 'post_title_typography', 'font-size' ) );
@@ -805,6 +797,73 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 	$css['global']['.ei-title h2']['font-size']   = Fusion_Sanitize::size( Avada()->settings->get( 'es_title_font_size' ) );
 	$css['global']['.ei-title h3']['font-size']   = Fusion_Sanitize::size( Avada()->settings->get( 'es_caption_font_size' ) );
+
+	if ( class_exists( 'bbPress' ) ) {
+
+		$elements = array(
+			'#bbpress-forums',
+			'#bbpress-forums ul.bbp-lead-topic',
+			'#bbpress-forums ul.bbp-topics',
+			'#bbpress-forums ul.bbp-forums',
+			'#bbpress-forums ul.bbp-replies',
+			'#bbpress-forums ul.bbp-search-results',
+			'#bbpress-forums .bbp-reply-header a.bbp-reply-permalink',
+			'#bbpress-forums .bbp-forum-info .bbp-forum-content',
+			'div.bbp-breadcrumb',
+			'div.bbp-topic-tags',
+		);
+
+		$heading_elements = array(
+			'#bbpress-forums li.bbp-header ul',
+			'#bbpress-forums li.bbp-body .bbp-forum-title',
+			'#bbpress-forums li.bbp-body .bbp-forum-topic-count',
+			'#bbpress-forums li.bbp-body .bbp-forum-reply-count',
+			'#bbpress-forums li.bbp-body .bbp-topic-permalink',
+			'#bbpress-forums li.bbp-body .bbp-topic-voice-count',
+			'#bbpress-forums li.bbp-body .bbp-topic-reply-count',
+			'#bbpress-forums fieldset.bbp-form legend',
+		);
+
+		$side_elements = array(
+			'#bbpress-forums div.bbp-reply-author',
+			'#bbpress-forums div.bbp-topic-author',
+			'#bbpress-forums fieldset.bbp-form label',
+			'#bbpress-forums .bbp-reply-form fieldset label',
+			'#bbpress-forums .bbp-reply-form fieldset label',
+			'#bbpress-forums div.bbp-reply-favs',
+		);
+
+		$meta_elements = array(
+			'#bbpress-forums li.bbp-body ul.forum .bbp-forum-freshness',
+			'#bbpress-forums li.bbp-body ul.topic .bbp-topic-freshness',
+			'#bbpress-forums .bbp-forum-info .bbp-forum-content',
+			'#bbpress-forums p.bbp-topic-meta',
+			'.bbp-pagination-count',
+			'#bbpress-forums div.bbp-topic-author .fusion-reply-id',
+			'#bbpress-forums div.bbp-reply-author .fusion-reply-id',
+			'#bbpress-forums .bbp-reply-header .bbp-meta',
+			'#bbpress-forums span.bbp-admin-links a',
+			'#bbpress-forums span.bbp-admin-links',
+			'#bbpress-forums .bbp-topic-content ul.bbp-topic-revision-log',
+			'#bbpress-forums .bbp-reply-content ul.bbp-topic-revision-log',
+			'#bbpress-forums .bbp-reply-content ul.bbp-reply-revision-log',
+			'#bbpress-forums .bbp-reply-header a.bbp-reply-permalink',
+			'#bbpress-forums div.bbp-reply-author span.bbp-author-ip',
+		);
+
+		$elements = array_merge( $elements, $heading_elements, $side_elements, $meta_elements );
+
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['font-size'] = Fusion_Sanitize::size( Avada()->settings->get( 'bbp_forum_base_font_size' ) );
+
+		$bbpress_base_font_size_value = Fusion_Sanitize::number( Fusion_Sanitize::size( Avada()->settings->get( 'bbp_forum_base_font_size' ) ) );
+		$bbpress_base_font_size_unit = Fusion_Sanitize::get_unit( Fusion_Sanitize::size( Avada()->settings->get( 'bbp_forum_base_font_size' ) ) );
+
+		$css['global'][ $dynamic_css_helpers->implode( $heading_elements ) ]['font-size'] = ( 1.25 * $bbpress_base_font_size_value ) . $bbpress_base_font_size_unit;
+		$css['global'][ $dynamic_css_helpers->implode( $side_elements ) ]['font-size'] = ( 1.1 * $bbpress_base_font_size_value ) . $bbpress_base_font_size_unit;
+		$css['global'][ $dynamic_css_helpers->implode( $meta_elements ) ]['font-size'] = ( 1 * $bbpress_base_font_size_value ) . $bbpress_base_font_size_unit;
+
+	}
+
 	$elements = array(
 		'.fusion-image-wrapper .fusion-rollover .fusion-rollover-content .fusion-rollover-categories',
 		'.fusion-image-wrapper .fusion-rollover .fusion-rollover-content .fusion-rollover-categories a',
@@ -813,21 +872,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		'.fusion-single-line-meta',
 		'#wrapper .fusion-events-shortcode .fusion-events-meta h4',
 	);
-	if ( class_exists( 'bbPress' ) ) {
-		$elements[] = '#bbpress-forums li.bbp-body ul.forum .bbp-forum-freshness';
-		$elements[] = '#bbpress-forums li.bbp-body ul.topic .bbp-topic-freshness';
-		$elements[] = '#bbpress-forums .bbp-forum-info .bbp-forum-content';
-		$elements[] = '#bbpress-forums p.bbp-topic-meta';
-		$elements[] = '.bbp-pagination-count';
-		$elements[] = '#bbpress-forums div.bbp-topic-author .fusion-reply-id';
-		$elements[] = '#bbpress-forums div.bbp-reply-author .fusion-reply-id';
-		$elements[] = '#bbpress-forums .bbp-reply-header .bbp-meta';
-		$elements[] = '#bbpress-forums span.bbp-admin-links a';
-		$elements[] = '#bbpress-forums span.bbp-admin-links';
-		$elements[] = '#bbpress-forums .bbp-topic-content ul.bbp-topic-revision-log';
-		$elements[] = '#bbpress-forums .bbp-reply-content ul.bbp-topic-revision-log';
-		$elements[] = '#bbpress-forums .bbp-reply-content ul.bbp-reply-revision-log';
-	}
+
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['font-size']   = Fusion_Sanitize::size( Avada()->settings->get( 'meta_font_size' ) );
 
 	$elements = array(
@@ -1723,13 +1768,8 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global']['.fusion-page-title-bar h3']['font-size']   = Fusion_Sanitize::size( Avada()->settings->get( 'page_title_subheader_font_size' ) );
 	$css['global']['.fusion-page-title-bar h3']['line-height'] = Fusion_Sanitize::add_css_values( array( Fusion_Sanitize::size( Avada()->settings->get( 'page_title_subheader_font_size' ) ), '12px' ) );
 
-	if ( false !== strpos( Avada()->settings->get( 'site_width' ), 'px' ) ) {
-		$margin      = '80px';
-		$half_margin = '40px';
-	} else {
-		$margin      = '6%';
-		$half_margin = '3%';
-	}
+	$single_sidebar_gutter = Avada()->settings->get( 'sidebar_gutter' );
+	$dual_sidebar_gutter   = Avada()->settings->get( 'dual_sidebar_gutter' );
 
 	/**
 	 * Portfolio Styling Options
@@ -1760,7 +1800,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	if ( ! Fusion_Sanitize::get_unit( $sidebar_width ) ) {
 		$sidebar_width = ( 100 > intval( $sidebar_width ) ) ? $sidebar_width . '%' : $sidebar_width . 'px';
 	}
-	$css['global']['body.has-sidebar #content']['width']       = Fusion_Sanitize::add_css_values( array( '100%', '-' . $sidebar_width, '-' . $margin ) );
+	$css['global']['body.has-sidebar #content']['width']       = Fusion_Sanitize::add_css_values( array( '100%', '-' . $sidebar_width, '-' . $single_sidebar_gutter ) );
 	$css['global']['body.has-sidebar #main .sidebar']['width'] = $sidebar_width;
 	/**
 	 * Double-Sidebar layouts
@@ -1773,12 +1813,12 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	if ( ! Fusion_Sanitize::get_unit( $sidebar_2_2_width ) ) {
 		$sidebar_2_2_width = ( 100 > intval( $sidebar_2_2_width ) ) ? $sidebar_2_2_width . '%' : $sidebar_2_2_width . 'px';
 	}
-	$css['global']['body.has-sidebar.double-sidebars #content']['width']               = Fusion_Sanitize::add_css_values( array( '100%', '-' . $sidebar_2_1_width, '-' . $sidebar_2_2_width, '-' . $margin ) );
-	$css['global']['body.has-sidebar.double-sidebars #content']['margin-left']         = Fusion_Sanitize::add_css_values( array( $sidebar_2_1_width, $half_margin ) );
+	$css['global']['body.has-sidebar.double-sidebars #content']['width']               = Fusion_Sanitize::add_css_values( array( '100%', '-' . $sidebar_2_1_width, '-' . $sidebar_2_2_width, '-' . $dual_sidebar_gutter, '-' . $dual_sidebar_gutter ) );
+	$css['global']['body.has-sidebar.double-sidebars #content']['margin-left']         = Fusion_Sanitize::add_css_values( array( $sidebar_2_1_width, $dual_sidebar_gutter ) );
 	$css['global']['body.has-sidebar.double-sidebars #main #sidebar']['width']         = $sidebar_2_1_width;
-	$css['global']['body.has-sidebar.double-sidebars #main #sidebar']['margin-left']   = Fusion_Sanitize::add_css_values( array( $half_margin, '-100%', $sidebar_2_2_width ) );
+	$css['global']['body.has-sidebar.double-sidebars #main #sidebar']['margin-left']   = Fusion_Sanitize::add_css_values( array( $dual_sidebar_gutter, '-100%', $sidebar_2_2_width ) );
 	$css['global']['body.has-sidebar.double-sidebars #main #sidebar-2']['width']       = $sidebar_2_2_width;
-	$css['global']['body.has-sidebar.double-sidebars #main #sidebar-2']['margin-left'] = $half_margin;
+	$css['global']['body.has-sidebar.double-sidebars #main #sidebar-2']['margin-left'] = $dual_sidebar_gutter;
 
 	if ( class_exists( 'Tribe__Events__Main' ) ) {
 		$sidebar_width = Fusion_Sanitize::size( Avada()->settings->get( 'ec_sidebar_width' ) );
@@ -1786,13 +1826,13 @@ function avada_dynamic_css_array( $original_css = array() ) {
 			$sidebar_width = ( 100 > intval( $sidebar_width ) ) ? $sidebar_width . '%' : $sidebar_width . 'px';
 		}
 		if ( '100-width.php' !== tribe_get_option( 'tribeEventsTemplate', 'default' ) ) {
-			$css['global']['.single-tribe_events #content']['width'] = Fusion_Sanitize::add_css_values( array( '100%', '-' . $sidebar_width, '-' . $margin ) );
+			$css['global']['.single-tribe_events #content']['width'] = Fusion_Sanitize::add_css_values( array( '100%', '-' . $sidebar_width, '-' . $single_sidebar_gutter ) );
 			$css['global']['.single-tribe_events #main .sidebar']['width'] = $sidebar_width;
 		}
 		/**
 		 * Single-sidebar Layouts
 		 */
-		$css['global']['body.has-sidebar.single-tribe_events #content']['width']       = Fusion_Sanitize::add_css_values( array( '100%', '-' . $sidebar_width, '-' . $margin ) );
+		$css['global']['body.has-sidebar.single-tribe_events #content']['width']       = Fusion_Sanitize::add_css_values( array( '100%', '-' . $sidebar_width, '-' . $single_sidebar_gutter ) );
 		$css['global']['body.has-sidebar.single-tribe_events #main .sidebar']['width'] = $sidebar_width;
 		/**
 		 * Double-Sidebar layouts
@@ -1805,12 +1845,12 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		if ( ! Fusion_Sanitize::get_unit( $sidebar_2_2_width ) ) {
 			$sidebar_2_2_width = ( 100 > intval( $sidebar_2_2_width ) ) ? $sidebar_2_2_width . '%' : $sidebar_2_2_width . 'px';
 		}
-		$css['global']['body.has-sidebar.double-sidebars.single-tribe_events #content']['width']               = Fusion_Sanitize::add_css_values( array( '100%', '-' . $sidebar_2_1_width, '-' . $sidebar_2_2_width, '-' . $margin ) );
-		$css['global']['body.has-sidebar.double-sidebars.single-tribe_events #content']['margin-left']         = Fusion_Sanitize::add_css_values( array( $sidebar_2_1_width, $half_margin ) );
+		$css['global']['body.has-sidebar.double-sidebars.single-tribe_events #content']['width']               = Fusion_Sanitize::add_css_values( array( '100%', '-' . $sidebar_2_1_width, '-' . $sidebar_2_2_width, '-' . $dual_sidebar_gutter, '-' . $dual_sidebar_gutter ) );
+		$css['global']['body.has-sidebar.double-sidebars.single-tribe_events #content']['margin-left']         = Fusion_Sanitize::add_css_values( array( $sidebar_2_1_width, $dual_sidebar_gutter ) );
 		$css['global']['body.has-sidebar.double-sidebars.single-tribe_events #main #sidebar']['width']         = $sidebar_2_1_width;
-		$css['global']['body.has-sidebar.double-sidebars.single-tribe_events #main #sidebar']['margin-left']   = Fusion_Sanitize::add_css_values( array( $half_margin, '-100%', $sidebar_2_2_width ) );
+		$css['global']['body.has-sidebar.double-sidebars.single-tribe_events #main #sidebar']['margin-left']   = Fusion_Sanitize::add_css_values( array( $dual_sidebar_gutter, '-100%', $sidebar_2_2_width ) );
 		$css['global']['body.has-sidebar.double-sidebars.single-tribe_events #main #sidebar-2']['width']       = $sidebar_2_2_width;
-		$css['global']['body.has-sidebar.double-sidebars.single-tribe_events #main #sidebar-2']['margin-left'] = $half_margin;
+		$css['global']['body.has-sidebar.double-sidebars.single-tribe_events #main #sidebar-2']['margin-left'] = $dual_sidebar_gutter;
 	}
 
 	$elements = array(
@@ -1984,6 +2024,17 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	}
 	$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = Fusion_Sanitize::color( Avada()->settings->get( 'bbp_forum_border_color' ) );
 
+	if ( class_exists( 'bbPress' ) ) {
+
+		$elements = array(
+			'.bbp-topics-front ul.super-sticky',
+			'.bbp-topics ul.super-sticky',
+			'.bbp-topics ul.sticky',
+			'.bbp-forum-content ul.sticky',
+		);
+		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = Fusion_Color::new_color( Fusion_Sanitize::color( Avada()->settings->get( 'primary_color' ) ) )->get_new( 'alpha', '0.2' )->to_css( 'rgba' ) . '!important';
+	}
+
 	if ( 'Dark' === Avada()->settings->get( 'scheme_type' ) ) {
 
 		$css['global']['.fusion-rollover .price .amount']['color'] = '#333333';
@@ -2026,14 +2077,6 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = '#29292A';
 
 		if ( class_exists( 'bbPress' ) ) {
-
-			$elements = array(
-				'.bbp-topics-front ul.super-sticky',
-				'.bbp-topics ul.super-sticky',
-				'.bbp-topics ul.sticky',
-				'.bbp-forum-content ul.sticky',
-			);
-			$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = '#3E3E3E';
 
 			$elements = array(
 				'.bbp-topics-front ul.super-sticky a',
@@ -2236,9 +2279,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h1_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h1_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h1_typography', 'font-style' );
-		if ( ! empty( $font_style ) ) {
-			$css['global'][ $dynamic_css_helpers->implode( $h1_typography_elements['family'] ) ]['font-style'] = esc_attr( Avada()->settings->get( 'h1_typography', 'font-style' ) );
-		}
+		$css['global'][ $dynamic_css_helpers->implode( $h1_typography_elements['family'] ) ]['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
 	}
 	if ( isset( $h1_typography_elements['size'] ) ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h1_typography_elements['size'] ) ]['font-size']        = Fusion_Sanitize::size( Avada()->settings->get( 'h1_typography', 'font-size' ) );
@@ -2255,9 +2296,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h2_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h2_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h2_typography', 'font-style' );
-		if ( ! empty( $font_style ) ) {
-			$css['global'][ $dynamic_css_helpers->implode( $h2_typography_elements['family'] ) ]['font-style'] = esc_attr( Avada()->settings->get( 'h2_typography', 'font-style' ) );
-		}
+		$css['global'][ $dynamic_css_helpers->implode( $h2_typography_elements['family'] ) ]['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
 	}
 	if ( isset( $h2_typography_elements['size'] ) ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h2_typography_elements['size'] ) ]['font-size']      = Fusion_Sanitize::size( Avada()->settings->get( 'h2_typography', 'font-size' ) );
@@ -2274,9 +2313,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h3_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h3_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h3_typography', 'font-style' );
-		if ( ! empty( $font_style ) ) {
-			$css['global'][ $dynamic_css_helpers->implode( $h3_typography_elements['family'] ) ]['font-style'] = esc_attr( Avada()->settings->get( 'h3_typography', 'font-style' ) );
-		}
+		$css['global'][ $dynamic_css_helpers->implode( $h3_typography_elements['family'] ) ]['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
 	}
 	if ( isset( $h3_typography_elements['size'] ) ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h3_typography_elements['size'] ) ]['font-size']      = Fusion_Sanitize::size( Avada()->settings->get( 'h3_typography', 'font-size' ) );
@@ -2293,9 +2330,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h4_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h4_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h4_typography', 'font-style' );
-		if ( ! empty( $font_style ) ) {
-			$css['global'][ $dynamic_css_helpers->implode( $h4_typography_elements['family'] ) ]['font-style'] = esc_attr( Avada()->settings->get( 'h4_typography', 'font-style' ) );
-		}
+		$css['global'][ $dynamic_css_helpers->implode( $h4_typography_elements['family'] ) ]['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
 	}
 	if ( isset( $h4_typography_elements['size'] ) ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h4_typography_elements['size'] ) ]['font-size']      = Fusion_Sanitize::size( Avada()->settings->get( 'h4_typography', 'font-size' ) );
@@ -2315,9 +2350,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h5_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h5_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h5_typography', 'font-style' );
-		if ( ! empty( $font_style ) ) {
-			$css['global'][ $dynamic_css_helpers->implode( $h5_typography_elements['family'] ) ]['font-style'] = esc_attr( Avada()->settings->get( 'h5_typography', 'font-style' ) );
-		}
+		$css['global'][ $dynamic_css_helpers->implode( $h5_typography_elements['family'] ) ]['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
 	}
 	if ( isset( $h5_typography_elements['size'] ) ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h5_typography_elements['size'] ) ]['font-size']      = Fusion_Sanitize::size( Avada()->settings->get( 'h5_typography', 'font-size' ) );
@@ -2334,9 +2367,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h6_typography_elements['family'] ) ]['letter-spacing'] = Fusion_Sanitize::size( Avada()->settings->get( 'h6_typography', 'letter-spacing' ), 'px' );
 
 		$font_style = Avada()->settings->get( 'h6_typography', 'font-style' );
-		if ( ! empty( $font_style ) ) {
-			$css['global'][ $dynamic_css_helpers->implode( $h6_typography_elements['family'] ) ]['font-style'] = esc_attr( Avada()->settings->get( 'h6_typography', 'font-style' ) );
-		}
+		$css['global'][ $dynamic_css_helpers->implode( $h6_typography_elements['family'] ) ]['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
 	}
 	if ( isset( $h6_typography_elements['size'] ) ) {
 		$css['global'][ $dynamic_css_helpers->implode( $h6_typography_elements['size'] ) ]['font-size']      = Fusion_Sanitize::size( Avada()->settings->get( 'h6_typography', 'font-size' ) );
@@ -2644,9 +2675,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	}
 
 	$font_style = Avada()->settings->get( 'body_typography', 'font-style' );
-	if ( ! empty( $font_style ) ) {
-		$css['global'][ $dynamic_css_helpers->implode( $body_typography_elements['family'] ) ]['font-style'] = esc_attr( Avada()->settings->get( 'body_typography', 'font-style' ) );
-	}
+	$css['global'][ $dynamic_css_helpers->implode( $body_typography_elements['family'] ) ]['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
 
 	$elements = array(
 		'.fusion-main-menu > ul > li > a:hover',
@@ -3463,9 +3492,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 	$css['global']['.fusion-mobile-nav-holder > ul > li > a']['font-family'] = $dynamic_css_helpers->combined_font_family( Avada()->settings->get( 'mobile_menu_typography' ) );
 	$css['global']['.fusion-mobile-nav-holder > ul > li > a']['font-weight'] = intval( Avada()->settings->get( 'mobile_menu_typography', 'font-weight' ) );
 	$font_style = Avada()->settings->get( 'mobile_menu_typography', 'font-style' );
-	if ( ! empty( $font_style ) ) {
-		$css['global']['.fusion-mobile-nav-holder > ul > li > a']['font-style'] = esc_attr( $font_style );
-	}
+	$css['global']['.fusion-mobile-nav-holder > ul > li > a']['font-style'] = ( $font_style ) ? esc_attr( $font_style ) : 'normal';
 	$css['global']['.fusion-mobile-selector']['background-color']            = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_background_color' ) );
 	$css['global']['.fusion-mobile-selector']['border-color']                = Fusion_Sanitize::color( Avada()->settings->get( 'mobile_menu_border_color' ) );
 	$css['global']['.fusion-mobile-selector']['font-size']                   = Fusion_Sanitize::size( Avada()->settings->get( 'mobile_menu_typography', 'font-size' ) );
@@ -4464,6 +4491,28 @@ function avada_dynamic_css_array( $original_css = array() ) {
 				$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['left']     = '0';
 				$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['right']    = '0';
 
+			}
+		}
+
+		if ( is_search() || is_404() || is_archive() ) {
+			$header_bg_color = Avada()->settings->get( 'archive_header_bg_color' );
+
+			if ( '' !== Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'header_bg_color' ) ) {
+				$header_bg_color = Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'header_bg_color' );
+			}
+
+			$css[ $mobile_header_min_media_query ]['.fusion-header']['background-color'] = $header_bg_color;
+
+			if ( 1 > Fusion_Color::new_color( $header_bg_color )->alpha ) {
+				$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['position'] = 'absolute';
+				$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['z-index']  = '10000';
+				if ( 'boxed' === fusion_get_option( 'layout', 'page_bg_layout', $c_page_id ) ) {
+					$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['width']     = '100%';
+					$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['max-width'] = Fusion_Sanitize::size( Avada()->settings->get( 'site_width' ) );
+				} else {
+					$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['left']     = '0';
+					$css[ $mobile_header_min_media_query ]['.fusion-header-wrapper']['right']    = '0';
+				}
 			}
 		}
 

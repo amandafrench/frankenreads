@@ -134,6 +134,7 @@ class Avada_Upgrade {
 			'542' => array( '5.4.2', false ),
 			'550' => array( '5.5.0', false ),
 			'551' => array( '5.5.1', false ),
+			'552' => array( '5.5.2', false ),
 		);
 
 		$upgraded = false;
@@ -318,7 +319,7 @@ class Avada_Upgrade {
 				?>
 				<p><strong>The following important changes were made to Avada 3.8.7:</strong></p>
 				<ol>
-					<li><strong>REMOVED:</strong> Fixed Mode for iPad is removed as a theme option. Fixed Mode is moved into a free plugin. <a href="https://theme-fusion.com/avada-doc/fixed-mode-for-ipad-portrait/" target="_blank" rel="noopener noreferrer">Download</a>.</li>
+					<li><strong>REMOVED:</strong> Fixed Mode for iPad is removed as a theme option. Fixed Mode is moved into a free plugin. <a href="https://theme-fusion.com/documentation/avada/fixed-mode-for-ipad-portrait/" target="_blank" rel="noopener noreferrer">Download</a>.</li>
 					<li><strong>CHANGED:</strong> The left/right padding for the 100% Width Page Template &amp; 100% Full Width Container Now Applies To Mobile.</li>
 					<li><strong>CHANGED:</strong> <strong><em>Theme Options -> Header Content Options -> Side Header Responsive Breakpoint</em></strong> was replaced by <strong>Mobile Header Responsive Breakpoint</strong>. It can now be used to control the side header breakpoint as well as the mobile header break point for top headers.</li>
 					<li><strong>CHANGED:</strong> <strong><em>Theme Options -> Menu Options -> Menu Text Align</em></strong> will be followed by header 5. If your menu is no longer in center, please use that option to change the position of the menu.</li>
@@ -339,13 +340,13 @@ class Avada_Upgrade {
 				?>
 				<p><strong>Please view the important update information for Avada 5.1:</strong></p>
 
-				You can view all update information here: <a href="http://theme-fusion.com/avada-doc/install-update/important-update-information/" target="_blank" rel="noopener noreferrer">Important Update Information</a>
+				You can view all update information here: <a href="https://theme-fusion.com/documentation/avada/install-update/important-update-information/" target="_blank" rel="noopener noreferrer">Important Update Information</a>
 				<?php
 			}
 			?>
 			<p>
 				<strong>
-					<a href="http://theme-fusion.com/avada-documentation/changelog.txt" class="view-changelog button-primary" style="margin-top:1em;" target="_blank" rel="noopener noreferrer"><?php esc_attr_e( 'View Changelog', 'Avada' ); ?></a>
+					<a href="https://theme-fusion.com/avada-documentation/changelog.txt" class="view-changelog button-primary" style="margin-top:1em;" target="_blank" rel="noopener noreferrer"><?php esc_attr_e( 'View Changelog', 'Avada' ); ?></a>
 					<a href="<?php echo esc_url( add_query_arg( 'avada_update_notice', '1' ) ); ?>" class="dismiss-notice button-secondary" style="margin:1em 4px 0 4px;"><?php esc_attr_e( 'Dismiss this notice', 'Avada' ); ?></a>
 				</strong>
 			</p>

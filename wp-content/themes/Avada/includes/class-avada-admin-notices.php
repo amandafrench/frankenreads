@@ -65,7 +65,7 @@ class Avada_Admin_Notices {
 
 		$text_strings = array(
 			/* translators: The "Fusion Documentation" link. */
-			'deprecated_side_nav_teamplate' => sprintf( __( 'The \'Side Navigation\' page template will be deprecated in a future version of Avada. We have replaced it with a better solution, the <a href="%s" target="_blank" rel="noopener noreferrer">Avada Vertical Menu widget</a>. This new widget offers the same features but with greater flexibility. It works with the WP menu system. Please utilize this new method instead of the page template which will eventually be removed.', 'Avada' ), 'https://theme-fusion.com/avada-doc/widgets/avada-vertical-and-horizontal-menu-widgets' ),
+			'deprecated_side_nav_teamplate' => sprintf( __( 'The \'Side Navigation\' page template will be deprecated in a future version of Avada. We have replaced it with a better solution, the <a href="%s" target="_blank" rel="noopener noreferrer">Avada Vertical Menu widget</a>. This new widget offers the same features but with greater flexibility. It works with the WP menu system. Please utilize this new method instead of the page template which will eventually be removed.', 'Avada' ), 'https://theme-fusion.com/documentation/avada/widgets/avada-vertical-and-horizontal-menu-widgets/' ),
 		);
 
 		return $text_strings;

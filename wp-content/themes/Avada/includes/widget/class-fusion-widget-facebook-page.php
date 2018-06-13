@@ -83,8 +83,14 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 		?>
 
 		<?php if ( $page_url ) : ?>
+			<?php $consent_needed = class_exists( 'Avada_Privacy_Embeds' ) && Avada()->settings->get( 'privacy_embeds' ) && ! Avada()->privacy_embeds->get_consent( 'facebook' ); ?>
+			<?php if ( $consent_needed ) : ?>
+				<?php echo Avada()->privacy_embeds->script_placeholder( 'facebook' ); // WPCS: XSS ok. ?>
+				<span data-privacy-script="true" data-privacy-type="facebook" class="fusion-hidden">
+			<?php else : ?>
+				<script>
+			<?php endif; ?>
 
-			<script>
 			window.fbAsyncInit = function() {
 				fusion_resize_page_widget();
 
@@ -115,7 +121,12 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 			  js.src = "https://connect.facebook.net/<?php echo esc_attr( $language ); ?>/sdk.js#xfbml=1&version=v2.11&appId=<?php echo esc_attr( $app_id ); ?>";
 			  fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));
-			</script>
+
+			<?php if ( $consent_needed ) : ?>
+				</span>
+			<?php else : ?>
+				</script>
+			<?php endif; ?>
 
 			<div class="fb-like-box-container <?php echo esc_attr( $args['widget_id'] ); ?>" id="fb-root">
 				<div class="fb-page" data-href="<?php echo esc_url_raw( $page_url ); ?>" data-original-width="<?php echo esc_attr( $widget_width ); ?>" data-width="<?php echo esc_attr( $widget_width ); ?>" data-adapt-container-width="true" data-small-header="<?php echo esc_attr( $small_header ); ?>" data-height="<?php echo esc_attr( $height ); ?>" data-hide-cover="<?php echo esc_attr( $show_header ); ?>" data-show-facepile="<?php echo esc_attr( $show_faces ); ?>" data-tabs="<?php echo esc_attr( $tabs ); ?>"></div>

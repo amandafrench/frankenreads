@@ -61,13 +61,13 @@ class Avada_Layout {
 
 		// Append sidebar to after content div.
 		if ( Avada()->template->has_sidebar() && ! Avada()->template->double_sidebars() ) {
-			add_action( 'fusion_after_content', array( $this, 'append_sidebar_single' ) );
+			add_action( 'avada_after_content', array( $this, 'append_sidebar_single' ) );
 			$load_sidebars = true;
 		} elseif ( Avada()->template->double_sidebars() ) {
-			add_action( 'fusion_after_content', array( $this, 'append_sidebar_double' ) );
+			add_action( 'avada_after_content', array( $this, 'append_sidebar_double' ) );
 			$load_sidebars = true;
 		} elseif ( ! Avada()->template->has_sidebar() && ( is_page_template( 'side-navigation.php' ) || is_singular( 'tribe_events' ) ) ) {
-			add_action( 'fusion_after_content', array( $this, 'append_sidebar_single' ) );
+			add_action( 'avada_after_content', array( $this, 'append_sidebar_single' ) );
 			$load_sidebars = true;
 		}
 
@@ -711,28 +711,18 @@ class Avada_Layout {
 			}
 		}
 
+		$body_font_size = 16;
+		$real_body_font_size = Avada()->settings->get( 'body_typography', 'font-size' );
+		if ( 'px' === Fusion_Sanitize::get_unit( $real_body_font_size ) ) {
+			$body_font_size = (int) $real_body_font_size;
+		}
+
 		if ( $sidebar_1_width ) {
-			if ( false !== strpos( $sidebar_1_width, '%' ) ) {
-				$sidebar_1_width = Avada_Helper::percent_to_pixels( $sidebar_1_width, $site_width );
-			} elseif ( false !== strpos( $sidebar_1_width, 'rem' ) ) {
-				$sidebar_1_width = Fusion_Sanitize::number( $sidebar_1_width ) * 16;
-			} elseif ( false !== strpos( $sidebar_1_width, 'em' ) ) {
-				$sidebar_1_width = Avada_Helper::ems_to_pixels( $sidebar_1_width );
-			} else {
-				$sidebar_1_width = intval( $sidebar_1_width );
-			}
+			$sidebar_1_width = Fusion_Sanitize::units_to_px( $sidebar_1_width, $body_font_size, $site_width );
 		}
 
 		if ( $sidebar_2_width ) {
-			if ( false !== strpos( $sidebar_2_width, '%' ) ) {
-				$sidebar_2_width = Avada_Helper::percent_to_pixels( $sidebar_2_width, $site_width );
-			} elseif ( false !== strpos( $sidebar_2_width, 'rem' ) ) {
-				$sidebar_2_width = Fusion_Sanitize::number( $sidebar_2_width ) * 16;
-			} elseif ( false !== strpos( $sidebar_2_width, 'em' ) ) {
-				$sidebar_2_width = Avada_Helper::ems_to_pixels( $sidebar_2_width );
-			} else {
-				$sidebar_2_width = intval( $sidebar_2_width );
-			}
+			$sidebar_2_width = Fusion_Sanitize::units_to_px( $sidebar_2_width, $body_font_size, $site_width );
 		}
 
 		$columns = 1;
@@ -741,13 +731,31 @@ class Avada_Layout {
 		} elseif ( $site_width && $sidebar_1_width ) {
 			$columns = 2;
 		}
+
 		$gutter = ( 1 < $columns ) ? 80 : 0;
-		$extra_gutter = $gutter;
+
+		// If we're not using calc() and we've got more than 1 columns, get the gutter from theme-options.
+		if ( $gutter && false === strpos( Avada()->settings->get( 'sidebar_gutter' ), 'calc' ) ) {
+
+			// Only single sidebar user single sidebar gutter.
+			if ( 2 === $columns ) {
+				$gutter = Fusion_Sanitize::units_to_px( Avada()->settings->get( 'sidebar_gutter' ), $body_font_size, $site_width );
+			} elseif ( 3 === $columns ) {
+				$gutter = Fusion_Sanitize::units_to_px( Avada()->settings->get( 'dual_sidebar_gutter' ), $body_font_size, $site_width );
+			}
+		}
+
+		$gutter = (int) $gutter;
+
+		// If dual sidebar, we need to multiply gutter by 2.
+		if ( 3 === $columns ) {
+			$gutter = $gutter * 2;
+		}
 
 		$sidebar_1_width = (int) $sidebar_1_width;
 		$sidebar_2_width = (int) $sidebar_2_width;
 
-		self::$content_width = $site_width - $sidebar_1_width - $sidebar_2_width - $extra_gutter;
+		self::$content_width = $site_width - $sidebar_1_width - $sidebar_2_width - $gutter;
 
 		return self::$content_width;
 	}
@@ -755,10 +763,10 @@ class Avada_Layout {
 	/**
 	 * Gets the width of each column.
 	 *
-	 * @access  public
+	 * @access public
 	 * @param  int $columns The number of columns.
 	 * @param  int $gutter  The gutter size (in pixels).
-	 * @return  int The column width in pixels.
+	 * @return int The column width in pixels.
 	 */
 	public function get_relative_width( $columns = 1, $gutter = 0 ) {
 		$columns = intval( $columns );

@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<?php if ( get_post_meta( $post->ID, 'pyre_video', true ) ) : ?>
 									<li>
 										<div class="full-video">
-											<?php echo get_post_meta( $post->ID, 'pyre_video', true ); // WPCS: XSS ok. ?>
+											<?php echo apply_filters( 'privacy_iframe_embed', get_post_meta( $post->ID, 'pyre_video', true ) ); // WPCS: XSS ok. ?>
 										</div>
 									</li>
 								<?php endif; ?>

@@ -34,7 +34,7 @@ if ( is_array( $posts ) && ! empty( $posts ) ) : ?>
 					<a href="<?php echo esc_url( tribe_get_event_link( $post ) ); ?>" class="url" rel="bookmark"><?php echo $thumb ?></a>
 				</div>
 				<div class="tribe-related-event-info">
-					<h3 class="tribe-related-events-title summary"><a href="<?php echo tribe_get_event_link( $post ); ?>" class="url" rel="bookmark"><?php echo get_the_title( $post->ID ); ?></a></h3>
+					<h3 class="tribe-related-events-title summary"><a class="fusion-related-posts-title-link" href="<?php echo tribe_get_event_link( $post ); ?>" class="url" rel="bookmark"><?php echo get_the_title( $post->ID ); ?></a></h3>
 					<?php
 						if ( $post->post_type == Tribe__Events__Main::POSTTYPE ) {
 							echo tribe_events_event_schedule_details( $post );

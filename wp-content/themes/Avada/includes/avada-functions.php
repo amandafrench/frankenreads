@@ -522,7 +522,7 @@ if ( ! function_exists( 'avada_nav_woo_cart' ) ) {
 		if ( 'bar' === Avada()->settings->get( 'menu_highlight_style' ) ) {
 			$highlight_class = ' fusion-bar-highlight';
 		}
-		$cart_link_markup = '<a class="' . $cart_link_active_class . $highlight_class . '" href="' . $woo_cart_page_link . '" aria-hidden="true"><span class="menu-text" aria-label="' . esc_html__( 'View Cart', 'Avada' ) . '">' . $cart_link_active_text . '</span></a>';
+		$cart_link_markup = '<a class="' . $cart_link_active_class . $highlight_class . '" href="' . $woo_cart_page_link . '"><span class="menu-text" aria-label="' . esc_html__( 'View Cart', 'Avada' ) . '">' . $cart_link_active_text . '</span></a>';
 
 		if ( $is_enabled ) {
 			if ( is_cart() ) {
@@ -565,7 +565,7 @@ if ( ! function_exists( 'avada_nav_woo_cart' ) ) {
 				$items .= '</div>';
 				$items .= '</div>';
 			} else {
-				$items .= '<a class="' . $cart_link_inactive_class . $highlight_class . '" href="' . $woo_cart_page_link . '" aria-hidden="true"><span class="menu-text" aria-label="' . esc_html__( 'View Cart', 'Avada' ) . '">' . $cart_link_inactive_text . '</span></a>';
+				$items .= '<a class="' . $cart_link_inactive_class . $highlight_class . '" href="' . $woo_cart_page_link . '"><span class="menu-text" aria-label="' . esc_html__( 'View Cart', 'Avada' ) . '">' . $cart_link_inactive_text . '</span></a>';
 			}
 			$items .= '</li>';
 		} // End if().
@@ -667,7 +667,7 @@ if ( ! function_exists( 'avada_add_sliding_bar_icon_to_main_nav' ) ) {
 					}
 
 					$items .= '<li class="fusion-custom-menu-item fusion-main-menu-sliding-bar" data-classes="fusion-main-menu-sliding-bar">';
-						$items .= '<a class="fusion-main-menu-icon fusion-icon-sliding-bar' . $highlight_class . '" href="#" aria-hidden="true" aria-label="' . $sliding_bar_label . '" data-title="' . $sliding_bar_label . '" title="' . $sliding_bar_label . '"></a>';
+						$items .= '<a class="fusion-main-menu-icon fusion-icon-sliding-bar' . $highlight_class . '" href="#" aria-label="' . $sliding_bar_label . '" data-title="' . $sliding_bar_label . '" title="' . $sliding_bar_label . '"></a>';
 					$items .= '</li>';
 				}
 			}
@@ -705,7 +705,7 @@ if ( ! function_exists( 'avada_add_search_to_main_nav' ) ) {
 					if ( 'bar' === Avada()->settings->get( 'menu_highlight_style' ) ) {
 						$highlight_class = ' fusion-bar-highlight';
 					}
-					$items .= '<a class="fusion-main-menu-icon' . $highlight_class . '" href="#" aria-hidden="true" aria-label="' . $search_label . '" data-title="' . $search_label . '" title="' . $search_label . '"></a>';
+					$items .= '<a class="fusion-main-menu-icon' . $highlight_class . '" href="#" aria-label="' . $search_label . '" data-title="' . $search_label . '" title="' . $search_label . '"></a>';
 					$items .= '<div class="fusion-custom-menu-item-contents">';
 					$items .= get_search_form( false );
 					$items .= '</div>';
@@ -931,7 +931,7 @@ function avada_ajax_avada_slider_preview() {
 			<p><?php esc_attr_e( 'This Slider Is Assigned Via Fusion Page Options', 'Avada' ); ?></p>
 			<?php /* translators: The slider. */ ?>
 			<h4 class="fusion-builder-slider-id"><?php printf( esc_html__( 'Slider "%s" cannot be found', 'Avada' ), esc_attr( $slider_demo ) ); ?></h4>
-			<a href="https://theme-fusion.com/avada-doc/sliders/how-to-get-our-demo-sliders/" title="<?php esc_attr_e( 'Learn How To Import Sliders', 'Avada' ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary">
+			<a href="https://theme-fusion.com/documentation/avada/sliders/how-to-get-our-demo-sliders/" title="<?php esc_attr_e( 'Learn How To Import Sliders', 'Avada' ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary">
 				<?php esc_attr_e( 'Learn How To Import Sliders', 'Avada' ); ?>
 			</a> <a href="#" id="avada-slider-remove" title="<?php esc_attr_e( 'Remove Slider', 'Avada' ); ?>" style="margin-left:10px" class="button button-primary"><?php esc_attr_e( 'Remove Slider', 'Avada' ); ?></a>
 		</div>

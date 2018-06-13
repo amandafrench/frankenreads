@@ -53,7 +53,7 @@ class Fusion_Widget_Tabs extends WP_Widget {
 		extract( $args );
 
 		$design_tabs        = isset( $instance['design_tabs'] ) ? $instance['design_tabs'] : 'classic';
-		$design_posts       = isset( $instance['design_posts'] ) ? $instance['design_posts'] : 'image_square';
+		$design_posts       = isset( $instance['design_posts'] ) ? $instance['design_posts'] : 'image_default';
 		$posts              = isset( $instance['posts'] ) ? $instance['posts'] : 3;
 		$comments           = isset( $instance['comments'] ) ? $instance['comments'] : '3';
 		$tags_count         = isset( $instance['tags'] ) ? $instance['tags'] : 3;
@@ -271,7 +271,7 @@ class Fusion_Widget_Tabs extends WP_Widget {
 
 		$defaults = array(
 			'design_tabs'        => 'classic',
-			'design_posts'       => 'image_square',
+			'design_posts'       => 'image_default',
 			'posts'              => 3,
 			'comments'           => '3',
 			'tags'               => 3,
@@ -299,8 +299,9 @@ class Fusion_Widget_Tabs extends WP_Widget {
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'design_posts' ) ); ?>"><?php esc_html_e( 'Post Design:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'design_posts' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'design_posts' ) ); ?>" class="widefat" style="width:100%;">
-				<option value="image_square" <?php echo ( 'image_square' === $instance['design_posts'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Featured Image Square', 'Avada' ); ?></option>
-				<option value="image_circle" <?php echo ( 'image_circle' === $instance['design_posts'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Featured Image Circle', 'Avada' ); ?></option>
+				<option value="image_default" <?php echo ( 'image_default' === $instance['design_posts'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Featured Image / Avatar Default Shape', 'Avada' ); ?></option>
+				<option value="image_square" <?php echo ( 'image_square' === $instance['design_posts'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Featured Image / Avatar Square', 'Avada' ); ?></option>
+				<option value="image_circle" <?php echo ( 'image_circle' === $instance['design_posts'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Featured Image / Avatar Circle', 'Avada' ); ?></option>
 				<option value="post_date" <?php echo ( 'post_date' === $instance['design_posts'] ) ? 'selected="selected"' : ''; ?>><?php esc_html_e( 'Post Date', 'Avada' ); ?></option>
 			</select>
 		</p>

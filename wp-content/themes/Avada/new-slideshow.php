@@ -69,7 +69,7 @@ $size = ( $featured_image_height && $featured_image_width && 'auto' !== $feature
 $size = ( 'auto' === $featured_image_height || 'auto' === $featured_image_width ) ? 'full' : $size;
 $size = ( 'Grid' === $layout || 'masonry' === $layout || 'Timeline' === $layout ) ? 'full' : $size;
 
-$video = get_post_meta( get_the_ID(), 'pyre_video', true );
+$video = apply_filters( 'privacy_iframe_embed', get_post_meta( get_the_ID(), 'pyre_video', true ) );
 ?>
 
 <?php if ( ( has_post_thumbnail() || $video ) && ! post_password_required( get_the_ID() ) ) : ?>

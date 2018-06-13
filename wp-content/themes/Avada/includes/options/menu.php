@@ -80,7 +80,7 @@ function avada_options_section_menu( $sections ) {
 					),
 					'menu_highlight_style' => array(
 						'label'       => esc_html__( 'Main Menu Highlight Style', 'Avada' ),
-						'description' => __( 'Controls the highlight style for main menu links and also affects the look of menu dropdowns. Arrow style cannot work with a transparent header background. <strong>Important:</strong> Arrow & Background style can require configuration of other options depending on desired effect.', 'Avada' ) . ' <a href="http://theme-fusion.com/avada-doc/main-menu-highlight-styles/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'See this post for more information', 'Avada' ) . '</a>.',
+						'description' => __( 'Controls the highlight style for main menu links and also affects the look of menu dropdowns. Arrow style cannot work with a transparent header background. <strong>Important:</strong> Arrow & Background style can require configuration of other options depending on desired effect.', 'Avada' ) . ' <a href="https://theme-fusion.com/documentation/avada/main-menu-highlight-styles/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'See this post for more information', 'Avada' ) . '</a>.',
 						'id'          => 'menu_highlight_style',
 						'default'     => 'bar',
 						'choices'     => array(
@@ -89,7 +89,13 @@ function avada_options_section_menu( $sections ) {
 							'background'   => esc_html__( 'Background', 'Avada' ),
 						),
 						'type'        => 'radio-buttonset',
+						'class'       => 'fusion-or-gutter',
 						'required'    => array(
+							array(
+								'setting'  => 'header_position',
+								'operator' => '!=',
+								'value'    => 'Top',
+							),
 							array(
 								'setting'  => 'header_layout',
 								'operator' => '!=',
@@ -103,7 +109,18 @@ function avada_options_section_menu( $sections ) {
 						'id'          => 'menu_highlight_background',
 						'default'     => '#a0ce4e',
 						'type'        => 'color-alpha',
+						'class'       => 'fusion-gutter-and-or-and',
 						'required'    => array(
+							array(
+								'setting'  => 'menu_highlight_style',
+								'operator' => '==',
+								'value'    => 'background',
+							),
+							array(
+								'setting'  => 'header_position',
+								'operator' => '!=',
+								'value'    => 'Top',
+							),
 							array(
 								'setting'  => 'menu_highlight_style',
 								'operator' => '==',
@@ -126,7 +143,18 @@ function avada_options_section_menu( $sections ) {
 							'height'  => ( isset( $settings['header_position'] ) && 'Top' !== $settings['header_position'] ) ? '23px' : '12px',
 						),
 						'type'        => 'dimensions',
+						'class'       => 'fusion-gutter-and-or-and',
 						'required'    => array(
+							array(
+								'setting'  => 'menu_highlight_style',
+								'operator' => '==',
+								'value'    => 'arrow',
+							),
+							array(
+								'setting'  => 'header_position',
+								'operator' => '!=',
+								'value'    => 'Top',
+							),
 							array(
 								'setting'  => 'menu_highlight_style',
 								'operator' => '==',
@@ -150,7 +178,18 @@ function avada_options_section_menu( $sections ) {
 							'max'  => '40',
 							'step' => '1',
 						),
+						'class'       => 'fusion-gutter-and-or-and',
 						'required'    => array(
+							array(
+								'setting'  => 'menu_highlight_style',
+								'operator' => '==',
+								'value'    => 'bar',
+							),
+							array(
+								'setting'  => 'header_position',
+								'operator' => '!=',
+								'value'    => 'Top',
+							),
 							array(
 								'setting'  => 'menu_highlight_style',
 								'operator' => '==',

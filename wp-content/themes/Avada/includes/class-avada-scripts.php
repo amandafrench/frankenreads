@@ -156,7 +156,7 @@ class Avada_Scripts {
 				self::$version,
 				true,
 			),
-			$scripts[] = array(
+			array(
 				'jquery-sticky-kit',
 				$js_folder_url . '/library/jquery.sticky-kit.js',
 				$js_folder_path . '/library/jquery.sticky-kit.js',
@@ -396,6 +396,17 @@ class Avada_Scripts {
 			);
 		}
 
+		if ( Avada()->settings->get( 'privacy_embeds' ) ) {
+			$scripts[] = array(
+				'avada-privacy',
+				$js_folder_url . '/general/avada-privacy.js',
+				$js_folder_path . '/general/avada-privacy.js',
+				array( 'jquery' ),
+				self::$version,
+				true,
+			);
+		}
+
 		if ( ! class_exists( 'FusionBuilder' ) ) {
 			$scripts[] = array(
 				'fusion-carousel',
@@ -464,6 +475,8 @@ class Avada_Scripts {
 		$avada_rev_styles = get_post_meta( Avada()->fusion_library->get_page_id(), 'pyre_avada_rev_styles', true );
 		$layout           = ( 'boxed' === $page_bg_layout || 'wide' === $page_bg_layout ) ? $page_bg_layout : Avada()->settings->get( 'layout' );
 		$avada_rev_styles = ( 'no' === $avada_rev_styles || ( Avada()->settings->get( 'avada_rev_styles' ) && 'yes' !== $avada_rev_styles ) ) ? 1 : 0;
+
+		$cookie_args = class_exists( 'Avada_Privacy_Embeds' ) ? Avada()->privacy_embeds->get_cookie_args() : false;
 
 		$scripts = array(
 			array(
@@ -636,6 +649,15 @@ class Avada_Scripts {
 					'header_position'   => Avada()->settings->get( 'header_position' ),
 				),
 			),
+			array(
+				'avada-privacy',
+				'avadaPrivacyVars',
+				array(
+					'name'  => $cookie_args ? $cookie_args['name'] : 'privacy_embeds',
+					'days'  => $cookie_args ? $cookie_args['days'] : '30',
+					'path'  => $cookie_args ? $cookie_args['path'] : '/',
+				),
+			),
 		);
 
 		foreach ( $scripts as $script ) {
@@ -682,7 +704,7 @@ class Avada_Scripts {
 			wp_style_add_data( 'avada-IE-fontawesome', 'conditional', 'lte IE 9' );
 		}
 
-		wp_enqueue_style( 'avada-IE', Avada::$template_dir_url . '/assets/css/ie.css', array(), self::$version );
+		wp_enqueue_style( 'avada-IE', Avada::$template_dir_url . '/assets/css/ie.min.css', array(), self::$version );
 		wp_style_add_data( 'avada-IE', 'conditional', 'IE' );
 
 		if ( Avada()->settings->get( 'status_lightbox' ) && class_exists( 'WooCommerce' ) ) {

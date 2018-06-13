@@ -106,7 +106,7 @@ function avada_options_section_contact( $sections ) {
 					'recaptcha_public' => ( Avada::$is_updating || version_compare( PHP_VERSION, '5.3' ) >= 0 ) ? array(
 						'label'           => esc_html__( 'ReCaptcha Site Key', 'Avada' ),
 						/* translators: "our docs" link. */
-						'description'     => sprintf( esc_html__( 'Follow the steps in %s to get the site key.', 'Avada' ), '<a href="http://theme-fusion.com/avada-doc/pages/setting-up-contact-page/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'our docs', 'Avada' ) . '</a>' ),
+						'description'     => sprintf( esc_html__( 'Follow the steps in %s to get the site key.', 'Avada' ), '<a href="https://theme-fusion.com/documentation/avada/pages/setting-up-contact-page/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'our docs', 'Avada' ) . '</a>' ),
 						'id'              => 'recaptcha_public',
 						'default'         => '',
 						'type'            => 'text',
@@ -115,7 +115,7 @@ function avada_options_section_contact( $sections ) {
 					'recaptcha_private' => ( Avada::$is_updating || version_compare( PHP_VERSION, '5.3' ) >= 0 ) ? array(
 						'label'           => esc_html__( 'ReCaptcha Secret Key', 'Avada' ),
 						/* translators: "our docs" link. */
-						'description'     => sprintf( esc_html__( 'Follow the steps in %s to get the secret key.', 'Avada' ), '<a href="http://theme-fusion.com/avada-doc/pages/setting-up-contact-page/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'our docs', 'Avada' ) . '</a>' ),
+						'description'     => sprintf( esc_html__( 'Follow the steps in %s to get the secret key.', 'Avada' ), '<a href="https://theme-fusion.com/documentation/avada/pages/setting-up-contact-page/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'our docs', 'Avada' ) . '</a>' ),
 						'id'              => 'recaptcha_private',
 						'default'         => '',
 						'type'            => 'text',

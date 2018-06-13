@@ -133,7 +133,8 @@
 .ilightbox-thumbnails .ilightbox-thumbnails-grid .ilightbox-thumbnail {
   display: block;
   cursor: pointer;
-  padding: 10px;
+  padding: 0px;
+  margin: 5px;
   position: relative;
 }
 .ilightbox-thumbnails .ilightbox-thumbnails-grid .ilightbox-thumbnail img {

@@ -32,6 +32,13 @@ function avada_options_section_bbpress( $sections ) {
 		'priority' => 3,
 		'icon'     => 'el-icon-person',
 		'fields'   => array(
+			'bbp_forum_base_font_size' => array(
+				'label'       => esc_html__( 'bbPress Forum Base Font Size', 'Avada' ),
+				'description' => esc_html__( 'Controls the base font size for replies. Some related font sizes are automatically calculated from it.', 'Avada' ),
+				'id'          => 'bbp_forum_base_font_size',
+				'default'     => '12px',
+				'type'        => 'dimension',
+			),
 			'bbp_forum_header_bg' => array(
 				'label'       => esc_html__( 'bbPress Forum Header Background Color', 'Avada' ),
 				'description' => esc_html__( 'Controls the background color for forum header rows.', 'Avada' ),
