@@ -1627,6 +1627,12 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 								delete prefixedAttributes.params[ key ];
 							}
 						}
+
+						// Ensures backwards compatibility for register note in user registration element.
+						if ( 'fusion_register' === shortcodeName && 'undefined' === typeof shortcodeAttributes.named.register_note ) {
+							prefixedAttributes.params.register_note = fusionBuilderText.user_login_register_note;
+						}
+
 						elementSettings = _.extend( elementSettings, prefixedAttributes );
 					}
 
@@ -1748,6 +1754,8 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 						break;
 
 					case 'fusion_builder_row_inner':
+
+						FusionPageBuilderEvents.trigger( 'fusion-remove-modal-view' );
 
 						view = new FusionPageBuilder.InnerRowView( viewSettings );
 
@@ -3031,21 +3039,12 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 				output  = '<div class="fusion-icons-rendered" style="height:0px; overflow:hidden;">';
 
 			_.each( icons, function( icon, key ) {
-				output += '<span class="icon_preview icon-' + icon[0] + '"><i class="' + icon[0] + ' ' + icon[1] + '" data-name="' + icon[0].substr( 3 ) + '"></i></span>';
+				output += '<span class="icon_preview icon-' + icon[0] + '"><i class="' + icon[0] + ' ' + icon[1] + '" data-name="' + icon[0].substr( 3 ) + '" data-alt-name="' + icon[2] + '"></i></span>';
 			} );
 			output += '</div>';
 
 			$( 'body' ).append( output );
 
-			if ( 'undefined' !== typeof window['fusion-fontawesome-free-shims'] ) {
-				_.each( window['fusion-fontawesome-free-shims'], function( shim, key ) {
-
-					if ( null !== shim[0] && null !== shim[2] ) {
-							$( '.fusion-icons-rendered' ).find( 'i.fa-' + shim[2] ).attr( 'data-alt-name', shim[0] );
-					}
-
-				} );
-			}
 		} () );
 	} );
 }( jQuery ) );

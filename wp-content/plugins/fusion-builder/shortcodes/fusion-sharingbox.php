@@ -280,13 +280,17 @@ if ( fusion_is_element_enabled( 'fusion_sharing' ) ) {
 					case 'reddit':
 						$social_link = 'http://reddit.com/submit?url=' . $link . '&amp;title=' . $title;
 						break;
-					case 'tumblr':
-						$social_link = 'http://www.tumblr.com/share/link?url=' . rawurlencode( $link ) . '&amp;name=' . rawurlencode( $title ) . '&amp;description=' . rawurlencode( $description );
+					case 'whatsapp':
+						$social_link = 'https://api.whatsapp.com/send?text=' . rawurlencode( $link );
 						break;
 					case 'googleplus':
 						$social_link     = 'https://plus.google.com/share?url=' . $link;
 						$attr['onclick'] = 'javascript:window.open(this.href,\'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600\');return false;';
 						break;
+					case 'tumblr':
+						$social_link = 'http://www.tumblr.com/share/link?url=' . rawurlencode( $link ) . '&amp;name=' . rawurlencode( $title ) . '&amp;description=' . rawurlencode( $description );
+						break;
+
 					case 'pinterest':
 						$social_link = 'http://pinterest.com/pin/create/button/?url=' . rawurlencode( $link ) . '&amp;description=' . rawurlencode( $description ) . '&amp;media=' . $image;
 						break;
@@ -376,15 +380,21 @@ if ( fusion_is_element_enabled( 'fusion_sharing' ) ) {
 					);
 				}
 
-				if ( $fusion_settings->get( 'sharing_tumblr' ) ) {
+				if ( $fusion_settings->get( 'sharing_whatsapp' ) ) {
 					$social_media[] = array(
-						'network' => 'tumblr',
+						'network' => 'whatsapp',
 					);
 				}
 
 				if ( $fusion_settings->get( 'sharing_google' ) ) {
 					$social_media[] = array(
 						'network' => 'googleplus',
+					);
+				}
+
+				if ( $fusion_settings->get( 'sharing_tumblr' ) ) {
+					$social_media[] = array(
+						'network' => 'tumblr',
 					);
 				}
 

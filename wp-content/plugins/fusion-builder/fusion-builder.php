@@ -4,7 +4,7 @@
 Plugin Name: Fusion Builder
 Plugin URI: http://www.theme-fusion.com
 Description: ThemeFusion Page Builder Plugin
-Version: 1.5.1
+Version: 1.5.2
 Author: ThemeFusion
 Author URI: http://www.theme-fusion.com
 */
@@ -21,7 +21,7 @@ if ( ! defined( 'FUSION_BUILDER_DEV_MODE' ) ) {
 
 // Plugin version.
 if ( ! defined( 'FUSION_BUILDER_VERSION' ) ) {
-	define( 'FUSION_BUILDER_VERSION', '1.5.1' );
+	define( 'FUSION_BUILDER_VERSION', '1.5.2' );
 }
 // Plugin Folder Path.
 if ( ! defined( 'FUSION_BUILDER_PLUGIN_DIR' ) ) {
@@ -1069,11 +1069,15 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 					'status_vimeo' => $fusion_settings->get( 'status_vimeo' ),
 				)
 			);
+			$fusion_video_dependencies = array( 'jquery', 'fusion-video-general' );
+			if ( $fusion_settings->get( 'status_vimeo' ) ) {
+				$fusion_video_dependencies = array( 'jquery', 'vimeo-player', 'fusion-video-general' );
+			}
 			Fusion_Dynamic_JS::register_script(
 				'fusion-video',
 				self::$js_folder_url . '/general/fusion-video.js',
 				self::$js_folder_path . '/general/fusion-video.js',
-				array( 'jquery', 'vimeo-player', 'fusion-video-general' ),
+				$fusion_video_dependencies,
 				'1',
 				true
 			);

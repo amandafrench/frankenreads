@@ -257,7 +257,7 @@ function fusion_builder_display_library_content() {
 						<?php // @codingStandardsIgnoreStart ?>
 						<span class="fusion-builder-layout-info"><?php
 						/* translators: The "Fusion Documentation" link. */
-						printf( __( 'Manage your saved containers. Containers cannot be inserted from the library window. The globe icon indicates the element is a <a href="%s" target="_blank">global element</a>.', 'fusion-builder' ), 'https://theme-fusion.com/fb-doc/fusion-builder-global-elements/' );
+						printf( __( 'Manage your saved containers. Containers cannot be inserted from the library window. The globe icon indicates the element is a <a href="%s" target="_blank">global element</a>.', 'fusion-builder' ), 'https://theme-fusion.com/documentation/fusion-builder/technical/page-content-not-parsable-fusion-builder/' );
 						?></span>
 						<?php // @codingStandardsIgnoreEnd ?>
 					</div>
@@ -333,7 +333,7 @@ function fusion_builder_display_library_content() {
 						<?php // @codingStandardsIgnoreStart ?>
 						<span class="fusion-builder-layout-info"><?php
 						/* translators: The "Fusion Documentation" link. */
-						printf( __( 'Manage your saved columns. Columns cannot be inserted from the library window and they must always go inside a container. The globe icon indicates the element is a <a href="%s" target="_blank">global element</a>.', 'fusion-builder' ), 'https://theme-fusion.com/fb-doc/fusion-builder-global-elements/' );
+						printf( __( 'Manage your saved columns. Columns cannot be inserted from the library window and they must always go inside a container. The globe icon indicates the element is a <a href="%s" target="_blank">global element</a>.', 'fusion-builder' ), 'https://theme-fusion.com/documentation/fusion-builder/technical/page-content-not-parsable-fusion-builder/' );
 						?></span>
 						<?php // @codingStandardsIgnoreEnd ?>
 					</div>
@@ -409,7 +409,7 @@ function fusion_builder_display_library_content() {
 						<?php // @codingStandardsIgnoreStart ?>
 						<span class="fusion-builder-layout-info"><?php
 						/* translators: The "Fusion Documentation" link. */
-						printf( __( 'Manage your saved elements. Elements cannot be inserted from the library window and they must always go inside a column. The globe icon indicates the element is a <a href="%s" target="_blank">global element</a>.', 'fusion-builder' ), 'https://theme-fusion.com/fb-doc/fusion-builder-global-elements/' );
+						printf( __( 'Manage your saved elements. Elements cannot be inserted from the library window and they must always go inside a column. The globe icon indicates the element is a <a href="%s" target="_blank">global element</a>.', 'fusion-builder' ), 'https://theme-fusion.com/documentation/fusion-builder/technical/page-content-not-parsable-fusion-builder/' );
 						?></span>
 						<?php // @codingStandardsIgnoreEnd ?>
 					</div>

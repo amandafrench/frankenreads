@@ -204,8 +204,7 @@ class Fusion_Images {
 				// Make sure the original image isn't deleted.
 				preg_match( '/-\d+x\d+(?=\.(jpg|jpeg|png|gif|tiff|svg)$)/i', $source['url'], $matches );
 
-				// @codingStandardsIgnoreLine
-				if ( ! in_array( $width, self::$grid_accepted_widths ) && isset( $matches[0] )  ) {
+				if ( ! in_array( $width, self::$grid_accepted_widths ) && isset( $matches[0] ) ) {
 					unset( $sources[ $width ] );
 				}
 			}
@@ -319,7 +318,6 @@ class Fusion_Images {
 	 * @return string The html markup of the image.
 	 */
 	public function edit_grid_image_src( $html, $post_id = null, $post_thumbnail_id = null, $size = null, $attr = null ) {
-		// @codingStandardsIgnoreLine
 		if ( isset( self::$grid_image_meta['layout'] ) && in_array( self::$grid_image_meta['layout'], self::$supported_grid_layouts ) && 'full' === $size ) {
 			$image_size = $this->get_grid_image_base_size( $post_thumbnail_id, self::$grid_image_meta['layout'], self::$grid_image_meta['columns'] );
 
@@ -344,7 +342,6 @@ class Fusion_Images {
 	 * @return string Image size name.
 	 */
 	public function get_grid_image_base_size( $post_thumbnail_id = null, $layout = null, $columns = null, $match_basis = 'get_closest' ) {
-		// @codingStandardsIgnoreLine
 		global $is_IE;
 		$sizes = array();
 
@@ -396,7 +393,6 @@ class Fusion_Images {
 		}
 
 		// Fallback to 'full' image size if no match was found or Internet Explorer is used.
-		// @codingStandardsIgnoreLine
 		if ( null == $size_name || '' == $size_name || $is_IE ) {
 			$size_name = 'full';
 		}
@@ -582,7 +578,6 @@ class Fusion_Images {
 			// Get the resized images filename.
 			$file = $upload_dir . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '-' . $dims . '.' . $pathinfo['extension'];
 			// Delete the resized image.
-			// @codingStandardsIgnoreLine
 			@unlink( $file );
 		}
 	}

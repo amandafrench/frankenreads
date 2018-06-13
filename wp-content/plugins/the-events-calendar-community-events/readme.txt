@@ -4,8 +4,8 @@ Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tr
 Tags: widget, events, simple, tooltips, grid, month, list, calendar, event, venue, community, registration, api, dates, date, plugin, posts, sidebar, template, theme, time, google maps, google, maps, conference, workshop, concert, meeting, seminar, summit, forum, shortcode, The Events Calendar, The Events Calendar PRO
 Donate link: http://m.tri.be/29
 Requires at least: 4.5
-Tested up to: 4.9.5
-Stable tag: 4.5.11
+Tested up to: 4.9.6
+Stable tag: 4.5.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -151,6 +151,12 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.5.12] 2018-05-29 =
+
+* Fix - Added method with `tribe_community_events_max_file_size_allowed` filter to set the max file size allowed [61354]
+* Tweak - Updated views: `src/views/community/modules/image.php`
+* Language - 0 new strings added, 8 updated, 0 fuzzied, and 0 obsoleted
 
 = [4.5.11] 2018-04-18 =
 

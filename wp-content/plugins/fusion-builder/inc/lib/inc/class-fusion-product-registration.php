@@ -415,12 +415,35 @@ class Fusion_Product_Registration {
 
 						<h3><?php esc_attr_e( 'Instructions For Generating A Token', 'Avada' ); ?></h3>
 						<ol>
-							<?php // @codingStandardsIgnoreStart ?>
-							<li><?php printf( __( 'Click on this <a href="%1$s" target="_blank">Generate A Personal Token</a> link. <strong>IMPORTANT:</strong> You must be logged into the same Themeforest account that purchased %2$s. If you are logged in already, look in the top menu bar to ensure it is the right account. If you are not logged in, you will be directed to login then directed back to the Create A Token Page.', 'Avada' ), 'https://build.envato.com/create-token/?user:username=t&purchase:download=t&purchase:verify=t&purchase:list=t', $this->args['name'] ); ?></li>
-							<li><?php _e( 'Enter a name for your token, then check the boxes for <strong>View Your Envato Account Username, Download Your Purchased Items, List Purchases You\'ve Made</strong> and <strong>Verify Purchases You\'ve Made</strong> from the permissions needed section. Check the box to agree to the terms and conditions, then click the <strong>Create Token button</strong>', 'Avada' ); ?></li>
-							<li><?php _e( 'A new page will load with a token number in a box. Copy the token number then come back to this registration page and paste it into the field below and click the <strong>Submit</strong> button.', 'Avada' ); ?></li>
-							<li><?php printf( __( 'You will see a green check mark for success, or a failure message if something went wrong. If it failed, please make sure you followed the steps above correctly. You can also view our <a %s>documentation post</a> for various fallback methods.', 'Avada' ), 'href="https://theme-fusion.com/avada-doc/getting-started/how-to-register-your-purchase/" target="_blank"' ); ?></li>
-							<?php // @codingStandardsIgnoreEnd ?>
+							<li>
+								<?php
+								printf( // WPCS: XSS ok.
+									/* translators: "Generate A Personal Token" link. */
+									__( 'Click on this %1$s link. <strong>IMPORTANT:</strong> You must be logged into the same Themeforest account that purchased %2$s. If you are logged in already, look in the top menu bar to ensure it is the right account. If you are not logged in, you will be directed to login then directed back to the Create A Token Page.', 'Avada' ), // WPCS: XSS ok.
+									'<a href="https://build.envato.com/create-token/?user:username=t&purchase:download=t&purchase:verify=t&purchase:list=t" target="_blank">' . esc_html__( 'Generate A Personal Token', 'Avada' ) . '</a>',
+									esc_html( $this->args['name'] )
+								);
+								?>
+							</li>
+							<li>
+								<?php
+								_e( 'Enter a name for your token, then check the boxes for <strong>View Your Envato Account Username, Download Your Purchased Items, List Purchases You\'ve Made</strong> and <strong>Verify Purchases You\'ve Made</strong> from the permissions needed section. Check the box to agree to the terms and conditions, then click the <strong>Create Token button</strong>', 'Avada' ); // WPCS: XSS ok.
+								?>
+							</li>
+							<li>
+								<?php
+								_e( 'A new page will load with a token number in a box. Copy the token number then come back to this registration page and paste it into the field below and click the <strong>Submit</strong> button.', 'Avada' ); // WPCS: XSS ok.
+								?>
+							</li>
+							<li>
+								<?php
+								printf(
+									/* translators: "documentation post" link. */
+									esc_html__( 'You will see a green check mark for success, or a failure message if something went wrong. If it failed, please make sure you followed the steps above correctly. You can also view our %s for various fallback methods.', 'Avada' ),
+									'<a href="https://theme-fusion.com/documentation/avada/getting-started/how-to-register-your-purchase/" target="_blank">' . esc_html__( 'documentation post', 'Avada' ) . '</a>'
+								);
+								?>
+							</li>
 						</ol>
 
 					</div>

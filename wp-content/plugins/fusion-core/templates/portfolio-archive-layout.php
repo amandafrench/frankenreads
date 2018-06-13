@@ -105,7 +105,8 @@ $column_spacing_class = ' fusion-col-spacing';
 $column_spacing = ' style="padding:' . ( (int) ( $portfolio_column_spacing / 2 ) ) . 'px;"';
 
 if ( 'one' === $portfolio_columns && 'grid' === $portfolio_layout_setting ) {
-	$column_spacing_class = $column_spacing = '';
+	$column_spacing_class = '';
+	$column_spacing       = '';
 }
 
 // Check pagination type.
@@ -265,8 +266,7 @@ if ( 'no_text' !== $portfolio_text_layout ) {
 									)
 								);
 							}
-							// @codingStandardsIgnoreLine
-							echo fusion_render_first_featured_image_markup( $post->ID, $portfolio_image_size, get_permalink( $post->ID ), true, false, false, 'default', 'default', '', '', 'yes', false, $masonry_attributes );
+							echo fusion_render_first_featured_image_markup( $post->ID, $portfolio_image_size, get_permalink( $post->ID ), true, false, false, 'default', 'default', '', '', 'yes', false, $masonry_attributes ); // WPCS: XSS ok.
 							Avada()->images->set_grid_image_meta( array() );
 							?>
 

@@ -123,6 +123,10 @@ class Fusion_Data {
 				'label' => 'VK',
 				'color' => '#45668e',
 			),
+			'whatsapp'    => array(
+				'label' => 'WhatsApp',
+				'color' => '#77e878',
+			),
 			'xing'       => array(
 				'label' => 'Xing',
 				'color' => '#026466',

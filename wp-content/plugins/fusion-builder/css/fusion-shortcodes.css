@@ -1854,6 +1854,10 @@ Table of Contents
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
+  -webkit-box-align: start;
+  -webkit-align-items: start;
+      -ms-flex-align: start;
+          align-items: start;
 }
 .fusion-blog-layout-medium .fusion-post-slideshow,
 .fusion-blog-layout-medium-alternate .fusion-post-slideshow {
@@ -1864,9 +1868,9 @@ Table of Contents
 .fusion-blog-layout-medium .fusion-post-content,
 .fusion-blog-layout-medium-alternate .fusion-post-content {
   -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  -webkit-flex: 1 1 1px;
+      -ms-flex: 1 1 1px;
+          flex: 1 1 1px;
 }
 .fusion-blog-layout-medium .fusion-meta-info,
 .fusion-blog-layout-medium-alternate .fusion-meta-info {
@@ -2210,6 +2214,15 @@ Table of Contents
 .fusion-load-more-button:hover {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+}
+.fusion-blog-layout-center .fusion-post-content {
+  text-align: center;
+}
+.fusion-blog-layout-left .fusion-post-content {
+  text-align: left;
+}
+.fusion-blog-layout-right .fusion-post-content {
+  text-align: right;
 }
 .fusion-button.button-flat {
   box-shadow: none !important;
@@ -7491,6 +7504,9 @@ html[xmlns] .flexslider .slides {
 .fusion-recent-posts .columns {
   overflow: hidden;
 }
+.fusion-recent-posts .columns .post {
+  margin-bottom: 0;
+}
 .fusion-recent-posts .columns .column {
   overflow: hidden;
   box-sizing: border-box;
@@ -7529,6 +7545,15 @@ html[xmlns] .flexslider .slides {
 }
 .fusion-recent-posts .columns .password {
   width: auto;
+}
+.fusion-recent-posts.fusion-recent-posts-left {
+  text-align: left;
+}
+.fusion-recent-posts.fusion-recent-posts-center {
+  text-align: center;
+}
+.fusion-recent-posts.fusion-recent-posts-right {
+  text-align: right;
 }
 .fusion-recent-posts.layout-thumbnails-on-side .columns .column {
   margin-bottom: 20px;
@@ -9645,6 +9670,9 @@ Table of Contents
 }
 .fusion-icon-yelp:before {
   content: "\ead7";
+}
+.fusion-icon-whatsapp:before {
+  content: "\f232";
 }
 .fusion-icon-xing:before {
   content: "\e4d8";

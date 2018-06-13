@@ -98,4 +98,31 @@ final class Fusion_Helper {
 
 		return $wp_filesystem;
 	}
+
+	/**
+	 * Auto calculate accent color, based on provided background color.
+	 *
+	 * @since 1.5.2
+	 * @param  string $color color base value.
+	 * @return string
+	 */
+	public static function fusion_auto_calculate_accent_color( $color ) {
+		$color_obj = Fusion_Color::new_color( $color );
+
+		// Not black.
+		if ( 0 < $color_obj->lightness ) {
+			if ( 25 > $color_obj->lightness ) {
+
+				// Colors with very little lightness.
+				return $color_obj->getNew( 'lightness', $color_obj->lightness * 4 )->toCSS( 'rgba' );
+			} else if ( 50 > $color_obj->lightness ) {
+				return $color_obj->getNew( 'lightness', $color_obj->lightness * 2 )->toCSS( 'rgba' );
+			} else if ( 50 <= $color_obj->lightness ) {
+				return $color_obj->getNew( 'lightness', $color_obj->lightness / 2 )->toCSS( 'rgba' );
+			}
+		} else {
+			// // Black.
+			return $color_obj->getNew( 'lightness', 70 )->toCSS( 'rgba' );
+		}
+	}
 }

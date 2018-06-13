@@ -301,16 +301,6 @@ class Fusion_Scripts {
 				'1',
 				true,
 			),
-
-			// Necessary?
-			array(
-				'vimeo-player',
-				self::$js_folder_url . '/library/vimeoPlayer.js',
-				self::$js_folder_path . '/library/vimeoPlayer.js',
-				array(),
-				'2.2.1',
-				true,
-			),
 			array(
 				'images-loaded',
 				self::$js_folder_url . '/library/imagesLoaded.js',
@@ -434,6 +424,19 @@ class Fusion_Scripts {
 				true,
 			),
 		);
+
+		// Conditional scripts.
+		if ( fusion_library()->get_option( 'status_vimeo' ) ) {
+			$scripts[] = array(
+				'vimeo-player',
+				self::$js_folder_url . '/library/vimeoPlayer.js',
+				self::$js_folder_path . '/library/vimeoPlayer.js',
+				array(),
+				'2.2.1',
+				true,
+			);
+		}
+
 		foreach ( $scripts as $script ) {
 			Fusion_Dynamic_JS::register_script(
 				$script[0],
@@ -466,7 +469,7 @@ class Fusion_Scripts {
 
 		// Conditional loading for older IE versions.
 		if ( function_exists( 'wp_script_add_data' ) ) {
-			wp_register_script( 'fusion-ie9', self::$js_folder_url . '/general/fusion-ie9.js', array(), '1', true );
+			wp_register_script( 'fusion-ie9', FUSION_LIBRARY_URL . '/assets/min/js/general/fusion-ie9.js', array(), '1', true );
 			wp_enqueue_script( 'fusion-ie9' );
 			wp_script_add_data( 'fusion-ie9', 'conditional', 'IE 9' );
 		}
@@ -657,6 +660,7 @@ class Fusion_Scripts {
 				'typography_responsive'  => fusion_library()->get_option( 'typography_responsive' ) ? true : false,
 				'typography_sensitivity' => fusion_library()->get_option( 'typography_sensitivity' ) ? fusion_library()->get_option( 'typography_sensitivity' ) : 1,
 				'typography_factor'      => fusion_library()->get_option( 'typography_factor' ) ? fusion_library()->get_option( 'typography_factor' ) : 1,
+				'elements'               => apply_filters( 'fusion_responsive_type_elements', 'h1, h2, h3, h4, h5, h6' ),
 			)
 		);
 		Fusion_Dynamic_JS::localize_script(

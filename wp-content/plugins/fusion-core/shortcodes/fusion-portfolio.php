@@ -232,8 +232,6 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 				} else {
 					$defaults['strip_html'] = ( 'yes' === $defaults['strip_html'] );
 				}
-
-				// @codingStandardsIgnoreLine
 				extract( $defaults );
 
 				self::$args = $defaults;
@@ -429,7 +427,19 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 					if ( has_post_thumbnail() || $fusion_settings->get( 'featured_image_placeholder' ) || fusion_get_page_option( 'video', get_the_ID() ) ) {
 
 						// Reset vars.
-						$rich_snippets = $post_classes = $title_terms = $image = $post_title = $post_terms = $separator = $post_content = $buttons = $learn_more_button = $view_project_button = $post_separator = $element_orientation_class = '';
+						$rich_snippets             = '';
+						$post_classes              = '';
+						$title_terms               = '';
+						$image                     = '';
+						$post_title                = '';
+						$post_terms                = '';
+						$separator                 = '';
+						$post_content              = '';
+						$buttons                   = '';
+						$learn_more_button         = '';
+						$view_project_button       = '';
+						$post_separator            = '';
+						$element_orientation_class = '';
 
 						// For carousels we only need the image and a li wrapper.
 						if ( 'carousel' === $layout ) {
@@ -707,7 +717,9 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 					// Other layouts.
 				} else {
 					// Reset vars.
-					$filter_wrapper = $filter = $styles = '';
+					$filter_wrapper = '';
+					$filter         = '';
+					$styles         = '';
 
 					// Setup the filters, if enabled.
 					$portfolio_categories = get_terms( 'portfolio_category' );
@@ -1240,7 +1252,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 								),
 							),
 							'portfolio_columns' => array(
-								'label'       => esc_attr__( 'Number of Columns', 'fusion-builder' ),
+								'label'       => esc_attr__( 'Number of Columns', 'fusion-core' ),
 								'description' => __( 'Set the number of columns per row. With Carousel layout this specifies the maximum amount of columns. <strong>IMPORTANT:</strong> Masonry layout does not work with 1 column.', 'fusion-core' ),
 								'id'          => 'portfolio_columns',
 								'default'     => 3,

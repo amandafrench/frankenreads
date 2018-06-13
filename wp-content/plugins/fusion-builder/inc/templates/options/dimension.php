@@ -1,4 +1,5 @@
 <# if ( 'object' == typeof param.value ) { #>
+	<div class="multi-builder-dimension" id="{{ param.param_name }}">
 	<# _.each( param.value, function( sub_value, sub_param ) { #>
 		<#
 		var dimension_value = ( 'undefined' !== atts.params[ sub_param ] ) ? atts.params[ sub_param ] : sub_value;
@@ -39,10 +40,11 @@
 		}
 		#>
 		<div class="fusion-builder-dimension">
-		<span class="add-on"><i class="{{ icon_class }}"></i></span>
-		<input type="text" name="{{ sub_param }}" id="{{ sub_param }}" value="{{ dimension_value }}" />
+			<span class="add-on"><i class="{{ icon_class }}"></i></span>
+			<input type="text" name="{{ sub_param }}" id="{{ sub_param }}" value="{{ dimension_value }}" />
 		</div>
 	<# } ); #>
+	</div>
 <# } else { #>
 	<#
 	values = option_value.split(' ');

@@ -87,6 +87,7 @@ if ( fusion_is_element_enabled( 'fusion_social_links' ) ) {
 						'dropbox'            => '',
 						'soundcloud'         => '',
 						'vk'                 => '',
+						'whatsapp'           => '',
 						'xing'               => '',
 						'yelp'               => '',
 						'spotify'            => '',
@@ -679,6 +680,13 @@ function fusion_element_social_links() {
 				'heading'     => esc_attr__( 'VK Link', 'fusion-builder' ),
 				'description' => esc_attr__( 'Insert your custom VK link.', 'fusion-builder' ),
 				'param_name'  => 'vk',
+				'value'       => '',
+			),
+			array(
+				'type'        => 'textfield',
+				'heading'     => esc_attr__( 'WhatsApp Link', 'fusion-builder' ),
+				'description' => esc_attr__( 'Insert your custom WhatsApp link.', 'fusion-builder' ),
+				'param_name'  => 'whatsapp',
 				'value'       => '',
 			),
 			array(
