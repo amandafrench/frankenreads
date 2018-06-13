@@ -252,13 +252,23 @@ jQuery( document ).ready( function() {
 
 	( function initIconPicker() {
 			var icons  = fusionMenuConfig.fontawesomeicons,
-				output  = '<div class="fusion-icons-rendered" style="height:0px; overflow:hidden;">';
+				output = '<div class="fusion-icons-rendered" style="height:0px; overflow:hidden;">';
 
 			_.each( icons, function( icon, key ) {
-				output += '<span class="icon_preview icon-' + icon[0] + '"><i class="' + icon[0] + ' ' + icon[1] + '" data-name="' + icon[0].substr( 3 ) + '" data-alt-name="' + icon[2] + '"></i></span>';
+				output += '<span class="icon_preview icon-' + icon[0] + '"><i class="' + icon[0] + ' ' + icon[1] + '" data-name="' + icon[0].substr( 3 ) + '"></i></span>';
 			} );
 			output += '</div>';
 			jQuery( 'body' ).append( output );
+
+			if ( 'undefined' !== typeof window['fusion-fontawesome-free-shims'] ) {
+				_.each( window['fusion-fontawesome-free-shims'], function( shim, key ) {
+
+					if ( null !== shim[0] && null !== shim[2] ) {
+							jQuery( '.fusion-icons-rendered' ).find( 'i.fa-' + shim[2] ).attr( 'data-alt-name', shim[0] );
+					}
+
+				} );
+			}
 
 		} () );
 

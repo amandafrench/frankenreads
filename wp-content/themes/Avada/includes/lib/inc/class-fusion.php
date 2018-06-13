@@ -88,10 +88,6 @@ class Fusion {
 			$fusion_cache->reset_all_caches();
 		}
 
-		if ( is_admin() ) {
-			new Fusion_Privacy();
-		}
-
 		add_action( 'admin_body_class', array( $this, 'admin_body_class' ) );
 	}
 

@@ -16,8 +16,8 @@
 			</h2>
 
 			<div class="changelog">
-				<h3><?php _e( '1.0.14 maintenance Release', 'cbox' ); ?></h3>
-				<p><?php _e( 'The 1.0.14 release brings a number of plugins up to date, and improves compatibility with WordPress 4.7 and BuddyPress 2.7.', 'cbox' ) ?></p>
+				<h3><?php _e( '1.0.17 maintenance Release', 'cbox' ); ?></h3>
+				<p><?php _e( 'The 1.0.17 release brings a number of plugins up to date.', 'cbox' ) ?></p>
 			</div>
 
 			<div class="changelog">
@@ -26,11 +26,14 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following plugins were updated in CBOX:', 'cbox' ); ?></h4>
 					<ul>
-						<li>bbPress 2.5.12</li>
-						<li>BuddyPress 2.7.3</li>
-						<li>BuddyPress Docs 1.9.2</li>
-						<li>BuddyPress Group Email Subscription 3.7.0</li>
-						<li>Invite Anyone 1.3.12</li>
+						<li>BuddyPress 2.9.4</li>
+						<li>BuddyPress Docs 2.0.1</li>
+						<li>BuddyPress Group Email Subscription 3.8.2</li>
+						<li>BuddyPress Groupblog 1.9.0</li>
+						<li>BP MPO Activity Filter 1.2.1</li>
+						<li>BP Reply By Email 1.0-RC6</li>
+						<li>CAC Featured Content 1.0.9</li>
+						<li>Invite Anyone 1.3.20</li>
 					</ul>
 
 				</div>
@@ -42,16 +45,12 @@
 				<div class="feature-section">
 					<h4><?php _e( 'Since the last version release, the following bugfixes and enhancements were added to the Commons In A Box theme:', 'cbox' ); ?></h4>
 					<ul>
-						<li><?php _e( 'Fix bug that prevented secondary profile group tabs from appearing in Edit mode.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fix bug that caused post trackbacks and pingbacks not to appear in some cases.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fix some PHP deprecation and error notices.', 'cbox' ) ?></li>
-						<li><?php _e( 'Fix bug that caused images and other elements not to render properly in theme documentation.', 'cbox' ) ?></li>
+						<li><?php esc_html_e( 'Add search form to Members directory and to Manage > Members page in groups.', 'cbox' ) ?></li>
 					</ul>
 
 				</div>
 			</div>
 
-			<?php /*
 			<div class="changelog">
 				<h3><?php _e( 'Under the Hood', 'cbox' ); ?></h3>
 
@@ -59,12 +58,13 @@
 
 					<div class="last-feature">
 
-						<p>Fixed a bug that could cause errors when installing Commons In A Box on top of an existing BuddyPress installation.</p>
+						<p><?php esc_html_e( 'Introduce new technique for setting plugin defaults at the time of CBOX setup.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fix bug that caused BuddyPress Notifications component not to be activated at CBOX setup.', 'cbox' ); ?></p>
+						<p><?php esc_html_e( 'Fix bug that causes bbPress topic replies not to go through in certain cases.', 'cbox' ); ?></p>
 
 					</div>
 				</div>
 			</div>
-			*/ ?>
 
 			<div class="return-to-dashboard">
 				<?php printf( __( '<a href="%s">Return to the CBOX dashboard &rarr;</a>', 'cbox' ), self_admin_url( 'admin.php?page=cbox' ) ); ?>

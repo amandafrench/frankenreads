@@ -9,10 +9,7 @@
 ?>
 <script type="text/template" id="fusion-builder-block-module-portfolio-preview-template">
 	<h4 class="fusion_module_title"><span class="fusion-module-icon {{ fusionAllElements[element_type].icon }}"></span>{{ fusionAllElements[element_type].name }}</h4>
-	<?php
-	/* translators: The layout. */
-	printf( esc_html__( 'layout = %s', 'fusion-core' ), '{{ params.layout }}' );
-	?>
+	<?php printf( esc_html__( 'layout = %s', 'fusion-core' ), '{{ params.layout }}' ); ?>
 	<br />
 
 	<#
@@ -20,15 +17,9 @@
 	var tags = ( null === params.tag_slug || '' === params.tag_slug ) ? 'All' : params.tag_slug;
 	#>
 	<# if ( 'tag' === params.pull_by ) { #>
-		<?php
-		/* translators: The tags. */
-		printf( esc_html__( 'tags = %s', 'fusion-core' ), '{{ tags }}' );
-		?>
+		<?php printf( esc_html__( 'tags = %s', 'fusion-core' ), '{{ tags }}' ); ?>
 	<# } else { #>
-		<?php
-		/* translators: The categories. */
-		printf( esc_html__( 'categories = %s', 'fusion-core' ), '{{ categories }}' );
-		?>
+		<?php printf( esc_html__( 'categories = %s', 'fusion-core' ), '{{ categories }}' ); ?>
 	<# } #>
 
 </script>

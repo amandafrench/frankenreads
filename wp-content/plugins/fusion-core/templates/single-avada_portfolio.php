@@ -19,7 +19,7 @@ if ( ! class_exists( 'Avada' ) ) {
 	<?php
 	$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 	FusionCore_Plugin::fusion_core_cached_query( $query_string . '&paged=' . $paged );
-	$nav_categories  = ( isset( $_GET['portfolioCats'] ) ) ? wp_unslash( $_GET['portfolioCats'] ) : '';
+	$nav_categories  = ( isset( $_GET['portfolioCats'] ) ) ? $_GET['portfolioCats'] : '';
 	?>
 
 	<?php $post_pagination = get_post_meta( $post->ID, 'pyre_post_pagination', true ); ?>

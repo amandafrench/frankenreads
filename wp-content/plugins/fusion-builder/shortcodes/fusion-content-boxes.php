@@ -506,12 +506,9 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 					}
 				}
 
-				if ( $content ) {
-					$content_output  .= '<div class="fusion-clearfix"></div>';
-					$content_output .= '<div ' . FusionBuilder::attributes( 'content-box-shortcode-content-container' ) . '>' . do_shortcode( $content ) . '</div>';
-				}
-
-				$output          = $heading . $content_output . $link_output;
+				$content_output  = '<div class="fusion-clearfix"></div>';
+				$content_output .= '<div ' . FusionBuilder::attributes( 'content-box-shortcode-content-container' ) . '>' . do_shortcode( $content ) . '</div>' . $link_output;
+				$output          = $heading . $content_output;
 				$timeline        = '';
 
 				if ( $icon && 'yes' === $this->parent_args['icon_circle'] && 'timeline-horizontal' === $this->parent_args['layout'] && '1' != $this->parent_args['columns'] ) {
@@ -1723,7 +1720,7 @@ function fusion_element_content_boxes() {
 					'heading'     => esc_attr__( 'Content', 'fusion-builder' ),
 					'description' => esc_attr__( 'Enter some content for this contentbox', 'fusion-builder' ),
 					'param_name'  => 'element_content',
-					'value'       => '[fusion_content_box title="' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '" backgroundcolor="" icon="" iconflip="" iconrotate="" iconspin="no" iconcolor="" circlecolor="" circlebordercolor="" image="" image_width="" image_height="" link="" linktext="Read More" linktarget="default" animation_type="" animation_direction="left" animation_speed="0.3" ]' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '[/fusion_content_box]',
+					'value'       => '[fusion_content_box title="' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '" backgroundcolor="" icon="" iconflip="" iconrotate="" iconspin="no" iconcolor="" circlecolor="" circlebordercolor="" image="" image_width="35" image_height="35" link="" linktext="Read More" linktarget="default" animation_type="" animation_direction="left" animation_speed="0.3" ]' . esc_attr__( 'Your Content Goes Here', 'fusion-builder' ) . '[/fusion_content_box]',
 				),
 				array(
 					'type'        => 'select',

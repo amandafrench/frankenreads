@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Fusion Core package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Fusion Core 3.5.2\n"
+"Project-Id-Version: Fusion Core 3.5.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/fusion-core\n"
-"POT-Creation-Date: 2018-05-23 07:13:50+00:00\n"
+"POT-Creation-Date: 2018-05-04 18:33:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Add New Skill"
 msgstr ""
 
-#: fusion-core.php:357 shortcodes/fusion-portfolio.php:1901
+#: fusion-core.php:357 shortcodes/fusion-portfolio.php:1889
 msgid "Tags"
 msgstr ""
 
@@ -119,7 +119,7 @@ msgstr ""
 msgid "Not Found"
 msgstr ""
 
-#: fusion-core.php:1030 fusion-core.php:1031
+#: fusion-core.php:1029 fusion-core.php:1030
 msgid "Fusion Patcher"
 msgstr ""
 
@@ -181,142 +181,137 @@ msgstr ""
 msgid "Choose from the most used sliders"
 msgstr ""
 
-#: fusion-slider/class-fusion-slider.php:242
+#: fusion-slider/class-fusion-slider.php:239
 msgid "Export / Import"
 msgstr ""
 
-#: fusion-slider/class-fusion-slider.php:673
+#: fusion-slider/class-fusion-slider.php:663
 msgid "No file to import."
 msgstr ""
 
-#: fusion-slider/class-fusion-slider.php:729
+#: fusion-slider/class-fusion-slider.php:719
 #: fusion-slider/templates/clone-button-after-title.php:19
 msgid "Clone this slide"
 msgstr ""
 
-#: fusion-slider/class-fusion-slider.php:729
-#: fusion-slider/class-fusion-slider.php:749
+#: fusion-slider/class-fusion-slider.php:719
+#: fusion-slider/class-fusion-slider.php:739
 msgid "Clone"
 msgstr ""
 
-#: fusion-slider/class-fusion-slider.php:749
+#: fusion-slider/class-fusion-slider.php:739
 #: fusion-slider/templates/clone-button-edit-form.php:12
 #: fusion-slider/templates/clone-button-edit-form.php:13
 msgid "Clone this slider"
 msgstr ""
 
-#: fusion-slider/class-fusion-slider.php:799
-#: fusion-slider/class-fusion-slider.php:921
-#. translators: The term title.
-#. translators: The post title.
+#: fusion-slider/class-fusion-slider.php:790
+#: fusion-slider/class-fusion-slider.php:910
 msgid "%s ( Cloned )"
 msgstr ""
 
-#: fusion-slider/class-fusion-slider.php:869
+#: fusion-slider/class-fusion-slider.php:860
 msgid "No slide to clone."
 msgstr ""
 
-#: fusion-slider/class-fusion-slider.php:889
-#. translators: The ID found.
-msgid "Cloning failed. Post not found. ID: %s"
+#: fusion-slider/class-fusion-slider.php:880
+msgid "Cloninig failed. Post not found. ID: %s"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:13
-#: fusion-slider/templates/edit-meta-fields.php:13
+#: fusion-slider/templates/add-new-meta-fields.php:12
+#: fusion-slider/templates/edit-meta-fields.php:12
 msgid "Slider Size"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:14
-#: fusion-slider/templates/edit-meta-fields.php:15
+#: fusion-slider/templates/add-new-meta-fields.php:13
+#: fusion-slider/templates/edit-meta-fields.php:14
 msgid "Enter a pixel value for width and height, ex: 1000px"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:18
-#: fusion-slider/templates/add-new-meta-fields.php:72
-#: fusion-slider/templates/edit-meta-fields.php:18
-#: fusion-slider/templates/edit-meta-fields.php:84
+#: fusion-slider/templates/add-new-meta-fields.php:17
+#: fusion-slider/templates/add-new-meta-fields.php:69
+#: fusion-slider/templates/edit-meta-fields.php:17
+#: fusion-slider/templates/edit-meta-fields.php:81
 msgid "Width"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:22
-#: fusion-slider/templates/add-new-meta-fields.php:76
-#: fusion-slider/templates/edit-meta-fields.php:22
-#: fusion-slider/templates/edit-meta-fields.php:88
+#: fusion-slider/templates/add-new-meta-fields.php:21
+#: fusion-slider/templates/add-new-meta-fields.php:73
+#: fusion-slider/templates/edit-meta-fields.php:21
+#: fusion-slider/templates/edit-meta-fields.php:85
 msgid "Height"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:26
-#: fusion-slider/templates/edit-meta-fields.php:27
+#: fusion-slider/templates/add-new-meta-fields.php:25
+#: fusion-slider/templates/edit-meta-fields.php:26
 msgid "Slider Content Max Width"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:28
+#: fusion-slider/templates/add-new-meta-fields.php:27
 msgid ""
 "Controls the width of content, In pixels, ex: 850px. Leave blank for site "
 "width."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:31
-#: fusion-slider/templates/edit-meta-fields.php:34
+#: fusion-slider/templates/add-new-meta-fields.php:30
+#: fusion-slider/templates/edit-meta-fields.php:33
 msgid "Full Screen Slider"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:34
-#: fusion-slider/templates/edit-meta-fields.php:38
+#: fusion-slider/templates/add-new-meta-fields.php:33
+#: fusion-slider/templates/edit-meta-fields.php:37
 msgid "Check this option if you want full width and height of the screen."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:37
-#: fusion-slider/templates/edit-meta-fields.php:42
+#: fusion-slider/templates/add-new-meta-fields.php:36
+#: fusion-slider/templates/edit-meta-fields.php:41
 msgid "Slider Indicator"
+msgstr ""
+
+#: fusion-slider/templates/add-new-meta-fields.php:38
+#: fusion-slider/templates/edit-meta-fields.php:44
+#: shortcodes/fusion-portfolio.php:1338 shortcodes/fusion-portfolio.php:1771
+#: shortcodes/fusion-portfolio.php:1928
+msgid "None"
 msgstr ""
 
 #: fusion-slider/templates/add-new-meta-fields.php:39
 #: fusion-slider/templates/edit-meta-fields.php:45
-#: shortcodes/fusion-portfolio.php:1350 shortcodes/fusion-portfolio.php:1783
-#: shortcodes/fusion-portfolio.php:1940
-msgid "None"
+msgid "Scroll Down Indicator"
 msgstr ""
 
 #: fusion-slider/templates/add-new-meta-fields.php:40
 #: fusion-slider/templates/edit-meta-fields.php:46
-msgid "Scroll Down Indicator"
-msgstr ""
-
-#: fusion-slider/templates/add-new-meta-fields.php:41
-#: fusion-slider/templates/edit-meta-fields.php:47
 msgid "Pagination Circles"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:43
-#: fusion-slider/templates/edit-meta-fields.php:49
+#: fusion-slider/templates/add-new-meta-fields.php:42
+#: fusion-slider/templates/edit-meta-fields.php:48
 msgid "Choose do you want to display paginatin circler or scroll down indicator."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:46
-#: fusion-slider/templates/edit-meta-fields.php:53
+#: fusion-slider/templates/add-new-meta-fields.php:45
+#: fusion-slider/templates/edit-meta-fields.php:52
 msgid "Slider Indicator Color"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:49
-#: fusion-slider/templates/edit-meta-fields.php:57
-#. translators: The default value.
+#: fusion-slider/templates/add-new-meta-fields.php:47
+#: fusion-slider/templates/edit-meta-fields.php:55
 msgid "Default: %s"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:51
-#: fusion-slider/templates/edit-meta-fields.php:59
-#. translators: The default value text.
+#: fusion-slider/templates/add-new-meta-fields.php:48
+#: fusion-slider/templates/edit-meta-fields.php:56
 msgid "Select a color for the slider indicator icon. Hex color code, ex: #fff. %s"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:56
-#: fusion-slider/templates/edit-meta-fields.php:63
+#: fusion-slider/templates/add-new-meta-fields.php:53
+#: fusion-slider/templates/edit-meta-fields.php:60
 msgid "Parallax Scrolling Effect"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:59
-#: fusion-slider/templates/edit-meta-fields.php:67
+#: fusion-slider/templates/add-new-meta-fields.php:56
+#: fusion-slider/templates/edit-meta-fields.php:64
 msgid ""
 "Check this box to have a parallax scrolling effect, this ONLY works when "
 "assigning the slider in page options. It does not work when using a slider "
@@ -325,183 +320,181 @@ msgid ""
 "ex: 500px will show as 415px. Please adjust accordingly."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:62
-#: fusion-slider/templates/edit-meta-fields.php:71
+#: fusion-slider/templates/add-new-meta-fields.php:59
+#: fusion-slider/templates/edit-meta-fields.php:68
 msgid "Display Navigation Arrows"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:65
-#: fusion-slider/templates/edit-meta-fields.php:75
+#: fusion-slider/templates/add-new-meta-fields.php:62
+#: fusion-slider/templates/edit-meta-fields.php:72
 msgid "Check this box to display the navigation arrows."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:68
-#: fusion-slider/templates/edit-meta-fields.php:79
+#: fusion-slider/templates/add-new-meta-fields.php:65
+#: fusion-slider/templates/edit-meta-fields.php:76
 msgid "Navigation Box Size"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:69
+#: fusion-slider/templates/add-new-meta-fields.php:66
 msgid "Enter a pixel value for width and height, ex: 40px"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:80
-#: fusion-slider/templates/edit-meta-fields.php:93
+#: fusion-slider/templates/add-new-meta-fields.php:77
+#: fusion-slider/templates/edit-meta-fields.php:90
 msgid "Navigation Arrow Size"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:82
-#: fusion-slider/templates/edit-meta-fields.php:96
+#: fusion-slider/templates/add-new-meta-fields.php:79
+#: fusion-slider/templates/edit-meta-fields.php:93
 msgid "Enter a pixel value for the arrow size, ex: 14px"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:85
-#: fusion-slider/templates/edit-meta-fields.php:100
+#: fusion-slider/templates/add-new-meta-fields.php:82
+#: fusion-slider/templates/edit-meta-fields.php:97
 msgid "Autoplay"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:88
-#: fusion-slider/templates/edit-meta-fields.php:104
+#: fusion-slider/templates/add-new-meta-fields.php:85
+#: fusion-slider/templates/edit-meta-fields.php:101
 msgid "Check this box to autoplay the slides."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:91
-#: fusion-slider/templates/edit-meta-fields.php:108
+#: fusion-slider/templates/add-new-meta-fields.php:88
+#: fusion-slider/templates/edit-meta-fields.php:105
 msgid "Slide Loop"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:94
-#: fusion-slider/templates/edit-meta-fields.php:112
+#: fusion-slider/templates/add-new-meta-fields.php:91
+#: fusion-slider/templates/edit-meta-fields.php:109
 msgid "Check this box to have the slider loop infinitely."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:97
-#: fusion-slider/templates/edit-meta-fields.php:116
-#: shortcodes/fusion-faq.php:670 shortcodes/fusion-portfolio.php:1980
+#: fusion-slider/templates/add-new-meta-fields.php:94
+#: fusion-slider/templates/edit-meta-fields.php:113
+#: shortcodes/fusion-faq.php:670 shortcodes/fusion-portfolio.php:1968
 msgid "Order By"
+msgstr ""
+
+#: fusion-slider/templates/add-new-meta-fields.php:96
+#: fusion-slider/templates/edit-meta-fields.php:116
+#: shortcodes/fusion-faq.php:675 shortcodes/fusion-portfolio.php:1973
+msgid "Date"
+msgstr ""
+
+#: fusion-slider/templates/add-new-meta-fields.php:97
+#: fusion-slider/templates/edit-meta-fields.php:117
+msgid "ID"
+msgstr ""
+
+#: fusion-slider/templates/add-new-meta-fields.php:98
+#: fusion-slider/templates/edit-meta-fields.php:118
+msgid "Title"
 msgstr ""
 
 #: fusion-slider/templates/add-new-meta-fields.php:99
 #: fusion-slider/templates/edit-meta-fields.php:119
-#: shortcodes/fusion-faq.php:675 shortcodes/fusion-portfolio.php:1985
-msgid "Date"
+msgid "Modified"
 msgstr ""
 
 #: fusion-slider/templates/add-new-meta-fields.php:100
 #: fusion-slider/templates/edit-meta-fields.php:120
-msgid "ID"
-msgstr ""
-
-#: fusion-slider/templates/add-new-meta-fields.php:101
-#: fusion-slider/templates/edit-meta-fields.php:121
-msgid "Title"
+#: shortcodes/fusion-faq.php:682 shortcodes/fusion-portfolio.php:1980
+msgid "Random"
 msgstr ""
 
 #: fusion-slider/templates/add-new-meta-fields.php:102
 #: fusion-slider/templates/edit-meta-fields.php:122
-msgid "Modified"
-msgstr ""
-
-#: fusion-slider/templates/add-new-meta-fields.php:103
-#: fusion-slider/templates/edit-meta-fields.php:123
-#: shortcodes/fusion-faq.php:682 shortcodes/fusion-portfolio.php:1992
-msgid "Random"
-msgstr ""
-
-#: fusion-slider/templates/add-new-meta-fields.php:105
-#: fusion-slider/templates/edit-meta-fields.php:125
 msgid "Defines how the slides should be ordered."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:108
-#: fusion-slider/templates/edit-meta-fields.php:129
-#: shortcodes/fusion-faq.php:687 shortcodes/fusion-portfolio.php:1997
+#: fusion-slider/templates/add-new-meta-fields.php:105
+#: fusion-slider/templates/edit-meta-fields.php:126
+#: shortcodes/fusion-faq.php:687 shortcodes/fusion-portfolio.php:1985
 msgid "Order"
+msgstr ""
+
+#: fusion-slider/templates/add-new-meta-fields.php:107
+#: fusion-slider/templates/edit-meta-fields.php:129
+#: shortcodes/fusion-faq.php:692 shortcodes/fusion-portfolio.php:1990
+msgid "Descending"
+msgstr ""
+
+#: fusion-slider/templates/add-new-meta-fields.php:108
+#: fusion-slider/templates/edit-meta-fields.php:130
+#: shortcodes/fusion-faq.php:693 shortcodes/fusion-portfolio.php:1991
+msgid "Ascending"
 msgstr ""
 
 #: fusion-slider/templates/add-new-meta-fields.php:110
 #: fusion-slider/templates/edit-meta-fields.php:132
-#: shortcodes/fusion-faq.php:692 shortcodes/fusion-portfolio.php:2002
-msgid "Descending"
-msgstr ""
-
-#: fusion-slider/templates/add-new-meta-fields.php:111
-#: fusion-slider/templates/edit-meta-fields.php:133
-#: shortcodes/fusion-faq.php:693 shortcodes/fusion-portfolio.php:2003
-msgid "Ascending"
-msgstr ""
-
-#: fusion-slider/templates/add-new-meta-fields.php:113
-#: fusion-slider/templates/edit-meta-fields.php:135
 msgid "Defines the sorting order of the slides."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:116
-#: fusion-slider/templates/edit-meta-fields.php:139
-#: shortcodes/fusion-portfolio.php:2193 shortcodes/fusion-portfolio.php:2208
-#: shortcodes/fusion-portfolio.php:2226 shortcodes/fusion-portfolio.php:2247
-#: shortcodes/fusion-privacy.php:329 shortcodes/fusion-privacy.php:344
-#: shortcodes/fusion-privacy.php:362 shortcodes/fusion-privacy.php:383
+#: fusion-slider/templates/add-new-meta-fields.php:113
+#: fusion-slider/templates/edit-meta-fields.php:136
+#: shortcodes/fusion-portfolio.php:2181 shortcodes/fusion-portfolio.php:2196
+#: shortcodes/fusion-portfolio.php:2214 shortcodes/fusion-portfolio.php:2235
 msgid "Animation"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:121
-#: fusion-slider/templates/edit-meta-fields.php:145
+#: fusion-slider/templates/add-new-meta-fields.php:118
+#: fusion-slider/templates/edit-meta-fields.php:142
 msgid ""
 "The type of animation when slides rotate.<br/>Please Note: Fade effect does "
 "not work in IE."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:124
-#: fusion-slider/templates/edit-meta-fields.php:149
+#: fusion-slider/templates/add-new-meta-fields.php:121
+#: fusion-slider/templates/edit-meta-fields.php:146
 msgid "Slideshow Speed"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:126
-#: fusion-slider/templates/edit-meta-fields.php:152
+#: fusion-slider/templates/add-new-meta-fields.php:123
+#: fusion-slider/templates/edit-meta-fields.php:149
 msgid "Controls the speed of the slideshow. 1000 = 1 second."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:129
-#: fusion-slider/templates/edit-meta-fields.php:156
+#: fusion-slider/templates/add-new-meta-fields.php:126
+#: fusion-slider/templates/edit-meta-fields.php:153
 msgid "Animation Speed"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:131
-#: fusion-slider/templates/edit-meta-fields.php:159
+#: fusion-slider/templates/add-new-meta-fields.php:128
+#: fusion-slider/templates/edit-meta-fields.php:156
 msgid ""
 "Controls the speed of the slide transition from slide to slide. 1000 = 1 "
 "second."
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:134
-#: fusion-slider/templates/edit-meta-fields.php:163
+#: fusion-slider/templates/add-new-meta-fields.php:131
+#: fusion-slider/templates/edit-meta-fields.php:160
 msgid "Responsive Typography Sensitivity"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:136
-#: fusion-slider/templates/edit-meta-fields.php:166
+#: fusion-slider/templates/add-new-meta-fields.php:133
+#: fusion-slider/templates/edit-meta-fields.php:163
 msgid "Values below 1 decrease resizing, values above 1 increase sizing. ex: .6"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:139
-#: fusion-slider/templates/edit-meta-fields.php:170
+#: fusion-slider/templates/add-new-meta-fields.php:136
+#: fusion-slider/templates/edit-meta-fields.php:167
 msgid "Minimum Font Size Factor"
 msgstr ""
 
-#: fusion-slider/templates/add-new-meta-fields.php:141
-#: fusion-slider/templates/edit-meta-fields.php:173
+#: fusion-slider/templates/add-new-meta-fields.php:138
+#: fusion-slider/templates/edit-meta-fields.php:170
 msgid ""
 "Minimum font factor is used to determine minimum distance between headings "
 "and body type by a multiplying value. ex: 1.5"
 msgstr ""
 
-#: fusion-slider/templates/edit-meta-fields.php:30
+#: fusion-slider/templates/edit-meta-fields.php:29
 msgid ""
 "Controls the width of content,  In pixels, ex: 850px. Leave blank for site "
 "width."
 msgstr ""
 
-#: fusion-slider/templates/edit-meta-fields.php:81
+#: fusion-slider/templates/edit-meta-fields.php:78
 msgid ""
 "Enter a pixel for height. Width accepts pixel and percentage values., ex: "
 "40px"
@@ -527,7 +520,7 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: shortcodes/fusion-faq.php:219 shortcodes/fusion-portfolio.php:738
+#: shortcodes/fusion-faq.php:219 shortcodes/fusion-portfolio.php:726
 msgid "All"
 msgstr ""
 
@@ -684,14 +677,14 @@ msgid "Controls the alignment of the icon."
 msgstr ""
 
 #: shortcodes/fusion-faq.php:545 shortcodes/fusion-faq.php:851
-#: shortcodes/fusion-portfolio.php:1360 shortcodes/fusion-portfolio.php:1801
-#: shortcodes/fusion-portfolio.php:2204 shortcodes/fusion-privacy.php:340
+#: shortcodes/fusion-portfolio.php:1348 shortcodes/fusion-portfolio.php:1789
+#: shortcodes/fusion-portfolio.php:2192
 msgid "Left"
 msgstr ""
 
 #: shortcodes/fusion-faq.php:546 shortcodes/fusion-faq.php:852
-#: shortcodes/fusion-portfolio.php:1362 shortcodes/fusion-portfolio.php:1803
-#: shortcodes/fusion-portfolio.php:2202 shortcodes/fusion-privacy.php:338
+#: shortcodes/fusion-portfolio.php:1350 shortcodes/fusion-portfolio.php:1791
+#: shortcodes/fusion-portfolio.php:2190
 msgid "Right"
 msgstr ""
 
@@ -710,12 +703,11 @@ msgstr ""
 #: shortcodes/fusion-faq.php:633 shortcodes/fusion-faq.php:646
 #: shortcodes/fusion-faq.php:709 shortcodes/fusion-faq.php:721
 #: shortcodes/fusion-faq.php:801 shortcodes/fusion-faq.php:838
-#: shortcodes/fusion-faq.php:850 shortcodes/fusion-portfolio.php:1510
-#: shortcodes/fusion-portfolio.php:1529 shortcodes/fusion-portfolio.php:1594
-#: shortcodes/fusion-portfolio.php:1779 shortcodes/fusion-portfolio.php:1800
-#: shortcodes/fusion-portfolio.php:1936 shortcodes/fusion-portfolio.php:2019
-#: shortcodes/fusion-portfolio.php:2077 shortcodes/fusion-portfolio.php:2241
-#: shortcodes/fusion-privacy.php:377
+#: shortcodes/fusion-faq.php:850 shortcodes/fusion-portfolio.php:1498
+#: shortcodes/fusion-portfolio.php:1517 shortcodes/fusion-portfolio.php:1582
+#: shortcodes/fusion-portfolio.php:1767 shortcodes/fusion-portfolio.php:1788
+#: shortcodes/fusion-portfolio.php:1924 shortcodes/fusion-portfolio.php:2007
+#: shortcodes/fusion-portfolio.php:2065 shortcodes/fusion-portfolio.php:2229
 msgid "Default"
 msgstr ""
 
@@ -729,21 +721,21 @@ msgstr ""
 
 #: shortcodes/fusion-faq.php:647 shortcodes/fusion-faq.php:722
 #: shortcodes/fusion-faq.php:802 shortcodes/fusion-faq.php:839
-#: shortcodes/fusion-portfolio.php:1746 shortcodes/fusion-portfolio.php:1845
-#: shortcodes/fusion-portfolio.php:2078 shortcodes/fusion-portfolio.php:2138
-#: shortcodes/fusion-portfolio.php:2156 shortcodes/fusion-portfolio.php:2174
+#: shortcodes/fusion-portfolio.php:1734 shortcodes/fusion-portfolio.php:1833
+#: shortcodes/fusion-portfolio.php:2066 shortcodes/fusion-portfolio.php:2126
+#: shortcodes/fusion-portfolio.php:2144 shortcodes/fusion-portfolio.php:2162
 msgid "Yes"
 msgstr ""
 
 #: shortcodes/fusion-faq.php:648 shortcodes/fusion-faq.php:723
 #: shortcodes/fusion-faq.php:803 shortcodes/fusion-faq.php:840
-#: shortcodes/fusion-portfolio.php:1747 shortcodes/fusion-portfolio.php:1847
-#: shortcodes/fusion-portfolio.php:2079 shortcodes/fusion-portfolio.php:2139
-#: shortcodes/fusion-portfolio.php:2157 shortcodes/fusion-portfolio.php:2175
+#: shortcodes/fusion-portfolio.php:1735 shortcodes/fusion-portfolio.php:1835
+#: shortcodes/fusion-portfolio.php:2067 shortcodes/fusion-portfolio.php:2127
+#: shortcodes/fusion-portfolio.php:2145 shortcodes/fusion-portfolio.php:2163
 msgid "No"
 msgstr ""
 
-#: shortcodes/fusion-faq.php:654 shortcodes/fusion-portfolio.php:1871
+#: shortcodes/fusion-faq.php:654 shortcodes/fusion-portfolio.php:1859
 msgid "Categories"
 msgstr ""
 
@@ -751,11 +743,11 @@ msgstr ""
 msgid "Select categories to include or leave blank for all."
 msgstr ""
 
-#: shortcodes/fusion-faq.php:662 shortcodes/fusion-portfolio.php:1886
+#: shortcodes/fusion-faq.php:662 shortcodes/fusion-portfolio.php:1874
 msgid "Exclude Categories"
 msgstr ""
 
-#: shortcodes/fusion-faq.php:663 shortcodes/fusion-portfolio.php:1887
+#: shortcodes/fusion-faq.php:663 shortcodes/fusion-portfolio.php:1875
 msgid "Select categories to exclude."
 msgstr ""
 
@@ -763,7 +755,7 @@ msgstr ""
 msgid "Defines how FAQs should be ordered."
 msgstr ""
 
-#: shortcodes/fusion-faq.php:676 shortcodes/fusion-portfolio.php:1986
+#: shortcodes/fusion-faq.php:676 shortcodes/fusion-portfolio.php:1974
 msgid "Post Title"
 msgstr ""
 
@@ -771,19 +763,19 @@ msgstr ""
 msgid "FAQ Order"
 msgstr ""
 
-#: shortcodes/fusion-faq.php:678 shortcodes/fusion-portfolio.php:1988
+#: shortcodes/fusion-faq.php:678 shortcodes/fusion-portfolio.php:1976
 msgid "Post Slug"
 msgstr ""
 
-#: shortcodes/fusion-faq.php:679 shortcodes/fusion-portfolio.php:1989
+#: shortcodes/fusion-faq.php:679 shortcodes/fusion-portfolio.php:1977
 msgid "Author"
 msgstr ""
 
-#: shortcodes/fusion-faq.php:680 shortcodes/fusion-portfolio.php:1990
+#: shortcodes/fusion-faq.php:680 shortcodes/fusion-portfolio.php:1978
 msgid "Number of Comments"
 msgstr ""
 
-#: shortcodes/fusion-faq.php:681 shortcodes/fusion-portfolio.php:1991
+#: shortcodes/fusion-faq.php:681 shortcodes/fusion-portfolio.php:1979
 msgid "Last Modified"
 msgstr ""
 
@@ -868,40 +860,39 @@ msgid "Controls the alignment of FAQ icon."
 msgstr ""
 
 #: shortcodes/fusion-faq.php:858 shortcodes/fusion-fusionslider.php:519
-#: shortcodes/fusion-portfolio.php:2258 shortcodes/fusion-privacy.php:394
+#: shortcodes/fusion-portfolio.php:2246
 msgid "Element Visibility"
 msgstr ""
 
 #: shortcodes/fusion-faq.php:862 shortcodes/fusion-fusionslider.php:523
-#: shortcodes/fusion-portfolio.php:2262 shortcodes/fusion-privacy.php:398
+#: shortcodes/fusion-portfolio.php:2250
 msgid ""
 "Choose to show or hide the element on small, medium or large screens. You "
 "can choose more than one at a time."
 msgstr ""
 
 #: shortcodes/fusion-faq.php:866 shortcodes/fusion-fusionslider.php:527
-#: shortcodes/fusion-portfolio.php:2266 shortcodes/fusion-privacy.php:402
+#: shortcodes/fusion-portfolio.php:2254
 msgid "CSS Class"
 msgstr ""
 
 #: shortcodes/fusion-faq.php:867 shortcodes/fusion-fusionslider.php:530
-#: shortcodes/fusion-portfolio.php:2267 shortcodes/fusion-privacy.php:403
+#: shortcodes/fusion-portfolio.php:2255
 msgid "Add a class to the wrapping HTML element."
 msgstr ""
 
 #: shortcodes/fusion-faq.php:870 shortcodes/fusion-faq.php:878
-#: shortcodes/fusion-portfolio.php:2270 shortcodes/fusion-portfolio.php:2278
-#: shortcodes/fusion-privacy.php:406 shortcodes/fusion-privacy.php:414
+#: shortcodes/fusion-portfolio.php:2258 shortcodes/fusion-portfolio.php:2266
 msgid "General"
 msgstr ""
 
 #: shortcodes/fusion-faq.php:874 shortcodes/fusion-fusionslider.php:534
-#: shortcodes/fusion-portfolio.php:2274 shortcodes/fusion-privacy.php:410
+#: shortcodes/fusion-portfolio.php:2262
 msgid "CSS ID"
 msgstr ""
 
 #: shortcodes/fusion-faq.php:875 shortcodes/fusion-fusionslider.php:537
-#: shortcodes/fusion-portfolio.php:2275 shortcodes/fusion-privacy.php:411
+#: shortcodes/fusion-portfolio.php:2263
 msgid "Add an ID to the wrapping HTML element."
 msgstr ""
 
@@ -915,325 +906,325 @@ msgid ""
 "name next to the number of slides in brackets."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:662
+#: shortcodes/fusion-portfolio.php:652
 #: templates/portfolio-archive-layout.php:356
 msgid "Learn More"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:667
+#: shortcodes/fusion-portfolio.php:657
 msgid "View Project"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:844
+#: shortcodes/fusion-portfolio.php:832
 #: templates/portfolio-archive-layout.php:416
 msgid "Load More Posts"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1238
+#: shortcodes/fusion-portfolio.php:1226
 msgid "Portfolio Element"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1244
+#: shortcodes/fusion-portfolio.php:1232
 msgid "Portfolio Featured Image Size"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1245
+#: shortcodes/fusion-portfolio.php:1233
 msgid ""
 "Controls if the featured image size is fixed (cropped) or auto (full image "
 "ratio) for portfolio elements. <strong>IMPORTANT:</strong> Fixed works best "
 "with a standard 940px site width. Auto works best with larger site widths."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1250 shortcodes/fusion-portfolio.php:1511
+#: shortcodes/fusion-portfolio.php:1238 shortcodes/fusion-portfolio.php:1499
 msgid "Fixed"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1251 shortcodes/fusion-portfolio.php:1512
+#: shortcodes/fusion-portfolio.php:1239 shortcodes/fusion-portfolio.php:1500
 msgid "Auto"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1255 shortcodes/fusion-portfolio.php:1660
+#: shortcodes/fusion-portfolio.php:1243 shortcodes/fusion-portfolio.php:1648
 msgid "Number of Columns"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1256 shortcodes/fusion-portfolio.php:1661
+#: shortcodes/fusion-portfolio.php:1244 shortcodes/fusion-portfolio.php:1649
 msgid ""
 "Set the number of columns per row. With Carousel layout this specifies the "
 "maximum amount of columns. <strong>IMPORTANT:</strong> Masonry layout does "
 "not work with 1 column."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1267 shortcodes/fusion-portfolio.php:1671
+#: shortcodes/fusion-portfolio.php:1255 shortcodes/fusion-portfolio.php:1659
 msgid "Column Spacing"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1268 shortcodes/fusion-portfolio.php:1672
+#: shortcodes/fusion-portfolio.php:1256 shortcodes/fusion-portfolio.php:1660
 msgid "Controls the column spacing for portfolio items."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1279
+#: shortcodes/fusion-portfolio.php:1267
 msgid "Number of Portfolio Items Per Page"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1280
+#: shortcodes/fusion-portfolio.php:1268
 msgid ""
 "Controls the number of posts that display per page for portfolio elements. "
 "Set to -1 to display all. Set to 0 to use the number of posts from Settings "
 "> Reading."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1291
+#: shortcodes/fusion-portfolio.php:1279
 msgid "Portfolio Text Layout"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1292
+#: shortcodes/fusion-portfolio.php:1280
 msgid ""
 "Controls if the portfolio text content is displayed boxed or unboxed or is "
 "completely disabled for portfolio elements."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1297 shortcodes/fusion-portfolio.php:1309
-#: shortcodes/fusion-portfolio.php:1530 shortcodes/fusion-portfolio.php:2020
+#: shortcodes/fusion-portfolio.php:1285 shortcodes/fusion-portfolio.php:1297
+#: shortcodes/fusion-portfolio.php:1518 shortcodes/fusion-portfolio.php:2008
 msgid "No Text"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1298 shortcodes/fusion-portfolio.php:1531
+#: shortcodes/fusion-portfolio.php:1286 shortcodes/fusion-portfolio.php:1519
 msgid "Boxed"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1299 shortcodes/fusion-portfolio.php:1532
+#: shortcodes/fusion-portfolio.php:1287 shortcodes/fusion-portfolio.php:1520
 msgid "Unboxed"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1303
+#: shortcodes/fusion-portfolio.php:1291
 msgid "Portfolio Text Display"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1304
+#: shortcodes/fusion-portfolio.php:1292
 msgid "Choose how to display the post excerpt for portfolio elements."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1310 shortcodes/fusion-portfolio.php:2021
+#: shortcodes/fusion-portfolio.php:1298 shortcodes/fusion-portfolio.php:2009
 msgid "Excerpt"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1311 shortcodes/fusion-portfolio.php:2022
+#: shortcodes/fusion-portfolio.php:1299 shortcodes/fusion-portfolio.php:2010
 msgid "Full Content"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1315 shortcodes/fusion-portfolio.php:2040
+#: shortcodes/fusion-portfolio.php:1303 shortcodes/fusion-portfolio.php:2028
 msgid "Excerpt Length"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1316
+#: shortcodes/fusion-portfolio.php:1304
 msgid "Controls the number of words in the excerpts for portfolio elements."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1334
+#: shortcodes/fusion-portfolio.php:1322
 msgid "Strip HTML from Excerpt"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1335
+#: shortcodes/fusion-portfolio.php:1323
 msgid "Turn on to strip HTML content from the excerpt for portfolio elements."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1341 shortcodes/fusion-portfolio.php:1775
+#: shortcodes/fusion-portfolio.php:1329 shortcodes/fusion-portfolio.php:1763
 msgid "Portfolio Title Display"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1342
+#: shortcodes/fusion-portfolio.php:1330
 msgid "Controls what displays with the portfolio post title for portfolio elements."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1347 shortcodes/fusion-portfolio.php:1780
+#: shortcodes/fusion-portfolio.php:1335 shortcodes/fusion-portfolio.php:1768
 msgid "Title and Categories"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1348 shortcodes/fusion-portfolio.php:1781
+#: shortcodes/fusion-portfolio.php:1336 shortcodes/fusion-portfolio.php:1769
 msgid "Only Title"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1349 shortcodes/fusion-portfolio.php:1782
+#: shortcodes/fusion-portfolio.php:1337 shortcodes/fusion-portfolio.php:1770
 msgid "Only Categories"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1354 shortcodes/fusion-portfolio.php:1796
+#: shortcodes/fusion-portfolio.php:1342 shortcodes/fusion-portfolio.php:1784
 msgid "Portfolio Text Alignment"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1355
+#: shortcodes/fusion-portfolio.php:1343
 msgid ""
 "Controls the alignment of the portfolio title, categories and excerpt text "
 "when using the Portfolio Text layouts in portfolio elements."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1361 shortcodes/fusion-portfolio.php:1802
+#: shortcodes/fusion-portfolio.php:1349 shortcodes/fusion-portfolio.php:1790
 msgid "Center"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1366
+#: shortcodes/fusion-portfolio.php:1354
 msgid "Portfolio Text Layout Padding"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1367
+#: shortcodes/fusion-portfolio.php:1355
 msgid ""
 "Controls the padding for the portfolio text layout when using boxed mode in "
 "portfolio elements."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1392 shortcodes/fusion-portfolio.php:1931
+#: shortcodes/fusion-portfolio.php:1380 shortcodes/fusion-portfolio.php:1919
 msgid "Pagination Type"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1393
+#: shortcodes/fusion-portfolio.php:1381
 msgid "Controls the pagination type for portfolio elements."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1398 shortcodes/fusion-portfolio.php:1937
+#: shortcodes/fusion-portfolio.php:1386 shortcodes/fusion-portfolio.php:1925
 msgid "Pagination"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1399
+#: shortcodes/fusion-portfolio.php:1387
 msgid "Infinite Scroll"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1400 shortcodes/fusion-portfolio.php:1939
+#: shortcodes/fusion-portfolio.php:1388 shortcodes/fusion-portfolio.php:1927
 msgid "Load More Button"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1404
+#: shortcodes/fusion-portfolio.php:1392
 msgid "Load More Posts Button Color"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1405
+#: shortcodes/fusion-portfolio.php:1393
 msgid ""
 "Controls the background color of the load more button for ajax post loading "
 "for portfolio elements."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1460
+#: shortcodes/fusion-portfolio.php:1448
 msgid "All items displayed."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1461
+#: shortcodes/fusion-portfolio.php:1449
 msgid "Loading the next set of posts..."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1486
+#: shortcodes/fusion-portfolio.php:1474
 msgid "Portfolio"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1494
+#: shortcodes/fusion-portfolio.php:1482
 msgid "Layout"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1495
+#: shortcodes/fusion-portfolio.php:1483
 msgid "Select the layout for the element."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1498
+#: shortcodes/fusion-portfolio.php:1486
 msgid "Carousel"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1499
+#: shortcodes/fusion-portfolio.php:1487
 msgid "Grid"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1500
+#: shortcodes/fusion-portfolio.php:1488
 msgid "Masonry"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1506
+#: shortcodes/fusion-portfolio.php:1494
 msgid "Picture Size"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1507
+#: shortcodes/fusion-portfolio.php:1495
 msgid ""
 "fixed = width and height will be fixed <br />auto = width and height will "
 "adjust to the image."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1525
+#: shortcodes/fusion-portfolio.php:1513
 msgid "Text Layout"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1526
+#: shortcodes/fusion-portfolio.php:1514
 msgid ""
 "Controls if the portfolio text content is displayed boxed or unboxed or is "
 "completely disabled."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1545
+#: shortcodes/fusion-portfolio.php:1533
 msgid "Grid Box Color"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1546
+#: shortcodes/fusion-portfolio.php:1534
 msgid ""
 "Controls the background color for the grid boxes. For grid layout this "
 "option will only work in boxed mode."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1565
+#: shortcodes/fusion-portfolio.php:1553
 msgid "Grid Element Color"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1566
+#: shortcodes/fusion-portfolio.php:1554
 msgid "Controls the color of borders of the grid boxes."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1590
+#: shortcodes/fusion-portfolio.php:1578
 msgid "Grid Separator Style"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1591
+#: shortcodes/fusion-portfolio.php:1579
 msgid "Controls the line style of grid separators."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1595
+#: shortcodes/fusion-portfolio.php:1583
 msgid "No Style"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1596
+#: shortcodes/fusion-portfolio.php:1584
 msgid "Single Border Solid"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1597
+#: shortcodes/fusion-portfolio.php:1585
 msgid "Double Border Solid"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1598
+#: shortcodes/fusion-portfolio.php:1586
 msgid "Single Border Dashed"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1599
+#: shortcodes/fusion-portfolio.php:1587
 msgid "Double Border Dashed"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1600
+#: shortcodes/fusion-portfolio.php:1588
 msgid "Single Border Dotted"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1601
+#: shortcodes/fusion-portfolio.php:1589
 msgid "Double Border Dotted"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1602
+#: shortcodes/fusion-portfolio.php:1590
 msgid "Shadow"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1630
+#: shortcodes/fusion-portfolio.php:1618
 msgid "Grid Separator Color"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1631
+#: shortcodes/fusion-portfolio.php:1619
 msgid "Controls the line style color of grid separators."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1682
+#: shortcodes/fusion-portfolio.php:1670
 msgid "Masonry Image Aspect Ratio"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1683
+#: shortcodes/fusion-portfolio.php:1671
 msgid ""
 "Set the ratio to decide when an image should become landscape (ratio being "
 "width : height) and portrait (ratio being height : width). "
@@ -1242,11 +1233,11 @@ msgid ""
 "5.5."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1700
+#: shortcodes/fusion-portfolio.php:1688
 msgid "Masonry 2x2 Width"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1701
+#: shortcodes/fusion-portfolio.php:1689
 msgid ""
 "This option decides when a square 1x1 image should become 2x2. This will "
 "not apply to images that highly favor landscape or portrait layouts. "
@@ -1256,337 +1247,288 @@ msgid ""
 "original ratio. In pixels."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1718
+#: shortcodes/fusion-portfolio.php:1706
 msgid "Content Position"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1719
+#: shortcodes/fusion-portfolio.php:1707
 msgid ""
 "Select if title, terms and excerpts should be displayed below or next to "
 "the featured images."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1723
+#: shortcodes/fusion-portfolio.php:1711
 msgid "Below image"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1724
+#: shortcodes/fusion-portfolio.php:1712
 msgid "Next to Image"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1741
+#: shortcodes/fusion-portfolio.php:1729
 msgid "Equal Heights"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1742
+#: shortcodes/fusion-portfolio.php:1730
 msgid "Set to yes to display grid boxes with equal heights per row."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1764
+#: shortcodes/fusion-portfolio.php:1752
 msgid "Posts Per Page"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1765
+#: shortcodes/fusion-portfolio.php:1753
 msgid ""
 "Select number of posts per page.  Set to -1 to display all. Set to 0 to use "
 "number of posts from Settings > Reading."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1776
+#: shortcodes/fusion-portfolio.php:1764
 msgid "Controls what displays with the portfolio post title."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1797
+#: shortcodes/fusion-portfolio.php:1785
 msgid ""
 "Controls the alignment of the portfolio title, categories and excerpt text "
 "when using the Portfolio Text layouts."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1817
+#: shortcodes/fusion-portfolio.php:1805
 msgid "Portfolio Text Layout Padding "
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1818
+#: shortcodes/fusion-portfolio.php:1806
 msgid ""
 "Controls the padding for the portfolio text layout when using boxed mode. "
 "Enter values including any valid CSS unit, ex: 25px, 25px, 25px, 25px."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1841
+#: shortcodes/fusion-portfolio.php:1829
 msgid "Show Filters"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1842
+#: shortcodes/fusion-portfolio.php:1830
 msgid "Choose to show or hide the category filters."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1846
+#: shortcodes/fusion-portfolio.php:1834
 msgid "Yes without \"All\""
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1860
+#: shortcodes/fusion-portfolio.php:1848
 msgid "Pull Posts By"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1861
+#: shortcodes/fusion-portfolio.php:1849
 msgid "Choose to show posts by category or tag."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1865
+#: shortcodes/fusion-portfolio.php:1853
 msgid "Category"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1866
+#: shortcodes/fusion-portfolio.php:1854
 msgid "Tag"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1872
+#: shortcodes/fusion-portfolio.php:1860
 msgid "Select categories or leave blank for all."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1902
+#: shortcodes/fusion-portfolio.php:1890
 msgid "Select a tag or leave blank for all."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1916
+#: shortcodes/fusion-portfolio.php:1904
 msgid "Exclude Tags"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1917
+#: shortcodes/fusion-portfolio.php:1905
 msgid "Select a tag to exclude."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1932
+#: shortcodes/fusion-portfolio.php:1920
 msgid "Choose the type of pagination."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1938
+#: shortcodes/fusion-portfolio.php:1926
 msgid "Infinite Scrolling"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1952
+#: shortcodes/fusion-portfolio.php:1940
 msgid "Hide URL Parameter"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1953
+#: shortcodes/fusion-portfolio.php:1941
 msgid ""
 "Turn on to remove portfolio category parameters in single post URLs. These "
 "are mainly used for single item pagination within selected categories."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1957
+#: shortcodes/fusion-portfolio.php:1945
 msgid "On"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1958
+#: shortcodes/fusion-portfolio.php:1946
 msgid "Off"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1970
+#: shortcodes/fusion-portfolio.php:1958
 msgid "Post Offset"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1971
+#: shortcodes/fusion-portfolio.php:1959
 msgid "The number of posts to skip. ex: 1."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1981
+#: shortcodes/fusion-portfolio.php:1969
 msgid "Defines how portfolios should be ordered."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1987
+#: shortcodes/fusion-portfolio.php:1975
 msgid "Portfolio Order"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:1998
+#: shortcodes/fusion-portfolio.php:1986
 msgid "Defines the sorting order of portfolios."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2015
+#: shortcodes/fusion-portfolio.php:2003
 msgid "Text Display"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2016
+#: shortcodes/fusion-portfolio.php:2004
 msgid "Choose how to display the post excerpt."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2041
+#: shortcodes/fusion-portfolio.php:2029
 msgid "Insert the number of words/characters you want to show in the excerpt."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2073
+#: shortcodes/fusion-portfolio.php:2061
 msgid "Strip HTML"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2074
+#: shortcodes/fusion-portfolio.php:2062
 msgid "Strip HTML from the post excerpt."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2102
+#: shortcodes/fusion-portfolio.php:2090
 msgid "Carousel Layout"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2103
+#: shortcodes/fusion-portfolio.php:2091
 msgid "Choose to show titles on rollover image, or below image."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2106
+#: shortcodes/fusion-portfolio.php:2094
 msgid "Title below image"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2107
+#: shortcodes/fusion-portfolio.php:2095
 msgid "Title on rollover"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2120
+#: shortcodes/fusion-portfolio.php:2108
 msgid "Carousel Scroll Items"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2121
+#: shortcodes/fusion-portfolio.php:2109
 msgid ""
 "Insert the amount of items to scroll. Leave empty to scroll number of "
 "visible items."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2134
+#: shortcodes/fusion-portfolio.php:2122
 msgid "Carousel Autoplay"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2135
+#: shortcodes/fusion-portfolio.php:2123
 msgid "Choose to autoplay the carousel."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2152
+#: shortcodes/fusion-portfolio.php:2140
 msgid "Carousel Show Navigation"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2153
+#: shortcodes/fusion-portfolio.php:2141
 msgid "Choose to show navigation buttons on the carousel."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2170
+#: shortcodes/fusion-portfolio.php:2158
 msgid "Carousel Mouse Scroll"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2171
+#: shortcodes/fusion-portfolio.php:2159
 msgid "Choose to enable mouse drag control on the carousel."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2188 shortcodes/fusion-privacy.php:324
+#: shortcodes/fusion-portfolio.php:2176
 msgid "Animation Type"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2189 shortcodes/fusion-privacy.php:325
+#: shortcodes/fusion-portfolio.php:2177
 msgid "Select the type of animation to use on the element."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2197 shortcodes/fusion-privacy.php:333
+#: shortcodes/fusion-portfolio.php:2185
 msgid "Direction of Animation"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2198 shortcodes/fusion-privacy.php:334
+#: shortcodes/fusion-portfolio.php:2186
 msgid "Select the incoming direction for the animation."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2201 shortcodes/fusion-privacy.php:337
+#: shortcodes/fusion-portfolio.php:2189
 msgid "Top"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2203 shortcodes/fusion-privacy.php:339
+#: shortcodes/fusion-portfolio.php:2191
 msgid "Bottom"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2205 shortcodes/fusion-privacy.php:341
+#: shortcodes/fusion-portfolio.php:2193
 msgid "Static"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2219 shortcodes/fusion-privacy.php:355
+#: shortcodes/fusion-portfolio.php:2207
 msgid "Speed of Animation"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2220 shortcodes/fusion-privacy.php:356
+#: shortcodes/fusion-portfolio.php:2208
 msgid "Type in speed of animation in seconds (0.1 - 1)."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2237 shortcodes/fusion-privacy.php:373
+#: shortcodes/fusion-portfolio.php:2225
 msgid "Offset of Animation"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2238 shortcodes/fusion-privacy.php:374
+#: shortcodes/fusion-portfolio.php:2226
 msgid "Controls when the animation should start."
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2242 shortcodes/fusion-privacy.php:378
+#: shortcodes/fusion-portfolio.php:2230
 msgid "Top of element hits bottom of viewport"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2243 shortcodes/fusion-privacy.php:379
+#: shortcodes/fusion-portfolio.php:2231
 msgid "Top of element hits middle of viewport"
 msgstr ""
 
-#: shortcodes/fusion-portfolio.php:2244 shortcodes/fusion-privacy.php:380
+#: shortcodes/fusion-portfolio.php:2232
 msgid "Bottom of element enters viewport"
 msgstr ""
 
-#: shortcodes/fusion-privacy.php:143
-msgid "Update"
-msgstr ""
-
-#: shortcodes/fusion-privacy.php:272
-msgid "Your embed preferences have been updated."
-msgstr ""
-
-#: shortcodes/fusion-privacy.php:274
-msgid "Your embed preferences have been cleared."
-msgstr ""
-
-#: shortcodes/fusion-privacy.php:297
-msgid "Privacy"
-msgstr ""
-
-#: shortcodes/fusion-privacy.php:305
-msgid "Privacy Text"
-msgstr ""
-
-#: shortcodes/fusion-privacy.php:306
-msgid "Controls the privacy text which will show above the form."
-msgstr ""
-
-#: shortcodes/fusion-privacy.php:308
-msgid "Your Content Goes Here"
-msgstr ""
-
-#: shortcodes/fusion-privacy.php:313
-msgid "Form Field Layout"
-msgstr ""
-
-#: shortcodes/fusion-privacy.php:314
-msgid ""
-"Choose if form checkboxes should be stacked and full width, or if they "
-"should be floated."
-msgstr ""
-
-#: shortcodes/fusion-privacy.php:317
-msgid "Stacked"
-msgstr ""
-
-#: shortcodes/fusion-privacy.php:318
-msgid "Floated"
-msgstr ""
-
-#: shortcodes/previews/fusion-faq-preview.php:15
-#: shortcodes/previews/fusion-portfolio-preview.php:30
-#. translators: The categories.
+#: shortcodes/previews/fusion-faq-preview.php:13
+#: shortcodes/previews/fusion-portfolio-preview.php:22
 msgid "categories = %s"
 msgstr ""
 
-#: shortcodes/previews/fusion-portfolio-preview.php:14
-#. translators: The layout.
+#: shortcodes/previews/fusion-portfolio-preview.php:12
 msgid "layout = %s"
 msgstr ""
 
-#: shortcodes/previews/fusion-portfolio-preview.php:25
-#. translators: The tags.
+#: shortcodes/previews/fusion-portfolio-preview.php:20
 msgid "tags = %s"
 msgstr ""
 

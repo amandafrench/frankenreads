@@ -44,10 +44,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="avada-admin-toggle-content">
 				<?php esc_attr_e( 'All support is handled through Avada\'s support center. First you create an account on our website which gives you access to our support center. Our support center includes online documentation, video tutorials and a hands on ticket system. Our team of experts will gladly help answer questions you may have. Please see the links below.', 'Avada' ); ?>
 				<ul>
-					<li><a href="https://theme-fusion.com/documentation/avada/getting-started/avada-theme-support/" target="_blank"><?php esc_attr_e( 'Sign up at our support center with these steps', 'Avada' ); ?></a></li>
-					<li><a href="https://theme-fusion.com/support/submit-a-ticket/" target="_blank"><?php esc_attr_e( 'Submit a ticket to our team', 'Avada' ); ?></a></li>
-					<li><a href="https://theme-fusion.com/documentation/avada/" target="_blank"><?php esc_attr_e( 'View Avada Documentation', 'Avada' ); ?></a></li>
-					<li><a href="https://theme-fusion.com/documentation/avada/videos/" target="_blank"><?php esc_attr_e( 'View Avada Video Tutorials', 'Avada' ); ?></a></li>
+					<li><a href="https://theme-fusion.com/avada-doc/getting-started/avada-theme-support/" target="_blank"><?php esc_attr_e( 'Sign up at our support center with these steps', 'Avada' ); ?></a></li>
+					<li><a href="https://theme-fusion.com/support-ticket/" target="_blank"><?php esc_attr_e( 'Submit a ticket to our team', 'Avada' ); ?></a></li>
+					<li><a href="https://theme-fusion.com/support/documentation/avada-documentation/" target="_blank"><?php esc_attr_e( 'View Avada Documentation', 'Avada' ); ?></a></li>
+					<li><a href="https://theme-fusion.com/support/video-tutorials/avada-videos/" target="_blank"><?php esc_attr_e( 'View Avada Video Tutorials', 'Avada' ); ?></a></li>
 				</ul>
 			</div>
 		</div>
@@ -82,7 +82,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="avada-admin-toggle-content">
 			<?php esc_attr_e( 'Avada\'s Option Network consists of Fusion Theme Options, Fusion Page Options and Fusion Builder Options. This powerful network of options allows you to build professional sites without coding knowledge. Please see the link below to learn how these work together.', 'Avada' ); ?>
 			<ul>
-				<li><a href="https://theme-fusion.com/documentation/avada/options/how-options-work/" target="_blank"><?php esc_attr_e( 'How To Use The Avada Option Network', 'Avada' ); ?></a></li>
+				<li><a href="https://theme-fusion.com/avada-doc/options/how-options-work/" target="_blank"><?php esc_attr_e( 'How To Use The Avada Option Network', 'Avada' ); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -98,7 +98,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				/* translators: %1$s is the "Plugins" link. %2$s is the link to the documentation page. (link text: "Avada's Required, Included & Recommended Plugins"). */
 				esc_attr__( 'Avada can be used by itself without any additional plugins it includes. However, to utilize all the features Avada offers, Fusion Core and Fusion Builder plugins must be installed and activated. They are considered required plugins. The recommended plugins are either premium plugins we bundle with Avada (Fusion White Label Branding, Convert Plus, ACF Pro, Slider Revolution & Layer Slider) or free plugins that we offer design integration for (WooCommerce,  The Events Calendar or bbPress). All of these can be installed on the %1$s tab. For more information, please see this article in our documentation: %2$s.', 'Avada' ),
 				'<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-plugins' ) ) . '">Plugins</a>',
-				'<a href="' . esc_url( 'https://theme-fusion.com/documentation/avada/install-update/plugin-installation/' ) . '" target="_blank">' . esc_attr__( "Avada's Required, Included & Recommended Plugins", 'Avada' ) . '</a>'
+				'<a href="' . esc_url( 'https://theme-fusion.com/avada-doc/install-update/plugin-installation/' ) . '" target="_blank">' . esc_attr__( "Avada's Required, Included & Recommended Plugins", 'Avada' ) . '</a>'
 			);
 			?>
 			<br/><br/>
@@ -124,8 +124,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="avada-admin-toggle-content">
 			<?php esc_attr_e( 'Avada has a complete set of documentation and growing video tutorial library. Both are stored on our company site in the support center, see the links below.', 'Avada' ); ?>
 			<ul>
-				<li><a href="https://theme-fusion.com/support/" target="_blank"><?php esc_attr_e( 'Avada Documentation', 'Avada' ); ?></a></li>
-				<li><a href="https://theme-fusion.com/documentation/avada/videos/" target="_blank"><?php esc_attr_e( 'Avada Video Tutorials', 'Avada' ); ?></a></li>
+				<li><a href="https://theme-fusion.com/support/documentation/avada-documentation/" target="_blank"><?php esc_attr_e( 'Avada Documentation', 'Avada' ); ?></a></li>
+				<li><a href="https://theme-fusion.com/support/video-tutorials/avada-videos/" target="_blank"><?php esc_attr_e( 'Avada Video Tutorials', 'Avada' ); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -138,7 +138,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="avada-admin-toggle-content">
 			<?php esc_attr_e( 'Avada\'s requirements can be found in our support center at the link below.', 'Avada' ); ?>
 			<ul>
-				<li><a href="https://theme-fusion.com/documentation/avada/getting-started/requirements-for-avada/" target="_blank"><?php esc_attr_e( 'Requirements For Using Avada', 'Avada' ); ?></a></li>
+				<li><a href="https://theme-fusion.com/avada-doc/getting-started/requirements-for-avada/" target="_blank"><?php esc_attr_e( 'Requirements For Using Avada', 'Avada' ); ?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -152,8 +152,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php /* translators: "System Status" link. */ ?>
 			<?php printf( esc_attr__( 'The %s tab contains a collection of relevant data that will help you debug your website more efficiently. In this tab, you can also generate a System Report, which you can include in your support tickets to help our support team find solutions for your issues much faster. This tab is divided into three sections; the WordPress Environment section, the Server Environment section, and the Active Plugins section. Please see the relevant links below about the System Status tab.', 'Avada' ), '<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-system-status' ) ) . '" target="_blank">System Status</a>' ); ?>
 			<ul>
-				<li><a href="https://theme-fusion.com/documentation/avada/special-features/system-status/" target="_blank"><?php esc_attr_e( 'System Status General Information', 'Avada' ); ?></a></li>
-				<li><a href="https://theme-fusion.com/documentation/avada/special-features/system-status-limits/" target="_blank"><?php esc_attr_e( 'System Status Limits', 'Avada' ); ?></a></li>
+				<li><a href="https://theme-fusion.com/avada-doc/special-features/system-status/" target="_blank"><?php esc_attr_e( 'System Status General Information', 'Avada' ); ?></a></li>
+				<li><a href="https://theme-fusion.com/avada-doc/special-features/system-status-limits/" target="_blank"><?php esc_attr_e( 'System Status Limits', 'Avada' ); ?></a></li>
 			</ul>
 		</div>
 	</div>

@@ -58,7 +58,7 @@ function avada_options_section_social_media( $sections ) {
 							),
 							'url' => array(
 								'type'        => 'text',
-								'label'       => esc_html__( 'Link URL (each network can have a varying link type)', 'Avada' ),
+								'label'       => esc_html__( 'Link (URL)', 'Avada' ),
 								'description' => esc_html__( 'Insert your custom link here', 'Avada' ),
 								'default'     => '',
 							),
@@ -523,14 +523,6 @@ function avada_options_section_social_media( $sections ) {
 						/* translators: Social Network name. */
 						'description' => sprintf( esc_html__( 'Turn on to display %s in the social share box.', 'Avada' ), esc_html__( 'LinkedIn', 'Avada' ) ),
 						'id'          => 'sharing_linkedin',
-						'default'     => '1',
-						'type'        => 'switch',
-					),
-					'sharing_whatsapp' => array(
-						'label'       => esc_html__( 'WhatsApp', 'Avada' ),
-						/* translators: Social Network name. */
-						'description' => sprintf( esc_html__( 'Turn on to display %s in the social share box.', 'Avada' ), esc_html__( 'WhatsApp', 'Avada' ) ),
-						'id'          => 'sharing_whatsapp',
 						'default'     => '1',
 						'type'        => 'switch',
 					),

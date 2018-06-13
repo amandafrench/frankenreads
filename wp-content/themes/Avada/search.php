@@ -30,7 +30,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 				echo avada_render_post_title( 0, false, esc_html__( 'Need a new search?', 'Avada' ), $title_size ); // WPCS: XSS ok.
 				?>
 				<p><?php esc_html_e( 'If you didn\'t find what you were looking for, try a new search!', 'Avada' ); ?></p>
-				<?php get_search_form(); ?>
+				<form class="searchform fusion-search-form" role="search" method="get" action="<?php echo esc_url_raw( home_url( '/' ) ); ?>">
+					<div class="fusion-search-form-content">
+						<div class="fusion-search-field search-field">
+							<label class="screen-reader-text" for="searchform"><?php esc_attr_e( 'Search for:', 'Avada' ); ?></label>
+							<input id="searchform" type="text" value="" name="s" class="s" placeholder="<?php esc_html_e( 'Search ...', 'Avada' ); ?>" required aria-required="true" aria-label="<?php esc_html_e( 'Search ...', 'Avada' ); ?>"/>
+						</div>
+						<div class="fusion-search-button search-button">
+							<input type="submit" class="fusion-search-submit searchsubmit" value="&#xf002;" alt="<?php esc_attr_e( 'Search', 'Avada' ); ?>" />
+						</div>
+					</div>
+				</form>
 			</div>
 		<?php endif; ?>
 

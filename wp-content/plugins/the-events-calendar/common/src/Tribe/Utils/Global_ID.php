@@ -22,7 +22,6 @@ class Tribe__Utils__Global_ID {
 		'url',
 		'meetup',
 		'facebook',
-		'eventbrite',
 	);
 
 	/**
@@ -32,7 +31,6 @@ class Tribe__Utils__Global_ID {
 	private $type_origins = array(
 		'meetup' => 'meetup.com',
 		'facebook' => 'facebook.com',
-		'eventbrite' => 'eventbrite.com',
 	);
 
 	/**
@@ -105,36 +103,5 @@ class Tribe__Utils__Global_ID {
 		}
 
 		return add_query_arg( $args, $this->origin() );
-	}
-
-	/**
-	 * Parse the Global ID string.
-	 *
-	 * @param string $global_id The previously generated global ID string.
-	 *
-	 * @return array The parsed $args information built by self::generate()
-	 *
-	 * @since 4.7.15
-	 */
-	public function parse( string $global_id ) {
-		$parsed_global_id = null;
-
-		if ( $global_id ) {
-			$global_id = html_entity_decode( $global_id ); // &amp; characters replaced as expected
-
-			$parsed = wp_parse_url( 'http://' . $global_id );
-
-			if ( ! empty( $parsed['query'] ) ) {
-				$parsed_query = array();
-
-				wp_parse_str( $parsed['query'], $parsed_query );
-
-				if ( ! empty( $parsed_query ) ) {
-					$parsed_global_id = $parsed_query;
-				}
-			}
-		}
-
-		return $parsed_global_id;
 	}
 }

@@ -57,7 +57,7 @@ if ( 'default' === $display_post_title ) {
 	$display_post_title = $title_image_rollover;
 }
 
-// Set the link and the link text on the link icon to a custom url if set in page options.
+// Set the link and the link text on the link icon to a custom url if set in page options. @codingStandardsIgnoreLine
 if ( null != $link_icon_url ) {
 	$icon_permalink = $link_icon_url;
 	$icon_permalink_title = esc_url_raw( $link_icon_url );
@@ -163,7 +163,8 @@ $link_target = ( 'yes' === $link_icon_target || 'yes' === $post_links_target || 
 				<?php endforeach; ?>
 			<?php endif; ?>
 
-			<?php $id      = get_the_ID(); ?>
+			<?php $id = get_the_ID(); ?>
+			<?php // @codingStandardsIgnoreLine ?>
 			<?php $in_cart = in_array( $id, $items_in_cart ); ?>
 		<?php endif; ?>
 

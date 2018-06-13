@@ -124,10 +124,10 @@ if ( fusion_is_element_enabled( 'fusion_image_before_after' ) ) {
 							$styles .= 'border-color:' . $color_obj->getNew( 'alpha', $color_obj->alpha * 0.6 )->toCSS( 'rgba' ) . ' !important;';
 							$styles .= '}';
 							$styles .= '.fusion-image-before-after-' . $this->before_after_counter . ' .fusion-image-before-after-handle-circle .fusion-image-before-after-left-arrow {';
-							$styles .= 'border-right-color:' . Fusion_Helper::fusion_auto_calculate_accent_color( $color ) . ' !important;';
+							$styles .= 'border-right-color:' . fusion_auto_calculate_accent_color( $color ) . ' !important;';
 							$styles .= '}';
 							$styles .= '.fusion-image-before-after-' . $this->before_after_counter . ' .fusion-image-before-after-handle-circle .fusion-image-before-after-right-arrow {';
-							$styles .= 'border-left-color:' . Fusion_Helper::fusion_auto_calculate_accent_color( $color ) . ' !important;';
+							$styles .= 'border-left-color:' . fusion_auto_calculate_accent_color( $color ) . ' !important;';
 							$styles .= '}';
 						}
 					} else if ( 'vertical' === $this->args['orientation'] ) {
@@ -151,10 +151,10 @@ if ( fusion_is_element_enabled( 'fusion_image_before_after' ) ) {
 							$styles .= 'border-color:' . $color_obj->getNew( 'alpha', $color_obj->alpha * 0.6 )->toCSS( 'rgba' ) . ' !important;';
 							$styles .= '}';
 							$styles .= '.fusion-image-before-after-' . $this->before_after_counter . ' .fusion-image-before-after-handle-circle .fusion-image-before-after-up-arrow {';
-							$styles .= 'border-bottom-color:' . Fusion_Helper::fusion_auto_calculate_accent_color( $color ) . ' !important;';
+							$styles .= 'border-bottom-color:' . fusion_auto_calculate_accent_color( $color ) . ' !important;';
 							$styles .= '}';
 							$styles .= '.fusion-image-before-after-' . $this->before_after_counter . ' .fusion-image-before-after-handle-circle .fusion-image-before-after-down-arrow {';
-							$styles .= 'border-top-color:' . Fusion_Helper::fusion_auto_calculate_accent_color( $color ) . ' !important;';
+							$styles .= 'border-top-color:' . fusion_auto_calculate_accent_color( $color ) . ' !important;';
 							$styles .= '}';
 						}
 					} // End if().

@@ -46,17 +46,7 @@ do_action( 'bp_before_directory_members_page' ); ?>
 
 	<?php endif; ?>
 
-<p id="partner-intro"><a href="../join">Join the Community</a> to become a partner listed on this page. Click on someone's name to see that person's events. If you are logged in, you can also send them a message, which they will receive by email if their settings allow.<br /><br />
-
-Please also visit our Project Partners, who are also organizing large-scale celebrations of <em>Frankenstein</em>: 
-
-<ul>
-<li>ASU Center for Science and the Imagination: <a href="https://frankenreads.org/partners/asu-center-for-science-and-the-imagination/">Frankenbook and Frankenstein200 the Game</a></li>
-<li>Indiana Humanities Council: <a href="https://frankenreads.org/partners/one-state-one-story/">One State, One Story</a></li>
-<li><a href="https://www.manyconversations.org/">One Book, Many Conversations</a></li>
-</ul>
-
-</p>
+<p id="partner-intro"><a href="../join">Join the Community</a> to become a partner listed on this page. Click on someone's name to see that person's events. If you are logged in, you can also send them a message, which they will receive by email if their settings allow.</p>
 
 
 	<?php

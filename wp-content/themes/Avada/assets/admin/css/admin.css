@@ -1989,17 +1989,3 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
 .nav-menus-php #menu-management .item-edit {
   overflow: hidden;
 }
-div#fusion-privacy-notice.fusion-notice {
-  display: block !important;
-}
-.avada-wrap div#fusion-privacy-notice.fusion-notice {
-  margin-top: 15px;
-  max-width: calc(100% - 250px);
-}
-div#fusion-privacy-notice td {
-  padding: 2px 15px 2px 0;
-  font-size: 13px;
-}
-.rtl div#fusion-privacy-notice td {
-  padding: 2px 0 2px 15px;
-}

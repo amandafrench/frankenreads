@@ -8,7 +8,6 @@
  */
 
 ?>
-<?php wp_nonce_field( 'fusion_core_meta_fields_nonce', 'fusion_core_meta_fields_nonce' ); ?>
 <div class="form-field fusion-double-fields">
 	<label for="term_meta[slider_width]"><?php esc_attr_e( 'Slider Size', 'fusion-core' ); ?></label>
 	<p class="description"><?php esc_attr_e( 'Enter a pixel value for width and height, ex: 1000px', 'fusion-core' ); ?></p>
@@ -45,9 +44,7 @@
 <div class="form-field">
 	<label for="term_meta[slider_indicator_color]"><?php esc_attr_e( 'Slider Indicator Color', 'fusion-core' ); ?></label>
 	<input type="text" name="term_meta[slider_indicator_color]" id="slider_indicator_color" value="">
-	<?php /* translators: The default value. */ ?>
 	<?php $default = sprintf( esc_html__( 'Default: %s', 'fusion-core' ), '#fff' ); ?>
-	<?php /* translators: The default value text. */ ?>
 	<p class="description"><?php printf( esc_html__( 'Select a color for the slider indicator icon. Hex color code, ex: #fff. %s', 'fusion-core' ), '<strong>' . esc_attr( $default ) . '</strong>' ); ?></p>
 </div>
 

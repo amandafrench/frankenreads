@@ -447,7 +447,6 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			'typography_factor',
 			'testimonials_speed',
 			'masonry_grid_ratio',
-			'privacy_expiry',
 		);
 		return array_unique( array_merge( $fields, $extra_fields ) );
 	}

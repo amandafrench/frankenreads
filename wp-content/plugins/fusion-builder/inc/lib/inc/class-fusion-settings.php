@@ -252,6 +252,7 @@ class Fusion_Settings {
 				if ( isset( self::$options_with_id[ $setting ]['type'] ) && 'typography' === self::$options_with_id[ $setting ]['type'] ) {
 					if ( 'font-family' === $subset ) {
 						if ( isset( $value['font-family'] ) && 'select font' === strtolower( $value['font-family'] ) ) {
+							// @codingStandardsIgnoreLine
 							return apply_filters( "avada_setting_get_{$setting}[{$subset}]", '' );
 						}
 					} elseif ( 'color' === $subset ) {
@@ -259,7 +260,7 @@ class Fusion_Settings {
 							if ( null !== $default ) {
 								return $default;
 							}
-							// Get the default value. Colors should not be empty.
+							// Get the default value. Colors should not be empty. @codingStandardsIgnoreLine
 							return apply_filters( "avada_setting_get_{$setting}[{$subset}]", $this->get_default( $setting, $subset ) );
 						}
 					}
@@ -267,7 +268,7 @@ class Fusion_Settings {
 
 				if ( is_array( $value ) && isset( $value[ $subset ] ) ) {
 
-					// The subset is set so we can just return it.
+					// The subset is set so we can just return it. @codingStandardsIgnoreLine
 					return apply_filters( "avada_setting_get_{$setting}[{$subset}]", $value[ $subset ] );
 				} else {
 					if ( null !== $default ) {
@@ -275,7 +276,7 @@ class Fusion_Settings {
 					}
 
 					// If we've reached this point then the setting has not been set in the db.
-					// We'll need to get the default value.
+					// We'll need to get the default value. @codingStandardsIgnoreLine
 					return apply_filters( "avada_setting_get_{$setting}[{$subset}]", $this->get_default( $setting, $subset ) );
 				}
 			} else {
@@ -286,6 +287,7 @@ class Fusion_Settings {
 						if ( null !== $default ) {
 							return $default;
 						}
+						// @codingStandardsIgnoreLine
 						return apply_filters( "avada_setting_get_{$setting}[{$subset}]", $this->get_default( $setting, $subset ) );
 					}
 				}
@@ -301,6 +303,7 @@ class Fusion_Settings {
 				if ( null !== $default ) {
 					return $default;
 				}
+				// @codingStandardsIgnoreLine
 				return apply_filters( "avada_setting_get_{$setting}[{$subset}]", $this->get_default( $setting, $subset ) );
 			}
 			if ( null !== $default ) {
@@ -432,6 +435,7 @@ class Fusion_Settings {
 				break;
 
 			case 'showhide':
+				// @codingStandardsIgnoreLine
 				$setting_value = ( 1 == $setting_value ) ? esc_attr__( 'Show', 'Avada' ) : esc_attr__( 'Hide', 'Avada' );
 				$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
 				/* translators: The value. */
@@ -439,6 +443,7 @@ class Fusion_Settings {
 				break;
 
 			case 'yesno':
+				// @codingStandardsIgnoreLine
 				$setting_value = ( 1 == $setting_value ) ? esc_attr__( 'Yes', 'Avada' ) : esc_attr__( 'No', 'Avada' );
 				$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
 				/* translators: The value. */

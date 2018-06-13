@@ -74,16 +74,16 @@ class Fusion_Builder_Dynamic_CSS extends Fusion_Dynamic_CSS {
 		$css                 = array();
 
 		$info_background_color    = '' !== $fusion_settings->get( 'info_bg_color' ) ? strtolower( $fusion_settings->get( 'info_bg_color' ) ) : '#ffffff';
-		$info_accent_color        = $fusion_settings->get( 'info_accent_color' );
+		$info_accent_color        = fusion_auto_calculate_accent_color( $info_background_color );
 
 		$danger_background_color  = '' !== $fusion_settings->get( 'danger_bg_color' ) ? strtolower( $fusion_settings->get( 'danger_bg_color' ) ) : '#f2dede';
-		$danger_accent_color      = $fusion_settings->get( 'danger_accent_color' );
+		$danger_accent_color      = fusion_auto_calculate_accent_color( $danger_background_color );
 
 		$success_background_color = '' !== $fusion_settings->get( 'success_bg_color' ) ? strtolower( $fusion_settings->get( 'success_bg_color' ) ) : '#dff0d8';
-		$success_accent_color     = $fusion_settings->get( 'success_accent_color' );
+		$success_accent_color     = fusion_auto_calculate_accent_color( $success_background_color );
 
 		$warning_background_color = '' !== $fusion_settings->get( 'warning_bg_color' ) ? strtolower( $fusion_settings->get( 'warning_bg_color' ) ) : '#fcf8e3';
-		$warning_accent_color     = $fusion_settings->get( 'warning_accent_color' );
+		$warning_accent_color     = fusion_auto_calculate_accent_color( $warning_background_color );
 
 		if ( defined( 'WPCF7_PLUGIN' ) ) {
 			// CF7 error notice.

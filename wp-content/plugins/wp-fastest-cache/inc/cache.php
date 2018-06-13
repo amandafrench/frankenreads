@@ -474,11 +474,7 @@
 				foreach((array)$this->exclude_rules as $key => $value){
 					$value->type = isset($value->type) ? $value->type : "page";
 
-					if($value->prefix == "googleanalytics"){
-						if(preg_match("/utm_(source|medium|campaign|content|term)/i", $request_url)){
-							return true;
-						}
-					}else if($buffer && isset($value->prefix) && $value->prefix && ($value->type == "page")){
+					if($buffer && isset($value->prefix) && $value->prefix && ($value->type == "page")){
 						$value->content = trim($value->content);
 						$value->content = trim($value->content, "/");
 
@@ -510,6 +506,10 @@
 							if(preg_match("/".preg_quote($value->content, "/")."/i", $_SERVER['HTTP_COOKIE'])){
 								return true;
 							}
+						}
+					}else if($value->prefix == "googleanalytics"){
+						if(preg_match("/utm_(source|medium|campaign|content|term)/i", $request_url)){
+							return true;
 						}
 					}
 				}

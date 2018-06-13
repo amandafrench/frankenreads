@@ -599,27 +599,14 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 			renderAttachments: function( ids, $multipleImageContainer ) {
 				var $imageHTML,
-					attachment,
-					imageSizes,
-					thumbnail,
-					image;
+					attachment;
 
 				if ( 0 < ids.length ) {
 					jQuery.each( ids, function( index, id ) {
 						if ( '' !== id && 'NaN' !== id ) {
-							attachment = wp.media.attachment( id );
-							imageSizes = attachment.get( 'sizes' );
-
-							if ( 'undefined' !== typeof imageSizes['200'] ) {
-								image = imageSizes['200'].url;
-							} else if ( 'undefined' !== typeof imageSizes.thumbnail ) {
-								image = imageSizes.thumbnail.url;
-							} else {
-								image = attachment.get( 'url' );
-							}
-
-							$imageHTML  = '<div class="fusion-multi-image" data-image-id="' + attachment.get( 'id' ) + '">';
-							$imageHTML += '<img src="' + image + '"/>';
+							attachment  = wp.media.attachment( id );
+							$imageHTML = '<div class="fusion-multi-image" data-image-id="' + attachment.get( 'id' ) + '">';
+							$imageHTML += '<img src="' + attachment.get( 'url' ) + '"/>';
 							$imageHTML += '<span class="fusion-multi-image-remove dashicons dashicons-no-alt"></span>';
 							$imageHTML += '</div>';
 							$multipleImageContainer.append( $imageHTML );

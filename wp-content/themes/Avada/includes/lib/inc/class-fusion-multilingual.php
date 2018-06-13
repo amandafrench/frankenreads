@@ -147,7 +147,7 @@ class Fusion_Multilingual {
 		if ( is_string( $lang ) && ! empty( $lang ) ) {
 			self::$active_language = $lang;
 		}
-		// If we have not defined a language, then autodetect.
+		// If we have not defined a language, then autodetect. @codingStandardsIgnoreLine
 		if ( false == $lang || empty( $lang ) ) {
 			// No need to proceed if both WPML & PLL are inactive.
 			if ( ! self::$is_pll && ! self::$is_wpml ) {

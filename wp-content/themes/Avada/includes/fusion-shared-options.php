@@ -35,7 +35,6 @@ function avada_set_builder_classes( $default_elements, $class ) {
 		'.post-password-form input[type="submit"]',
 		'.ticket-selector-submit-btn[type=submit]',
 		'.tml-submit-wrap input[type="submit"]',
-		'.slidingbar-area .button-default',
 	);
 	if ( class_exists( 'GFForms' ) ) {
 		$elements[] = '.gform_wrapper .gform_button';
@@ -574,7 +573,6 @@ function avada_add_fb_styling( $css ) {
 			'.input-radio',
 			'.panel.entry-content',
 			'#reviews li .comment-text',
-			'.fusion-author-widget .fusion-author-widget-separator .fusion-author-widget-sep',
 		);
 		if ( is_rtl() ) {
 			$elements[] = '.rtl .side-nav';

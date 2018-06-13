@@ -6,8 +6,7 @@ class Tribe__Events__Aggregator__API__Image extends Tribe__Events__Aggregator__A
 	/**
 	 * Fetches an image from the service and saves it to the filesystem if needed
 	 *
-	 * @param  string                                      $image_id  EA Image ID
-	 * @param  Tribe__Events__Aggregator__Record__Abstract $record    Record Object
+	 * @param string $image_id EA Image ID
 	 *
 	 * @return WP_Error|stdClass {
 	 *     @type int        $post_id      Attachment ID on WP
@@ -15,9 +14,8 @@ class Tribe__Events__Aggregator__API__Image extends Tribe__Events__Aggregator__A
 	 *     @type string     $path         Absolute path of the image
 	 *     @type string     $extension    Extension of the image
 	 * }
-	 *
 	 */
-	public function get( $image_id, $record = false ) {
+	public function get( $image_id ) {
 		$tribe_aggregator_meta_key = 'tribe_aggregator_image_id';
 
 		// Prevent Possible duplicated includes
@@ -63,7 +61,7 @@ class Tribe__Events__Aggregator__API__Image extends Tribe__Events__Aggregator__A
 		}
 
 		// fetch an image
-		$response = $this->service->get_image( $image_id, $record );
+		$response = $this->service->get_image( $image_id );
 
 		if ( is_wp_error( $response ) ) {
 			return $response;

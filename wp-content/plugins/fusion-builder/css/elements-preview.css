@@ -1908,8 +1908,8 @@ button.fusion-button.button-3d:active {
 .fusion-content-boxes.content-boxes-icon-on-side .heading-with-icon .content-box-heading {
   vertical-align: top;
 }
-.fusion-content-boxes.content-boxes-icon-on-side .heading-with-icon .fa,
-.fusion-content-boxes.content-boxes-icon-on-side .heading-with-icon .fontawesome-icon {
+.fusion-content-boxes.content-boxes-icon-on-side .heading-with-icon .fontawesome-icon,
+.fusion-content-boxes.content-boxes-icon-on-side .heading-with-icon .fa {
   margin-right: 20px;
 }
 .fusion-content-boxes.content-boxes-icon-on-side .content-container.icon-small {

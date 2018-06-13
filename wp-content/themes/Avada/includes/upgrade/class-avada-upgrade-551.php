@@ -74,9 +74,6 @@ class Avada_Upgrade_551 extends Avada_Upgrade_Abstract {
 				continue;
 			}
 
-			// Get language specific TOs.
-			$options = get_option( $this->option_name . '_' . $language, array() );
-
 			$options = $this->correct_chart_default_value( $options );
 			$options = $this->page_title_bar_hover( $options );
 
@@ -85,7 +82,7 @@ class Avada_Upgrade_551 extends Avada_Upgrade_Abstract {
 	}
 
 	/**
-	 * Corrects default Chart Gridline Color value.
+	 * Corrects default Chart Gridline Gridline Color value.
 	 *
 	 * @access private
 	 * @since 5.5.1

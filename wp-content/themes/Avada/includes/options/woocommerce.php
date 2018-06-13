@@ -101,7 +101,7 @@ function avada_options_section_woocommerce( $sections ) {
 					),
 					'woocommerce_single_gallery_size' => array(
 						'label'       => esc_html__( 'WooCommerce Product Gallery Size', 'Avada' ),
-						'description' => __( 'Controls the size of the single product page image gallery. For the image gallery zoom feature to work, the images you upload must be larger than the gallery size you select for this option. <strong>Important:</strong> When this option is changed, you may need to adjust the Single Product Image size setting in WooCommerce Settings to make sure that one is larger and also regenerate thumbnails. <a href="https://theme-fusion.com/documentation/avada/woocommerce-single-product-gallery/" target="_blank">See this post for more information.</a><br/>', 'Avada' ),
+						'description' => __( 'Controls the size of the single product page image gallery. For the image gallery zoom feature to work, the images you upload must be larger than the gallery size you select for this option. <strong>Important:</strong> When this option is changed, you may need to adjust the Single Product Image size setting in WooCommerce Settings to make sure that one is larger and also regenerate thumbnails. <a href="http://theme-fusion.com/avada-doc/woocommerce-single-product-gallery/" target="_blank">See this post for more information.</a><br/>', 'Avada' ),
 						'id'          => 'woocommerce_single_gallery_size',
 						'default'     => '500px',
 						'type'        => 'dimension',
@@ -121,7 +121,7 @@ function avada_options_section_woocommerce( $sections ) {
 					),
 					'enable_woo_gallery_zoom' => array(
 						'label'           => esc_html__( 'WooCommerce Product Gallery Zoom', 'Avada' ),
-						'description'     => __( 'Turn on to enable the WooCommerce gallery zoom feature. Important: Every product image you use must be larger than the gallery container for zoom to work correctly.<br/><a href="https://theme-fusion.com/documentation/avada/woocommerce-single-product-gallery/" target="_blank">See this post for more information.</a>', 'Avada' ),
+						'description'     => __( 'Turn on to enable the WooCommerce gallery zoom feature. Important: Every product image you use must be larger than the gallery container for zoom to work correctly.<br/><a href="http://theme-fusion.com/avada-doc/woocommerce-single-product-gallery/" target="_blank">See this post for more information.</a>', 'Avada' ),
 						'id'              => 'enable_woo_gallery_zoom',
 						'default'         => '1',
 						'type'            => 'switch',

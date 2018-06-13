@@ -1,8 +1,6 @@
 /*--------------------------------------------------------------
 Hello, this is the BuddyPress Legacy stylesheet.
 
-@version 3.0.0
-
 ----------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
@@ -786,10 +784,6 @@ body.activity-permalink #buddypress div.activity-comments div.acomment-content {
 	font-weight: 700;
 	margin: 15px 0 5px;
 	width: auto;
-}
-
-#buddypress label.xprofile-field-label {
-	display: inline;
 }
 
 #buddypress .standard-form p label,

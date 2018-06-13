@@ -101,6 +101,7 @@ class Fusion_Dynamic_JS_Compiler {
 					$file_content = $wp_filesystem->get_contents( $path );
 					// If it failed, try file_get_contents().
 					if ( ! $file_content ) {
+						// @codingStandardsIgnoreLine
 						$file_content = @file_get_contents( $path );
 					}
 					$file_content = trim( $file_content );
@@ -149,6 +150,7 @@ class Fusion_Dynamic_JS_Compiler {
 			// Add the contents of the JS file.
 			$file_content = $wp_filesystem->get_contents( $path );
 			if ( ! $file_content ) {
+				// @codingStandardsIgnoreLine
 				$file_content = @file_get_contents( $path );
 			}
 			$file_content = trim( $file_content );

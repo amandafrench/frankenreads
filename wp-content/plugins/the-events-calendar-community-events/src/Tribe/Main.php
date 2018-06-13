@@ -18,12 +18,12 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		/**
 		 * The current version of Community Events
 		 */
-		const VERSION = '4.5.12';
+		const VERSION = '4.5.11';
 
 		/**
 		 * required The Events Calendar Version
 		 */
-		const REQUIRED_TEC_VERSION = '4.6.17';
+		const REQUIRED_TEC_VERSION = '4.6.6';
 
 		/**
 		 * Singleton instance variable
@@ -214,7 +214,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		/**
 		 * A meta field to help us track if an event's "Submitted" email alert has already been sent.
 		 *
-		 * @since 4.5.11
+		 * @since TBD
 		 *
 		 * @var string
 		 */
@@ -958,7 +958,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		/**
 		 * Returns a filterable page title for the "Submit" page.
 		 *
-		 * @since 4.5.11
+		 * @since TBD
 		 *
 		 * @return string
 		 */
@@ -966,7 +966,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 			/**
 			 * Allows for filtering the "Submit" page's title.
 			 *
-			 * @since 4.5.11
+			 * @since TBD
 			 *
 			 * @param string $title
 			 */
@@ -1653,7 +1653,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 
 			// file upload check
 			if ( $this->max_file_size_exceeded() ) {
-				$this->enqueueOutputMessage( sprintf( __( 'The file you attempted to upload exceeded the maximum file size of %1$s.', 'tribe-events-community' ), size_format( $this->max_file_size_allowed() ) ), 'error' );
+				$this->enqueueOutputMessage( sprintf( __( 'The file you attempted to upload exceeded the maximum file size of %1$s.', 'tribe-events-community' ), size_format( wp_max_upload_size() ) ), 'error' );
 			}
 
 			$this->loadScripts = true;
@@ -2178,30 +2178,9 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		public function max_file_size_exceeded() {
 			return (
 				isset( $_SERVER['CONTENT_LENGTH'] )
-				&& (int) $_SERVER['CONTENT_LENGTH'] > $this->max_file_size_allowed()
+				&& (int) $_SERVER['CONTENT_LENGTH'] > wp_max_upload_size()
 			);
 		}
-
-		/**
-		 * Indicate the max upload size allowed
-		 *
-		 * @since 4.5.12
-		 *
-		 * @return int
-		 */
-		public function max_file_size_allowed() {
-			/**
-			 * Filter the the max upload size allowed.
-			 *
-			 * By default, it's using the `wp_max_upload_size()` value
-			 *
-			 * @since 4.5.12
-			 *
-			 * @param int `wp_max_upload_size()` The default WordPress max upload size.
-			 */
-			return apply_filters( 'tribe_community_events_max_file_size_allowed', wp_max_upload_size() );
-		}
-
 
 		/**
 		 * Honeypot to prevent spam.

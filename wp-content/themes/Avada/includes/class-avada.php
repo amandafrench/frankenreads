@@ -265,14 +265,6 @@ class Avada {
 	public $sermon_manager;
 
 	/**
-	 * Avada_Privacy_Embeds
-	 *
-	 * @access public
-	 * @var object Avada_Privacy_Embeds
-	 */
-	public $privacy_embeds;
-
-	/**
 	 * Access the single instance of this class.
 	 *
 	 * @return Avada
@@ -350,7 +342,6 @@ class Avada {
 		$this->remote_install = new Avada_Remote_installer();
 		$this->fusion_library = Fusion::get_instance();
 		$this->sermon_manager = new Avada_Sermon_Manager();
-		$this->privacy_embeds = new Avada_Privacy_Embeds();
 
 		// Set the Fusion Library Image Class variable to the Avada one, to avoid duplication.
 		global $fusion_library;
@@ -441,6 +432,12 @@ class Avada {
 				}
 
 				$data = json_decode( $data, true );
+
+				if ( ! is_array( $data ) && function_exists( 'file_get_contents' ) ) {
+					// Fallback to file_get_contents in case.
+					$response = file_get_contents( $url );
+					$data     = json_decode( $response, true );
+				}
 
 				if ( ! is_array( $data ) ) {
 					return array();

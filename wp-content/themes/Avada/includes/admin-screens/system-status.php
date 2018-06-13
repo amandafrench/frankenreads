@@ -129,7 +129,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td colspan="3">
 							<p style="padding: 15px 0;">
 								<?php /* translators: URL. */ ?>
-								<?php printf( __( '<strong style="color:red;">IMPORTANT:</strong> Updating to Avada 4.0 and 5.0 requires a conversion process to ensure your content is compatible with the new version. This is an automatic process that happens upon update. In rare situations, you may need to rerun conversion if there was an issue through the automatic process. The controls below allow you to do this if needed. Please <a href="%s" target="_blank">contact our support team</a> through a ticket if you have any questions or need assistance.', 'Avada' ), 'https://theme-fusion.com/documentation/avada/getting-started/avada-theme-support/' ); // WPCS: XSS ok.?>
+								<?php printf( __( '<strong style="color:red;">IMPORTANT:</strong> Updating to Avada 4.0 and 5.0 requires a conversion process to ensure your content is compatible with the new version. This is an automatic process that happens upon update. In rare situations, you may need to rerun conversion if there was an issue through the automatic process. The controls below allow you to do this if needed. Please <a href="%s" target="_blank">contact our support team</a> through a ticket if you have any questions or need assistance.', 'Avada' ), 'https://theme-fusion.com/avada-doc/getting-started/avada-theme-support/' ); // WPCS: XSS ok.?>
 							</p>
 						</td>
 					</tr>
@@ -140,7 +140,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<tr>
 						<td>
 							<?php esc_attr_e( 'Avada 4.0 Conversion:', 'Avada' ); ?>
-							<div><a href="https://theme-fusion.com/documentation/avada/knowledgebase/avada-v4-migration/" target="_blank"><?php esc_attr_e( 'Learn More', 'Avada' ); ?></a></div>
+							<div><a href="https://theme-fusion.com/knowledgebase/avada-v4-migration/"><?php esc_attr_e( 'Learn More', 'Avada' ); ?></a></div>
 						</td>
 						<td class="help">&nbsp;</td>
 						<td>
@@ -161,7 +161,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<tr>
 						<td>
 							<?php esc_attr_e( 'Avada 5.0 Conversion:', 'Avada' ); ?>
-							<div><a href="https://theme-fusion.com/documentation/fusion-builder/technical/converting-fusion-builder-pages/" target="_blank"><?php esc_attr_e( 'Learn More', 'Avada' ); ?></a></div>
+							<div><a href="https://theme-fusion.com/fb-doc/technical/converting-fusion-builder-pages/"><?php esc_attr_e( 'Learn More', 'Avada' ); ?></a></div>
 						</td>
 						<td class="help">&nbsp;</td>
 						<td>

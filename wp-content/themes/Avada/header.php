@@ -53,7 +53,6 @@ if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 
 ?>
 <body <?php body_class(); ?>>
-	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'Avada' ); ?></a>
 	<?php
 	do_action( 'avada_before_body_content' );
 

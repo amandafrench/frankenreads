@@ -203,6 +203,7 @@ class Fusion_Patcher_Checker {
 					$valid_patch = true;
 				}
 			}
+			// @codingStandardsIgnoreLine
 			if ( $valid_patch && ! in_array( $patch_id, $this->applied_patches ) ) {
 				$this->new_patches++;
 			}

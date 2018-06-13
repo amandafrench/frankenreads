@@ -12,15 +12,6 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 		class FusionSC_RecentPosts extends Fusion_Element {
 
 			/**
-			 * Recent Posts element counter.
-			 *
-			 * @access private
-			 * @since 1.5.2
-			 * @var int
-			 */
-			private $recent_posts_counter = 1;
-
-			/**
 			 * An array of the shortcode arguments.
 			 *
 			 * @access protected
@@ -49,7 +40,6 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 				add_filter( 'fusion_attr_recentposts-shortcode', array( $this, 'attr' ) );
 				add_filter( 'fusion_attr_recentposts-shortcode-section', array( $this, 'section_attr' ) );
 				add_filter( 'fusion_attr_recentposts-shortcode-column', array( $this, 'column_attr' ) );
-				add_filter( 'fusion_attr_recentposts-shortcode-content', array( $this, 'content_attr' ) );
 				add_filter( 'fusion_attr_recentposts-shortcode-slideshow', array( $this, 'slideshow_attr' ) );
 				add_filter( 'fusion_attr_recentposts-shortcode-img', array( $this, 'img_attr' ) );
 				add_filter( 'fusion_attr_recentposts-shortcode-img-link', array( $this, 'link_attr' ) );
@@ -82,7 +72,6 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 						'tag_slug'            => '',
 						'exclude_tags'        => '',
 						'columns'             => 3,
-						'content_alignment'   => '',
 						'excerpt'             => 'no',
 						'exclude_cats'        => '',
 						'excerpt_length'      => '',
@@ -95,9 +84,8 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 						'meta_comments'       => 'yes',
 						'meta_date'           => 'yes',
 						'meta_tags'           => 'no',
-						'number_posts'        => '4',
+						'number_posts'        => 4,
 						'offset'              => '',
-						'scrolling'           => 'no',
 						'strip_html'          => 'yes',
 						'title'               => 'yes',
 						'thumbnail'           => 'yes',
@@ -120,10 +108,6 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 
 				if ( $defaults['number_posts'] ) {
 					$defaults['posts_per_page'] = $defaults['number_posts'];
-				}
-
-				if ( '-1' === $defaults['number_posts'] ) {
-					$defaults['scrolling'] = 'no';
 				}
 
 				if ( $defaults['excerpt_length'] || '0' === $defaults['excerpt_length'] ) {
@@ -208,15 +192,8 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 					'ignore_sticky_posts' => 1,
 				);
 
-				// Check if there is paged content.
-				$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-				if ( is_front_page() ) {
-					$paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
-				}
-				$args['paged'] = $paged;
-
 				if ( $defaults['offset'] ) {
-					$args['offset'] = $defaults['offset'] + ( $paged - 1 ) * $defaults['number_posts'];
+					$args['offset'] = $defaults['offset'];
 				}
 
 				if ( isset( $defaults['cat'] ) && $defaults['cat'] ) {
@@ -259,8 +236,6 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 				$this->args = $defaults;
 
 				$recent_posts = fusion_cached_query( $args );
-
-				$this->args['max_num_pages'] = $recent_posts->max_num_pages;
 
 				if ( ! $recent_posts->have_posts() ) {
 					return fusion_builder_placeholder( 'post', 'blog posts' );
@@ -381,30 +356,12 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 						$content .= fusion_builder_get_post_content( '', 'no', $excerpt_words, $strip_html );
 					}
 
-					$items .= '<article ' . FusionBuilder::attributes( 'recentposts-shortcode-column' ) . '>' . $date_box . $slideshow . '<div ' . FusionBuilder::attributes( 'recentposts-shortcode-content' ) . '>' . $content . '</div></article>';
+					$items .= '<div ' . FusionBuilder::attributes( 'recentposts-shortcode-column' ) . '>' . $date_box . $slideshow . '<div ' . FusionBuilder::attributes( 'recent-posts-content' ) . '>' . $content . '</div></div>';
 				}
 
-				// Pagination is used.
-				$pagination = '';
-				if ( 'no' !== $this->args['scrolling'] ) {
-					$infinite_pagination = false;
-					if ( 'pagination' !== $this->args['scrolling'] ) {
-						$infinite_pagination = true;
-					}
-
-					$pagination = fusion_pagination( $recent_posts->max_num_pages, apply_filters( 'fusion_pagination_size', 1 ), $recent_posts, $infinite_pagination, true );
-
-					// If infinite scroll with "load more" button is used.
-					if ( 'load_more_button' === $this->args['scrolling'] && 1 < $recent_posts->max_num_pages ) {
-						$pagination .= '<div class="fusion-load-more-button fusion-blog-button fusion-clearfix">' . apply_filters( 'avada_load_more_posts_name', esc_attr__( 'Load More Posts', 'fusion-builder' ) ) . '</div>';
-					}
-				}
-
-				$html = '<div ' . FusionBuilder::attributes( 'recentposts-shortcode' ) . '><section ' . FusionBuilder::attributes( 'recentposts-shortcode-section' ) . '>' . $items . '</section>' . $pagination . '</div>';
+				$html = '<div ' . FusionBuilder::attributes( 'recentposts-shortcode' ) . '><section ' . FusionBuilder::attributes( 'recentposts-shortcode-section' ) . '>' . $items . '</section></div>';
 
 				wp_reset_postdata();
-
-				$this->recent_posts_counter++;
 
 				return $html;
 
@@ -421,23 +378,9 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 
 				$attr = fusion_builder_visibility_atts(
 					$this->args['hide_on_mobile'], array(
-						'class' => 'fusion-recent-posts fusion-recent-posts-' . $this->recent_posts_counter . ' avada-container layout-' . $this->args['layout'] . ' layout-columns-' . $this->args['columns'],
+						'class' => 'fusion-recent-posts avada-container layout-' . $this->args['layout'] . ' layout-columns-' . $this->args['columns'],
 					)
 				);
-
-				if ( $this->args['content_alignment'] && 'default' === $this->args['layout'] ) {
-					$attr['class'] .= ' fusion-recent-posts-' . $this->args['content_alignment'];
-				}
-
-				if ( 'infinite' === $this->args['scrolling'] || 'load_more_button' === $this->args['scrolling'] ) {
-					$attr['class'] .= ' fusion-recent-posts-infinite';
-
-					$attr['data-pages'] = $this->args['max_num_pages'];
-				}
-
-				if ( 'load_more_button' === $this->args['scrolling'] ) {
-					$attr['class'] .= ' fusion-recent-posts-load-more';
-				}
 
 				if ( $this->args['class'] ) {
 					$attr['class'] .= ' ' . $this->args['class'];
@@ -459,11 +402,9 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 			 * @return array
 			 */
 			public function section_attr() {
-				$attr = array(
+				return array(
 					'class' => 'fusion-columns columns fusion-columns-' . $this->args['columns'] . ' columns-' . $this->args['columns'],
 				);
-
-				return $attr;
 			}
 
 			/**
@@ -481,12 +422,11 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 				}
 
 				$attr = array(
-					'class' => 'post fusion-column column col col-lg-' . $columns . ' col-md-' . $columns . ' col-sm-' . $columns . '',
-					'style' => '',
+					'class' => 'fusion-column column col col-lg-' . $columns . ' col-md-' . $columns . ' col-sm-' . $columns . '',
 				);
 
 				if ( '5' == $this->args['columns'] ) {
-					$attr['class'] = 'post fusion-column column col-lg-2 col-md-2 col-sm-2';
+					$attr['class'] = 'fusion-column column col-lg-2 col-md-2 col-sm-2';
 				}
 
 				if ( $this->args['animation_type'] ) {
@@ -578,21 +518,6 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 			}
 
 			/**
-			 * Builds the content wrapper attributes array.
-			 *
-			 * @access public
-			 * @since 1.5.2
-			 * @return array
-			 */
-			public function content_attr() {
-				$attr = array(
-					'class' => 'recent-posts-content',
-				);
-
-				return $attr;
-			}
-
-			/**
 			 * Builds the dynamic styling.
 			 *
 			 * @access public
@@ -613,40 +538,6 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = $fusion_library->sanitize->color( $fusion_settings->get( 'carousel_hover_color' ) );
 
 				return $css;
-			}
-
-			/**
-			 * Sets the necessary scripts.
-			 *
-			 * @access public
-			 * @since 1.5.2
-			 * @return void
-			 */
-			public function add_scripts() {
-
-				global $fusion_settings;
-
-				Fusion_Dynamic_JS::enqueue_script(
-					'fusion-recent-posts',
-					FusionBuilder::$js_folder_url . '/general/fusion-recent-posts.js',
-					FusionBuilder::$js_folder_path . '/general/fusion-recent-posts.js',
-					array( 'jquery' ),
-					'1',
-					true
-				);
-
-				Fusion_Dynamic_JS::localize_script(
-					'fusion-recent-posts',
-					'fusionRecentPostsVars',
-					array(
-						'infinite_loading_text'  => '<em>' . __( 'Loading the next set of posts...', 'fusion-builder' ) . '</em>',
-						'infinite_finished_msg'  => '<em>' . __( 'All items displayed.', 'fusion-builder' ) . '</em>',
-						'slideshow_autoplay'     => $fusion_settings->get( 'slideshow_autoplay' ) ? $fusion_settings->get( 'slideshow_autoplay' ) : false,
-						'slideshow_speed'        => $fusion_settings->get( 'slideshow_speed' ) ? (int) $fusion_settings->get( 'slideshow_speed' ) : 5000,
-						'pagination_video_slide' => $fusion_settings->get( 'pagination_video_slide' ) ? $fusion_settings->get( 'pagination_video_slide' ) : false,
-						'status_yt'              => $fusion_settings->get( 'status_yt' ) ? $fusion_settings->get( 'status_yt' ) : false,
-					)
-				);
 			}
 		}
 	}
@@ -698,7 +589,7 @@ function fusion_element_recent_posts() {
 				),
 				array(
 					'type'        => 'range',
-					'heading'     => esc_attr__( 'Number of Columns', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Columns', 'fusion-builder' ),
 					'description' => esc_attr__( 'Select the number of columns to display.', 'fusion-builder' ),
 					'param_name'  => 'columns',
 					'value'       => '3',
@@ -929,26 +820,6 @@ function fusion_element_recent_posts() {
 				),
 				array(
 					'type'        => 'radio_button_set',
-					'heading'     => esc_attr__( 'Content Alignment', 'fusion-builder' ),
-					'description' => esc_attr__( 'Select the alignment of contents.', 'fusion-builder' ),
-					'param_name'  => 'content_alignment',
-					'default'     => '',
-					'value'       => array(
-						''       => esc_attr__( 'Text Flow', 'fusion-builder' ),
-						'left'   => esc_attr__( 'Left', 'fusion-builder' ),
-						'center' => esc_attr__( 'Center', 'fusion-builder' ),
-						'right'  => esc_attr__( 'Right', 'fusion-builder' ),
-					),
-					'dependency'  => array(
-						array(
-							'element'  => 'layout',
-							'value'    => 'default',
-							'operator' => '==',
-						),
-					),
-				),
-				array(
-					'type'        => 'radio_button_set',
 					'heading'     => esc_attr__( 'Text display', 'fusion-builder' ),
 					'description' => esc_attr__( 'Choose to display the post excerpt.', 'fusion-builder' ),
 					'param_name'  => 'excerpt',
@@ -992,19 +863,6 @@ function fusion_element_recent_posts() {
 							'value'    => 'yes',
 							'operator' => '==',
 						),
-					),
-				),
-				array(
-					'type'        => 'radio_button_set',
-					'heading'     => esc_attr__( 'Pagination Type', 'fusion-builder' ),
-					'description' => esc_attr__( 'Choose the type of pagination.', 'fusion-builder' ),
-					'param_name'  => 'scrolling',
-					'default'     => 'no',
-					'value'       => array(
-						'no'               => esc_attr__( 'No Pagination', 'fusion-builder' ),
-						'pagination'       => esc_attr__( 'Pagination', 'fusion-builder' ),
-						'infinite'         => esc_attr__( 'Infinite Scrolling', 'fusion-builder' ),
-						'load_more_button' => esc_attr__( 'Load More Button', 'fusion-builder' ),
 					),
 				),
 				array(

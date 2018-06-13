@@ -369,7 +369,7 @@ if ( ! function_exists( 'avada_featured_images_for_pages' ) ) {
 		if ( ! post_password_required( get_the_ID() ) ) {
 
 			if ( Avada()->settings->get( 'featured_images_pages' ) ) {
-				$pyre_video = apply_filters( 'privacy_iframe_embed', get_post_meta( get_the_ID(), 'pyre_video', true ) );
+				$pyre_video = get_post_meta( get_the_ID(), 'pyre_video', true );
 				if ( 0 < avada_number_of_featured_images() || $pyre_video ) {
 					if ( $pyre_video ) {
 						$video = '<li><div class="full-video">' . $pyre_video . '</div></li>';

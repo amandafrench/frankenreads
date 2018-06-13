@@ -242,7 +242,7 @@ class Fusion_Dynamic_CSS_Helpers {
 
 				// Check if the transient exists.
 				// If it does not exist, then generate the CSS and update the transient.
-				// @codingStandardsIgnoreLine Squiz.PHP.DisallowMultipleAssignments.Found
+				// @codingStandardsIgnoreLine
 				if ( false === ( $dynamic_css = get_transient( $transient_name ) ) ) {
 
 					// Calculate the dynamic CSS.

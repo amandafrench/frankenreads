@@ -249,9 +249,7 @@ class Avada_Gravity_Forms_Tags_Merger {
 		$eid        = $entry_id;
 		$do_encrypt = $force_encrypt || $this->_args['encrypt_eid'];
 
-		if ( $do_encrypt && is_callable( array( 'GFCommon', 'openssl_encrypt' ) ) ) {
-			$eid = rawurlencode( GFCommon::openssl_encrypt( $eid ) );
-		} else if ( $do_encrypt && is_callable( array( 'GFCommon', 'encrypt' ) ) ) {
+		if ( $do_encrypt && is_callable( array( 'GFCommon', 'encrypt' ) ) ) {
 			$eid = rawurlencode( GFCommon::encrypt( $eid ) );
 		}
 
@@ -325,13 +323,7 @@ class Avada_Gravity_Forms_Tags_Merger {
 		} elseif ( ! $do_encrypt && is_numeric( $entry_id ) && intval( $entry_id ) > 0 ) {
 			return $entry_id;
 		} else {
-
-			if ( is_callable( array( 'GFCommon', 'openssl_decrypt' ) ) ) {
-				$entry_id = rawurlencode( GFCommon::openssl_decrypt( $entry_id ) );
-			} else if ( is_callable( array( 'GFCommon', 'decrypt' ) ) ) {
-				$entry_id = rawurlencode( GFCommon::decrypt( $entry_id ) );
-			}
-
+			$entry_id = is_callable( array( 'GFCommon', 'decrypt' ) ) ? GFCommon::decrypt( $entry_id ) : $entry_id;
 			return intval( $entry_id );
 		}
 

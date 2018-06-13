@@ -155,28 +155,30 @@ class Fusion_Patcher_Apply_Patch {
 		// Add the patch key to the array and save.
 		// Save on a different setting depending on whether the patch failed to be applied or not.
 		if ( false === $this->status ) {
-			// Update the failed patches setting.
+			// Update the failed patches setting. @codingStandardsIgnoreLine
 			if ( ! in_array( $key, $failed_patches ) ) {
 				$failed_patches[] = $key;
 				$failed_patches   = array_unique( $failed_patches );
 				update_site_option( 'fusion_failed_patches', $failed_patches );
 			}
-			// Update the applied patches setting.
+			// Update the applied patches setting. @codingStandardsIgnoreLine
 			if ( in_array( $key, $applied_patches ) ) {
+				// @codingStandardsIgnoreLine
 				$applied_key = array_search( $key, $applied_patches );
 				unset( $applied_patches[ $applied_key ] );
 				update_site_option( 'fusion_applied_patches', $applied_patches );
 			}
 			return;
 		}
-		// If we got this far then the patch has been applied.
+		// If we got this far then the patch has been applied. @codingStandardsIgnoreLine
 		if ( ! in_array( $key, $applied_patches ) ) {
 			$applied_patches[] = $key;
 			$applied_patches   = array_unique( $applied_patches );
 			update_site_option( 'fusion_applied_patches', $applied_patches );
 
-			// If the current patch is in the array of failed patches, remove it.
+			// If the current patch is in the array of failed patches, remove it. @codingStandardsIgnoreLine
 			if ( in_array( $key, $failed_patches ) ) {
+				// @codingStandardsIgnoreLine
 				$failed_key = array_search( $key, $failed_patches );
 				unset( $failed_patches[ $failed_key ] );
 				update_site_option( 'fusion_failed_patches', $failed_patches );

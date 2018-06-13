@@ -67,11 +67,6 @@ if ( Avada()->settings->get( 'image_rollover' ) && Avada()->settings->get( 'feat
 	$container_class .= ' fusion-blog-rollover';
 }
 
-$content_align = Avada()->settings->get( 'blog_layout_alignment' );
-if ( $content_align && ( 'grid' === $blog_layout || 'masonry' === $blog_layout || 'timeline' === $blog_layout ) ) {
-	$container_class .= ' fusion-blog-layout-' . $content_align;
-}
-
 $number_of_pages = $wp_query->max_num_pages;
 if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 	$number_of_pages = ceil( $wp_query->found_posts / Avada()->settings->get( 'search_results_per_page' ) );
@@ -323,12 +318,8 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 						<?php if ( Avada()->settings->get( 'post_meta_comments' ) || Avada()->settings->get( 'post_meta_read' ) ) : ?>
 							<div class="fusion-meta-info">
 								<?php if ( Avada()->settings->get( 'post_meta_read' ) ) : ?>
-									<?php
-										$link_target = ( 'yes' === fusion_get_page_option( 'link_icon_target', $post->ID ) || 'yes' === fusion_get_page_option( 'post_links_target', $post->ID ) ) ? ' target="_blank" rel="noopener noreferrer"' : '';
-
-										$readmore_alignment = ! Avada()->settings->get( 'post_meta_comments' ) && '' !== $content_align ? 'fusion-align' . $content_align : 'fusion-alignleft';
-									?>
-									<div class="<?php echo esc_attr( $readmore_alignment ); ?>">
+									<?php $link_target = ( 'yes' === fusion_get_page_option( 'link_icon_target', $post->ID ) || 'yes' === fusion_get_page_option( 'post_links_target', $post->ID ) ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>
+									<div class="fusion-alignleft">
 										<a href="<?php echo esc_url_raw( get_permalink() ); ?>" class="fusion-read-more"<?php echo $link_target; // WPCS: XSS ok. ?>>
 											<?php echo esc_textarea( apply_filters( 'avada_blog_read_more_link', esc_attr__( 'Read More', 'Avada' ) ) ); ?>
 										</a>
@@ -337,8 +328,7 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 
 								<?php // Render comments for grid/timeline layouts. ?>
 								<?php if ( Avada()->settings->get( 'post_meta_comments' ) ) : ?>
-									<?php $comment_alignment = ! Avada()->settings->get( 'post_meta_read' ) && '' !== $content_align ? 'fusion-align' . $content_align : 'fusion-alignright'; ?>
-									<div class="<?php echo esc_attr( $comment_alignment ); ?>">
+									<div class="fusion-alignright">
 										<?php if ( ! post_password_required( $post->ID ) ) : ?>
 											<?php comments_popup_link( '<i class="fusion-icon-bubbles"></i>&nbsp;0', '<i class="fusion-icon-bubbles"></i>&nbsp;1', '<i class="fusion-icon-bubbles"></i>&nbsp;%' ); ?>
 										<?php else : ?>

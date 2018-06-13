@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<?php if ( ! post_password_required( $post->ID ) ) : ?>
 				<?php if ( Avada()->settings->get( 'featured_images_single' ) ) : ?>
-					<?php $video = apply_filters( 'privacy_iframe_embed', get_post_meta( $post->ID, 'pyre_video', true ) ); ?>
+					<?php $video = get_post_meta( $post->ID, 'pyre_video', true ); ?>
 					<?php if ( 0 < avada_number_of_featured_images() || $video ) : ?>
 						<?php
 						Avada()->images->set_grid_image_meta(

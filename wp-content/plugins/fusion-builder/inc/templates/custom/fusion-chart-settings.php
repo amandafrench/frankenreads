@@ -57,7 +57,7 @@ $border_size = $fusion_settings->get( 'chart_border_size' );
 					border_size          = null,
 					legend_text_colors   = null,
 					table_class          = 'showY',
-					wrapperClass         = '',
+					note_class           = '',
 					columnOffset         = 5,
 					chart_bg_color        = '',
 					padding_top           = '',
@@ -155,11 +155,13 @@ $border_size = $fusion_settings->get( 'chart_border_size' );
 					table_class = 'showX';
 				}
 
-				wrapperClass = 'fusion-chart-' + ( 'object' !== typeof atts.params.chart_type ? atts.params.chart_type : 'bar' );
+				if ( 'object' === typeof atts.params.chart_type || 'bar' === atts.params.chart_type || 'horizontalBar' == atts.params.chart_type ) {
+					note_class = 'show-note';
+				}
 				#>
 
-				<div class="fusion-table-builder fusion-table-builder-chart {{ wrapperClass }}">
-					<div class="fusion-builder-layouts-header-info">
+				<div class="fusion-table-builder fusion-table-builder-chart">
+					<div class="fusion-builder-layouts-header-info {{ note_class }}">
 						<h2>{{ fusionBuilderText.chart_intro }}</h2>
 						<h3>{{{ fusionBuilderText.chart_bars_note }}}</h3>
 						<span class="fusion-table-builder-add-column fusion-builder-button-default ">{{ fusionBuilderText.add_chart_column }}</span>

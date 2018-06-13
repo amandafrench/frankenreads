@@ -196,7 +196,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 		);
 
 		$instance        = wp_parse_args( (array) $instance, $defaults );
-		$twitter_doc_url = 'https://theme-fusion.com/documentation/avada/twitter-widget/';
+		$twitter_doc_url = 'https://theme-fusion.com/avada-doc/twitter-widget/';
 
 		?>
 
@@ -358,8 +358,6 @@ class Fusion_Widget_Tweets extends WP_Widget {
 	public function render_new_widget( $widget_params ) {
 		?>
 		<?php extract( $widget_params ); ?>
-		<?php $consent_needed = class_exists( 'Avada_Privacy_Embeds' ) && Avada()->settings->get( 'privacy_embeds' ) && ! Avada()->privacy_embeds->get_consent( 'twitter' ); ?>
-
 		<div style="overflow:hidden">
 			<?php if ( 'twitter_style' == $widget_type ) : ?>
 				<a class="twitter-timeline" data-dnt="true" href="<?php echo esc_url_raw( 'https://twitter.com/' . $twitter_id ); ?>" data-tweet-limit="<?php echo esc_attr( $count ); ?>" data-width="<?php echo esc_attr( $width ); ?>" data-height="<?php echo esc_attr( $height ); ?>" width="<?php echo esc_attr( $width ); ?>" height="<?php echo esc_attr( $height ); ?>" data-theme="<?php echo esc_attr( $theme ); ?>" data-link-color="<?php echo esc_attr( $link_color ); ?>" data-border-color="<?php echo esc_attr( $border_color ); ?>" data-chrome="<?php echo esc_attr( $chrome ); ?>">Tweets by <?php echo esc_attr( $twitter_id ); ?></a>
@@ -367,16 +365,9 @@ class Fusion_Widget_Tweets extends WP_Widget {
 				<?php /* translators: The twitter-ID. */ ?>
 				<a class="twitter-timeline" data-dnt="true" href="<?php echo esc_url_raw( 'https://twitter.com/' . $twitter_id ); ?>" data-widget-id="<?php echo esc_attr( $widget_id ); ?>"><?php printf( esc_attr__( 'Tweets by %s', 'Avada' ), esc_attr( $twitter_id ) ); ?></a>
 			<?php endif; ?>
-
-			<?php if ( $consent_needed ) : ?>
-				<?php echo Avada()->privacy_embeds->script_placeholder( 'twitter' ); // WPCS: XSS ok. ?>
-				<span data-privacy-script="true" data-privacy-type="twitter" class="fusion-hidden" data-privacy-src="//platform.twitter.com/widgets.js"></span>
-			<?php else : ?>
-				<?php // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
-				<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-				<?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
-			<?php endif; ?>
-
+			<?php // phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
+			<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+			<?php // phpcs:enable WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 		</div>
 		<?php
 	}

@@ -47,12 +47,7 @@ class Avada_Social_Sharing extends Avada_Social_Icon {
 		$icons = '';
 
 		$i = 0;
-
-		if ( isset( parent::$args['authorpage'] ) && 'yes' == parent::$args['authorpage'] && isset( parent::$args['color_type'] ) ) {
-			$per_icon_colors = ( 'brand' === parent::$args['color_type'] ) ? true : false;
-		} else {
-			$per_icon_colors = ( 'brand' == Avada()->settings->get( 'sharing_social_links_color_type' ) ) ? true : false;
-		}
+		$per_icon_colors = ( 'brand' == Avada()->settings->get( 'sharing_social_links_color_type' ) ) ? true : false;
 		$number_of_social_networks = count( $social_networks );
 		foreach ( $social_networks as $network => $icon_args ) {
 
@@ -124,43 +119,37 @@ class Avada_Social_Sharing extends Avada_Social_Icon {
 			}
 
 			$social_links_array['facebook'] = array(
-				'url' => $facebook_url,
+				'url'        => $facebook_url,
 			);
 		}
 
 		if ( Avada()->settings->get( 'sharing_twitter' ) ) {
 			$social_links_array['twitter'] = array(
-				'url' => 'https://twitter.com/share?text=' . rawurlencode( html_entity_decode( $args['title'], ENT_COMPAT, 'UTF-8' ) ) . '&url=' . rawurlencode( $args['link'] ),
+				'url'        => 'https://twitter.com/share?text=' . rawurlencode( html_entity_decode( $args['title'], ENT_COMPAT, 'UTF-8' ) ) . '&url=' . rawurlencode( $args['link'] ),
 			);
 		}
 
 		if ( Avada()->settings->get( 'sharing_linkedin' ) ) {
 			$social_links_array['linkedin'] = array(
-				'url' => 'https://www.linkedin.com/shareArticle?mini=true&url=' . $args['link'] . '&amp;title=' . rawurlencode( $args['title'] ) . '&amp;summary=' . rawurlencode( mb_substr( html_entity_decode( $args['description'], ENT_QUOTES, 'UTF-8' ), 0, 256 ) ),
+				'url'        => 'https://www.linkedin.com/shareArticle?mini=true&url=' . $args['link'] . '&amp;title=' . rawurlencode( $args['title'] ) . '&amp;summary=' . rawurlencode( mb_substr( html_entity_decode( $args['description'], ENT_QUOTES, 'UTF-8' ), 0, 256 ) ),
 			);
 		}
 
 		if ( Avada()->settings->get( 'sharing_reddit' ) ) {
 			$social_links_array['reddit'] = array(
-				'url' => 'http://reddit.com/submit?url=' . $args['link'] . '&amp;title=' . rawurlencode( $args['title'] ),
-			);
-		}
-
-		if ( Avada()->settings->get( 'sharing_whatsapp' ) ) {
-			$social_links_array['whatsapp'] = array(
-				'url' => 'https://api.whatsapp.com/send?text=' . rawurlencode( $args['link'] ),
-			);
-		}
-
-		if ( Avada()->settings->get( 'sharing_google' ) ) {
-			$social_links_array['googleplus'] = array(
-				'url' => 'https://plus.google.com/share?url=' . $args['link'],
+				'url'        => 'http://reddit.com/submit?url=' . $args['link'] . '&amp;title=' . rawurlencode( $args['title'] ),
 			);
 		}
 
 		if ( Avada()->settings->get( 'sharing_tumblr' ) ) {
 			$social_links_array['tumblr'] = array(
 				'url' => 'http://www.tumblr.com/share/link?url=' . rawurlencode( $args['link'] ) . '&amp;name=' . rawurlencode( $args['title'] ) . '&amp;description=' . rawurlencode( $args['description'] ),
+			);
+		}
+
+		if ( Avada()->settings->get( 'sharing_google' ) ) {
+			$social_links_array['googleplus'] = array(
+				'url'        => 'https://plus.google.com/share?url=' . $args['link'],
 			);
 		}
 
@@ -172,13 +161,13 @@ class Avada_Social_Sharing extends Avada_Social_Icon {
 
 		if ( Avada()->settings->get( 'sharing_vk' ) ) {
 			$social_links_array['vk'] = array(
-				'url' => 'http://vkontakte.ru/share.php?url=' . rawurlencode( $args['link'] ) . '&amp;title=' . rawurlencode( $args['title'] ) . '&amp;description=' . rawurlencode( $args['description'] ),
+				'url'        => 'http://vkontakte.ru/share.php?url=' . rawurlencode( $args['link'] ) . '&amp;title=' . rawurlencode( $args['title'] ) . '&amp;description=' . rawurlencode( $args['description'] ),
 			);
 		}
 
 		if ( Avada()->settings->get( 'sharing_email' ) ) {
 			$social_links_array['email'] = array(
-				'url' => 'mailto:?subject=' . rawurlencode( $args['title'] ) . '&body=' . $args['link'],
+				'url'        => 'mailto:?subject=' . rawurlencode( $args['title'] ) . '&body=' . $args['link'],
 			);
 		}
 
@@ -200,43 +189,37 @@ class Avada_Social_Sharing extends Avada_Social_Icon {
 
 		if ( get_the_author_meta( 'author_facebook', $args['author_id'] ) ) {
 			$social_links_array['facebook'] = array(
-				'url' => get_the_author_meta( 'author_facebook', $args['author_id'] ),
+				'url'        => get_the_author_meta( 'author_facebook', $args['author_id'] ),
 			);
 		}
 
 		if ( get_the_author_meta( 'author_twitter', $args['author_id'] ) ) {
 			$social_links_array['twitter'] = array(
-				'url' => get_the_author_meta( 'author_twitter', $args['author_id'] ),
+				'url'        => get_the_author_meta( 'author_twitter', $args['author_id'] ),
 			);
 		}
 
 		if ( get_the_author_meta( 'author_linkedin', $args['author_id'] ) ) {
 			$social_links_array['linkedin'] = array(
-				'url' => get_the_author_meta( 'author_linkedin', $args['author_id'] ),
+				'url'        => get_the_author_meta( 'author_linkedin', $args['author_id'] ),
 			);
 		}
 
 		if ( get_the_author_meta( 'author_dribble', $args['author_id'] ) ) {
 			$social_links_array['dribbble'] = array(
-				'url' => get_the_author_meta( 'author_dribble', $args['author_id'] ),
-			);
-		}
-
-		if ( get_the_author_meta( 'author_whatsapp', $args['author_id'] ) ) {
-			$social_links_array['whatsapp'] = array(
-				'url' => get_the_author_meta( 'author_whatsapp', $args['author_id'] ),
+				'url'        => get_the_author_meta( 'author_dribble', $args['author_id'] ),
 			);
 		}
 
 		if ( get_the_author_meta( 'author_gplus', $args['author_id'] ) ) {
 			$social_links_array['googleplus'] = array(
-				'url' => get_the_author_meta( 'author_gplus', $args['author_id'] ),
+				'url'        => get_the_author_meta( 'author_gplus', $args['author_id'] ),
 			);
 		}
 
 		if ( get_the_author_meta( 'author_email', $args['author_id'] ) ) {
 			$social_links_array['email'] = array(
-				'url' => get_the_author_meta( 'author_email', $args['author_id'] ),
+				'url'        => get_the_author_meta( 'author_email', $args['author_id'] ),
 			);
 		}
 

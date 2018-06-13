@@ -31,8 +31,8 @@ $this->radio_buttonset(
 	esc_attr__( 'Use 100% Width Page', 'Avada' ),
 	array(
 		'default' => esc_attr__( 'Default', 'Avada' ),
-		'yes'     => esc_attr__( 'Yes', 'Avada' ),
 		'no'      => esc_attr__( 'No', 'Avada' ),
+		'yes'     => esc_attr__( 'Yes', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
 	sprintf( esc_html__( 'Choose to set this post to 100&#37; browser width. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_width_100', '', 'yesno' ) )
@@ -67,8 +67,8 @@ $this->radio_buttonset(
 	esc_html__( 'Disable First Featured Image', 'Avada' ),
 	array(
 		'default' => esc_attr__( 'Default', 'Avada' ),
-		'yes'     => esc_attr__( 'Yes', 'Avada' ),
 		'no'      => esc_attr__( 'No', 'Avada' ),
+		'yes'     => esc_attr__( 'Yes', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
 	sprintf( esc_html__( 'Disable the 1st featured image on single post pages. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_disable_first_featured_image', '', 'reverseyesno' ) )
@@ -160,8 +160,8 @@ $this->radio_buttonset(
 	esc_attr__( 'Open Portfolio Links In New Window', 'Avada' ),
 	array(
 		'default' => esc_attr__( 'Default', 'Avada' ),
-		'yes'     => esc_attr__( 'Yes', 'Avada' ),
 		'no'      => esc_attr__( 'No', 'Avada' ),
+		'yes'     => esc_attr__( 'Yes', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
 	sprintf( esc_html__( 'Choose to open the single post page, project url and copyright url links in a new window. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_link_icon_target', '', 'yesno' ) )

@@ -1668,8 +1668,8 @@
   width: auto;
 }
 .rtl #fusion_builder_layout .fusion-builder-global-tooltip,
-.rtl #fusion_builder_layout .fusion-global-column:after,
 .rtl #fusion_builder_layout .fusion-global-container:after,
+.rtl #fusion_builder_layout .fusion-global-column:after,
 .rtl #fusion_builder_layout .fusion-global-element:after {
   right: auto !important;
   left: 5px;
@@ -1753,7 +1753,7 @@
   float: left;
 }
 .rtl .option-field .wp-picker-container .iris-picker .iris-picker-inner .iris-slider {
-  margin-left: 0 !important;
+  margin-left: 0px !important;
   margin-right: 14px;
 }
 .rtl .option-field .wp-picker-container .wp-picker-input-wrap label {
@@ -3303,35 +3303,28 @@ tr:hover .fusion-builder-table-delete-row {
   background-color: #e5e5e5;
   display: none;
 }
-.fusion-table-builder-chart .fusion-builder-layouts-header-info h3 span,
-.fusion-table-builder-chart .fusion-builder-layouts-header-info h3 strong {
+.fusion-table-builder-chart .fusion-builder-layouts-header-info h3 strong,
+.fusion-table-builder-chart .fusion-builder-layouts-header-info h3 span {
   color: #666666;
   font-weight: 600;
 }
 .fusion-table-builder-chart .fusion-builder-layouts-header-info h3 span {
   font-style: italic;
 }
-.fusion-table-builder-chart.fusion-chart-bar .fusion-builder-layouts-header-info h3,
-.fusion-table-builder-chart.fusion-chart-horizontalBar .fusion-builder-layouts-header-info h3 {
+.fusion-table-builder-chart .fusion-builder-layouts-header-info.show-note h3 {
   display: block;
-}
-.fusion-table-builder-chart.fusion-chart-doughnut li[data-option-id='chart_axis_text_color'],
-.fusion-table-builder-chart.fusion-chart-pie li[data-option-id='chart_axis_text_color'],
-.fusion-table-builder-chart.fusion-chart-doughnut li[data-option-id='chart_gridline_color'],
-.fusion-table-builder-chart.fusion-chart-pie li[data-option-id='chart_gridline_color'] {
-  display: none;
 }
 .fusion-table-builder-chart .fusion-builder-table.showX thead tr:nth-child(2),
 .fusion-table-builder-chart .fusion-builder-table.showX thead tr:nth-child(3),
 .fusion-table-builder-chart .fusion-builder-table.showX thead tr:nth-child(4) {
   display: table-row;
 }
-.fusion-table-builder-chart .fusion-builder-table.showX .td-2,
-.fusion-table-builder-chart .fusion-builder-table.showX .td-3,
-.fusion-table-builder-chart .fusion-builder-table.showX .td-4,
 .fusion-table-builder-chart .fusion-builder-table.showX .th-2,
 .fusion-table-builder-chart .fusion-builder-table.showX .th-3,
-.fusion-table-builder-chart .fusion-builder-table.showX .th-4 {
+.fusion-table-builder-chart .fusion-builder-table.showX .th-4,
+.fusion-table-builder-chart .fusion-builder-table.showX .td-2,
+.fusion-table-builder-chart .fusion-builder-table.showX .td-3,
+.fusion-table-builder-chart .fusion-builder-table.showX .td-4 {
   display: none;
 }
 .fusion-table-builder-chart .fusion-builder-table.showY thead tr:nth-child(2),
@@ -3339,12 +3332,12 @@ tr:hover .fusion-builder-table-delete-row {
 .fusion-table-builder-chart .fusion-builder-table.showY thead tr:nth-child(4) {
   display: none;
 }
-.fusion-table-builder-chart .fusion-builder-table.showY .td-2,
-.fusion-table-builder-chart .fusion-builder-table.showY .td-3,
-.fusion-table-builder-chart .fusion-builder-table.showY .td-4,
 .fusion-table-builder-chart .fusion-builder-table.showY .th-2,
 .fusion-table-builder-chart .fusion-builder-table.showY .th-3,
-.fusion-table-builder-chart .fusion-builder-table.showY .th-4 {
+.fusion-table-builder-chart .fusion-builder-table.showY .th-4,
+.fusion-table-builder-chart .fusion-builder-table.showY .td-2,
+.fusion-table-builder-chart .fusion-builder-table.showY .td-3,
+.fusion-table-builder-chart .fusion-builder-table.showY .td-4 {
   display: table-cell;
 }
 .fusion-table-builder-chart.fusion-table-builder .fusion-builder-table {
@@ -3363,8 +3356,8 @@ tr:hover .fusion-builder-table-delete-row {
   min-height: 25px;
   background-color: transparent !important;
 }
-.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table > tbody > tr > td,
-.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table > thead > tr > th {
+.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table > thead > tr > th,
+.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table > tbody > tr > td {
   vertical-align: middle;
   text-align: center;
 }
@@ -3413,8 +3406,8 @@ tr:hover .fusion-builder-table-delete-row {
 .fusion-table-builder-chart.fusion-table-builder input {
   height: 33px;
 }
-.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table > tbody > tr > td,
-.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table > thead > tr > th {
+.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table > thead > tr > th,
+.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table > tbody > tr > td {
   padding: 0;
   position: relative;
 }
@@ -3450,12 +3443,12 @@ tr:hover .fusion-builder-table-delete-row {
   z-index: 9;
   top: 70px;
 }
-.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table td:last-child .wp-picker-holder,
-.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table th:last-child .wp-picker-holder {
+.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table th:last-child .wp-picker-holder,
+.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table td:last-child .wp-picker-holder {
   right: -3px;
 }
-.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table td:last-child .option-field .wp-picker-container.wp-picker-alpha-container.wp-picker-active .wp-picker-input-wrap,
-.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table th:last-child .option-field .wp-picker-container.wp-picker-alpha-container.wp-picker-active .wp-picker-input-wrap {
+.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table th:last-child .option-field .wp-picker-container.wp-picker-alpha-container.wp-picker-active .wp-picker-input-wrap,
+.fusion-table-builder-chart.fusion-table-builder .fusion-builder-table td:last-child .option-field .wp-picker-container.wp-picker-alpha-container.wp-picker-active .wp-picker-input-wrap {
   right: 0;
 }
 .fusion-table-builder-chart.fusion-table-builder .fusion-builder-table .option-field .wp-picker-container.wp-picker-alpha-container.wp-picker-active {
@@ -3587,8 +3580,8 @@ tr:hover .fusion-builder-table-delete-row {
   position: relative;
   overflow: hidden;
 }
-.fusion-builder-default-reset a,
-.fusion-builder-default-reset span {
+.fusion-builder-default-reset span,
+.fusion-builder-default-reset a {
   display: inline-block;
 }
 .fusion-builder-default-reset.checked span,

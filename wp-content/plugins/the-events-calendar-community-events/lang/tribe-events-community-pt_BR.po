@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Community Events package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2018-05-29 04:51:17+0000\n"
+"PO-Revision-Date: 2017-01-27 16:24:37+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,7 +14,7 @@ msgstr ""
 #: src/views/community/modules/taxonomy.php:94
 msgctxt "taxonomy selector ajax search placeholder"
 msgid "Searching…"
-msgstr "Pesquisando…"
+msgstr ""
 
 #: src/views/community/modules/header-links.php:27
 msgid "Edit Venue"
@@ -27,7 +27,7 @@ msgstr ""
 #: src/Tribe/Submission_Handler.php:403
 msgctxt "field label for post tags"
 msgid "Tag"
-msgstr "Tag"
+msgstr ""
 
 #: src/Tribe/Submission_Handler.php:400
 msgctxt "field label for event categories"
@@ -40,7 +40,7 @@ msgstr ""
 
 #: src/views/community/modules/taxonomy.php:59
 msgid "terms"
-msgstr "termos"
+msgstr ""
 
 #: src/admin-views/community-options-template.php:234
 msgid "Users can delete their events"
@@ -84,7 +84,7 @@ msgstr ""
 
 #: src/views/community/modules/header-links.php:23
 msgid "Edit Event"
-msgstr "Editar evento"
+msgstr ""
 
 #: src/views/community/event-list.php:159
 msgid "You have no upcoming %s"
