@@ -171,11 +171,11 @@ class Mailer extends MailerAbstract {
 				)
 			);
 		} else {
-			$data['type']  = 'text/html';
+			$data['type']  = 'text/plain';
 			$data['value'] = $content;
 
-			if ( $this->phpmailer->ContentType === 'text/plain' ) {
-				$data['type'] = 'text/plain';
+			if ( $this->phpmailer->ContentType === 'text/html' ) {
+				$data['type'] = 'text/html';
 			}
 
 			$this->set_body_param(
@@ -225,7 +225,7 @@ class Mailer extends MailerAbstract {
 			$data[] = array(
 				'content'     => base64_encode( $file ),
 				'type'        => $attachment[4],
-				'filename'    => $attachment[2],
+				'filename'    => $attachment[1],
 				'disposition' => $attachment[6],
 			);
 		}

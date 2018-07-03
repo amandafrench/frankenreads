@@ -137,11 +137,10 @@ class Mailer extends MailerAbstract {
 				);
 			}
 		} else {
+			$type = 'text';
 
-			$type = 'html';
-
-			if ( $this->phpmailer->ContentType === 'text/plain' ) {
-				$type = 'text';
+			if ( $this->phpmailer->ContentType === 'text/html' ) {
+				$type = 'html';
 			}
 
 			if ( ! empty( $content ) ) {
@@ -191,7 +190,7 @@ class Mailer extends MailerAbstract {
 
 			$data[] = array(
 				'content' => $file,
-				'name'    => $attachment[2],
+				'name'    => $attachment[1],
 			);
 		}
 

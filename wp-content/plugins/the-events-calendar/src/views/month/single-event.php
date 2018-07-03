@@ -6,7 +6,6 @@
  * Override this template in your own theme by creating a file at [your-theme]/tribe-events/month/single-event.php
  *
  * @package TribeEventsCalendar
- * @version 4.6.19
  *
  */
 
@@ -24,7 +23,7 @@ global $post;
  * in.
  */
 $day      = tribe_events_get_current_month_day();
-$event_id = "{$post->ID}-{$day['date']}";
+$event_id = "{$post->ID}-{$day['daynum']}";
 $link     = tribe_get_event_link( $post );
 $title    = get_the_title( $post );
 

@@ -545,19 +545,7 @@ class Tribe__Events__Aggregator__Service {
 	 */
 	public function get_service_message( $key, $args = array(), $default = null ) {
 		if ( empty( $this->service_messages[ $key ] ) ) {
-			// Get error message if this is a registered Tribe_Error key.
-			$error = tribe_error( $key );
-
-			if ( is_wp_error( $error ) && 'unknown' !== $error->get_error_code() ) {
-				return $error->get_error_message();
-			}
-
-			// Use default message if set.
-			if ( null !== $default ) {
-				return $default;
-			}
-
-			return $this->get_unknow_message();
+			return ! empty( $default ) ? $default : $this->get_unknow_message();
 		}
 
 		return vsprintf( $this->service_messages[ $key ], $args );
@@ -630,7 +618,7 @@ class Tribe__Events__Aggregator__Service {
 	 * @return int
 	 */
 	public function get_limit_usage( $ignore_cache = false ) {
-		$limits = (object) $this->get_usage( 'import', $ignore_cache );
+		$limits = $this->get_usage( 'import', $ignore_cache );
 
 		if ( isset( $limits->used ) ) {
 			return $limits->used;
@@ -647,7 +635,7 @@ class Tribe__Events__Aggregator__Service {
 	 * @return int
 	 */
 	public function get_limit_remaining( $ignore_cache = false ) {
-		$limits = (object) $this->get_usage( 'import', $ignore_cache );
+		$limits = $this->get_usage( 'import', $ignore_cache );
 
 		if ( isset( $limits->remaining ) ) {
 			return $limits->remaining;

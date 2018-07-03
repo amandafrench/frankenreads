@@ -19,58 +19,58 @@
 	$( document ).ready( function() {
 
 		var $body        = $( 'body' );
-		var $navLink    = $( '[class^="tribe-events-nav-"] a' );
-		var initialDate = tf.get_url_param( 'tribe-bar-date' );
+		var $nav_link    = $( '[class^="tribe-events-nav-"] a' );
+		var initial_date = tf.get_url_param( 'tribe-bar-date' );
 		var $wrapper     = $( document.getElementById( 'tribe-events' ) );
 		var $tribedate   = $( document.getElementById( 'tribe-bar-date' ) );
-		var dateMod     = false;
+		var date_mod     = false;
 
-		var baseUrl = '/';
+		var base_url = '/';
 
 		if ( 'undefined' !== typeof config.events_base ) {
-			baseUrl =  $( document.getElementById( 'tribe-events-header' ) ).data( 'baseurl' );
-		} else if ( $navLink.length ) {
-			baseUrl = $navLink.first().attr( 'href' ).slice( 0, -8 );
+			base_url =  $( document.getElementById( 'tribe-events-header' ) ).data( 'baseurl' );
+		} else if ( $nav_link.length ) {
+			base_url = $nav_link.first().attr( 'href' ).slice( 0, -8 );
 		}
 
 		if ( td.default_permalinks ) {
-			baseUrl = baseUrl.split("?")[0];
+			base_url = base_url.split("?")[0];
 		}
 
 		if ( $( '.tribe-events-calendar' ).length && $( document.getElementById( 'tribe-events-bar' ) ).length ) {
-			if ( initialDate && initialDate.length > 7 ) {
-				$( document.getElementById( 'tribe-bar-date-day' ) ).val( initialDate.slice( -3 ) );
-				$tribedate.val( initialDate.substring( 0, 7 ) );
+			if ( initial_date && initial_date.length > 7 ) {
+				$( document.getElementById( 'tribe-bar-date-day' ) ).val( initial_date.slice( -3 ) );
+				$tribedate.val( initial_date.substring( 0, 7 ) );
 			}
 		}
 
 		// begin display date formatting
 
-		var dateFormat = 'yyyy-mm';
+		var date_format = 'yyyy-mm';
 
-		if ( '0' !== ts.datepicker_format ) {
+		if ( ts.datepicker_format !== '0' ) {
 
 			// we are not using the default query date format, lets grab it from the data array
 
-			var arrKey  = parseInt( ts.datepicker_format );
-			var maskKey = 'm' + ts.datepicker_format.toString();
+			var arr_key  = parseInt( ts.datepicker_format );
+			var mask_key = 'm' + ts.datepicker_format.toString();
 
-			dateFormat = td.datepicker_formats.month[arrKey];
+			date_format = td.datepicker_formats.month[arr_key];
 
 			// if url date is set and datepicker format is different from query format
 			// we need to fix the input value to emulate that before kicking in the datepicker
 
-			if ( initialDate ) {
-				if ( initialDate.length <= 7 ) {
-					initialDate = initialDate + '-01';
+			if ( initial_date ) {
+				if ( initial_date.length <= 7 ) {
+					initial_date = initial_date + '-01';
 				}
 
-				$tribedate.val( tribeDateFormat( initialDate, maskKey ) );
+				$tribedate.val( tribeDateFormat( initial_date, mask_key ) );
 			}
 		}
 
 		td.datepicker_opts = {
-			format      : dateFormat,
+			format      : date_format,
 			minViewMode : 'months',
 			autoclose   : true
 		};
@@ -84,7 +84,7 @@
 				var year  = e.date.getFullYear();
 				var month = ( '0' + ( e.date.getMonth() + 1 ) ).slice( -2 );
 
-				dateMod = true;
+				date_mod = true;
 				ts.date  = year + '-' + month;
 
 				if ( tt.no_bar() || tt.live_ajax() && tt.pushstate ) {
@@ -96,9 +96,9 @@
 					}
 					else {
 						if ( td.default_permalinks ) {
-							td.cur_url = baseUrl;
+							td.cur_url = base_url;
 						} else {
-							td.cur_url = baseUrl + ts.date + '/';
+							td.cur_url = base_url + ts.date + '/';
 						}
 					}
 
@@ -180,24 +180,19 @@
 
 		function tribe_mobile_month_setup() {
 
-			var $activeDay       = $wrapper.find( '.mobile-active' );
-			var $mobileTrigger = $wrapper.find( '.mobile-trigger' );
-			var $tribeGrid     = $wrapper.find( document.getElementById( 'tribe-events-content' ) ).find( '.tribe-events-calendar'  );
-
-			// If for some reason we don't have a "$activeDay" selected, default to today.
-			if ( !$activeDay.length ) {
-				var $activeDay = $wrapper.find( '.tribe-events-present' );
-			}
+			var $today          = $wrapper.find( '.tribe-events-present' );
+			var $mobile_trigger = $wrapper.find( '.mobile-trigger' );
+			var $tribe_grid     = $wrapper.find( document.getElementById( 'tribe-events-content' ) ).find( '.tribe-events-calendar'  );
 
 			if ( ! $( document.getElementById( 'tribe-mobile-container' ) ).length ) {
-				$( '<div id="tribe-mobile-container" />' ).insertAfter( $tribeGrid );
+				$( '<div id="tribe-mobile-container" />' ).insertAfter( $tribe_grid );
 			}
 
-			if ( $activeDay.length && $activeDay.is( '.tribe-events-thismonth' ) ) {
-				tribe_mobile_setup_day( $activeDay );
+			if ( $today.length && $today.is( '.tribe-events-thismonth' ) ) {
+				tribe_mobile_setup_day( $today );
 			}
 			else {
-				var $first_current_day = $mobileTrigger.filter( '.tribe-events-thismonth' ).first();
+				var $first_current_day = $mobile_trigger.filter( '.tribe-events-thismonth' ).first();
 				tribe_mobile_setup_day( $first_current_day );
 			}
 
@@ -207,14 +202,14 @@
 
 			$wrapper.find( '.tribe-events-calendar th' ).each( function() {
 				var $this    = $( this );
-				var dayAbbr = $this.attr( 'data-day-abbr' );
-				var dayFull = $this.attr( 'title' );
+				var day_abbr = $this.attr( 'data-day-abbr' );
+				var day_full = $this.attr( 'title' );
 
 				if ( $body.is( '.tribe-mobile' ) ) {
-					$this.text( dayAbbr );
+					$this.text( day_abbr );
 				}
 				else {
-					$this.text( dayFull );
+					$this.text( day_full );
 				}
 			} );
 
@@ -288,8 +283,8 @@
 
 				ts.date = $this.data( "month" );
 				ts.mdate = ts.date + '-01';
-				if ( '0' !== ts.datepicker_format ) {
-					tf.update_picker( tribeDateFormat( ts.mdate, maskKey ) );
+				if ( ts.datepicker_format !== '0' ) {
+					tf.update_picker( tribeDateFormat( ts.mdate, mask_key ) );
 				}
 				else {
 					tf.update_picker( ts.date );
@@ -358,7 +353,7 @@
 					return;
 				}
 				if ( $tribedate.val().length ) {
-					if ( '0' !== ts.datepicker_format ) {
+					if ( ts.datepicker_format !== '0' ) {
 						ts.date = tribeDateFormat( $tribedate.bootstrapDatepicker( 'getDate' ), 'tribeMonthQuery' );
 					}
 					else {
@@ -366,7 +361,7 @@
 					}
 				}
 				else {
-					if ( !dateMod ) {
+					if ( !date_mod ) {
 						ts.date = td.cur_date.slice( 0, -3 );
 					}
 				}
@@ -376,9 +371,9 @@
 				}
 				else {
 					if ( td.default_permalinks ) {
-						td.cur_url = baseUrl;
+						td.cur_url = base_url;
 					} else {
-						td.cur_url = baseUrl + ts.date + '/';
+						td.cur_url = base_url + ts.date + '/';
 					}
 				}
 				ts.popping = false;
@@ -403,9 +398,9 @@
 			}
 			else {
 				if ( td.default_permalinks ) {
-					td.cur_url = baseUrl;
+					td.cur_url = base_url;
 				} else {
-					td.cur_url = baseUrl + ts.date + '/';
+					td.cur_url = base_url + ts.date + '/';
 				}
 			}
 			ts.popping = false;
@@ -511,25 +506,23 @@
 						}
 						// @endif
 
-						var $theContent = '';
-						if ( $.isFunction( $.fn.parseHTML ) ) {
-							$theContent = $.parseHTML( response.html );
-						} else {
-							$theContent = response.html;
-						}
-
 						// @TODO: We need to D.R.Y. this assignment and the following if statement about shortcodes/do_string
 						// Ensure that the base URL is, in fact, the URL we want
 						td.cur_url = tf.get_base_url();
 
-						$( '#tribe-events-content' ).replaceWith( $theContent );
+						var $the_content = '';
+						if ( $.isFunction( $.fn.parseHTML ) ) {
+							$the_content = $.parseHTML( response.html );
+						} else {
+							$the_content = response.html;
+						}
+
+						$( '#tribe-events-content' ).replaceWith( $the_content );
 
 						tribe_month_view_init( true );
 
 						ts.page_title = $( '#tribe-events-header' ).data( 'title' );
-						ts.view_title = $( '#tribe-events-header' ).data( 'viewtitle' );
 						document.title = ts.page_title;
-						$( '.tribe-events-page-title' ).html(ts.view_title);
 
 						// we only want to add query args for Shortcodes and ugly URL sites
 						if (

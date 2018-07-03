@@ -21,8 +21,6 @@ class Options {
 			'from_email',
 			'mailer',
 			'return_path',
-			'from_name_force',
-			'from_email_force',
 		),
 		'smtp'     => array(
 			'host',
@@ -70,7 +68,6 @@ class Options {
 
 	/**
 	 * Init the Options class.
-	 * TODO: add a flag to process without retrieving const values.
 	 *
 	 * @since 1.0.0
 	 */
@@ -102,30 +99,6 @@ class Options {
 		}
 
 		return $instance;
-	}
-
-	/**
-	 * Default options that are saved on plugin activation.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @return array
-	 */
-	public static function get_defaults() {
-
-		return array(
-			'mail' => array(
-				'from_email'       => get_option( 'admin_email' ),
-				'from_name'        => get_bloginfo( 'name' ),
-				'mailer'           => 'mail',
-				'return_path'      => false,
-				'from_email_force' => false,
-				'from_name_force'  => false,
-			),
-			'smtp' => array(
-				'autotls' => true,
-			),
-		);
 	}
 
 	/**
@@ -215,12 +188,7 @@ class Options {
 				$value = $this->postprocess_key_defaults( $group, $key );
 			}
 		} else {
-			// check on maps
-			if ( isset( self::$map[ $group ] ) && in_array( $key, self::$map[ $group ] ) ) {
-				$value = $this->get_const_value( $group, $key, false );
-			} else {
-				$value = $this->postprocess_key_defaults( $group, $key );
-			}
+			$value = $this->postprocess_key_defaults( $group, $key );
 		}
 
 		if ( is_string( $value ) ) {
@@ -246,8 +214,6 @@ class Options {
 		$value = '';
 
 		switch ( $key ) {
-			case 'from_email_force':
-			case 'from_name_force':
 			case 'return_path':
 				$value = $group === 'mail' ? false : true;
 				break;
@@ -302,14 +268,7 @@ class Options {
 						/** @noinspection PhpUndefinedConstantInspection */
 						return $this->is_const_defined( $group, $key ) ? WPMS_MAILER : $value;
 					case 'return_path':
-						/** @noinspection PhpUndefinedConstantInspection */
-						return $this->is_const_defined( $group, $key ) ? WPMS_SET_RETURN_PATH : $value;
-					case 'from_name_force':
-						/** @noinspection PhpUndefinedConstantInspection */
-						return $this->is_const_defined( $group, $key ) ? WPMS_MAIL_FROM_NAME_FORCE : $value;
-					case 'from_email_force':
-						/** @noinspection PhpUndefinedConstantInspection */
-						return $this->is_const_defined( $group, $key ) ? WPMS_MAIL_FROM_FORCE : $value;
+						return $this->is_const_defined( $group, $key ) ? true : $value;
 				}
 
 				break;
@@ -425,10 +384,6 @@ class Options {
 						return defined( 'WPMS_MAILER' ) && WPMS_MAILER;
 					case 'return_path':
 						return defined( 'WPMS_SET_RETURN_PATH' ) && ( WPMS_SET_RETURN_PATH === 'true' || WPMS_SET_RETURN_PATH === true );
-					case 'from_name_force':
-						return defined( 'WPMS_MAIL_FROM_NAME_FORCE' ) && ( WPMS_MAIL_FROM_NAME_FORCE === 'true' || WPMS_MAIL_FROM_NAME_FORCE === true );
-					case 'from_email_force':
-						return defined( 'WPMS_MAIL_FROM_FORCE' ) && ( WPMS_MAIL_FROM_FORCE === 'true' || WPMS_MAIL_FROM_FORCE === true );
 				}
 
 				break;
@@ -511,8 +466,6 @@ class Options {
 								}
 								break;
 							case 'return_path':
-							case 'from_name_force':
-							case 'from_email_force':
 								$options[ $group ][ $key_name ] = $this->get_const_value( $group, $key_name, (bool) $options[ $group ][ $key_name ] );
 								break;
 						}
@@ -521,7 +474,6 @@ class Options {
 					case 'general':
 						switch ( $key_name ) {
 							case 'am_notifications_hidden':
-							case 'uninstall':
 								$options[ $group ][ $key_name ] = (bool) $options[ $group ][ $key_name ];
 								break;
 						}
@@ -562,14 +514,8 @@ class Options {
 					case 'client_secret':
 					case 'auth_code':
 					case 'access_token':
-						if ( is_string( $options[ $mailer ][ $key_name ] ) ) {
-							$value = trim( $options[ $mailer ][ $key_name ] );
-						} else {
-							$value = $options[ $mailer ][ $key_name ];
-						}
-
 						// Do not process as they may contain certain special characters, but allow to be overwritten using constants.
-						$options[ $mailer ][ $key_name ] = $this->get_const_value( $mailer, $key_name, $value );
+						$options[ $mailer ][ $key_name ] = $this->get_const_value( $mailer, $key_name, $options[ $mailer ][ $key_name ] );
 						break;
 				}
 			}
