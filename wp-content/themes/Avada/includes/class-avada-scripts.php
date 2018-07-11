@@ -412,7 +412,7 @@ class Avada_Scripts {
 			);
 		}
 
-		if ( Avada()->settings->get( 'privacy_embeds' ) || 'no' !== Avada()->settings->get( 'privacy_bar' ) ) {
+		if ( Avada()->settings->get( 'privacy_embeds' ) || Avada()->settings->get( 'privacy_bar' ) ) {
 			$scripts[] = array(
 				'avada-privacy',
 				$js_folder_url . '/general/avada-privacy.js',
@@ -497,9 +497,9 @@ class Avada_Scripts {
 			$side_header_breakpoint = 800;
 		}
 
-		$cookie_args      = class_exists( 'Avada_Privacy_Embeds' ) ? Avada()->privacy_embeds->get_cookie_args() : false;
-		$consents         = class_exists( 'Avada_Privacy_Embeds' ) ? array_keys( Avada()->privacy_embeds->get_embed_types() ) : array();
-		$default_consents = class_exists( 'Avada_Privacy_Embeds' ) ? Avada()->privacy_embeds->get_default_consents() : array();
+		$cookie_args      = class_exists( 'Avada_Privacy_Embeds' ) && Avada()->settings->get( 'privacy_embeds' ) ? Avada()->privacy_embeds->get_cookie_args() : false;
+		$consents         = class_exists( 'Avada_Privacy_Embeds' ) && Avada()->settings->get( 'privacy_embeds' ) ? array_keys( Avada()->privacy_embeds->get_embed_types() ) : array();
+		$default_consents = class_exists( 'Avada_Privacy_Embeds' ) && Avada()->settings->get( 'privacy_embeds' ) ? Avada()->privacy_embeds->get_default_consents() : array();
 
 		$scripts = array(
 			array(
