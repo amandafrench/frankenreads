@@ -330,7 +330,12 @@ if ( fusion_is_element_enabled( 'fusion_sharing' ) ) {
 				$tooltip = $args['social_network'];
 				if ( 'googleplus' == $tooltip ) {
 					$tooltip = 'Google+';
+				} elseif ( 'youtube' === $tooltip ) {
+					$tooltip = 'YouTube';
+				} elseif ( 'linkedin' === $tooltip ) {
+					$tooltip = 'LinkedIn';
 				}
+
 				$attr['data-title'] = ucfirst( $tooltip );
 				$attr['title']      = ucfirst( $tooltip );
 				$attr['aria-label'] = ucfirst( $tooltip );

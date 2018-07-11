@@ -600,6 +600,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 						thisEl.find( '.fusion-builder-all-modules li' ).each( function() {
 
 							name = $( this ).find( '.fusion_module_title' ).text().trim().toLowerCase();
+							name = name.replace( 'this is a global column.', '' );
 
 							// Also show portfolio on recent works search
 							if ( 'portfolio' === name ) {

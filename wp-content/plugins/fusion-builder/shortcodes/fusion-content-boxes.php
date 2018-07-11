@@ -134,6 +134,7 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 						'backgroundcolor'        => $fusion_settings->get( 'content_box_bg_color' ),
 						'columns'                => '',
 						'circle'                 => '',
+						'heading_size'           => '2',
 						'icon'                   => '',
 						'iconflip'               => '',
 						'iconrotate'             => '',
@@ -160,6 +161,7 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 						'title_color'            => $fusion_library->sanitize->color( $fusion_settings->get( 'content_box_title_color' ) ),
 						'body_color'             => $fusion_library->sanitize->color( $fusion_settings->get( 'content_box_body_color' ) ),
 						'link_type'              => $fusion_settings->get( 'content_box_link_type' ),
+						'button_span'            => $fusion_settings->get( 'content_box_button_span' ),
 						'link_area'              => $fusion_settings->get( 'content_box_link_area' ),
 						'link_target'            => $fusion_settings->get( 'content_box_link_target' ),
 						'animation_type'         => '',
@@ -221,14 +223,14 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 				$styles = '<style type="text/css" scoped="scoped">';
 
 				if ( $title_color ) {
-					$styles .= ".fusion-content-boxes-{$this->content_box_counter} .heading h2{color:{$title_color};}";
+					$styles .= ".fusion-content-boxes-{$this->content_box_counter} .heading .content-box-heading {color:{$title_color};}";
 				}
 
 				$styles .= "
-					.fusion-content-boxes-{$this->content_box_counter} .fusion-content-box-hover .link-area-link-icon-hover .heading h2,
-					.fusion-content-boxes-{$this->content_box_counter} .fusion-content-box-hover .link-area-link-icon-hover .heading .heading-link h2,
-					.fusion-content-boxes-{$this->content_box_counter} .fusion-content-box-hover .link-area-box-hover .heading h2,
-					.fusion-content-boxes-{$this->content_box_counter} .fusion-content-box-hover .link-area-box-hover .heading .heading-link h2,
+					.fusion-content-boxes-{$this->content_box_counter} .fusion-content-box-hover .link-area-link-icon-hover .heading .content-box-heading,
+					.fusion-content-boxes-{$this->content_box_counter} .fusion-content-box-hover .link-area-link-icon-hover .heading .heading-link .content-box-heading,
+					.fusion-content-boxes-{$this->content_box_counter} .fusion-content-box-hover .link-area-box-hover .heading .content-box-heading,
+					.fusion-content-boxes-{$this->content_box_counter} .fusion-content-box-hover .link-area-box-hover .heading .heading-link .content-box-heading,
 					.fusion-content-boxes-{$this->content_box_counter} .fusion-content-box-hover .link-area-link-icon-hover.link-area-box .fusion-read-more,
 					.fusion-content-boxes-{$this->content_box_counter} .fusion-content-box-hover .link-area-link-icon-hover.link-area-box .fusion-read-more::after,
 					.fusion-content-boxes-{$this->content_box_counter} .fusion-content-box-hover .link-area-link-icon-hover.link-area-box .fusion-read-more::before,
@@ -385,6 +387,7 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 						'circlecolor'            => $this->parent_args['circlecolor'],
 						'circlebordercolor'      => $this->parent_args['circlebordercolor'],
 						'circlebordersize'       => $this->parent_args['circlebordersize'],
+						'heading_size'           => $this->parent_args['heading_size'],
 						'outercirclebordercolor' => $this->parent_args['outercirclebordercolor'],
 						'outercirclebordersize'  => $this->parent_args['outercirclebordersize'],
 						'icon'                   => $this->parent_args['icon'],
@@ -477,7 +480,7 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 				}
 
 				if ( $title ) {
-					$title_output = '<h2 ' . FusionBuilder::attributes( 'content-box-heading' ) . '>' . $title . '</h2>';
+					$title_output = '<h' . $heading_size . ' ' . FusionBuilder::attributes( 'content-box-heading' ) . '>' . $title . '</h' . $heading_size . '>';
 				}
 
 				if ( 'right' === $this->parent_args['icon_align'] && in_array( $this->parent_args['layout'], array( 'icon-on-side', 'icon-with-title', 'timeline-vertical', 'clean-horizontal' ), true ) ) {
@@ -820,8 +823,15 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 					} else {
 						$attr['style'] .= 'margin-left:' . ( $full_icon_size + $addition_margin ) . 'px;';
 					}
+					if ( 'button' === $this->parent_args['link_type'] && 'yes' === $this->parent_args['button_span'] ) {
+						$attr['style'] .= 'width: calc(100% - ' . ( $full_icon_size + $addition_margin ) . 'px);';
+					}
 				} elseif ( 'icon-with-title' === $this->parent_args['layout'] ) {
 					$attr['style'] .= 'float:' . $this->parent_args['icon_align'] . ';';
+				}
+
+				if ( ! in_array( $this->parent_args['layout'], array( 'icon-on-side', 'clean-horizontal', 'timeline-vertical' ), true ) && 'button' === $this->parent_args['link_type'] && 'yes' === $this->parent_args['button_span'] ) {
+					$attr['style'] .= 'width: 100%;';
 				}
 
 				return $attr;
@@ -1382,8 +1392,10 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 				$css[ $three_twenty_six_fourty_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['margin-bottom'] = '55px';
 				$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['margin-bottom'] = '55px';
 
-				$elements = $dynamic_css_helpers->map_selector( $main_elements, '.content-boxes-icon-boxed .content-box-column .heading h2' );
-				$css[ $six_fourty_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['margin-top'] = '-5px';
+				for ( $i = 1; $i <= 6; $i++ ) {
+					$elements = $dynamic_css_helpers->map_selector( $main_elements, '.content-boxes-icon-boxed .content-box-column .heading h' . $i );
+					$css[ $six_fourty_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['margin-top'] = '-5px';
+				}
 
 				$elements = $dynamic_css_helpers->map_selector( $main_elements, '.content-boxes-icon-boxed .content-box-column .more' );
 				$css[ $six_fourty_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['margin-top'] = '12px';
@@ -1473,7 +1485,7 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 							),
 							'content_box_title_size' => array(
 								'label'       => esc_html__( 'Content Box Title Font Size', 'fusion-builder' ),
-								'description' => esc_html__( 'Controls the size of the title text. in pixels', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the size of the title text.', 'fusion-builder' ),
 								'id'          => 'content_box_title_size',
 								'default'     => '18px',
 								'type'        => 'dimension',
@@ -1648,6 +1660,24 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 									'button'     => esc_html__( 'Button', 'fusion-builder' ),
 								),
 							),
+							'content_box_button_span' => array(
+								'label'       => esc_html__( 'Button Span', 'fusion-builder' ),
+								'description' => esc_html__( 'Choose to have the button span the full width.', 'fusion-builder' ),
+								'id'          => 'content_box_button_span',
+								'default'     => 'no',
+								'type'        => 'radio-buttonset',
+								'choices'     => array(
+									'yes' => esc_html__( 'Yes', 'fusion-builder' ),
+									'no'  => esc_html__( 'No', 'fusion-builder' ),
+								),
+								'required'    => array(
+									array(
+										'setting'  => 'content_box_link_type',
+										'operator' => '==',
+										'value'    => 'button',
+									),
+								),
+							),
 							'content_box_link_area' => array(
 								'label'       => esc_html__( 'Content Box Link Area', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls which area the link will be assigned to.', 'fusion-builder' ),
@@ -1758,6 +1788,21 @@ function fusion_element_content_boxes() {
 					'description' => esc_attr__( 'Controls the size of the title.  In pixels ex: 18px.', 'fusion-builder' ),
 					'param_name'  => 'title_size',
 					'value'       => '',
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Heading Size', 'fusion-builder' ),
+					'description' => esc_attr__( 'Choose the title size, H1-H6.', 'fusion-builder' ),
+					'param_name'  => 'heading_size',
+					'value'       => array(
+						'1' => 'H1',
+						'2' => 'H2',
+						'3' => 'H3',
+						'4' => 'H4',
+						'5' => 'H5',
+						'6' => 'H6',
+					),
+					'default' => '2',
 				),
 				array(
 					'type'        => 'colorpickeralpha',
@@ -2030,6 +2075,30 @@ function fusion_element_content_boxes() {
 						'button'     => esc_attr__( 'Button', 'fusion-builder' ),
 					),
 					'default'     => '',
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Button Span', 'fusion-builder' ),
+					'description' => esc_attr__( 'Choose to have the button span the full width.', 'fusion-builder' ),
+					'param_name'  => 'button_span',
+					'value'       => array(
+						''          => esc_attr__( 'Default', 'fusion-builder' ),
+						'yes'       => esc_attr__( 'Yes', 'fusion-builder' ),
+						'no'        => esc_attr__( 'No', 'fusion-builder' ),
+					),
+					'default'     => '',
+					'dependency'  => array(
+						array(
+							'element'  => 'link_type',
+							'value'    => 'text',
+							'operator' => '!=',
+						),
+						array(
+							'element'  => 'link_type',
+							'value'    => 'button-bar',
+							'operator' => '!=',
+						),
+					),
 				),
 				array(
 					'type'        => 'select',

@@ -89,7 +89,7 @@ if ( ! class_exists( 'Avada_Woocommerce' ) && ! class_exists( 'FusionBuilder_Woo
 				<span class="fusion-rollover-linebreak">
 					<?php echo ( 'clean' === $fusion_settings->get( 'woocommerce_product_box_design' ) ) ? '/' : ''; ?>
 				</span>
-			<?php
+				<?php
 			endif;
 		}
 

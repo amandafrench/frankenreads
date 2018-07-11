@@ -70,6 +70,9 @@ if ( fusion_is_element_enabled( 'fusion_map' ) ) {
 
 				$defaults = FusionBuilder::set_shortcode_defaults(
 					array(
+						'api_type'                 => 'js',
+						'embed_address'            => '',
+						'embed_map_type'           => '',
 						'hide_on_mobile'           => fusion_builder_default_visibility( 'string' ),
 						'class'                    => '',
 						'id'                       => '',
@@ -96,9 +99,53 @@ if ( fusion_is_element_enabled( 'fusion_map' ) ) {
 				$defaults['width']  = FusionBuilder::validate_shortcode_attr_value( $defaults['width'], 'px' );
 				$defaults['height'] = FusionBuilder::validate_shortcode_attr_value( $defaults['height'], 'px' );
 
-				extract( $defaults );
-
 				$this->args = $defaults;
+
+				if ( 'js' === $this->args['api_type'] ) {
+					$html = $this->use_js_api();
+					$html = apply_filters( 'privacy_script_embed', $html, 'gmaps', true, $this->args['width'], $this->args['height'] );
+				} else {
+					$html = $this->use_embed_api();
+					$html = apply_filters( 'privacy_iframe_embed', $html );
+				}
+
+				return $html;
+
+			}
+
+			/**
+			 * Sets up the map data when using the embed API.
+			 *
+			 * @access public
+			 * @since 1.6
+			 * @return string The needed map data.
+			 */
+			public function use_embed_api() {
+				global $fusion_settings;
+
+				$html = '';
+				$api_key = apply_filters( 'fusion_google_maps_api_key', $fusion_settings->get( 'gmap_api' ) );
+				$embed_address = str_replace( ' ', '+', $this->args['embed_address'] );
+
+				$html .= '<iframe width="' . $this->args['width'] . '" height="' . $this->args['height'] . '" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=' . $api_key . '&q=' . $embed_address . '&maptype=' . $this->args['embed_map_type'] . '&zoom=' . $this->args['zoom'] . '" allowfullscreen></iframe>';
+
+				$html = '<div ' . FusionBuilder::attributes( 'google-map-shortcode' ) . '>' . $html . '</div>';
+
+				return $html;
+			}
+
+
+			/**
+			 * Sets up the map data when using the JS API.
+			 *
+			 * @access public
+			 * @since 1.6
+			 * @return string The needed map data.
+			 */
+			public function use_js_api() {
+				global $fusion_settings;
+
+				extract( $this->args );
 
 				$html = '';
 
@@ -279,17 +326,14 @@ if ( fusion_is_element_enabled( 'fusion_map' ) ) {
 						google.maps.event.addDomListener(window, 'load', fusion_run_map_<?php echo $map_id; // WPCS: XSS ok. ?>);
 					</script>
 					<?php
-					if ( $defaults['id'] ) {
-						$html = ob_get_clean() . '<div id="' . $defaults['id'] . '"><div ' . FusionBuilder::attributes( 'google-map-shortcode' ) . '></div></div>';
+					if ( $this->args['id'] ) {
+						$html = ob_get_clean() . '<div id="' . $this->args['id'] . '"><div ' . FusionBuilder::attributes( 'google-map-shortcode' ) . '></div></div>';
 					} else {
 						$html = ob_get_clean() . '<div ' . FusionBuilder::attributes( 'google-map-shortcode' ) . '></div>';
 					}
 				}
 
-				$html = apply_filters( 'privacy_script_embed', $html, 'gmaps', true, $this->args['width'], $this->args['height'] );
-
 				return $html;
-
 			}
 
 			/**
@@ -307,11 +351,19 @@ if ( fusion_is_element_enabled( 'fusion_map' ) ) {
 					)
 				);
 
+				if ( 'embed' === $this->args['api_type'] ) {
+					$attr['class'] .= ' fusion-maps-embed-type';
+				}
+
 				if ( $this->args['class'] ) {
 					$attr['class'] .= ' ' . $this->args['class'];
 				}
 
-				$attr['id'] = $this->map_id;
+				if ( 'js' === $this->args['api_type'] ) {
+					$attr['id'] = $this->map_id;
+				} elseif ( $this->args['id'] ) {
+					$attr['id'] = $this->args['id'];
+				}
 
 				$attr['style'] = 'height:' . $this->args['height'] . ';width:' . $this->args['width'] . ';';
 
@@ -462,11 +514,62 @@ function fusion_element_google_map() {
 			'preview_id' => 'fusion-builder-block-module-google-map-preview-template',
 			'params'     => array(
 				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Google API Type', 'fusion-builder' ),
+					/* translators: URL to google maps doc. */
+					'description' => sprintf( __( 'Select the Google API type that should be used to load your map. The JavaScript API allows for more options and custom styling, but could be charged for by Google depending on map loads, while the embed API can be used for free regardless of map loads. For more information please see the <a href="%s" target="_blank">Google Maps Users Guide</a>.', 'fusion-builder' ), 'https://cloud.google.com/maps-platform/user-guide/' ),
+					'param_name'  => 'api_type',
+					'value'       => array(
+						'js'   => esc_attr__( 'JS API', 'fusion-builder' ),
+						'embed' => esc_attr__( 'Embed API', 'fusion-builder' ),
+					),
+					'default' => 'js',
+				),
+				array(
+					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'Address', 'fusion-builder' ),
+					'description' => esc_attr__( 'Add the address of the location you wish to display. Address example: 775 New York Ave, Brooklyn, Kings, New York 11203. If the location is off, please try to use long/lat coordinates. ex: 12.381068,-1.492711.', 'fusion-builder' ),
+					'param_name'  => 'embed_address',
+					'value'       => '',
+					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'embed',
+							'operator' => '==',
+						),
+					),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Map Type', 'fusion-builder' ),
+					'description' => esc_attr__( 'Select the type of google map to display.', 'fusion-builder' ),
+					'param_name'  => 'embed_map_type',
+					'value'       => array(
+						'roadmap'   => esc_attr__( 'Roadmap', 'fusion-builder' ),
+						'satellite' => esc_attr__( 'Satellite', 'fusion-builder' ),
+					),
+					'default' => 'roadmap',
+					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'embed',
+							'operator' => '==',
+						),
+					),
+				),
+				array(
 					'type'        => 'textarea',
 					'heading'     => esc_attr__( 'Address', 'fusion-builder' ),
-					'description' => esc_attr__( 'Add the address to the location you wish to display. Single address example: 775 New York Ave, Brooklyn, Kings, New York 11203. If the location is off, please try to use long/lat coordinates with latlng=. ex: latlng=12.381068,-1.492711. For multiple addresses, separate addresses by using the | symbol. ex: Address 1|Address 2|Address 3.', 'fusion-builder' ),
+					'description' => esc_attr__( 'Add the address of the location you wish to display. Single address example: 775 New York Ave, Brooklyn, Kings, New York 11203. If the location is off, please try to use long/lat coordinates with latlng=. ex: latlng=12.381068,-1.492711. For multiple addresses, separate addresses by using the | symbol. ex: Address 1|Address 2|Address 3.', 'fusion-builder' ),
 					'param_name'  => 'address',
 					'value'       => '',
+					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
+					),
 				),
 				array(
 					'type'        => 'radio_button_set',
@@ -480,6 +583,13 @@ function fusion_element_google_map() {
 						'terrain'   => esc_attr__( 'Terrain', 'fusion-builder' ),
 					),
 					'default' => 'roadmap',
+					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
+					),
 				),
 				array(
 					'type'             => 'dimension',
@@ -512,6 +622,13 @@ function fusion_element_google_map() {
 						'no'  => esc_attr__( 'No', 'fusion-builder' ),
 					),
 					'default'     => 'yes',
+					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
+					),
 				),
 				array(
 					'type'        => 'radio_button_set',
@@ -523,6 +640,13 @@ function fusion_element_google_map() {
 						'no'  => esc_attr__( 'No', 'fusion-builder' ),
 					),
 					'default'     => 'yes',
+					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
+					),
 				),
 				array(
 					'type'        => 'radio_button_set',
@@ -534,6 +658,13 @@ function fusion_element_google_map() {
 						'no'  => esc_attr__( 'No', 'fusion-builder' ),
 					),
 					'default'     => 'yes',
+					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
+					),
 				),
 				array(
 					'type'        => 'radio_button_set',
@@ -545,6 +676,13 @@ function fusion_element_google_map() {
 						'no'  => esc_attr__( 'No', 'fusion-builder' ),
 					),
 					'default'     => 'no',
+					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
+					),
 				),
 				array(
 					'type'        => 'radio_button_set',
@@ -556,6 +694,13 @@ function fusion_element_google_map() {
 						'no'  => esc_attr__( 'No', 'fusion-builder' ),
 					),
 					'default'     => 'yes',
+					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
+					),
 				),
 				array(
 					'type'        => 'radio_button_set',
@@ -568,6 +713,13 @@ function fusion_element_google_map() {
 						'custom'  => esc_attr__( 'Custom Styling', 'fusion-builder' ),
 					),
 					'default' => 'default',
+					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
+					),
 				),
 				array(
 					'type'        => 'colorpickeralpha',
@@ -576,6 +728,11 @@ function fusion_element_google_map() {
 					'param_name'  => 'overlay_color',
 					'value'       => '',
 					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
 						array(
 							'element'  => 'map_style',
 							'value'    => 'custom',
@@ -590,6 +747,11 @@ function fusion_element_google_map() {
 					'param_name'  => 'infobox_content',
 					'value'       => '',
 					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
 						array(
 							'element'  => 'map_style',
 							'value'    => 'custom',
@@ -609,6 +771,11 @@ function fusion_element_google_map() {
 					'default'     => 'default',
 					'dependency'  => array(
 						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
+						array(
 							'element'  => 'map_style',
 							'value'    => 'custom',
 							'operator' => '==',
@@ -622,6 +789,11 @@ function fusion_element_google_map() {
 					'param_name'  => 'infobox_text_color',
 					'value'       => '',
 					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
 						array(
 							'element'  => 'map_style',
 							'value'    => 'custom',
@@ -642,6 +814,11 @@ function fusion_element_google_map() {
 					'value'       => '',
 					'dependency'  => array(
 						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
+						array(
 							'element'  => 'map_style',
 							'value'    => 'custom',
 							'operator' => '==',
@@ -660,6 +837,11 @@ function fusion_element_google_map() {
 					'param_name'  => 'icon',
 					'value'       => '',
 					'dependency'  => array(
+						array(
+							'element'  => 'api_type',
+							'value'    => 'js',
+							'operator' => '==',
+						),
 						array(
 							'element'  => 'map_style',
 							'value'    => 'custom',

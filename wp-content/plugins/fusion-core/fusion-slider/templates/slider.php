@@ -57,7 +57,10 @@
 				$img_width = '';
 				$image_url = array( '', '' );
 
-				if ( isset( $metadata['pyre_type'][0] ) && 'image' === $metadata['pyre_type'][0] && has_post_thumbnail() ) {
+				$vimeo_consent   = class_exists( 'Avada_Privacy_Embeds' ) ? Avada()->privacy_embeds->get_consent( 'vimeo' ) : true;
+				$youtube_consent = class_exists( 'Avada_Privacy_Embeds' ) ? Avada()->privacy_embeds->get_consent( 'youtube' ) : true;
+
+				if ( isset( $metadata['pyre_type'][0] ) && ( 'image' === $metadata['pyre_type'][0] || ( 'youtube' === $metadata['pyre_type'][0] && ! $youtube_consent ) || ( 'vimeo' === $metadata['pyre_type'][0] && ! $vimeo_consent ) ) && has_post_thumbnail() ) {
 					$image_id         = get_post_thumbnail_id();
 					$image_url        = wp_get_attachment_image_src( $image_id, 'full', true );
 					$background_image = 'background-image: url(' . $image_url[0] . ');';
@@ -277,13 +280,13 @@
 						<?php if ( isset( $metadata['pyre_type'][0] ) && isset( $metadata['pyre_youtube_id'][0] ) && 'youtube' === $metadata['pyre_type'][0] && $metadata['pyre_youtube_id'][0] ) : ?>
 							<div style="position: absolute; top: 0; left: 0; <?php echo esc_attr( $video_zindex ); ?> width: 100%; height: 100%" data-youtube-video-id="<?php echo esc_attr( $metadata['pyre_youtube_id'][0] ); ?>" data-video-aspect-ratio="<?php echo esc_attr( $aspect_ratio ); ?>" data-display="<?php echo esc_attr( $data_display ); ?>">
 								<div id="video-<?php echo esc_attr( $metadata['pyre_youtube_id'][0] ); ?>-inner">
-									<iframe height="100%" width="100%" src="https://www.youtube.com/embed/<?php echo esc_attr( $metadata['pyre_youtube_id'][0] ); ?>?wmode=transparent&amp;modestbranding=1&amp;showinfo=0&amp;autohide=1&amp;enablejsapi=1&amp;rel=0&amp;vq=hd720&amp;<?php echo esc_attr( $youtube_attributes ); ?>"></iframe>
+									<?php echo apply_filters( 'privacy_iframe_embed', '<iframe height="100%" width="100%" src="https://www.youtube.com/embed/' . esc_attr( $metadata['pyre_youtube_id'][0] ) . '?wmode=transparent&amp;modestbranding=1&amp;showinfo=0&amp;autohide=1&amp;enablejsapi=1&amp;rel=0&amp;vq=hd720&amp;' . esc_attr( $youtube_attributes ) . '" data-fusion-no-placeholder></iframe>' ); // WPCS: XSS ok. ?>
 								</div>
 							</div>
 						<?php endif; ?>
 						<?php if ( isset( $metadata['pyre_type'][0] ) && isset( $metadata['pyre_vimeo_id'][0] ) && 'vimeo' === $metadata['pyre_type'][0] && $metadata['pyre_vimeo_id'][0] ) : ?>
 							<div style="position: absolute; top: 0; left: 0; <?php echo esc_attr( $video_zindex ); ?> width: 100%; height: 100%" data-mute="<?php echo esc_attr( $data_mute ); ?>" data-vimeo-video-id="<?php echo esc_attr( $metadata['pyre_vimeo_id'][0] ); ?>" data-video-aspect-ratio="<?php echo esc_attr( $aspect_ratio ); ?>">
-								<iframe src="https://player.vimeo.com/video/<?php echo esc_attr( $metadata['pyre_vimeo_id'][0] ); ?>?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&amp;badge=0&amp;autopause=0<?php echo esc_attr( $vimeo_attributes ); ?>" height="100%" width="100%" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+								<?php echo apply_filters( 'privacy_iframe_embed', '<iframe src="https://player.vimeo.com/video/' . esc_attr( $metadata['pyre_vimeo_id'][0] ) . '?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff&amp;badge=0&amp;autopause=0' . esc_attr( $vimeo_attributes ) . '" height="100%" width="100%" webkitallowfullscreen mozallowfullscreen allowfullscreen data-fusion-no-placeholder></iframe>' ); // WPCS: XSS ok. ?>
 							</div>
 						<?php endif; ?>
 					</div>

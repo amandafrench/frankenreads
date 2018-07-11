@@ -98,7 +98,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				}
 
 				// Set parentValues for dependencies on child.
-				parentValues = 'undefined' !== typeof this.model.get( 'parent_values' ) ? this.model.get( 'parent_values' ) : false;
+				parentValues = ( 'undefined' !== typeof this.model.get && 'undefined' !== typeof this.model.get( 'parent_values' ) ) ? this.model.get( 'parent_values' ) : false;
 
 				this.$el.html( this.template( { atts: this.model.attributes } ) );
 

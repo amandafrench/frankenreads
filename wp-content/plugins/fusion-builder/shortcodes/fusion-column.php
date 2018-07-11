@@ -762,7 +762,7 @@ if ( ! class_exists( 'FusionSC_Column' ) ) {
 				'fusion-column-bg-image',
 				FusionBuilder::$js_folder_url . '/general/fusion-column-bg-image.js',
 				FusionBuilder::$js_folder_path . '/general/fusion-column-bg-image.js',
-				array( 'jquery' ),
+				array( 'jquery', 'modernizr' ),
 				'1',
 				true
 			);

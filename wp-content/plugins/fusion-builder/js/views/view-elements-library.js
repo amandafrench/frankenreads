@@ -24,6 +24,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			},
 
 			render: function() {
+				var self = this;
+
 				this.$el.html( this.template( FusionPageBuilderViewManager.toJSON() ) );
 
 				// Load saved elements
@@ -33,6 +35,10 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				if ( 'true' === FusionPageBuilderApp.innerColumn ) {
 					this.$el.addClass( 'fusion-add-to-nested' );
 				}
+
+				setTimeout( function() {
+					self.$el.find( '.fusion-elements-filter' ).focus();
+				}, 50 );
 
 				return this;
 			},

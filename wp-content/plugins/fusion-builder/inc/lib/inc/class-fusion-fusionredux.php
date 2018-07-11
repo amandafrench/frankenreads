@@ -446,6 +446,9 @@ class Fusion_FusionRedux {
 				} elseif ( 'text_column_spacing' === $field['id'] ) {
 					/* translators: The description subtitle and an example value. */
 					$args['subtitle'] = sprintf( esc_attr__( '%1$s Enter value including any valid CSS unit besides %% which does not work for inline columns, ex: %2$s.', 'Avada' ), $args['subtitle'], $field['default'] );
+				} elseif ( 'page_title_height' === $field['id'] || 'page_title_mobile_height' === $field['id'] ) {
+					/* translators: The description subtitle and an example value. */
+					$args['subtitle'] = sprintf( esc_attr__( '%1$s Enter value including any valid CSS unit besides %% which does not work for page title bar, ex: %2$s.', 'Avada' ), $args['subtitle'], $field['default'] );
 				} else {
 					/* translators: The description subtitle and an example value. */
 					$args['subtitle'] = sprintf( esc_attr__( '%1$s Enter value including any valid CSS unit, ex: %2$s.', 'Avada' ), $args['subtitle'], $field['default'] );

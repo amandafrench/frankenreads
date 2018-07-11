@@ -245,10 +245,11 @@ if ( fusion_is_element_enabled( 'fusion_social_links' ) ) {
 					$attr['style'] .= 'border-radius:' . $this->args['icons_boxed_radius'] . ';';
 				}
 
-				if ( 'none' != strtolower( $this->args['tooltip_placement'] ) ) {
+				if ( 'none' !== strtolower( $this->args['tooltip_placement'] ) ) {
 					$attr['data-placement'] = strtolower( $this->args['tooltip_placement'] );
-					$tooltip = ( 'googleplus' == strtolower( $tooltip ) ) ? 'Google+' : $tooltip;
-					$tooltip = ( 'youtube' == strtolower( $tooltip ) ) ? 'YouTube' : $tooltip;
+					$tooltip = ( 'googleplus' === strtolower( $tooltip ) ) ? 'Google+' : $tooltip;
+					$tooltip = ( 'youtube' === strtolower( $tooltip ) ) ? 'YouTube' : $tooltip;
+					$tooltip = ( 'linkedin' === strtolower( $tooltip ) ) ? 'LinkedIn' : $tooltip;
 					$attr['data-title']  = $tooltip;
 					$attr['data-toggle'] = 'tooltip';
 				}

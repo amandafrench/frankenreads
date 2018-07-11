@@ -77,7 +77,7 @@ if ( fusion_is_element_enabled( 'fusion_youtube' ) ) {
 
 				$html  = '<div ' . FusionBuilder::attributes( 'youtube-shortcode' ) . '>';
 				$html .= '<div ' . FusionBuilder::attributes( 'youtube-shortcode-video-sc' ) . '>';
-				$html .= '<iframe title="YouTube video player" src="https://www.youtube.com/embed/' . $id . '?wmode=transparent&autoplay=0' . $api_params . '" width="' . $width . '" height="' . $height . '" allowfullscreen></iframe>';
+				$html .= '<iframe title="YouTube video player" src="https://www.youtube.com/embed/' . $id . '?wmode=transparent&autoplay=0' . $api_params . '" width="' . $width . '" height="' . $height . '" allowfullscreen allow="autoplay; fullscreen"></iframe>';
 				$html .= '</div></div>';
 
 				return $html;

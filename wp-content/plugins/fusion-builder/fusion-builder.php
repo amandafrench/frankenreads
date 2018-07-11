@@ -4,7 +4,7 @@
 Plugin Name: Fusion Builder
 Plugin URI: http://www.theme-fusion.com
 Description: ThemeFusion Page Builder Plugin
-Version: 1.5.2
+Version: 1.6
 Author: ThemeFusion
 Author URI: http://www.theme-fusion.com
 */
@@ -21,7 +21,7 @@ if ( ! defined( 'FUSION_BUILDER_DEV_MODE' ) ) {
 
 // Plugin version.
 if ( ! defined( 'FUSION_BUILDER_VERSION' ) ) {
-	define( 'FUSION_BUILDER_VERSION', '1.5.2' );
+	define( 'FUSION_BUILDER_VERSION', '1.6' );
 }
 // Plugin Folder Path.
 if ( ! defined( 'FUSION_BUILDER_PLUGIN_DIR' ) ) {
@@ -289,6 +289,9 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 
 			// Exclude post types from Events Calendar.
 			add_filter( 'tribe_tickets_settings_post_types', array( $this, 'fusion_builder_exclude_post_type' ) );
+
+			// Add admin body classes.
+			add_action( 'admin_body_class', array( $this, 'admin_body_class' ) );
 		}
 
 		/**
@@ -460,7 +463,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 					font-weight: normal;
 					font-style: normal;
 				}
-				<?php if ( current_user_can( 'edit_theme_options' ) && ! class_exists( 'Avada' ) ) : ?>
+				<?php if ( current_user_can( 'switch_themes' ) && ! class_exists( 'Avada' ) ) : ?>
 					.dashicons-fusiona-logo:before{
 						content: "\e62d";
 						font-family: 'icomoon';
@@ -589,6 +592,38 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 		}
 
 		/**
+		 * Add Fusion library message meta box.
+		 *
+		 * @access public
+		 * @since 1.0
+		 * @param mixed $post The post (not used in this context).
+		 */
+		public function library_single_message_box( $post ) {
+			$terms   = get_the_terms( $post->ID, 'element_category' );
+			$message = '';
+
+			if ( $terms ) {
+				foreach ( $terms as $term ) {
+					$term_name = $term->name;
+
+					if ( 'sections' === $term_name ) {
+						$message = esc_html__( 'You are editing a saved container from the Fusion Builder Library which will update with your changes when you click the update button. This is not a real page, only a saved container.', 'fusion-builder' );
+					} elseif ( 'columns' === $term_name ) {
+						$message = esc_html__( 'You are editing a saved column from the Fusion Builder Library which will update with your changes when you click the update button. This is not a real page, only a saved column.', 'fusion-builder' );
+					} elseif ( 'elements' === $term_name ) {
+						$message = esc_html__( 'You are editing a saved element from the Fusion Builder Library which will update with your changes when you click the update button. This is not a real page, only a saved element.', 'fusion-builder' );
+					}
+				}
+			}
+			?>
+
+			<p class="fusion-library-single-message">
+				<?php echo $message; // WPCS: XSS ok. ?>
+			</p>
+			<?php
+		}
+
+		/**
 		 * Add Helper MetaBox.
 		 *
 		 * @access public
@@ -596,7 +631,10 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 		 */
 		public function add_builder_helper_meta_box() {
 			$screens = $this->allowed_post_types();
+
 			add_meta_box( 'fusion_settings_meta_box', esc_attr__( 'Fusion Builder Settings', 'fusion-builder' ), array( $this, 'single_settings_meta_box' ), $screens, 'side', 'high' );
+
+			add_meta_box( 'fusion_library_message_box', esc_attr__( 'Important', 'fusion-builder' ), array( $this, 'library_single_message_box' ), 'fusion_element', 'side', 'low' );
 		}
 
 		/**
@@ -1215,6 +1253,8 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 
 					wp_enqueue_script( 'fusion_builder_view_next_page', FUSION_BUILDER_PLUGIN_URL . 'js/views/view-next-page.js', array( 'fusion_builder_app_util_js' ), FUSION_BUILDER_VERSION, true );
 
+					wp_enqueue_script( 'fusion_builder_context_menu', FUSION_BUILDER_PLUGIN_URL . 'js/views/view-context-menu.js', array( 'fusion_builder_app_util_js' ), FUSION_BUILDER_VERSION, true );
+
 					wp_enqueue_script( 'fusion_builder_view_element_settings', FUSION_BUILDER_PLUGIN_URL . 'js/views/view-element-settings.js', array( 'fusion_builder_app_util_js' ), FUSION_BUILDER_VERSION, true );
 
 					wp_enqueue_script( 'fusion_builder_view_multi_element_child_settings', FUSION_BUILDER_PLUGIN_URL . 'js/views/view-multi-element-child-settings.js', array( 'fusion_builder_app_util_js' ), FUSION_BUILDER_VERSION, true );
@@ -1370,6 +1410,8 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 				require_once FUSION_BUILDER_PLUGIN_DIR . 'inc/fusion-builder-admin.php';
 
 				require_once FUSION_BUILDER_PLUGIN_DIR . 'inc/class-fusion-builder-options-panel.php';
+				// Fusion Library.
+				require_once FUSION_BUILDER_PLUGIN_DIR . 'inc/class-fusion-builder-library-table.php';
 
 				if ( class_exists( 'Avada' ) ) {
 					$this->fusion_builder_options_panel = new Fusion_Builder_Options_Panel();
@@ -1398,7 +1440,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 
 				$builder_enabled_data = '';
 				$builder_settings = get_option( 'fusion_builder_settings' );
-				if ( isset( $builder_settings['enable_builder_ui_by_default'] ) && $builder_settings['enable_builder_ui_by_default'] && 'active' !== get_post_meta( $post->ID, 'fusion_builder_status', true ) ) {
+				if ( ( isset( $builder_settings['enable_builder_ui_by_default'] ) && $builder_settings['enable_builder_ui_by_default'] && 'active' !== get_post_meta( $post->ID, 'fusion_builder_status', true ) ) || ( 'fusion_element' == $typenow && 'active' !== get_post_meta( $post->ID, 'fusion_builder_status', true ) ) ) {
 					$builder_enabled_data = ' data-enabled="1"';
 				}
 
@@ -1439,6 +1481,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 				'avada_faq',
 				'avada_portfolio',
 				'fusion_template',
+				'fusion_element',
 			);
 			// Allow theme developers to change default selection via filter.  Can also do so for Avada.
 			return apply_filters( 'fusion_builder_default_post_types', $post_types );
@@ -1456,6 +1499,8 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 			if ( ! empty( $options ) && isset( $options['post_types'] ) ) {
 				// If there are options saved, used them.
 				$post_types = ( ' ' === $options['post_types'] ) ? array() : $options['post_types'];
+				// Add fusion_element to allowed post types ( bc ).
+				$post_types[] = 'fusion_element';
 				return apply_filters( 'fusion_builder_allowed_post_types', $post_types );
 			} else {
 				// Otherwise use defaults.
@@ -1499,7 +1544,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 		 */
 		public function add_builder_meta_box( $post_type ) {
 			if ( post_type_supports( $post_type, 'editor' ) ) {
-				add_meta_box( 'fusion_builder_layout', '<span class="fusion-builder-logo"></span><span class="fusion-builder-title">' . esc_attr__( 'Fusion Builder', 'fusion-builder' ) . '</span><a href="https://theme-fusion.com/support/documentation/fusion-builder-documentation/" target="_blank" rel="noopener noreferrer"><span class="fusion-builder-help dashicons dashicons-editor-help"></span></a>', 'fusion_pagebuilder_meta_box', null, 'normal', 'high' );
+				add_meta_box( 'fusion_builder_layout', '<span class="fusion-builder-logo"></span><span class="fusion-builder-title">' . esc_attr__( 'Fusion Builder', 'fusion-builder' ) . '</span><a href="https://theme-fusion.com/documentation/fusion-builder/" target="_blank" rel="noopener noreferrer"><span class="fusion-builder-help dashicons dashicons-editor-help"></span></a>', 'fusion_pagebuilder_meta_box', null, 'normal', 'high' );
 			}
 		}
 
@@ -2015,6 +2060,28 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 			if ( ! self::$is_updating && $_GET && isset( $_GET['avada_update'] ) && '1' == $_GET['avada_update'] ) {
 				self::$is_updating = true;
 			}
+		}
+
+		/**
+		 * Checks if we're editing Fusion Library element.
+		 *
+		 * @access public
+		 * @since 1.5.2
+		 * @param array $classes An array of body classes.
+		 * @return array
+		 */
+		public function admin_body_class( $classes ) {
+			global $post, $typenow;
+
+			if ( 'fusion_element' == $typenow && $post ) {
+				$terms    = get_the_terms( $post->ID, 'element_category' );
+				$classes .= ' fusion-builder-library-edit';
+
+				if ( $terms ) {
+					$classes .= ' fusion-element-post-type-' . $terms[0]->name . ' ';
+				}
+			}
+			return $classes;
 		}
 
 		/**

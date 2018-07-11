@@ -152,7 +152,7 @@ $post_video = fusion_get_page_option( 'video', get_the_ID() );
 			<?php $fusion_library->images->set_grid_image_meta( array() ); ?>
 		</ul>
 	</div>
-<?php
+	<?php
 endif;
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

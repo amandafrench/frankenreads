@@ -127,7 +127,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 
 					// Loop each embed type and add a checkbox.
 					foreach ( $embeds as $id => $embed ) {
-						$selected = in_array( $id, $consents ) ? 'checked' : '';
+						$selected = Avada()->privacy_embeds->is_selected( $id ) ? 'checked' : '';
 
 						$html .= '<li>';
 						$html .= '<label for="' . $id . '">';
@@ -140,6 +140,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 					$html .= '</ul>';
 					$html .= wp_referer_field( false );
 					$html .= '<input type="hidden" name="privacyformid" value="' . $this->privacy_counter . '">';
+					$html .= '<input type="hidden" name="consents[]" value="consent">';
 					$html .= '<input class="fusion-button fusion-button-default fusion-button-default-size" type="submit" value="' . esc_attr__( 'Update', 'fusion-core' ) . '" >';
 					$html .= '</form>';
 				}
@@ -269,9 +270,17 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 
 				if ( isset( $_GET ) && isset( $_GET['success'] ) && isset( $_GET['id'] ) && $this->privacy_counter === (int) $_GET['id'] ) {
 					if ( 1 === (int) $_GET['success'] ) {
-						$alert = do_shortcode( '[fusion_alert type="success"]' . esc_html__( 'Your embed preferences have been updated.', 'fusion-core' ) . '[/fusion_alert]' );
+						if ( shortcode_exists( 'fusion_alert' ) ) {
+							$alert = do_shortcode( '[fusion_alert type="success"]' . esc_html__( 'Your embed preferences have been updated.', 'fusion-core' ) . '[/fusion_alert]' );
+						} else {
+							$alert = '<h3 style="color:#468847;">' . esc_html__( 'Your embed preferences have been updated.', 'fusion-core' ) . '</h3>';
+						}
 					} else {
-						$alert = do_shortcode( '[fusion_alert type="success"]' . esc_html__( 'Your embed preferences have been cleared.', 'fusion-core' ) . '[/fusion_alert]' );
+						if ( shortcode_exists( 'fusion_alert' ) ) {
+							$alert = do_shortcode( '[fusion_alert type="success"]' . esc_html__( 'Your embed preferences have been cleared.', 'fusion-core' ) . '[/fusion_alert]' );
+						} else {
+							$alert = '<h3 style="color:#b94a48;">' . esc_html__( 'Your embed preferences have been cleared.', 'fusion-core' ) . '</h3>';
+						}
 					}
 				}
 

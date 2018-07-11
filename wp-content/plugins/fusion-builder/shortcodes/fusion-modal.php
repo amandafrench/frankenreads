@@ -41,6 +41,7 @@ if ( fusion_is_element_enabled( 'fusion_modal' ) ) {
 				add_filter( 'fusion_attr_modal-shortcode-dialog', array( $this, 'dialog_attr' ) );
 				add_filter( 'fusion_attr_modal-shortcode-content', array( $this, 'content_attr' ) );
 				add_filter( 'fusion_attr_modal-shortcode-heading', array( $this, 'heading_attr' ) );
+				add_filter( 'fusion_attr_modal-body', array( $this, 'modal_body_attr' ) );
 				add_filter( 'fusion_attr_modal-shortcode-button', array( $this, 'button_attr' ) );
 				add_filter( 'fusion_attr_modal-shortcode-button-footer', array( $this, 'button_footer_attr' ) );
 
@@ -217,6 +218,19 @@ if ( fusion_is_element_enabled( 'fusion_modal' ) ) {
 					'id'           => 'modal-heading-' . $this->modal_counter,
 					'data-dismiss' => 'modal',
 					'aria-hidden'  => 'true',
+				);
+			}
+
+			/**
+			 * Builds the heading attributes array.
+			 *
+			 * @access public
+			 * @since 1.6
+			 * @return array
+			 */
+			public function modal_body_attr() {
+				return array(
+					'class' => 'modal-body fusion-clearfix',
 				);
 			}
 

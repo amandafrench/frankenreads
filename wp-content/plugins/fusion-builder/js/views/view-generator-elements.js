@@ -24,7 +24,14 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			},
 
 			render: function() {
+				var self = this;
+
 				this.$el.html( this.template( FusionPageBuilderViewManager.toJSON() ) );
+
+				setTimeout( function() {
+					self.$el.find( '.fusion-elements-filter' ).focus();
+				}, 50 );
+
 				return this;
 			},
 

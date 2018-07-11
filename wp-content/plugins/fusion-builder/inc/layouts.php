@@ -70,6 +70,10 @@ function fusion_builder_register_layouts() {
 		'map_meta_cap'       => true,
 		'hierarchical'       => false,
 		'supports'           => array( 'title', 'editor', 'revisions' ),
+		'show_ui'            => true,
+		'capabilities'       => array(
+			'create_posts' => 'do_not_allow',
+		),
 	);
 
 	register_post_type( 'fusion_element', apply_filters( 'fusion_layout_element_args', $args ) );
@@ -83,7 +87,7 @@ function fusion_builder_register_layouts() {
 			'hierarchical'      => true,
 			'labels'            => $labels,
 			'show_ui'           => false,
-			'show_admin_column' => false,
+			'show_admin_column' => true,
 			'query_var'         => true,
 			'show_in_nav_menus' => false,
 		)
@@ -300,6 +304,7 @@ function fusion_builder_display_library_content() {
 								</h4>
 								<span class="fusion-layout-buttons">
 									<a href="#" class="fusion-builder-layout-button-delete"><?php esc_attr_e( 'Delete', 'fusion-builder' ); ?></a>
+									<a href="<?php echo esc_url_raw( htmlspecialchars_decode( get_edit_post_link( $post->ID ) ) ); ?>" class="fusion-builder-layout-button-edit" target="_blank"><?php esc_attr_e( 'Edit', 'fusion-builder' ); ?></a>
 								</span>
 							</li>
 						<?php endwhile; ?>
@@ -361,12 +366,12 @@ function fusion_builder_display_library_content() {
 
 					<ul class="fusion-page-layouts fusion-layout-columns">
 
-						<?php
-						while ( $query->have_posts() ) :
+						<?php while ( $query->have_posts() ) : ?>
+							<?php
 							$query->the_post();
 							$is_global = ( 'yes' === get_post_meta( get_the_ID(), '_fusion_is_global', true ) ? 'fusion-global' : '' );
 							global $post;
-						?>
+							?>
 
 							<li class="<?php echo esc_attr( $is_global ); ?> fusion-page-layout" data-layout_id="<?php echo get_the_ID(); ?>">
 								<h4 class="fusion-page-layout-title"><?php echo get_the_title(); ?>
@@ -375,6 +380,7 @@ function fusion_builder_display_library_content() {
 									<?php endif; ?>
 								</h4>
 								<span class="fusion-layout-buttons">
+									<a href="<?php echo esc_url_raw( htmlspecialchars_decode( get_edit_post_link( $post->ID ) ) ); ?>" class="fusion-builder-layout-button-edit" target="_blank"><?php esc_attr_e( 'Edit', 'fusion-builder' ); ?></a></a>
 									<a href="#" class="fusion-builder-layout-button-delete"><?php esc_attr_e( 'Delete', 'fusion-builder' ); ?></a>
 								</span>
 							</li>
@@ -433,9 +439,7 @@ function fusion_builder_display_library_content() {
 				);
 				?>
 
-				<?php
-				if ( $query->have_posts() ) :
-				?>
+				<?php if ( $query->have_posts() ) : ?>
 
 					<ul class="fusion-page-layouts fusion-layout-elements">
 
@@ -454,6 +458,7 @@ function fusion_builder_display_library_content() {
 									<?php endif; ?>
 								</h4>
 								<span class="fusion-layout-buttons">
+									<a href="<?php echo esc_url_raw( htmlspecialchars_decode( get_edit_post_link( $post->ID ) ) ); ?>" class="fusion-builder-layout-button-edit" target="_blank"><?php esc_attr_e( 'Edit', 'fusion-builder' ); ?></a></a>
 									<a href="#" class="fusion-builder-layout-button-delete"><?php esc_attr_e( 'Delete', 'fusion-builder' ); ?></a>
 								</span>
 							</li>
@@ -577,9 +582,10 @@ function fusion_load_custom_elements() {
 				),
 			)
 		);
-
-		if ( $query->have_posts() ) :
 		?>
+
+		<?php if ( $query->have_posts() ) : ?>
+
 			<ul class="fusion-builder-all-modules">
 				<?php while ( $query->have_posts() ) : ?>
 					<?php $query->the_post(); ?>
@@ -592,7 +598,6 @@ function fusion_load_custom_elements() {
 					</li>
 
 				<?php endwhile; ?>
-
 			</ul>
 
 		<?php else : ?>
@@ -808,6 +813,7 @@ function fusion_builder_save_layout() {
 						<?php endif; ?>
 					</h4>
 					<span class="fusion-layout-buttons">
+						<a href="<?php echo esc_url_raw( htmlspecialchars_decode( get_edit_post_link( $new_layout_id ) ) ); ?>" class="" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Edit', 'fusion-builder' ); ?></a>
 						<a href="#" class="fusion-builder-layout-button-delete"><?php esc_html_e( 'Delete', 'fusion-builder' ); ?></a>
 					</span>
 				</li>
@@ -896,3 +902,96 @@ function fusion_builder_get_image_url() {
 
 }
 add_action( 'wp_ajax_fusion_builder_get_image_url', 'fusion_builder_get_image_url' );
+
+/**
+ * Process action for trash element.
+ *
+ * @since 1.0
+ * @return void
+ */
+function fusion_library_trash_element() {
+	if ( current_user_can( 'manage_options' ) ) {
+		$element_ids = '';
+
+		if ( isset( $_GET['post'] ) ) {
+			$element_ids = wp_unslash( $_GET['post'] ); // WPCS: sanitization ok.
+		}
+
+		if ( '' !== $element_ids ) {
+			$element_ids = (array) $element_ids;
+		}
+
+		if ( ! empty( $element_ids ) ) {
+			foreach ( $element_ids as $id ) {
+				wp_trash_post( $id );
+			}
+		}
+	}
+
+	if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
+		wp_safe_redirect( sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) );
+	}
+}
+add_action( 'admin_action_fusion_trash_element', 'fusion_library_trash_element' );
+
+/**
+ * Process action for restore element.
+ *
+ * @since 1.0
+ * @return void
+ */
+function fusion_library_restore_element() {
+	if ( current_user_can( 'manage_options' ) ) {
+		$element_ids = '';
+
+		if ( isset( $_GET['post'] ) ) {
+			$element_ids = wp_unslash( $_GET['post'] ); // WPCS: sanitization ok.
+		}
+
+		if ( '' !== $element_ids ) {
+			$element_ids = (array) $element_ids;
+		}
+
+		if ( ! empty( $element_ids ) ) {
+			foreach ( $element_ids as $id ) {
+				wp_untrash_post( $id );
+			}
+		}
+	}
+
+	if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
+		wp_safe_redirect( sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) );
+	}
+}
+add_action( 'admin_action_fusion_restore_element', 'fusion_library_restore_element' );
+
+/**
+ * Process action for untrash element.
+ *
+ * @since 1.0
+ * @return void
+ */
+function fusion_library_delete_element_post() {
+	if ( current_user_can( 'manage_options' ) ) {
+		$element_ids = '';
+
+		if ( isset( $_GET['post'] ) ) {
+			$element_ids = wp_unslash( $_GET['post'] ); // WPCS: sanitization ok.
+		}
+
+		if ( '' !== $element_ids ) {
+			$element_ids = (array) $element_ids;
+		}
+
+		if ( ! empty( $element_ids ) ) {
+			foreach ( $element_ids as $id ) {
+				wp_delete_post( $id, true );
+			}
+		}
+	}
+
+	if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
+		wp_safe_redirect( sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) );
+	}
+}
+add_action( 'admin_action_fusion_delete_element', 'fusion_library_delete_element_post' );

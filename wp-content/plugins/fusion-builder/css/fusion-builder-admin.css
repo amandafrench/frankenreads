@@ -121,7 +121,7 @@
 .fusion-builder-wrap .three-col .col {
   float: left;
   margin-bottom: 30px;
-  margin-right: 4.999999999%;
+  margin-right: 5%;
   position: relative;
   min-width: 29.95%;
 }
@@ -460,4 +460,70 @@ input[type="file"]::-webkit-file-upload-button {
   right: 30px;
   margin: 0;
   top: 50%;
+}
+#fusion-library-data .fusion-library-element-type {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display:         inline-flex;
+  line-height: 2em;
+  padding: 0 10px;
+  color: #777777;
+  background: #e5e5e5;
+  border-radius: 4px;
+  white-space: nowrap;
+  margin-right: 20px;
+}
+#fusion-library-data .fusion-library-element-type.fusion-library-element-sections {
+  background: #0091cd;
+}
+#fusion-library-data .fusion-library-element-type.fusion-library-element-elements {
+  background: #888888;
+}
+#fusion-library-data .fusion-library-element-type.fusion-library-element-columns {
+  background: #222222;
+}
+#fusion-library-data .fusion-library-element-type.fusion-library-element-template {
+  background: #0073aa;
+}
+#fusion-library-data .fusion-library-element-type a {
+  color: #ffffff;
+  opacity: .9;
+}
+#fusion-library-data .fusion-library-element-type a:hover {
+  opacity: 1;
+}
+#fusion-library-data .fusion-library-element-global::after {
+  content: "\f0ac";
+  font-family: "icomoon";
+  color: #777777;
+  font-size: 16px;
+  line-height: 2.5em;
+  text-align: center;
+  box-sizing: border-box;
+}
+#fusion-library-data .fusion-library-table td.column-type,
+#fusion-library-data .fusion-library-table td.column-global {
+  vertical-align: middle;
+}
+.admin-color-light #fusion-library-data .fusion-library-element-type.fusion-library-element-sections {
+  background: #e5e5e5;
+}
+.admin-color-blue #fusion-library-data .fusion-library-element-type.fusion-library-element-sections {
+  background: #52accc;
+}
+.admin-color-coffee #fusion-library-data .fusion-library-element-type.fusion-library-element-sections {
+  background: #59524c;
+}
+.admin-color-ectoplasm #fusion-library-data .fusion-library-element-type.fusion-library-element-sections {
+  background: #523f6d;
+}
+.admin-color-midnight #fusion-library-data .fusion-library-element-type.fusion-library-element-sections {
+  background: #363b3f;
+}
+.admin-color-ocean #fusion-library-data .fusion-library-element-type.fusion-library-element-sections {
+  background: #738e96;
+}
+.admin-color-sunrise #fusion-library-data .fusion-library-element-type.fusion-library-element-sections {
+  background: #cf4944;
 }

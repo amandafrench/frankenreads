@@ -80,16 +80,6 @@ if ( fusion_is_element_enabled( 'fusion_menu_anchor' ) ) {
 				return $attr;
 
 			}
-
-			/**
-			 * Sets the necessary scripts.
-			 *
-			 * @access public
-			 * @since 1.1
-			 * @return void
-			 */
-			public function add_scripts() {
-			}
 		}
 	}
 

@@ -62,26 +62,29 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 
 				$defaults = FusionBuilder::set_shortcode_defaults(
 					array(
-						'hide_on_mobile'   => fusion_builder_default_visibility( 'string' ),
-						'class'            => '',
-						'id'               => '',
-						'cats_slug'        => '',
-						'exclude_cats'     => '',
-						'order'            => 'DESC',
-						'orderby'          => 'date',
-						'featured_image'   => $fusion_settings->get( 'faq_featured_image' ),
-						'filters'          => $fusion_settings->get( 'faq_filters' ),
-						'type'             => ( '' !== $fusion_settings->get( 'faq_accordion_type' ) ) ? $fusion_settings->get( 'faq_accordion_type' ) : 'accordions',
-						'boxed_mode'       => ( '' !== $fusion_settings->get( 'faq_accordion_boxed_mode' ) ) ? $fusion_settings->get( 'faq_accordion_boxed_mode' ) : 'no',
-						'border_size'      => intval( $fusion_settings->get( 'faq_accordion_border_size' ) ) . 'px',
-						'border_color'     => ( '' !== $fusion_settings->get( 'faq_accordian_border_color' ) ) ? $fusion_settings->get( 'faq_accordian_border_color' ) : '#cccccc',
-						'background_color' => ( '' !== $fusion_settings->get( 'faq_accordian_background_color' ) ) ? $fusion_settings->get( 'faq_accordian_background_color' ) : '#ffffff',
-						'hover_color'      => ( '' !== $fusion_settings->get( 'faq_accordian_hover_color' ) ) ? $fusion_settings->get( 'faq_accordian_hover_color' ) : $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) ),
-						'divider_line'     => $fusion_settings->get( 'faq_accordion_divider_line' ),
-						'icon_size'        => ( '' !== $fusion_settings->get( 'faq_accordion_icon_size' ) ) ? $fusion_settings->get( 'faq_accordion_icon_size' ) : '13px',
-						'icon_color'       => ( '' !== $fusion_settings->get( 'faq_accordian_icon_color' ) ) ? $fusion_settings->get( 'faq_accordian_icon_color' ) : '#ffffff',
-						'icon_boxed_mode'  => ( '' !== $fusion_settings->get( 'faq_accordion_icon_boxed' ) ) ? $fusion_settings->get( 'faq_accordion_icon_boxed' ) : 'no',
-						'icon_alignment'   => ( '' !== $fusion_settings->get( 'faq_accordion_icon_align' ) ) ? $fusion_settings->get( 'faq_accordion_icon_align' ) : 'left',
+						'hide_on_mobile'            => fusion_builder_default_visibility( 'string' ),
+						'class'                     => '',
+						'id'                        => '',
+						'cats_slug'                 => '',
+						'exclude_cats'              => '',
+						'order'                     => 'DESC',
+						'orderby'                   => 'date',
+						'featured_image'            => $fusion_settings->get( 'faq_featured_image' ),
+						'filters'                   => $fusion_settings->get( 'faq_filters' ),
+						'type'                      => ( '' !== $fusion_settings->get( 'faq_accordion_type' ) ) ? $fusion_settings->get( 'faq_accordion_type' ) : 'accordions',
+						'boxed_mode'                => ( '' !== $fusion_settings->get( 'faq_accordion_boxed_mode' ) ) ? $fusion_settings->get( 'faq_accordion_boxed_mode' ) : 'no',
+						'border_size'               => intval( $fusion_settings->get( 'faq_accordion_border_size' ) ) . 'px',
+						'border_color'              => ( '' !== $fusion_settings->get( 'faq_accordian_border_color' ) ) ? $fusion_settings->get( 'faq_accordian_border_color' ) : '#cccccc',
+						'background_color'          => ( '' !== $fusion_settings->get( 'faq_accordian_background_color' ) ) ? $fusion_settings->get( 'faq_accordian_background_color' ) : '#ffffff',
+						'hover_color'               => ( '' !== $fusion_settings->get( 'faq_accordian_hover_color' ) ) ? $fusion_settings->get( 'faq_accordian_hover_color' ) : $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) ),
+						'divider_line'              => $fusion_settings->get( 'faq_accordion_divider_line' ),
+						'icon_size'                 => ( '' !== $fusion_settings->get( 'faq_accordion_icon_size' ) ) ? $fusion_settings->get( 'faq_accordion_icon_size' ) : '13px',
+						'icon_color'                => ( '' !== $fusion_settings->get( 'faq_accordian_icon_color' ) ) ? $fusion_settings->get( 'faq_accordian_icon_color' ) : '#ffffff',
+						'icon_boxed_mode'           => ( '' !== $fusion_settings->get( 'faq_accordion_icon_boxed' ) ) ? $fusion_settings->get( 'faq_accordion_icon_boxed' ) : 'no',
+						'icon_alignment'            => ( '' !== $fusion_settings->get( 'faq_accordion_icon_align' ) ) ? $fusion_settings->get( 'faq_accordion_icon_align' ) : 'left',
+						'icon_box_color'            => $fusion_settings->get( 'faq_accordion_inactive_color' ),
+						'title_font_size'           => $fusion_settings->get( 'faq_accordion_title_font_size' ),
+						'toggle_hover_accent_color' => $fusion_settings->get( 'faq_accordion_active_color' ),
 					), $args
 				);
 
@@ -120,15 +123,34 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 				}
 
 				if ( ! empty( self::$args['icon_size'] ) ) {
-					$styles .= '.fusion-accordian  #accordian-' . $this->faq_counter . ' .panel-title a .fa-fusion-box:before{ font-size: ' . self::$args['icon_size'] . ';}';
+					$styles .= '.fusion-accordian #accordian-' . $this->faq_counter . ' .panel-title a .fa-fusion-box:before{ font-size: ' . self::$args['icon_size'] . ';}';
 				}
 
 				if ( ! empty( self::$args['icon_color'] ) ) {
-					$styles .= '.fusion-accordian  #accordian-' . $this->faq_counter . ' .panel-title a .fa-fusion-box{ color: ' . self::$args['icon_color'] . ';}';
+					$styles .= '.fusion-accordian #accordian-' . $this->faq_counter . ' .panel-title a .fa-fusion-box{ color: ' . self::$args['icon_color'] . ';}';
 				}
 
 				if ( ! empty( self::$args['icon_alignment'] ) && 'right' === self::$args['icon_alignment'] ) {
-					$styles .= '.fusion-accordian  #accordian-' . $this->faq_counter . '.fusion-toggle-icon-right .fusion-toggle-heading{ margin-right: ' . FusionBuilder::validate_shortcode_attr_value( intval( self::$args['icon_size'] ) + 18, 'px' ) . ';}';
+					$styles .= '.fusion-accordian #accordian-' . $this->faq_counter . '.fusion-toggle-icon-right .fusion-toggle-heading{ margin-right: ' . FusionBuilder::validate_shortcode_attr_value( intval( self::$args['icon_size'] ) + 18, 'px' ) . ';}';
+				}
+
+				if ( ! empty( self::$args['title_font_size'] ) ) {
+					$styles .= '.fusion-accordian #accordian-' . $this->faq_counter . ' .panel-title a{font-size:' . FusionBuilder::validate_shortcode_attr_value( self::$args['title_font_size'], 'px' ) . ';}';
+				}
+
+				if ( ( '1' === self::$args['icon_boxed_mode'] || 'yes' === self::$args['icon_boxed_mode'] ) && ! empty( self::$args['icon_box_color'] ) ) {
+					$icon_box_color = $fusion_library->sanitize->color( $this->parent_args['icon_box_color'] );
+					$styles .= '.fusion-accordian #accordian-' . $this->faq_counter . ' .fa-fusion-box { background-color: ' . $icon_box_color . ';border-color: ' . $icon_box_color . ';}';
+				}
+
+				if ( ! empty( self::$args['toggle_hover_accent_color'] ) ) {
+					$toggle_hover_accent_color = $fusion_library->sanitize->color( self::$args['toggle_hover_accent_color'] );
+					$styles .= '.fusion-accordian #accordian-' . $this->faq_counter . ' .panel-title a:hover { color: ' . $toggle_hover_accent_color . ';}';
+
+					if ( '1' === self::$args['icon_boxed_mode'] || 'yes' === self::$args['icon_boxed_mode'] ) {
+						$styles .= '.fusion-accordian #accordian-' . $this->faq_counter . ' .panel-title .active .fa-fusion-box,';
+						$styles .= '.fusion-accordian #accordian-' . $this->faq_counter . ' .panel-title a:hover .fa-fusion-box { background-color: ' . $toggle_hover_accent_color . '!important;border-color: ' . $toggle_hover_accent_color . '!important;}';
+					}
 				}
 
 				if ( $styles ) {
@@ -497,6 +519,13 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 									),
 								),
 							),
+							'faq_accordion_title_font_size' => array(
+								'label'       => esc_html__( 'FAQ Title Font Size', 'fusion-core' ),
+								'description' => esc_html__( 'Controls the size of the title text.', 'fusion-core' ),
+								'id'          => 'faq_accordion_title_font_size',
+								'default'     => $fusion_settings->get( 'h4_typography', 'font-size' ),
+								'type'        => 'dimension',
+							),
 							'faq_accordion_icon_size' => array(
 								'label'       => esc_html__( 'FAQ Item Icon Size', 'fusion-core' ),
 								'description' => esc_html__( 'Set the size of the icon.', 'fusion-core' ),
@@ -527,13 +556,13 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 								'id'          => 'faq_accordian_inactive_color',
 								'default'     => '#333333',
 								'type'        => 'color-alpha',
-							),
-							'faq_accordian_active_color' => array(
-								'label'       => esc_html__( 'FAQ Item Icon Active Box Color', 'fusion-core' ),
-								'description' => esc_html__( 'Controls the color of the active FAQ box.', 'fusion-core' ),
-								'id'          => 'faq_accordian_active_color',
-								'default'     => $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) ),
-								'type'        => 'color-alpha',
+								'required'    => array(
+									array(
+										'setting'  => 'faq_accordion_icon_boxed',
+										'operator' => '==',
+										'value'    => '1',
+									),
+								),
 							),
 							'faq_accordion_icon_align' => array(
 								'label'       => esc_html__( 'FAQ Item Icon Alignment', 'fusion-core' ),
@@ -545,6 +574,13 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 									'left'    => esc_html__( 'Left', 'fusion-core' ),
 									'right'   => esc_html__( 'Right', 'fusion-core' ),
 								),
+							),
+							'faq_accordian_active_color' => array(
+								'label'       => esc_html__( 'FAQ Item Icon Toggle Hover Accent Color', 'fusion-core' ),
+								'description' => esc_html__( 'Controls the accent color on hover for icon box and title.', 'fusion-core' ),
+								'id'          => 'faq_accordian_active_color',
+								'default'     => $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) ),
+								'type'        => 'color-alpha',
 							),
 						),
 					),
@@ -812,7 +848,14 @@ function fusion_element_faq() {
 					),
 				),
 				array(
-					'heading'     => esc_html__( 'FAQ Item Icon Size', 'fusion-core' ),
+					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'Title Size', 'fusion-core' ),
+					'description' => esc_attr__( 'Controls the size of the title. Enter value including any valid CSS unit, ex: 13px.', 'fusion-core' ),
+					'param_name'  => 'title_font_size',
+					'value'       => '',
+				),
+				array(
+					'heading'     => esc_html__( 'Icon Size', 'fusion-core' ),
 					'description' => esc_html__( 'Set the size of the icon. In pixels (px), ex: 13px.', 'fusion-core' ),
 					'param_name'  => 'icon_size',
 					'default'     => $fusion_settings->get( 'faq_accordion_icon_size' ),
@@ -823,7 +866,7 @@ function fusion_element_faq() {
 				),
 				array(
 					'type'        => 'colorpickeralpha',
-					'heading'     => esc_attr__( 'FAQ Item Icon Color', 'fusion-core' ),
+					'heading'     => esc_attr__( 'Icon Color', 'fusion-core' ),
 					'description' => esc_attr__( 'Set the color of icon in toggle box.', 'fusion-core' ),
 					'param_name'  => 'icon_color',
 					'value'       => '',
@@ -831,7 +874,7 @@ function fusion_element_faq() {
 				),
 				array(
 					'type'        => 'radio_button_set',
-					'heading'     => esc_attr__( 'FAQ Icon Boxed Mode', 'fusion-core' ),
+					'heading'     => esc_attr__( 'Icon Boxed Mode', 'fusion-core' ),
 					'description' => esc_attr__( 'Choose to display icon in boxed mode.', 'fusion-core' ),
 					'param_name'  => 'icon_boxed_mode',
 					'value'       => array(
@@ -842,8 +885,23 @@ function fusion_element_faq() {
 					'default' => '',
 				),
 				array(
+					'type'        => 'colorpickeralpha',
+					'heading'     => esc_attr__( 'Icon Inactive Box Color', 'fusion-core' ),
+					'description' => esc_attr__( 'Controls the color of the inactive toggle box.', 'fusion-core' ),
+					'param_name'  => 'icon_box_color',
+					'value'       => '',
+					'default'     => $fusion_settings->get( 'faq_accordian_inactive_color' ),
+					'dependency'  => array(
+						array(
+							'element'  => 'icon_boxed_mode',
+							'value'    => 'no',
+							'operator' => '!=',
+						),
+					),
+				),
+				array(
 					'type'        => 'radio_button_set',
-					'heading'     => esc_attr__( 'FAQ Icon Alignment', 'fusion-core' ),
+					'heading'     => esc_attr__( 'Icon Alignment', 'fusion-core' ),
 					'description' => esc_attr__( 'Controls the alignment of FAQ icon.', 'fusion-core' ),
 					'param_name'  => 'icon_alignment',
 					'value'       => array(
@@ -852,6 +910,14 @@ function fusion_element_faq() {
 						'right'  => esc_attr__( 'Right', 'fusion-core' ),
 					),
 					'default' => '',
+				),
+				array(
+					'type'        => 'colorpickeralpha',
+					'heading'     => esc_attr__( 'FAQ Toggle Hover Accent Color', 'fusion-core' ),
+					'description' => esc_attr__( 'Controls the accent color on hover for icon box and title.', 'fusion-core' ),
+					'param_name'  => 'toggle_hover_accent_color',
+					'value'       => '',
+					'default'     => $fusion_settings->get( 'faq_accordian_active_color' ),
 				),
 				array(
 					'type'        => 'checkbox_button_set',

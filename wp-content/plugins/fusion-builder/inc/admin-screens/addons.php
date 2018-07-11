@@ -88,17 +88,15 @@
 								$date_difference = (int) floor( ( $now - $addon['date'] ) / ( 60 * 60 * 24 ) );
 
 								if ( 30 >= $date_difference ) :
-								?>
+									?>
 									<div class="plugin-required"><?php esc_attr_e( 'New', 'fusion-builder' ); ?></div>
 								<?php endif; ?>
 							<?php endif; ?>
 						</div>
 					</div>
 				</div>
-			<?php
-				$n++;
-				endforeach;
-			?>
+				<?php $n++; ?>
+			<?php endforeach; ?>
 		</div>
 		<script>
 			jQuery( document ).ready( function() {

@@ -26,7 +26,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 				// If Global, make it.
 				if ( 'undefined' !== typeof this.model.attributes.params.fusion_global ) {
-					FusionPageBuilderApp.addClassToElement( this.$el, 'fusion-global-element', this.model.attributes.params.fusion_global );
+					FusionPageBuilderApp.addClassToElement( this.$el, 'fusion-global-element', this.model.attributes.params.fusion_global, this.model.get( 'cid' ) );
 				}
 
 				return this;
@@ -119,7 +119,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 								thisModel.attributes.params.fusion_global = $( data.responseText ).attr( 'data-layout_id' );
 								$( 'div.fusion_builder_column_element[data-cid="' + thisModel.get( 'cid' ) + '"]' ).addClass( 'fusion-global-element' );
 								$( 'div.fusion_builder_column_element[data-cid="' + thisModel.get( 'cid' ) + '"]' ).attr( 'fusion-global-layout', $( data.responseText ).attr( 'data-layout_id' ) );
-								$( 'div.fusion_builder_column_element[data-cid="' + thisModel.get( 'cid' ) + '"]' ).append( '<div class="fusion-builder-global-tooltip"><span>' + fusionBuilderText.global_element + '</span></div>' );
+								$( 'div.fusion_builder_column_element[data-cid="' + thisModel.get( 'cid' ) + '"]' ).append( '<div class="fusion-builder-global-tooltip" data-cid="' + thisModel.get( 'cid' ) + '"><span>' + fusionBuilderText.global_element + '</span></div>' );
 								FusionPageBuilderEvents.trigger( 'fusion-element-added' );
 								FusionPageBuilderApp.saveGlobal = true;
 

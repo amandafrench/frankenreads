@@ -75,7 +75,7 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 					$style_type .= ' solid';
 				}
 
-				if ( ! $this->args['style_type'] || 'default' == $this->args['style_type'] ) {
+				if ( ! $this->args['style_type'] || 'default' === $this->args['style_type'] ) {
 					$this->args['style_type'] = $style_type = $fusion_settings->get( 'title_style_type' );
 				}
 
@@ -152,7 +152,7 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 					)
 				);
 
-				if ( strpos( $this->args['style_type'], 'underline' ) !== false ) {
+				if ( false !== strpos( $this->args['style_type'], 'underline' ) ) {
 					$styles = explode( ' ', $this->args['style_type'] );
 
 					foreach ( $styles as $style ) {
@@ -314,15 +314,12 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 								'default'     => 'double',
 								'type'        => 'select',
 								'choices'     => array(
-									'single'           => esc_html__( 'Single', 'fusion-builder' ),
 									'single solid'     => esc_html__( 'Single Solid', 'fusion-builder' ),
 									'single dashed'    => esc_html__( 'Single Dashed', 'fusion-builder' ),
 									'single dotted'    => esc_html__( 'Single Dotted', 'fusion-builder' ),
-									'double'           => esc_html__( 'Double', 'fusion-builder' ),
 									'double solid'     => esc_html__( 'Double Solid', 'fusion-builder' ),
 									'double dashed'    => esc_html__( 'Double Dashed', 'fusion-builder' ),
 									'double dotted'    => esc_html__( 'Double Dotted', 'fusion-builder' ),
-									'underline'        => esc_html__( 'Underline', 'fusion-builder' ),
 									'underline solid'  => esc_html__( 'Underline Solid', 'fusion-builder' ),
 									'underline dashed' => esc_html__( 'Underline Dashed', 'fusion-builder' ),
 									'underline dotted' => esc_html__( 'Underline Dotted', 'fusion-builder' ),

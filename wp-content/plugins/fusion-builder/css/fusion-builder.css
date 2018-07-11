@@ -857,7 +857,7 @@
   margin-bottom: 4px;
 }
 .fusion-builder-modal-settings-container .fusion-builder-link-field {
-  max-width: 82%;
+  max-width: 81%;
 }
 .fusion-builder-modal-settings-container .fusion-builder-link-button {
   margin-top: 0 !important;
@@ -954,6 +954,14 @@
   padding: 1em;
   box-sizing: border-box;
   z-index: 99999;
+}
+#fusion-builder-layouts .fusion-global h4.fusion-page-layout-title:before,
+#fusion-builder-layouts .fusion-global h4.fusion_module_title:before {
+  right: 154px;
+}
+#fusion-builder-layouts .fusion-global h4.fusion-page-layout-title .fusion-global-tooltip-wrapper,
+#fusion-builder-layouts .fusion-global h4.fusion_module_title .fusion-global-tooltip-wrapper {
+  right: 154px;
 }
 #fusion-page-builder-tabs {
   margin: 0;
@@ -1653,6 +1661,7 @@
   position: absolute;
   right: auto;
   left: 0;
+  width: auto;
 }
 .rtl #fusion_builder_layout .fusion-page-layouts .fusion-page-layout .fusion-layout-buttons a {
   float: right;
@@ -1893,6 +1902,7 @@
   right: 0;
   top: 0;
   bottom: 0;
+  width: auto;
 }
 .fusion-page-layouts {
   width: 100%;
@@ -1919,7 +1929,11 @@
 }
 .fusion-page-layouts .fusion-page-layout h4.fusion-page-layout-title {
   width: 100%;
-  position: relative;
+}
+.fusion-page-layouts .fusion-page-layout .fusion-layout-buttons {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 .fusion-page-layouts .fusion-page-layout .fusion-layout-buttons a {
   width: 40px;
@@ -2322,6 +2336,7 @@ h4.fusion_module_title span.fusion-global-tooltip {
   top: 5px;
   border-radius: 5px;
   z-index: 99999;
+  cursor: pointer;
 }
 #fusion_builder_layout .fusion-builder-global-tooltip span {
   background: #32383c;
@@ -2332,13 +2347,14 @@ h4.fusion_module_title span.fusion-global-tooltip {
   padding: 10px 20px;
   border-radius: 5px;
   font-weight: 200;
-  top: -50px;
+  top: -68px;
   left: 50%;
   -webkit-transform: translateX(-50%);
       -ms-transform: translateX(-50%);
           transform: translateX(-50%);
   white-space: nowrap;
   display: none;
+  text-align: center;
 }
 #fusion_builder_layout .fusion-builder-global-tooltip span:before {
   content: "\f0d7";
@@ -3143,7 +3159,7 @@ input[type=text].fusion-builder-section-name:hover {
 .fusion-table-builder .fusion-builder-table > thead > tr > td,
 .fusion-table-builder .fusion-builder-table > tbody > tr > td {
   padding: 8px;
-  line-height: 1.5384615384615385;
+  line-height: 1.53846154;
   vertical-align: top;
   border-top: 1px solid #e5e4e3;
   border-right: 1px solid #e5e4e3;
@@ -4595,4 +4611,140 @@ tr:hover .fusion-builder-table-delete-row {
 .fusion-module-icon.fusiona-convertplus:before {
   content: "\e600" !important;
   font-family: ConvertPlug !important;
+}
+.post-type-fusion_element #fusion_builder_controls .fusion-builder-library-dialog,
+.post-type-fusion_element #fusion_builder_controls .fusion-builder-layout-buttons-toggle-containers,
+.post-type-fusion_element #fusion_builder_controls .fusion-builder-layout-custom-css,
+.post-type-fusion_element #fusion_builder_controls .fusion-builder-template-buttons-save,
+.post-type-fusion_element #fusion_builder_controls .fusion-builder-layout-buttons-clear {
+  display: none;
+}
+.post-type-fusion_element.fusion-element-post-type-sections .fusion-builder-section-add,
+.post-type-fusion_element.fusion-element-post-type-sections .fusion_builder_container.fusion-builder-section-folded .fusion-builder-section-add,
+.post-type-fusion_element.fusion-element-post-type-sections .fusion-builder-section-controls .fusion-builder-save-element,
+.post-type-fusion_element.fusion-element-post-type-sections .fusion-builder-section-controls .fusion-builder-clone-container,
+.post-type-fusion_element.fusion-element-post-type-sections .fusion-builder-section-controls .fusion-builder-remove,
+.post-type-fusion_element.fusion-element-post-type-sections .fusion-builder-controls .fusion-builder-save,
+.post-type-fusion_element.fusion-element-post-type-sections .fusion-builder-save-inner-row-dialog-button {
+  display: none;
+}
+.post-type-fusion_element.fusion-element-post-type-sections .fusion-builder-module-controls .fusion-builder-settings {
+  margin-left: 17px;
+}
+.post-type-fusion_element.fusion-element-post-type-sections .fusion-builder-inner-row-controls {
+  left: 34px;
+}
+.post-type-fusion_element.fusion-element-post-type-columns .fusion-builder-module-controls .fusion-builder-save {
+  display: none;
+}
+.post-type-fusion_element.fusion-element-post-type-columns .fusion-builder-module-controls .fusion-builder-settings {
+  margin-left: 17px;
+}
+.post-type-fusion_element.fusion-element-post-type-columns .fusion-builder-inner-row-controls .fusion-builder-save-inner-row-dialog-button {
+  display: none;
+}
+.post-type-fusion_element.fusion-element-post-type-columns .fusion-builder-inner-row-controls .fusion-builder-inner-row-overlay {
+  margin-left: 17px;
+}
+.post-type-fusion_element.fusion-element-post-type-columns .fusion-builder-section-header,
+.post-type-fusion_element.fusion-element-post-type-columns .fusion-builder-section-add,
+.post-type-fusion_element.fusion-element-post-type-columns .fusion_builder_container .fusion-builder-insert-column,
+.post-type-fusion_element.fusion-element-post-type-columns .fusion-builder-column-outer > .fusion-builder-column-controls .fusion-builder-save-column-dialog,
+.post-type-fusion_element.fusion-element-post-type-columns .fusion-builder-column-outer > .fusion-builder-column-controls .fusion-builder-remove-column,
+.post-type-fusion_element.fusion-element-post-type-columns .fusion-builder-column-outer > .fusion-builder-column-controls .fusion-builder-clone-column {
+  display: none;
+}
+.post-type-fusion_element.fusion-element-post-type-columns .fusion-builder-column-controls .fusion-builder-save-column-dialog {
+  display: none;
+}
+.post-type-fusion_element.fusion-element-post-type-columns #fusion_builder_layout .fusion-builder-column-outer {
+  margin: 40px auto 0 auto;
+  display: -ms-grid;
+  display: grid;
+}
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-column-outer > .fusion-builder-add-element {
+  display: none;
+}
+.post-type-fusion_element.fusion-element-post-type-elements #fusion_builder_layout .fusion-builder-column-outer {
+  padding: 0;
+  border: 0;
+}
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-section-header,
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-column-outer > .fusion-builder-column-controls,
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-section-add,
+.post-type-fusion_element.fusion-element-post-type-elements .fusion_builder_container .fusion-builder-insert-column {
+  display: none;
+}
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-module-controls .fusion-builder-clone,
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-module-controls .fusion-builder-save,
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-module-controls .fusion-builder-remove {
+  display: none;
+}
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-module-controls .fusion-builder-settings {
+  margin-left: 51px;
+}
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-inner-row-controls .fusion-builder-save-inner-row-dialog-button,
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-inner-row-controls .fusion-builder-remove-inner-row,
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-inner-row-controls .fusion-builder-clone-inner-row {
+  display: none;
+}
+.post-type-fusion_element.fusion-element-post-type-elements .fusion-builder-inner-row-controls .fusion-builder-inner-row-overlay {
+  margin-left: 51px;
+}
+.post-type-fusion_element.fusion-element-post-type-elements .fusion_builder_row_inner .fusion-builder-module-controls .fusion-builder-clone,
+.post-type-fusion_element.fusion-element-post-type-elements .fusion_builder_row_inner .fusion-builder-module-controls .fusion-builder-remove {
+  display: block;
+}
+.post-type-fusion_element.fusion-element-post-type-elements .fusion_builder_row_inner .fusion-builder-module-controls .fusion-builder-settings {
+  margin-left: 17px;
+}
+/* Context Menu */
+.fusion-builder-context-menu {
+  position: absolute;
+  z-index: 99999999;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  min-width: 130px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.fusion-builder-context-menu > span {
+  text-align: center;
+  display: block;
+  padding: 6px 15px;
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.fusion-builder-context-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.fusion-builder-context-menu ul li {
+  display: block;
+  padding: 6px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+  -webkit-transition-property: all;
+  transition-property: all;
+  margin-bottom: 0px;
+}
+.fusion-builder-context-menu ul li:last-child {
+  border-bottom: none;
+}
+.fusion-builder-context-menu ul li:hover {
+  color: rgba(0, 0, 0, 0.9);
+}
+.fusion-builder-context-menu:hover ul {
+  color: rgba(0, 0, 0, 0.4);
+}
+.fusion-builder-library-edit .fusion-builder-slider-helper {
+  display: none;
 }

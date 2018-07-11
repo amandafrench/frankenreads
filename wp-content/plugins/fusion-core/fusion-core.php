@@ -3,7 +3,7 @@
  * Plugin Name: Fusion Core
  * Plugin URI: http://theme-fusion.com
  * Description: ThemeFusion Core Plugin for ThemeFusion Themes
- * Version: 3.5.2
+ * Version: 3.6
  * Author: ThemeFusion
  * Author URI: http://theme-fusion.com
  *
@@ -33,7 +33,7 @@ if ( ! class_exists( 'FusionCore_Plugin' ) ) {
 		 * @since   1.0.0
 		 * @var  string
 		 */
-		const VERSION = '3.5.2';
+		const VERSION = '3.6';
 
 		/**
 		 * Instance of the class.
@@ -578,6 +578,21 @@ if ( ! class_exists( 'FusionCore_Plugin' ) ) {
 			$shortcode_option_map = array();
 
 			// Portfolio.
+			$portfolio_is_single_column = array(
+				'check' => array(
+					'element-global' => 'portfolio_columns',
+					'value'          => '1',
+					'operator'       => '==',
+				),
+				'output' => array(
+					'element'  => 'columns',
+					'value'    => '',
+					'operator' => '!=',
+				),
+			);
+			$shortcode_option_map['column_spacing']['fusion_portfolio'][] = $portfolio_is_single_column;
+			$shortcode_option_map['equal_heights']['fusion_portfolio'][]  = $portfolio_is_single_column;
+
 			$shortcode_option_map['grid_element_color']['fusion_portfolio'][] = array(
 				'check' => array(
 					'element-global' => 'portfolio_text_layout',
@@ -737,6 +752,18 @@ if ( ! class_exists( 'FusionCore_Plugin' ) ) {
 					'operator' => '!=',
 				),
 			);
+			$shortcode_option_map['icon_box_color']['fusion_faq'][] = array(
+				'check' => array(
+					'element-global' => 'faq_accordion_icon_boxed',
+					'value' => '0',
+					'operator' => '==',
+				),
+				'output' => array(
+					'element' => 'icon_boxed_mode',
+					'value' => '',
+					'operator' => '!=',
+				),
+			);
 
 			// If has TO related dependency, do checks.
 			if ( isset( $shortcode_option_map[ $option ][ $shortcode ] ) && is_array( $shortcode_option_map[ $option ][ $shortcode ] ) ) {
@@ -880,21 +907,32 @@ if ( ! class_exists( 'FusionCore_Plugin' ) ) {
 				'theme-option' => 'faq_accordian_hover_color',
 				'reset'        => true,
 			);
+			$shortcode_option_map['title_font_size']['fusion_faq'] = array(
+				'theme-option' => 'faq_accordion_title_font_size',
+			);
 			$shortcode_option_map['icon_size']['fusion_faq'] = array(
 				'theme-option' => 'faq_accordion_icon_size',
 				'type'         => 'range',
+			);
+			$shortcode_option_map['icon_color']['fusion_faq'] = array(
+				'theme-option' => 'faq_accordian_icon_color',
+				'reset'        => true,
 			);
 			$shortcode_option_map['icon_boxed_mode']['fusion_faq'] = array(
 				'theme-option' => 'faq_accordion_icon_boxed',
 				'type'         => 'yesno',
 			);
+			$shortcode_option_map['icon_box_color']['fusion_faq'] = array(
+				'theme-option' => 'faq_accordian_inactive_color',
+				'reset' => true,
+			);
 			$shortcode_option_map['icon_alignment']['fusion_faq'] = array(
 				'theme-option' => 'faq_accordion_icon_align',
 				'type'         => 'select',
 			);
-			$shortcode_option_map['icon_color']['fusion_faq'] = array(
-				'theme-option' => 'faq_accordian_icon_color',
-				'reset'        => true,
+			$shortcode_option_map['toggle_hover_accent_color']['fusion_faq'] = array(
+				'theme-option' => 'faq_accordian_active_color',
+				'reset' => true,
 			);
 
 			return $shortcode_option_map;

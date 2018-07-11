@@ -86,16 +86,6 @@ if ( fusion_is_element_enabled( 'fusion_one_page_text_link' ) ) {
 				return $attr;
 
 			}
-
-			/**
-			 * Sets the necessary scripts.
-			 *
-			 * @access public
-			 * @since 1.1
-			 * @return void
-			 */
-			public function add_scripts() {
-			}
 		}
 	}
 

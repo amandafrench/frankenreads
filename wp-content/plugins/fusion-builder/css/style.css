@@ -1777,7 +1777,7 @@ input[type="range"].fusion-range-option::-ms-thumb {
 .fusion-table-builder .fusion-builder-table > tbody > tr > td {
   border-right: 1px solid #e5e4e3;
   border-top: 1px solid #e5e4e3;
-  line-height: 1.5384615384615385;
+  line-height: 1.53846154;
   padding: 8px;
   vertical-align: top;
 }

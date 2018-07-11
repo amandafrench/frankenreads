@@ -25,6 +25,16 @@ class Fusion_Dynamic_CSS_Helpers {
 	public static $dynamic_css = array();
 
 	/**
+	 * The dynamic-css after it's been parsed.
+	 *
+	 * @static
+	 * @access private
+	 * @since 1.6
+	 * @var string
+	 */
+	private static $dynamic_css_parsed = '';
+
+	/**
 	 * Add to Dynamic CSS.
 	 *
 	 * @access public
@@ -33,7 +43,9 @@ class Fusion_Dynamic_CSS_Helpers {
 	 */
 	public function add_css( $css ) {
 
-		self::$dynamic_css = array_merge_recursive( self::$dynamic_css, $css );
+		if ( ! empty( $css ) ) {
+			self::$dynamic_css = array_merge_recursive( self::$dynamic_css, $css );
+		}
 	}
 
 	/**
@@ -41,14 +53,22 @@ class Fusion_Dynamic_CSS_Helpers {
 	 * Merge and combine the CSS elements.
 	 *
 	 * @access public
-	 * @param  string|array $elements An array of our elements.
-	 *                                If we use a string then it is directly returned.
-	 * @return  string
+	 * @param string|array $elements An array of our elements. Strings are directly returned.
+	 * @param string       $prefix   A prefix to add to all selectors.
+	 * @param string       $suffix   A suffix to add to all selectors.
+	 * @return string                The imploded array of CSS selectors.
 	 */
-	public function implode( $elements = array() ) {
+	public function implode( $elements = array(), $prefix = '', $suffix = '' ) {
+		if ( $prefix ) {
+			$prefix .= ' ';
+		}
 
-		if ( ! is_array( $elements ) ) {
-			return $elements;
+		if ( $suffix ) {
+			$suffix = ' ' . $suffix;
+		}
+
+		if ( is_string( $elements ) ) {
+			return $prefix . $elements . $suffix;
 		}
 
 		// Make sure our values are unique.
@@ -58,7 +78,7 @@ class Fusion_Dynamic_CSS_Helpers {
 		sort( $elements );
 
 		// Implode items and return the value.
-		return implode( ',', $elements );
+		return $prefix . implode( $suffix . ',' . $prefix, $elements ) . $suffix;
 
 	}
 
@@ -98,55 +118,45 @@ class Fusion_Dynamic_CSS_Helpers {
 							$value = "'" . $value . "'";
 						}
 						$css[ $media_query ][ $element ]['font-family'] = $value;
-					} // End if().
-					elseif ( 'border-radius' === $property ) {
+					} elseif ( 'border-radius' === $property ) {
 						$css[ $media_query ][ $element ]['-webkit-border-radius'] = $value;
-					} // box-shadow.
-					elseif ( 'box-shadow' === $property ) {
+					} elseif ( 'box-shadow' === $property ) {
 						$css[ $media_query ][ $element ]['-webkit-box-shadow'] = $value;
 						$css[ $media_query ][ $element ]['-moz-box-shadow']    = $value;
-					} // box-sizing.
-					elseif ( 'box-sizing' === $property ) {
+					} elseif ( 'box-sizing' === $property ) {
 						$css[ $media_query ][ $element ]['-webkit-box-sizing'] = $value;
 						$css[ $media_query ][ $element ]['-moz-box-sizing']    = $value;
-					} // text-shadow.
-					elseif ( 'text-shadow' === $property ) {
+					} elseif ( 'text-shadow' === $property ) {
 						$css[ $media_query ][ $element ]['-webkit-text-shadow'] = $value;
 						$css[ $media_query ][ $element ]['-moz-text-shadow']    = $value;
-					} // transform.
-					elseif ( 'transform' === $property ) {
+					} elseif ( 'transform' === $property ) {
 						$css[ $media_query ][ $element ]['-webkit-transform'] = $value;
 						$css[ $media_query ][ $element ]['-moz-transform']    = $value;
 						$css[ $media_query ][ $element ]['-ms-transform']     = $value;
 						$css[ $media_query ][ $element ]['-o-transform']      = $value;
-					} // background-size.
-					elseif ( 'background-size' === $property ) {
+					} elseif ( 'background-size' === $property ) {
 						$css[ $media_query ][ $element ]['-webkit-background-size'] = $value;
 						$css[ $media_query ][ $element ]['-moz-background-size']    = $value;
 						$css[ $media_query ][ $element ]['-ms-background-size']     = $value;
 						$css[ $media_query ][ $element ]['-o-background-size']      = $value;
-					} // transition.
-					elseif ( 'transition' === $property ) {
+					} elseif ( 'transition' === $property ) {
 						$css[ $media_query ][ $element ]['-webkit-transition'] = $value;
 						$css[ $media_query ][ $element ]['-moz-transition']    = $value;
 						$css[ $media_query ][ $element ]['-ms-transition']     = $value;
 						$css[ $media_query ][ $element ]['-o-transition']      = $value;
-					} // transition-property.
-					elseif ( 'transition-property' === $property ) {
+					} elseif ( 'transition-property' === $property ) {
 						$css[ $media_query ][ $element ]['-webkit-transition-property'] = $value;
 						$css[ $media_query ][ $element ]['-moz-transition-property']    = $value;
 						$css[ $media_query ][ $element ]['-ms-transition-property']     = $value;
 						$css[ $media_query ][ $element ]['-o-transition-property']      = $value;
-					} // linear-gradient.
-					elseif ( is_array( $value ) ) {
+					} elseif ( is_array( $value ) ) {
 						foreach ( $value as $subvalue ) {
 							if ( false !== strpos( $subvalue, 'linear-gradient' ) ) {
 								$css[ $media_query ][ $element ][ $property ][] = '-webkit-' . $subvalue;
 								$css[ $media_query ][ $element ][ $property ][] = '-moz-' . $subvalue;
 								$css[ $media_query ][ $element ][ $property ][] = '-ms-' . $subvalue;
 								$css[ $media_query ][ $element ][ $property ][] = '-o-' . $subvalue;
-							} // End if().
-							elseif ( 0 === stripos( $subvalue, 'calc' ) ) {
+							} elseif ( 0 === stripos( $subvalue, 'calc' ) ) {
 								$css[ $media_query ][ $element ][ $property ][] = '-webkit-' . $subvalue;
 								$css[ $media_query ][ $element ][ $property ][] = '-moz-' . $subvalue;
 								$css[ $media_query ][ $element ][ $property ][] = '-ms-' . $subvalue;
@@ -154,9 +164,9 @@ class Fusion_Dynamic_CSS_Helpers {
 							}
 						}
 					}
-				}// End foreach().
-			}// End foreach().
-		}// End foreach().
+				}
+			}
+		}
 
 		/**
 		 * Process the array of CSS properties and produce the final CSS.
@@ -218,24 +228,22 @@ class Fusion_Dynamic_CSS_Helpers {
 		if ( $cache ) {
 			// If we're compiling to file, and this is a fallback, 1hr caching, 1 day for db mode.
 			$cache_time = ( 'db' === $settings->get( 'css_cache_method' ) ) ? DAY_IN_SECONDS : HOUR_IN_SECONDS;
+			$c_page_id  = $fusion_library->get_page_id();
+			$page_id    = ( $c_page_id ) ? $c_page_id : 'global';
 
-			$c_page_id      = $fusion_library->get_page_id();
-			$page_id        = ( $c_page_id > 0 ) ? $c_page_id : 'global';
-
-			$transient_name = 'fusion_dynamic_css_' . $page_id;
+			$transient_name = 'fusion_dynamic_css_' . $this->get_dynamic_css_id();
 
 			// Check if the dynamic CSS needs updating.
 			// If it does, then calculate the CSS and then update the transient.
 			if ( $dynamic_css_obj->needs_update() ) {
 
 				// Calculate the dynamic CSS.
-				$dynamic_css_array = apply_filters( 'fusion_dynamic_css_array', self::$dynamic_css );
-				$dynamic_css       = '/********* Compiled on ' . date( DATE_ATOM ) . " - Do not edit *********/\n" . $this->parser( $dynamic_css_array );
+				$dynamic_css = $this->get_dynamic_css();
 
 				// Set the transient for an hour.
 				set_transient( $transient_name, $dynamic_css, $cache_time );
 
-				$option  = get_option( 'fusion_dynamic_css_posts', array() );
+				$option             = get_option( 'fusion_dynamic_css_posts', array() );
 				$option[ $page_id ] = true;
 				update_option( 'fusion_dynamic_css_posts', $option );
 			} else {
@@ -246,8 +254,7 @@ class Fusion_Dynamic_CSS_Helpers {
 				if ( false === ( $dynamic_css = get_transient( $transient_name ) ) ) {
 
 					// Calculate the dynamic CSS.
-					$dynamic_css_array = apply_filters( 'fusion_dynamic_css_array', self::$dynamic_css );
-					$dynamic_css       = $this->parser( $dynamic_css_array );
+					$dynamic_css = $this->get_dynamic_css();
 
 					// Set the transient for an hour.
 					set_transient( $transient_name, $dynamic_css, $cache_time );
@@ -255,9 +262,8 @@ class Fusion_Dynamic_CSS_Helpers {
 			}
 		} else {
 			// Calculate the dynamic CSS.
-			$dynamic_css_array = apply_filters( 'fusion_dynamic_css_array', self::$dynamic_css );
-			$dynamic_css       = '/********* Compiled on ' . date( DATE_ATOM ) . " - Do not edit *********/\n" . $this->parser( $dynamic_css_array );
-		}// End if().
+			$dynamic_css = $this->get_dynamic_css();
+		}
 
 		return apply_filters( 'fusion_dynamic_css_cached', $dynamic_css );
 
@@ -340,5 +346,41 @@ class Fusion_Dynamic_CSS_Helpers {
 			}
 		}
 		return $family;
+	}
+
+	/**
+	 * Get the dynamic-css ID.
+	 *
+	 * @access public
+	 * @since 1.6
+	 * @return string
+	 */
+	public function get_dynamic_css_id() {
+		$fusion_library = Fusion::get_instance();
+		$ids            = get_option( 'fusion_dynamic_css_ids', array() );
+		$c_page_id      = $fusion_library->get_page_id();
+		$page_id        = ( $c_page_id ) ? $c_page_id : 'global';
+
+		if ( ! isset( $ids[ $page_id ] ) || ! $ids[ $page_id ] ) {
+			$dynamic_css     = $this->get_dynamic_css();
+			$ids[ $page_id ] = md5( $dynamic_css );
+			update_option( 'fusion_dynamic_css_ids', $ids );
+		}
+		return $ids[ $page_id ];
+	}
+
+	/**
+	 * Get the dynamic-css.
+	 *
+	 * @access public
+	 * @since 1.6
+	 * @return string
+	 */
+	public function get_dynamic_css() {
+		if ( ! self::$dynamic_css_parsed ) {
+			$dynamic_css_array        = apply_filters( 'fusion_dynamic_css_array', self::$dynamic_css );
+			self::$dynamic_css_parsed = '/********* Compiled CSS - Do not edit *********/' . $this->parser( $dynamic_css_array );
+		}
+		return self::$dynamic_css_parsed;
 	}
 }

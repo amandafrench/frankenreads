@@ -48,6 +48,15 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 			private $image_data = false;
 
 			/**
+			 * The gallery counter.
+			 *
+			 * @access private
+			 * @since 1.5.3
+			 * @var int
+			 */
+			private $gallery_counter = 1;
+
+			/**
 			 * Constructor.
 			 *
 			 * @access public
@@ -81,7 +90,7 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 						'class'                        => '',
 						'id'                           => '',
 						'image_ids'                    => '',
-						'columns'                      => ( '' !== $fusion_settings->get( 'gallery_columns' ) ) ? intval( $fusion_settings->get( 'gallery_columns' ) ) : 3,
+						'columns'                      => ( '' !== $fusion_settings->get( 'gallery_columns' ) ) ? (int) $fusion_settings->get( 'gallery_columns' ) : 3,
 						'hover_type'                   => ( '' !== $fusion_settings->get( 'gallery_hover_type' ) ) ? strtolower( $fusion_settings->get( 'gallery_hover_type' ) ) : 'none',
 						'lightbox_content'             => ( '' !== $fusion_settings->get( 'gallery_lightbox_content' ) ) ? strtolower( $fusion_settings->get( 'gallery_lightbox_content' ) ) : '',
 						'lightbox'                     => $fusion_settings->get( 'status_lightbox' ),
@@ -90,9 +99,18 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 						'layout'                       => ( '' !== $fusion_settings->get( 'gallery_layout' ) ) ? strtolower( $fusion_settings->get( 'gallery_layout' ) ) : 'grid',
 						'gallery_masonry_grid_ratio'   => $fusion_settings->get( 'masonry_grid_ratio' ),
 						'gallery_masonry_width_double' => $fusion_settings->get( 'masonry_width_double' ),
+						'bordersize'                   => $fusion_settings->get( 'gallery_border_size' ),
+						'bordercolor'                  => $fusion_settings->get( 'gallery_border_color' ),
+						'border_radius'                => (int) $fusion_settings->get( 'gallery_border_radius' ) . 'px',
 					), $args
 				);
-				$defaults = apply_filters( 'fusion_builder_default_args', $defaults, 'fusion_gallery' );
+				$defaults                 = apply_filters( 'fusion_builder_default_args', $defaults, 'fusion_gallery' );
+				$defaults['bordersize']    = FusionBuilder::validate_shortcode_attr_value( $defaults['bordersize'], 'px' );
+				$defaults['border_radius'] = FusionBuilder::validate_shortcode_attr_value( $defaults['border_radius'], 'px' );
+
+				if ( 'round' === $defaults['border_radius'] ) {
+					$defaults['border_radius'] = '50%';
+				}
 
 				extract( $defaults );
 
@@ -116,8 +134,9 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 					}
 				}
 
-				$n = 1;
+				$n           = 1;
 				$images_html = '';
+				$styles      = '';
 
 				if ( is_array( $image_ids ) ) {
 					foreach ( $image_ids as $image_id ) {
@@ -191,6 +210,22 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 
 						$n++;
 					}
+
+					if ( '' !== $this->args['bordersize'] && 0 !== $this->args['bordersize'] ) {
+						$styles .= '.fusion-gallery-' . $this->gallery_counter . ' .fusion-gallery-image {';
+						$styles .= "border:{$bordersize} solid {$bordercolor};";
+						if ( '0' != $this->args['border_radius'] && '0px' !== $this->args['border_radius'] && 'px' !== $this->args['border_radius'] ) {
+							$styles .= "-webkit-border-radius:{$border_radius};-moz-border-radius:{$border_radius};border-radius:{$border_radius};";
+							if ( '50%' === $this->args['border_radius'] || 100 < (int) $this->args['border_radius'] ) {
+									$styles .= '-webkit-mask-image: -webkit-radial-gradient(circle, white, black);';
+							}
+						}
+						$styles .= '}';
+					}
+
+					if ( '' !== $styles ) {
+						$style_tag = '<style type="text/css" scoped="scoped">' . $styles . '</style>';
+					}
 				}
 
 				$html = '<div ' . FusionBuilder::attributes( 'gallery-shortcode' ) . '>';
@@ -203,7 +238,9 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 				$html .= $images_html;
 				$html .= '</div>';
 
-				return $html;
+				$this->gallery_counter++;
+
+				return $style_tag . $html;
 			}
 
 			/**
@@ -221,6 +258,7 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 				$attr['class'] .= ' fusion-grid-' . $this->num_of_columns;
 				$attr['class'] .= ' fusion-columns-total-' . $this->total_num_of_columns;
 				$attr['class'] .= ' fusion-gallery-layout-' . $this->args['layout'];
+				$attr['class'] .= ' fusion-gallery-' . $this->gallery_counter;
 
 				if ( $this->args['column_spacing'] ) {
 					$margin = ( -1 ) * (int) $this->args['column_spacing'];
@@ -443,6 +481,33 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 								),
 								'description' => esc_attr__( 'Choose if titles and captions will display in the lightbox.', 'fusion-builder' ),
 							),
+							'gallery_border_size' => array(
+								'label'       => esc_html__( 'Gallery Image Border Size', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the border size of the image.', 'fusion-builder' ),
+								'id'          => 'gallery_border_size',
+								'default'     => '0',
+								'type'        => 'slider',
+								'choices'     => array(
+									'min'  => '0',
+									'max'  => '50',
+									'step' => '1',
+								),
+							),
+							'gallery_border_color' => array(
+								'label'       => esc_html__( 'Gallery Image Border Color', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the border color of the image.', 'fusion-builder' ),
+								'id'          => 'gallery_border_color',
+								'default'     => '#f6f6f6',
+								'type'        => 'color-alpha',
+							),
+							'gallery_border_radius' => array(
+								'label'       => esc_html__( 'Gallery Image Border Radius', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the border radius of the gallery images.', 'fusion-builder' ),
+								'id'          => 'gallery_border_radius',
+								'default'     => '0px',
+								'type'        => 'dimension',
+								'choices'     => array( 'px', '%' ),
+							),
 						),
 					),
 				);
@@ -638,6 +703,46 @@ function fusion_element_gallery() {
 						array(
 							'element'  => 'lightbox',
 							'value'    => 'no',
+							'operator' => '!=',
+						),
+					),
+				),
+				array(
+					'type'        => 'range',
+					'heading'     => esc_attr__( 'Gallery Image Border Size', 'fusion-builder' ),
+					'description' => esc_attr__( 'In pixels.', 'fusion-builder' ),
+					'param_name'  => 'bordersize',
+					'value'       => '',
+					'min'         => '0',
+					'max'         => '50',
+					'step'        => '1',
+					'default'     => $fusion_settings->get( 'gallery_border_size' ),
+				),
+				array(
+					'type'        => 'colorpickeralpha',
+					'heading'     => esc_attr__( 'Gallery Image Border Color', 'fusion-builder' ),
+					'description' => esc_attr__( 'Choose the border color. ', 'fusion-builder' ),
+					'param_name'  => 'bordercolor',
+					'value'       => '',
+					'default'     => $fusion_settings->get( 'gallery_border_color' ),
+					'dependency'  => array(
+						array(
+							'element'  => 'bordersize',
+							'value'    => '0',
+							'operator' => '!=',
+						),
+					),
+				),
+				array(
+					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'Gallery Image Border Radius', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls the gallery image border radius. In pixels (px), ex: 1px, or "round". ', 'fusion-builder' ),
+					'param_name'  => 'border_radius',
+					'value'       => '',
+					'dependency'  => array(
+						array(
+							'element'  => 'bordersize',
+							'value'    => '0',
 							'operator' => '!=',
 						),
 					),

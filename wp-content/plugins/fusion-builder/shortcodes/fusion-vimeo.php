@@ -80,7 +80,7 @@ if ( fusion_is_element_enabled( 'fusion_vimeo' ) ) {
 
 				$html  = '<div ' . FusionBuilder::attributes( 'vimeo-shortcode' ) . '>';
 				$html .= '<div ' . FusionBuilder::attributes( 'vimeo-shortcode-video-sc' ) . '>';
-				$html .= '<iframe src="https://player.vimeo.com/video/' . $id . '?autoplay=0' . $api_params . '" width="' . $width . '" height="' . $height . '" allowfullscreen title="vimeo' . $id . '"></iframe>';
+				$html .= '<iframe src="https://player.vimeo.com/video/' . $id . '?autoplay=0' . $api_params . '" width="' . $width . '" height="' . $height . '" allowfullscreen title="vimeo' . $id . '" allow="autoplay; fullscreen"></iframe>';
 				$html .= '</div></div>';
 
 				return $html;

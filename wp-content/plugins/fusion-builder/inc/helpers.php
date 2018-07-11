@@ -40,19 +40,19 @@ function fusion_builder_get_video_provider( $video_string ) {
 	// Check for YouTube.
 	$video_id = false;
 	if ( preg_match( '/youtube\.com\/watch\?v=([^\&\?\/]+)/', $video_string, $id ) ) {
-		if ( count( $id > 1 ) ) {
+		if ( isset( $id[1] ) ) {
 			$video_id = $id[1];
 		}
 	} else if ( preg_match( '/youtube\.com\/embed\/([^\&\?\/]+)/', $video_string, $id ) ) {
-		if ( count( $id > 1 ) ) {
+		if ( isset( $id[1] ) ) {
 			$video_id = $id[1];
 		}
 	} else if ( preg_match( '/youtube\.com\/v\/([^\&\?\/]+)/', $video_string, $id ) ) {
-		if ( count( $id > 1 ) ) {
+		if ( isset( $id[1] ) ) {
 			$video_id = $id[1];
 		}
 	} else if ( preg_match( '/youtu\.be\/([^\&\?\/]+)/', $video_string, $id ) ) {
-		if ( count( $id > 1 ) ) {
+		if ( isset( $id[1] ) ) {
 			$video_id = $id[1];
 		}
 	}
@@ -66,7 +66,7 @@ function fusion_builder_get_video_provider( $video_string ) {
 
 	// Check for Vimeo.
 	if ( preg_match( '/vimeo\.com\/(\w*\/)*(\d+)/', $video_string, $id ) ) {
-		if ( count( $id > 1 ) ) {
+		if ( isset( $id[1] ) ) {
 			$video_id = $id[ count( $id ) - 1 ];
 		}
 	}
@@ -733,13 +733,16 @@ function fusion_builder_save_meta( $post_id, $post ) {
 		// Get the meta value of the custom field key.
 		$meta_value = get_post_meta( $post_id, $meta_key, true );
 
-		// If a new meta value was added and there was no previous value, add it.
 		if ( $new_meta_value && '' == $meta_value ) {
-			add_post_meta( $post_id, $meta_key, $new_meta_value, true ); } // If the new meta value does not match the old value, update it.
-		elseif ( $new_meta_value && $new_meta_value != $meta_value ) {
-			update_post_meta( $post_id, $meta_key, $new_meta_value ); } // If there is no new meta value but an old value exists, delete it.
-		elseif ( '' == $new_meta_value && $meta_value ) {
-			delete_post_meta( $post_id, $meta_key, $meta_value ); }
+			// If a new meta value was added and there was no previous value, add it.
+			add_post_meta( $post_id, $meta_key, $new_meta_value, true );
+		} elseif ( $new_meta_value && $new_meta_value != $meta_value ) {
+			// If the new meta value does not match the old value, update it.
+			update_post_meta( $post_id, $meta_key, $new_meta_value );
+		} elseif ( '' == $new_meta_value && $meta_value ) {
+			// If there is no new meta value but an old value exists, delete it.
+			delete_post_meta( $post_id, $meta_key, $meta_value );
+		}
 	}
 }
 add_action( 'save_post', 'fusion_builder_save_meta', 10, 2 );
@@ -848,9 +851,9 @@ function fusion_builder_textdomain_strings() {
 		'are_you_sure_you_want_to_delete_this_layout' => esc_attr__( 'Are you sure you want to delete this layout ?', 'fusion-builder' ),
 		'are_you_sure_you_want_to_delete_this'        => esc_attr__( 'Are you sure you want to delete this ?', 'fusion-builder' ),
 		'are_you_sure_you_want_to_delete_global'      => esc_attr__( 'This is a global item. Deleting this element will remove it from every page you have it on. Are you sure you want to remove it?', 'fusion-builder' ),
-		'global_element'                              => esc_attr__( 'Global element', 'fusion-builder' ),
-		'global_column'                               => esc_attr__( 'Global column', 'fusion-builder' ),
-		'global_container'                            => esc_attr__( 'Global container', 'fusion-builder' ),
+		'global_element'                              => __( 'Global element.<br>Click to disable global status.', 'fusion-builder' ),
+		'global_column'                               => __( 'Global column.<br>Click to disable global status.', 'fusion-builder' ),
+		'global_container'                            => __( 'Global container.<br>Click to disable global status.', 'fusion-builder' ),
 		'duplicate_element_name_error'                => esc_attr__( 'An element with this name already exists. Please enter different name.', 'fusion-builder' ),
 		'please_enter_template_name'                  => esc_attr__( 'Please enter template name', 'fusion-builder' ),
 		'save_page_layout'                            => esc_attr__( 'Save page layout', 'fusion-builder' ),
@@ -883,6 +886,7 @@ function fusion_builder_textdomain_strings() {
 		'added_custom_section'                        => esc_attr__( 'Added Custom Container: ', 'fusion-builder' ),
 		'deleted'                                     => esc_attr__( 'Deleted', 'fusion-builder' ),
 		'cloned'                                      => esc_attr__( 'Cloned', 'fusion-builder' ),
+		'pasted'                                      => esc_attr__( 'Pasted', 'fusion-builder' ),
 		'moved'                                       => esc_attr__( 'Moved', 'fusion-builder' ),
 		'edited'                                      => esc_attr__( 'Edited', 'fusion-builder' ),
 		'added_nested_columns'                        => esc_attr__( 'Added Nested Columns', 'fusion-builder' ),
@@ -950,6 +954,8 @@ function fusion_builder_textdomain_strings() {
 		'add_chart_column'                            => esc_attr__( 'Add Value Column', 'fusion-builder' ),
 		'add_chart_row'                               => esc_attr__( 'Add Data Set', 'fusion-builder' ),
 		'user_login_register_note'                    => esc_attr__( 'Registration confirmation will be emailed to you.', 'fusion-builder' ),
+		'are_you_sure_you_want_to_remove_global'      => esc_attr__( 'Are you sure you want to remove global property ?', 'fusion-builder' ),
+		'removed_global'                              => esc_attr__( 'Removed Global Status', 'fusion-builder' ),
 	);
 
 	return $text_strings;
@@ -968,8 +974,8 @@ function fusion_builder_add_quicktags_button() {
 				QTags.addButton( 'fusion_shortcodes_text_mode', ' ','', '', 'f' );
 			}
 		</script>
+	<?php endif; ?>
 	<?php
-	endif;
 }
 add_action( 'admin_print_footer_scripts', 'fusion_builder_add_quicktags_button' );
 
@@ -1855,6 +1861,11 @@ function fusion_builder_map_descriptions( $shortcode, $param ) {
 		'theme-option' => 'content_box_icon_hover_type',
 		'type' => 'select',
 	);
+	$shortcode_option_map['button_span']['fusion_content_boxes'] = array(
+		'theme-option' => 'content_box_button_span',
+		'reset' => true,
+		'type' => 'select',
+	);
 	$shortcode_option_map['hover_accent_color']['fusion_content_boxes'] = array(
 		'theme-option' => 'content_box_hover_animation_accent_color',
 		'reset' => true,
@@ -1879,7 +1890,6 @@ function fusion_builder_map_descriptions( $shortcode, $param ) {
 		'theme-option' => 'content_box_margin',
 		'subset' => 'bottom',
 	);
-
 	$shortcode_option_map['backgroundcolor']['fusion_content_box'] = array(
 		'theme-option' => 'content_box_bg_color',
 		'type' => 'child',
@@ -2000,6 +2010,37 @@ function fusion_builder_map_descriptions( $shortcode, $param ) {
 		'theme-option' => 'dropcap_color',
 		'shortcode' => 'fusion_dropcap',
 		'reset' => true,
+	);
+
+	// Events.
+	$shortcode_option_map['number_posts']['fusion_events'] = array(
+		'theme-option' => 'events_per_page',
+		'type'         => 'range',
+	);
+
+	$shortcode_option_map['column_spacing']['fusion_events'] = array(
+		'theme-option' => 'events_column_spacing',
+		'type'         => 'range',
+	);
+
+	$shortcode_option_map['content_padding']['fusion_events'] = array(
+		'theme-option' => 'events_content_padding',
+		'subset'       => array( 'top', 'left', 'bottom', 'right' ),
+	);
+
+	$shortcode_option_map['content_length']['fusion_events'] = array(
+		'theme-option' => 'events_content_length',
+		'type'         => 'select',
+	);
+
+	$shortcode_option_map['excerpt_length']['fusion_events'] = array(
+		'theme-option' => 'excerpt_length_events',
+		'type'         => 'range',
+	);
+
+	$shortcode_option_map['strip_html']['fusion_events'] = array(
+		'theme-option' => 'events_strip_html_excerpt',
+		'type'         => 'yesno',
 	);
 
 	// Flipboxes.
@@ -2488,20 +2529,31 @@ function fusion_builder_map_descriptions( $shortcode, $param ) {
 		'theme-option' => 'accordian_hover_color',
 		'reset' => true,
 	);
+	$shortcode_option_map['title_font_size']['fusion_accordion'] = array(
+		'theme-option' => 'accordion_title_font_size',
+	);
 	$shortcode_option_map['icon_size']['fusion_accordion'] = array(
 		'theme-option' => 'accordion_icon_size',
 		'type' => 'range',
+	);
+	$shortcode_option_map['icon_color']['fusion_accordion'] = array(
+		'theme-option' => 'accordian_icon_color',
+		'reset' => true,
 	);
 	$shortcode_option_map['icon_boxed_mode']['fusion_accordion'] = array(
 		'theme-option' => 'accordion_icon_boxed',
 		'type' => 'yesno',
 	);
+	$shortcode_option_map['icon_box_color']['fusion_accordion'] = array(
+		'theme-option' => 'accordian_inactive_color',
+		'reset' => true,
+	);
 	$shortcode_option_map['icon_alignment']['fusion_accordion'] = array(
 		'theme-option' => 'accordion_icon_align',
 		'type' => 'select',
 	);
-	$shortcode_option_map['icon_color']['fusion_accordion'] = array(
-		'theme-option' => 'accordian_icon_color',
+	$shortcode_option_map['toggle_hover_accent_color']['fusion_accordion'] = array(
+		'theme-option' => 'accordian_active_color',
 		'reset' => true,
 	);
 
@@ -2619,6 +2671,17 @@ function fusion_builder_map_descriptions( $shortcode, $param ) {
 	$shortcode_option_map['gallery_masonry_width_double']['fusion_gallery'] = array(
 		'theme-option' => 'masonry_width_double',
 		'type' => 'range',
+	);
+	$shortcode_option_map['bordersize']['fusion_gallery'] = array(
+		'theme-option' => 'gallery_border_size',
+		'type' => 'range',
+	);
+	$shortcode_option_map['bordercolor']['fusion_gallery'] = array(
+		'theme-option' => 'gallery_border_color',
+		'reset' => true,
+	);
+	$shortcode_option_map['border_radius']['fusion_gallery'] = array(
+		'theme-option' => 'gallery_border_radius',
 	);
 
 	// Image Carousel.
@@ -2749,7 +2812,22 @@ function fusion_builder_element_dependencies( $dependencies, $shortcode, $option
 		),
 	);
 	$shortcode_option_map['excerpt_length']['fusion_blog'][] = $blog_is_excerpt;
-	$shortcode_option_map['strip_html']['fusion_blog'][]  = $blog_is_excerpt;
+	$shortcode_option_map['strip_html']['fusion_blog'][]     = $blog_is_excerpt;
+
+	$blog_is_single_column = array(
+		'check' => array(
+			'element-option' => 'blog_grid_columns',
+			'value'          => '1',
+			'operator'       => '==',
+		),
+		'output' => array(
+			'element'  => 'blog_grid_columns',
+			'value'    => '',
+			'operator' => '!=',
+		),
+	);
+	$shortcode_option_map['blog_grid_column_spacing']['fusion_blog'][] = $blog_is_single_column;
+	$shortcode_option_map['equal_heights']['fusion_blog'][]            = $blog_is_single_column;
 
 	// Progress.
 	$shortcode_option_map['filledbordercolor']['fusion_progress'][] = array(
@@ -2910,6 +2988,18 @@ function fusion_builder_element_dependencies( $dependencies, $shortcode, $option
 		),
 		'output' => array(
 			'element' => 'boxed_mode',
+			'value' => '',
+			'operator' => '!=',
+		),
+	);
+	$shortcode_option_map['icon_box_color']['fusion_accordion'][] = array(
+		'check' => array(
+			'element-option' => 'accordion_icon_boxed',
+			'value' => '0',
+			'operator' => '==',
+		),
+		'output' => array(
+			'element' => 'icon_boxed_mode',
 			'value' => '',
 			'operator' => '!=',
 		),
@@ -3151,6 +3241,32 @@ function fusion_builder_element_dependencies( $dependencies, $shortcode, $option
 		),
 	);
 
+	// Gallery.
+	$shortcode_option_map['bordercolor']['fusion_gallery'][] = array(
+		'check' => array(
+			'element-option' => 'gallery_border_size',
+			'value' => '0',
+			'operator' => '==',
+		),
+		'output' => array(
+			'element' => 'bordersize',
+			'value' => '',
+			'operator' => '!=',
+		),
+	);
+	$shortcode_option_map['border_radius']['fusion_gallery'][] = array(
+		'check' => array(
+			'element-option' => 'gallery_border_size',
+			'value' => '0',
+			'operator' => '==',
+		),
+		'output' => array(
+			'element' => 'bordersize',
+			'value' => '',
+			'operator' => '!=',
+		),
+	);
+
 	// Person.
 	$shortcode_option_map['social_icon_boxed_radius']['fusion_person'][] = array(
 		'check' => array(
@@ -3222,6 +3338,18 @@ function fusion_builder_element_dependencies( $dependencies, $shortcode, $option
 		),
 		'output' => array(
 			'element' => 'outercirclebordersize',
+			'value' => '',
+			'operator' => '!=',
+		),
+	);
+	$shortcode_option_map['button_span']['fusion_content_boxes'][] = array(
+		'check' => array(
+			'element-option' => 'content_box_link_type',
+			'value' => 'button',
+			'operator' => '!=',
+		),
+		'output' => array(
+			'element' => 'link_type',
 			'value' => '',
 			'operator' => '!=',
 		),
@@ -3371,8 +3499,8 @@ if ( ! function_exists( 'fusion_builder_render_rich_snippets_for_pages' ) ) {
 		}
 
 		ob_start();
-		if ( $fusion_settings->get( 'disable_date_rich_snippet_pages' ) ) :
 		?>
+		<?php if ( $fusion_settings->get( 'disable_date_rich_snippet_pages' ) ) : ?>
 
 			<?php if ( $title_tag && $fusion_settings->get( 'disable_rich_snippet_title' ) ) : ?>
 				<span class="entry-title" style="display: none;">
@@ -3394,9 +3522,10 @@ if ( ! function_exists( 'fusion_builder_render_rich_snippets_for_pages' ) ) {
 				</span>
 			<?php endif; ?>
 
+		<?php endif; ?>
 		<?php
-		endif;
-		return ob_get_clean();
+		$rich_snippets = ob_get_clean();
+		return str_replace( array( "\t", "\n", "\r", "\0", "\x0B" ), '', $rich_snippets );
 	}
 }
 

@@ -255,7 +255,7 @@
   height: 100.1%;
   line-height: normal;
   text-align: center;
-  background-image: -webkit-linear-gradient(bottom, #aad75d, #d1e990);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#aad75d), to(#d1e990));
   background-image: linear-gradient(to top, #aad75d, #d1e990);
   -webkit-transform: translateX(-100%);
       -ms-transform: translateX(-100%);
@@ -387,8 +387,8 @@ Needed Styles From Bootstrap
 -----------------------------------------------------------------------------*/
 .fade {
   opacity: 0;
-  -webkit-transition: opacity .3s linear;
-  transition: opacity .3s linear;
+  -webkit-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear;
 }
 .fade.in {
   opacity: 1;
@@ -403,8 +403,8 @@ Needed Styles From Bootstrap
   position: relative;
   height: 0;
   overflow: hidden;
-  -webkit-transition: height .35s ease;
-  transition: height .35s ease;
+  -webkit-transition: height 0.35s ease;
+  transition: height 0.35s ease;
 }
 .container {
   margin-right: auto;
@@ -437,13 +437,71 @@ Needed Styles From Bootstrap
   margin-left: -15px;
   margin-right: -15px;
 }
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+.col-xs-1,
+.col-sm-1,
+.col-md-1,
+.col-lg-1,
+.col-xs-2,
+.col-sm-2,
+.col-md-2,
+.col-lg-2,
+.col-xs-3,
+.col-sm-3,
+.col-md-3,
+.col-lg-3,
+.col-xs-4,
+.col-sm-4,
+.col-md-4,
+.col-lg-4,
+.col-xs-5,
+.col-sm-5,
+.col-md-5,
+.col-lg-5,
+.col-xs-6,
+.col-sm-6,
+.col-md-6,
+.col-lg-6,
+.col-xs-7,
+.col-sm-7,
+.col-md-7,
+.col-lg-7,
+.col-xs-8,
+.col-sm-8,
+.col-md-8,
+.col-lg-8,
+.col-xs-9,
+.col-sm-9,
+.col-md-9,
+.col-lg-9,
+.col-xs-10,
+.col-sm-10,
+.col-md-10,
+.col-lg-10,
+.col-xs-11,
+.col-sm-11,
+.col-md-11,
+.col-lg-11,
+.col-xs-12,
+.col-sm-12,
+.col-md-12,
+.col-lg-12 {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
 }
-.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+.col-xs-1,
+.col-xs-2,
+.col-xs-3,
+.col-xs-4,
+.col-xs-5,
+.col-xs-6,
+.col-xs-7,
+.col-xs-8,
+.col-xs-9,
+.col-xs-10,
+.col-xs-11,
+.col-xs-12 {
   float: left;
 }
 .col-xs-12 {
@@ -600,7 +658,18 @@ Needed Styles From Bootstrap
   margin-left: 0%;
 }
 @media (min-width: 0px) {
-  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+  .col-sm-1,
+  .col-sm-2,
+  .col-sm-3,
+  .col-sm-4,
+  .col-sm-5,
+  .col-sm-6,
+  .col-sm-7,
+  .col-sm-8,
+  .col-sm-9,
+  .col-sm-10,
+  .col-sm-11,
+  .col-sm-12 {
     float: left;
   }
   .col-sm-12 {
@@ -758,7 +827,18 @@ Needed Styles From Bootstrap
   }
 }
 @media (min-width: 992px) {
-  .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+  .col-md-1,
+  .col-md-2,
+  .col-md-3,
+  .col-md-4,
+  .col-md-5,
+  .col-md-6,
+  .col-md-7,
+  .col-md-8,
+  .col-md-9,
+  .col-md-10,
+  .col-md-11,
+  .col-md-12 {
     float: left;
   }
   .col-md-12 {
@@ -916,7 +996,18 @@ Needed Styles From Bootstrap
   }
 }
 @media (min-width: 1200px) {
-  .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+  .col-lg-1,
+  .col-lg-2,
+  .col-lg-3,
+  .col-lg-4,
+  .col-lg-5,
+  .col-lg-6,
+  .col-lg-7,
+  .col-lg-8,
+  .col-lg-9,
+  .col-lg-10,
+  .col-lg-11,
+  .col-lg-12 {
     float: left;
   }
   .col-lg-12 {
@@ -1394,11 +1485,10 @@ button.close {
   text-align: center;
   background-color: #A0CE4E;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-  -webkit-transition: width .6s ease;
-  transition: width .6s ease;
+  -webkit-transition: width 0.6s ease;
+  transition: width 0.6s ease;
 }
 .progress-striped .progress {
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-size: 40px 40px;
 }
@@ -1785,6 +1875,7 @@ Table of Contents
   margin: 0 auto -6px;
   max-width: 1000px;
   font-size: 46px;
+  line-height: 1;
   color: #ebeaea;
   text-align: center;
 }
@@ -1980,12 +2071,12 @@ Table of Contents
   width: 100%;
 }
 .fusion-blog-layout-grid.fusion-blog-layout-grid-3 .post {
-  width: 33.3333333333%;
+  width: 33.33333333%;
   display: inline-block;
   float: left;
 }
 .fusion-blog-layout-grid.fusion-blog-layout-grid-3.fusion-blog-layout-masonry-has-vertical .post.fusion-element-landscape {
-  width: 66.6666666666%;
+  width: 66.66666667%;
 }
 .fusion-blog-layout-grid.fusion-blog-layout-grid-4 .post {
   width: 25%;
@@ -2004,12 +2095,12 @@ Table of Contents
   width: 40%;
 }
 .fusion-blog-layout-grid.fusion-blog-layout-grid-6 .post {
-  width: 16.6666666666%;
+  width: 16.66666667%;
   display: inline-block;
   float: left;
 }
 .fusion-blog-layout-grid.fusion-blog-layout-grid-6.fusion-blog-layout-masonry-has-vertical .post.fusion-element-landscape {
-  width: 33.3333333333%;
+  width: 33.33333333%;
 }
 .fusion-blog-layout-grid .fusion-post-content,
 .fusion-blog-layout-grid .post-content {
@@ -2090,9 +2181,10 @@ Table of Contents
   position: relative;
   clear: both;
   margin: 0 auto 2px;
-  padding: 4px 0;
-  width: 108px;
-  line-height: 20px;
+  padding: 0.35em 0.45em;
+  width: auto;
+  max-width: 8em;
+  line-height: 1.35em;
   background: #efeeee;
   font-size: 15px;
   font-weight: normal;
@@ -2959,7 +3051,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-green,
 .fusion-button.button-green.wpcf7-submit {
   background: #D1E990;
-  background-image: -webkit-linear-gradient(bottom, #AAD75D, #D1E990);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#AAD75D), to(#D1E990));
   background-image: linear-gradient(to top, #AAD75D, #D1E990);
   border: 1px solid #9dba60;
   color: #54770f;
@@ -2982,7 +3074,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-green:hover,
 .fusion-button.button-green.wpcf7-submit:hover {
   background: #AAD75D;
-  background-image: -webkit-linear-gradient(bottom, #D1E990, #AAD75D);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#D1E990), to(#AAD75D));
   background-image: linear-gradient(to top, #D1E990, #AAD75D);
   border: 1px solid #9dba60;
   color: #54770f;
@@ -3091,7 +3183,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-darkgreen,
 .fusion-button.button-darkgreen.wpcf7-submit {
   background: #d0e0a5;
-  background-image: -webkit-linear-gradient(bottom, #a8c76a, #d0e0a5);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#a8c76a), to(#d0e0a5));
   background-image: linear-gradient(to top, #a8c76a, #d0e0a5);
   border: 1px solid #9dba60;
   color: #54770f;
@@ -3114,7 +3206,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-darkgreen:hover,
 .fusion-button.button-darkgreen.wpcf7-submit:hover {
   background: #a8c76a;
-  background-image: -webkit-linear-gradient(bottom, #d0e0a5, #a8c76a);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#d0e0a5), to(#a8c76a));
   background-image: linear-gradient(to top, #d0e0a5, #a8c76a);
   border: 1px solid #9dba60;
   color: #54770f;
@@ -3223,7 +3315,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-orange,
 .fusion-button.button-orange.wpcf7-submit {
   background: #fbdc86;
-  background-image: -webkit-linear-gradient(bottom, #f8bf56, #fbdc86);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#f8bf56), to(#fbdc86));
   background-image: linear-gradient(to top, #f8bf56, #fbdc86);
   border: 1px solid #c0830b;
   color: #c0830b;
@@ -3246,7 +3338,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-orange:hover,
 .fusion-button.button-orange.wpcf7-submit:hover {
   background: #f8bf56;
-  background-image: -webkit-linear-gradient(bottom, #fbdc86, #f8bf56);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#fbdc86), to(#f8bf56));
   background-image: linear-gradient(to top, #fbdc86, #f8bf56);
   border: 1px solid #c0830b;
   color: #c0830b;
@@ -3355,7 +3447,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-blue,
 .fusion-button.button-blue.wpcf7-submit {
   background: #b5e0f7;
-  background-image: -webkit-linear-gradient(bottom, #76c7f1, #b5e0f7);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#76c7f1), to(#b5e0f7));
   background-image: linear-gradient(to top, #76c7f1, #b5e0f7);
   border: 1px solid #1172c1;
   color: #1172c1;
@@ -3378,7 +3470,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-blue:hover,
 .fusion-button.button-blue.wpcf7-submit:hover {
   background: #76c7f1;
-  background-image: -webkit-linear-gradient(bottom, #b5e0f7, #76c7f1);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#b5e0f7), to(#76c7f1));
   background-image: linear-gradient(to top, #b5e0f7, #76c7f1);
   border: 1px solid #1172c1;
   color: #1172c1;
@@ -3487,7 +3579,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button.button-darkblue,
 .fusion-button.button.button-darkblue.wpcf7-submit {
   background: #428BCA;
-  background-image: -webkit-linear-gradient(bottom, #2A6496, #428BCA);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#2A6496), to(#428BCA));
   background-image: linear-gradient(to top, #2A6496, #428BCA);
   border: 1px solid #072c5e;
   color: #072c5e;
@@ -3510,7 +3602,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button.button-darkblue:hover,
 .fusion-button.button.button-darkblue.wpcf7-submit:hover {
   background: #2A6496;
-  background-image: -webkit-linear-gradient(bottom, #428BCA, #2A6496);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#428BCA), to(#2A6496));
   background-image: linear-gradient(to top, #428BCA, #2A6496);
   border: 1px solid #072c5e;
   color: #072c5e;
@@ -3619,7 +3711,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-red,
 .fusion-button.button-red.wpcf7-submit {
   background: #fd9c9c;
-  background-image: -webkit-linear-gradient(bottom, #fc7d7d, #fd9c9c);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#fc7d7d), to(#fd9c9c));
   background-image: linear-gradient(to top, #fc7d7d, #fd9c9c);
   border: 1px solid #9d1111;
   color: #9d1111;
@@ -3642,7 +3734,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-red:hover,
 .fusion-button.button-red.wpcf7-submit:hover {
   background: #fc7d7d;
-  background-image: -webkit-linear-gradient(bottom, #fd9c9c, #fc7d7d);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#fd9c9c), to(#fc7d7d));
   background-image: linear-gradient(to top, #fd9c9c, #fc7d7d);
   border: 1px solid #9d1111;
   color: #9d1111;
@@ -3751,7 +3843,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-darkred,
 .fusion-button.button-darkred.wpcf7-submit {
   background: #fe2020;
-  background-image: -webkit-linear-gradient(bottom, #b01818, #fe2020);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#b01818), to(#fe2020));
   background-image: linear-gradient(to top, #b01818, #fe2020);
   border: 1px solid #690e0e;
   color: #690e0e;
@@ -3774,7 +3866,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-darkred:hover,
 .fusion-button.button-darkred.wpcf7-submit:hover {
   background: #b01818;
-  background-image: -webkit-linear-gradient(bottom, #fe2020, #b01818);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#fe2020), to(#b01818));
   background-image: linear-gradient(to top, #fe2020, #b01818);
   border: 1px solid #690e0e;
   color: #690e0e;
@@ -3883,7 +3975,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-pink,
 .fusion-button.button-pink.wpcf7-submit {
   background: #fda1d5;
-  background-image: -webkit-linear-gradient(bottom, #fc84c8, #fda1d5);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#fc84c8), to(#fda1d5));
   background-image: linear-gradient(to top, #fc84c8, #fda1d5);
   border: 1px solid #a31366;
   color: #a31366;
@@ -3906,7 +3998,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-pink:hover,
 .fusion-button.button-pink.wpcf7-submit:hover {
   background: #fc84c8;
-  background-image: -webkit-linear-gradient(bottom, #fda1d5, #fc84c8);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#fda1d5), to(#fc84c8));
   background-image: linear-gradient(to top, #fda1d5, #fc84c8);
   border: 1px solid #a31366;
   color: #a31366;
@@ -4015,7 +4107,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-lightgray,
 .fusion-button.button-lightgray.wpcf7-submit {
   background: #fbfbfb;
-  background-image: -webkit-linear-gradient(bottom, #f0f0f0, #fbfbfb);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#f0f0f0), to(#fbfbfb));
   background-image: linear-gradient(to top, #f0f0f0, #fbfbfb);
   border: 1px solid #ababab;
   color: #ababab;
@@ -4038,7 +4130,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-lightgray:hover,
 .fusion-button.button-lightgray.wpcf7-submit:hover {
   background: #f0f0f0;
-  background-image: -webkit-linear-gradient(bottom, #fbfbfb, #f0f0f0);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#fbfbfb), to(#f0f0f0));
   background-image: linear-gradient(to top, #fbfbfb, #f0f0f0);
   border: 1px solid #ababab;
   color: #ababab;
@@ -4147,7 +4239,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-darkgray,
 .fusion-button.button-darkgray.wpcf7-submit {
   background: #c0c0c0;
-  background-image: -webkit-linear-gradient(bottom, #9e9e9e, #c0c0c0);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#9e9e9e), to(#c0c0c0));
   background-image: linear-gradient(to top, #9e9e9e, #c0c0c0);
   border: 1px solid #434c50;
   color: #434c50;
@@ -4170,7 +4262,7 @@ button.fusion-button.button-3d:active {
 .fusion-button.button-darkgray:hover,
 .fusion-button.button-darkgray.wpcf7-submit:hover {
   background: #9e9e9e;
-  background-image: -webkit-linear-gradient(bottom, #c0c0c0, #9e9e9e);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#c0c0c0), to(#9e9e9e));
   background-image: linear-gradient(to top, #c0c0c0, #9e9e9e);
   border: 1px solid #434c50;
   color: #434c50;
@@ -4449,7 +4541,7 @@ ul.fusion-checklist .fusion-li-item p:last-of-type {
 ul.fusion-checklist.fusion-checklist-divider.fusion-404-checklist > li,
 .fusion-checklist.fusion-checklist-divider .fusion-li-item,
 ul.fusion-checklist.fusion-checklist-divider .fusion-li-item {
-  padding: 0.45em 0;
+  padding: 0.7em 0;
   border-bottom: 1px solid;
 }
 .fusion-checklist .icon-wrapper,
@@ -5662,7 +5754,7 @@ html[xmlns] .flexslider .slides {
   box-sizing: border-box;
 }
 .fusion-flip-boxes .fusion-flip-box .flip-box-back .fusion-button {
-  display: block;
+  display: table;
   margin: 20px auto 0;
 }
 .fusion-flip-boxes .fusion-flip-box.hover .flip-box-back {
@@ -6104,6 +6196,10 @@ html[xmlns] .flexslider .slides {
           transform: translate3d(-22px, -50%, 0);
   -webkit-transition: all 0.2s ease 0s;
   transition: all 0.2s ease 0s;
+}
+.fusion-parallax-fixed {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 .fusion-scroll-section-link-bullet {
   display: block;
@@ -7721,6 +7817,12 @@ html[xmlns] .flexslider .slides {
 .fusion-section-separator #curvedCandy {
   display: block;
 }
+.ua-ie-11 .fusion-section-separator svg,
+.ua-edge .fusion-section-separator svg {
+  -webkit-transform: scale(1.01);
+      -ms-transform: scale(1.01);
+          transform: scale(1.01);
+}
 .fusion-sep-clear {
   clear: both;
   display: block;
@@ -7781,7 +7883,7 @@ html[xmlns] .flexslider .slides {
   overflow: visible;
   border: none;
   background: none;
-  background: -webkit-linear-gradient(left, rgba(150, 150, 150, 0) 0%, rgba(150, 150, 150, 0) 15%, rgba(150, 150, 150, 0.65) 50%, rgba(150, 150, 150, 0) 85%, rgba(150, 150, 150, 0) 100%);
+  background: -webkit-gradient(linear, left top, right top, from(rgba(150, 150, 150, 0)), color-stop(15%, rgba(150, 150, 150, 0)), color-stop(50%, rgba(150, 150, 150, 0.65)), color-stop(85%, rgba(150, 150, 150, 0)), to(rgba(150, 150, 150, 0)));
   background: linear-gradient(left, rgba(150, 150, 150, 0) 0%, rgba(150, 150, 150, 0) 15%, rgba(150, 150, 150, 0.65) 50%, rgba(150, 150, 150, 0) 85%, rgba(150, 150, 150, 0) 100%);
 }
 .fusion-body .fusion-content-sep.sep-shadow:after,
@@ -7791,7 +7893,6 @@ html[xmlns] .flexslider .slides {
   height: 6px;
   width: 100%;
   content: '';
-  background: -webkit-radial-gradient(50% -50% ellipse, rgba(0, 0, 0, 0.5) 0px, rgba(255, 255, 255, 0) 65%);
   background: radial-gradient(ellipse at 50% -50%, rgba(0, 0, 0, 0.5) 0px, rgba(255, 255, 255, 0) 65%);
 }
 .fusion-body .fusion-content-sep .icon-wrapper,
@@ -8077,7 +8178,7 @@ table {
 }
 .table-1 table,
 .tkt-slctr-tbl-wrap-dv table {
-  border: 1px solid#dcdcdc;
+  border: 1px solid #dcdcdc;
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
@@ -8798,8 +8899,14 @@ table {
 }
 .fusion-events-shortcode .fusion-layout-column {
   border-style: solid;
-  border-width: 1px;
+  border-width: 0;
   border-color: transparent;
+}
+.fusion-events-shortcode .fusion-layout-column.fusion-spacing-no {
+  margin-bottom: 0;
+}
+.fusion-events-shortcode .fusion-layout-column .fusion-column-wrapper {
+  border: 1px solid transparent;
 }
 .fusion-events-shortcode .fusion-events-thumbnail {
   display: block;
@@ -8846,12 +8953,15 @@ table {
 .fusion-events-shortcode .fusion-one-sixth .tribe-events-event-image {
   height: 118px;
 }
-.fusion-events-shortcode .fusion-events-meta {
-  padding: 20px;
-}
 .fusion-events-shortcode .fusion-events-meta .event-is-recurring,
 .fusion-events-shortcode .fusion-events-meta .recurringinfo {
   display: inline;
+}
+.fusion-events-shortcode .fusion-events-content {
+  padding-top: 20px;
+}
+.fusion-events-shortcode .fusion-events-content p:last-child {
+  margin-bottom: 0;
 }
 .fusion-events-shortcode .tribe-events-tooltip {
   display: none;
@@ -9103,8 +9213,8 @@ table {
 }
 .fusion-gallery.fusion-gallery-layout-masonry.fusion-grid-3.fusion-masonry-has-vertical .fusion-element-landscape,
 .fusion-gallery.fusion-gallery-layout-masonry.fusion-grid-three.fusion-masonry-has-vertical .fusion-element-landscape {
-  width: -webkit-calc(66.66666667%);
-  width: calc(66.66666667%);
+  width: -webkit-calc(100% / 3 * 2);
+  width: calc(100% / 3 * 2);
 }
 .fusion-gallery.fusion-gallery-layout-masonry.fusion-grid-4.fusion-masonry-has-vertical .fusion-element-landscape,
 .fusion-gallery.fusion-gallery-layout-masonry.fusion-grid-four.fusion-masonry-has-vertical .fusion-element-landscape {
@@ -9116,8 +9226,8 @@ table {
 }
 .fusion-gallery.fusion-gallery-layout-masonry.fusion-grid-6.fusion-masonry-has-vertical .fusion-element-landscape,
 .fusion-gallery.fusion-gallery-layout-masonry.fusion-grid-six.fusion-masonry-has-vertical .fusion-element-landscape {
-  width: -webkit-calc(33.33333333%);
-  width: calc(33.33333333%);
+  width: -webkit-calc(100% / 3);
+  width: calc(100% / 3);
 }
 .fusion-gallery.fusion-gallery-layout-masonry .fusion-gallery-column .fusion-gallery-image.fusion-gallery-image-liftup img {
   display: none;
@@ -9160,8 +9270,8 @@ table {
 }
 .fusion-grid-3 .fusion-grid-column,
 .fusion-grid-three .fusion-grid-column {
-  width: -webkit-calc(33.33333333%);
-  width: calc(33.33333333%);
+  width: -webkit-calc(100% / 3);
+  width: calc(100% / 3);
 }
 .fusion-grid-4 .fusion-grid-column,
 .fusion-grid-four .fusion-grid-column {
@@ -9173,8 +9283,8 @@ table {
 }
 .fusion-grid-6 .fusion-grid-column,
 .fusion-grid-six .fusion-grid-column {
-  width: -webkit-calc(16.66666667%);
-  width: calc(16.66666667%);
+  width: -webkit-calc(100% / 6);
+  width: calc(100% / 6);
 }
 @media only screen and (max-width: 800px) {
   .fusion-gallery .fusion-column.fusion-gallery-column.fusion-element-landscape {

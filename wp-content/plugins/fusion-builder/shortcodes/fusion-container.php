@@ -216,9 +216,9 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 					$video_url = fusion_builder_get_video_provider( $video_url );
 
 					if ( 'youtube' == $video_url['type'] ) {
-						$outer_html .= "<div style='visibility: hidden' id='video-" . ( $parallax_id++ ) . "' data-youtube-video-id='" . $video_url['id'] . "' data-mute='" . $video_mute . "' data-loop='" . ( 'yes' == $video_loop ? 1 : 0 ) . "' data-loop-adjustment='" . $video_loop_refinement . "' data-video-aspect-ratio='" . $video_aspect_ratio . "'><div class='fusion-container-video-bg' id='video-" . ( $parallax_id++ ) . "-inner'></div></div>";
+						$outer_html .= "<div style='opacity:0;' class='fusion-background-video-wrapper' id='video-" . ( $parallax_id++ ) . "' data-youtube-video-id='" . $video_url['id'] . "' data-mute='" . $video_mute . "' data-loop='" . ( 'yes' == $video_loop ? 1 : 0 ) . "' data-loop-adjustment='" . $video_loop_refinement . "' data-video-aspect-ratio='" . $video_aspect_ratio . "'><div class='fusion-container-video-bg' id='video-" . ( $parallax_id++ ) . "-inner'></div></div>";
 					} elseif ( 'vimeo' == $video_url['type'] ) {
-						$outer_html .= '<div id="video-' . $parallax_id . '" data-vimeo-video-id="' . $video_url['id'] . '" data-mute="' . $video_mute . '" data-video-aspect-ratio="' . $video_aspect_ratio . '" style="visibility:hidden;"><iframe id="video-iframe-' . $parallax_id . '" class="fusion-container-video-bg" src="//player.vimeo.com/video/' . $video_url['id'] . '?html5=1&autopause=0&autoplay=1&badge=0&byline=0&autopause=0&loop=' . ( 'yes' == $video_loop ? '1' : '0' ) . '&title=0' . ( 'yes' === $video_mute ? '&muted=1' : '' ) . '" frameborder="0"></iframe></div>';
+						$outer_html .= '<div id="video-' . $parallax_id . '" class="fusion-background-video-wrapper" data-vimeo-video-id="' . $video_url['id'] . '" data-mute="' . $video_mute . '" data-video-aspect-ratio="' . $video_aspect_ratio . '" style="opacity:0;"><iframe id="video-iframe-' . $parallax_id . '" class="fusion-container-video-bg" src="//player.vimeo.com/video/' . $video_url['id'] . '?html5=1&autopause=0&autoplay=1&badge=0&byline=0&autopause=0&loop=' . ( 'yes' == $video_loop ? '1' : '0' ) . '&title=0' . ( 'yes' === $video_mute ? '&muted=1' : '' ) . '" frameborder="0"></iframe></div>';
 					}
 				} else {
 					$video_attributes = 'preload="auto" autoplay';
@@ -647,7 +647,7 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 				'fusion-container',
 				FusionBuilder::$js_folder_url . '/general/fusion-container.js',
 				FusionBuilder::$js_folder_path . '/general/fusion-container.js',
-				array( 'jquery', 'fusion-animations', 'jquery-fade', 'fusion-parallax', 'fusion-video-general', 'fusion-video-bg' ),
+				array( 'jquery', 'modernizr', 'fusion-animations', 'jquery-fade', 'fusion-parallax', 'fusion-video-general', 'fusion-video-bg' ),
 				'1',
 				true
 			);

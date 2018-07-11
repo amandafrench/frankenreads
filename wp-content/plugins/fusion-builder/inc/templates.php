@@ -45,6 +45,7 @@ function fusion_pagebuilder_meta_box() {
 	include wp_normalize_path( FUSION_BUILDER_PLUGIN_DIR . '/inc/templates/element.php' );
 	include wp_normalize_path( FUSION_BUILDER_PLUGIN_DIR . '/inc/templates/element-settings.php' );
 	include wp_normalize_path( FUSION_BUILDER_PLUGIN_DIR . '/inc/templates/next-page.php' );
+	include wp_normalize_path( FUSION_BUILDER_PLUGIN_DIR . '/inc/templates/context-menu.php' );
 
 	do_action( 'fusion_builder_after' );
 }
@@ -77,7 +78,6 @@ function fusion_element_options_loop( $params ) {
 			} #>
 
 			<# if ( 'code' === param.type && 1 === Number( FusionPageBuilderApp.disable_encoding ) && 'undefined' !== typeof option_value ) {
-				console.log( option_value );
 				if ( FusionPageBuilderApp.base64Encode( FusionPageBuilderApp.base64Decode( option_value ) ) === option_value ) {
 					option_value = FusionPageBuilderApp.base64Decode( option_value );
 				}

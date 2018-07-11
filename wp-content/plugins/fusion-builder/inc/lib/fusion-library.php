@@ -3,7 +3,7 @@
  * Loads common Fusion libraries.
  *
  * @package Fusion-Library
- * @version 1.5.2
+ * @version 1.6
  */
 
 // Do not allow directly accessing this file.
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Don't use a constant, we need this as a simple var.
-$fusion_library_version = '1.5.2';
+$fusion_library_version = '1.6';
 
 $current_dir = dirname( __FILE__ );
 
@@ -40,7 +40,7 @@ if ( ! defined( 'FUSION_LIBRARY_URL' ) ) {
 		$dir = dirname( __FILE__ );
 		$dir = wp_normalize_path( $dir ); // Current directory.
 
-		$dir_array = explode( '/', $dir );
+		$dir_array   = explode( '/', $dir );
 		$path_length = count( $dir_array );
 		if ( 4 < $path_length ) {
 			for ( $i = 1; $i < 5; $i++ ) {

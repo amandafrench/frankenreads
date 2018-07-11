@@ -21,6 +21,15 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 			protected $args;
 
 			/**
+			 * The events counter.
+			 *
+			 * @access private
+			 * @since 1.0
+			 * @var int
+			 */
+			private $fusion_events_counter = 1;
+
+			/**
 			 * Constructor.
 			 *
 			 * @access public
@@ -29,6 +38,10 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 			public function __construct() {
 				parent::__construct();
 				add_shortcode( 'fusion_events', array( $this, 'render' ) );
+
+				add_filter( 'fusion_attr_events-shortcode', array( $this, 'attr' ) );
+				add_filter( 'fusion_attr_events-shortcode-columns', array( $this, 'column_attr' ) );
+				add_filter( 'fusion_events_shortcode_content', array( $this, 'get_post_content' ), 10, 3 );
 			}
 
 			/**
@@ -45,27 +58,58 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 				global $fusion_settings;
 
 				$html     = '';
-				$defaults = shortcode_atts(
+				$defaults = FusionBuilder::set_shortcode_defaults(
 					array(
-						'hide_on_mobile' => fusion_builder_default_visibility( 'string' ),
-						'class'          => '',
-						'id'             => '',
-						'cat_slug'       => '',
-						'columns'        => '4',
-						'number_posts'   => '4',
-						'picture_size'   => 'cover',
+						'column_spacing'  => ( isset( $args['column_spacing'] ) && '' === $args['column_spacing'] ) ? $fusion_settings->get( 'events_column_spacing' ) : '-1',
+						'content_length'  => ( '' !== $fusion_settings->get( 'events_content_length' ) ) ? $fusion_settings->get( 'events_content_length' ) : 'no_text',
+						'excerpt_length'  => ( '' !== $fusion_settings->get( 'excerpt_length_events' ) ) ? $fusion_settings->get( 'excerpt_length_events' ) : 55,
+						'hide_on_mobile'  => fusion_builder_default_visibility( 'string' ),
+						'class'           => '',
+						'id'              => '',
+						'cat_slug'        => '',
+						'columns'         => '4',
+						'number_posts'    => ( '' !== $fusion_settings->get( 'events_per_page' ) ) ? $fusion_settings->get( 'events_per_page' ) : '4',
+						'pagination'      => 'no',
+						'past_events'     => 'no',
+						'picture_size'    => 'cover',
+						'strip_html'      => ( '' !== $fusion_settings->get( 'events_strip_html_excerpt' ) ) ? $fusion_settings->get( 'events_strip_html_excerpt' ) : 'yes',
 					), $args
 				);
+
+				$theme_option_content_padding = $fusion_settings->get( 'events_content_padding' );
+				$padding_values = array();
+
+				$padding_values['top']     = ( isset( $args['padding_top'] ) && '' !== $args['padding_top'] ) ? $args['padding_top'] : Fusion_Sanitize::size( $theme_option_content_padding['top'] );
+				$padding_values['right']   = ( isset( $args['padding_right'] ) && '' !== $args['padding_right'] ) ? $args['padding_right'] : Fusion_Sanitize::size( $theme_option_content_padding['right'] );
+				$padding_values['bottom']  = ( isset( $args['padding_bottom'] ) && '' !== $args['padding_bottom'] ) ? $args['padding_bottom'] : Fusion_Sanitize::size( $theme_option_content_padding['bottom'] );
+				$padding_values['left']    = ( isset( $args['padding_left'] ) && '' !== $args['padding_left'] ) ? $args['padding_left'] : Fusion_Sanitize::size( $theme_option_content_padding['left'] );
+				$content_padding = implode( ' ', $padding_values );
+
+				$this->args = $defaults;
 
 				extract( $defaults );
 
 				if ( class_exists( 'Tribe__Events__Main' ) ) {
 
+					// Check if there is paged content.
+					$paged = 1;
+					if ( 'no' !== $defaults['pagination'] ) {
+						$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+						if ( is_front_page() ) {
+							$paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
+						}
+					}
+
 					$args = array(
-						'post_type' => 'tribe_events',
+						'post_type'      => 'tribe_events',
+						'paged'          => $paged,
 						'posts_per_page' => $number_posts,
-						'order' => 'ASC',
+						'order'          => 'ASC',
 					);
+
+					if ( 'yes' === $defaults['past_events'] ) {
+						$args['eventDisplay'] = 'custom';
+					}
 
 					if ( $cat_slug ) {
 						$terms = explode( ',', $cat_slug );
@@ -78,40 +122,19 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 						);
 					}
 
-					switch ( $columns ) {
-						case '1':
-							$column_class = 'full-one';
-							break;
-						case '2':
-							$column_class = 'one-half';
-							break;
-						case '3':
-							$column_class = 'one-third';
-							break;
-						case '4':
-							$column_class = 'one-fourth';
-							break;
-						case '5':
-							$column_class = 'one-fifth';
-							break;
-						case '6':
-							$column_class = 'one-sixth';
-							break;
-					}
-
+					wp_reset_postdata();
 					$events = fusion_cached_query( $args );
 
 					if ( ! $events->have_posts() ) {
+						$this->fusion_events_counter++;
 						return fusion_builder_placeholder( 'tribe_events', 'events' );
 					}
 
 					$class = fusion_builder_visibility_atts( $hide_on_mobile, $class );
 
 					if ( $events->have_posts() ) {
-						if ( $id ) {
-							$id = ' id="' . $id . '"';
-						}
-						$html .= '<div class="fusion-events-shortcode ' . $class . '"' . $id . '>';
+						$html .= '<div ' . FusionBuilder::attributes( 'events-shortcode' ) . '>';
+						$html .= '<div class="fusion-events-wrapper" data-pages="' . $events->max_num_pages . '">';
 						$i       = 1;
 						$last    = false;
 						$columns = (int) $columns;
@@ -132,7 +155,7 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 								$last = true;
 							}
 
-							$html .= '<div class="fusion-' . $column_class . ' fusion-spacing-yes fusion-layout-column ' . ( ( $last ) ? 'fusion-column-last' : '' ) . '">';
+							$html .= '<div ' . FusionBuilder::attributes( 'events-shortcode-columns', $last ) . '>';
 							$html .= '<div class="fusion-column-wrapper">';
 							$thumb_id = get_post_thumbnail_id();
 							$thumb_link = wp_get_attachment_image_src( $thumb_id, 'full', true );
@@ -180,25 +203,288 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 
 							$html .= '</a>';
 							$html .= '</div>';
+							$html .= '<div class="fusion-events-content-wrapper" style="padding:' . $content_padding . ';">';
 							$html .= '<div class="fusion-events-meta">';
 							$html .= '<h2><a href="' . get_the_permalink() . '" class="url" rel="bookmark">' . get_the_title() . '</a></h2>';
 							$html .= '<h4>' . tribe_events_event_schedule_details() . '</h4>';
 							$html .= '</div>';
+
+							if ( 'no_text' !== $defaults['content_length'] ) {
+								$html .= '<div class="fusion-events-content">';
+								$html .= apply_filters( 'fusion_events_shortcode_content', $defaults['content_length'], $defaults['excerpt_length'], $defaults['strip_html'] );
+								$html .= '</div>';
+							}
+
+							$html .= '</div>';
 							$html .= '</div>';
 							$html .= '</div>';
 
-							if ( $last ) {
+							if ( $last && 'no' === $defaults['pagination'] ) {
 								$html .= '<div class="fusion-clearfix"></div>';
 							}
 							$i++;
 						}
+
 						// @codingStandardsIgnoreLine
 						wp_reset_query();
-						$html .= '<div class="fusion-clearfix"></div>';
+
+						if ( 'no' === $defaults['pagination'] ) {
+							$html .= '<div class="fusion-clearfix"></div>';
+						}
+
+						$html .= '</div>';
+
+						// Pagination.
+						$pagination_type = ( '' !== $defaults['pagination'] ) ? $defaults['pagination'] : 'no';
+						$pagination_html = '';
+
+						if ( 'no' !== $pagination_type && 1 < esc_attr( $events->max_num_pages ) ) {
+
+							// Pagination is set to "load more" button.
+							if ( 'load_more_button' === $pagination_type && -1 !== intval( $number_posts ) ) {
+								$button_margin = '';
+								if ( '-1' !== $this->args['column_spacing'] ) {
+									$button_margin  = 'margin-left: ' . ( $this->args['column_spacing'] / 2 ) . 'px;';
+									$button_margin .= 'margin-right: ' . ( $this->args['column_spacing'] / 2 ) . 'px;';
+									$style  = '<style type="text/css">';
+									$style .= '.fusion-events-shortcode.fusion-events-shortcode-' . $this->fusion_events_counter . ' .fusion-load-more-button {' . $button_margin . '}';
+									$style .= '.fusion-events-shortcode.fusion-events-shortcode-' . $this->fusion_events_counter . ' .fusion-loading-container {' . $button_margin . '}';
+									$style .= '</style>';
+									$pagination_html .= $style;
+								}
+								$pagination_html .= '<div class="fusion-load-more-button fusion-events-button fusion-clearfix">' . apply_filters( 'avada_load_more_events_name', esc_attr__( 'Load More Events', 'fusion-builder' ) ) . '</div>';
+							}
+
+							$infinite_pagination = false;
+							if ( 'load_more_button' === $pagination_type || 'infinite' === $pagination_type ) {
+								$infinite_pagination = true;
+							}
+
+							$pagination_html .= fusion_pagination( $events->max_num_pages, apply_filters( 'fusion_pagination_size', 1 ), $events, $infinite_pagination, true );
+						}
+
+						$html .= $pagination_html;
+
 						$html .= '</div>';
 					}
+
+					$this->fusion_events_counter++;
+
 					return $html;
 				}
+			}
+
+			/**
+			 * Builds the attributes array.
+			 *
+			 * @access public
+			 * @since 1.6
+			 * @return array
+			 */
+			public function attr() {
+				$attr = array(
+					'class' => 'fusion-events-shortcode fusion-events-shortcode-' . $this->fusion_events_counter,
+				);
+
+				if ( 'no' !== $this->args['pagination'] ) {
+					$attr['class'] .= ' fusion-events-pagination-' . str_replace( '_', '-', $this->args['pagination'] );
+				}
+
+				// Add custom class.
+				if ( $this->args['class'] ) {
+					$attr['class'] .= ' ' . $this->args['class'];
+				}
+
+				// Add custom id.
+				if ( $this->args['id'] ) {
+					$attr['id'] = $this->args['id'];
+				}
+
+				if ( '-1' !== $this->args['column_spacing'] ) {
+					$attr['style']  = 'margin-left: -' . ( $this->args['column_spacing'] / 2 ) . 'px;';
+					$attr['style'] .= 'margin-right: -' . ( $this->args['column_spacing'] / 2 ) . 'px;';
+				}
+
+				return $attr;
+			}
+
+			/**
+			 * Builds the attributes array.
+			 *
+			 * @access public
+			 * @since 1.6
+			 * @param bool $last Holds value for last column in a row.
+			 * @return array
+			 */
+			public function column_attr( $last = false ) {
+				$attr = array(
+					'class' => 'fusion-events-post',
+				);
+
+				$fusion_spacing = ( '-1' !== $this->args['column_spacing'] ) ? 'fusion-spacing-no' : 'fusion-spacing-yes';
+				$attr['class'] .= ' ' . $fusion_spacing;
+
+				$columns = (int) $this->args['columns'];
+
+				switch ( $columns ) {
+					case '1':
+						$column_class = 'full-one';
+						break;
+					case '2':
+						$column_class = 'one-half';
+						break;
+					case '3':
+						$column_class = 'one-third';
+						break;
+					case '4':
+						$column_class = 'one-fourth';
+						break;
+					case '5':
+						$column_class = 'one-fifth';
+						break;
+					case '6':
+						$column_class = 'one-sixth';
+						break;
+				}
+
+				$attr['class'] .= ' fusion-' . $column_class . ' fusion-layout-column';
+				$attr['class'] .= ( $last ) ? ' fusion-column-last' : '';
+
+				if ( '-1' !== $this->args['column_spacing'] ) {
+					$attr['style']  = 'padding:' . ( $this->args['column_spacing'] / 2 ) . 'px';
+				}
+
+				return $attr;
+			}
+
+			/**
+			 * Echoes the post-content.
+			 *
+			 * @access public
+			 * @since 1.6
+			 * @param string $content_length Display excerpt / full content.
+			 * @param int    $excerpt_length Excerpt length in words.
+			 * @param string $strip_html     Yes/no option to strip html.
+			 * @return string Excerpt / Full content of event.
+			 */
+			public function get_post_content( $content_length = 'excerpt', $excerpt_length = 55, $strip_html = 'yes' ) {
+				if ( 'no_text' !== $content_length ) {
+					$excerpt = 'no';
+					if ( 'excerpt' === strtolower( $content_length ) ) {
+						$excerpt = 'yes';
+					}
+
+					return fusion_get_post_content( '', $excerpt, $excerpt_length, $strip_html );
+				}
+			}
+
+			/**
+			 * Adds settings to element options panel.
+			 *
+			 * @access public
+			 * @since 1.6
+			 * @return array $sections Events settings.
+			 */
+			public function add_options() {
+				return array(
+					'events_shortcode_section' => array(
+						'label'       => esc_attr__( 'Events Element', 'fusion-builder' ),
+						'description' => '',
+						'id'          => 'events_shortcode_section',
+						'default'     => '',
+						'type'        => 'accordion',
+						'fields'      => array(
+							'events_per_page' => array(
+								'label'       => esc_attr__( 'Number of Events Per Page', 'fusion-core' ),
+								'description' => esc_attr__( 'Controls the number of events displayed per page for events element. Set to -1 to display all. Set to 0 to use the number of posts from Settings > Reading.', 'fusion-core' ),
+								'id'          => 'events_per_page',
+								'default'     => '4',
+								'type'        => 'slider',
+								'choices'     => array(
+									'min'  => '-1',
+									'max'  => '50',
+									'step' => '1',
+								),
+							),
+							'events_column_spacing' => array(
+								'label'       => esc_attr__( 'Column Spacing', 'fusion-core' ),
+								'description' => esc_attr__( 'Controls the column spacing for events items.', 'fusion-core' ),
+								'id'          => 'events_column_spacing',
+								'default'     => '40',
+								'type'        => 'slider',
+								'choices'     => array(
+									'min'  => '-1',
+									'max'  => '300',
+									'step' => '1',
+								),
+							),
+							'events_content_padding' => array(
+								'label'       => esc_attr__( 'Events Content Padding', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the top/right/bottom/left padding of the events contents.', 'fusion-builder' ),
+								'id'          => 'events_content_padding',
+								'choices'     => array(
+									'top'     => true,
+									'bottom'  => true,
+									'left'    => true,
+									'right'   => true,
+									'units'   => array( 'px', '%' ),
+								),
+								'default'     => array(
+									'top'     => '20px',
+									'bottom'  => '20px',
+									'left'    => '20px',
+									'right'   => '20px',
+								),
+								'type'        => 'spacing',
+							),
+							'events_content_length' => array(
+								'label'       => esc_attr__( 'Events Text Display', 'fusion-core' ),
+								'description' => esc_attr__( 'Choose how to display the post excerpt for events elements.', 'fusion-core' ),
+								'id'          => 'events_content_length',
+								'default'     => 'no_text',
+								'type'        => 'radio-buttonset',
+								'choices'     => array(
+									'no_text'      => esc_attr__( 'No Text', 'fusion-core' ),
+									'excerpt'      => esc_attr__( 'Excerpt', 'fusion-core' ),
+									'full_content' => esc_attr__( 'Full Content', 'fusion-core' ),
+								),
+							),
+							'excerpt_length_events' => array(
+								'label'       => esc_attr__( 'Excerpt Length', 'fusion-core' ),
+								'description' => esc_attr__( 'Controls the number of words in the excerpts for events elements.', 'fusion-core' ),
+								'id'          => 'excerpt_length_events',
+								'default'     => '55',
+								'type'        => 'slider',
+								'choices'     => array(
+									'min'  => '0',
+									'max'  => '500',
+									'step' => '1',
+								),
+								'required'    => array(
+									array(
+										'setting'  => 'events_content_length',
+										'operator' => '==',
+										'value'    => 'excerpt',
+									),
+								),
+							),
+							'events_strip_html_excerpt' => array(
+								'label'       => esc_attr__( 'Strip HTML from Excerpt', 'fusion-core' ),
+								'description' => esc_attr__( 'Turn on to strip HTML content from the excerpt for events elements.', 'fusion-core' ),
+								'id'          => 'events_strip_html_excerpt',
+								'default'     => '1',
+								'type'        => 'switch',
+								'required'    => array(
+									array(
+										'setting'  => 'events_content_length',
+										'operator' => '==',
+										'value'    => 'excerpt',
+									),
+								),
+							),
+						),
+					),
+				);
 			}
 
 			/**
@@ -217,12 +503,8 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 				);
 				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['background-color'] = $fusion_library->sanitize->color( $fusion_settings->get( 'timeline_bg_color' ) );
 
-				if ( '0' !== Fusion_Color::new_color( $fusion_settings->get( 'timeline_bg_color' ) )->alpha ) {
-					$css['global']['.fusion-events-shortcode .fusion-events-meta']['padding'] = '20px';
-				}
-
 				$elements = array(
-					'.fusion-events-shortcode .fusion-layout-column',
+					'.fusion-events-shortcode .fusion-layout-column .fusion-column-wrapper',
 					'.fusion-events-shortcode .fusion-events-thumbnail',
 				);
 				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['border-color'] = $fusion_library->sanitize->color( $fusion_settings->get( 'timeline_color' ) );
@@ -244,7 +526,7 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 					'fusion-events',
 					FusionBuilder::$js_folder_url . '/general/fusion-events.js',
 					FusionBuilder::$js_folder_path . '/general/fusion-events.js',
-					array( 'jquery', 'fusion-equal-heights' ),
+					array( 'jquery', 'fusion-equal-heights', 'images-loaded', 'packery' ),
 					'1',
 					true
 				);
@@ -262,6 +544,8 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
  * @since 1.0
  */
 function fusion_element_events() {
+	global $fusion_settings;
+
 	if ( class_exists( 'Tribe__Events__Main' ) ) {
 		fusion_builder_map(
 			array(
@@ -278,26 +562,47 @@ function fusion_element_events() {
 						'default'     => '',
 					),
 					array(
-						'type'        => 'textfield',
+						'type'        => 'radio_button_set',
+						'heading'     => esc_attr__( 'Display Past Events', 'fusion-builder' ),
+						'description' => __( 'Turn on if you want the past events to be displayed.', 'fusion-builder' ),
+						'param_name'  => 'past_events',
+						'value'       => array(
+							'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+							'no'  => esc_attr__( 'No', 'fusion-builder' ),
+						),
+						'default' => 'no',
+					),
+					array(
+						'type'        => 'range',
 						'heading'     => esc_attr__( 'Number of Events', 'fusion-builder' ),
 						'description' => esc_attr__( 'Select the number of events to display.', 'fusion-builder' ),
 						'param_name'  => 'number_posts',
-						'value'       => '4',
+						'value'       => '',
+						'min'         => '-1',
+						'max'         => '25',
+						'step'        => '1',
+						'default'     => $fusion_settings->get( 'events_per_page' ),
 					),
 					array(
-						'type'        => 'select',
+						'type'        => 'range',
 						'heading'     => esc_attr__( 'Maximum Columns', 'fusion-builder' ),
 						'description' => esc_attr__( 'Select the number of max columns to display.', 'fusion-builder' ),
 						'param_name'  => 'columns',
-						'value'       => array(
-							'1' => '1',
-							'2' => '2',
-							'3' => '3',
-							'4' => '4',
-							'5' => '5',
-							'6' => '6',
-						),
-						'default'     => '4',
+						'value'       => '4',
+						'min'         => '1',
+						'max'         => '6',
+						'step'        => '1',
+					),
+					array(
+						'type'        => 'range',
+						'heading'     => esc_attr__( 'Column Spacing', 'fusion-builder' ),
+						'description' => esc_attr__( 'Controls the column spacing for events items. Setting to -1 will keep the default 4% column spacing.', 'fusion-builder' ),
+						'param_name'  => 'column_spacing',
+						'value'       => '',
+						'min'         => '-1',
+						'max'         => '300',
+						'step'        => '1',
+						'default'     => $fusion_settings->get( 'events_column_spacing' ),
 					),
 					array(
 						'type'        => 'radio_button_set',
@@ -309,6 +614,80 @@ function fusion_element_events() {
 							'auto'  => esc_attr__( 'Auto', 'fusion-builder' ),
 						),
 						'default' => 'cover',
+					),
+					array(
+						'type'             => 'dimension',
+						'remove_from_atts' => true,
+						'heading'          => esc_attr__( 'Content Padding ', 'fusion-builder' ),
+						'description'      => esc_attr__( 'Controls the padding for the event contents. Enter values including any valid CSS unit, ex: 20px, 20px, 20px, 20px.', 'fusion-builder' ),
+						'param_name'       => 'content_padding',
+						'value'            => array(
+							'padding_top'    => '',
+							'padding_right'  => '',
+							'padding_bottom' => '',
+							'padding_left'   => '',
+						),
+					),
+					array(
+						'type'        => 'radio_button_set',
+						'heading'     => esc_attr__( 'Text Display', 'fusion-builder' ),
+						'description' => esc_attr__( 'Choose how to display the post excerpt.', 'fusion-builder' ),
+						'param_name'  => 'content_length',
+						'value'       => array(
+							''             => esc_attr__( 'Default', 'fusion-builder' ),
+							'no_text'      => esc_attr__( 'No Text', 'fusion-builder' ),
+							'excerpt'      => esc_attr__( 'Excerpt', 'fusion-builder' ),
+							'full_content' => esc_attr__( 'Full Content', 'fusion-builder' ),
+						),
+					),
+					array(
+						'type'        => 'range',
+						'heading'     => esc_attr__( 'Excerpt Length', 'fusion-builder' ),
+						'description' => esc_attr__( 'Insert the number of words/characters you want to show in the excerpt.', 'fusion-builder' ),
+						'param_name'  => 'excerpt_length',
+						'value'       => '',
+						'min'         => '0',
+						'max'         => '500',
+						'step'        => '1',
+						'default'     => $fusion_settings->get( 'excerpt_length_events' ),
+						'dependency'  => array(
+							array(
+								'element'  => 'content_length',
+								'value'    => 'excerpt',
+								'operator' => '==',
+							),
+						),
+					),
+					array(
+						'type'        => 'radio_button_set',
+						'heading'     => esc_attr__( 'Strip HTML', 'fusion-builder' ),
+						'description' => esc_attr__( 'Strip HTML from the post excerpt.', 'fusion-builder' ),
+						'param_name'  => 'strip_html',
+						'value'       => array(
+							''    => esc_attr__( 'Default', 'fusion-builder' ),
+							'yes' => esc_attr__( 'Yes', 'fusion-builder' ),
+							'no'  => esc_attr__( 'No', 'fusion-builder' ),
+						),
+						'dependency'  => array(
+							array(
+								'element'  => 'content_length',
+								'value'    => 'excerpt',
+								'operator' => '==',
+							),
+						),
+					),
+					array(
+						'type'        => 'radio_button_set',
+						'heading'     => esc_attr__( 'Pagination Type', 'fusion-builder' ),
+						'description' => esc_attr__( 'Choose the type of pagination.', 'fusion-builder' ),
+						'param_name'  => 'pagination',
+						'default'     => 'no',
+						'value'       => array(
+							'no'               => esc_attr__( 'No Pagination', 'fusion-builder' ),
+							'pagination'       => esc_attr__( 'Pagination', 'fusion-builder' ),
+							'infinite'         => esc_attr__( 'Infinite Scrolling', 'fusion-builder' ),
+							'load_more_button' => esc_attr__( 'Load More Button', 'fusion-builder' ),
+						),
 					),
 					array(
 						'type'        => 'checkbox_button_set',

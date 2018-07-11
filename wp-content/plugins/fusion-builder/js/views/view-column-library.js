@@ -27,6 +27,8 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			},
 
 			render: function() {
+				var self = this;
+
 				this.$el.html( this.template( this.model.toJSON() ) );
 
 				// Show saved custom columns
@@ -36,6 +38,10 @@ var FusionPageBuilder = FusionPageBuilder || {};
 				if ( 'container' === FusionPageBuilderApp.activeModal ) {
 					FusionPageBuilderApp.showSavedElements( 'sections', this.$el.find( '#custom-sections' ) );
 				}
+
+				setTimeout( function() {
+					self.$el.find( '.fusion-elements-filter' ).focus();
+				}, 50 );
 
 				return this;
 			},

@@ -47,7 +47,7 @@ class Fusion_Builder_Admin {
 				<a href="#" class="button button-secondary fusion-preview" target="wp-preview-<?php echo esc_attr( $post->ID ); ?>"><?php esc_attr_e( 'Preview', 'fusion-builder' ); ?></a>
 				<a href="#" class="button button-primary fusion-update"><?php echo esc_attr( $publish_button_text ); ?></a>
 			</div>
-		<?php
+			<?php
 		}
 	}
 
@@ -60,9 +60,10 @@ class Fusion_Builder_Admin {
 		global $submenu;
 
 		$whatsnew = add_menu_page( esc_attr__( 'Fusion Builder', 'fusion-builder' ), esc_attr__( 'Fusion Builder', 'fusion-builder' ), 'manage_options', 'fusion-builder-options', array( $this, 'whatsnew' ), 'dashicons-fusiona-logo', '2.222222' );
+		$library   = add_submenu_page( 'fusion-builder-options', esc_attr__( 'Library', 'fusion-builder' ), esc_attr__( 'Library', 'fusion-builder' ), 'manage_options', 'fusion-builder-library', array( $this, 'library' ) );
 		$addons   = add_submenu_page( 'fusion-builder-options', esc_attr__( 'Add-ons', 'fusion-builder' ), esc_attr__( 'Add-ons', 'fusion-builder' ), 'manage_options', 'fusion-builder-addons', array( $this, 'addons' ) );
 
-		if ( current_user_can( 'edit_theme_options' ) ) {
+		if ( current_user_can( 'switch_themes' ) ) {
 			$submenu['fusion-builder-options'][0][0] = esc_attr__( 'Welcome', 'fusion-builder' );
 		}
 
@@ -86,6 +87,7 @@ class Fusion_Builder_Admin {
 		}
 
 		add_action( 'admin_print_scripts-' . $addons, array( $this, 'admin_scripts' ) );
+		add_action( 'admin_print_scripts-' . $library, array( $this, 'admin_scripts' ) );
 	}
 
 	/**
@@ -151,6 +153,16 @@ class Fusion_Builder_Admin {
 	 */
 	public function addons() {
 		require_once wp_normalize_path( dirname( __FILE__ ) . '/admin-screens/addons.php' );
+	}
+
+	/**
+	 * Loads the template file.
+	 *
+	 * @since  1.0
+	 * @access public
+	 */
+	public function library() {
+		require_once wp_normalize_path( dirname( __FILE__ ) . '/admin-screens/library.php' );
 	}
 	/**
 	 * Add the title.
@@ -241,6 +253,7 @@ class Fusion_Builder_Admin {
 				self::admin_tab( esc_attr__( 'FAQ', 'fusion-builder' ), 'fusion-builder-faq' );
 				self::admin_tab( esc_attr__( 'Settings', 'fusion-builder' ), 'fusion-builder-settings' );
 			}
+			self::admin_tab( esc_attr__( 'Library', 'fusion-builder' ), 'fusion-builder-library' );
 			self::admin_tab( esc_attr__( 'Add-ons', 'fusion-builder' ), 'fusion-builder-addons' );
 			?>
 		</h2>
@@ -264,6 +277,10 @@ class Fusion_Builder_Admin {
 			return $menu_order;
 		}
 		foreach ( $submenu['fusion-builder-options'] as $key => $args ) {
+			if ( 'fusion-builder-library' === $args[2] ) {
+				unset( $submenu['fusion-builder-options'][ $key ] );
+				$submenu['fusion-builder-options'][] = $args;
+			}
 			if ( 'fusion-builder-addons' === $args[2] ) {
 				unset( $submenu['fusion-builder-options'][ $key ] );
 				$submenu['fusion-builder-options'][] = $args;

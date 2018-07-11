@@ -94,6 +94,7 @@ class Fusion_Images {
 		add_filter( 'attachment_fields_to_edit', array( $this, 'add_image_meta_fields' ), 10, 2 );
 		add_filter( 'attachment_fields_to_save', array( $this, 'save_image_meta_fields' ), 10, 2 );
 		add_action( 'admin_head', array( $this, 'style_image_meta_fields' ) );
+		add_filter( 'wp_update_attachment_metadata', array( $this, 'remove_dynamically_generated_images' ), 10, 2 );
 	}
 
 	/**
@@ -552,10 +553,11 @@ class Fusion_Images {
 	 * This is necessary in order to handle custom image sizes created from the Fusion_Image_Resizer class.
 	 *
 	 * @access public
-	 * @param  int $post_id The post ID.
+	 * @param int   $post_id The post ID.
+	 * @param array $delete_image_sizes Array of images sizes to be deleted. All are deleted if empty.
 	 * @return void
 	 */
-	public function delete_resized_images( $post_id ) {
+	public function delete_resized_images( $post_id, $delete_image_sizes = array() ) {
 		// Get attachment image metadata.
 		$metadata = wp_get_attachment_metadata( $post_id );
 		if ( ! $metadata ) {
@@ -566,19 +568,28 @@ class Fusion_Images {
 			return;
 		}
 		$pathinfo = pathinfo( $metadata['file'] );
-		$resized_images = $metadata['image_meta']['resized_images'];
-		// Get Wordpress uploads directory (and bail if it doesn't exist).
+		$resized_images = isset( $metadata['image_meta']['resized_images'] ) ? $metadata['image_meta']['resized_images'] : array();
+		// Get WordPress uploads directory (and bail if it doesn't exist).
 		$wp_upload_dir = wp_upload_dir();
 		$upload_dir    = $wp_upload_dir['basedir'];
 		if ( ! is_dir( $upload_dir ) ) {
 			return;
 		}
 		// Delete the resized images.
-		foreach ( $resized_images as $dims ) {
+		foreach ( $resized_images as $handle => $dims ) {
+			if ( ! empty( $delete_image_sizes ) && ! in_array( $handle, $delete_image_sizes ) ) {
+				continue;
+			}
+
 			// Get the resized images filename.
 			$file = $upload_dir . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '-' . $dims . '.' . $pathinfo['extension'];
 			// Delete the resized image.
 			@unlink( $file );
+
+			// Get the retina resized images filename.
+			$retina_file = $upload_dir . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '-' . $dims . '@2x.' . $pathinfo['extension'];
+			// Delete the resized retina image.
+			@unlink( $retina_file );
 		}
 	}
 
@@ -779,6 +790,25 @@ class Fusion_Images {
 			echo '<style type="text/css">.compat-field-fusion_masonry_element_layout th, .compat-field-fusion_masonry_element_layout td{display: block;}.compat-field-fusion_masonry_element_layout th{padding-bottom: 10px;}</style>';
 		}
 
+	}
+
+	/**
+	 * Removes dynamically created thumbnails.
+	 *
+	 * @since 1.6
+	 *
+	 * @param array $data          Array of updated attachment meta data.
+	 * @param int   $attachment_id Attachment post ID.
+	 *
+	 * @return array $data         Array of updated attachment meta data.
+	 */
+	public function remove_dynamically_generated_images( $data, $attachment_id ) {
+
+		if ( ! isset( $data['image_meta']['resized_images']['fusion-500'] ) ) {
+			$this->delete_resized_images( $attachment_id, array( 'fusion-500' ) );
+		}
+
+		return $data;
 	}
 
 }

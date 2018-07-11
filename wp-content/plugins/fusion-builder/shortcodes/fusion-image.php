@@ -263,6 +263,8 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 						$element_styles  .= 'display:inline-block}</style>';
 					}
 
+					$wrapper_classes = fusion_builder_visibility_atts( $this->args['hide_on_mobile'], $wrapper_classes );
+
 					$wrapper_styles = '';
 					if ( $max_width ) {
 						$wrapper_styles = 'style="max-width:' . $max_width . ';"';
@@ -296,6 +298,7 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 					'style' => '',
 				);
 
+				$visibility_classes_need_set = false;
 				$bordercolor  = $this->args['bordercolor'];
 				$stylecolor   = $this->args['stylecolor'];
 				$bordersize   = $this->args['bordersize'];
@@ -343,6 +346,8 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 				}
 
 				if ( 'liftup' !== $this->args['hover_type'] && ( 'bottomshadow' !== $this->args['style'] && ( 'zoomin' !== $this->args['hover_type'] || 'zoomout' !== $this->args['hover_type'] ) ) ) {
+					$visibility_classes_need_set = true;
+
 					if ( 'left' === $this->args['align'] ) {
 						$attr['style'] .= 'margin-right:25px;float:left;';
 					} elseif ( 'right' === $this->args['align'] ) {
@@ -382,8 +387,10 @@ if ( fusion_is_element_enabled( 'fusion_imageframe' ) ) {
 					unset( $attr['animation_class'] );
 				}
 
-				return fusion_builder_visibility_atts( $this->args['hide_on_mobile'], $attr );
-
+				if ( $visibility_classes_need_set ) {
+					return fusion_builder_visibility_atts( $this->args['hide_on_mobile'], $attr );
+				}
+				return $attr;
 			}
 
 			/**

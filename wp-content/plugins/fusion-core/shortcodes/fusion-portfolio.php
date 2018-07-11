@@ -1466,7 +1466,7 @@ function fusion_portfolio_scripts() {
 		'avada-portfolio',
 		FusionCore_Plugin::$js_folder_url . '/avada-portfolio.js',
 		FusionCore_Plugin::$js_folder_path . '/avada-portfolio.js',
-		array( 'jquery', 'fusion-video-general', 'fusion-lightbox', 'images-loaded', 'packery' ),
+		array( 'jquery', 'modernizr', 'fusion-video-general', 'fusion-lightbox', 'images-loaded', 'packery' ),
 		'1',
 		true
 	);
@@ -1676,6 +1676,13 @@ function fusion_element_portfolio() {
 					'max'         => '300',
 					'step'        => '1',
 					'default'     => $fusion_settings->get( 'portfolio_column_spacing' ),
+					'dependency'  => array(
+						array(
+							'element'  => 'columns',
+							'value'    => 1,
+							'operator' => '!=',
+						),
+					),
 				),
 				array(
 					'type'        => 'range',
@@ -1755,7 +1762,7 @@ function fusion_element_portfolio() {
 						array(
 							'element'  => 'columns',
 							'value'    => 1,
-							'operator' => '>',
+							'operator' => '!=',
 						),
 					),
 				),

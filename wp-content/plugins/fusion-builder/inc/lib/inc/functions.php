@@ -108,7 +108,8 @@ if ( ! function_exists( 'fusion_render_rich_snippets_for_pages' ) ) {
 	function fusion_render_rich_snippets_for_pages( $title_tag = true, $author_tag = true, $updated_tag = true ) {
 		ob_start();
 		include wp_normalize_path( locate_template( 'templates/pages-rich-snippets.php' ) );
-		return ob_get_clean();
+		$rich_snippets = ob_get_clean();
+		return str_replace( array( "\t", "\n", "\r", "\0", "\x0B" ), '', $rich_snippets );
 	}
 }
 
@@ -452,7 +453,7 @@ if ( ! function_exists( 'fusion_get_post_content' ) ) {
 
 		// Return excerpted content.
 		if ( $content_excerpted ) {
-			return fusion_get_post_content_excerpt( $excerpt_length, $strip_html );
+			return fusion_get_post_content_excerpt( $excerpt_length, $strip_html, $page_id );
 		}
 
 		// Return full content.
@@ -469,9 +470,10 @@ if ( ! function_exists( 'fusion_get_post_content_excerpt' ) ) {
 	 *
 	 * @param  string  $limit      Maximum number of words or chars to be displayed in excerpt.
 	 * @param  boolean $strip_html Set to TRUE to strip HTML tags from excerpt.
+	 * @param  string  $page_id    The id of the current page or post.
 	 * @return string               The custom excerpt.
 	 **/
-	function fusion_get_post_content_excerpt( $limit = 285, $strip_html ) {
+	function fusion_get_post_content_excerpt( $limit = 285, $strip_html, $page_id = '' ) {
 		global $more;
 
 		// Init variables, cast to correct types.
@@ -486,7 +488,11 @@ if ( ! function_exists( 'fusion_get_post_content_excerpt' ) ) {
 			return $content;
 		}
 
-		$post = get_post( get_the_ID() );
+		if ( ! $page_id ) {
+			$page_id = get_the_ID();
+		}
+
+		$post = get_post( $page_id );
 
 		// Filter to set the default [...] read more to something arbritary.
 		$read_more_text = apply_filters( 'fusion_blog_read_more_excerpt', '&#91;...&#93;' );
@@ -503,7 +509,7 @@ if ( ! function_exists( 'fusion_get_post_content_excerpt' ) ) {
 
 		// Construct the content.
 		// Posts having a custom excerpt.
-		if ( has_excerpt() ) {
+		if ( has_excerpt( $post->ID ) ) {
 			// WooCommerce products should use short description field, which is a custom excerpt.
 			if ( 'product' === $post->post_type ) {
 				$content = do_shortcode( $post->post_excerpt );
@@ -513,7 +519,7 @@ if ( ! function_exists( 'fusion_get_post_content_excerpt' ) ) {
 					$content = wp_strip_all_tags( $content, '<p>' );
 				}
 			} else { // All other posts with custom excerpt.
-				$content = '<p>' . do_shortcode( get_the_excerpt() ) . '</p>';
+				$content = '<p>' . do_shortcode( get_the_excerpt( $post->ID ) ) . '</p>';
 			}
 		} else { // All other posts (with and without <!--more--> tag in the contents).
 			// HTML tags should be stripped.
@@ -543,7 +549,7 @@ if ( ! function_exists( 'fusion_get_post_content_excerpt' ) ) {
 		}// End if().
 
 		// Limit the contents to the $limit length.
-		if ( ! has_excerpt() || 'product' === $post->post_type ) {
+		if ( ! has_excerpt( $post->ID ) || 'product' === $post->post_type ) {
 			// Check if the excerpting should be char or word based.
 			if ( 'Characters' === fusion_library()->get_option( 'excerpt_base' ) ) {
 				$content = mb_substr( $content, 0, $limit );

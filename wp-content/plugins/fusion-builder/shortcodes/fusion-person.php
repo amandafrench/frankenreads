@@ -511,6 +511,7 @@ if ( fusion_is_element_enabled( 'fusion_person' ) ) {
 				$tooltip = $args['social_network'];
 				$tooltip = ( 'googleplus' === strtolower( $tooltip ) ) ? 'Google+' : $tooltip;
 				$tooltip = ( 'youtube' === strtolower( $tooltip ) ) ? 'YouTube' : $tooltip;
+				$tooltip = ( 'linkedin' === strtolower( $tooltip ) ) ? 'LinkedIn' : $tooltip;
 
 				$attr['data-title'] = ucfirst( $tooltip );
 				$attr['title']      = ucfirst( $tooltip );

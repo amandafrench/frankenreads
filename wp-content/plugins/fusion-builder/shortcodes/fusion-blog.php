@@ -326,7 +326,6 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					$tags_id_to_exclude = array();
 					if ( $tags_to_exclude ) {
 						foreach ( $tags_to_exclude as $tag_to_exclude ) {
-							// @codingStandardsIgnoreLine WordPress.VIP.RestrictedFunctions.get_term_by_get_term_by
 							$id_obj = get_term_by( 'slug', $tag_to_exclude, 'post_tag' );
 							if ( $id_obj ) {
 								$tags_id_to_exclude[] = $id_obj->term_id;
@@ -343,7 +342,6 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 						$tags = explode( ',', $defaults['tag_slug'] );
 						if ( isset( $tags ) && $tags ) {
 							foreach ( $tags as $tag ) {
-								// @codingStandardsIgnoreLine WordPress.VIP.RestrictedFunctions.get_term_by_get_term_by
 								$id_obj = get_term_by( 'slug', $tag, 'post_tag' );
 
 								if ( $id_obj ) {
@@ -1919,7 +1917,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 							),
 							'blog_grid_padding' => array(
 								'label'       => esc_attr__( 'Blog Grid Text Padding', 'fusion-builder' ),
-								'description' => esc_html__( 'Controls the top/right/bottom/left padding of the blog text when using grid / masonry or timeline layout. ', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls the top/right/bottom/left padding of the blog text when using grid / masonry or timeline layout.', 'fusion-builder' ),
 								'id'          => 'blog_grid_padding',
 								'choices'     => array(
 									'top'     => true,
@@ -2179,6 +2177,11 @@ function fusion_element_blog() {
 							'value'    => 'timeline',
 							'operator' => '!=',
 						),
+						array(
+							'element'  => 'blog_grid_columns',
+							'value'    => 1,
+							'operator' => '!=',
+						),
 					),
 				),
 				array(
@@ -2236,7 +2239,7 @@ function fusion_element_blog() {
 						array(
 							'element'  => 'blog_grid_columns',
 							'value'    => 1,
-							'operator' => '>',
+							'operator' => '!=',
 						),
 					),
 				),
