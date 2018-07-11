@@ -34,7 +34,7 @@ class Avada_Options {
 	 * @access public
 	 * @var array
 	 */
-	public $sections      = array();
+	public $sections = array();
 
 	/**
 	 * An array of our fields.
@@ -68,10 +68,10 @@ class Avada_Options {
 		 */
 		$this->section_names = array(
 			'layout',
-			'menu',
 			'responsive',
 			'colors',
 			'header',
+			'menu',
 			'logo',
 			'page_title_bar',
 			'sliding_bar',
@@ -87,6 +87,7 @@ class Avada_Options {
 			'lightbox',
 			'contact',
 			'search_page',
+			'privacy',
 			'extra',
 			'advanced',
 			'bbpress',
@@ -166,7 +167,7 @@ class Avada_Options {
 
 		// Get the options object.
 		$avada_new_options = Avada::$options;
-		$fields = array();
+		$fields            = array();
 
 		// Start parsing sections.
 		foreach ( $avada_new_options->sections as $section ) {

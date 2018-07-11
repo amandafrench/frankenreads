@@ -284,6 +284,30 @@ class Avada_Importer_Data {
 			$json_content
 		);
 
+		// Widget replacements.
+		$site_url     = str_replace( '/', '\\/', '//avada.theme-fusion.com/' . $demo . '/wp-content/uploads/sites/' );
+		$widget_image = strpos( $json_content, $site_url );
+		if ( false !== $widget_image ) {
+
+			// Find the site id on multi-site.
+			$start_position = $widget_image + strlen( $site_url );
+			$end_position   = strpos( $json_content, '/', $start_position );
+			$site_id        = substr( $json_content, $start_position, $end_position - $start_position - 1 );
+
+			// Use site id to create upload url.
+			$uploads_url    = array(
+				str_replace( '/', '\\/', 'http://avada.theme-fusion.com/' . $demo . '/wp-content/uploads/sites/' . $site_id ),
+				str_replace( '/', '\\/', 'https://avada.theme-fusion.com/' . $demo . '/wp-content/uploads/sites/' . $site_id ),
+			);
+
+			// Find new uploads url.
+			$uploads_dir    = wp_upload_dir();
+			$target_url     = $uploads_dir['baseurl'];
+
+			// Replace live url with target.
+			$json_content   = str_replace( $uploads_url, $target_url, $json_content );
+		}
+
 		// Write files.
 		$xml_file_return  = $wp_filesystem->put_contents( $xml_file_path, $xml_content );
 		$json_file_return = $wp_filesystem->put_contents( $json_file_path, $json_content );

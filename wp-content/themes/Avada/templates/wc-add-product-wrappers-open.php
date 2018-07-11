@@ -11,5 +11,6 @@
  */
 
 ?>
-<div class="product-details">
-	<div class="product-details-container">
+<div class="fusion-product-content">
+	<div class="product-details">
+		<div class="product-details-container">

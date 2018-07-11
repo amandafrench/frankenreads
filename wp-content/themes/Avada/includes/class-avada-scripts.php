@@ -40,6 +40,16 @@ class Avada_Scripts {
 	private $compiler_mode;
 
 	/**
+	 * The media-query assets.
+	 *
+	 * @static
+	 * @access private
+	 * @since 5.6
+	 * @var array
+	 */
+	private static $media_query_assets = array();
+
+	/**
 	 * The class construction
 	 *
 	 * @access public
@@ -64,6 +74,12 @@ class Avada_Scripts {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_css' ), 999 );
 		add_action( 'admin_head', array( $this, 'admin_styles' ) );
+
+		// Handle media-query styles.
+		$this->add_media_query_styles();
+		$this->combine_media_query_files();
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_media_query_styles' ), 900 );
+		add_filter( 'fusion_dynamic_css_final', array( $this, 'compile_media_query_styles' ), 999 );
 
 	}
 
@@ -152,7 +168,7 @@ class Avada_Scripts {
 				'avada-sidebars',
 				$js_folder_url . '/general/avada-sidebars.js',
 				$js_folder_path . '/general/avada-sidebars.js',
-				array( 'jquery' ),
+				array( 'jquery', 'modernizr' ),
 				self::$version,
 				true,
 			),
@@ -351,7 +367,7 @@ class Avada_Scripts {
 				'avada-woocommerce',
 				$js_folder_url . '/general/avada-woocommerce.js',
 				$js_folder_path . '/general/avada-woocommerce.js',
-				array( 'jquery', 'fusion-equal-heights' ),
+				array( 'jquery', 'modernizr', 'fusion-equal-heights' ),
 				self::$version,
 				true,
 			);
@@ -390,13 +406,13 @@ class Avada_Scripts {
 				'avada-nicescroll',
 				$js_folder_url . '/general/avada-nicescroll.js',
 				$js_folder_path . '/general/avada-nicescroll.js',
-				array( 'jquery', 'jquery-nicescroll' ),
+				array( 'jquery', 'modernizr', 'jquery-nicescroll' ),
 				self::$version,
 				true,
 			);
 		}
 
-		if ( Avada()->settings->get( 'privacy_embeds' ) ) {
+		if ( Avada()->settings->get( 'privacy_embeds' ) || 'no' !== Avada()->settings->get( 'privacy_bar' ) ) {
 			$scripts[] = array(
 				'avada-privacy',
 				$js_folder_url . '/general/avada-privacy.js',
@@ -476,7 +492,14 @@ class Avada_Scripts {
 		$layout           = ( 'boxed' === $page_bg_layout || 'wide' === $page_bg_layout ) ? $page_bg_layout : Avada()->settings->get( 'layout' );
 		$avada_rev_styles = ( 'no' === $avada_rev_styles || ( Avada()->settings->get( 'avada_rev_styles' ) && 'yes' !== $avada_rev_styles ) ) ? 1 : 0;
 
-		$cookie_args = class_exists( 'Avada_Privacy_Embeds' ) ? Avada()->privacy_embeds->get_cookie_args() : false;
+		$side_header_breakpoint = Avada()->settings->get( 'side_header_break_point' );
+		if ( ! $side_header_breakpoint ) {
+			$side_header_breakpoint = 800;
+		}
+
+		$cookie_args      = class_exists( 'Avada_Privacy_Embeds' ) ? Avada()->privacy_embeds->get_cookie_args() : false;
+		$consents         = class_exists( 'Avada_Privacy_Embeds' ) ? array_keys( Avada()->privacy_embeds->get_embed_types() ) : array();
+		$default_consents = class_exists( 'Avada_Privacy_Embeds' ) ? Avada()->privacy_embeds->get_default_consents() : array();
 
 		$scripts = array(
 			array(
@@ -487,7 +510,7 @@ class Avada_Scripts {
 					'header_layout'              => Avada()->settings->get( 'header_layout' ),
 					'header_sticky'              => Avada()->settings->get( 'header_sticky' ),
 					'header_sticky_type2_layout' => Avada()->settings->get( 'header_sticky_type2_layout' ),
-					'side_header_break_point'    => (int) Avada()->settings->get( 'side_header_break_point' ),
+					'side_header_break_point'    => (int) $side_header_breakpoint,
 					'header_sticky_mobile'       => Avada()->settings->get( 'header_sticky_mobile' ),
 					'header_sticky_tablet'       => Avada()->settings->get( 'header_sticky_tablet' ),
 					'mobile_menu_design'         => Avada()->settings->get( 'mobile_menu_design' ),
@@ -510,7 +533,7 @@ class Avada_Scripts {
 					'header_position'         => Avada()->settings->get( 'header_position' ),
 					'logo_alignment'          => Avada()->settings->get( 'logo_alignment' ),
 					'header_sticky'           => Avada()->settings->get( 'header_sticky' ),
-					'side_header_break_point' => (int) Avada()->settings->get( 'side_header_break_point' ),
+					'side_header_break_point' => (int) $side_header_breakpoint,
 					'mobile_menu_design'      => Avada()->settings->get( 'mobile_menu_design' ),
 					'dropdown_goto'           => __( 'Go to...', 'Avada' ),
 					'mobile_nav_cart'         => __( 'Shopping Cart', 'Avada' ),
@@ -555,7 +578,7 @@ class Avada_Scripts {
 					'header_layout'              => Avada()->settings->get( 'header_layout' ),
 					'header_sticky'              => Avada()->settings->get( 'header_sticky' ),
 					'header_sticky_type2_layout' => Avada()->settings->get( 'header_sticky_type2_layout' ),
-					'side_header_break_point'    => (int) Avada()->settings->get( 'side_header_break_point' ),
+					'side_header_break_point'    => (int) $side_header_breakpoint,
 					'header_sticky_tablet'       => Avada()->settings->get( 'header_sticky_tablet' ),
 					'sticky_header_shrinkage'    => Avada()->settings->get( 'header_sticky_shrinkage' ),
 					'nav_height'                 => (int) Avada()->settings->get( 'nav_height' ),
@@ -573,7 +596,7 @@ class Avada_Scripts {
 				'avada-side-header-scroll',
 				'avadaSideHeaderVars',
 				array(
-					'side_header_break_point' => (int) Avada()->settings->get( 'side_header_break_point' ),
+					'side_header_break_point' => (int) $side_header_breakpoint,
 					'footer_special_effects'  => Avada()->settings->get( 'footer_special_effects' ),
 				),
 			),
@@ -588,7 +611,7 @@ class Avada_Scripts {
 				'avada-parallax-footer',
 				'avadaParallaxFooterVars',
 				array(
-					'side_header_break_point' => (int) Avada()->settings->get( 'side_header_break_point' ),
+					'side_header_break_point' => (int) $side_header_breakpoint,
 					'header_position'         => Avada()->settings->get( 'header_position' ),
 				),
 			),
@@ -596,14 +619,14 @@ class Avada_Scripts {
 				'avada-mobile-image-hover',
 				'avadaMobileImageVars',
 				array(
-					'side_header_break_point' => (int) Avada()->settings->get( 'side_header_break_point' ),
+					'side_header_break_point' => (int) $side_header_breakpoint,
 				),
 			),
 			array(
 				'avada-nicescroll',
 				'avadaNiceScrollVars',
 				array(
-					'side_header_width' => ( 'Top' !== Avada()->settings->get( 'header_position' ) ) ? intval( Avada()->settings->get( 'side_header_width' ) ) : '0',
+					'side_header_width' => ( 'Top' !== Avada()->settings->get( 'header_position' ) ) ? (int) Avada()->settings->get( 'side_header_width' ) : '0',
 					'smooth_scrolling'  => Avada()->settings->get( 'smooth_scrolling' ),
 				),
 			),
@@ -653,9 +676,12 @@ class Avada_Scripts {
 				'avada-privacy',
 				'avadaPrivacyVars',
 				array(
-					'name'  => $cookie_args ? $cookie_args['name'] : 'privacy_embeds',
-					'days'  => $cookie_args ? $cookie_args['days'] : '30',
-					'path'  => $cookie_args ? $cookie_args['path'] : '/',
+					'name'     => $cookie_args ? $cookie_args['name'] : 'privacy_embeds',
+					'days'     => $cookie_args ? $cookie_args['days'] : '30',
+					'path'     => $cookie_args ? $cookie_args['path'] : '/',
+					'types'    => $consents ? $consents : array(),
+					'defaults' => $default_consents ? $default_consents : array(),
+					'button'   => Avada()->settings->get( 'privacy_bar_button_save' ),
 				),
 			),
 		);
@@ -778,6 +804,671 @@ class Avada_Scripts {
 		}
 		return $scripts;
 
+	}
+
+	/**
+	 * Calculates media-queries.
+	 *
+	 * @static
+	 * @access public
+	 * @since 5.4
+	 * @param array  $args      An array of arguments.
+	 * @param string $context   Example: 'only screen'.
+	 * @param bool   $add_media Whether we should prepend "@media" or not.
+	 * @return string
+	 */
+	public static function get_media_query( $args, $context = 'only screen', $add_media = false ) {
+
+		$master_query_array = array();
+		$query_array        = array( $context );
+		$query              = '';
+		foreach ( $args as $what => $when ) {
+			// If an array then we have multiple media-queries here
+			// and we need to process each one separately.
+			if ( is_array( $when ) ) {
+				$query_array = array( $context );
+				foreach ( $when as $sub_what => $sub_when ) {
+					// Make sure pixels are integers.
+					$sub_when = ( false !== strpos( $sub_when, 'px' ) && false === strpos( $sub_when, 'dppx' ) ) ? absint( $sub_when ) . 'px' : $sub_when;
+					$query_array[] = "({$sub_what}: $sub_when)";
+				}
+				$master_query_array[] = implode( ' and ', $query_array );
+				continue;
+			}
+			// Make sure pixels are integers.
+			$when = ( false !== strpos( $when, 'px' ) && false === strpos( $when, 'dppx' ) ) ? absint( $when ) . 'px' : $when;
+			$query_array[] = "({$what}: $when)";
+		}
+
+		// If we've got multiple queries, then need to be separated using a comma.
+		if ( ! empty( $master_query_array ) ) {
+			$query = implode( ', ', $master_query_array );
+		}
+		// If we don't have multiple queries we need to separate arguments with "and".
+		$query = ( ! $query ) ? implode( ' and ', $query_array ) : $query;
+
+		if ( $add_media ) {
+			return '@media ' . $query;
+		}
+		return $query;
+	}
+
+	/**
+	 * Enqueues media-query styles if needed.
+	 *
+	 * @access public
+	 * @since 5.6
+	 * @return void
+	 */
+	public function enqueue_media_query_styles() {
+		// No reason to proceed any further if we're including the files inside the compiler.
+		if ( '0' === Avada()->settings->get( 'media_queries_async' ) ) {
+			return;
+		}
+		$media_queries = array();
+		foreach ( self::$media_query_assets as $asset ) {
+			if ( ! isset( $media_queries[ $asset[4] ] ) ) {
+				$media_queries[ $asset[4] ] = array();
+			}
+			$media_queries[ $asset[4] ][] = $asset;
+		}
+
+		foreach ( $media_queries as $media_query ) {
+			if ( ! isset( $media_query[1] ) ) {
+				// We only have 1 asset for this media-query. Enqueue it.
+				wp_enqueue_style( $media_query[0][0], $media_query[0][1], $media_query[0][2], $media_query[0][3], $media_query[0][4] );
+				continue;
+			}
+			$handles = array();
+			$paths   = array();
+			$deps    = array();
+			$ver     = '';
+			$query   = '';
+			foreach ( $media_query as $asset ) {
+				$handles[] = $asset[0];
+				$paths[]   = str_replace( array( '.min.min.css', '.css' ), '', str_replace( get_template_directory_uri() . '/assets/css/media/', '', $asset[1] ) );
+				$deps      = array_merge( $deps, $asset[2] );
+				$ver       = $asset[3];
+				$query     = $asset[4];
+			}
+			$handle = 'avada-' . str_replace( 'avada-', '-', implode( '-', $handles ) );
+			$handle = str_replace( array( '_', '--' ), '-', $handle );
+			$url    = add_query_arg(
+				array(
+					'action' => 'avada-get-styles',
+					'mq'     => implode( ',', $paths ),
+				),
+				get_site_url()
+			);
+			wp_enqueue_style( $handle, $url, $deps, $ver, $query );
+		}
+	}
+
+	/**
+	 * Get combine media-query files.
+	 *
+	 * @access private
+	 * @since 5.6
+	 * @return void
+	 */
+	private function combine_media_query_files() {
+
+		if ( ! isset( $_GET['action'] ) || 'avada-get-styles' !== sanitize_text_field( wp_unslash( $_GET['action'] ) ) ) {
+			return;
+		}
+
+		// Output as CSS file.
+		header( 'Content-type: text/css', true );
+
+		$styles = explode( ',', $_GET['mq'] ); // WPCS: CSRF ok sanitization ok.
+		foreach ( $styles as $style ) {
+			$style = trim( $style );
+			if ( file_exists( Avada::$template_dir_path . "/assets/css/media/{$style}.min.css" ) ) {
+				include_once Avada::$template_dir_path . "/assets/css/media/{$style}.min.css";
+			} elseif ( file_exists( Avada::$template_dir_path . "/assets/css/media/{$style}.css" ) ) {
+				include_once Avada::$template_dir_path . "/assets/css/media/{$style}.css";
+			}
+		}
+		exit();
+	}
+
+	/**
+	 * Adds media-query styles to the compiler if needed.
+	 *
+	 * @access public
+	 * @since 5.6
+	 * @param string $styles The css styles where we'll be adding our compiled styles.
+	 * @return string
+	 */
+	public function compile_media_query_styles( $styles ) {
+		// No reason to proceed any further if we're including the files inside the compiler.
+		if ( '1' === Avada()->settings->get( 'media_queries_async' ) ) {
+			return $styles;
+		}
+		$template_dir_url  = get_template_directory_uri();
+		$template_dir_path = get_template_directory();
+		foreach ( self::$media_query_assets as $asset ) {
+			// The file-path.
+			$path    = wp_normalize_path( str_replace( $template_dir_url, $template_dir_path, $asset[1] ) );
+			// Add the contents of the file to $styles.
+			$styles .= '@media ' . $asset[4] . '{';
+			$styles .= file_get_contents( $path );
+			$styles .= '}';
+		}
+		return $styles;
+	}
+
+	/**
+	 * Adds media-query styles.
+	 *
+	 * @access public
+	 * @since 6.0.0
+	 */
+	public function add_media_query_styles() {
+		$side_header_breakpoint = Avada()->settings->get( 'side_header_break_point' );
+		if ( ! $side_header_breakpoint ) {
+			$side_header_breakpoint = 800;
+		}
+
+		if ( '0' === Avada()->settings->get( 'responsive' ) || 0 === Avada()->settings->get( 'responsive' ) || ! Avada()->settings->get( 'responsive' ) ) {
+			self::$media_query_assets[] = array(
+				'avada-max-shbp-not-responsive',
+				get_template_directory_uri() . '/assets/css/media/max-shbp-not-responsive.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => (int) $side_header_breakpoint . 'px',
+					)
+				),
+			);
+
+			self::$media_query_assets[] = array(
+				'avada-max-shbp-18-not-responsive',
+				get_template_directory_uri() . '/assets/css/media/max-shbp-18-not-responsive.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => (int) $side_header_breakpoint - 18 . 'px',
+					)
+				),
+			);
+			return;
+		}
+
+		// Responsive mode.
+		$side_header_width = ( 'Top' === Avada()->settings->get( 'header_position' ) ) ? 0 : (int) Avada()->settings->get( 'side_header_width' );
+
+		// # Grid System.
+		$main_break_point = (int) Avada()->settings->get( 'grid_main_break_point' );
+		if ( 640 < $main_break_point ) {
+			$breakpoint_range = $main_break_point - 640;
+		} else {
+			$breakpoint_range = 360;
+		}
+
+		$breakpoint_interval = (int) ( $breakpoint_range / 5 );
+
+		$six_columns_breakpoint   = $main_break_point + $side_header_width;
+		$five_columns_breakpoint  = $six_columns_breakpoint - $breakpoint_interval;
+		$four_columns_breakpoint  = $five_columns_breakpoint - $breakpoint_interval;
+		$three_columns_breakpoint = $four_columns_breakpoint - $breakpoint_interval;
+		$two_columns_breakpoint   = $three_columns_breakpoint - $breakpoint_interval;
+		$one_column_breakpoint    = $two_columns_breakpoint - $breakpoint_interval;
+
+		self::$media_query_assets[] = array(
+			'avada-max-1c',
+			get_template_directory_uri() . '/assets/css/media/max-1c.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'max-width' => $one_column_breakpoint . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-max-2c',
+			get_template_directory_uri() . '/assets/css/media/max-2c.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'max-width' => $two_columns_breakpoint . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-min-2c-max-3c',
+			get_template_directory_uri() . '/assets/css/media/min-2c-max-3c.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'min-width' => $two_columns_breakpoint . 'px',
+					'max-width' => $three_columns_breakpoint . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-min-3c-max-4c',
+			get_template_directory_uri() . '/assets/css/media/min-3c-max-4c.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'min-width' => $three_columns_breakpoint . 'px',
+					'max-width' => $four_columns_breakpoint . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-min-4c-max-5c',
+			get_template_directory_uri() . '/assets/css/media/min-4c-max-5c.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'min-width' => $four_columns_breakpoint . 'px',
+					'max-width' => $five_columns_breakpoint . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-min-5c-max-6c',
+			get_template_directory_uri() . '/assets/css/media/min-5c-max-6c.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'min-width' => $five_columns_breakpoint . 'px',
+					'max-width' => $six_columns_breakpoint . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-min-shbp',
+			get_template_directory_uri() . '/assets/css/media/min-shbp.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'min-width' => (int) $side_header_breakpoint . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-max-shbp',
+			get_template_directory_uri() . '/assets/css/media/max-shbp.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'max-width' => (int) $side_header_breakpoint . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-max-sh-shbp',
+			get_template_directory_uri() . '/assets/css/media/max-sh-shbp.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'max-width' => (int) ( $side_header_width + $side_header_breakpoint ) . 'px',
+				)
+			),
+		);
+
+		// IPAD.
+		self::$media_query_assets[] = array(
+			'avada-min-768-max-1024-p',
+			get_template_directory_uri() . '/assets/css/media/min-768-max-1024-p.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'min-device-width' => '768px',
+					'max-device-width' => '1024px',
+					'orientation'      => 'portrait',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-min-768-max-1024-l',
+			get_template_directory_uri() . '/assets/css/media/min-768-max-1024-l.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'min-device-width' => '768px',
+					'max-device-width' => '1024px',
+					'orientation'      => 'landscape',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-max-sh-cbp',
+			get_template_directory_uri() . '/assets/css/media/max-sh-cbp.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'max-width' => (int) ( $side_header_width + Avada()->settings->get( 'content_break_point' ) ) . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-max-sh-sbp',
+			get_template_directory_uri() . '/assets/css/media/max-sh-sbp.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'max-width' => (int) ( $side_header_width + Avada()->settings->get( 'sidebar_break_point' ) ) . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-max-sh-640',
+			get_template_directory_uri() . '/assets/css/media/max-sh-640.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'max-width' => (int) ( $side_header_width + 640 ) . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-max-shbp-18',
+			get_template_directory_uri() . '/assets/css/media/max-shbp-18.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'max-width' => (int) ( $side_header_breakpoint - 18 ) . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-max-shbp-32',
+			get_template_directory_uri() . '/assets/css/media/max-shbp-32.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'max-width' => (int) ( $side_header_breakpoint - 32 ) . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-min-sh-cbp',
+			get_template_directory_uri() . '/assets/css/media/min-sh-cbp.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'min-width' => (int) ( $side_header_width + Avada()->settings->get( 'content_break_point' ) ) . 'px',
+				)
+			),
+		);
+
+		self::$media_query_assets[] = array(
+			'avada-max-640',
+			get_template_directory_uri() . '/assets/css/media/max-640.min.css',
+			array(),
+			self::$version,
+			self::get_media_query(
+				array(
+					'max-device-width' => '640px',
+				)
+			),
+		);
+
+		// bbPress.
+		if ( function_exists( 'is_bbpress' ) ) {
+			self::$media_query_assets[] = array(
+				'avada-max-640-bbpress',
+				get_template_directory_uri() . '/assets/css/media/max-640-bbpress.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => '640px',
+					)
+				),
+			);
+
+			self::$media_query_assets[] = array(
+				'avada-max-sh-640-bbpress',
+				get_template_directory_uri() . '/assets/css/media/max-sh-640-bbpress.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => (int) ( $side_header_width + 640 ) . 'px',
+					)
+				),
+			);
+
+			self::$media_query_assets[] = array(
+				'avada-max-sh-cbp-bbpress',
+				get_template_directory_uri() . '/assets/css/media/max-sh-cbp-bbpress.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => (int) ( $side_header_width + Avada()->settings->get( 'content_break_point' ) ) . 'px',
+					)
+				),
+			);
+
+			self::$media_query_assets[] = array(
+				'avada-min-sh-cbp-bbpress',
+				get_template_directory_uri() . '/assets/css/media/min-sh-cbp-bbpress.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'min-width' => (int) ( $side_header_width + Avada()->settings->get( 'content_break_point' ) ) . 'px',
+					)
+				),
+			);
+		}
+
+		// Gravity Forms.
+		if ( class_exists( 'GFForms' ) ) {
+			self::$media_query_assets[] = array(
+				'avada-max-640-gravity',
+				get_template_directory_uri() . '/assets/css/media/max-640-gravity.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => '640px',
+					)
+				),
+			);
+
+			self::$media_query_assets[] = array(
+				'avada-max-sh-cbp-gravity',
+				get_template_directory_uri() . '/assets/css/media/max-sh-cbp-gravity.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => (int) ( $side_header_width + Avada()->settings->get( 'content_break_point' ) ) . 'px',
+					)
+				),
+			);
+		}
+
+		// WPCF7.
+		if ( defined( 'WPCF7_PLUGIN' ) ) {
+			self::$media_query_assets[] = array(
+				'avada-max-sh-cbp-cf7',
+				get_template_directory_uri() . '/assets/css/media/max-sh-cbp-cf7.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => (int) ( $side_header_width + Avada()->settings->get( 'content_break_point' ) ) . 'px',
+					)
+				),
+			);
+		}
+
+		// LayerSlider & RevSlider.
+		if ( defined( 'LS_PLUGIN_SLUG' ) || defined( 'RS_PLUGIN_PATH' ) ) {
+			self::$media_query_assets[] = array(
+				'avada-max-640-sliders',
+				get_template_directory_uri() . '/assets/css/media/max-640-sliders.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => '640px',
+					)
+				),
+			);
+
+			self::$media_query_assets[] = array(
+				'avada-max-sh-cbp-sliders',
+				get_template_directory_uri() . '/assets/css/media/max-sh-cbp-sliders.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => (int) ( $side_header_width + Avada()->settings->get( 'content_break_point' ) ) . 'px',
+					)
+				),
+			);
+		}
+
+		// Elastic Slider.
+		if ( Avada()->settings->get( 'status_eslider' ) ) {
+			self::$media_query_assets[] = array(
+				'avada-max-sh-cbp-eslider',
+				get_template_directory_uri() . '/assets/css/media/max-sh-cbp-eslider.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => (int) ( $side_header_width + Avada()->settings->get( 'content_break_point' ) ) . 'px',
+					)
+				),
+			);
+		}
+
+		// CSS only added for the admin-bar.
+		if ( is_admin_bar_showing() ) {
+			self::$media_query_assets[] = array(
+				'avada-max-782-adminbar',
+				get_template_directory_uri() . '/assets/css/media/max-782-adminbar.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => '782px',
+					)
+				),
+			);
+		}
+
+		// WooCommerce.
+		if ( class_exists( 'WooCommerce' ) ) {
+			self::$media_query_assets[] = array(
+				'avada-min-768-max-1024-woo',
+				get_template_directory_uri() . '/assets/css/media/min-768-max-1024-woo.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'min-device-width' => '768px',
+						'max-device-width' => '1024px',
+					)
+				),
+			);
+
+			self::$media_query_assets[] = array(
+				'avada-max-sh-640-woo',
+				get_template_directory_uri() . '/assets/css/media/max-sh-640-woo.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => (int) ( $side_header_width + 640 ) . 'px',
+					)
+				),
+			);
+
+			self::$media_query_assets[] = array(
+				'avada-max-sh-cbp-woo',
+				get_template_directory_uri() . '/assets/css/media/max-sh-cbp-woo.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => (int) ( $side_header_width + Avada()->settings->get( 'content_break_point' ) ) . 'px',
+					)
+				),
+			);
+
+			self::$media_query_assets[] = array(
+				'avada-min-sh-cbp-woo',
+				get_template_directory_uri() . '/assets/css/media/min-sh-cbp-woo.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'min-width' => (int) ( $side_header_width + Avada()->settings->get( 'content_break_point' ) ) . 'px',
+					)
+				),
+			);
+		}
+
+		// Events Calendar.
+		if ( class_exists( 'Tribe__Events__Main' ) ) {
+			self::$media_query_assets[] = array(
+				'avada-max-768-ec',
+				get_template_directory_uri() . '/assets/css/media/max-768-ec.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => '768px',
+					)
+				),
+			);
+			self::$media_query_assets[] = array(
+				'avada-max-sh-cbp-ec',
+				get_template_directory_uri() . '/assets/css/media/max-sh-cbp-ec.min.css',
+				array(),
+				self::$version,
+				self::get_media_query(
+					array(
+						'max-width' => (int) ( $side_header_width + Avada()->settings->get( 'content_break_point' ) ) . 'px',
+					)
+				),
+			);
+		}
 	}
 
 	/**

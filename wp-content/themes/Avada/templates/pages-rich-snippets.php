@@ -35,8 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php echo esc_attr( get_the_modified_time( 'c' ) ); ?>
 		</span>
 	<?php endif; ?>
-
-<?php
+	<?php
 endif;
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

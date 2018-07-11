@@ -281,6 +281,7 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 
 						$tooltip = $value;
 						$tooltip = ( 'googleplus' === $tooltip ) ? 'Google+' : $tooltip;
+						$tooltip = ( 'linkedin' === $tooltip ) ? 'LinkedIn' : $tooltip;
 					} else {
 						$tooltip = $value['network_name'];
 					}
@@ -290,7 +291,7 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 
 					if ( 'brand' === $instance['color_type'] ) {
 						// If not custom social icon.
-						if ( is_string( $value ) ) {
+						if ( is_string( $value ) && 0 !== strpos( $value, 'custom_' ) ) {
 							// Get a list of all the available social networks.
 							$social_icon_boxed_colors  = Fusion_Data::fusion_social_icons( false, true );
 							$social_icon_boxed_colors['googleplus'] = array(
@@ -424,7 +425,7 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 
 		if ( 0 < count( self::$custom_icons ) ) {
 			foreach ( self::$custom_icons as $key => $value ) {
-				$instance[ $key . '_link' ] = $new_instance[ $key . '_link' ];
+				$instance[ $key . '_link' ] = isset( $new_instance[ $key . '_link' ] ) ? $new_instance[ $key . '_link' ] : '';
 			}
 		}
 

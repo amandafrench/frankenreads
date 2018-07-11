@@ -139,13 +139,15 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 				$link_after = '</span><span class="arrow"></span>';
 			}
 
-			$html    .= wp_list_pages( array(
-				'title_li'    => '',
-				'child_of'    => $parent_page,
-				'link_before' => $link_before,
-				'link_after'  => $link_after,
-				'echo'        => 0,
-			));
+			$html    .= wp_list_pages(
+				array(
+					'title_li'    => '',
+					'child_of'    => $parent_page,
+					'link_before' => $link_before,
+					'link_after'  => $link_after,
+					'echo'        => 0,
+				)
+			);
 
 			$html    .= '</ul></nav>';
 
@@ -310,10 +312,8 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 					<option value="<?php echo esc_attr( key( $pages ) ); ?>" <?php selected( $parent_page, key( $pages ) ); ?>>
 						<?php echo esc_html( $page ); ?>
 					</option>
-				<?php
-				next( $pages );
-			endwhile;
-			?>
+					<?php next( $pages ); ?>
+				<?php endwhile; ?>
 			</select>
 		</p>
 

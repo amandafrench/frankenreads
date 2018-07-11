@@ -403,12 +403,97 @@ function avada_options_section_footer( $sections ) {
 							),
 						),
 					),
+					'footer_divider_line' => array(
+						'label'       => esc_html__( 'Footer Widgets Area Vertical Divider Line', 'Avada' ),
+						'description' => esc_html__( 'Turn on to have the footer widget area display vertical divider line between columns.', 'Avada' ),
+						'id'          => 'footer_divider_line',
+						'default'     => '0',
+						'type'        => 'switch',
+						'class'       => 'fusion-or-gutter',
+						'required'    => array(
+							array(
+								'setting'  => 'footer_widgets',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
+					'footer_divider_line_size' => array(
+						'label'       => esc_html__( 'Footer Widgets Area Vertical Divider Line Size', 'Avada' ),
+						'description' => esc_html__( 'Controls the size of the vertical divider line between footer widget area columns.', 'Avada' ),
+						'id'          => 'footer_divider_line_size',
+						'default'     => '1',
+						'type'        => 'slider',
+						'choices'     => array(
+							'min'  => '0',
+							'max'  => '50',
+							'step' => '1',
+						),
+						'required'    => array(
+							array(
+								'setting'  => 'footer_widgets',
+								'operator' => '==',
+								'value'    => '1',
+							),
+							array(
+								'setting'  => 'footer_divider_line',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
+					'footer_divider_line_style' => array(
+						'label'       => esc_html__( 'Footer Widgets Area Vertical Divider Line Style', 'Avada' ),
+						'description' => esc_html__( 'Controls the style of the vertical divider line between footer widget area columns.', 'Avada' ),
+						'id'          => 'footer_divider_line_style',
+						'default'     => 'solid',
+						'choices'     => array(
+							'none'      => esc_html__( 'None', 'fusion-builder' ),
+							'solid'     => esc_html__( 'Solid', 'fusion-builder' ),
+							'dashed'    => esc_html__( 'Dashed', 'fusion-builder' ),
+							'dotted'    => esc_html__( 'Dotted', 'fusion-builder' ),
+							'double'    => esc_html__( 'Double', 'fusion-builder' ),
+							'groove'    => esc_html__( 'Groove', 'fusion-builder' ),
+							'ridge'     => esc_html__( 'Ridge', 'fusion-builder' ),
+						),
+						'type'        => 'select',
+						'required'    => array(
+							array(
+								'setting'  => 'footer_widgets',
+								'operator' => '==',
+								'value'    => '1',
+							),
+							array(
+								'setting'  => 'footer_divider_line',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
 					'footer_divider_color' => array(
 						'label'       => esc_html__( 'Footer Widget Divider Color', 'Avada' ),
-						'description' => esc_html__( 'Controls the divider color in the footer widgets.', 'Avada' ),
+						'description' => esc_html__( 'Controls the divider color in the footer widgets and also the vertical divider lines between widget areas.', 'Avada' ),
 						'id'          => 'footer_divider_color',
 						'default'     => '#505152',
 						'type'        => 'color-alpha',
+						'required'    => array(
+							array(
+								'setting'  => 'footer_widgets',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
+					'footer_widgets_padding' => array(
+						'label'       => esc_html__( 'Footer Widgets Area Padding', 'Avada' ),
+						'description' => esc_html__( 'Controls the right/left padding for the footer widget areas.', 'Avada' ),
+						'id'          => 'footer_widgets_padding',
+						'default'     => '15px',
+						'type'        => 'dimension',
+						'choices'     => array(
+							'units' => array( 'px', '%' ),
+						),
+						'class'       => 'fusion-or-gutter',
 						'required'    => array(
 							array(
 								'setting'  => 'footer_widgets',

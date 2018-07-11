@@ -186,6 +186,44 @@ jQuery( window ).load( function() {
 		if ( '.widget-inside' === itemWrapEl  && 'auto' !== jQuery( this ).closest( '.widget' ).css( 'z-index' ) ) {
 			jQuery( this ).closest( '.widget' ).css( 'z-index', '99999' );
 		}
+
+		$rangeSlider = jQuery( $modal ).find( '.fusion-builder-option.avada-range .fusion-slider-container' );
+
+		if ( $rangeSlider.length ) {
+
+			// Counter variable for sliders
+			$i = 0;
+
+			// Method for retreiving decimal places from step
+			Number.prototype.countDecimals = function() {
+				if ( Math.floor( this.valueOf() ) === this.valueOf() ) {
+					return 0;
+				}
+				return this.toString().split( '.' )[1].length || 0;
+			};
+
+			// Each slider on page, determine settings and create slider
+			$rangeSlider.each( function() {
+
+				var $targetId     = jQuery( this ).data( 'id' ),
+					$rangeInput   = jQuery( this ).prev( '.fusion-slider-input' ),
+					$min          = jQuery( this ).data( 'min' ),
+					$max          = jQuery( this ).data( 'max' ),
+					$step         = jQuery( this ).data( 'step' ),
+					$direction    = jQuery( this ).data( 'direction' ),
+					$value        = $rangeInput.val(),
+					$decimals     = $step.countDecimals(),
+					$rangeDefault = ( jQuery( this ).parents( '.fusion-builder-option' ).find( '.fusion-range-default' ).length ) ? jQuery( this ).parents( '.fusion-builder-option' ).find( '.fusion-range-default' ) : false,
+					$hiddenValue  = ( $rangeDefault ) ? jQuery( this ).parent().find( '.fusion-hidden-value' ) : false,
+					$defaultValue = ( $rangeDefault ) ? jQuery( this ).parents( '.fusion-builder-option' ).find( '.fusion-range-default' ).data( 'default' ) : false;
+
+				createSlider( $i, $targetId, $rangeInput, $min, $max, $step, $value, $decimals, $rangeDefault, $hiddenValue, $defaultValue, $direction );
+
+				$i++;
+			} );
+
+		}
+
 	} );
 
 	// On cancel.
@@ -219,6 +257,11 @@ jQuery( window ).load( function() {
 			jQuery( this ).closest( '.widget' ).css( 'z-index', '100' );
 		}
 
+		if ( 'undefined' !== typeof $rangeSlider && 0 < $rangeSlider.length ) {
+			$rangeSlider.each( function() {
+				this.noUiSlider.destroy();
+			} );
+		}
 		jQuery( '.fusion-builder-option .wp-color-picker' ).wpColorPicker( 'close' );
 		jQuery( '.fusion-builder-option select.select2-hidden-accessible' ).selectWoo( 'destroy' );
 		jQuery( '.fusion-active' ).removeClass( 'fusion-active' );
@@ -237,6 +280,11 @@ jQuery( window ).load( function() {
 			jQuery( this ).closest( '.widget' ).css( 'z-index', '100' );
 		}
 
+		if ( 'undefined' !== typeof $rangeSlider && 0 < $rangeSlider.length ) {
+			$rangeSlider.each( function() {
+				this.noUiSlider.destroy();
+			} );
+		}
 		jQuery( '.fusion-builder-option .wp-color-picker' ).wpColorPicker( 'close' );
 		jQuery( '.fusion-builder-option select.select2-hidden-accessible' ).selectWoo( 'destroy' );
 		jQuery( '.fusion-active' ).removeClass( 'fusion-active' );
@@ -245,6 +293,89 @@ jQuery( window ).load( function() {
 		jQuery( 'body' ).removeClass( 'fusion_builder_no_scroll' );
 		jQuery( '.fusion-menu-clone' ).html( '' );
 	} );
+
+
+	function createSlider( $slide, $targetId, $rangeInput, $min, $max, $step, $value, $decimals, $rangeDefault, $hiddenValue, $defaultValue, $direction ) {
+
+		// Create slider with values passed on in data attributes.
+		var $slider = noUiSlider.create( $rangeSlider[ $slide ], {
+				start: [ $value ],
+				step: $step,
+				direction: $direction,
+				range: {
+					'min': $min,
+					'max': $max
+				},
+				format: wNumb( {
+					decimals: $decimals
+				} )
+			} ),
+			$notFirst = false;
+
+		// Check if default is currently set.
+		if ( $rangeDefault && '' === $hiddenValue.val() ) {
+			$rangeDefault.parent().addClass( 'checked' );
+		}
+
+		// If this range has a default option then if checked set slider value to data-value.
+		if ( $rangeDefault ) {
+			$rangeDefault.on( 'click', function( e ) {
+				e.preventDefault();
+				$rangeSlider[$slide].noUiSlider.set( $defaultValue );
+				$hiddenValue.val( '' );
+				jQuery( this ).parent().addClass( 'checked' );
+
+				// Specific for Widget modals.
+				if ( '.widget-inside' === itemWrapEl ) {
+					jQuery( this ).closest( '.widget' ).find( '.widget-control-save' ).prop( 'disabled', false );
+				}
+			} );
+		}
+
+		// On slider move, update input
+		$slider.on( 'update', function( values, handle ) {
+			if ( $rangeDefault && $notFirst ) {
+				$rangeDefault.parent().removeClass( 'checked' );
+				$hiddenValue.val( values[handle] );
+			}
+			$notFirst = true;
+			jQuery( this.target ).closest( '.fusion-slider-container' ).prev().val( values[handle] );
+			jQuery( '#' + $targetId ).trigger( 'change' );
+			if ( jQuery( '#' + $targetId ).length ) {
+				jQuery( '#' + $targetId ).trigger( 'fusion-changed' );
+			} else {
+				jQuery( '#slider' + $targetId ).trigger( 'fusion-changed' );
+			}
+
+			// Specific for Widget modals.
+			if ( '.widget-inside' === itemWrapEl ) {
+				jQuery( this.target ).closest( '.widget' ).find( '.widget-control-save' ).prop( 'disabled', false );
+
+				if ( '0' === jQuery( this.target ).siblings( '.fusion-slider-input' ).val() ) {
+					jQuery( this.target ).closest( '.fusion-options-holder' ).addClass( 'fusion-widget-no-border' );
+				} else {
+					jQuery( this.target ).closest( '.fusion-options-holder' ).removeClass( 'fusion-widget-no-border' );
+				}
+			}
+		} );
+
+		// On manual input change, update slider position
+		$rangeInput.on( 'keyup', function( values, handle ) {
+			if ( $rangeDefault ) {
+				$rangeDefault.parent().removeClass( 'checked' );
+				$hiddenValue.val( values[handle] );
+
+				// Specific for Widget modals.
+				if ( '.widget-inside' === itemWrapEl ) {
+					jQuery( this ).closest( '.widget' ).find( '.widget-control-save' ).prop( 'disabled', false );
+				}
+			}
+
+			if ( this.value !== $rangeSlider[$slide].noUiSlider.get() ) {
+				$rangeSlider[$slide].noUiSlider.set( this.value );
+			}
+		} );
+	}
 } );
 
 

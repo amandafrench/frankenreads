@@ -253,7 +253,7 @@ class Avada_Admin {
 
 		global $wp_admin_bar, $avada_patcher;
 
-		if ( current_user_can( 'edit_theme_options' ) ) {
+		if ( current_user_can( 'switch_themes' ) ) {
 
 			$registration_complete = false;
 			$token = Avada()->registration->get_token();
@@ -312,7 +312,7 @@ class Avada_Admin {
 
 		global $wp_admin_bar;
 
-		if ( current_user_can( 'edit_theme_options' ) ) {
+		if ( current_user_can( 'switch_themes' ) ) {
 			if ( ! is_super_admin() || ! is_admin_bar_showing() ) {
 				return;
 			}
@@ -354,7 +354,7 @@ class Avada_Admin {
 		global $submenu;
 
 		// Change Avada to Welcome.
-		if ( current_user_can( 'edit_theme_options' ) ) {
+		if ( current_user_can( 'switch_themes' ) ) {
 			$submenu['avada'][0][0] = esc_attr__( 'Welcome', 'Avada' );
 		}
 
@@ -397,7 +397,7 @@ class Avada_Admin {
 	 * @return void
 	 */
 	public function activation_redirect() {
-		if ( current_user_can( 'edit_theme_options' ) ) {
+		if ( current_user_can( 'switch_themes' ) ) {
 			// Do not redirect if a migration is needed for Avada 5.0.0.
 			if ( true === Fusion_Builder_Migrate::needs_migration() ) {
 				return;
@@ -415,7 +415,7 @@ class Avada_Admin {
 	 */
 	public function admin_init() {
 
-		if ( current_user_can( 'edit_theme_options' ) ) {
+		if ( current_user_can( 'switch_themes' ) ) {
 
 			if ( isset( $_GET['avada-deactivate'] ) && 'deactivate-plugin' === $_GET['avada-deactivate'] ) {
 				check_admin_referer( 'avada-deactivate', 'avada-deactivate-nonce' );
@@ -454,7 +454,7 @@ class Avada_Admin {
 	 */
 	public function ajax_activate_plugin() {
 
-		if ( current_user_can( 'edit_theme_options' ) ) {
+		if ( current_user_can( 'switch_themes' ) ) {
 
 			if ( isset( $_GET['avada_activate'] ) && 'activate-plugin' === $_GET['avada_activate'] ) {
 
@@ -504,7 +504,7 @@ class Avada_Admin {
 	 */
 	public function ajax_install_plugin() {
 
-		if ( current_user_can( 'edit_theme_options' ) ) {
+		if ( current_user_can( 'switch_themes' ) ) {
 
 			if ( isset( $_GET['avada_activate'] ) && 'activate-plugin' === $_GET['avada_activate'] ) {
 
@@ -540,7 +540,7 @@ class Avada_Admin {
 	 */
 	public function admin_menu() {
 
-		if ( current_user_can( 'edit_theme_options' ) ) {
+		if ( current_user_can( 'switch_themes' ) ) {
 
 			$plugins_callback = array( $this, 'plugins_tab' );
 			if ( isset( $_GET['tgmpa-install'] ) || isset( $_GET['tgmpa-update'] ) ) {
@@ -553,21 +553,21 @@ class Avada_Admin {
 			$avada_menu_page_creation_method    = 'add_menu_page';
 			$avada_submenu_page_creation_method = 'add_submenu_page';
 
-			$welcome_screen = $avada_menu_page_creation_method( 'Avada', 'Avada', 'edit_theme_options', 'avada', array( $this, 'welcome_screen' ), 'dashicons-fusiona-logo', '2.111111' );
+			$welcome_screen = $avada_menu_page_creation_method( 'Avada', 'Avada', 'switch_themes', 'avada', array( $this, 'welcome_screen' ), 'dashicons-fusiona-logo', '2.111111' );
 
 			if ( ! defined( 'ENVATO_HOSTED_SITE' ) ) {
 				$registration  = $avada_submenu_page_creation_method( 'avada', esc_attr__( 'Registration', 'Avada' ), esc_attr__( 'Registration', 'Avada' ), 'manage_options', 'avada-registration', array( $this, 'registration_tab' ) );
 				$support       = $avada_submenu_page_creation_method( 'avada', esc_attr__( 'Support', 'Avada' ), esc_attr__( 'Support', 'Avada' ), 'manage_options', 'avada-support', array( $this, 'support_tab' ) );
 			}
 
-			$faqs          = $avada_submenu_page_creation_method( 'avada', esc_attr__( 'FAQ', 'Avada' ), esc_attr__( 'FAQ', 'Avada' ), 'edit_theme_options', 'avada-faq', array( $this, 'faq_tab' ) );
+			$faqs          = $avada_submenu_page_creation_method( 'avada', esc_attr__( 'FAQ', 'Avada' ), esc_attr__( 'FAQ', 'Avada' ), 'switch_themes', 'avada-faq', array( $this, 'faq_tab' ) );
 			$demos         = $avada_submenu_page_creation_method( 'avada', esc_attr__( 'Demos', 'Avada' ), esc_attr__( 'Demos', 'Avada' ), 'manage_options', 'avada-demos', array( $this, 'demos_tab' ) );
 			$plugins       = $avada_submenu_page_creation_method( 'avada', esc_attr__( 'Plugins', 'Avada' ), esc_attr__( 'Plugins', 'Avada' ), 'install_plugins', 'avada-plugins', $plugins_callback );
-			$status        = $avada_submenu_page_creation_method( 'avada', esc_attr__( 'System Status', 'Avada' ), esc_attr__( 'System Status', 'Avada' ), 'edit_theme_options', 'avada-system-status', array( $this, 'system_status_tab' ) );
-			$theme_options = $avada_submenu_page_creation_method( 'avada', esc_attr__( 'Theme Options', 'Avada' ), esc_attr__( 'Theme Options', 'Avada' ), 'edit_theme_options', 'themes.php?page=avada_options' );
+			$status        = $avada_submenu_page_creation_method( 'avada', esc_attr__( 'System Status', 'Avada' ), esc_attr__( 'System Status', 'Avada' ), 'switch_themes', 'avada-system-status', array( $this, 'system_status_tab' ) );
+			$theme_options = $avada_submenu_page_creation_method( 'avada', esc_attr__( 'Theme Options', 'Avada' ), esc_attr__( 'Theme Options', 'Avada' ), 'switch_themes', 'themes.php?page=avada_options' );
 
 			if ( ! class_exists( 'FusionReduxFrameworkPlugin' ) ) {
-				$theme_options_global = $avada_submenu_page_creation_method( 'themes.php', esc_attr__( 'Theme Options', 'Avada' ), esc_attr__( 'Theme Options', 'Avada' ), 'edit_theme_options', 'themes.php?page=avada_options' );
+				$theme_options_global = $avada_submenu_page_creation_method( 'themes.php', esc_attr__( 'Theme Options', 'Avada' ), esc_attr__( 'Theme Options', 'Avada' ), 'switch_themes', 'themes.php?page=avada_options' );
 			}
 
 			add_action( 'admin_print_scripts-' . $welcome_screen, array( $this, 'welcome_screen_scripts' ) );
@@ -732,7 +732,7 @@ class Avada_Admin {
 	 */
 	public function admin_styles() {
 		?>
-		<?php if ( current_user_can( 'edit_theme_options' ) ) : ?>
+		<?php if ( current_user_can( 'switch_themes' ) ) : ?>
 			<style type="text/css">
 				@media screen and (max-width: 782px) {
 					#wp-toolbar > ul > .avada-menu {
@@ -777,7 +777,7 @@ class Avada_Admin {
 	 * @return void
 	 */
 	public function admin_scripts() {
-		if ( current_user_can( 'edit_theme_options' ) ) {
+		if ( current_user_can( 'switch_themes' ) ) {
 			global $pagenow;
 
 			$version = Avada::get_theme_version();
@@ -801,6 +801,29 @@ class Avada_Admin {
 					Avada::$template_dir_url . '/assets/admin/js/selectWoo.full.min.js',
 					array( 'jquery' ),
 					'1.0.2'
+				);
+
+				// Range field assets.
+				wp_enqueue_style(
+					'avadaredux-nouislider-css',
+					FUSION_LIBRARY_URL . '/inc/redux/framework/FusionReduxCore/inc/fields/slider/vendor/nouislider/fusionredux.jquery.nouislider.css',
+					array(),
+					'5.0.0',
+					'all'
+				);
+				wp_enqueue_script(
+					'avadaredux-nouislider-js',
+					Avada::$template_dir_url . '/assets/admin/js/jquery.nouislider.min.js',
+					array( 'jquery' ),
+					'5.0.0',
+					true
+				);
+				wp_enqueue_script(
+					'wnumb-js',
+					Avada::$template_dir_url . '/assets/admin/js/wNumb.js',
+					array( 'jquery' ),
+					'1.0.2',
+					true
 				);
 				wp_enqueue_script( 'jquery-color' );
 				wp_enqueue_script( 'wp-color-picker' );
@@ -1554,7 +1577,7 @@ class Avada_Admin {
 			array(
 				'name' => __( 'Page Title Bar Height', 'Avada' ),
 				/* translators: The "Fusion Theme Options" link. */
-				'desc' => sprintf( esc_attr__( 'Set the height of the page title bar. In pixels ex: 100px. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_height' ) ),
+				'desc' => sprintf( esc_attr__( 'Controls the height of the page title bar on desktop. Enter value including any valid CSS unit besides %% which does not work for page title bar, ex: 87px. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_height' ) ),
 			)
 		);
 
@@ -1563,7 +1586,7 @@ class Avada_Admin {
 			array(
 				'name' => __( 'Page Title Bar Mobile Height', 'Avada' ),
 				/* translators: The "Fusion Theme Options" link. */
-				'desc' => sprintf( esc_attr__( 'Set the height of the page title bar on mobile. In pixels ex: 100px. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_mobile_height' ) ),
+				'desc' => sprintf( esc_attr__( 'Controls the height of the page title bar on mobile. Enter value including any valid CSS unit besides %% which does not work for page title bar, ex: 70px. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_mobile_height' ) ),
 			)
 		);
 

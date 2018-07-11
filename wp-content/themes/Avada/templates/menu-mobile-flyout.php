@@ -41,7 +41,7 @@ $header_content_3 = Avada()->settings->get( 'header_v4_content' );
 		</div>
 	<?php endif; ?>
 
-	<?php if ( ( 'v4' == Avada()->settings->get( 'header_layout' ) || 'Top' != Avada()->settings->get( 'header_position' ) ) && ( 'Tagline And Search' == $header_content_3 || 'Search' == $header_content_3 ) ) : ?>
+	<?php if ( Avada()->settings->get( 'mobile_menu_search' ) ) : ?>
 		<div class="fusion-flyout-search-toggle">
 			<div class="fusion-toggle-icon">
 				<div class="fusion-toggle-icon-line"></div>
@@ -62,7 +62,7 @@ $header_content_3 = Avada()->settings->get( 'header_v4_content' );
 	<?php endif; ?>
 </div>
 
-<?php if ( ( 'v4' == Avada()->settings->get( 'header_layout' ) || 'Top' != Avada()->settings->get( 'header_position' ) ) && ( 'Tagline And Search' == $header_content_3 || 'Search' == $header_content_3 ) ) : ?>
+<?php if ( Avada()->settings->get( 'mobile_menu_search' ) ) : ?>
 	<div class="fusion-flyout-search">
 		<?php get_search_form(); ?>
 	</div>

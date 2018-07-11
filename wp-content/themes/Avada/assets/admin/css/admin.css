@@ -1262,6 +1262,10 @@ span[class*=" fusiona-"] {
   border: 1px solid rgba(0, 0, 0, 0.05);
   min-height: 34px;
 }
+.nav-menus-php .option-field input[type="text"].fusion-slider-input,
+.widgets-php .option-field input[type="text"].fusion-slider-input {
+  width: 100px;
+}
 .nav-menus-php .fusion-builder-modal-settings-container .ui-button,
 .widgets-php .fusion-builder-modal-settings-container .ui-button {
   border-radius: 0;
@@ -1442,17 +1446,12 @@ span[class*=" fusiona-"] {
   width: 100%;
   margin: 10px 0 20px;
 }
+.widgets-php .fusion-options-holder.fusion-widget-no-border .fusion-builder-option.fusion-widget-fusion_border_style,
+.widgets-php .fusion-options-holder.fusion-widget-no-border .fusion-builder-option.fusion-widget-fusion_border_color {
+  display: none;
+}
 .widget input {
   border-color: #DFDFDF !important;
-}
-div#fusion_featured_images_info {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-div#fusion_featured_images_info button,
-div#fusion_featured_images_info h2 {
-  display: none;
 }
 .spinner.fusion-spinner.is-active {
   display: inline-block;

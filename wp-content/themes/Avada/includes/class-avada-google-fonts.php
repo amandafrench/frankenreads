@@ -144,7 +144,7 @@ final class Avada_Google_Fonts {
 	 * @access private
 	 */
 	private function loop_fields() {
-		$fields  = array(
+		$fields = array(
 			'footer_headings_typography',
 			'nav_typography',
 			'mobile_menu_typography',
@@ -315,8 +315,8 @@ final class Avada_Google_Fonts {
 
 		$this->remote_link = add_query_arg(
 			array(
-				'family' => str_replace( '%2B', '+', urlencode( implode( '|', $link_fonts ) ) ),
-				'subset' => urlencode( implode( ',', $this->subsets ) ),
+				'family' => str_replace( '%2B', '+', rawurlencode( implode( '|', $link_fonts ) ) ),
+				'subset' => rawurlencode( implode( ',', $this->subsets ) ),
 			), 'https://fonts.googleapis.com/css'
 		);
 	}
@@ -348,7 +348,7 @@ final class Avada_Google_Fonts {
 		$this->local_link = add_query_arg(
 			array(
 				'action' => 'get-gfonts',
-				'family' => str_replace( '%2B', '+', urlencode( implode( '|', $link_fonts ) ) ),
+				'family' => str_replace( '%2B', '+', rawurlencode( implode( '|', $link_fonts ) ) ),
 			), site_url()
 		);
 	}
@@ -362,12 +362,12 @@ final class Avada_Google_Fonts {
 	 */
 	public function the_local_fonts_css() {
 		$css = '';
-		if ( isset( $_GET['action'] ) && 'get-gfonts' === $_GET['action'] && isset( $_GET['family'] ) ) {
+		if ( isset( $_GET['action'] ) && 'get-gfonts' === sanitize_text_field( wp_unslash( $_GET['action'] ) ) && isset( $_GET['family'] ) ) { // WPCS: CSRF ok.
 
 			header( 'Content-type: text/css; charset: UTF-8' );
 
 			// Split font-families.
-			$families = explode( '|', sanitize_text_field( wp_unslash( $_GET['family'] ) ) );
+			$families = explode( '|', sanitize_text_field( wp_unslash( $_GET['family'] ) ) ); // WPCS: CSRF ok.
 
 			foreach ( $families as $family ) {
 
@@ -407,7 +407,7 @@ final class Avada_Google_Fonts {
 		// Get font-family + subsets.
 		foreach ( $this->fonts as $font => $variants ) {
 			$family = new Fusion_GFonts_Downloader( $font );
-			$css .= $family->get_fontface_css( $variants );
+			$css   .= $family->get_fontface_css( $variants );
 		}
 		return $css;
 	}

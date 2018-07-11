@@ -116,7 +116,7 @@ class Fusion_Widget_Flickr extends WP_Widget {
 
 			<?php // @codingStandardsIgnoreEnd ?>
 
-		<?php
+			<?php
 		endif;
 
 		echo $after_widget; // WPCS: XSS ok.
@@ -192,7 +192,7 @@ class Fusion_Widget_Flickr extends WP_Widget {
 			<small><?php printf( __( 'Default key is: %s', 'Avada' ), 'c9d2c2fda03a2ff487cb4769dc0781ea' ); // WPCS: XSS ok. ?></small>
 		</p>
 
-	<?php
+		<?php
 	}
 }
 

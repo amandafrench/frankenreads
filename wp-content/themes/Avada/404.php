@@ -77,7 +77,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 						 * @return string|false
 						 */
 						function fusion_error_page_menu_fallback( $error_page_menu_args ) {
-							$error_page_menu_args['theme_location'] = 'main_navigation';
+							if ( has_nav_menu( 'main_navigation' ) ) {
+								$error_page_menu_args['theme_location'] = 'main_navigation';
+							}
+
+							unset( $error_page_menu_args['fallback_cb'] );
 
 							return wp_nav_menu( $error_page_menu_args );
 						}

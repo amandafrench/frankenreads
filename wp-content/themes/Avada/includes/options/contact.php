@@ -185,6 +185,53 @@ function avada_options_section_contact( $sections ) {
 							),
 						),
 					),
+					'gmap_api_type' => array(
+						'label'           => esc_html__( 'Google API Type', 'Avada' ),
+						/* translators: "the Google Maps Users Guide" link. */
+						'description'     => sprintf( __( 'Select the Google API type that should be used to load your map. The JavaScript API allows for more options and custom styling, but could be charged for by Google depending on map loads, while the embed API can be used for free regardless of map loads. For more information please see the <a href="%s" target="_blank">Google Maps Users Guide</a>.', 'Avada' ), 'https://cloud.google.com/maps-platform/user-guide/' ),
+						'id'              => 'gmap_api_type',
+						'default'         => 'js',
+						'type'            => 'radio-buttonset',
+						'choices'         => array(
+							'js'    => esc_attr__( 'JS API', 'Avada' ),
+							'embed' => esc_attr__( 'Embed API', 'Avada' ),
+						),
+						'active_callback' => array( 'Avada_Options_Conditionals', 'is_contact' ),
+					),
+					'gmap_embed_address' => array(
+						'label'           => esc_html__( 'Address', 'Avada' ),
+						'description'     => esc_attr__( 'Add the address of the location you wish to display. Address example: 775 New York Ave, Brooklyn, Kings, New York 11203. If the location is off, please try to use long/lat coordinates. ex: 12.381068,-1.492711.', 'Avada' ),
+						'id'              => 'gmap_embed_address',
+						'default'         => '',
+						'type'            => 'text',
+						'active_callback' => array( 'Avada_Options_Conditionals', 'is_contact' ),
+						'required'    => array(
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'embed',
+							),
+						),
+					),
+					'gmap_embed_map_type' => array(
+						'label'           => esc_html__( 'Map Type', 'Avada' ),
+						'description'     => esc_attr__( 'Select the type of google map to display.', 'Avada' ),
+						'id'              => 'gmap_embed_map_type',
+						'default'         => 'roadmap',
+						'type'            => 'radio-buttonset',
+						'active_callback' => array( 'Avada_Options_Conditionals', 'is_contact' ),
+						'choices'     => array(
+							'roadmap'   => esc_html__( 'Roadmap', 'Avada' ),
+							'satellite' => esc_html__( 'Satellite', 'Avada' ),
+						),
+						'required'    => array(
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'embed',
+							),
+						),
+					),
 					'gmap_address' => array(
 						'label'           => esc_html__( 'Google Map Address', 'Avada' ),
 						'description'     => esc_html__( 'Add the address to the location you wish to display. Single address example: 775 New York Ave, Brooklyn, Kings, New York 11203. If the location is off, please try to use long/lat coordinates with latlng=. ex: latlng=12.381068,-1.492711. For multiple addresses, separate addresses by using the | symbol. ex: Address 1|Address 2|Address 3.', 'Avada' ),
@@ -197,6 +244,11 @@ function avada_options_section_contact( $sections ) {
 								'setting'  => 'status_gmap',
 								'operator' => '=',
 								'value'    => '1',
+							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
 							),
 						),
 					),
@@ -218,6 +270,11 @@ function avada_options_section_contact( $sections ) {
 								'setting'  => 'status_gmap',
 								'operator' => '=',
 								'value'    => '1',
+							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
 							),
 						),
 					),
@@ -288,6 +345,11 @@ function avada_options_section_contact( $sections ) {
 								'operator' => '=',
 								'value'    => '1',
 							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
+							),
 						),
 					),
 					'gmap_pin_animation' => array(
@@ -302,6 +364,11 @@ function avada_options_section_contact( $sections ) {
 								'setting'  => 'status_gmap',
 								'operator' => '=',
 								'value'    => '1',
+							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
 							),
 						),
 					),
@@ -318,6 +385,11 @@ function avada_options_section_contact( $sections ) {
 								'operator' => '=',
 								'value'    => '1',
 							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
+							),
 						),
 					),
 					'map_scrollwheel' => array(
@@ -332,6 +404,11 @@ function avada_options_section_contact( $sections ) {
 								'setting'  => 'status_gmap',
 								'operator' => '=',
 								'value'    => '1',
+							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
 							),
 						),
 					),
@@ -348,6 +425,11 @@ function avada_options_section_contact( $sections ) {
 								'operator' => '=',
 								'value'    => '1',
 							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
+							),
 						),
 					),
 					'map_zoomcontrol' => array(
@@ -362,6 +444,11 @@ function avada_options_section_contact( $sections ) {
 								'setting'  => 'status_gmap',
 								'operator' => '=',
 								'value'    => '1',
+							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
 							),
 						),
 					),
@@ -389,7 +476,7 @@ function avada_options_section_contact( $sections ) {
 					),
 					'google_map_styling_important_note_info' => array(
 						'label'       => '',
-						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> The options on this tab are only for the google map that displays on the "Contact" page template, they do not control the google map element.', 'Avada' ) . '</div>',
+						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> The options on this tab are only for the google map that displays on the "Contact" page template, they do not control the google map element.  These options are only available for the JS API type.', 'Avada' ) . '</div>',
 						'id'          => 'google_map_styling_important_note_info',
 						'type'        => 'custom',
 						'required'    => array(
@@ -418,6 +505,11 @@ function avada_options_section_contact( $sections ) {
 								'operator' => '=',
 								'value'    => '1',
 							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
+							),
 						),
 					),
 					'map_overlay_color' => array(
@@ -437,6 +529,11 @@ function avada_options_section_contact( $sections ) {
 								'setting'  => 'status_gmap',
 								'operator' => '=',
 								'value'    => '1',
+							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
 							),
 						),
 					),
@@ -462,6 +559,11 @@ function avada_options_section_contact( $sections ) {
 								'operator' => '=',
 								'value'    => '1',
 							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
+							),
 						),
 					),
 					'map_infobox_content' => array(
@@ -481,6 +583,11 @@ function avada_options_section_contact( $sections ) {
 								'setting'  => 'status_gmap',
 								'operator' => '=',
 								'value'    => '1',
+							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
 							),
 						),
 					),
@@ -507,6 +614,11 @@ function avada_options_section_contact( $sections ) {
 								'operator' => '=',
 								'value'    => '1',
 							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
+							),
 						),
 					),
 					'map_infobox_text_color' => array(
@@ -532,6 +644,11 @@ function avada_options_section_contact( $sections ) {
 								'operator' => '=',
 								'value'    => '1',
 							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
+							),
 						),
 					),
 					'map_custom_marker_icon' => array(
@@ -556,6 +673,11 @@ function avada_options_section_contact( $sections ) {
 								'setting'  => 'status_gmap',
 								'operator' => '=',
 								'value'    => '1',
+							),
+							array(
+								'setting'  => 'gmap_api_type',
+								'operator' => '=',
+								'value'    => 'js',
 							),
 						),
 					),

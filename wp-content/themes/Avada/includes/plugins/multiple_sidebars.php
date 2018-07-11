@@ -64,7 +64,7 @@ class Sidebar_Generator {
 	 */
 	public function init() {
 
-		if ( current_user_can( 'edit_theme_options' ) ) {
+		if ( current_user_can( 'switch_themes' ) ) {
 			add_action( 'wp_ajax_add_sidebar', array( $this, 'add_sidebar' ) );
 			add_action( 'wp_ajax_remove_sidebar', array( $this, 'remove_sidebar' ) );
 		}
@@ -693,7 +693,7 @@ class Sidebar_Generator {
 		$sidebars = get_option( 'sbg_sidebars', array() );
 
 		// Check needed in case empty string (as wrongly converted false) is stored in var.
-		if ( empty( $sidebars ) ) {
+		if ( empty( $sidebars ) || ! is_array( $sidebars ) ) {
 			$sidebars = array();
 		}
 

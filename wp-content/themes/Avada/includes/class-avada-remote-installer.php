@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 5.0.0
  */
-class Avada_Remote_installer {
+class Avada_Remote_Installer {
 
 	/**
 	 * The remote API URL.
@@ -53,7 +53,7 @@ class Avada_Remote_installer {
 
 		// Tweak for Envato Hosted.
 		$is_envato_hosted = (bool) ( defined( 'ENVATO_HOSTED_SITE' ) && ENVATO_HOSTED_SITE && defined( 'SUBSCRIPTION_CODE' ) && SUBSCRIPTION_CODE );
-		$token = ( $is_envato_hosted ) ? SUBSCRIPTION_CODE : $token;
+		$token            = ( $is_envato_hosted ) ? SUBSCRIPTION_CODE : $token;
 
 		// Get any existing copy of our transient data.
 		$saved_nonce = get_transient( 'avada_ri_' . $download . $token );
@@ -61,7 +61,7 @@ class Avada_Remote_installer {
 			// It wasn't there, so regenerate the data and save the transient.
 			$avada_version = Avada::get_theme_version();
 			$url           = $this->api_url . '?avada_action=request_download&item_name=' . rawurlencode( $download ) . '&token=' . $token . '&ver=' . $avada_version;
-			$url .= ( $is_envato_hosted ) ? '&envato-hosted=true' : '';
+			$url          .= ( $is_envato_hosted ) ? '&envato-hosted=true' : '';
 
 			$response      = wp_remote_get(
 				$url, array(
@@ -96,7 +96,7 @@ class Avada_Remote_installer {
 			}
 
 			set_transient( 'avada_ri_' . $download . $token, $saved_nonce, 600 );
-		} // End if().
+		}
 
 		return $saved_nonce;
 

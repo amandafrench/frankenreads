@@ -160,7 +160,7 @@ if ( ! class_exists( 'Avada_TGM_Plugin_Activation' ) ) {
 		 *
 		 * @var string
 		 */
-		public $capability = 'edit_theme_options';
+		public $capability = 'switch_themes';
 
 		/**
 		 * Default absolute path to folder containing bundled plugin zip files.
@@ -392,7 +392,7 @@ if ( ! class_exists( 'Avada_TGM_Plugin_Activation' ) ) {
 				/* translators: 1: plugin name. */
 				'plugin_already_active'           => __( 'No action taken. Plugin %1$s was already active.', 'Avada' ),
 				/* translators: 1: plugin name. */
-				'plugin_needs_higher_version'     => __( 'Plugin not activated. A higher version of %s is needed for this theme. Please update the plugin.', 'Avada' ),
+				'plugin_needs_higher_version'     => __( '%s installation failed. The update procedure could not delete the plugin due to a permissions issue on your server. Please ask your hosting provider to check the permissions level or manually remove the plugin via FTP or WordPress before attempting to reinstall it.', 'Avada' ),
 				/* translators: 1: dashboard link. */
 				'complete'                        => __( 'All plugins installed and activated successfully. %1$s', 'Avada' ),
 				'dismiss'                         => __( 'Dismiss this notice', 'Avada' ),

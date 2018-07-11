@@ -302,11 +302,7 @@ class Avada_Layout {
 
 		// Add sidebar 1 margin, if double sidebars are used.
 		if ( Avada()->template->double_sidebars() ) {
-			if ( false !== strpos( Avada()->settings->get( 'site_width' ), 'px' ) ) {
-				$half_margin = '40px';
-			} else {
-				$half_margin = '3%';
-			}
+			$half_margin = 'calc(' . str_replace( 'calc', '', Avada()->settings->get( 'sidebars_gutter' ) ) . ' / 2)';
 
 			$sidebar_2_1_width = Fusion_Sanitize::size( Avada()->settings->get( 'sidebar_2_1_width' ) );
 			if ( false === strpos( $sidebar_2_1_width, 'px' ) && false === strpos( $sidebar_2_1_width, '%' ) ) {
@@ -318,7 +314,7 @@ class Avada_Layout {
 				$sidebar_2_2_width = ( 100 > intval( $sidebar_2_2_width ) ) ? intval( $sidebar_2_2_width ) . '%' : intval( $sidebar_2_2_width ) . 'px';
 			}
 
-			$sidebar_2_1_margin = 'calc( ' . $half_margin . ' - 100% + ' . $sidebar_2_2_width . ' )';
+			$sidebar_2_1_margin = Fusion_Sanitize::add_css_values( array( '-100%', $half_margin, $sidebar_2_2_width ) );
 			$sidebar_2_2_margin = $half_margin;
 
 			$return['sidebar_1_data'] = array(

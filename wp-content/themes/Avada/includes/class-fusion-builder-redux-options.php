@@ -134,7 +134,7 @@ class Fusion_Builder_Redux_Options {
 				'fusion_woo_shortcodes'           => 'Woo Shortcodes',
 				'fusion_youtube'                  => 'Youtube',
 			);
-		} // End if().
+		}
 
 		$option_name = 'fusion_builder_options';
 		if ( ! function_exists( 'fusion_builder_redux_shortcode_styling' ) ) {

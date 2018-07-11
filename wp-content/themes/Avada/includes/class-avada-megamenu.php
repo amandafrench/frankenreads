@@ -105,10 +105,10 @@ if ( ! class_exists( 'Avada_Megamenu' ) ) {
 			$menu_item->fusion_megamenu_icon  = isset( $avada_meta['icon'] ) ? $avada_meta['icon'] : '';
 			$menu_item->fusion_megamenu_modal = isset( $avada_meta['modal'] ) ? $avada_meta['modal'] : '';
 
-			$menu_item->fusion_highlight_label               = isset( $avada_meta['highlight_label'] ) ? $avada_meta['highlight_label'] : '';
-			$menu_item->fusion_highlight_label_background    = isset( $avada_meta['highlight_label_background'] ) ? $avada_meta['highlight_label_background'] : '';
-			$menu_item->fusion_highlight_label_color         = isset( $avada_meta['highlight_label_color'] ) ? $avada_meta['highlight_label_color'] : '';
-			$menu_item->fusion_highlight_label_border_color  = isset( $avada_meta['highlight_label_border_color'] ) ? $avada_meta['highlight_label_border_color'] : '';
+			$menu_item->fusion_highlight_label              = isset( $avada_meta['highlight_label'] ) ? $avada_meta['highlight_label'] : '';
+			$menu_item->fusion_highlight_label_background   = isset( $avada_meta['highlight_label_background'] ) ? $avada_meta['highlight_label_background'] : '';
+			$menu_item->fusion_highlight_label_color        = isset( $avada_meta['highlight_label_color'] ) ? $avada_meta['highlight_label_color'] : '';
+			$menu_item->fusion_highlight_label_border_color = isset( $avada_meta['highlight_label_border_color'] ) ? $avada_meta['highlight_label_border_color'] : '';
 
 			if ( Avada()->settings->get( 'disable_megamenu' ) ) {
 				if ( ! $menu_item->menu_item_parent ) {
@@ -119,15 +119,15 @@ if ( ! class_exists( 'Avada_Megamenu' ) ) {
 					$menu_item->fusion_megamenu_title      = isset( $avada_meta['title'] ) ? $avada_meta['title'] : '';
 					$menu_item->fusion_megamenu_widgetarea = isset( $avada_meta['widgetarea'] ) ? $avada_meta['widgetarea'] : '';
 				}
-				$menu_item->fusion_megamenu_columnwidth = isset( $avada_meta['columnwidth'] ) ? $avada_meta['columnwidth'] : '';
-				$menu_item->fusion_megamenu_thumbnail   = isset( $avada_meta['thumbnail'] ) ? $avada_meta['thumbnail'] : '';
-				$menu_item->fusion_megamenu_background_image   = isset( $avada_meta['background_image'] ) ? $avada_meta['background_image'] : '';
+				$menu_item->fusion_megamenu_columnwidth      = isset( $avada_meta['columnwidth'] ) ? $avada_meta['columnwidth'] : '';
+				$menu_item->fusion_megamenu_thumbnail        = isset( $avada_meta['thumbnail'] ) ? $avada_meta['thumbnail'] : '';
+				$menu_item->fusion_megamenu_background_image = isset( $avada_meta['background_image'] ) ? $avada_meta['background_image'] : '';
 			}
 
 			return $menu_item;
 
 		}
 	}
-} // End if().
+}
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

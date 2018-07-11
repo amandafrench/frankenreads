@@ -35,7 +35,6 @@ if ( ! $wp_api_plugins ) {
 	);
 	$wp_api_plugins = array();
 	foreach ( $wp_org_plugins as $slug => $path ) {
-		$wp_api_plugins[ $slug ] = array();
 		$wp_api_plugins[ $slug ] = (array) plugins_api(
 			'plugin_information', array(
 				'slug' => $slug,
@@ -198,4 +197,3 @@ if ( ! $wp_api_plugins ) {
 	</div>
 </div>
 <div class="fusion-clearfix" style="clear: both;"></div>
-<?php

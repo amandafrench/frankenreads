@@ -15,18 +15,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'AVADA_VERSION' ) ) {
-	define( 'AVADA_VERSION', '5.5.2' );
+	define( 'AVADA_VERSION', '5.6' );
 }
 
 /**
  * Include Fusion-Library.
  */
-include_once wp_normalize_path( get_template_directory() . '/includes/lib/fusion-library.php' );
+require_once wp_normalize_path( get_template_directory() . '/includes/lib/fusion-library.php' );
 
 /**
  * Include the main Avada class.
  */
-include_once wp_normalize_path( get_template_directory() . '/includes/class-avada.php' );
+require_once wp_normalize_path( get_template_directory() . '/includes/class-avada.php' );
 
 /**
  * Define basic properties in the Avada class.
@@ -39,7 +39,7 @@ Avada::$stylesheet_dir_url  = get_stylesheet_directory_uri();
 /**
  * Include the autoloader.
  */
-include_once Avada::$template_dir_path . '/includes/class-avada-autoload.php';
+require_once Avada::$template_dir_path . '/includes/class-avada-autoload.php';
 
 /**
  * Instantiate the autoloader.
@@ -49,7 +49,7 @@ new Avada_Autoload();
 /**
  * Must-use Plugins.
  */
-include_once Avada::$template_dir_path . '/includes/plugins/multiple_sidebars.php';
+require_once Avada::$template_dir_path . '/includes/plugins/multiple_sidebars.php';
 require_once Avada::$template_dir_path . '/includes/plugins/post-link-plus.php';
 
 /**
@@ -181,7 +181,7 @@ if ( ! is_admin() && class_exists( 'bbPress' ) ) {
  * Instantiate Avada_EventsCalendar
  * We only need to do this on the frontend if Events Calendar is installed or on customizer preview.
  */
-if ( ( ! is_admin() || is_customize_preview() ) && class_exists( 'Tribe__Events__Main' ) ) {
+if ( ( ! is_admin() || is_customize_preview() || fusion_doing_ajax() ) && class_exists( 'Tribe__Events__Main' ) ) {
 	new Avada_EventsCalendar();
 }
 
@@ -190,7 +190,7 @@ if ( ( ! is_admin() || is_customize_preview() ) && class_exists( 'Tribe__Events_
  */
 $load_avadaredux   = false;
 $load_avada_gfonts = true;
-if ( is_admin() && isset( $_GET['page'] ) && 'avada_options' === $_GET['page'] ) {
+if ( is_admin() && isset( $_GET['page'] ) && 'avada_options' === $_GET['page'] ) { // WPCS: CSRF ok.
 	$load_avadaredux   = true;
 	$load_avada_gfonts = false;
 }
@@ -199,7 +199,7 @@ if ( false !== strpos( $http_referer, 'avada_options' ) ) {
 	$load_avadaredux   = true;
 	$load_avada_gfonts = true;
 }
-$avadaredux_export = ( isset( $_GET['action'] ) && 'fusionredux_link_options-fusion_options' === $_GET['action'] && isset( $_GET['secret'] ) && '' !== $_GET['secret'] ) ? true : false;
+$avadaredux_export = ( isset( $_GET['action'] ) && 'fusionredux_link_options-fusion_options' === $_GET['action'] && isset( $_GET['secret'] ) && '' !== $_GET['secret'] ) ? true : false; // WPCS: CSRF ok.
 if ( $avadaredux_export ) {
 	$load_avadaredux   = true;
 	$load_avada_gfonts = false;
@@ -221,7 +221,7 @@ if ( $load_avadaredux ) {
 			'page_parent'          => 'themes.php',
 			'page_slug'            => 'avada_options',
 			'menu_type'            => 'submenu',
-			'page_permissions'     => 'edit_theme_options',
+			'page_permissions'     => 'switch_themes',
 		)
 	);
 }
@@ -247,7 +247,14 @@ require_once Avada::$template_dir_path . '/includes/deprecated.php';
  * Metaboxes
  */
 if ( is_admin() ) {
-	include_once Avada::$template_dir_path . '/includes/metaboxes/metaboxes.php';
+	require_once Avada::$template_dir_path . '/includes/metaboxes/metaboxes.php';
+}
+
+/**
+ * Instantiate Avada_System_Status helper class.
+ */
+if ( is_admin() && ( isset( $_GET['page'] ) && 'avada-system-status' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) || ( fusion_doing_ajax() && isset( $_GET['action'] ) && 'fusion_check_api_status' === $_GET['action'] ) ) { // WPCS: CSRF ok.
+	new Avada_System_Status();
 }
 
 /**
@@ -265,7 +272,7 @@ require_once Avada::$template_dir_path . '/includes/avada-functions.php';
  * WPML Config
  */
 if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
-	include_once Avada::$template_dir_path . '/includes/plugins/wpml.php';
+	require_once Avada::$template_dir_path . '/includes/plugins/wpml.php';
 }
 
 /**
@@ -279,7 +286,7 @@ if ( is_admin() ) {
  * Load Woocommerce Configuraion.
  */
 if ( class_exists( 'WooCommerce' ) ) {
-	include_once Avada::$template_dir_path . '/includes/wc-functions.php';
+	require_once Avada::$template_dir_path . '/includes/wc-functions.php';
 	global $avada_woocommerce;
 	$avada_woocommerce = new Avada_Woocommerce();
 }
@@ -314,7 +321,6 @@ if ( ! is_admin() && ( ! isset( $content_width ) || empty( $content_width ) ) ) 
  */
 function avada_font_awesome_name_handler( $icon ) {
 	$old_icons = Fusion_Data::old_icons();
-
 	$fa_icon   = ( 'fa-' !== substr( $icon, 0, 3 ) && 'fa ' !== substr( $icon, 0, 3 ) ) ? 'fa-' . $icon : $icon;
 	if ( 'icon-' === substr( $icon, 0, 5 ) || 'fa=' !== substr( $icon, 0, 3 ) ) {
 		// Replace old prefix with new one.
@@ -373,7 +379,7 @@ function avada_admin_notice() {
 		</div>
 	<?php endif; ?>
 
-	<?php if ( isset( $_GET['imported'] ) && 'success' === $_GET['imported'] ) : ?>
+	<?php if ( isset( $_GET['imported'] ) && 'success' === $_GET['imported'] ) : // WPCS: CSRF ok. ?>
 		<div id="setting-error-settings_updated" class="updated settings-error">
 			<p><?php esc_attr_e( 'Sucessfully imported demo data!', 'Avada' ); ?></p>
 		</div>
@@ -390,12 +396,12 @@ function avada_nag_ignore() {
 	$user_id = $current_user->ID;
 
 	// If user clicks to ignore the notice, add that to their user meta.
-	if ( isset( $_GET['fusion_richedit_nag_ignore'] ) && '0' == $_GET['fusion_richedit_nag_ignore'] ) {
+	if ( isset( $_GET['fusion_richedit_nag_ignore'] ) && '0' === $_GET['fusion_richedit_nag_ignore'] ) { // WPCS: CSRF ok.
 		add_user_meta( $user_id, 'fusion_richedit_nag_ignore', 'true', true );
 	}
 
 	// If user clicks to ignore the notice, add that to their user meta.
-	if ( isset( $_GET['avada_uber_nag_ignore'] ) && '0' == $_GET['avada_uber_nag_ignore'] ) {
+	if ( isset( $_GET['avada_uber_nag_ignore'] ) && '0' === $_GET['avada_uber_nag_ignore'] ) { // WPCS: CSRF ok.
 		update_option( 'avada_ubermenu_notice', true );
 		update_option( 'avada_ubermenu_notice_hidden', true );
 		$referer = ( isset( $_SERVER['HTTP_REFERER'] ) ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
@@ -437,8 +443,8 @@ function avada_email_login_auth( $user, $username, $password ) {
 
 	if ( ! empty( $username ) ) {
 		$username = str_replace( '&', '&amp;', stripslashes( $username ) );
-		$user = get_user_by( 'email', $username );
-		if ( isset( $user, $user->user_login, $user->user_status ) && 0 == (int) $user->user_status ) {
+		$user     = get_user_by( 'email', $username );
+		if ( isset( $user, $user->user_login, $user->user_status ) && 0 === (int) $user->user_status ) {
 			$username = $user->user_login;
 		}
 	}
@@ -526,16 +532,16 @@ function avada_login_fail( $url = '', $raw_url = '', $user = '' ) {
 				}
 				exit;
 			}
-		} // End if().
+		}
 		return $url;
-	} // End if().
+	}
 }
 
 /**
  * Show a shop page description on product archives.
  */
 function woocommerce_product_archive_description() {
-	if ( is_post_type_archive( 'product' ) && 0 == get_query_var( 'paged' ) ) {
+	if ( is_post_type_archive( 'product' ) && 0 === get_query_var( 'paged' ) ) {
 		$shop_page = get_post( fusion_wc_get_page_id( 'shop' ) );
 		if ( $shop_page ) {
 			$description = apply_filters( 'the_content', $shop_page->post_content );
@@ -600,7 +606,7 @@ if ( Avada::$is_updating ) {
 if ( class_exists( 'FusionCore_Plugin' ) ) {
 	$fc_version = FusionCore_Plugin::VERSION;
 	if ( version_compare( $fc_version, '2.0', '<' ) ) {
-		$maintenance   = true;
+		$maintenance = true;
 		/* translators: The "follow this link" link. */
 		$admin_message = sprintf( esc_attr__( 'The Fusion-Core plugin needs to be updated before your site can exit maintenance mode. Please %s to update the plugin.', 'Avada' ), '<a href="' . admin_url( 'themes.php?page=install-required-plugins' ) . '" style="color:#0088cc;font-weight:bold;">' . esc_attr__( 'follow this link', 'Avada' ) . '</a>' );
 	}
@@ -697,7 +703,7 @@ add_action( 'fusion_library_set_language_is_all', 'avada_set_language_is_all' );
  * Include Fusion Builder shared options support.
  */
 if ( class_exists( 'FusionBuilder' ) ) {
-	include_once Avada::$template_dir_path . '/includes/fusion-shared-options.php';
+	require_once Avada::$template_dir_path . '/includes/fusion-shared-options.php';
 }
 
 /**
@@ -710,7 +716,7 @@ if ( class_exists( 'FusionBuilder' ) ) {
 function avada_reset_all_caches( $delete_cache = array() ) {
 	// Reset fusion-caches.
 	if ( ! class_exists( 'Fusion_Cache' ) ) {
-		include_once Avada::$template_dir_path . '/includes/lib/inc/class-fusion-cache.php';
+		require_once Avada::$template_dir_path . '/includes/lib/inc/class-fusion-cache.php';
 	}
 
 	$fusion_cache = new Fusion_Cache();

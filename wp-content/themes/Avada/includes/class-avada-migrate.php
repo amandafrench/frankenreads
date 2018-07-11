@@ -575,7 +575,6 @@ class Avada_Migrate extends Avada_Upgrade {
 				$debug_content = file_get_contents( $debug_file_path );
 			}
 			$debug_content .= $debug_log;
-			// @codingStandardsIgnoreLine WordPress.VIP.FileSystemWritesDisallow.file_ops_file_put_contents
 			file_put_contents( $debug_file_path, $debug_content );
 		}
 	}

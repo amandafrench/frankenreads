@@ -41,7 +41,7 @@ class Fusion_Scripts {
 	 */
 	public function __construct() {
 
-		self::$js_folder_url = FUSION_LIBRARY_URL . '/assets/min/js';
+		self::$js_folder_url  = FUSION_LIBRARY_URL . '/assets/min/js';
 		self::$js_folder_path = FUSION_LIBRARY_PATH . '/assets/min/js';
 
 		add_action( 'wp', array( $this, 'init' ) );
@@ -323,7 +323,7 @@ class Fusion_Scripts {
 				'fusion-equal-heights',
 				self::$js_folder_url . '/general/fusion-equal-heights.js',
 				self::$js_folder_path . '/general/fusion-equal-heights.js',
-				array( 'jquery' ),
+				array( 'jquery', 'modernizr' ),
 				'1',
 				true,
 			),
@@ -331,7 +331,7 @@ class Fusion_Scripts {
 				'fusion-parallax',
 				self::$js_folder_url . '/library/fusion-parallax.js',
 				self::$js_folder_path . '/library/fusion-parallax.js',
-				array( 'jquery-request-animation-frame' ),
+				array( 'jquery', 'cssua', 'jquery-request-animation-frame' ),
 				'1',
 				true,
 			),
@@ -460,9 +460,10 @@ class Fusion_Scripts {
 	public function wp_enqueue_scripts() {
 
 		if ( fusion_library()->get_option( 'status_gmap' ) ) {
-			$map_protocol = 'http' . ( ( is_ssl() ) ? 's' : '' );
-			$map_key = ( ( fusion_library()->get_option( 'gmap_api' ) ) ? 'key=' . fusion_library()->get_option( 'gmap_api' ) . '&' : '' );
-			$map_api = $map_protocol . '://maps.googleapis.com/maps/api/js?' . $map_key . 'language=' . substr( get_locale(), 0, 2 );
+			$map_protocol = ( is_ssl() ) ? 'https' : 'http';
+			$map_key      = apply_filters( 'fusion_google_maps_api_key', fusion_library()->get_option( 'gmap_api' ) );
+			$map_key      = ( $map_key ) ? 'key=' . $map_key . '&' : '';
+			$map_api      = $map_protocol . '://maps.googleapis.com/maps/api/js?' . $map_key . 'language=' . substr( get_locale(), 0, 2 );
 			wp_register_script( 'google-maps-api', $map_api, array(), '1', true );
 			wp_register_script( 'google-maps-infobox', self::$js_folder_url . '/library/infobox_packed.js', array(), '1', true );
 		}
@@ -506,11 +507,21 @@ class Fusion_Scripts {
 		);
 
 		// Scroll to anchor, required in FB?
+		$scroll_to_anchor_dependencies = array(
+			'jquery',
+			'jquery-easing',
+			'modernizr',
+		);
+
+		if ( ! isset( $post->ID ) || 'no' !== fusion_get_page_option( 'display_header', $post->ID ) ) {
+			$scroll_to_anchor_dependencies[] = 'avada-menu';
+		}
+
 		Fusion_Dynamic_JS::enqueue_script(
 			'fusion-scroll-to-anchor',
 			self::$js_folder_url . '/general/fusion-scroll-to-anchor.js',
 			self::$js_folder_path . '/general/fusion-scroll-to-anchor.js',
-			array( 'jquery', 'jquery-easing', ( ! isset( $post->ID ) || 'no' !== fusion_get_page_option( 'display_header', $post->ID ) ) ? 'avada-menu' : '' ),
+			$scroll_to_anchor_dependencies,
 			'1',
 			true
 		);
@@ -577,7 +588,7 @@ class Fusion_Scripts {
 			'jquery-fusion-maps',
 			'fusionMapsVars',
 			array(
-				'admin_ajax'       => admin_url( 'admin-ajax.php' ),
+				'admin_ajax' => admin_url( 'admin-ajax.php' ),
 			)
 		);
 		Fusion_Dynamic_JS::localize_script(
@@ -613,7 +624,7 @@ class Fusion_Scripts {
 			'fusionCarouselVars',
 			array(
 				'related_posts_speed' => fusion_library()->get_option( 'related_posts_speed' ) ? (int) fusion_library()->get_option( 'related_posts_speed' ) : 5000,
-				'carousel_speed' => fusion_library()->get_option( 'carousel_speed' ) ? (int) fusion_library()->get_option( 'carousel_speed' ) : 5000,
+				'carousel_speed'      => fusion_library()->get_option( 'carousel_speed' ) ? (int) fusion_library()->get_option( 'carousel_speed' ) : 5000,
 			)
 		);
 		Fusion_Dynamic_JS::localize_script(
@@ -627,7 +638,7 @@ class Fusion_Scripts {
 			'fusion-scroll-to-anchor',
 			'fusionScrollToAnchorVars',
 			array(
-				'content_break_point' => intval( fusion_library()->get_option( 'content_break_point' ) ),
+				'content_break_point'                     => intval( fusion_library()->get_option( 'content_break_point' ) ),
 				'container_hundred_percent_height_mobile' => intval( fusion_library()->get_option( 'container_hundred_percent_height_mobile' ) ),
 			)
 		);

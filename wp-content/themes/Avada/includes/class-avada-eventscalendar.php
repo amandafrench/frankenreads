@@ -21,6 +21,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Avada_EventsCalendar {
 
 	/**
+	 * Holds the HMTL of the title bar.
+	 *
+	 * @access private
+	 * @since 5.6
+	 * @var string
+	 */
+	private $title_bar_html;
+
+	/**
 	 * Constructor.
 	 *
 	 * @access public
@@ -46,6 +55,9 @@ class Avada_EventsCalendar {
 
 		add_filter( 'tribe_the_notices', array( $this, 'style_notices' ), 10, 2 );
 
+		add_filter( 'tribe_get_template_part_content', array( $this, 'position_events_title_bar' ), 10, 5 );
+
+		add_filter( 'tribe_get_template_part_content', array( $this, 'sidebar_headings' ), 10, 5 );
 	}
 
 	/**
@@ -134,12 +146,13 @@ class Avada_EventsCalendar {
 	 * @since 5.1.6
 	 * @access public
 	 * @param string $excerpt The post excerpt.
-	 * @param object $post The post object.
+	 * @param object $_post The post object.
 	 * @return string The new excerpt.
 	 */
-	public function get_the_excerpt( $excerpt, $post ) {
+	public function get_the_excerpt( $excerpt, $_post ) {
+		global $post;
 
-		if ( 'tribe_events' === get_post_type() && is_archive() ) {
+		if ( false !== strpos( get_post_type( $_post->ID ), 'tribe_' ) && is_archive() && ! empty( $post->ID ) && $post->ID === $_post->ID ) {
 			return fusion_get_post_content( $post->ID, 'yes', apply_filters( 'excerpt_length', 55 ), true );
 		}
 
@@ -200,12 +213,12 @@ class Avada_EventsCalendar {
 		$manager->add_control(
 			'avada_ec_notice_post_title_color',
 			array(
-				'label'    => __( 'NOTE', 'Avada' ),
+				'label'       => __( 'NOTE', 'Avada' ),
 				/* translators: EC Customizer notice. */
 				'description' => sprintf( __( 'You can control the post title color from Avada theme options panel through the <a href="%1$s" target="_blank">Events Primary Color Overlay Text Color</a> setting. Avada has additional <a href="%2$s" target="_blank">Event Calendar settings</a> in theme options.', 'Avada' ), Avada()->settings->get_setting_link( 'primary_overlay_text_color' ), Avada()->settings->get_setting_link( 'primary_overlay_text_color' ) ),
-				'section'  => $section->id,
-				'settings' => $customizer->get_setting_name( 'avada_ec_notice_post_title_color', $section ),
-				'type'     => 'hidden',
+				'section'     => $section->id,
+				'settings'    => $customizer->get_setting_name( 'avada_ec_notice_post_title_color', $section ),
+				'type'        => 'hidden',
 			)
 		);
 	}
@@ -232,12 +245,12 @@ class Avada_EventsCalendar {
 		$manager->add_control(
 			'avada_ec_notice_photo_bg_color',
 			array(
-				'label'    => __( 'NOTE', 'Avada' ),
+				'label'       => __( 'NOTE', 'Avada' ),
 				/* translators: EC Customizer notice. */
 				'description' => sprintf( __( 'You can control the photo background color from Avada theme options panel through the <a href="%1$s" target="_blank">Grid Box Color</a> setting. Avada has additional <a href="%2$s" target="_blank">Event Calendar settings</a> in theme options.', 'Avada' ), Avada()->settings->get_setting_link( 'timeline_bg_color' ), Avada()->settings->get_setting_link( 'primary_overlay_text_color' ) ),
-				'section'  => $section->id,
-				'settings' => $customizer->get_setting_name( 'avada_ec_notice_photo_bg_color', $section ),
-				'type'     => 'hidden',
+				'section'     => $section->id,
+				'settings'    => $customizer->get_setting_name( 'avada_ec_notice_photo_bg_color', $section ),
+				'type'        => 'hidden',
 			)
 		);
 	}
@@ -264,12 +277,12 @@ class Avada_EventsCalendar {
 		$manager->add_control(
 			'avada_ec_notice_highlight_color',
 			array(
-				'label'    => __( 'NOTE', 'Avada' ),
+				'label'       => __( 'NOTE', 'Avada' ),
 				/* translators: EC Customizer notice. */
 				'description' => sprintf( __( 'You can control the calendar highlight color from Avada theme options panel through the <a href="%1$s" target="_blank">Primary Color</a> setting. Avada has additional <a href="%2$s" target="_blank">Event Calendar settings</a> in theme options.', 'Avada' ), Avada()->settings->get_setting_link( 'primary_color' ), Avada()->settings->get_setting_link( 'primary_overlay_text_color' ) ),
-				'section'  => $section->id,
-				'settings' => $customizer->get_setting_name( 'avada_ec_notice_highlight_color', $section ),
-				'type'     => 'hidden',
+				'section'     => $section->id,
+				'settings'    => $customizer->get_setting_name( 'avada_ec_notice_highlight_color', $section ),
+				'type'        => 'hidden',
 			)
 		);
 	}
@@ -306,4 +319,72 @@ class Avada_EventsCalendar {
 		return $html;
 	}
 
+	/**
+	 * Positions or disables the events page title.
+	 *
+	 * @access public
+	 * @since 5.6
+	 * @param string $html The template markup.
+	 * @param string $template The template.
+	 * @param string $file The template file.
+	 * @param string $slug The template slug.
+	 * @param string $name The template name.
+	 * @return string Empty string.
+	 */
+	public function position_events_title_bar( $html, $template, $file, $slug, $name ) {
+		if ( $slug && false !== strpos( $slug, 'title-bar' ) ) {
+			if ( 'disable' === Avada()->settings->get( 'ec_display_page_title' ) ) {
+				return '';
+			} elseif ( 'below' === Avada()->settings->get( 'ec_display_page_title' ) ) {
+				$this->title_bar_html = str_replace( array( '<h1', '</h1>' ), array( '<h2', '</h2>' ), $html );
+
+				$action = 'tribe_events_bar_after_template';
+				if ( class_exists( 'Tribe__Events__Filterbar__View' ) ) {
+					$action = 'tribe_events_filter_view_after_template';
+				}
+
+				add_action( $action, array( $this, 'the_events_title_bar' ) );
+
+				return '';
+			} else {
+
+				// Extend "Upcoming Events" borders on versions above 4.6.18.
+				if ( version_compare( Tribe__Events__Main::VERSION, '4.6.19', '>=' ) ) {
+					$html = str_replace( 'tribe-events-page-title', 'tribe-events-page-title fusion-events-title-above', $html );
+				}
+			}
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Echo the events page title bar.
+	 *
+	 * @access public
+	 * @since 5.6
+	 * @return void
+	 */
+	public function the_events_title_bar() {
+		echo $this->title_bar_html; // WPCS: XSS ok.
+	}
+
+	/**
+	 * Change headings from h2 to h3.
+	 *
+	 * @access public
+	 * @since 5.6
+	 * @param string $html The template markup.
+	 * @param string $template The template.
+	 * @param string $file The template file.
+	 * @param string $slug The template slug.
+	 * @param string $name The template name.
+	 * @return string The altered sidebar headings.
+	 */
+	public function sidebar_headings( $html, $template, $file, $slug, $name ) {
+		if ( $slug && false !== strpos( $slug, 'modules/meta/' ) ) {
+			return str_replace( array( '<h2', '</h2>' ), array( '<h4', '</h4>' ), $html );
+		}
+		return $html;
+	}
 }

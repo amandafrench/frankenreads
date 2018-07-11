@@ -1261,8 +1261,8 @@ class Fusion_Builder_Migrate {
 	 * @return void
 	 */
 	private function get_migration_page_more_info() {
-		if ( isset( $_GET['step'] ) && 'query' === $_GET['step'] ) :
 		?>
+		<?php if ( isset( $_GET['step'] ) && 'query' === $_GET['step'] ) : ?>
 			<ul class="tasks-list">
 				<?php foreach ( $this->post_types as $post_type ) : ?>
 					<?php

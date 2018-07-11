@@ -31,104 +31,116 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</script>
 		<div class="avada-important-notice">
 			<?php /* translators: %1$s: "System Status" link. %2$s: "View more info here" link. */ ?>
-			<p class="about-description"><?php printf( wp_kses_post( __( "Avada demos can be fully imported (everything), or partially imported (only portions). Hover over the demo you want to use and make your selections. Any demo you use will display a badge on it after import so you can quickly recognize and modify the content you already imported. You can choose to uninstall this content at any time. Uninstalling content from a demo will remove ALL previously imported demo content from that demo and restore your site to it's previous state before the demo content was imported.<br /><strong>IMPORTANT:</strong> Demo imports can vary in time. The included plugins need to be installed and activated before you install a demo. Please check the %1\$s tab to ensure your server meets all requirements for a successful import. Settings that need attention will be listed in red. %2\$s.", 'Avada' ) ), '<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-system-status' ) ) . '" target="_blank">' . esc_attr__( 'System Status', 'Avada' ) . '</a>', '<a href="' . esc_url_raw( trailingslashit( $this->theme_fusion_url ) ) . 'documentation/avada/demo-content-info/import-all-demo-content/" target="_blank">' . esc_attr__( 'View more info here', 'Avada' ) . '</a>' ); ?></p>
+			<p class="about-description">
+				<?php esc_html_e( 'Avada demos can be fully imported (everything), or partially imported (only portions). Hover over the demo you want to use and make your selections. Any demo you use will display a badge on it after import so you can quickly recognize and modify the content you already imported. You can choose to uninstall this content at any time. Uninstalling content from a demo will remove ALL previously imported demo content from that demo and restore your site to it\'s previous state before the demo content was imported.', 'Avada' ); ?>
+				<br>
+				<?php
+				printf(
+					/* translators: %1$s: "IMPORTANT:". %2$s: "System Status" link. %3$s: "View more info here" link. */
+					esc_html__( '%1$s Demo imports can vary in time. The included plugins need to be installed and activated before you install a demo. Please check the %2$s tab to ensure your server meets all requirements for a successful import. Settings that need attention will be listed in red. %3$s.', 'Avada' ),
+					'<strong>' . esc_html__( 'IMPORTANT:', 'Avada' ) . '</strong>',
+					'<a href="' . esc_url_raw( admin_url( 'admin.php?page=avada-system-status' ) ) . '" target="_blank">' . esc_attr__( 'System Status', 'Avada' ) . '</a>',
+					'<a href="' . esc_url_raw( trailingslashit( $this->theme_fusion_url ) ) . 'documentation/avada/demo-content-info/import-all-demo-content/" target="_blank">' . esc_attr__( 'View more info here', 'Avada' ) . '</a>'
+				);
+				?>
+			</p>
 		</div>
-	<?php
-	// Get theme version for later.
-	$theme_version = Avada_Helper::normalize_version( $this->theme_version );
+		<?php
+		// Get theme version for later.
+		$theme_version = Avada_Helper::normalize_version( $this->theme_version );
 
-	$demos = Avada_Importer_Data::get_data();
-	$all_tags = array(
-		'all' => esc_attr__( 'All Demos', 'Avada' ),
-	);
+		$demos = Avada_Importer_Data::get_data();
+		$all_tags = array(
+			'all' => esc_attr__( 'All Demos', 'Avada' ),
+		);
 
-	foreach ( $demos as $demo => $demo_details ) {
-		if ( ! isset( $demo_details['tags'] ) ) {
-			$demo_details['tags'] = array();
+		foreach ( $demos as $demo => $demo_details ) {
+			if ( ! isset( $demo_details['tags'] ) ) {
+				$demo_details['tags'] = array();
+			}
+			$all_tags = array_replace_recursive( $all_tags, $demo_details['tags'] );
 		}
-		$all_tags = array_replace_recursive( $all_tags, $demo_details['tags'] );
-	}
 
-	// Check which recommended plugins are installed and activated.
-	$plugin_dependencies = Avada_TGM_Plugin_Activation::$instance->plugins;
+		// Check which recommended plugins are installed and activated.
+		$plugin_dependencies = Avada_TGM_Plugin_Activation::$instance->plugins;
 
-	foreach ( $plugin_dependencies as $key => $plugin ) {
-		$plugin_dependencies[ $key ]['active']    = is_plugin_active( $plugin['file_path'] );
-		$plugin_dependencies[ $key ]['installed'] = file_exists( WP_PLUGIN_DIR . '/' . $plugin['file_path'] );
-	}
+		foreach ( $plugin_dependencies as $key => $plugin ) {
+			$plugin_dependencies[ $key ]['active']    = is_plugin_active( $plugin['file_path'] );
+			$plugin_dependencies[ $key ]['installed'] = file_exists( WP_PLUGIN_DIR . '/' . $plugin['file_path'] );
+		}
 
-	// Import / Remove demo.
-	$imported_data = get_option( 'fusion_import_data', array() );
+		// Import / Remove demo.
+		$imported_data = get_option( 'fusion_import_data', array() );
 
-	$import_stages = array(
-		array(
-			'value' => 'post',
-			'label' => esc_html__( 'Posts', 'Avada' ),
-			'data'  => 'content',
-			'feature_dependency' => 'post',
-		),
-		array(
-			'value' => 'page',
-			'label' => esc_html__( 'Pages', 'Avada' ),
-			'data'  => 'content',
-			'feature_dependency' => 'page',
-		),
-		array(
-			'value' => 'avada_portfolio',
-			'label' => esc_html__( 'Portfolios', 'Avada' ),
-			'data'  => 'content',
-			'feature_dependency' => 'avada_portfolio',
-		),
-		array(
-			'value' => 'avada_faq',
-			'label' => esc_html__( 'FAQs', 'Avada' ),
-			'data'  => 'content',
-			'feature_dependency' => 'avada_faq',
-		),
-		array(
-			'value' => 'product',
-			'label' => esc_html__( 'Products', 'Avada' ),
-			'data'  => 'content',
-			'plugin_dependency' => 'woocommerce',
-		),
-		array(
-			'value' => 'event',
-			'label' => esc_html__( 'Events', 'Avada' ),
-			'data'  => 'content',
-			'plugin_dependency' => 'the-events-calendar',
-		),
-		array(
-			'value' => 'forum',
-			'label' => esc_html__( 'Forum', 'Avada' ),
-			'data'  => 'content',
-			'plugin_dependency' => 'bbpress',
-		),
-		array(
-			'value' => 'attachment',
-			'label' => esc_html__( 'Images', 'Avada' ),
-			'data'  => 'content',
-		),
-		array(
-			'value' => 'sliders',
-			'label' => esc_html__( 'Sliders', 'Avada' ),
-		),
-		array(
-			'value' => 'theme_options',
-			'label' => esc_html__( 'Theme Options', 'Avada' ),
-		),
-		array(
-			'value' => 'widgets',
-			'label' => esc_html__( 'Widgets', 'Avada' ),
-		),
-	);
-	?>
-	<?php
-	/**
-	 * WIP:
-	 * The tag-selector is hidden for now, we can enable it when needed
-	 * simply by removing the "display:none" from the wrapper.
-	 */
-	?>
+		$import_stages = array(
+			array(
+				'value' => 'post',
+				'label' => esc_html__( 'Posts', 'Avada' ),
+				'data'  => 'content',
+				'feature_dependency' => 'post',
+			),
+			array(
+				'value' => 'page',
+				'label' => esc_html__( 'Pages', 'Avada' ),
+				'data'  => 'content',
+				'feature_dependency' => 'page',
+			),
+			array(
+				'value' => 'avada_portfolio',
+				'label' => esc_html__( 'Portfolios', 'Avada' ),
+				'data'  => 'content',
+				'feature_dependency' => 'avada_portfolio',
+			),
+			array(
+				'value' => 'avada_faq',
+				'label' => esc_html__( 'FAQs', 'Avada' ),
+				'data'  => 'content',
+				'feature_dependency' => 'avada_faq',
+			),
+			array(
+				'value' => 'product',
+				'label' => esc_html__( 'Products', 'Avada' ),
+				'data'  => 'content',
+				'plugin_dependency' => 'woocommerce',
+			),
+			array(
+				'value' => 'event',
+				'label' => esc_html__( 'Events', 'Avada' ),
+				'data'  => 'content',
+				'plugin_dependency' => 'the-events-calendar',
+			),
+			array(
+				'value' => 'forum',
+				'label' => esc_html__( 'Forum', 'Avada' ),
+				'data'  => 'content',
+				'plugin_dependency' => 'bbpress',
+			),
+			array(
+				'value' => 'attachment',
+				'label' => esc_html__( 'Images', 'Avada' ),
+				'data'  => 'content',
+			),
+			array(
+				'value' => 'sliders',
+				'label' => esc_html__( 'Sliders', 'Avada' ),
+			),
+			array(
+				'value' => 'theme_options',
+				'label' => esc_html__( 'Theme Options', 'Avada' ),
+			),
+			array(
+				'value' => 'widgets',
+				'label' => esc_html__( 'Widgets', 'Avada' ),
+			),
+		);
+		?>
+		<?php
+		/**
+		 * WIP:
+		 * The tag-selector is hidden for now, we can enable it when needed
+		 * simply by removing the "display:none" from the wrapper.
+		 */
+		?>
 		<div class="avada-importer-tags-selector" style="margin-bottom: 1.5em; <?php echo ( isset( $_GET['beta'] ) ) ? '' : 'display: none;'; ?>">
 			<?php foreach ( $all_tags as $key => $label ) : ?>
 				<button class="button small button-small button-<?php echo ( 'all' === $key ) ? 'primary' : 'secondary'; ?>" data-tag="<?php echo esc_attr( $key ); ?>"><?php echo esc_attr( $label ); ?></button>

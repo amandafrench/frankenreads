@@ -56,76 +56,80 @@ class Avada_Widget_Style {
 		$this->widget_options = array(
 			array(
 				'key'          => 'fusion_padding_color',
-				'title'        => __( 'Padding', 'Avada' ),
-				'description'  => __( 'Controls the padding for this widget container. Enter value including any valid CSS unit, ex: 10px.', 'Avada' ),
+				'title'        => esc_html__( 'Padding', 'Avada' ),
+				'description'  => esc_html__( 'Controls the padding for this widget container. Enter value including any valid CSS unit, ex: 10px.', 'Avada' ),
 				'css_property' => 'padding',
 				'type'         => 'text',
 			),
 			array(
 				'key'          => 'fusion_bg_color',
-				'title'        => __( 'Background Color', 'Avada' ),
-				'description'  => __( 'Controls the background color for this widget container.', 'Avada' ),
+				'title'        => esc_html__( 'Background Color', 'Avada' ),
+				'description'  => esc_html__( 'Controls the background color for this widget container.', 'Avada' ),
 				'css_property' => 'background-color',
 				'type'         => 'colorpickeralpha',
 			),
 			array(
 				'key'          => 'fusion_bg_radius_size',
-				'title'        => __( 'Background Radius', 'Avada' ),
-				'description'  => __( 'Controls the background radius for this widget container.', 'Avada' ),
+				'title'        => esc_html__( 'Background Radius', 'Avada' ),
+				'description'  => esc_html__( 'Controls the background radius for this widget container.', 'Avada' ),
 				'css_property' => 'border-radius',
 				'type'         => 'text',
 			),
 			array(
 				'key'          => 'fusion_border_size',
-				'title'        => __( 'Border Size', 'Avada' ),
-				'description'  => __( 'Controls the border size for this widget container.', 'Avada' ),
+				'title'        => esc_html__( 'Border Size', 'Avada' ),
+				'description'  => esc_html__( 'Controls the border size for this widget container.', 'Avada' ),
 				'css_property' => 'border-width',
-				'type'         => 'text',
+				'type'         => 'range',
+				'min'          => 0,
+				'max'          => 50,
+				'step'         => 1,
+				'default'      => 0,
 			),
 			array(
 				'key'          => 'fusion_border_style',
-				'title'        => __( 'Border Style', 'Avada' ),
-				'description'  => __( 'Controls the border style for this widget container.', 'Avada' ),
+				'title'        => esc_html__( 'Border Style', 'Avada' ),
+				'description'  => esc_html__( 'Controls the border style for this widget container.', 'Avada' ),
 				'css_property' => 'border-style',
 				'type'         => 'select',
 				'options'      => array(
-					''       => __( 'None', 'Avada' ),
-					'solid'  => __( 'Solid', 'Avada' ),
-					'dotted' => __( 'Dotted', 'Avada' ),
-					'dashed' => __( 'Dashed', 'Avada' ),
+					''       => esc_html__( 'None', 'Avada' ),
+					'solid'  => esc_html__( 'Solid', 'Avada' ),
+					'dotted' => esc_html__( 'Dotted', 'Avada' ),
+					'dashed' => esc_html__( 'Dashed', 'Avada' ),
 				),
 			),
 			array(
 				'key'          => 'fusion_border_color',
-				'title'        => __( 'Border Color', 'Avada' ),
-				'description'  => __( 'Controls the border color for this widget container.', 'Avada' ),
+				'title'        => esc_html__( 'Border Color', 'Avada' ),
+				'description'  => esc_html__( 'Controls the border color for this widget container.', 'Avada' ),
 				'css_property' => 'border-color',
 				'type'         => 'colorpickeralpha',
 			),
 			array(
 				'key'          => 'fusion_align',
-				'title'        => __( 'Content Align', 'Avada' ),
-				'description'  => __( 'Controls content alignment for this widget container. Inherit means it will inherit alignment from it\'s parent element.', 'Avada' ),
+				'title'        => esc_html__( 'Content Align', 'Avada' ),
+				'description'  => esc_html__( 'Controls content alignment for this widget container. Inherit means it will inherit alignment from its parent element.', 'Avada' ),
 				'css_property' => 'text-align',
 				'type'         => 'select',
 				'options'      => array(
-					''       => __( 'Inherit', 'Avada' ),
-					'left'   => __( 'Left', 'Avada' ),
-					'right'  => __( 'Right', 'Avada' ),
-					'center' => __( 'Center', 'Avada' ),
+					''       => esc_html__( 'Inherit', 'Avada' ),
+					'left'   => esc_html__( 'Left', 'Avada' ),
+					'right'  => esc_html__( 'Right', 'Avada' ),
+					'center' => esc_html__( 'Center', 'Avada' ),
 				),
 			),
 			array(
 				'key'          => 'fusion_align_mobile',
-				'title'        => __( 'Mobile Content Align', 'Avada' ),
-				'description'  => __( 'Controls mobile content alignment for this widget container. Inherit means it will inherit alignment from it\'s parent element.', 'Avada' ),
+				'title'        => esc_html__( 'Mobile Content Align', 'Avada' ),
+				'description'  => esc_html__( 'Controls mobile content alignment for this widget container. Inherit means it will inherit alignment from its parent element.', 'Avada' ),
 				'css_property' => 'text-align',
 				'type'         => 'select',
 				'options'      => array(
-					''        => __( 'Inherit', 'Avada' ),
-					'left'    => __( 'Left', 'Avada' ),
-					'right'   => __( 'Right', 'Avada' ),
-					'center'  => __( 'Center', 'Avada' ),
+					''       => esc_html__( 'Inherit', 'Avada' ),
+					'left'   => esc_html__( 'Left', 'Avada' ),
+					'right'  => esc_html__( 'Right', 'Avada' ),
+					'center' => esc_html__( 'Center', 'Avada' ),
 				),
 			),
 		);
@@ -145,7 +149,8 @@ class Avada_Widget_Style {
 		?>
 		<?php foreach ( $this->widget_options as $option ) : ?>
 			<?php
-			$field_css_classes = 'option-field fusion-builder-option-container';
+			$field_css_classes   = 'option-field fusion-builder-option-container';
+			$wrapper_css_classes = 'fusion-widget-' . $option['key'];
 
 			if ( 'colorpickeralpha' === $option['type'] ) {
 				$field_css_classes .= ' pyre_field avada-color colorpickeralpha';
@@ -153,11 +158,22 @@ class Avada_Widget_Style {
 
 			$value                 = isset( $instance[ $option['key'] ] ) ? $instance[ $option['key'] ] : '';
 			$option['description'] = isset( $option['description'] ) ? $option['description'] : '';
+
+			if ( 'range' === $option['type'] ) {
+				$wrapper_css_classes .= ' avada-range';
+				$value                = '' !== $value ? (int) $value : $option['default'];
+			}
 			?>
-			<li class="fusion-builder-option">
+			<li class="fusion-builder-option <?php echo esc_attr( $wrapper_css_classes ); ?>">
 				<div class="option-details">
 					<h3><?php echo esc_html( $option['title'] ); ?></h3>
-					<p class="description"><?php echo esc_html( $option['description'] ); ?></p>
+					<p class="description"><?php echo esc_html( $option['description'] ); ?>
+					<?php
+					if ( 'range' === $option['type'] && isset( $option['default'] ) && '' !== $option['default'] ) {
+						echo '<span class="pyre-default-reset" style="display:none;"><a href="#" id="default-' . esc_attr( $widget->get_field_id( $option['key'] ) ) . '" class="fusion-range-default fusion-hide-from-atts" type="radio" name="' . esc_attr( $widget->get_field_id( $option['key'] ) ) . '" value="" data-default="' . $option['default'] . '">' . esc_attr( 'Reset to default.', 'Avada' ) . '</a><span>' . esc_attr( 'Using default value.', 'Avada' ) . '</span></span>'; // WPCS: XSS ok.
+					}
+					?>
+					</p>
 				</div>
 
 				<div class="<?php echo esc_attr( $field_css_classes ); ?>">
@@ -176,6 +192,27 @@ class Avada_Widget_Style {
 							name="<?php echo esc_attr( $widget->get_field_name( $option['key'] ) ); ?>"
 							value="<?php echo esc_attr( $value ); ?>"
 						/>
+					<?php elseif ( 'range' === $option['type'] ) : ?>
+						<input
+							type="text"
+							name="range-<?php echo esc_attr( $widget->get_field_name( $option['key'] ) ); ?>"
+							id="range-<?php echo esc_attr( $widget->get_field_id( $option['key'] ) ); ?>"
+							value="<?php echo esc_attr( $value ); ?>"
+							class="fusion-slider-input <?php echo ( isset( $option['default'] ) && '' !== $option['default'] ) ? 'fusion-hide-from-atts' : ''; ?>" />
+						<div
+							class="fusion-slider-container"
+							data-id="<?php echo esc_attr( $widget->get_field_id( $option['key'] ) ); ?>"
+							data-min="<?php echo esc_attr( $option['min'] ); ?>"
+							data-max="<?php echo esc_attr( $option['max'] ); ?>"
+							data-step="<?php echo esc_attr( $option['step'] ); ?>">
+						</div>
+						<?php if ( isset( $option['default'] ) && '' !== $option['default'] ) : ?>
+						<input type="hidden"
+							id="<?php echo esc_attr( $widget->get_field_name( $option['key'] ) ); ?>"
+							name="<?php echo esc_attr( $widget->get_field_name( $option['key'] ) ); ?>"
+							value="<?php echo esc_attr( $value ); ?>"
+							class="fusion-hidden-value" />
+						<?php endif; ?>
 				<?php else : ?>
 					<input type="text" id="<?php echo esc_attr( $widget->get_field_id( $option['key'] ) ); ?>"
 						name="<?php echo esc_attr( $widget->get_field_name( $option['key'] ) ); ?>"
@@ -187,37 +224,36 @@ class Avada_Widget_Style {
 			<?php endforeach; ?>
 		<?php
 		$this->end_widget_options();
-		return;
 	}
 
 	/**
 	 * Open widget options container.
 	 */
 	private function start_widget_options() {
-	?>
-	<div class="fusion-menu-options-container">
-		<a class="button button-primary button-large fusion-menu-option-trigger" href="#">
-			<?php esc_html_e( 'Avada Widget Options', 'Avada' ); ?>
-		</a>
-		<div class="fusion_builder_modal_overlay" style="display:none"></div>
-		<div class="fusion-options-holder fusion-builder-modal-settings-container" style="display:none">
-			<div class="fusion-builder-modal-container fusion_builder_module_settings">
-				<div class="fusion-builder-modal-top-container">
-					<h2>
-						<?php esc_attr_e( 'Avada Widget Options', 'Avada' ); ?>
-						<div class="fusion-modal-description">
-							<?php esc_html_e( 'These options apply to the widget container, not the actual widget.', 'Avada' ); ?>
-						</div>
-					</h2>
-					<div class="fusion-builder-modal-close fusiona-plus2"></div>
-				</div>
-				<div class="fusion-builder-modal-bottom-container">
-					<a href="#" class="fusion-builder-modal-save" ><span><?php esc_attr_e( 'Save', 'Avada' ); ?></span></a>
-					<a href="#" class="fusion-builder-modal-close" ><span><?php esc_attr_e( 'Cancel', 'Avada' ); ?></span></a>
-				</div>
-				<div class="fusion-builder-main-settings fusion-builder-main-settings-full">
-					<ul class="fusion-builder-module-settings">
-	<?php
+		?>
+		<div class="fusion-menu-options-container">
+			<a class="button button-primary button-large fusion-menu-option-trigger" href="#">
+				<?php esc_html_e( 'Avada Widget Options', 'Avada' ); ?>
+			</a>
+			<div class="fusion_builder_modal_overlay" style="display:none"></div>
+			<div class="fusion-options-holder fusion-builder-modal-settings-container" style="display:none">
+				<div class="fusion-builder-modal-container fusion_builder_module_settings">
+					<div class="fusion-builder-modal-top-container">
+						<h2>
+							<?php esc_attr_e( 'Avada Widget Options', 'Avada' ); ?>
+							<div class="fusion-modal-description">
+								<?php esc_html_e( 'These options apply to the widget container, not the actual widget.', 'Avada' ); ?>
+							</div>
+						</h2>
+						<div class="fusion-builder-modal-close fusiona-plus2"></div>
+					</div>
+					<div class="fusion-builder-modal-bottom-container">
+						<a href="#" class="fusion-builder-modal-save" ><span><?php esc_attr_e( 'Save', 'Avada' ); ?></span></a>
+						<a href="#" class="fusion-builder-modal-close" ><span><?php esc_attr_e( 'Cancel', 'Avada' ); ?></span></a>
+					</div>
+					<div class="fusion-builder-main-settings fusion-builder-main-settings-full">
+						<ul class="fusion-builder-module-settings">
+						<?php
 	}
 
 	/**
@@ -225,12 +261,12 @@ class Avada_Widget_Style {
 	 */
 	public function end_widget_options() {
 		?>
-					</ul>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<?php
+		<?php
 	}
 
 	/**
@@ -289,7 +325,7 @@ class Avada_Widget_Style {
 			if ( isset( $widget_opt[ $widget_num ][ $option['key'] ] ) ) {
 
 				if ( 'fusion_align' === $option['key'] && false !== strpos( $widget_id, 'calendar' ) ) {
-					$alignment = ( '' === $widget_opt[ $widget_num ][ $option['key'] ] ) ? 'default' : $widget_opt[ $widget_num ][ $option['key'] ];
+					$alignment                  = ( '' === $widget_opt[ $widget_num ][ $option['key'] ] ) ? 'default' : $widget_opt[ $widget_num ][ $option['key'] ];
 					$params[0]['before_widget'] = str_replace( 'class="', 'class="fusion-widget-align-' . $alignment . ' ', $params[0]['before_widget'] );
 				}
 
@@ -314,6 +350,9 @@ class Avada_Widget_Style {
 
 				if ( '' !== $widget_opt[ $widget_num ][ $option['key'] ] ) {
 					if ( false === strpos( $option['key'], 'mobile' ) ) {
+						if ( 'border-width' === $option['css_property'] ) {
+							$widget_opt[ $widget_num ][ $option['key'] ] = (int) $widget_opt[ $widget_num ][ $option['key'] ] . 'px';
+						}
 						$style .= $option['css_property'] . ': ' . $widget_opt[ $widget_num ][ $option['key'] ] . ';';
 
 						if ( 'border-radius' === $option['css_property'] ) {

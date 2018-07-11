@@ -10,6 +10,7 @@ this.imagePreview = function() {
 
 // Starting the script on page load.
 jQuery( document ).ready( function() {
+	var copyDebugReport;
 
 	jQuery( '.help_tip' ).tipTip( {
 		attribute: 'data-tip'
@@ -85,14 +86,17 @@ jQuery( document ).ready( function() {
 		'activation': 'click',
 		'fadeIn': 50,
 		'fadeOut': 50,
-		'delay': 0
+		'delay': 100,
+		enter: function() {
+			copyDebugReport();
+		}
 	} );
 
-	jQuery( 'body' ).on( 'copy', '#copy-for-support', function( e ) {
-		e.clipboardData.clearData();
-		e.clipboardData.setData( 'text/plain', jQuery( '#debug-report textarea' ).val() );
-		e.preventDefault();
-	} );
+	copyDebugReport = function() {
+		var debugReportTextarea = document.getElementById( 'debug-report-textarea' );
+		jQuery( debugReportTextarea ).select();
+		document.execCommand( 'Copy', false, null );
+	};
 } );
 
 jQuery( document ).ready( function() {

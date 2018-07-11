@@ -14,3 +14,7 @@
 		</div>
 	</div>
 </div>
+
+<?php if ( 'clean' === Avada()->settings->get( 'woocommerce_product_box_design' ) ) : ?>
+	</div> <?php // fusion-product-content container. ?>
+<?php endif; ?>

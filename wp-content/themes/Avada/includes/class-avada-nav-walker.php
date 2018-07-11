@@ -571,7 +571,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				$item_output .= $args->before . '<a ' . $attributes . '>';
 
 				// For right side header add the caret icon at the beginning.
-				if ( 0 === $depth && $args->has_children && $menu_display_dropdown_indicator && 'v6' !== $header_layout && 'Right' === $header_position && ! $this->menu_style ) {
+				if ( $args->has_children && ( ( 'parent' === $menu_display_dropdown_indicator && 0 === $depth ) || 'parent_child' === $menu_display_dropdown_indicator ) && 'v6' !== $header_layout && 'Right' === $header_position && ! $this->menu_style ) {
 					$item_output .= ' <span class="fusion-caret"><i class="fusion-dropdown-indicator"></i></span>';
 				}
 
@@ -655,7 +655,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				}
 
 				// For top header and left side header add the caret icon at the end.
-				if ( 0 === $depth && $args->has_children && $menu_display_dropdown_indicator && 'v6' !== $header_layout && 'Right' !== $header_position && ! $this->menu_style ) {
+				if ( $args->has_children && ( ( 'parent' === $menu_display_dropdown_indicator && 0 === $depth ) || 'parent_child' === $menu_display_dropdown_indicator ) && 'v6' !== $header_layout && 'Right' !== $header_position && ! $this->menu_style ) {
 					$item_output .= ' <span class="fusion-caret"><i class="fusion-dropdown-indicator"></i></span>';
 				}
 
@@ -747,7 +747,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				$this->no_of_top_level_items_displayed++;
 			}
 
-			if ( 'v7' === Avada()->settings->get( 'header_layout' ) && 'Top' === Avada()->settings->get( 'header_position' ) && $this->middle_logo_menu_break_point == $this->no_of_top_level_items_displayed && '0' === $item->menu_item_parent ) {
+			if ( 'v7' === Avada()->settings->get( 'header_layout' ) && ( '' !== Avada()->settings->get( 'logo', 'url' ) || '' !== Avada()->settings->get( 'logo_retina', 'url' ) ) && 'Top' === Avada()->settings->get( 'header_position' ) && $this->middle_logo_menu_break_point == $this->no_of_top_level_items_displayed && '0' === $item->menu_item_parent ) {
 				ob_start();
 				get_template_part( 'templates/logo' );
 				$output .= ob_get_clean();

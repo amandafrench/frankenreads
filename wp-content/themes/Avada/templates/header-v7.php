@@ -21,6 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="fusion-header-has-flyout-menu-content">
 		<?php endif; ?>
 		<?php avada_main_menu(); ?>
+		<?php avada_mobile_menu_search(); ?>
 		<?php if ( 'flyout' === Avada()->settings->get( 'mobile_menu_design' ) ) : ?>
 			</div>
 		<?php endif; ?>

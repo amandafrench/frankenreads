@@ -25,9 +25,10 @@ function avada_get_required_and_recommened_plugins() {
 	}
 
 	$is_plugins_page = false;
-	if ( ( isset( $_GET['page'] ) && 'avada-plugins' === $_GET['page'] ) ||
-		 ( isset( $_GET['page'] ) && 'install-required-plugins' === $_GET['page'] ) ||
-		 ( isset( $_SERVER['HTTP_REFERER'] ) && false !== strpos( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ), 'HTTP_REFERER' ) )
+	if (
+		( isset( $_GET['page'] ) && 'avada-plugins' === $_GET['page'] ) || // WPCS: CSRF ok.
+		( isset( $_GET['page'] ) && 'install-required-plugins' === $_GET['page'] ) || // WPCS: CSRF ok.
+		( isset( $_SERVER['HTTP_REFERER'] ) && false !== strpos( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ), 'HTTP_REFERER' ) )
 	) {
 		$is_plugins_page = true;
 	}
@@ -67,14 +68,14 @@ function avada_register_required_and_recommended_plugins() {
 	 * end of each line for what each argument will be.
 	 */
 	$config = array(
-		'domain'            => $theme_text_domain,
-		'default_path'      => '',
-		'parent_slug'       => 'avada',
-		'menu'              => 'avada-plugins',
-		'has_notices'       => true,
-		'is_automatic'      => true,
-		'message'           => '',
-		'strings'           => array(
+		'domain'       => $theme_text_domain,
+		'default_path' => '',
+		'parent_slug'  => 'avada',
+		'menu'         => 'avada-plugins',
+		'has_notices'  => true,
+		'is_automatic' => true,
+		'message'      => '',
+		'strings'      => array(
 			'page_title'                      => __( 'Install/Update Required Plugins', 'Avada' ),
 			'menu_title'                      => __( 'Install Plugins', 'Avada' ),
 			/* translators: %1$s = plugin name(s) */
@@ -116,7 +117,7 @@ add_action( 'tgmpa_register', 'avada_register_required_and_recommended_plugins' 
  * @return string
  */
 function avada_tgm_show_admin_notice_capability() {
-	return 'edit_theme_options';
+	return 'switch_themes';
 }
 add_filter( 'tgmpa_show_admin_notice_capability', 'avada_tgm_show_admin_notice_capability' );
 

@@ -206,7 +206,7 @@ class Fusion_Image_Resizer {
 			// Add the resized dimensions to original image metadata (so we can delete our resized images when the original image is delete from the Media Library).
 			$metadata = wp_get_attachment_metadata( $attachment_id );
 			if ( isset( $metadata['image_meta'] ) ) {
-				$metadata['image_meta']['resized_images'][] = $resized_width . 'x' . $resized_height;
+				$metadata['image_meta']['resized_images'][ 'fusion-' . $resized_width ] = $resized_width . 'x' . $resized_height;
 				wp_update_attachment_metadata( $attachment_id, $metadata );
 			}
 			// Create the image array.

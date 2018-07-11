@@ -473,11 +473,13 @@ span.avada-loader {
   margin-bottom: 20px;
 }
 
+.widefat .fusion-api-status-error,
 .avada-system-status mark.error {
   color: #a00;
   background: 0;
 }
 
+.widefat .fusion-api-status-ok,
 .avada-system-status mark.yes {
   color: #7ad03a;
   background: 0;

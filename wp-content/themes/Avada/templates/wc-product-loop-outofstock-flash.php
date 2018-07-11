@@ -19,7 +19,7 @@ global $product;
 			<?php esc_attr_e( 'Out of stock', 'Avada' ); ?>
 		</div>
 	</div>
-<?php
+	<?php
 endif;
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

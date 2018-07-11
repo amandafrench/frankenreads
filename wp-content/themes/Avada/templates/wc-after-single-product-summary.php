@@ -57,7 +57,7 @@
 			</a>
 		</li>
 	</ul>
-<?php
+	<?php
 endif;
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

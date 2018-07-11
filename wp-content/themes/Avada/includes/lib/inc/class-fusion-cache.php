@@ -80,6 +80,7 @@ class Fusion_Cache {
 
 			// Delete cached CSS in the database.
 			update_option( 'fusion_dynamic_css_posts', array() );
+			update_option( 'fusion_dynamic_css_ids', array() );
 		}
 
 		if ( true === $delete_cache['demo_data'] ) {
@@ -114,7 +115,6 @@ class Fusion_Cache {
 			);
 			global $wpdb;
 			foreach ( $dynamic_transients as $transient ) {
-				// @codingStandardsIgnoreLine WordPress.VIP.DirectDatabaseQuery.NoCaching
 				$wpdb->query( // WPCS: cache ok.
 					$wpdb->prepare(
 						"DELETE FROM $wpdb->options WHERE option_name LIKE %s",

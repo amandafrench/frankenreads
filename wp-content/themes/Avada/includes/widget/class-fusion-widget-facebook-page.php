@@ -131,7 +131,7 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 			<div class="fb-like-box-container <?php echo esc_attr( $args['widget_id'] ); ?>" id="fb-root">
 				<div class="fb-page" data-href="<?php echo esc_url_raw( $page_url ); ?>" data-original-width="<?php echo esc_attr( $widget_width ); ?>" data-width="<?php echo esc_attr( $widget_width ); ?>" data-adapt-container-width="true" data-small-header="<?php echo esc_attr( $small_header ); ?>" data-height="<?php echo esc_attr( $height ); ?>" data-hide-cover="<?php echo esc_attr( $show_header ); ?>" data-show-facepile="<?php echo esc_attr( $show_faces ); ?>" data-tabs="<?php echo esc_attr( $tabs ); ?>"></div>
 			</div>
-		<?php
+			<?php
 		endif;
 
 		echo $after_widget; // WPCS: XSS ok.
@@ -245,7 +245,7 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 			<input class="checkbox" type="checkbox" <?php checked( $instance['small_header'], 'on' ); ?> id="<?php echo esc_attr( $this->get_field_id( 'small_header' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'small_header' ) ); ?>" />
 			<label for="<?php echo esc_attr( $this->get_field_id( 'small_header' ) ); ?>"><?php esc_attr_e( 'Use Small Header', 'Avada' ); ?></label>
 		</p>
-	<?php
+		<?php
 	}
 }
 

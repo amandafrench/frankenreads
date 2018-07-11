@@ -72,12 +72,12 @@ class Avada_Admin_Notices {
 
 	}
 
-	 /**
-	  * Ajax request handler for notices dismissal.
-	  *
-	  * @access public
-	  * @since 5.3
-	  */
+	/**
+	 * Ajax request handler for notices dismissal.
+	 *
+	 * @access public
+	 * @since 5.3
+	 */
 	public function dismiss_admin_notice() {
 
 		check_ajax_referer( 'avada_admin_notice', 'nonce' );
@@ -98,14 +98,14 @@ class Avada_Admin_Notices {
 		wp_die();
 	}
 
-	 /**
-	  * Check if notice if active.
-	  *
-	  * @access static
-	  * @since 5.3
-	  * @param string $option_name name of notice.
-	  * @return bool
-	  */
+	/**
+	 * Check if notice if active.
+	 *
+	 * @access static
+	 * @since 5.3
+	 * @param string $option_name name of notice.
+	 * @return bool
+	 */
 	public static function is_admin_notice_active( $option_name ) {
 		$avada_admin_notices = get_transient( 'avada_admin_notices' );
 

@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<span class="get-system-status"><a href="#" class="button-primary debug-report"><?php esc_attr_e( 'Get System Report', 'Avada' ); ?></a><span class="system-report-msg"><?php esc_attr_e( 'Click the button to produce a report, then copy and paste into your support ticket.', 'Avada' ); ?></span></span>
 
 						<div id="debug-report">
-							<textarea readonly="readonly"></textarea>
+							<textarea id="debug-report-textarea" readonly="readonly"></textarea>
 							<p class="submit"><button id="copy-for-support" class="button-primary" href="#" data-tip="<?php esc_attr_e( 'Copied!', 'Avada' ); ?>"><?php esc_attr_e( 'Copy for Support', 'Avada' ); ?></button></p>
 						</div>
 					</td>
@@ -116,7 +116,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// Display Avada conversions if available.
 		if ( ( $show_400_migration && ! $force_hide_400_migration ) || $show_500_migration ) {
-		?>
+			?>
 			<h3 class="screen-reader-text"><?php esc_attr_e( 'Avada Conversion Controls', 'Avada' ); ?></h3>
 			<table class="widefat" cellspacing="0">
 				<thead>
@@ -250,7 +250,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php endif; ?>
 			</tbody>
 		</table>
-		<?php
+			<?php
 		} // End if().
 		?>
 
@@ -339,7 +339,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</tbody>
 		</table>
 
-		<h3 class="screen-reader-text"><?php esc_attr_e( 'Server Environment', 'Avada' ); ?></h3>
+		<h3 class="screen-reader-text"><?php esc_attr_e( ' Environment', 'Avada' ); ?></h3>
 		<table class="widefat" cellspacing="0">
 			<thead>
 				<tr>
@@ -608,6 +608,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</tbody>
 		</table>
 
+		<h3 class="screen-reader-text"><?php esc_attr_e( 'Updates Server Status', 'Avada' ); ?></h3>
+		<table class="widefat" cellspacing="0">
+			<thead>
+				<tr>
+					<th colspan="3"><?php esc_attr_e( 'Updates Server Status', 'Avada' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<a href="#" data-api_type="envato" class="button button-primary fusion-check-api-status"><?php esc_attr_e( 'Check Envato Server Status', 'Avada' ); ?></a>
+						<span class="fusion-system-status-spinner" style="display: none;">
+							<img src="<?php echo esc_url( admin_url( 'images/spinner.gif' ) ); ?>" />
+						</span>
+					</td>
+					<td class="help"><?php echo '<a href="#" class="help_tip" data-tip="' . esc_attr__( 'Server from which Avada is updated.', 'Avada' ) . '">[?]</a>'; ?></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>
+						<a href="#" data-api_type="tf_updates" class="button button-primary fusion-check-api-status"><?php esc_attr_e( 'Check ThemeFusion Server Status', 'Avada' ); ?></a>
+						<span class="fusion-system-status-spinner" style="display: none;">
+							<img src="<?php echo esc_url( admin_url( 'images/spinner.gif' ) ); ?>" />
+						</span>
+					</td>
+					<td class="help"><?php echo '<a href="#" class="help_tip" data-tip="' . esc_attr__( 'Server from which plugins and patches are downloaded.', 'Avada' ) . '">[?]</a>'; ?></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="3"><textarea id="fusion-check-api-textarea" readonly style="display:none;width:100%;"></textarea></td>
+				</tr>
+			</tbody>
+		</table>
+
 		<h3 class="screen-reader-text"><?php esc_attr_e( 'Active Plugins', 'Avada' ); ?></h3>
 		<?php
 		$active_plugins = (array) get_option( 'active_plugins', array() );
@@ -705,5 +739,51 @@ if ( ! defined( 'ABSPATH' ) ) {
 				}
 			});
 		}
+		});
 	</script>
 <?php endif; ?>
+
+
+<script type="text/javascript">
+	jQuery( document ).ready( function() {
+
+		jQuery( '.fusion-check-api-status' ).on( 'click', function( event ) {
+			var $this = jQuery( this ),
+				$statusCell = $this.closest( 'tr' ).find( 'td:nth-child(3)' );
+				data = {
+				action: 'fusion_check_api_status',
+				nonce: '<?php echo esc_js( wp_create_nonce( 'fusion_check_api_status_nonce' ) ); ?>'
+			};
+
+			event.preventDefault();
+
+			if ( 'undefined' === typeof jQuery( this ).data( 'api_type' ) ) {
+				return;
+			}
+
+			$statusCell.html( '' );
+			$this.closest( 'tr' ).find( '.fusion-system-status-spinner' ).css( 'display', 'inline-block' );
+
+			data.api_type = jQuery( this ).data( 'api_type' );
+
+			jQuery.get( ajaxurl, data, function( response ) {
+
+				if ( 200 === response.code ) {
+					$statusCell.removeClass( 'fusion-api-status-error' );
+					$statusCell.addClass( 'fusion-api-status-ok' );
+					jQuery( '#fusion-check-api-textarea' ).css( 'display', 'none' );
+				} else {
+					$statusCell.removeClass( 'fusion-api-status-ok' );
+					$statusCell.addClass( 'fusion-api-status-error' );
+					jQuery( '#fusion-check-api-textarea' ).css( 'display', 'block' );
+				}
+
+				$this.closest( 'tr' ).find( '.fusion-system-status-spinner' ).css( 'display', 'none' );
+				$statusCell.html( response.message );
+
+				jQuery( '#fusion-check-api-textarea' ).html( response.api_response );
+			}, 'json' );
+
+		} );
+	});
+</script>

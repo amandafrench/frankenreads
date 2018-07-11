@@ -39,11 +39,11 @@ class Fusion_Dynamic_CSS {
 	/**
 	 * An object containing helper methods.
 	 *
-	 * @access private
+	 * @access protected
 	 * @since 1.0.0
 	 * @var null|object Fusion_Dynamic_CSS_Helpers
 	 */
-	private $helpers = null;
+	protected static $helpers = null;
 
 	/**
 	 * An instance of the Fusion_Dynamic_CSS_Inline class.
@@ -103,10 +103,7 @@ class Fusion_Dynamic_CSS {
 	 * @since 1.0.0
 	 */
 	protected function __construct() {
-
-		if ( null === $this->helpers ) {
-			$this->helpers = $this->get_helpers();
-		}
+		self::$helpers = $this->get_helpers();
 
 		add_action( 'wp', array( $this, 'init' ), 999 );
 
@@ -238,7 +235,7 @@ class Fusion_Dynamic_CSS {
 		// Creates the content of the CSS file.
 		// We're adding a warning at the top of the file to prevent users from editing it.
 		// The warning is then followed by the actual CSS content.
-		$content = $this->helpers->dynamic_css_cached();
+		$content = self::$helpers->dynamic_css_cached();
 		$content = apply_filters( 'fusion_dynamic_css_final', $content );
 
 		// When using domain-mapping plugins we have to make sure that any references to the original domain
@@ -315,9 +312,15 @@ class Fusion_Dynamic_CSS {
 	 * @return void
 	 */
 	public function post_update_option( $post_id ) {
-		$option = get_option( 'fusion_dynamic_css_posts', array() );
-		$option[ $post_id ] = false;
-		update_option( 'fusion_dynamic_css_posts', $option );
+		$options = array(
+			'fusion_dynamic_css_ids',
+			'fusion_dynamic_css_posts',
+		);
+		foreach ( $options as $option_name ) {
+			$option = get_option( $option_name, array() );
+			$option[ $post_id ] = false;
+			update_option( $option_name, $option );
+		}
 	}
 
 	/**
@@ -329,6 +332,7 @@ class Fusion_Dynamic_CSS {
 	 */
 	public function global_reset_option() {
 		update_option( 'fusion_dynamic_css_posts', array() );
+		update_option( 'fusion_dynamic_css_ids', array() );
 	}
 
 	/**
@@ -418,11 +422,12 @@ class Fusion_Dynamic_CSS {
 	 * @return object Fusion_Dynamic_CSS_Helpers
 	 */
 	public function get_helpers() {
+
 		// Instantiate the Fusion_Dynamic_CSS_Helpers object.
-		if ( null === $this->helpers ) {
-			$this->helpers = new Fusion_Dynamic_CSS_Helpers();
+		if ( null === self::$helpers ) {
+			self::$helpers = new Fusion_Dynamic_CSS_Helpers();
 		}
-		return $this->helpers;
+		return self::$helpers;
 	}
 
 	/**

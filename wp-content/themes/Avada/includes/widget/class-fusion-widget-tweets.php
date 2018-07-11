@@ -531,7 +531,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 				</div>
 				<span class="arrow"></span>
 			</div>
-		<?php
+			<?php
 		} // End if().
 	}
 

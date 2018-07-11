@@ -83,11 +83,9 @@ do_action( 'avada_before_comments' );
 		'class_submit'         => 'fusion-button fusion-button-default fusion-button-default-size',
 		'label_submit'         => esc_html__( 'Post Comment', 'Avada' ),
 	);
-	?>
 
-	<?php comment_form( $comments_args ); ?>
+	comment_form( $comments_args );
 
-<?php
 endif;
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

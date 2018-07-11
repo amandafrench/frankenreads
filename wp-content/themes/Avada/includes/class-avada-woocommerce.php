@@ -876,7 +876,7 @@ class Avada_Woocommerce {
 		}
 
 		// Get order by.
-		$pob = ( ! empty( $params['product_orderby'] ) ) ? $params['product_orderby'] : $woo_default_catalog_orderby;
+		$pob = ( ! empty( $params['product_orderby'] ) && 'default' !== $params['product_orderby'] ) ? $params['product_orderby'] : $woo_default_catalog_orderby;
 
 		// Get order.
 		$po = 'asc';

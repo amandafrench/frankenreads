@@ -27,6 +27,11 @@ function avada_options_section_events_calendar( $sections ) {
 		return $sections;
 	}
 
+	$ec_version_greater_than_4_6_18 = false;
+	if ( class_exists( 'Tribe__Events__Main' ) && version_compare( Tribe__Events__Main::VERSION, '4.6.19', '>=' ) ) {
+		$ec_version_greater_than_4_6_18 = true;
+	}
+
 	$sections['ec'] = array(
 		'label'    => esc_html__( 'Events Calendar', 'Avada' ),
 		'id'       => 'heading_events_calendar',
@@ -42,6 +47,18 @@ function avada_options_section_events_calendar( $sections ) {
 				'icon'        => true,
 				'type'        => 'sub-section',
 				'fields'      => array(
+					'ec_display_page_title' => ( ! $ec_version_greater_than_4_6_18 ) ? array() : array(
+						'type'        => 'radio-buttonset',
+						'label'       => esc_html__( 'Display Events Page Title', 'Avada' ),
+						'description' => esc_html__( 'Controls if the native page title for events calendar archive pages should be displayed above or below the filter bar, or if it should be disabled.', 'Avada' ),
+						'id'          => 'ec_display_page_title',
+						'default'     => 'below',
+						'choices'     => array(
+							'above' => esc_html__( 'Above', 'Avada' ),
+							'below' => esc_html__( 'Below', 'Avada' ),
+							'disable' => esc_html__( 'Disable', 'Avada' ),
+						),
+					),
 					'primary_overlay_text_color' => array(
 						'label'       => esc_html__( 'Events Primary Color Overlay Text Color', 'Avada' ),
 						'description' => esc_html__( 'Controls the color of text when primary color is the background.', 'Avada' ),
@@ -121,6 +138,13 @@ function avada_options_section_events_calendar( $sections ) {
 							'cover' => 'Cover',
 							'auto'  => 'Auto',
 						),
+					),
+					'ec_sep_heading_font_size' => array(
+						'label'           => esc_html__( 'Events Separator Heading Font Size', 'Avada' ),
+						'description'     => esc_html__( 'Controls the font size of the month and day separator headings on events archive pages.', 'Avada' ),
+						'id'              => 'ec_sep_heading_font_size',
+						'type'            => 'dimension',
+						'default'         => '18px',
 					),
 				),
 			),

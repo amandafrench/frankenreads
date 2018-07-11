@@ -466,17 +466,18 @@ class Avada_Template {
 						<strong><?php echo get_comment_author_link(); ?></strong>
 						<?php /* translators: %1$s: Comment date. %2$s: Comment time. */ ?>
 						<?php printf( esc_attr__( '%1$s at %2$s', 'Avada' ), get_comment_date(), get_comment_time() ); ?><?php edit_comment_link( __( ' - Edit', 'Avada' ), '  ', '' ); ?>
-										<?php
-										comment_reply_link(
-											array_merge(
-												$args, array(
-													'reply_text' => __( ' - Reply', 'Avada' ),
-													'add_below' => 'comment',
-													'depth' => $depth,
-													'max_depth' => $args['max_depth'],
-												)
-											)
-										);
+						<?php
+						comment_reply_link(
+							array_merge(
+								$args,
+								array(
+									'reply_text' => __( ' - Reply', 'Avada' ),
+									'add_below'  => 'comment',
+									'depth'      => $depth,
+									'max_depth'  => $args['max_depth'],
+								)
+							)
+						);
 						?>
 					</div>
 					<div class="comment-text">

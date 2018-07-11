@@ -221,6 +221,30 @@ function avada_options_section_menu( $sections ) {
 							),
 						),
 					),
+					'mobile_nav_padding' => array(
+						'label'       => esc_html__( 'Main Menu Item Padding On Mobile', 'Avada' ),
+						'description' => esc_html__( 'Controls the right padding for menu text (left on RTL) when the normal desktop menu is used on mobile devices.', 'Avada' ),
+						'id'          => 'mobile_nav_padding',
+						'default'     => '25',
+						'type'        => 'slider',
+						'choices'     => array(
+							'min'  => '0',
+							'max'  => '200',
+							'step' => '1',
+						),
+						'required'    => array(
+							array(
+								'setting'  => 'header_position',
+								'operator' => '==',
+								'value'    => 'Top',
+							),
+							array(
+								'setting'  => 'header_layout',
+								'operator' => '!=',
+								'value'    => 'v6',
+							),
+						),
+					),
 					'megamenu_shadow' => array(
 						'label'       => esc_html__( 'Main Menu Drop Shadow', 'Avada' ),
 						'description' => esc_html__( 'Turn on to display a drop shadow on menu dropdowns.', 'Avada' ),
@@ -233,6 +257,41 @@ function avada_options_section_menu( $sections ) {
 								'setting'  => 'header_position',
 								'operator' => '!=',
 								'value'    => 'Top',
+							),
+							array(
+								'setting'  => 'header_layout',
+								'operator' => '!=',
+								'value'    => 'v6',
+							),
+						),
+					),
+					'dropdown_menu_top_border_size' => array(
+						'label'       => esc_html__( 'Main Menu Dropdown Top Border Size', 'Avada' ),
+						'description' => esc_html__( 'Controls top border size of dropdown menus and mega menus.', 'Avada' ),
+						'id'          => 'dropdown_menu_top_border_size',
+						'default'     => '3',
+						'type'        => 'slider',
+						'choices'     => array(
+							'min'  => '0',
+							'max'  => '50',
+							'step' => '1',
+						),
+						'class'       => 'fusion-gutter-and-or-and',
+						'required'    => array(
+							array(
+								'setting'  => 'menu_highlight_style',
+								'operator' => '==',
+								'value'    => 'bar',
+							),
+							array(
+								'setting'  => 'header_position',
+								'operator' => '!=',
+								'value'    => 'Top',
+							),
+							array(
+								'setting'  => 'menu_highlight_style',
+								'operator' => '==',
+								'value'    => 'bar',
 							),
 							array(
 								'setting'  => 'header_layout',
@@ -315,8 +374,13 @@ function avada_options_section_menu( $sections ) {
 						'label'       => esc_html__( 'Main Menu Dropdown Indicator', 'Avada' ),
 						'description' => esc_html__( 'Turn on to display arrow indicators next to parent level menu items.', 'Avada' ),
 						'id'          => 'menu_display_dropdown_indicator',
-						'default'     => '0',
-						'type'        => 'switch',
+						'default'     => 'none',
+						'choices'     => array(
+							'parent'       => esc_html__( 'Parent', 'Avada' ),
+							'parent_child' => esc_html__( 'Parent + Child', 'Avada' ),
+							'none'         => esc_html__( 'None', 'Avada' ),
+						),
+						'type'        => 'radio-buttonset',
 						'class'       => 'fusion-or-gutter',
 						'required'    => array(
 							array(
@@ -1210,7 +1274,7 @@ function avada_options_section_menu( $sections ) {
 					),
 					'no_mobile_menu_note' => ( '0' === Avada()->settings->get( 'dependencies_status' ) ) ? array() : array(
 						'label'       => '',
-						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> "Mobile Header Background Color" is the only option available for your Header Layout #6, the other options are only available when using Header Layouts #1-5. The rest of the options for Header #6 are on the Flyout Menu and Main Menu tab. ', 'Avada' ) . '</div>',
+						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> "Mobile Menu Search Icon/Field" and "Mobile Header Background Color" are the only options available for your Header Layout #6, the other options are only available when using Header Layouts #1-5 or 7. The rest of the options for Header #6 are on the Flyout Menu and Main Menu tab. ', 'Avada' ) . '</div>',
 						'id'          => 'no_mobile_menu_note',
 						'type'        => 'custom',
 						'required'    => array(
@@ -1258,51 +1322,6 @@ function avada_options_section_menu( $sections ) {
 								'setting'  => 'header_position',
 								'operator' => '!=',
 								'value'    => 'Top',
-							),
-						),
-					),
-					'mobile_nav_padding' => array(
-						'label'       => esc_html__( 'Mobile Menu Item Padding', 'Avada' ),
-						'description' => esc_html__( 'Controls the right padding for mobile menu text (left on RTL) when the normal desktop menu is used on mobile devices.', 'Avada' ),
-						'id'          => 'mobile_nav_padding',
-						'default'     => '25',
-						'type'        => 'slider',
-						'class'       => 'fusion-gutter-and-and-or-and-and',
-						'choices'     => array(
-							'min'  => '0',
-							'max'  => '200',
-							'step' => '1',
-						),
-						'required'    => array(
-							array(
-								'setting'  => 'responsive',
-								'operator' => '==',
-								'value'    => '1',
-							),
-							array(
-								'setting'  => 'header_position',
-								'operator' => '!=',
-								'value'    => 'Top',
-							),
-							array(
-								'setting'  => 'mobile_menu_design',
-								'operator' => '!=',
-								'value'    => 'flyout',
-							),
-							array(
-								'setting'  => 'responsive',
-								'operator' => '==',
-								'value'    => '1',
-							),
-							array(
-								'setting'  => 'header_layout',
-								'operator' => '!=',
-								'value'    => 'v6',
-							),
-							array(
-								'setting'  => 'mobile_menu_design',
-								'operator' => '!=',
-								'value'    => 'flyout',
 							),
 						),
 					),
@@ -1433,6 +1452,20 @@ function avada_options_section_menu( $sections ) {
 								'setting'  => 'mobile_menu_design',
 								'operator' => '!=',
 								'value'    => 'flyout',
+							),
+						),
+					),
+					'mobile_menu_search' => array(
+						'label'       => esc_html__( 'Display Mobile Menu Search Icon/Field', 'Avada' ),
+						'description' => esc_html__( 'Turn on to display the search icon/field in the mobile menu.', 'Avada' ),
+						'id'          => 'mobile_menu_search',
+						'default'     => '1',
+						'type'        => 'switch',
+						'required'    => array(
+							array(
+								'setting'  => 'responsive',
+								'operator' => '==',
+								'value'    => '1',
 							),
 						),
 					),

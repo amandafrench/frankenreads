@@ -161,12 +161,14 @@ class Avada_Social_Icon {
 			$icon_options['style'] .= 'border-radius:' . self::$args['icon_boxed_radius'] . ';';
 		}
 
-		if ( 'none' != strtolower( self::$args['tooltip_placement'] ) ) {
+		if ( 'none' !== strtolower( self::$args['tooltip_placement'] ) ) {
 			$icon_options['data-placement'] = strtolower( self::$args['tooltip_placement'] );
 			if ( 'Googleplus' == $tooltip ) {
 				$tooltip = 'Google+';
 			} elseif ( 'Youtube' === $tooltip ) {
 				$tooltip = 'YouTube';
+			} elseif ( 'Linkedin' === $tooltip ) {
+				$tooltip = 'LinkedIn';
 			}
 
 			$icon_options['data-title']  = $tooltip;

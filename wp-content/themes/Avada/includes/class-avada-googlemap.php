@@ -63,7 +63,7 @@ class Avada_GoogleMap {
 		$args = shortcode_atts( $defaults, $args );
 
 		foreach ( $args as $key => $value ) {
-			if ( '' == $value ) {
+			if ( '' === $value ) {
 				$args[ $key ] = $defaults[ $key ];
 			}
 		}
@@ -85,7 +85,7 @@ class Avada_GoogleMap {
 		if ( in_array( strtolower( $color ), array( 'black', 'navy', 'purple', 'maroon', 'indigo', 'darkslategray', 'darkslateblue', 'darkolivegreen', 'darkgreen', 'darkblue' ) ) ) {
 			$brightness_level = 0;
 		} elseif ( 0 === strpos( $color, '#' ) ) {
-			$color = fusion_hex2rgb( $color );
+			$color            = fusion_hex2rgb( $color );
 			$brightness_level = sqrt( pow( $color[0], 2 ) * 0.299 + pow( $color[1], 2 ) * 0.587 + pow( $color[2], 2 ) * 0.114 );
 		} else {
 			$brightness_level = 150;
@@ -124,47 +124,15 @@ class Avada_GoogleMap {
 	} // end attr().
 
 	/**
-	 * Render the shortcode.
+	 * JS API render method.
 	 *
 	 * @access public
-	 * @param  array  $args    Shortcode parameters.
-	 * @param  string $content Content between shortcode.
-	 * @return string          HTML output.
+	 * @since 5.6
+	 * @return string The needed map data.
 	 */
-	public function render_map( $args, $content = '' ) {
+	public function use_js_api() {
 
-		if ( ! Avada()->settings->get( 'status_gmap' ) ) {
-			return '';
-		}
-
-		$defaults = $this->set_shortcode_defaults(
-			array(
-				'class'                    => '',
-				'id'                       => '',
-				'animation'                => 'no',
-				'address'                  => '',
-				'address_pin'              => 'yes',
-				'height'                   => '300px',
-				'icon'                     => '',
-				'infobox'                  => '',
-				'infobox_background_color' => '',
-				'infobox_content'          => '',
-				'infobox_text_color'       => '',
-				'map_style'                => '',
-				'overlay_color'            => '',
-				'popup'                    => 'yes',
-				'scale'                    => 'yes',
-				'scrollwheel'              => 'yes',
-				'type'                     => 'roadmap',
-				'width'                    => '100%',
-				'zoom'                     => '14',
-				'zoom_pancontrol'          => 'yes',
-			), $args
-		);
-
-		extract( $defaults );
-
-		self::$args = $defaults;
+		extract( self::$args );
 
 		$html = '';
 
@@ -200,11 +168,11 @@ class Avada_GoogleMap {
 				$infobox_text_color       = ( $brightness_level > 140 ) ? '#fff' : '#747474';
 			} elseif ( 'custom' === $map_style ) {
 				$overlay_color = Avada()->settings->get( 'map_overlay_color' );
-				$color_obj = Fusion_Color::new_color( $overlay_color );
-				if ( '0' == $color_obj->alpha ) {
+				$color_obj     = Fusion_Color::new_color( $overlay_color );
+				if ( 0 === $color_obj->alpha ) {
 					$overlay_color = '';
 				} elseif ( 1 > $color_obj->alpha ) {
-					$lighter = $color_obj->get_new( 'lightness', $color->lightness + absint( 100 * ( 1 - $color_obj->alpha ) ) );
+					$lighter       = $color_obj->get_new( 'lightness', $color->lightness + absint( 100 * ( 1 - $color_obj->alpha ) ) );
 					$overlay_color = $lighter->to_css( 'hex' );
 				}
 			}
@@ -292,11 +260,11 @@ class Avada_GoogleMap {
 						$json_addresses[ $key ]['cache']     = true;
 					}
 				}
-			} // End foreach().
+			}
 
 			$json_addresses = wp_json_encode( $json_addresses );
 
-			$map_id = uniqid( 'fusion_map_' ); // Generate a unique ID for this map.
+			$map_id       = uniqid( 'fusion_map_' ); // Generate a unique ID for this map.
 			$this->map_id = $map_id;
 			ob_start(); ?>
 			<script type="text/javascript">
@@ -307,8 +275,8 @@ class Avada_GoogleMap {
 				function fusion_run_map_<?php echo esc_attr( $map_id ); ?>() {
 					jQuery('#<?php echo esc_attr( $map_id ); ?>').fusion_maps({
 						addresses: <?php echo $json_addresses; // WPCS: XSS ok. ?>,
-						address_pin: <?php echo ( 'yes' == $address_pin ) ? 'true' : 'false'; ?>,
-						animations: <?php echo ( 'yes' == $animation ) ? 'true' : 'false'; ?>,
+						address_pin: <?php echo ( 'yes' === $address_pin ) ? 'true' : 'false'; ?>,
+						animations: <?php echo ( 'yes' === $animation ) ? 'true' : 'false'; ?>,
 						infobox_background_color: '<?php echo esc_attr( $infobox_background_color ); ?>',
 						infobox_styling: '<?php echo esc_attr( $infobox ); ?>',
 						infobox_text_color: '<?php echo esc_attr( $infobox_text_color ); ?>',
@@ -317,26 +285,98 @@ class Avada_GoogleMap {
 						marker_icon: '<?php echo esc_attr( $icon ); ?>',
 						overlay_color: '<?php echo esc_attr( $overlay_color ); ?>',
 						overlay_color_hsl: <?php echo wp_json_encode( fusion_rgb2hsl( $overlay_color ) ); ?>,
-						pan_control: <?php echo ( 'yes' == $zoom_pancontrol ) ? 'true' : 'false'; ?>,
-						show_address: <?php echo ( 'yes' == $popup ) ? 'true' : 'false'; ?>,
-						scale_control: <?php echo ( 'yes' == $scale ) ? 'true' : 'false'; ?>,
-						scrollwheel: <?php echo ( 'yes' == $scrollwheel ) ? 'true' : 'false'; ?>,
+						pan_control: <?php echo ( 'yes' === $zoom_pancontrol ) ? 'true' : 'false'; ?>,
+						show_address: <?php echo ( 'yes' === $popup ) ? 'true' : 'false'; ?>,
+						scale_control: <?php echo ( 'yes' === $scale ) ? 'true' : 'false'; ?>,
+						scrollwheel: <?php echo ( 'yes' === $scrollwheel ) ? 'true' : 'false'; ?>,
 						zoom: <?php echo esc_attr( $zoom ); ?>,
-						zoom_control: <?php echo ( 'yes' == $zoom_pancontrol ) ? 'true' : 'false'; ?>,
+						zoom_control: <?php echo ( 'yes' === $zoom_pancontrol ) ? 'true' : 'false'; ?>,
 					});
 				}
 
 				google.maps.event.addDomListener(window, 'load', fusion_run_map_<?php echo esc_attr( $map_id ); ?>);
 			</script>
 			<?php
-			if ( $defaults['id'] ) {
-				$html = ob_get_clean() . '<div id="' . $defaults['id'] . '"><div ' . $this->attributes( 'avada-google-map' ) . '></div></div>';
+			if ( self::$args['id'] ) {
+				$html = ob_get_clean() . '<div id="' . self::$args['id'] . '"><div ' . $this->attributes( 'avada-google-map' ) . '></div></div>';
 			} else {
 				$html = ob_get_clean() . '<div ' . $this->attributes( 'avada-google-map' ) . '></div>';
 			}
-		} // End if().
+		}
 
-		$html = apply_filters( 'privacy_script_embed', $html, 'gmaps', true, self::$args['width'], self::$args['height'] );
+		return $html;
+	}
+
+	/**
+	 * Embed API render method.
+	 *
+	 * @access public
+	 * @since 5.6
+	 * @return string The needed map data.
+	 */
+	public function use_embed_api() {
+		$html          = '';
+		$api_key       = apply_filters( 'fusion_google_maps_api_key', Avada()->settings->get( 'gmap_api' ) );
+		$embed_address = str_replace( ' ', '+', self::$args['embed_address'] );
+
+		$html .= '<iframe width="' . self::$args['width'] . '" height="' . self::$args['height'] . '" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=' . $api_key . '&q=' . $embed_address . '&maptype=' . self::$args['embed_map_type'] . '&zoom=' . self::$args['zoom'] . '" allowfullscreen></iframe>';
+
+		$html = '<div ' . $this->attributes( 'avada-google-map' ) . '>' . $html . '</div>';
+
+		return $html;
+	}
+
+	/**
+	 * Render the shortcode.
+	 *
+	 * @access public
+	 * @param  array  $args    Shortcode parameters.
+	 * @param  string $content Content between shortcode.
+	 * @return string          HTML output.
+	 */
+	public function render_map( $args, $content = '' ) {
+
+		if ( ! Avada()->settings->get( 'status_gmap' ) ) {
+			return '';
+		}
+
+		$defaults = $this->set_shortcode_defaults(
+			array(
+				'api_type'                 => 'js',
+				'embed_address'            => '',
+				'embed_map_type'           => '',
+				'class'                    => '',
+				'id'                       => '',
+				'animation'                => 'no',
+				'address'                  => '',
+				'address_pin'              => 'yes',
+				'height'                   => '300px',
+				'icon'                     => '',
+				'infobox'                  => '',
+				'infobox_background_color' => '',
+				'infobox_content'          => '',
+				'infobox_text_color'       => '',
+				'map_style'                => '',
+				'overlay_color'            => '',
+				'popup'                    => 'yes',
+				'scale'                    => 'yes',
+				'scrollwheel'              => 'yes',
+				'type'                     => 'roadmap',
+				'width'                    => '100%',
+				'zoom'                     => '14',
+				'zoom_pancontrol'          => 'yes',
+			), $args
+		);
+
+		self::$args = $defaults;
+
+		if ( 'js' === self::$args['api_type'] ) {
+			$html = $this->use_js_api();
+			$html = apply_filters( 'privacy_script_embed', $html, 'gmaps', true, self::$args['width'], self::$args['height'] );
+		} else {
+			$html = $this->use_embed_api();
+			$html = apply_filters( 'privacy_iframe_embed', $html );
+		}
 
 		return $html;
 
@@ -354,6 +394,10 @@ class Avada_GoogleMap {
 
 		if ( self::$args['class'] ) {
 			$attr['class'] .= ' ' . self::$args['class'];
+		}
+
+		if ( 'embed' === self::$args['api_type'] ) {
+			$attr['class'] .= ' fusion-maps-embed-type';
 		}
 
 		$attr['id'] = $this->map_id;
@@ -374,7 +418,7 @@ class Avada_GoogleMap {
 		check_ajax_referer( 'avada_admin_ajax', 'security' );
 
 		// Check that the user has the right permissions.
-		if ( ! current_user_can( 'edit_theme_options' ) ) {
+		if ( ! current_user_can( 'switch_themes' ) ) {
 			return;
 		}
 

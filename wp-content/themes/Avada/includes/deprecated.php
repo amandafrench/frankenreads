@@ -273,4 +273,40 @@ if ( ! class_exists( 'Avada_Data' ) ) {
 	class Avada_Data extends Fusion_Data {}
 }
 
+/**
+ * Backwards-compatibility for the avada_post_metadata_date filter.
+ *
+ * @since 5.1
+ * @param string $value The date format.
+ * @return string
+ */
+function apply_avada_post_metadata_date_filter( $value ) {
+	return apply_filters( 'avada_post_metadata_date', $value );
+}
+add_filter( 'fusion_post_metadata_date', 'apply_avada_post_metadata_date_filter' );
+
+/**
+ * Backwards-compatibility for the avada_post_metadata_markup filter.
+ *
+ * @since 5.1
+ * @param string $value HTML.
+ * @return string
+ */
+function apply_avada_post_metadata_markup_filter( $value ) {
+	return apply_filters( 'avada_post_metadata_markup', $value );
+}
+add_filter( 'fusion_post_metadata_markup', 'apply_avada_post_metadata_markup_filter' );
+
+/**
+ * Backwards-compatibility for the avada_post_metadata_markup filter.
+ *
+ * @since 5.1
+ * @param string $value HTML.
+ * @return string
+ */
+function apply_avada_blog_read_more_excerpt_filter( $value ) {
+	return apply_filters( 'avada_blog_read_more_excerpt', $value );
+}
+add_filter( 'fusion_blog_read_more_excerpt', 'apply_avada_blog_read_more_excerpt_filter' );
+
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

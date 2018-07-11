@@ -93,11 +93,11 @@ class Avada_Upgrade {
 
 		$this->previous_theme_versions = get_option( 'avada_previous_version', array() );
 		// Previous version only really needed, because through the upgrade loop, the database_theme_version will be altered.
-		$this->previous_theme_version  = $this->get_previous_theme_version();
-		$this->database_theme_version  = get_option( 'avada_version', false );
-		$this->database_theme_version  = Avada_Helper::normalize_version( $this->database_theme_version );
-		$this->current_theme_version   = Avada::get_theme_version();
-		$this->current_theme_version   = Avada_Helper::normalize_version( $this->current_theme_version );
+		$this->previous_theme_version = $this->get_previous_theme_version();
+		$this->database_theme_version = get_option( 'avada_version', false );
+		$this->database_theme_version = Avada_Helper::normalize_version( $this->database_theme_version );
+		$this->current_theme_version  = Avada::get_theme_version();
+		$this->current_theme_version  = Avada_Helper::normalize_version( $this->current_theme_version );
 
 		// Check through all options names that were available for Theme Options in databse.
 		$theme_options = get_option( Avada::get_option_name(), get_option( 'avada_theme_options', get_option( 'Avada_options', false ) ) );
@@ -135,6 +135,7 @@ class Avada_Upgrade {
 			'550' => array( '5.5.0', false ),
 			'551' => array( '5.5.1', false ),
 			'552' => array( '5.5.2', false ),
+			'560' => array( '5.6.0', false ),
 		);
 
 		$upgraded = false;
@@ -295,7 +296,7 @@ class Avada_Upgrade {
 	 */
 	public function upgrade_notice() {
 		/* Check that the user hasn't already clicked to ignore the message */
-		if ( $this->previous_theme_version && current_user_can( 'edit_theme_options' ) && ! get_user_meta( $this->current_user->ID, 'avada_update_notice', true ) ) {
+		if ( $this->previous_theme_version && current_user_can( 'switch_themes' ) && ! get_user_meta( $this->current_user->ID, 'avada_update_notice', true ) ) {
 			echo '<div class="updated error fusion-upgrade-notices">';
 			if ( version_compare( $this->previous_theme_version, '3.8.5', '<' ) ) {
 				?>
@@ -352,7 +353,7 @@ class Avada_Upgrade {
 			</p>
 			</div>
 			<?php
-		} // End if().
+		}
 	}
 
 	/**
@@ -417,10 +418,7 @@ class Avada_Upgrade {
 			var_dump( 'Previous Version: ' . get_option( 'avada_previous_version', array() ) );
 			var_dump( 'Update Notice: ' . get_user_meta( $current_user->ID, 'avada_update_notice', true ) );
 		}
-
-		return;
 	}
-
 }
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

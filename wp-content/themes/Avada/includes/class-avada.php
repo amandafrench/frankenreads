@@ -132,7 +132,7 @@ class Avada {
 	 * @access public
 	 * @var bool
 	 */
-	public static $is_updating  = false;
+	public static $is_updating = false;
 
 	/**
 	 * Avada_Settings.
@@ -241,10 +241,10 @@ class Avada {
 	public $events_calendar;
 
 	/**
-	 * Avada_Remote_installer.
+	 * Avada_Remote_Installer.
 	 *
 	 * @access public
-	 * @var object Avada_Remote_installer.
+	 * @var object Avada_Remote_Installer.
 	 */
 	public $remote_install;
 
@@ -326,8 +326,8 @@ class Avada {
 		}
 
 		// Instantiate secondary classes.
-		$this->settings       = Avada_Settings::get_instance();
-		$this->registration   = new Fusion_Product_Registration(
+		$this->settings     = Avada_Settings::get_instance();
+		$this->registration = new Fusion_Product_Registration(
 			array(
 				'type'    => 'theme',
 				'name'    => 'Avada',
@@ -347,7 +347,7 @@ class Avada {
 		$this->head           = new Avada_Head();
 		$this->layout         = new Avada_Layout();
 		$this->google_map     = new Avada_GoogleMap();
-		$this->remote_install = new Avada_Remote_installer();
+		$this->remote_install = new Avada_Remote_Installer();
 		$this->fusion_library = Fusion::get_instance();
 		$this->sermon_manager = new Avada_Sermon_Manager();
 		$this->privacy_embeds = new Avada_Privacy_Embeds();
@@ -392,7 +392,7 @@ class Avada {
 	 * @return string
 	 */
 	public static function get_normalized_theme_version() {
-		$theme_version = self::$version;
+		$theme_version       = self::$version;
 		$theme_version_array = explode( '.', $theme_version );
 
 		if ( isset( $theme_version_array[2] ) && '0' === $theme_version_array[2] ) {
@@ -451,9 +451,8 @@ class Avada {
 					if ( $plugin['premium'] ) {
 
 						// Making sure the correct array index is present, latest_version being returned from server plugin.
-						$plugin['version'] = $plugin['latest_version'];
-
-						$plugin['Author'] = $plugin['plugin_author'];
+						$plugin['version']   = $plugin['latest_version'];
+						$plugin['Author']    = $plugin['plugin_author'];
 						$plugin['AuthorURI'] = $plugin['plugin_author_url'];
 					}
 
@@ -505,7 +504,7 @@ class Avada {
 				update_option( self::$original_option_name . self::$lang, get_option( self::$original_option_name ) );
 			}
 			// Modify the option_name to include the language.
-			self::$option_name  = self::$original_option_name . self::$lang;
+			self::$option_name = self::$original_option_name . self::$lang;
 			// Set $lang_applied to true. Makes sure we don't do the above more than once.
 			self::$lang_applied = true;
 		}

@@ -190,7 +190,7 @@ $this->text(
 	'page_title_height',
 	esc_attr__( 'Page Title Bar Height', 'Avada' ),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Set the height of the page title bar. In pixels ex: 100px. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_height' ) ),
+	sprintf( esc_html__( 'Controls the height of the page title bar on desktop. Enter value including any valid CSS unit besides %% which does not work for page title bar, ex: 87px. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_height' ) ),
 	$page_title_dependency
 );
 
@@ -198,7 +198,7 @@ $this->text(
 	'page_title_mobile_height',
 	esc_attr__( 'Page Title Bar Mobile Height', 'Avada' ),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Set the height of the page title bar on mobile. In pixels ex: 100px. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_mobile_height' ) ),
+	sprintf( esc_html__( 'Controls the height of the page title bar on mobile. Enter value including any valid CSS unit besides %% which does not work for page title bar, ex: 70px. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_mobile_height' ) ),
 	$page_title_dependency
 );
 

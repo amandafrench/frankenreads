@@ -74,12 +74,12 @@ class Fusion_Privacy {
 	 */
 	public function display_notice() {
 		if ( isset( $_GET['page'] ) ) {
-			$this->current_screen = sanitize_text_field( wp_unslash( $_GET['page'] ) );
+			$this->current_screen = sanitize_text_field( wp_unslash( $_GET['page'] ) ); // WPCS: CSRF ok.
 			$this->screens        = $this->get_allowed_screens();
 			$this->server_data    = $this->get_server_data();
 			$this->message        = $this->get_message_contents( $this->current_screen );
 
-			if ( class_exists( 'Fusion_Admin_Notice' ) && $this->is_show() && ( isset( $this->current_screen ) && in_array( $this->current_screen, $this->screens ) ) ) {
+			if ( class_exists( 'Fusion_Admin_Notice' ) && $this->is_show() && ( isset( $this->current_screen ) && in_array( $this->current_screen, $this->screens, true ) ) ) {
 				new Fusion_Admin_Notice(
 					'fusion-privacy-notice',
 					$this->message,
@@ -120,7 +120,6 @@ class Fusion_Privacy {
 
 			switch ( $type ) {
 				case 'user_meta':
-					// @codingStandardsIgnoreLine WordPress.VIP.RestrictedFunctions.user_meta_update_user_meta
 					update_user_meta( get_current_user_id(), $option, true );
 					break;
 			}
@@ -161,21 +160,21 @@ class Fusion_Privacy {
 				'name'  => __( 'PHP Version', 'Avada' ),
 				'value' => phpversion(),
 			),
-			'php' => array(
+			'php'    => array(
 				'name'  => __( 'Server Software', 'Avada' ),
 				'value' => isset( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : '',
 			),
-			'wp' => array(
+			'wp'     => array(
 				'name'  => __( 'WordPress Version', 'Avada' ),
 				'value' => $wp_version,
 			),
-			'url' => array(
+			'url'    => array(
 				'name'  => __( 'Encrypted Site URL', 'Avada' ),
 				'value' => md5( site_url() ),
 			),
-			'token' => array(
+			'token'  => array(
 				'name'  => __( 'Token', 'Avada' ),
-				'value' => Avada()->registration->get_token(),
+				'value' => class_exists( 'Avada' ) ? Avada()->registration->get_token() : '',
 			),
 		);
 		return $data;

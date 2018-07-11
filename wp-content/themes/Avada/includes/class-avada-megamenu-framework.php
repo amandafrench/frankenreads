@@ -221,7 +221,7 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 					</div>
 				</div>
 			</div>
-		<?php
+			<?php
 		}
 
 		/**

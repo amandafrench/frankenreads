@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$cart_link_text  = '<span class="fusion-widget-cart-number">' . $woocommerce->cart->get_cart_contents_count() . '</span>';
 						$cart_link_class = ' fusion-widget-cart-counter';
 					}
-				?>
+					?>
 					<div class="fusion-flyout-cart-wrapper">
 						<a href="<?php echo esc_attr( get_permalink( get_option( 'woocommerce_cart_page_id' ) ) ); ?>" class="fusion-icon fusion-icon-shopping-cart<?php echo esc_attr( $cart_link_class ); ?>" aria-hidden="true" aria-label="<?php esc_attr_e( 'Toggle Shopping Cart', 'Avada' ); ?>"><?php echo $cart_link_text; // WPCS: XSS ok. ?></a>
 					</div>
@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 				<?php endif; ?>
 
-				<?php if ( Avada()->settings->get( 'main_nav_search_icon' ) ) : ?>
+				<?php if ( Avada()->settings->get( 'main_nav_search_icon' ) || Avada()->settings->get( 'mobile_menu_search' ) ) : ?>
 					<div class="fusion-flyout-search-toggle">
 						<div class="fusion-toggle-icon">
 							<div class="fusion-toggle-icon-line"></div>
@@ -70,7 +70,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php echo $menu; // WPCS: XSS ok. ?>
 		</div>
 
-		<?php if ( Avada()->settings->get( 'main_nav_search_icon' ) ) : ?>
+		<?php if ( Avada()->settings->get( 'main_nav_search_icon' ) || Avada()->settings->get( 'mobile_menu_search' ) ) : ?>
 			<div class="fusion-flyout-search">
 				<?php get_search_form(); ?>
 			</div>

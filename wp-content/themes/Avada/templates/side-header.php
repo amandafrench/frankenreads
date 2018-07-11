@@ -47,11 +47,7 @@ if ( 'flyout' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 			<?php avada_main_menu(); ?>
 		</div>
 
-		<?php if ( 'Tagline And Search' == Avada()->settings->get( 'header_v4_content' ) || 'Search' == Avada()->settings->get( 'header_v4_content' ) ) : ?>
-			<div class="fusion-secondary-menu-search">
-				<div class="fusion-secondary-menu-search-inner"><?php get_search_form(); ?></div>
-			</div>
-		<?php endif; ?>
+		<?php avada_mobile_menu_search(); ?>
 
 		<?php if ( 'Leave Empty' != Avada()->settings->get( 'header_left_content' ) || 'Leave Empty' != Avada()->settings->get( 'header_right_content' ) ) : ?>
 			<?php $content_1 = avada_secondary_header_content( 'header_left_content' ); ?>

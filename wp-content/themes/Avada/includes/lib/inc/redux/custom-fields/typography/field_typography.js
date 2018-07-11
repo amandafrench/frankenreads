@@ -100,12 +100,14 @@
                             }
                         );
 
-                        // Have to redeclare the wpColorPicker to get a callback function
+                        // Have to redeclare the wpColorPicker to get a callback function.
+                        var skipChek = true;
                         $( this ).find( '.fusionredux-typography-color' ).wpColorPicker(
                             {
                                 change: function( e, ui ) {
                                     $( this ).val( ui.color.toString() );
-                                    fusionredux.field_objects.typography.select( $( this ).parents( '.fusionredux-container-typography:first' ) );
+                                    fusionredux.field_objects.typography.select( $( this ).parents( '.fusionredux-container-typography:first' ), skipChek );
+                                    skipChek = false;
                                 },
 
                                 palettes: ['#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B']

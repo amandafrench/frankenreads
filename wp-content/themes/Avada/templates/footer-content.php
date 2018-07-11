@@ -41,6 +41,9 @@ $display_footer = get_post_meta( $c_page_id, 'pyre_display_footer', true );
 					<?php if ( $i <= Avada()->settings->get( 'footer_widgets_columns' ) ) : ?>
 						<?php
 						$css_class = 'fusion-column' . ( Avada()->settings->get( 'footer_widgets_columns' ) == $i ? ' fusion-column-last' : '' ) . ' col-lg-' . $column_width . ' col-md-' . $column_width . ' col-sm-' . $column_width;
+						if ( Avada()->settings->get( 'footer_divider_line' ) ) {
+							$css_class .= ( 0 < fusion_count_widgets( 'avada-footer-widget-' . $i ) ? ' fusion-has-widgets' : ' fusion-empty-area' );
+						}
 						?>
 						<div class="<?php echo esc_attr( $css_class ); ?>">
 							<?php if ( function_exists( 'dynamic_sidebar' ) && dynamic_sidebar( 'avada-footer-widget-' . $i ) ) : ?>

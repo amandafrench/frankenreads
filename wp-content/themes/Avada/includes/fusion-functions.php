@@ -435,6 +435,30 @@ if ( ! function_exists( 'fusion_compress_css' ) ) {
 	}
 }
 
+if ( ! function_exists( 'fusion_count_widgets' ) ) {
+	/**
+	 * Count number of widgets in the widget area.
+	 *
+	 * @param  string $area_id ID of widget area.
+	 * @return int             Number of widgets.
+	 */
+	function fusion_count_widgets( $area_id ) {
+		global $_wp_sidebars_widgets;
+
+		if ( empty( $_wp_sidebars_widgets ) ) {
+			$_wp_sidebars_widgets = get_option( 'sidebars_widgets', array() );
+		}
+
+		$sidebars_widgets_count = $_wp_sidebars_widgets;
+
+		if ( isset( $sidebars_widgets_count[ $area_id ] ) ) {
+			return count( $sidebars_widgets_count[ $area_id ] );
+		}
+
+		return 0;
+	}
+}
+
 if ( ! function_exists( 'fusion_get_attachment_data_by_url' ) ) {
 	/**
 	 * Get attachment data by URL.

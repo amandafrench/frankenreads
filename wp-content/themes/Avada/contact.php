@@ -32,7 +32,7 @@ $avada_contact = new Avada_Contact();
 					<?php if ( shortcode_exists( 'fusion_alert' ) ) : ?>
 						<?php echo do_shortcode( '[fusion_alert type="error"]' . esc_html__( 'Form email address is not set in Theme Options. Please fill in a valid address to make contact form work.', 'Avada' ) . '[/fusion_alert]' ); ?>
 					<?php else : ?>
-						<h2 style="color:#b94a48;"><?php esc_html_e( 'Form email address is not set in Theme Options. Please fill in a valid address to make contact form work.', 'Avada' ); ?></h2>
+						<h3 style="color:#b94a48;"><?php esc_html_e( 'Form email address is not set in Theme Options. Please fill in a valid address to make contact form work.', 'Avada' ); ?></h3>
 					<?php endif; ?>
 					<br />
 				<?php endif; ?>

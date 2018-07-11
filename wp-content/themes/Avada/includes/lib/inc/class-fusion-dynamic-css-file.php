@@ -109,9 +109,11 @@ class Fusion_Dynamic_CSS_File {
 		}
 
 		$fusion_library = Fusion::get_instance();
-		$page_id        = ( $fusion_library->get_page_id() ) ? $fusion_library->get_page_id() : 'global';
-
-		$file_name = "fusion{$blog_id}-{$page_id}.min.css";
+		$id             = $this->dynamic_css->get_helpers()->get_dynamic_css_id();
+		$file_name      = "{$id}.min.css";
+		if ( $blog_id ) {
+			$file_name = "{$blog_id}-{$id}.min.css";
+		}
 
 		if ( 'filename' === $target ) {
 			return $file_name;

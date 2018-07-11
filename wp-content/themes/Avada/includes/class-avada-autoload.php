@@ -128,7 +128,7 @@ class Avada_Autoload {
 
 			$previous_path = '';
 			for ( $i = 0; $i < $levels; $i++ ) {
-				$paths[] = $this->avada_includes_path . $previous_path . strtolower( $exploded[ $i ] ) . '/' . $filename;
+				$paths[]        = $this->avada_includes_path . $previous_path . strtolower( $exploded[ $i ] ) . '/' . $filename;
 				$previous_path .= strtolower( $exploded[ $i ] ) . '/';
 			}
 
@@ -154,8 +154,8 @@ class Avada_Autoload {
 	public function include_class_file( $class_name ) {
 
 		// If the path is cached, use it & early exit.
-		if ( isset( self::$cached_paths[ $class_name ] ) && file_exists( self::$cached_paths[ $class_name ] ) ) {
-			include_once wp_normalize_path( self::$cached_paths[ $class_name ] );
+		if ( isset( self::$cached_paths[ $class_name ] ) ) {
+			include_once self::$cached_paths[ $class_name ];
 			return;
 		}
 
@@ -163,23 +163,15 @@ class Avada_Autoload {
 		// We'll need to get it, and add it to the cache.
 		$path = $this->get_path( $class_name );
 
-		// If the path was not found, early exit.
-		if ( false === $path ) {
-			return;
-		}
-
 		// Include the path.
-		if ( file_exists( $path ) ) {
-			include_once wp_normalize_path( $path );
+		if ( $path ) {
+			include_once $path;
 			// Add path to the array of paths to cache.
 			self::$cached_paths[ $class_name ] = $path;
 			// Make sure we update the caches.
 			self::$update_cache = true;
 			return;
 		}
-		// If we got this far, we need to reset the caches.
-		$this->reset_cached_paths();
-
 	}
 
 	/**

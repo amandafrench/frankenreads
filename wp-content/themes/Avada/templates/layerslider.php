@@ -33,7 +33,7 @@ if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $ls_table_name ) ) =
 			<?php endif; ?>
 		</div>
 	</div>
-<?php
+	<?php
 }
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

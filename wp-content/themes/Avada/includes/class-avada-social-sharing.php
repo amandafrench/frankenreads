@@ -37,7 +37,7 @@ class Avada_Social_Sharing extends Avada_Social_Icon {
 		// Get a list of all the available social networks.
 		$social_networks_full_array = Fusion_Data::fusion_social_icons( true, true );
 
-		if ( isset( parent::$args['authorpage'] ) && 'yes' == parent::$args['authorpage'] ) {
+		if ( isset( parent::$args['authorpage'] ) && 'yes' === parent::$args['authorpage'] ) {
 			$social_networks = $this->get_authorpage_social_links_array( parent::$args );
 		} else {
 			$social_networks = $this->get_sharingbox_social_links_array( parent::$args );
@@ -48,10 +48,10 @@ class Avada_Social_Sharing extends Avada_Social_Icon {
 
 		$i = 0;
 
-		if ( isset( parent::$args['authorpage'] ) && 'yes' == parent::$args['authorpage'] && isset( parent::$args['color_type'] ) ) {
+		if ( isset( parent::$args['authorpage'] ) && 'yes' === parent::$args['authorpage'] && isset( parent::$args['color_type'] ) ) {
 			$per_icon_colors = ( 'brand' === parent::$args['color_type'] ) ? true : false;
 		} else {
-			$per_icon_colors = ( 'brand' == Avada()->settings->get( 'sharing_social_links_color_type' ) ) ? true : false;
+			$per_icon_colors = ( 'brand' === Avada()->settings->get( 'sharing_social_links_color_type' ) ) ? true : false;
 		}
 		$number_of_social_networks = count( $social_networks );
 		foreach ( $social_networks as $network => $icon_args ) {
@@ -63,7 +63,7 @@ class Avada_Social_Sharing extends Avada_Social_Icon {
 
 			if ( $per_icon_colors ) {
 				$network_for_colors = str_replace( 'sharing_', '', $network );
-				$network_for_colors = ( in_array( $network_for_colors, array( 'google', 'googleplus' ) ) ) ? 'gplus' : $network_for_colors;
+				$network_for_colors = ( in_array( $network_for_colors, array( 'google', 'googleplus' ), true ) ) ? 'gplus' : $network_for_colors;
 				if ( parent::$args['icon_boxed'] ) {
 					$icon_options['icon_color'] = '#ffffff';
 					$icon_options['box_color']  = $social_networks_full_array[ $network_for_colors ]['color'];
@@ -93,7 +93,7 @@ class Avada_Social_Sharing extends Avada_Social_Icon {
 				$attr['class'] .= ' boxed-icons';
 			}
 			$html = '<div ' . fusion_attr( 'social-icons-class-social-networks', $attr ) . '><div ' . fusion_attr( 'fusion-social-networks-wrapper' ) . '>' . $icons;
-			if ( isset( parent::$args['position'] ) && ( 'header' == parent::$args['position'] || 'footer' == parent::$args['position'] ) ) {
+			if ( isset( parent::$args['position'] ) && ( 'header' === parent::$args['position'] || 'footer' === parent::$args['position'] ) ) {
 				$html .= '</div></div>';
 			} else {
 				$html .= '<div class="fusion-clearfix"></div></div></div>';
@@ -166,7 +166,7 @@ class Avada_Social_Sharing extends Avada_Social_Icon {
 
 		if ( Avada()->settings->get( 'sharing_pinterest' ) ) {
 			$social_links_array['pinterest'] = array(
-				'url' => 'http://pinterest.com/pin/create/button/?url=' . urlencode( $args['link'] ) . '&amp;description=' . rawurlencode( $args['description'] ) . '&amp;media=' . rawurlencode( $args['pinterest_image'] ),
+				'url' => 'http://pinterest.com/pin/create/button/?url=' . rawurlencode( $args['link'] ) . '&amp;description=' . rawurlencode( $args['description'] ) . '&amp;media=' . rawurlencode( $args['pinterest_image'] ),
 			);
 		}
 

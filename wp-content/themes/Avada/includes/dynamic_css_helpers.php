@@ -377,6 +377,8 @@ function avada_get_h4_typography_elements() {
 		'.fusion-tabs .nav-tabs > li .fusion-tab-heading',
 		'.fusion-modal h4',
 		'.fusion-widget-area h4',
+		'#tribe-events-content .tribe-events-tooltip .entry-title',
+		'#tribe-events-content .tribe-events-tooltip .tribe-event-title',
 	);
 	// CSS classes that inherit h4 color.
 	$typography_elements['color'] = array(
@@ -411,6 +413,8 @@ function avada_get_h4_typography_elements() {
 		'.fusion-modal h4',
 		'.fusion-widget-area h4',
 		'.fusion-title h4',
+		'#tribe-events-content .tribe-events-tooltip .entry-title',
+		'#tribe-events-content .tribe-events-tooltip .tribe-event-title',
 	);
 
 	$typography_elements['line-height'] = array(

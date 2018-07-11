@@ -508,6 +508,7 @@
         margin: 0;
       }
 
+      .fusion_theme_options-privacy_bar_content,
       .fusion_theme_options-social_media_icons {
         .ui-accordion-content {
           .fusionredux-field-container {
@@ -1026,13 +1027,21 @@
         }
       }
 
-      .fusionredux-container-switch .cb-enable.selected,
-      .fusionredux-field-container .ui-buttonset .ui-state-active {
-        background-image: none !important;
-        .no-box-shadow;
-        border-color: rgba(0,0,0,.1) !important;
-        background-color: @color-accent-2 !important;
-        color: @color-text-menu-top-level-active;
+      .fusionredux-container-switch,
+      .fusionredux-field-container {
+        .cb-enable.selected,
+        .ui-buttonset .ui-state-active {
+          background-image: none !important;
+          .no-box-shadow;
+          border-color: rgba(0,0,0,.1) !important;
+          background-color: @color-accent-2 !important;
+          color: @color-text-menu-top-level-active;
+        }
+
+        .ui-buttonset label[for*="buttonsetno"].ui-state-active {
+          background: @color-back-2 !important;
+          color: @color-text-menu-top-level;
+        }
       }
 
       .fusionredux-container-switch {

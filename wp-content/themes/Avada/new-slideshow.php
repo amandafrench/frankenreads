@@ -162,7 +162,7 @@ $video = apply_filters( 'privacy_iframe_embed', get_post_meta( get_the_ID(), 'py
 			<?php Avada()->images->set_grid_image_meta( array() ); ?>
 		</ul>
 	</div>
-<?php
+	<?php
 endif;
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

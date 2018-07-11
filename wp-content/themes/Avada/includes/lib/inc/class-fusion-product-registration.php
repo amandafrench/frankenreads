@@ -329,7 +329,7 @@ class Fusion_Product_Registration {
 		?>
 		<div class="fusion-library-important-notice registration-form-container">
 			<?php if ( $is_registered ) : ?>
-				<p class="about-description"><?php esc_attr_e( 'Congratulations! Your product is registered now.', 'Avada' ); ?></p>
+				<p class="about-description"><?php esc_attr_e( 'Congratulations! Thank you for registering your product.', 'Avada' ); ?></p>
 			<?php else : ?>
 				<p class="about-description"><?php esc_attr_e( 'Please enter your Envato token to complete registration.', 'Avada' ); ?></p>
 			<?php endif; ?>

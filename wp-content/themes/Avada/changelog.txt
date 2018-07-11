@@ -7,6 +7,95 @@ This is why we highly recommend to stay up to date with each new theme version a
 
 
 -----------------------------------------------------------------------------------------
+Version 5.6 - July 9th, 2018
+-----------------------------------------------------------------------------------------
+
+
+- NEW: 4 New Professionally Designed Demos
+- NEW: Added right click context menu to Fusion Builder for easier element interactions and edits
+- NEW: Fusion Builder element library admin screen to easily manage, and edit your saved elements
+- NEW: Mobile menu search is now enabled for all headers
+- NEW: GDPR feature: added a customizable privacy banner that can handle embeds, tracking codes and custom cookie content
+- NEW: Added privacy settings support for the Theme Options tracking code field
+- NEW: Added API choice to Google maps element and contact page template to allow unlimited free map loads
+- NEW: Added option to choose the HTML heading size in content box element
+- NEW: Added ability to easily remove global property of a single element instance in Fusion Builder
+- NEW: Added option to load media query CSS files asynchronously improving performance especially on mobiles
+- NEW: Added option to show dropdown indicator also on sub-menus
+- NEW: Added option to set the size of the sub-menu and mega menu top highlight borders
+- NEW: Added option to set divider lines between footer widget areas
+- NEW: Added option to set left/right padding for footer widget areas
+- NEW: Added options for column spacing, content padding, excerpt length and load more to the Events element
+- NEW: Added content padding theme option for WooCommerce product boxes
+- NEW: Added quantity boxes to WooCommerce products in cart on mobiles along with a new design
+- NEW: Added option to set a font size for the Toggle element heading
+- NEW: Added toggle icon box color and hover accent color options to the Toggle element
+- NEW: Added border size, border type and border color options to the Gallery element
+- NEW: Added advanced server response output for remote get requests for easier debugging
+- NEW: Added option to Flip Box element to have buttons either span full width or default
+- NEW: Compatibility with The Events Calendar 4.6.19 incl. new page title and font size Theme Options
+- NEW: Compatibility with WooCommerce 3.4.3
+- NEW: Checked and confirmed WCAG 2.1 compliance
+- IMPROVEMENT: CSS caching is now no longer page driven but content driven, which will create less files and increases performance
+- IMPROVEMENT: Reduced the amount of used media queries in CSS for better performance
+- IMPROVEMENT: Added performance improvements to the PHP auto loader class
+- IMPROVEMENT: Sub-menus on mobile are now using the mobile menu typography
+- IMPROVEMENT: Added check for set privacy page to the privacy embed placeholders
+- IMPROVEMENT: Sub-menus are now shown when a parent menu is accessed through keyboard tabs
+- IMPROVEMENT: Removed logo spacing in header v7, if no logo is set in Theme Options
+- IMPROVEMENT: Added custom notices to privacy element, if alert element is disabled
+- IMPROVEMENT: Added more advanced plugin update error messages for easier debugging
+- IMPROVEMENT: Added option dependency system to widget and menu options
+- IMPROVEMENT: Padding of the months labels of blog timeline layouts now scale automatically with font size
+- IMPROVEMENT: Search field in Fusion Builder element library now has auto focus for better UX
+- IMPROVEMENT: Updated several option descriptions and dependencies for better usability
+- IMPROVEMENT: Added new actions and filters for better customizability
+- IMPROVEMENT: The deprecated avada_ipad_portrait_styles filter is removed
+- IMPROVEMENT: Removed deprecated iPad.less stylesheet
+- UPDATE: Changed admin screen permission to switch_themes for Envato compliance
+- FIXED: Mobile menu font not correctly applied to menu items that are icon only on desktop
+- FIXED: Events filter bar styling issues on tablets and mobiles
+- FIXED: Top margins in Column element being collapsing sometimes
+- FIXED: Wrong text domains used for the privacy embed placeholder strings
+- FIXED: fusion_privacy_cookie_args filter not being at correct location
+- FIXED: Flyout menu items sometimes hidden below header, when menu  is higher than viewport height
+- FIXED: Incorrect border color check for page title bar when set through Page Options
+- FIXED: WooCommerce shipping calculator on cart page missing the city/town input
+- FIXED: Undefined variable in WooCommerce product loop template
+- FIXED: WooCommerce star rating for review comments overlapping the figures on small screens
+- FIXED: Issue with WooCommerce product sorting, when non default sorting is set in the WooCommerce options
+- FIXED: Sticky header on scroll disappearing on iPads if disabled on mobiles but active on tablets
+- FIXED: Small gap in Events Calendar navigation on mobiles
+- FIXED: Menu items in mobile flyout menu not being vertically centered
+- FIXED: Videos not always correctly auto playing in Chrome
+- FIXED: Container background images with fixed parallax mode not working correctly in Chrome 67 (Chrome bug)
+- FIXED: Double white space in blog meta data after author
+- FIXED: Image element with bottom shadow or lift-up style taking up some white space, even if visibility settings hide element
+- FIXED: Infinite loop on 404 page, if neither 404 or main menu are assigned
+- FIXED: Modal window element height collapsing when floated content is used
+- FIXED: Left side header in boxed layout on RTL overlapping content
+- FIXED: Responsive type script in some cases interfering with responsive scripts of premium sliders
+- FIXED: Full screen Fusion Slider not loading full screen when the slider is not in viewport on load time
+- FIXED: PHP notice in class-avada-scripts.php
+- FIXED: Auto created related post fixed image sizes not always updated or deleted correctly
+- FIXED: Chrome browser incompatibility with background videos in containers
+- FIXED: Undefined index PHP notice in social widget class
+- FIXED: IE11 sometimes displaying small gaps when using section separators
+- FIXED: Minified Vimeo JS script causing some compatibility issues in IE11
+- FIXED: Events Calendar excerpt length being incorrect when loaded through AJAX
+- FIXED: A few icons missing from font awesome icon picker
+- FIXED: LinkedIn social icon tooltips not spelled with uppercase "I"
+- FIXED: Mobile device check for parallax backgrounds not detecting all devices correctly
+- FIXED: A parallax backgrounds performance issue on mobiles
+- FIXED: Dependency check missing for scroll to anchor script if JS compiler is turned off
+- FIXED: Notice about changed options showing on Theme Options load on tabs with typography elements
+- FIXED: JS compiler being off notice in Theme Options showing after reload, if compiler was turned off by user
+- FIXED: Fusion Builder search for columns issue
+- FIXED: Check for Avada being active missing in the privacy class, which could cause fatal error
+- FIXED: Small PHP 7.2 compatibility issue leading to a warning
+
+
+-----------------------------------------------------------------------------------------
 Version 5.5.2 - May 22nd, 2018
 -----------------------------------------------------------------------------------------
 
@@ -23,7 +112,7 @@ Version 5.5.2 - May 22nd, 2018
 - NEW: Added options to set gutter width between sidebar and content area
 - NEW: Added new Theme Option to control the header color and transparency for archive pages
 - NEW: Added new Theme Options for the accent color of all alert box types
-- NEW: Added Whats App social icon to social sharing box and social icons in Theme Options
+- NEW: Added WhatsApp social icon to social sharing box and social icons in Theme Options
 - NEW: Added text alignment option (left/center/right) to blog element and archives
 - NEW: Added full pagination option and text alignment option (left/center/right) to recent posts element
 - NEW: Added new base font size option for bbPress that gives you control over main text site and auto calcs others

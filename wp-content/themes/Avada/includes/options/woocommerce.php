@@ -22,14 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array
  */
 function avada_options_section_woocommerce( $sections ) {
-
-	$wc_version_greater_than_33 = false;
-	if ( defined( 'WC_VERSION' ) ) {
-		if ( WC_VERSION && version_compare( WC_VERSION, '3.3', '>=' ) ) {
-			$wc_version_greater_than_33 = true;
-		}
-	}
-
 	$sections['woocommerce'] = ( Avada::$is_updating || class_exists( 'WooCommerce' ) ) ? array(
 		'label'    => esc_html__( 'WooCommerce', 'Avada' ),
 		'id'       => 'heading_woocommerce',
@@ -316,6 +308,25 @@ function avada_options_section_woocommerce( $sections ) {
 							'classic' => esc_html__( 'Classic', 'Avada' ),
 							'clean'   => esc_html__( 'Clean', 'Avada' ),
 						),
+					),
+					'woocommerce_product_box_content_padding' => array(
+						'label'       => esc_html__( 'WooCommerce Product Box Content Padding', 'Avada' ),
+						'description' => esc_html__( 'Controls the top/right/bottom/left padding of the products contents.', 'Avada' ),
+						'id'          => 'woocommerce_product_box_content_padding',
+						'choices'     => array(
+							'top'     => true,
+							'bottom'  => true,
+							'left'    => true,
+							'right'   => true,
+							'units'   => array( 'px', '%' ),
+						),
+						'default'     => array(
+							'top'     => '20px',
+							'bottom'  => '15px',
+							'left'    => '15px',
+							'right'   => '15px',
+						),
+						'type'        => 'spacing',
 					),
 					'product_width_100' => array(
 						'label'       => esc_html__( '100% Width Page', 'Avada' ),

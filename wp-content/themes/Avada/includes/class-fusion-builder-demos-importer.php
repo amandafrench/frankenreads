@@ -116,7 +116,7 @@ class Fusion_Builder_Demos_Importer {
 	 */
 	private static function get_demo_folder_path() {
 
-		$wp_upload_dir    = wp_upload_dir();
+		$wp_upload_dir              = wp_upload_dir();
 		$demo_folder_path['direct'] = wp_normalize_path( $wp_upload_dir['basedir'] . '/' . self::$demo_folder_name . '/' );
 
 		$method = defined( 'FS_METHOD' ) ? FS_METHOD : false;
@@ -156,7 +156,7 @@ class Fusion_Builder_Demos_Importer {
 				$method = defined( 'FS_METHOD' ) ? FS_METHOD : false;
 				if ( 'ftpext' === $method ) {
 					$wp_filesystem = Fusion_Helper::init_filesystem();
-					$new_folder = $wp_filesystem->mkdir( $demo_folder_path['ftpext'] );
+					$new_folder    = $wp_filesystem->mkdir( $demo_folder_path['ftpext'] );
 					if ( false === $new_folder ) {
 						return false;
 					} else {
@@ -255,7 +255,7 @@ class Fusion_Builder_Demos_Importer {
 		}
 
 		// If the file is more than a week old, we should import.
-		$lastweek = time() - WEEK_IN_SECONDS;
+		$lastweek  = time() - WEEK_IN_SECONDS;
 		$filemtime = filemtime( $file );
 		if ( $filemtime < $lastweek ) {
 

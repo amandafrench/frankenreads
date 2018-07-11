@@ -78,7 +78,7 @@ class Avada_Gravity_Forms_Tags_Merger {
 	 */
 	public static function get_instance( $args = array() ) {
 
-		if ( null == self::$instance ) {
+		if ( ! self::$instance ) {
 			self::$instance = new self( $args );
 		}
 		return self::$instance;
@@ -133,7 +133,7 @@ class Avada_Gravity_Forms_Tags_Merger {
 			foreach ( $form['fields'] as $field ) {
 
 				$full_input_id       = false;
-				$matches_admin_label = rgar( $field, 'adminLabel' ) == $field_label;
+				$matches_admin_label = rgar( $field, 'adminLabel' ) === $field_label;
 				$matches_field_label = false;
 
 				if ( is_array( $field['inputs'] ) ) {
@@ -161,7 +161,7 @@ class Avada_Gravity_Forms_Tags_Merger {
 
 				break;
 			}
-		} // End foreach().
+		}
 
 		return $text;
 	}
@@ -251,7 +251,7 @@ class Avada_Gravity_Forms_Tags_Merger {
 
 		if ( $do_encrypt && is_callable( array( 'GFCommon', 'openssl_encrypt' ) ) ) {
 			$eid = rawurlencode( GFCommon::openssl_encrypt( $eid ) );
-		} else if ( $do_encrypt && is_callable( array( 'GFCommon', 'encrypt' ) ) ) {
+		} elseif ( $do_encrypt && is_callable( array( 'GFCommon', 'encrypt' ) ) ) {
 			$eid = rawurlencode( GFCommon::encrypt( $eid ) );
 		}
 
@@ -328,7 +328,7 @@ class Avada_Gravity_Forms_Tags_Merger {
 
 			if ( is_callable( array( 'GFCommon', 'openssl_decrypt' ) ) ) {
 				$entry_id = rawurlencode( GFCommon::openssl_decrypt( $entry_id ) );
-			} else if ( is_callable( array( 'GFCommon', 'decrypt' ) ) ) {
+			} elseif ( is_callable( array( 'GFCommon', 'decrypt' ) ) ) {
 				$entry_id = rawurlencode( GFCommon::decrypt( $entry_id ) );
 			}
 

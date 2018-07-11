@@ -4,7 +4,7 @@
  * The main reasons for this is the GDPR & performance.
  *
  * @package Avada
- * @since 5.2.2
+ * @since 5.5.2
  */
 
 // Do not allow directly accessing this file.
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Downloads Foofle-Fonts locally and generates the @font-face CSS for them.
  *
- * @since 5.2.2
+ * @since 5.5.2
  */
 class Fusion_GFonts_Downloader {
 
@@ -23,7 +23,7 @@ class Fusion_GFonts_Downloader {
 	 * The font-family.
 	 *
 	 * @access private
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @var string
 	 */
 	private $family;
@@ -32,7 +32,7 @@ class Fusion_GFonts_Downloader {
 	 * The path where files for this font are stored.
 	 *
 	 * @access private
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @var string
 	 */
 	private $folder_path;
@@ -41,7 +41,7 @@ class Fusion_GFonts_Downloader {
 	 * The URL where files for this font are stored.
 	 *
 	 * @access private
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @var string
 	 */
 	private $folder_url;
@@ -50,7 +50,7 @@ class Fusion_GFonts_Downloader {
 	 * The font-family arguments from the google-fonts API.
 	 *
 	 * @access private
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @var array
 	 */
 	private $font;
@@ -59,7 +59,7 @@ class Fusion_GFonts_Downloader {
 	 * Constructor.
 	 *
 	 * @access public
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @param string $family The font-family we're dealing with.
 	 */
 	public function __construct( $family ) {
@@ -73,7 +73,7 @@ class Fusion_GFonts_Downloader {
 	 * Gets the @font-face CSS for all variants this font-family contains.
 	 *
 	 * @access public
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @param array $variants The variants we want to get.
 	 * @return string
 	 */
@@ -102,7 +102,7 @@ class Fusion_GFonts_Downloader {
 	 * Get the @font-face CSS for a specific variant in this font-family.
 	 *
 	 * @access public
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @param string $variant The variant.
 	 * @return string
 	 */
@@ -142,7 +142,7 @@ class Fusion_GFonts_Downloader {
 	 * Gets the local URL for a variant.
 	 *
 	 * @access public
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @param string $variant The variant.
 	 * @return string         The URL.
 	 */
@@ -173,7 +173,7 @@ class Fusion_GFonts_Downloader {
 	 * This is used by @font-face in case the user already has the font downloaded locally.
 	 *
 	 * @access public
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @param string $variant The variant.
 	 * @param bool   $compact Whether we want the compact formatting or not.
 	 * @return string
@@ -230,7 +230,7 @@ class Fusion_GFonts_Downloader {
 	 * Only contains the filenames.
 	 *
 	 * @access public
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @return array
 	 */
 	public function get_font_files() {
@@ -246,7 +246,7 @@ class Fusion_GFonts_Downloader {
 	 * Get the remote URLs for the font-files.
 	 *
 	 * @access public
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @return array
 	 */
 	public function get_font_files_urls_remote() {
@@ -260,7 +260,7 @@ class Fusion_GFonts_Downloader {
 	 * Get an array of local file URLs.
 	 *
 	 * @access public
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @return array
 	 */
 	public function get_font_files_urls_local() {
@@ -276,7 +276,7 @@ class Fusion_GFonts_Downloader {
 	 * Get an array of local file paths.
 	 *
 	 * @access public
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @return array
 	 */
 	public function get_font_files_paths() {
@@ -292,7 +292,7 @@ class Fusion_GFonts_Downloader {
 	 * Returns the $wp_filesystem global.
 	 *
 	 * @access private
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @return WP_Filesystem
 	 */
 	private function filesystem() {
@@ -303,7 +303,7 @@ class Fusion_GFonts_Downloader {
 	 * Downloads a font-file and saves it locally.
 	 *
 	 * @access private
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @param string $url The URL of the file we want to get.
 	 * @return bool
 	 */
@@ -328,7 +328,7 @@ class Fusion_GFonts_Downloader {
 	 * Get a font-family from the array of google-fonts.
 	 *
 	 * @access public
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @return array
 	 */
 	public function get_font_family() {
@@ -355,7 +355,7 @@ class Fusion_GFonts_Downloader {
 	 * Gets the filename by breaking-down the URL parts.
 	 *
 	 * @access private
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @param string $url The URL.
 	 * @return string     The filename.
 	 */
@@ -372,7 +372,7 @@ class Fusion_GFonts_Downloader {
 	 * Get the font defined in the google-fonts API.
 	 *
 	 * @access private
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @return array
 	 */
 	private function get_fonts() {
@@ -424,7 +424,7 @@ class Fusion_GFonts_Downloader {
 			if ( function_exists( 'domain_mapping_siteurl' ) && function_exists( 'get_original_url' ) ) {
 				$mapped_domain   = domain_mapping_siteurl( false );
 				$original_domain = get_original_url( 'siteurl' );
-				$url = str_replace( $original_domain, $mapped_domain, $url );
+				$url             = str_replace( $original_domain, $mapped_domain, $url );
 			}
 		}
 		return apply_filters( 'fusion_gfonts_root_url', untrailingslashit( esc_url_raw( $url ) ) . '/fusion-gfonts' );
@@ -434,7 +434,7 @@ class Fusion_GFonts_Downloader {
 	 * Download font-family files.
 	 *
 	 * @access public
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @param array $variants An array of variants to download. Leave empty to download all.
 	 * @return void
 	 */
@@ -455,13 +455,14 @@ class Fusion_GFonts_Downloader {
 	 * Gets the remote URL contents.
 	 *
 	 * @access private
-	 * @since 5.2.2
+	 * @since 5.5.2
 	 * @param string $url The URL we want to get.
 	 * @return string     The contents of the remote URL.
 	 */
 	public function get_remote_url_contents( $url ) {
 		$transient_name = 'fusion_gfonts' . md5( $url );
-		if ( false === ( $html = get_transient( $transient_name ) ) ) {
+		$html           = get_transient( $transient_name );
+		if ( false === $html ) {
 			$response = wp_remote_get( $url );
 			if ( is_wp_error( $response ) ) {
 				return array();

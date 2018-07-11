@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <!DOCTYPE html>
-<html class="<?php echo ( Avada()->settings->get( 'smooth_scrolling' ) ) ? 'no-overflow-y' : ''; ?>" <?php language_attributes(); ?>>
+<html class="<?php avada_the_html_class(); ?>" <?php language_attributes(); ?>>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -36,8 +36,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	 * a user would have to gain access to the database
 	 * in which case this is the least on your worries.
 	 */
-	echo Avada()->settings->get( 'google_analytics' ); // WPCS: XSS ok.
-	echo Avada()->settings->get( 'space_head' ); // WPCS: XSS ok.
+	echo apply_filters( 'avada_google_analytics', Avada()->settings->get( 'google_analytics' ) ); // WPCS: XSS ok.
+	echo apply_filters( 'avada_space_head', Avada()->settings->get( 'space_head' ) ); // WPCS: XSS ok.
 	?>
 </head>
 
@@ -105,6 +105,9 @@ if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 				<?php
 				echo Avada()->google_map->render_map( // WPCS: XSS ok.
 					array(
+						'api_type'                 => esc_html( Avada()->settings->get( 'gmap_api_type' ) ),
+						'embed_address'            => esc_html( Avada()->settings->get( 'gmap_embed_address' ) ),
+						'embed_map_type'           => esc_html( Avada()->settings->get( 'gmap_embed_map_type' ) ),
 						'address'                  => esc_html( Avada()->settings->get( 'gmap_address' ) ),
 						'type'                     => esc_attr( Avada()->settings->get( 'gmap_type' ) ),
 						'address_pin'              => esc_attr( $address_pin ),

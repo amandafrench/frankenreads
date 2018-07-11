@@ -124,7 +124,7 @@ class Avada_Page_Options {
 	 */
 	public function export_options() {
 
-		if ( ! isset( $_GET['action'] ) || 'download-avada-po' !== $_GET['action'] ) {
+		if ( ! isset( $_GET['action'] ) || 'download-avada-po' !== $_GET['action'] ) { // WPCS: CSRF ok.
 			return;
 		}
 
@@ -145,7 +145,7 @@ class Avada_Page_Options {
 		header( 'Cache-Control: must-revalidate' );
 		header( 'Pragma: public' );
 
-		echo json_encode( $this->get_avada_post_custom_fields( $post_id ) );
+		echo wp_json_encode( $this->get_avada_post_custom_fields( $post_id ) );
 		die();
 	}
 
@@ -189,8 +189,7 @@ class Avada_Page_Options {
 			return false;
 		}
 
-		// @codingStandardsIgnoreLine WordPress.VIP.ValidatedSanitizedInput.InputNotSanitized
-		$json_file_path  = wp_normalize_path( $this->po_dir_path . wp_unslash( $_FILES['po_file_upload']['name'] ) );
+		$json_file_path = wp_normalize_path( $this->po_dir_path . wp_unslash( $_FILES['po_file_upload']['name'] ) );
 
 		if ( ! file_exists( $this->po_dir_path ) ) {
 			wp_mkdir_p( $this->po_dir_path );
@@ -200,7 +199,6 @@ class Avada_Page_Options {
 			return false;
 		}
 		// We're already checking if defined above.
-		// @codingStandardsIgnoreLine WordPress.VIP.ValidatedSanitizedInput.InputNotSanitized
 		if ( ! $this->wp_filesystem->move( wp_normalize_path( $_FILES['po_file_upload']['tmp_name'] ), $json_file_path, true ) ) {
 			return false;
 		}
@@ -211,13 +209,12 @@ class Avada_Page_Options {
 		if ( $custom_fields ) {
 
 			/* $this->update_avada_custom_fields( $post_id, $custom_fields ); */
-
 			$response['custom_fields'] = $custom_fields;
 		}
 
 		$this->wp_filesystem->delete( $json_file_path );
 
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		die();
 	}
 
@@ -258,7 +255,7 @@ class Avada_Page_Options {
 		$response['saved_post_id']    = $post_id;
 		$response['saved_post_title'] = get_the_title( $post_id );
 
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		die();
 	}
 
@@ -277,7 +274,7 @@ class Avada_Page_Options {
 
 		$this->delete_options_post( $saved_post_id );
 
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		die();
 	}
 
@@ -344,10 +341,9 @@ class Avada_Page_Options {
 		$custom_fields = get_post_meta( $saved_post_id, 'fusion_page_options', true );
 
 		/* $this->update_avada_custom_fields( $post_id, $custom_fields ); */
-
 		$response['custom_fields'] = $custom_fields;
 
-		echo json_encode( $response );
+		echo wp_json_encode( $response );
 		die();
 
 	}
