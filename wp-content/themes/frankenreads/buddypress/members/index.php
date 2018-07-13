@@ -48,7 +48,7 @@ do_action( 'bp_before_directory_members_page' ); ?>
 	
 	
 <p id="partner-intro"><a href="../join">Join the Community</a> to become a partner listed on this page. Click on someone's name to see that person's events. If you are logged in, you can also send them a message, which they will receive by email if their settings allow.<br /><br />
-Please also visit our Project Partners, who are also organizing large-scale celebrations of <em>Frankenstein</em>: ASU Center for Science and the Imagination's <a href="https://frankenreads.org/partners/asu-center-for-science-and-the-imagination/">Frankenbook and Frankenstein200 the Game</a>, Indiana Humanities Council's <a href="https://frankenreads.org/partners/one-state-one-story/">One State, One Story</a>, and the national initiative <a href="https://www.manyconversations.org/">One Book, Many Conversations</a>.</p>
+Please also visit our Project Partners, who are also organizing large-scale celebrations of <em>Frankenstein</em>: ASU Center for Science and the Imagination's <a href="https://www.frankenbook.org/">Frankenbook</a> and <a href="https://frankenstein200.org/">Frankenstein200 the Game</a>; Indiana Humanities Council's <a href="http://quantumleap.indianahumanities.org/frankenstein/">One State, One Story</a>; <a href="https://www.manyconversations.org/">One Book, Many Conversations</a>; and Columbia University Digital Storytelling Lab's <a href="http://www.digitalstorytellinglab.com/projects/frankenstein-ai/">Frankenstein AI: A Monster Made by Many</a>.</p>
 
 
 
