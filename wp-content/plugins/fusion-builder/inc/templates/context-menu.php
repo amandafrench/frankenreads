@@ -17,6 +17,8 @@
 		targetType   = FusionPageBuilderApp.getElementType( element_type ),
 		clipboard    = 'undefined' !== typeof data.type ? FusionPageBuilderApp.getElementType( data.type ) : false,
 		hasClipboard = 'undefined' !== typeof data.type && data.type ? true : false,
+		pageType     = 'undefined' !== typeof pageType ? pageType : 'default',
+		canPaste     = true,
 		pasteSame,
 		pasteChild;
 
@@ -28,7 +30,7 @@
 
 			// If clipboard has column, it can be added to container.
 			pasteChild = 'fusion_builder_column' === clipboard;
-
+			canRemove  = canSave = canClone = canPaste = 'container' !== pageType;
 			break;
 
 		case 'fusion_builder_column' :
@@ -37,7 +39,7 @@
 
 			// If clipboard is container then allow paste to same.
 			pasteChild = 'element' === clipboard || 'parent_element' === clipboard;
-
+			canRemove  = canSave = canClone = canPaste = 'column' !== pageType;
 			break;
 
 		case 'element' :
@@ -45,7 +47,7 @@
 
 			// Regular element has no children.
 			pasteChild = false;
-
+			canRemove  = canSave = canClone = canPaste = 'element' !== pageType;
 			break;
 
 		case 'parent_element' :
@@ -53,7 +55,7 @@
 
 			// If its a child element and the correct child element, allow paste.
 			pasteChild = 'child_element' === clipboard && fusionMultiElements[ element_type ] === FusionPageBuilderApp.clipboard.type;
-
+			canRemove  = canSave = canClone = canPaste = 'element' !== pageType;
 			break;
 
 		case 'fusion_builder_row_inner' :
@@ -62,7 +64,7 @@
 
 			// If its a child element and the correct child element, allow paste.
 			pasteChild = 'fusion_builder_column_inner' === clipboard;
-
+			canRemove  = canSave = canClone = canPaste = 'element' !== pageType;
 			break;
 
 		case 'fusion_builder_column_inner' :
@@ -108,7 +110,7 @@
 		<# if ( canCopy ) { #>
 			<li data-action="copy"><?php esc_html_e( 'Copy', 'fusion-builder' ); ?></li>
 		<# } #>
-		<# if ( pasteSame && hasClipboard ) { #>
+		<# if ( pasteSame && hasClipboard && canPaste ) { #>
 			<li data-action="paste-before"><?php esc_html_e( 'Paste Before', 'fusion-builder' ); ?></li>
 			<li data-action="paste-after"><?php esc_html_e( 'Paste After', 'fusion-builder' ); ?></li>
 		<# } #>

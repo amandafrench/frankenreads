@@ -96,7 +96,9 @@ if ( fusion_is_element_enabled( 'fusion_checklist' ) ) {
 						'iconcolor'      => $fusion_settings->get( 'checklist_icons_color' ),
 						'id'             => '',
 						'size'           => $fusion_settings->get( 'checklist_item_size' ),
-					), $args
+					),
+					$args,
+					'fusion_checklist'
 				);
 
 				$defaults['size'] = FusionBuilder::validate_shortcode_attr_value( $defaults['size'], 'px' );
@@ -197,7 +199,9 @@ if ( fusion_is_element_enabled( 'fusion_checklist' ) ) {
 						'circlecolor' => '',
 						'icon'        => '',
 						'iconcolor'   => '',
-					), $args
+					),
+					$args,
+					'fusion_li_item'
 				);
 
 				extract( $defaults );

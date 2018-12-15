@@ -103,7 +103,8 @@ class Fusion_Builder_Library_Table extends WP_List_Table {
 			'global' => esc_attr__( 'Global', 'fusion-builder' ),
 			'date'   => esc_attr__( 'Date', 'fusion-builder' ),
 		);
-		return $columns;
+
+		return apply_filters( 'manage_fusion_element_posts_columns', $columns );
 	}
 
 	/**
@@ -250,6 +251,8 @@ class Fusion_Builder_Library_Table extends WP_List_Table {
 	 * @return string
 	 */
 	public function column_default( $item, $column_id ) {
+		do_action( 'manage_fusion_element_custom_column', $column_id, $item );
+
 		if ( isset( $item[ $column_id ] ) ) {
 			return $item[ $column_id ];
 		}

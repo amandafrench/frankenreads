@@ -84,8 +84,10 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 						'icon_alignment'            => ( '' !== $fusion_settings->get( 'faq_accordion_icon_align' ) ) ? $fusion_settings->get( 'faq_accordion_icon_align' ) : 'left',
 						'icon_box_color'            => $fusion_settings->get( 'faq_accordion_inactive_color' ),
 						'title_font_size'           => $fusion_settings->get( 'faq_accordion_title_font_size' ),
-						'toggle_hover_accent_color' => $fusion_settings->get( 'faq_accordion_active_color' ),
-					), $args
+						'toggle_hover_accent_color' => $fusion_settings->get( 'faq_accordian_active_color' ),
+					),
+					$args,
+					'fusion_faq'
 				);
 
 				$defaults['border_size'] = FusionBuilder::validate_shortcode_attr_value( $defaults['border_size'], 'px' );
@@ -150,6 +152,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 					if ( '1' === self::$args['icon_boxed_mode'] || 'yes' === self::$args['icon_boxed_mode'] ) {
 						$styles .= '.fusion-accordian #accordian-' . $this->faq_counter . ' .panel-title .active .fa-fusion-box,';
 						$styles .= '.fusion-accordian #accordian-' . $this->faq_counter . ' .panel-title a:hover .fa-fusion-box { background-color: ' . $toggle_hover_accent_color . '!important;border-color: ' . $toggle_hover_accent_color . '!important;}';
+					} else {
+						$styles .= '.fusion-accordian #accordian-' . $this->faq_counter . '.fusion-toggle-icon-unboxed .panel-title a:hover .fa-fusion-box { color: ' . $toggle_hover_accent_color . '; }';
 					}
 				}
 
@@ -608,6 +612,10 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 					'.fusion-faq-shortcode .fusion-accordian .panel-title a:hover',
 					'.fusion-faq-shortcode .fusion-accordian .fusion-toggle-boxed-mode:hover .panel-title a',
 				);
+
+				if ( '1' !== $fusion_settings->get( 'faq_accordion_icon_boxed' ) && 'yes' !== $fusion_settings->get( 'faq_accordion_icon_boxed' ) ) {
+					$elements[] = '.fusion-faq-shortcode .fusion-accordian .fusion-toggle-icon-unboxed .panel-title a:hover .fa-fusion-box';
+				}
 
 				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = $faq_accordian_active_color;
 

@@ -205,10 +205,26 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					ColumnAttributesCheck;
 
 				_.each( module.get( 'params' ), function( value, name ) {
-					if ( 'undefined' === value ) {
+					if ( 'undefined' === value || 'undefined' === typeof value ) {
 						columnParams[ name ] = '';
 					} else {
 						columnParams[ name ] = value;
+					}
+
+					if ( 'padding' === name && '' === columnParams[ name ] ) {
+						columnParams.padding_top    = '';
+						columnParams.padding_right  = '';
+						columnParams.padding_bottom = '';
+						columnParams.padding_left   = '';
+
+						delete columnParams[ name ];
+					}
+
+					if ( 'dimension_margin' === name && '' === columnParams[ name ] ) {
+						columnParams.margin_top    = '';
+						columnParams.margin_bottom = '';
+
+						delete columnParams[ name ];
 					}
 
 				} );
@@ -272,7 +288,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 
 							_.each( module.get( 'params' ), function( value, name ) {
 
-								if ( 'undefined' === value ) {
+								if ( 'undefined' === value || 'undefined' === typeof value ) {
 									innerColumnParams[ name ] = '';
 								} else {
 									innerColumnParams[ name ] = value;

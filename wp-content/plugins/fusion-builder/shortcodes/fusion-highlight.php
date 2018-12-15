@@ -51,7 +51,9 @@ if ( fusion_is_element_enabled( 'fusion_highlight' ) ) {
 						'id'      => '',
 						'color'   => $fusion_settings->get( 'primary_color' ),
 						'rounded' => 'no',
-					), $args
+					),
+					$args,
+					'fusion_highlight'
 				);
 
 				extract( $defaults );

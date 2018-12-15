@@ -69,7 +69,9 @@ if ( fusion_is_element_enabled( 'fusion_fontawesome' ) ) {
 						'animation_direction' => 'down',
 						'animation_speed'     => '0.1',
 						'animation_offset'    => $fusion_settings->get( 'animation_offset' ),
-					), $args
+					),
+					$args,
+					'fusion_fontawesome'
 				);
 
 				extract( $defaults );
@@ -107,7 +109,8 @@ if ( fusion_is_element_enabled( 'fusion_fontawesome' ) ) {
 			public function attr() {
 
 				$attr = fusion_builder_visibility_atts(
-					$this->args['hide_on_mobile'], array(
+					$this->args['hide_on_mobile'],
+					array(
 						'class' => 'fontawesome-icon ' . FusionBuilder::font_awesome_name_handler( $this->args['icon'] ) . ' circle-' . $this->args['circle'],
 					)
 				);

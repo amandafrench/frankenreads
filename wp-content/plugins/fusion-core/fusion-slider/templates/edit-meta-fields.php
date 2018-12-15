@@ -46,7 +46,7 @@
 			<option value="scroll_down_indicator" <?php echo ( isset( $term_meta['slider_indicator'] ) && 'scroll_down_indicator' === esc_attr( $term_meta['slider_indicator'] ) ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Scroll Down Indicator', 'fusion-core' ); ?></option>
 			<option value="pagination_circles" <?php echo ( isset( $term_meta['slider_indicator'] ) && 'pagination_circles' === esc_attr( $term_meta['slider_indicator'] ) ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Pagination Circles', 'fusion-core' ); ?></option>
 	  </select>
-		<p class="description"><?php esc_attr_e( 'Choose do you want to display paginatin circler or scroll down indicator.', 'fusion-core' ); ?></p>
+		<p class="description"><?php esc_attr_e( 'Choose do you want to display pagination circler or scroll down indicator.', 'fusion-core' ); ?></p>
 	</td>
 </tr>
 <tr class="form-field">

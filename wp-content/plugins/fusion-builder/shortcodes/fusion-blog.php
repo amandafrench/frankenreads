@@ -190,7 +190,9 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 
 						'excerpt_words'            => '50', // Deprecated.
 						'title'                    => '',   // Deprecated.
-					), $args
+					),
+					$args,
+					'fusion_blog'
 				);
 
 				$defaults['blog_grid_column_spacing'] = FusionBuilder::validate_shortcode_attr_value( $defaults['blog_grid_column_spacing'], '' );
@@ -492,7 +494,7 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 				$html .= '</div>';
 
 				if ( 'no' !== $this->args['scrolling'] ) {
-					$pagination = $this->pagination( $this->query->max_num_pages, apply_filters( 'fusion_pagination_size', 1 ), $this->query );
+					$pagination = $this->pagination( $this->query->max_num_pages, $fusion_settings->get( 'pagination_range' ), $this->query );
 
 					$html .= $pagination;
 				}
@@ -517,92 +519,30 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 			 *
 			 * @access public
 			 * @since 1.0
-			 * @param int    $pages         Max number of pages.
+			 * @param int    $max_pages     Max number of pages.
 			 * @param int    $range         How many page numbers to display to either side of the current page.
 			 * @param object $current_query The query.
 			 */
-			public function pagination( $pages = '', $range = 1, $current_query = '' ) {
-				$output    = '';
+			public function pagination( $max_pages = '', $range = 1, $current_query = '' ) {
+				global $wp_query;
 
-				if ( '' == $current_query ) {
-					global $paged;
-					if ( empty( $paged ) ) {
-						$paged = 1;
-					}
-				} else {
-					$paged = $current_query->query_vars['paged'];
-				}
+				$range = apply_filters( 'fusion_pagination_size', $range );
 
-				if ( '' == $pages ) {
-					if ( '' == $current_query ) {
-						global $wp_query;
-						$pages = $wp_query->max_num_pages;
-						if ( ! $pages ) {
-							$pages = 1;
-						}
+				if ( '' === $max_pages ) {
+					if ( '' === $current_query ) {
+						$max_pages = $wp_query->max_num_pages;
+						$max_pages = ( ! $max_pages ) ? 1 : $max_pages;
 					} else {
-						$pages = $current_query->max_num_pages;
+						$max_pages = $current_query->max_num_pages;
 					}
 				}
+				$max_pages = intval( $max_pages );
 
-				if ( 1 != $pages ) :
-					$blog_global_pagination = apply_filters( 'fusion_builder_blog_pagination', '' );
+				$blog_global_pagination = apply_filters( 'fusion_builder_blog_pagination', '' );
+				$infinite_pagination    = 'pagination' !== $this->args['scrolling'] && 'Pagination' !== $blog_global_pagination;
+				$pagination_html        = fusion_pagination( $max_pages, $range, $current_query, $infinite_pagination, true );
 
-					if ( ( 'pagination' !== $this->args['scrolling'] && 'Pagination' !== $blog_global_pagination ) ) {
-						$output .= '<div class="pagination infinite-scroll clearfix">';
-					} else {
-						$output .= '<div class="pagination clearfix">';
-					}
-
-					if ( 1 < $paged ) {
-						$output .= '<a class="pagination-prev" href="' . get_pagenum_link( $paged - 1 ) . '">';
-						$output .= '<span class="page-prev"></span>';
-						$output .= '<span class="page-text">' . esc_html__( 'Previous', 'fusion-builder' ) . '</span>';
-						$output .= '</a>';
-					}
-
-					$start = $paged - $range;
-					$end = $paged + $range;
-					if ( 0 >= $paged - $range ) {
-							$start = ( 0 < $paged - 1 ) ? $paged - 1 : 1;
-					}
-
-					if ( $pages < $paged + $range ) {
-						$end = $pages;
-					}
-
-					for ( $i = $start; $i <= $end; $i++ ) {
-						if ( $paged === $i ) {
-							$output .= '<span class="current">' . absint( $i ) . '</span>';
-						} else {
-							$output .= '<a href="' . esc_url( get_pagenum_link( $i ) ) . '" class="inactive">' . absint( $i ) . '</a>';
-						}
-					}
-
-					if ( $paged < $pages ) {
-						$output .= '<a class="pagination-next" href="' . get_pagenum_link( $paged + 1 ) . '">';
-						$output .= '<span class="page-text">' . esc_html__( 'Next', 'fusion-builder' ) . '</span>';
-						$output .= '<span class="page-next"></span>';
-						$output .= '</a>';
-					}
-
-					$output .= '</div>';
-
-					if ( ( 'pagination' !== $this->args['scrolling'] && 'Pagination' !== $blog_global_pagination ) ) {
-						$output .= '<div class="fusion-infinite-scroll-trigger"></div>';
-					} else {
-						$output .= '<div class="fusion-clearfix"></div>';
-					}
-
-					return apply_filters( 'fusion_builder_blog_pagination_html', $output, $pages, $range, $current_query, $blog_global_pagination );
-
-					// Needed for Theme check.
-					ob_start();
-					posts_nav_link();
-					ob_get_clean();
-
-				endif;
-
+				return apply_filters( 'fusion_builder_blog_pagination_html', $pagination_html, $max_pages, $range, $current_query, $blog_global_pagination );
 			}
 
 			/**
@@ -1004,6 +944,8 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 					ob_start();
 					$atts = $this->args;
 
+					$atts['loop-id'] = '#blog-' . $this->blog_sc_counter . '-post-';
+
 					include FUSION_BUILDER_PLUGIN_DIR . 'inc/templates/shortcodes/new-slideshow-blog-shortcode.php';
 
 					$post_slideshow_action = ob_get_contents();
@@ -1102,8 +1044,12 @@ if ( fusion_is_element_enabled( 'fusion_blog' ) ) {
 
 				if ( 'grid' === $this->args['layout'] || 'masonry' === $this->args['layout'] || 'timeline' === $this->args['layout'] ) {
 					$content_wrapper_styles = '';
+					$is_there_meta_above    = 0 < $this->args['meta_all'] * ( $this->args['meta_author'] + $this->args['meta_date'] + $this->args['meta_categories'] + $this->args['meta_tags'] );
+					$is_there_meta_below    = $this->args['meta_all'] * $this->args['meta_comments'] || $this->args['meta_all'] * $this->args['meta_link'];
+					$is_there_content       = 'no' === $this->args['excerpt'] || ( 'yes' === $this->args['excerpt'] && ! $this->args['is_zero_excerpt'] );
 
-					if ( $this->args['meta_info_combined'] > 0 && ! $this->args['is_zero_excerpt'] && 'masonry' !== $this->args['layout'] ) {
+					// See 7199.
+					if ( 'masonry' !== $this->args['layout'] && ( ( $this->args['show_title'] && $is_there_meta_above && ( $is_there_content || $is_there_meta_below ) ) || ( $this->args['show_title'] && ! $is_there_meta_above && $is_there_meta_below ) ) ) {
 						$content_sep = '<div ' . FusionBuilder::attributes( 'blog-fusion-content-sep' ) . '></div>';
 					}
 
@@ -2703,7 +2649,7 @@ function fusion_element_blog() {
 				array(
 					'type'        => 'select',
 					'heading'     => esc_attr__( 'Grid Separator Style', 'fusion-builder' ),
-					'description' => __( 'Controls the line style of grid separators. <strong>Note:</strong> At least one meta data field must be enabled and excerpt or full content must be shown in order that the separator will be displayed.', 'fusion-builder' ),
+					'description' => __( 'Controls the line style of grid separators. <strong>Note:</strong> Separators will display, when excerpt/content or meta data below the separators is displayed.', 'fusion-builder' ),
 					'param_name'  => 'grid_separator_style_type',
 					'value'       => array(
 						''              => esc_attr__( 'Default', 'fusion-builder' ),

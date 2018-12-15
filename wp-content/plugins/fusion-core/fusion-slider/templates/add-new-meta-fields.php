@@ -40,7 +40,7 @@
 		<option value="scroll_down_indicator"><?php esc_attr_e( 'Scroll Down Indicator', 'fusion-core' ); ?></option>
 		<option value="pagination_circles"><?php esc_attr_e( 'Pagination Circles', 'fusion-core' ); ?></option>
   </select>
-	<p class="description"><?php esc_attr_e( 'Choose do you want to display paginatin circler or scroll down indicator.', 'fusion-core' ); ?></p>
+	<p class="description"><?php esc_attr_e( 'Choose do you want to display pagination circler or scroll down indicator.', 'fusion-core' ); ?></p>
 </div>
 <div class="form-field">
 	<label for="term_meta[slider_indicator_color]"><?php esc_attr_e( 'Slider Indicator Color', 'fusion-core' ); ?></label>

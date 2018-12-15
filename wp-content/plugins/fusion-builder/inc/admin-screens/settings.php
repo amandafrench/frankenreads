@@ -1,4 +1,13 @@
-<?php global $all_fusion_builder_elements; ?>
+<?php
+global $all_fusion_builder_elements;
+
+// If Fusion Builder is not bundled in another plugin/theme, it has its own options panel.
+if ( null == FusionBuilder()->registration ) {
+	$options_name = __( 'Fusion Element Theme Options', 'fusion-builder' );
+} else {
+	$options_name = __( 'Fusion Element Options', 'fusion-builder' );
+}
+?>
 
 <div class="wrap about-wrap fusion-builder-wrap fusion-builder-settings">
 
@@ -8,8 +17,23 @@
 
 		<div class="fusion-builder-important-notice">
 			<p class="about-description">
-				<?php esc_html_e( 'Fusion Builder elements are fully customizable through a global set of options in the Fusion Element Options Panel. Click the button below to go to Fusion Element Options to see all the style settings available for of each element. Additionally, there are options below for general Fusion Builder settings.', 'fusion-builder' ); ?><br/>
-				<a href="<?php echo esc_url_raw( apply_filters( 'fusion_builder_options_url', admin_url( 'admin.php?page=fusion-element-options' ) ) ); ?>#animation_offset" class="button button-primary button-large avada-large-button"><?php esc_attr_e( 'Go To Fusion Element Options', 'fusion-builder' ); ?></a>
+				<?php
+				printf(
+					/* translators: Fusion Element Theme Options | Fusion Element Options. */
+					esc_html__( 'Fusion Builder elements are fully customizable through a global set of options in the %1$s Panel. Click the button below to go to %1$s to see all the style settings available for of each element. Additionally, there are options below for general Fusion Builder settings.', 'fusion-builder' ),
+					esc_html( $options_name )
+				);
+				?>
+				<br/>
+				<a href="<?php echo esc_url_raw( apply_filters( 'fusion_builder_options_url', admin_url( 'admin.php?page=fusion-element-options' ) ) ); ?>#animation_offset" class="button button-primary button-large avada-large-button">
+					<?php
+					printf(
+						/* translators: Fusion Element Theme Options | Fusion Element Options. */
+						esc_html__( 'Go To %s', 'fusion-builder' ),
+						esc_html( $options_name )
+					);
+					?>
+				</a>
 			</p>
 		</div>
 
@@ -17,9 +41,9 @@
 
 			<div class="fusion-builder-option">
 				<div class="fusion-builder-option-title">
-					<h3><?php esc_attr_e( 'Fusion Builder Auto Activation', 'fusion-builder' ); ?></h3>
+					<h3><?php esc_html_e( 'Fusion Builder Auto Activation', 'fusion-builder' ); ?></h3>
 					<span class="fusion-builder-option-label">
-						<p><?php esc_attr_e( 'Turn on to enable the Fusion Builder user interface by default when opening a page or post. Turn off to enable the default WP editor view.', 'fusion-builder' ); ?></p>
+						<p><?php esc_html_e( 'Turn on to enable the Fusion Builder user interface by default when opening a page or post. Turn off to enable the default WP editor view.', 'fusion-builder' ); ?></p>
 					</span>
 				</div>
 
@@ -32,19 +56,19 @@
 						}
 						?>
 						<input type="hidden" class="button-set-value" value="<?php echo esc_attr( $enable_builder_ui_by_default ); ?>" name="enable_builder_ui_by_default" id="enable_builder_ui_by_default">
-						<a data-value="1" class="ui-button buttonset-item<?php echo ( $enable_builder_ui_by_default ) ? ' ui-state-active' : ''; ?>" href="#"><?php esc_attr_e( 'On', 'fusion-builder' ); ?></a>
-						<a data-value="0" class="ui-button buttonset-item<?php echo ( ! $enable_builder_ui_by_default ) ? ' ui-state-active' : ''; ?>" href="#"><?php esc_attr_e( 'Off', 'fusion-builder' ); ?></a>
+						<a data-value="1" class="ui-button buttonset-item<?php echo ( $enable_builder_ui_by_default ) ? ' ui-state-active' : ''; ?>" href="#"><?php esc_html_e( 'On', 'fusion-builder' ); ?></a>
+						<a data-value="0" class="ui-button buttonset-item<?php echo ( ! $enable_builder_ui_by_default ) ? ' ui-state-active' : ''; ?>" href="#"><?php esc_html_e( 'Off', 'fusion-builder' ); ?></a>
 					</div>
 				</div>
 			</div>
 
 			<div class="fusion-builder-option">
 				<div class="fusion-builder-option-title">
-					<h3><?php esc_attr_e( 'Fusion Builder Elements', 'fusion-builder' ); ?></h3>
+					<h3><?php esc_html_e( 'Fusion Builder Elements', 'fusion-builder' ); ?></h3>
 					<span class="fusion-builder-option-label">
-						<p><?php esc_attr_e( 'Each Fusion Builder element can be enabled or disabled. This can increase performance if you are not using a specific element. Check the box to enable, uncheck to disable.', 'fusion-builder' ); ?></p>
-						<p><?php esc_attr_e( 'NOTE: Elements for plugins like WooCommere or The Events Calendar will only be available in the builder, if the corresponding options are activated here and if those plugins are active.', 'fusion-builder' ); ?></p>
-						<p><?php esc_attr_e( 'WARNING: Use with caution. Disabling an element will remove it from all pages/posts, old and new. If it was on a previous page/post, it will render as regular element markup on the frontend.', 'fusion-builder' ); ?></p>
+						<p><?php esc_html_e( 'Each Fusion Builder element can be enabled or disabled. This can increase performance if you are not using a specific element. Check the box to enable, uncheck to disable.', 'fusion-builder' ); ?></p>
+						<p><?php _e( '<strong>NOTE:</strong> Elements for plugins like WooCommere or The Events Calendar will only be available in the builder, if the corresponding options are activated here and if those plugins are active.', 'fusion-builder' ); // WPCS: XSS ok. ?></p>
+						<p><?php _e( '<strong>WARNING:</strong> Use with caution. Disabling an element will remove it from all pages/posts, old and new. If it was on a previous page/post, it will render as regular element markup on the frontend.', 'fusion-builder' ); // WPCS: XSS ok. ?></p>
 						<p>
 							<a href="#" class="button fusion-check-all" title="<?php esc_attr_e( 'Check All Elements', 'fusion-builder' ); ?>"><?php esc_attr_e( 'Check All Elements', 'fusion-builder' ); ?></a>
 
@@ -124,7 +148,7 @@
 
 			<div class="fusion-builder-option">
 				<div class="fusion-builder-option-title">
-					<h3><?php esc_attr_e( 'Post Types', 'fusion-builder' ); ?></h3>
+					<h3><?php esc_html_e( 'Post Types', 'fusion-builder' ); ?></h3>
 					<span class="fusion-builder-option-label">
 						<p><?php esc_html_e( 'Fusion Builder can be enabled or disabled on registered post types. Check the box to enable, uncheck to disable. Please note the Fusion element generator will still be active on any post type that is disabled.', 'fusion-builder' ); ?></p>
 					</span>
@@ -167,7 +191,7 @@
 
 			<div class="fusion-builder-option">
 				<div class="fusion-builder-option-title">
-					<h3><?php esc_attr_e( 'Import Fusion Builder Content', 'fusion-builder' ); ?></h3>
+					<h3><?php esc_html_e( 'Import Fusion Builder Content', 'fusion-builder' ); ?></h3>
 					<span class="fusion-builder-option-label">
 						<p><?php esc_html_e( 'Choose to import Fusion Builder content; custom saved containers / columns / elements or full page templates. Click "Choose File" and select your Fusion Builder XML file.', 'fusion-builder' ); ?></p>
 					</span>
@@ -178,30 +202,30 @@
 						<input type="file" id="fusion-builder-import-file" name="fusion-builder-import-file" size="25" value="" accept=".xml" />
 						<input type="submit" name="submit" id="submit" class="button fusion-builder-import-data" value="Import" disabled />
 					</form>
-					<div class="fusion-builder-import-success"><?php esc_attr_e( 'Content Successfully  Imported', 'fusion-builder' ); ?></div>
+					<div class="fusion-builder-import-success"><?php esc_html_e( 'Content Successfully  Imported', 'fusion-builder' ); ?></div>
 				</div>
 			</div>
 
 			<div class="fusion-builder-option">
 				<div class="fusion-builder-option-title">
-					<h3><?php esc_attr_e( 'Export Fusion Builder Content', 'fusion-builder' ); ?></h3>
+					<h3><?php esc_html_e( 'Export Fusion Builder Content', 'fusion-builder' ); ?></h3>
 					<span class="fusion-builder-option-label">
 						<p><?php esc_html_e( 'Choose to export Fusion Builder content; custom saved containers / columns / elements or full page templates. An XML file will be downloaded to your computer.' ); ?></p>
 					</span>
 				</div>
 
 				<div class="fusion-builder-option-field">
-					<a href="<?php echo esc_url_raw( admin_url( 'admin.php?page=fusion-builder-options&fusion_action=export&fusion_export_type=fusion_element' ) ); ?>" class="button" title="<?php esc_attr_e( 'Export Fusion Elements from your Library', 'fusion-builder' ); ?>"><?php esc_attr_e( 'Export Content', 'fusion-builder' ); ?></a>
+					<a href="<?php echo esc_url_raw( admin_url( 'admin.php?page=fusion-builder-options&fusion_action=export&fusion_export_type=fusion_element' ) ); ?>" class="button" title="<?php esc_attr_e( 'Export Fusion Elements from your Library', 'fusion-builder' ); ?>"><?php esc_html_e( 'Export Content', 'fusion-builder' ); ?></a>
 
-					<a href="<?php echo esc_url_raw( admin_url( 'admin.php?page=fusion-builder-options&fusion_action=export&fusion_export_type=fusion_template' ) ); ?>" class="button" title="<?php esc_attr_e( 'Export Fusion Templates from your Library', 'fusion-builder' ); ?>"><?php esc_attr_e( 'Export Templates', 'fusion-builder' ); ?></a>
+					<a href="<?php echo esc_url_raw( admin_url( 'admin.php?page=fusion-builder-options&fusion_action=export&fusion_export_type=fusion_template' ) ); ?>" class="button" title="<?php esc_attr_e( 'Export Fusion Templates from your Library', 'fusion-builder' ); ?>"><?php esc_html_e( 'Export Templates', 'fusion-builder' ); ?></a>
 				</div>
 			</div>
 
 			<div class="fusion-builder-option">
 				<div class="fusion-builder-option-title">
-					<h3><?php esc_attr_e( 'Sticky Preview / Publish Buttons', 'fusion-builder' ); ?></h3>
+					<h3><?php esc_html_e( 'Sticky Preview / Publish Buttons', 'fusion-builder' ); ?></h3>
 					<span class="fusion-builder-option-label">
-						<p><?php esc_attr_e( 'This option allows the preview and publish button to stick to the bottom of the page so you can quickly access them.', 'fusion-builder' ); ?></p>
+						<p><?php esc_html_e( 'This option allows the preview and publish button to stick to the bottom of the page so you can quickly access them.', 'fusion-builder' ); ?></p>
 					</span>
 				</div>
 
@@ -214,8 +238,8 @@
 						}
 						?>
 						<input type="hidden" class="button-set-value" value="<?php echo esc_attr( $enable_builder_sticky_publish_buttons ); ?>" name="enable_builder_sticky_publish_buttons" id="enable_builder_sticky_publish_buttons">
-						<a data-value="1" class="ui-button buttonset-item<?php echo ( $enable_builder_sticky_publish_buttons ) ? ' ui-state-active' : ''; ?>" href="#"><?php esc_attr_e( 'On', 'fusion-builder' ); ?></a>
-						<a data-value="0" class="ui-button buttonset-item<?php echo ( ! $enable_builder_sticky_publish_buttons ) ? ' ui-state-active' : ''; ?>" href="#"><?php esc_attr_e( 'Off', 'fusion-builder' ); ?></a>
+						<a data-value="1" class="ui-button buttonset-item<?php echo ( $enable_builder_sticky_publish_buttons ) ? ' ui-state-active' : ''; ?>" href="#"><?php esc_html_e( 'On', 'fusion-builder' ); ?></a>
+						<a data-value="0" class="ui-button buttonset-item<?php echo ( ! $enable_builder_sticky_publish_buttons ) ? ' ui-state-active' : ''; ?>" href="#"><?php esc_html_e( 'Off', 'fusion-builder' ); ?></a>
 					</div>
 				</div>
 			</div>

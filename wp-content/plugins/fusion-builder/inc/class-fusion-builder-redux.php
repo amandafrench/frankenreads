@@ -69,7 +69,8 @@ class Fusion_Builder_Redux extends Fusion_FusionRedux {
 	 */
 	public function fusion_options_builder_soft_dependencies( $dependencies ) {
 		return array_merge(
-			$dependencies, array(
+			$dependencies,
+			array(
 				'accordion_divider_line'                 => array( 'accordion_boxed_mode' ),
 				'accordion_border_size'                  => array( 'accordion_boxed_mode' ),
 				'accordian_border_color'                 => array( 'accordion_boxed_mode' ),
@@ -92,6 +93,9 @@ class Fusion_Builder_Redux extends Fusion_FusionRedux {
 				'before_after_orientation'               => array( 'before_after_type' ),
 				'before_after_handle_movement'           => array( 'before_after_type' ),
 				'before_after_transition_time'           => array( 'before_after_type' ),
+				'imageframe_blur'                        => array( 'imageframe_style_type' ),
+				'imgframe_style_color'                   => array( 'imageframe_style_type' ),
+				'imgframe_border_color'                  => array( 'imageframe_border_size' ),
 				'portfolio_archive_excerpt_length'       => array( 'portfolio_archive_content_length' ),
 				'portfolio_archive_layout_padding'       => array( 'portfolio_archive_text_layout' ),
 				'social_links_icon_color'                => array( 'social_links_color_type' ),

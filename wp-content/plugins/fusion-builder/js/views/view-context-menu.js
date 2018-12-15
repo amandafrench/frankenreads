@@ -47,7 +47,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			render: function() {
 				var offset = jQuery( '#fusion_builder_layout .inside' ).offset();
 
-				this.$el.html( this.template( jQuery.extend( true, this.copyData, this.model.parent.attributes ) ) );
+				this.$el.html( this.template( jQuery.extend( true, this.copyData, this.model.parent.attributes, { pageType: this.model.pageType } ) ) );
 
 				this.$el.css( { top: ( this.model.event.pageY - offset.top  ) + 'px', left: ( this.model.event.pageX - offset.left ) + 'px' } );
 

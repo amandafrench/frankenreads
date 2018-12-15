@@ -72,6 +72,7 @@ class Fusion_Redux_Addons {
 			'spacing',
 			'dimensions',
 			'ace_editor',
+			'sortable',
 		);
 		// An array of all our extensions.
 		$this->extensions = array(
@@ -143,5 +144,15 @@ class Fusion_Redux_Addons {
 	 */
 	public function register_dimensions() {
 		return $this->path . '/custom-fields/dimensions/field_dimensions.php';
+	}
+
+	/**
+	 * Register the custom typography field
+	 *
+	 * @access public
+	 * @since 2.0
+	 */
+	public function register_sortable() {
+		return $this->path . '/custom-fields/sortable/field_sortable.php';
 	}
 }

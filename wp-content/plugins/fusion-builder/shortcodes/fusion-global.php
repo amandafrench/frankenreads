@@ -56,7 +56,9 @@ if ( ! class_exists( 'FusionSC_Global' ) ) {
 			$defaults = FusionBuilder::set_shortcode_defaults(
 				array(
 					'id'    => '',
-				), $args
+				),
+				$args,
+				'fusion_global'
 			);
 
 			extract( $defaults );

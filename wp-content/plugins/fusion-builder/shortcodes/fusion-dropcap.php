@@ -53,7 +53,9 @@ if ( fusion_is_element_enabled( 'fusion_dropcap' ) ) {
 						'boxed'        => '',
 						'boxed_radius' => '',
 						'color'        => strtolower( $fusion_settings->get( 'dropcap_color' ) ),
-					), $args
+					),
+					$args,
+					'fusion_dropcap'
 				);
 
 				extract( $defaults );

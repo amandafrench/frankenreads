@@ -110,7 +110,9 @@ if ( fusion_is_element_enabled( 'fusion_chart' ) ) {
 						'chart_gridline_color'     => $fusion_settings->get( 'chart_gridline_color' ),
 						'class'                    => '',
 						'id'                       => '',
-					), $args
+					),
+					$args,
+					'fusion_chart'
 				);
 
 				$defaults['chart_padding'] = array(
@@ -189,7 +191,8 @@ if ( fusion_is_element_enabled( 'fusion_chart' ) ) {
 			public function parent_attr() {
 
 				$attr = fusion_builder_visibility_atts(
-					$this->parent_args['hide_on_mobile'], array(
+					$this->parent_args['hide_on_mobile'],
+					array(
 						'id'    => 'fusion-chart-' . $this->chart_sc_counter,
 						'class' => 'fusion-chart',
 					)
@@ -300,7 +303,9 @@ if ( fusion_is_element_enabled( 'fusion_chart' ) ) {
 						'legend_text_color' => '',
 						'background_color'  => '',
 						'border_color'      => '',
-					), $args
+					),
+					$args,
+					'fusion_chart_dataset'
 				);
 
 				$this->child_args = $defaults;

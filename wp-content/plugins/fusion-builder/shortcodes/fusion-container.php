@@ -81,62 +81,72 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 				$fusion_settings = Fusion_Settings::get_instance();
 			}
 			$atts = fusion_section_deprecated_args( $atts );
-			extract(
-				FusionBuilder::set_shortcode_defaults(
-					array(
-						'admin_label'                           => '',
-						'is_nested'                             => '0', // Variable that simply checks if the current container is a nested one (e.g. from FAQ or blog element).
-						'hide_on_mobile'                        => fusion_builder_default_visibility( 'string' ),
-						'id'                                    => '',
-						'class'                                 => '',
 
-						// Background.
-						'background_color'                      => $fusion_settings->get( 'full_width_bg_color' ),
-						'background_image'                      => '',
-						'background_position'                   => 'center center',
-						'background_repeat'                     => 'no-repeat',
-						'background_parallax'                   => 'none',
-						'parallax_speed'                        => '0.3',
-						'opacity'                               => '100',
-						'break_parents'                         => '0',
-						'fade'                                  => 'no',
+			$this->args = FusionBuilder::set_shortcode_defaults(
+				array(
+					'admin_label'                           => '',
+					'is_nested'                             => '0', // Variable that simply checks if the current container is a nested one (e.g. from FAQ or blog element).
+					'hide_on_mobile'                        => fusion_builder_default_visibility( 'string' ),
+					'id'                                    => '',
+					'class'                                 => '',
+					'status'                                => 'published',
+					'publish_date'                          => '',
 
-						// Style.
-						'hundred_percent'                       => 'no',
-						'hundred_percent_height'                => 'no',
-						'hundred_percent_height_scroll'         => 'no',
-						'hundred_percent_height_center_content' => 'no',
-						'padding_bottom'                        => '',
-						'padding_left'                          => '',
-						'padding_right'                         => '',
-						'padding_top'                           => '',
-						'border_color'                          => $fusion_settings->get( 'full_width_border_color' ),
-						'border_size'                           => $fusion_settings->get( 'full_width_border_size' ),
-						'border_style'                          => 'solid',
-						'equal_height_columns'                  => 'no',
-						'data_bg_height'                        => '',
-						'data_bg_width'                         => '',
-						'enable_mobile'                         => 'no',
-						'menu_anchor'                           => '',
-						'margin_top'                            => '',
-						'margin_bottom'                         => '',
+					// Background.
+					'background_color'                      => $fusion_settings->get( 'full_width_bg_color' ),
+					'background_image'                      => '',
+					'background_position'                   => 'center center',
+					'background_repeat'                     => 'no-repeat',
+					'background_parallax'                   => 'none',
+					'parallax_speed'                        => '0.3',
+					'opacity'                               => '100',
+					'break_parents'                         => '0',
+					'fade'                                  => 'no',
 
-						// Video Background.
-						'video_mp4'                             => '',
-						'video_webm'                            => '',
-						'video_ogv'                             => '',
-						'video_loop'                            => 'yes',
-						'video_mute'                            => 'yes',
-						'video_preview_image'                   => '',
-						'overlay_color'                         => '',
-						'overlay_opacity'                       => '0.5',
-						'video_url'                             => '',
-						'video_loop_refinement'                 => '',
-						'video_aspect_ratio'                    => '16:9',
+					// Style.
+					'hundred_percent'                       => 'no',
+					'hundred_percent_height'                => 'no',
+					'hundred_percent_height_scroll'         => 'no',
+					'hundred_percent_height_center_content' => 'no',
+					'padding_bottom'                        => '',
+					'padding_left'                          => '',
+					'padding_right'                         => '',
+					'padding_top'                           => '',
+					'border_color'                          => $fusion_settings->get( 'full_width_border_color' ),
+					'border_size'                           => $fusion_settings->get( 'full_width_border_size' ),
+					'border_style'                          => 'solid',
+					'equal_height_columns'                  => 'no',
+					'data_bg_height'                        => '',
+					'data_bg_width'                         => '',
+					'enable_mobile'                         => 'no',
+					'menu_anchor'                           => '',
+					'margin_top'                            => '',
+					'margin_bottom'                         => '',
 
-					), $atts
-				)
+					// Video Background.
+					'video_mp4'                             => '',
+					'video_webm'                            => '',
+					'video_ogv'                             => '',
+					'video_loop'                            => 'yes',
+					'video_mute'                            => 'yes',
+					'video_preview_image'                   => '',
+					'overlay_color'                         => '',
+					'overlay_opacity'                       => '0.5',
+					'video_url'                             => '',
+					'video_loop_refinement'                 => '',
+					'video_aspect_ratio'                    => '16:9',
+
+				),
+				$atts,
+				'fusion_builder_container'
 			);
+
+			extract( $this->args );
+
+			// If container is no published, return early.
+			if ( ! apply_filters( 'fusion_is_container_viewable', $this->is_container_viewable(), $this->args ) ) {
+				return;
+			}
 
 			// @codingStandardsIgnoreLine
 			global $parallax_id, $fusion_fwc_type, $is_IE, $is_edge, $fusion_library, $columns, $global_container_count;
@@ -252,7 +262,7 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 				$style .= 'background-color: ' . esc_attr( $background_color ) . ';';
 			}
 
-			if ( ! empty( $background_image ) && 'yes' != $fade ) {
+			if ( ! empty( $background_image ) && 'yes' !== $fade ) {
 				$style .= 'background-image: url("' . esc_url_raw( $background_image ) . '");';
 			}
 
@@ -497,6 +507,46 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 			}
 
 			return $output;
+		}
+
+		/**
+		 * Check if container should render.
+		 *
+		 * @access public
+		 * @since 1.7
+		 * @return array
+		 */
+		public function is_container_viewable() {
+
+			// Published, all can see.
+			if ( 'published' === $this->args['status'] || '' === $this->args['status'] ) {
+				return true;
+			}
+
+			// If is author, can also see.
+			if ( is_user_logged_in() && current_user_can( 'publish_posts' ) ) {
+				return true;
+			}
+
+			// Set to hide.
+			if ( 'draft' === $this->args['status'] ) {
+				return false;
+			}
+
+			// Set to show until or after.
+			$time_check = strtotime( $this->args['publish_date'] );
+			$wp_local_time = current_time( 'timestamp' );
+			if ( '' !== $this->args['publish_date'] && $time_check ) {
+				if ( 'published_until' === $this->args['status'] ) {
+					return $wp_local_time < $time_check;
+				}
+				if ( 'publish_after' === $this->args['status'] ) {
+					return $wp_local_time > $time_check;
+				}
+			}
+
+			// Any incorrect set-up default to show.
+			return true;
 		}
 
 		/**
@@ -788,6 +838,38 @@ function fusion_builder_add_section() {
 						array(
 							'element'  => 'hundred_percent_height_scroll',
 							'value'    => 'yes',
+							'operator' => '!=',
+						),
+					),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'Container Publishing Status', 'fusion-builder' ),
+					'description' => __( 'Controls the publishing status of the container.  If draft is selected the container will only be visible to logged in users with the capability to publish posts.  If published until or publish after are selected the container will be in draft mode when not published.', 'fusion-builder' ),
+					'param_name'  => 'status',
+					'default'     => 'published',
+					'value'       => array(
+						'published'       => esc_attr__( 'Published', 'fusion-builder' ),
+						'published_until' => esc_attr__( 'Published Until', 'fusion-builder' ),
+						'publish_after'   => esc_attr__( 'Publish After', 'fusion-builder' ),
+						'draft'           => esc_attr__( 'Draft', 'fusion-builder' ),
+					),
+				),
+				array(
+					'type'        => 'date_time_picker',
+					'heading'     => esc_attr__( 'Container Publishing Date', 'fusion-builder' ),
+					'description' => __( 'Controls when the container should be published.  Can be before a date or after a date.  Use SQL time format: YYYY-MM-DD HH:MM:SS. E.g: 2016-05-10 12:30:00.  Timezone of site is used.', 'fusion-builder' ),
+					'param_name'  => 'publish_date',
+					'value'       => '',
+					'dependency'  => array(
+						array(
+							'element'  => 'status',
+							'value'    => 'published',
+							'operator' => '!=',
+						),
+						array(
+							'element'  => 'status',
+							'value'    => 'draft',
 							'operator' => '!=',
 						),
 					),

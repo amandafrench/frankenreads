@@ -93,7 +93,9 @@ class Fusion_Patcher {
 
 		// Only instantiate the sub-classes if we're on the admin page.
 		$slug            = $args['context'] . '-fusion-patcher';
-		$is_patcher_page = (bool) ( is_admin() && ( ( isset( $_GET['page'] ) && $slug === $_GET['page'] ) || ( isset( $_SERVER['HTTP_REFERER'] ) && false !== strpos( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ), $slug ) ) ) );
+		$referer         = fusion_get_referer();
+		$referer         = $referer ? $referer : '';
+		$is_patcher_page = (bool) ( is_admin() && ( ( isset( $_GET['page'] ) && $slug === $_GET['page'] ) || ( false !== strpos( $referer, $slug ) ) ) );
 
 		// Add bundled products.
 		$this->add_bundled( $args );

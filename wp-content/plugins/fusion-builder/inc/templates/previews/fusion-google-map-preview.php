@@ -6,5 +6,10 @@
 	<# } else { #>
 		{{ params.address }}
 	<# } #>
+	<br />
+	{{ fusionAllElements[element_type].params.api_type.value[ params.api_type ] }}
+	<# if ( '' === params.api_type ) { #>
+		API
+	<# } #>
 
 </script>

@@ -71,10 +71,11 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 			 *
 			 * @since 1.0
 			 *
-			 * @param  array $args       Shortcode paramters.
-			 * @return array                Shortcode paramters with default values where necesarry.
+			 * @param  array  $args      Shortcode paramters.
+			 * @param  string $shortcode Shortcode name.
+			 * @return array             Shortcode paramters with default values where necesarry.
 			 */
-			public function default_shortcode_parameter( $args ) {
+			public function default_shortcode_parameter( $args, $shortcode = false ) {
 
 				global $fusion_settings;
 
@@ -101,7 +102,9 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 						'text_align'            => $fusion_settings->get( 'user_login_text_align' ),
 
 						'disable_form'          => '', // Only for demo usage.
-					), $args
+					),
+					$args,
+					$shortcode
 				);
 
 				$defaults['main_container'] = ( $defaults['disable_form'] ) ? 'div' : 'form';
@@ -121,7 +124,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 			 */
 			public function render_login( $args, $content = '' ) {
 
-				$defaults = $this->default_shortcode_parameter( $args );
+				$defaults = $this->default_shortcode_parameter( $args, 'fusion_login' );
 
 				$defaults['action'] = 'login';
 
@@ -134,7 +137,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 				$html = '<div ' . FusionBuilder::attributes( 'login-shortcode' ) . '>' . $styles;
 
 				if ( ! is_user_logged_in() ) {
-					$user_login = ( isset( $_GET['log'] ) ) ? $_GET['log'] : '';
+					$user_login = ( isset( $_GET['log'] ) ) ? $_GET['log'] : ''; // WPCS: sanitization ok.
 
 					$html .= ( $heading ) ? '<h3 class="fusion-login-heading">' . $heading . '</h3>' : '';
 					$html .= ( $caption ) ? '<div class="fusion-login-caption">' . $caption . '</div>' : '';
@@ -220,7 +223,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 					$args['register_note'] = esc_attr__( 'Registration confirmation will be emailed to you.', 'fusion-builder' );
 				}
 
-				$defaults = $this->default_shortcode_parameter( $args );
+				$defaults = $this->default_shortcode_parameter( $args, 'fusion_register' );
 
 				$defaults['action'] = 'register';
 
@@ -275,7 +278,8 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 					$html .= $this->render_hidden_login_inputs(
 						apply_filters(
 							'fusion_builder_user_register_redirection_link',
-							$redirection_link, array(
+							$redirection_link,
+							array(
 								'action' => 'register',
 								'success' => '1',
 							)
@@ -305,7 +309,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 			 */
 			public function render_lost_password( $args, $content = '' ) {
 
-				$defaults = $this->default_shortcode_parameter( $args );
+				$defaults = $this->default_shortcode_parameter( $args, 'fusion_lost_password' );
 
 				$defaults['action'] = 'lostpassword';
 
@@ -346,7 +350,8 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 					$html .= $this->render_hidden_login_inputs(
 						apply_filters(
 							'fusion_builder_user_lost_password_redirection_link',
-							$redirection_link, array(
+							$redirection_link,
+							array(
 								'action' => 'lostpassword',
 								'success' => '1',
 							)
@@ -453,7 +458,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 			 */
 			public function login_init() {
 				check_admin_referer( 'fusion-login' );
-				$action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : 'login';
+				$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : 'login';
 
 				$action = 'reauth';
 				if ( isset( $_POST['wp-submit'] ) ) {
@@ -490,14 +495,15 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 			 */
 			public function get_redirection_link( $error = false ) {
 				$redirection_link = '';
+				$referer          = fusion_get_referer();
 
-				if ( isset( $_REQUEST['redirect_to'] ) ) {
-					$redirection_link = $_REQUEST['redirect_to'];
-				} elseif ( $error && isset( $_REQUEST['_wp_http_referer'] ) ) {
-					$redirection_link = $_REQUEST['_wp_http_referer'];
-				} elseif ( isset( $_SERVER ) && isset( $_SERVER['HTTP_REFERER'] ) && $_SERVER['HTTP_REFERER'] ) {
-					$referer_array = wp_parse_url( $_SERVER['HTTP_REFERER'] );
-					$referer = $referer_array['scheme'] . '://' . $referer_array['host'] . $referer_array['path'];
+				if ( $error && $referer ) {
+					$redirection_link = $referer;
+				} elseif ( isset( $_REQUEST['redirect_to'] ) ) {
+					$redirection_link = sanitize_text_field( wp_unslash( $_REQUEST['redirect_to'] ) );
+				} elseif ( $referer ) {
+					$referer_array = wp_parse_url( $referer );
+					$referer       = $referer_array['scheme'] . '://' . $referer_array['host'] . $referer_array['path'];
 
 					// If there's a valid referrer, and it's not the default log-in screen.
 					if ( ! empty( $referer ) && ! strstr( $referer, 'wp-login' ) && ! strstr( $referer, 'wp-admin' ) ) {
@@ -533,7 +539,8 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 							array(
 								'action' => 'login',
 								'success' => '0',
-							), $this->get_redirection_link( true )
+							),
+							$this->get_redirection_link( true )
 						)
 					);
 					exit;
@@ -564,7 +571,8 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 								array(
 									'action' => 'register',
 									'success' => '1',
-								), $redirection_link
+								),
+								$redirection_link
 							)
 						);
 						exit;
@@ -577,7 +585,8 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 							array(
 								'action' => 'register',
 								'success' => '0',
-							), $redirection_link
+							),
+							$redirection_link
 						);
 
 						// Empty username.
@@ -620,7 +629,8 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 						array(
 							'action' => 'lostpassword',
 							'success' => '0',
-						), $this->get_redirection_link( true )
+						),
+						$this->get_redirection_link( true )
 					);
 					$user_data = '';
 
@@ -629,14 +639,14 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 						$redirection_link = add_query_arg( array( 'empty_login' => '1' ), $redirection_link );
 						// Check email.
 					} elseif ( strpos( $_POST['user_login'], '@' ) ) {
-						$user_data = get_user_by( 'email', trim( $_POST['user_login'] ) );
+						$user_data = get_user_by( 'email', trim( $_POST['user_login'] ) ); // WPCS: sanitization ok.
 						// Error - invalid email.
 						if ( empty( $user_data ) ) {
 							$redirection_link = add_query_arg( array( 'unregistered_mail' => '1' ), $redirection_link );
 						}
 					} else {
 						// Check username.
-						$login = trim( $_POST['user_login'] );
+						$login = trim( $_POST['user_login'] ); // WPCS: sanitization ok.
 						$user_data = get_user_by( 'login', $login );
 
 						// Error - invalid username.
@@ -812,7 +822,8 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 			public function attr() {
 
 				$attr = fusion_builder_visibility_atts(
-					$this->args['hide_on_mobile'], array(
+					$this->args['hide_on_mobile'],
+					array(
 						'class' => 'fusion-login-box fusion-login-box-' . $this->login_counter . ' fusion-login-box-' . $this->args['action'] . ' fusion-login-align-' . $this->args['text_align'] . ' fusion-login-field-layout-' . $this->args['form_field_layout'],
 					)
 				);
@@ -962,7 +973,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 							),
 							'user_login_form_field_layout' => array(
 								'label'       => esc_html__( 'User Login Form Field Layout', 'fusion-builder' ),
-								'description' => __( 'Choose if form fields should be stacked and full width, or if they should be floated. <strong>IMPORTANT:</strong> This option does only work for the login and the register form.', 'fusion-builder' ),
+								'description' => __( 'Choose if form fields should be stacked and full width, or if they should be floated. <strong>IMPORTANT:</strong> This option only works for the login and the register form.', 'fusion-builder' ),
 								'id'          => 'user_login_form_field_layout',
 								'default'     => 'stacked',
 								'type'        => 'radio-buttonset',
@@ -995,7 +1006,7 @@ if ( fusion_is_element_enabled( 'fusion_login' ) ||
 							),
 							'user_login_form_show_remember_me' => array(
 								'label'       => esc_html__( 'User Login Show Remember Me Checkbox', 'fusion-builder' ),
-								'description' => esc_html__( 'Controls if the rember me checkbox should be displayed in the login form.', 'fusion-builder' ),
+								'description' => esc_html__( 'Controls if the remenber me checkbox should be displayed in the login form.', 'fusion-builder' ),
 								'id'          => 'user_login_form_show_remember_me',
 								'default'     => 'no',
 								'type'        => 'radio-buttonset',
@@ -1173,7 +1184,7 @@ function fusion_element_login() {
 				array(
 					'type'        => 'radio_button_set',
 					'heading'     => esc_attr__( 'Show Remember Me Checkbox', 'fusion-builder' ),
-					'description' => esc_attr__( 'Controls if the rember me checkbox should be displayed in the login form.', 'fusion-builder' ),
+					'description' => esc_attr__( 'Controls if the remember me checkbox should be displayed in the login form.', 'fusion-builder' ),
 					'param_name'  => 'show_remember_me',
 					'value'       => array(
 						''    => esc_attr__( 'Default', 'fusion-builder' ),

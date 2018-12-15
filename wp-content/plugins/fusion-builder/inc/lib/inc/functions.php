@@ -159,10 +159,10 @@ if ( ! function_exists( 'fusion_render_post_metadata' ) ) {
 				// Check if rich snippets are enabled.
 				if ( fusion_library()->get_option( 'disable_date_rich_snippet_pages' ) && fusion_library()->get_option( 'disable_rich_snippet_author' ) ) {
 					/* translators: The author. */
-					$metadata .= sprintf( esc_attr__( 'By %s', 'Avada' ), '<span class="vcard"><span class="fn">' . $author_post_link . '</span></span>' );
+					$metadata .= sprintf( esc_attr__( 'By %s', 'fusion-builder' ), '<span class="vcard"><span class="fn">' . $author_post_link . '</span></span>' );
 				} else {
 					/* translators: The author. */
-					$metadata .= sprintf( esc_attr__( 'By %s', 'Avada' ), '<span>' . $author_post_link . '</span>' );
+					$metadata .= sprintf( esc_attr__( 'By %s', 'fusion-builder' ), '<span>' . $author_post_link . '</span>' );
 				}
 				$metadata .= '<span class="fusion-inline-sep">|</span>';
 			} else { // If author meta data won't be visible, render just the invisible author rich snippet.
@@ -189,7 +189,7 @@ if ( ! function_exists( 'fusion_render_post_metadata' ) ) {
 
 				if ( $categories ) {
 					/* translators: The categories list. */
-					$metadata .= ( $settings['post_meta_tags'] ) ? sprintf( esc_html__( 'Categories: %s', 'Avada' ), $categories ) : $categories;
+					$metadata .= ( $settings['post_meta_tags'] ) ? sprintf( esc_html__( 'Categories: %s', 'fusion-builder' ), $categories ) : $categories;
 					$metadata .= '<span class="fusion-inline-sep">|</span>';
 				}
 			}
@@ -202,14 +202,14 @@ if ( ! function_exists( 'fusion_render_post_metadata' ) ) {
 
 				if ( $tags ) {
 					/* translators: The tags list. */
-					$metadata .= '<span class="meta-tags">' . sprintf( esc_html__( 'Tags: %s', 'Avada' ), $tags ) . '</span><span class="fusion-inline-sep">|</span>';
+					$metadata .= '<span class="meta-tags">' . sprintf( esc_html__( 'Tags: %s', 'fusion-builder' ), $tags ) . '</span><span class="fusion-inline-sep">|</span>';
 				}
 			}
 
 			// Render comments.
 			if ( $settings['post_meta_comments'] && 'grid_timeline' !== $layout ) {
 				ob_start();
-				comments_popup_link( esc_html__( '0 Comments', 'Avada' ), esc_html__( '1 Comment', 'Avada' ), esc_html__( '% Comments', 'Avada' ) );
+				comments_popup_link( esc_html__( '0 Comments', 'fusion-builder' ), esc_html__( '1 Comment', 'fusion-builder' ), esc_html__( '% Comments', 'fusion-builder' ) );
 				$comments = ob_get_clean();
 				$metadata .= '<span class="fusion-comments">' . $comments . '</span>';
 			}
@@ -446,6 +446,8 @@ if ( ! function_exists( 'fusion_get_post_content' ) ) {
 			$content_excerpted = true;
 		}
 
+		$content_excerpted = apply_filters( 'fusion_post_content_is_excerpted', $content_excerpted );
+
 		// Sermon specific additional content.
 		if ( 'wpfc_sermon' === get_post_type( get_the_ID() ) && class_exists( 'Avada' ) ) {
 			return Avada()->sermon_manager->get_sermon_content( true );
@@ -650,7 +652,7 @@ if ( ! function_exists( 'fusion_link_pages' ) ) {
 	function fusion_link_pages() {
 		wp_link_pages(
 			array(
-				'before'      => '<div class="page-links pagination"><span class="page-links-title">' . esc_html__( 'Pages:', 'Avada' ) . '</span>',
+				'before'      => '<div class="page-links pagination"><span class="page-links-title">' . esc_html__( 'Pages:', 'fusion-builder' ) . '</span>',
 				'after'       => '</div>',
 				'link_before' => '<span class="page-number">',
 				'link_after'  => '</span>',
@@ -828,70 +830,106 @@ if ( ! function_exists( 'fusion_pagination' ) ) {
 	 * Number based pagination.
 	 *
 	 * @since 1.3
-	 * @param string|int $pages           Maximum number of pages.
+	 * @param string|int $max_pages       Maximum number of pages.
 	 * @param integer    $range           How many page numbers to display to either side of the current page.
 	 * @param string     $current_query   The current query.
 	 * @param bool       $infinite_scroll Whether we want infinite scroll or not.
 	 * @param bool       $is_element      Whether pagination is definitely only set for a specific element.
 	 * @return string                     The pagination markup.
 	 */
-	function fusion_pagination( $pages = '', $range = 1, $current_query = '', $infinite_scroll = false, $is_element = false ) {
-		global $paged, $wp_query;
+	function fusion_pagination( $max_pages = '', $range = 1, $current_query = '', $infinite_scroll = false, $is_element = false ) {
+		global $paged, $wp_query, $fusion_settings;
+
+		$range       = apply_filters( 'fusion_pagination_size', $range );
+		$start_range = apply_filters( 'fusion_pagination_start_end_size', $fusion_settings->get( 'pagination_start_end_range' ) );
+		$end_range   = apply_filters( 'fusion_pagination_start_end_size', $fusion_settings->get( 'pagination_start_end_range' ) );
 
 		if ( '' === $current_query ) {
-			$paged_custom = ( empty( $paged ) ) ? 1 : $paged;
+			$current_page = ( empty( $paged ) ) ? 1 : $paged;
 		} else {
-			$paged_custom = $current_query->query_vars['paged'];
+			$current_page = $current_query->query_vars['paged'];
 		}
 
-		if ( '' === $pages ) {
+		if ( '' === $max_pages ) {
 			if ( '' === $current_query ) {
-				$pages = $wp_query->max_num_pages;
-				$pages = ( ! $pages ) ? 1 : $pages;
+				$max_pages = $wp_query->max_num_pages;
+				$max_pages = ( ! $max_pages ) ? 1 : $max_pages;
 			} else {
-				$pages = $current_query->max_num_pages;
+				$max_pages = $current_query->max_num_pages;
 			}
 		}
-		$pages        = intval( $pages );
-		$paged_custom = intval( $paged_custom );
+		$max_pages    = intval( $max_pages );
+		$current_page = intval( $current_page );
 		$output       = '';
 
-		if ( 1 !== $pages ) {
-			if ( $infinite_scroll || ( ! $is_element && ( 'Pagination' !== Avada()->settings->get( 'blog_pagination_type' ) && ( is_home() || is_search() || ( 'post' === get_post_type() && ( is_author() || is_archive() ) ) ) ) || ( 'pagination' !== Avada()->settings->get( 'portfolio_archive_pagination_type' ) && ( is_post_type_archive( 'avada_portfolio' ) || is_tax( 'portfolio_category' ) || is_tax( 'portfolio_skills' ) || is_tax( 'portfolio_tags' ) ) ) ) ) {
+		if ( 1 !== $max_pages ) {
+			if ( $infinite_scroll || ( ! $is_element && ( 'Pagination' !== $fusion_settings->get( 'blog_pagination_type' ) && ( is_home() || is_search() || ( 'post' === get_post_type() && ( is_author() || is_archive() ) ) ) ) || ( 'pagination' !== $fusion_settings->get( 'portfolio_archive_pagination_type' ) && ( is_post_type_archive( 'avada_portfolio' ) || is_tax( 'portfolio_category' ) || is_tax( 'portfolio_skills' ) || is_tax( 'portfolio_tags' ) ) ) ) ) {
 				$output .= '<div class="fusion-infinite-scroll-trigger"></div>';
 				$output .= '<div class="pagination infinite-scroll clearfix" style="display:none;">';
 			} else {
 				$output .= '<div class="pagination clearfix">';
 			}
 
-			if ( 1 < $paged_custom ) {
-				$output .= '<a class="pagination-prev" href="' . esc_url( get_pagenum_link( $paged - 1 ) ) . '">';
+			$start = $current_page - $range;
+			$end   = $current_page + $range;
+			if ( 0 >= $start ) {
+				$start = ( 0 < $current_page - 1 ) ? $current_page - 1 : 1;
+			}
+
+			if ( $max_pages < $end ) {
+				$end = $max_pages;
+			}
+
+			if ( 1 < $current_page ) {
+				$output .= '<a class="pagination-prev" href="' . esc_url( get_pagenum_link( $current_page - 1 ) ) . '">';
 					$output .= '<span class="page-prev"></span>';
-					$output .= '<span class="page-text">' . esc_html__( 'Previous', 'Avada' ) . '</span>';
+					$output .= '<span class="page-text">' . esc_html__( 'Previous', 'fusion-builder' ) . '</span>';
 				$output .= '</a>';
-			}
 
-			$start = $paged_custom - $range;
-			$end   = $paged_custom + $range;
-			if ( 0 >= $paged_custom - $range ) {
-				$start = ( 0 < $paged_custom - 1 ) ? $paged_custom - 1 : 1;
-			}
+				if ( 0 < $start_range ) {
+					if ( $start_range >= $start ) {
+						$start_range = $start - 1;
+					}
 
-			if ( $pages < $paged_custom + $range ) {
-				$end = $pages;
+					for ( $i = 1; $i <= $start_range; $i++ ) {
+						$output .= '<a href="' . esc_url( get_pagenum_link( $i ) ) . '" class="inactive">' . absint( $i ) . '</a>';
+					}
+
+					if ( 0 < $start_range && $start_range < $start - 1 ) {
+						$output .= '<span class="pagination-dots paginations-dots-start">&middot;&middot;&middot;</span>';
+					}
+				}
 			}
 
 			for ( $i = $start; $i <= $end; $i++ ) {
-				if ( $paged_custom === $i ) {
+				if ( $current_page === $i ) {
 					$output .= '<span class="current">' . absint( $i ) . '</span>';
 				} else {
 					$output .= '<a href="' . esc_url( get_pagenum_link( $i ) ) . '" class="inactive">' . absint( $i ) . '</a>';
 				}
 			}
 
-			if ( $paged_custom < $pages ) {
-				$output .= '<a class="pagination-next" href="' . esc_url( get_pagenum_link( $paged_custom + 1 ) ) . '">';
-					$output .= '<span class="page-text">' . esc_html__( 'Next', 'Avada' ) . '</span>';
+			if ( $current_page < $max_pages ) {
+
+				if ( 0 < $end_range ) {
+
+					if ( $max_pages - $end_range <= $end ) {
+						$end_range = $max_pages - $end;
+					}
+
+					$end_range--;
+
+					if ( $end + 1 < $max_pages - $end_range ) {
+						$output .= '<span class="pagination-dots paginations-dots-end">&middot;&middot;&middot;</span>';
+					}
+
+					for ( $i = $max_pages - $end_range; $i <= $max_pages; $i++ ) {
+						$output .= '<a href="' . esc_url( get_pagenum_link( $i ) ) . '" class="inactive">' . absint( $i ) . '</a>';
+					}
+				}
+
+				$output .= '<a class="pagination-next" href="' . esc_url( get_pagenum_link( $current_page + 1 ) ) . '">';
+					$output .= '<span class="page-text">' . esc_html__( 'Next', 'fusion-builder' ) . '</span>';
 					$output .= '<span class="page-next"></span>';
 				$output .= '</a>';
 			}
@@ -908,3 +946,19 @@ if ( ! function_exists( 'fusion_pagination' ) ) {
 		ob_get_clean();
 	}
 } // End if().
+
+if ( ! function_exists( 'fusion_get_referer' ) ) {
+	/**
+	 * Gets the HTTP referer.
+	 *
+	 * @since 1.7
+	 * @return string|false
+	 */
+	function fusion_get_referer() {
+		$referer = wp_get_referer();
+		if ( ! $referer ) {
+			$referer = wp_get_raw_referer();
+		}
+		return $referer;
+	}
+}

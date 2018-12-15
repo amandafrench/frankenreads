@@ -152,6 +152,7 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 						'icon_hover_type'        => $fusion_settings->get( 'content_box_icon_hover_type' ),
 						'hover_accent_color'     => ( '' !== $fusion_settings->get( 'content_box_hover_animation_accent_color' ) ) ? $fusion_library->sanitize->color( $fusion_settings->get( 'content_box_hover_animation_accent_color' ) ) : $fusion_library->sanitize->color( $fusion_settings->get( 'primary_color' ) ),
 						'image'                  => '',
+						'image_id'               => '',
 						'image_width'            => '35',
 						'image_height'           => '35',
 						'layout'                 => 'icon-with-title',
@@ -171,7 +172,9 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 						'animation_offset'       => $fusion_settings->get( 'animation_offset' ),
 						'settings_lvl'           => 'child',
 						'linktarget'             => '', // Deprecated.
-					), $args
+					),
+					$args,
+					'fusion_content_boxes'
 				);
 
 				$defaults['title_size']            = ( FusionBuilder::validate_shortcode_attr_value( $defaults['title_size'], 'px', false ) ) ? FusionBuilder::validate_shortcode_attr_value( $defaults['title_size'], 'px' ) : $fusion_library->sanitize->size( $fusion_settings->get( 'content_box_title_size' ) );
@@ -396,6 +399,7 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 						'iconrotate'             => $this->parent_args['iconrotate'],
 						'iconspin'               => $this->parent_args['iconspin'],
 						'image'                  => $this->parent_args['image'],
+						'image_id'               => $this->parent_args['image_id'],
 						'image_width'            => $this->parent_args['image_width'],
 						'image_height'           => $this->parent_args['image_height'],
 						'link'                   => '',
@@ -408,7 +412,9 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 						'animation_speed'        => $this->parent_args['animation_speed'],
 						'animation_offset'       => $this->parent_args['animation_offset'],
 						'linktarget'             => '', // Deprecated.
-					), $args
+					),
+					$args,
+					'fusion_content_box'
 				);
 
 				// Case when image is set on parent element and icon on child element.
@@ -460,10 +466,15 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 				$heading        = '';
 
 				if ( $image && $image_width && $image_height ) {
-					$image_id = $fusion_library->images->get_attachment_id_from_url( $image );
-					if ( $image_id ) {
-						$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+
+					$image_data = $fusion_library->images->get_attachment_data_by_helper( $this->child_args['image_id'], $image );
+
+					$alt = $image_data['alt'];
+
+					if ( $image_data['url'] ) {
+						$image = $image_data['url'];
 					}
+
 					$icon_output  = '<div ' . FusionBuilder::attributes( 'content-box-shortcode-icon' ) . '>';
 					$icon_output .= '<img src="' . $image . '" width="' . $image_width . '" height="' . $image_height . '" alt="' . $alt . '" />';
 					$icon_output .= '</div>';
@@ -2039,6 +2050,14 @@ function fusion_element_content_boxes() {
 				),
 				array(
 					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'Icon Image ID', 'fusion-builder' ),
+					'description' => esc_attr__( 'Icon Image ID from Media Library.', 'fusion-builder' ),
+					'param_name'  => 'image_id',
+					'value'       => '',
+					'hidden'      => true,
+				),
+				array(
+					'type'        => 'textfield',
 					'heading'     => esc_attr__( 'Icon Image Width', 'fusion-builder' ),
 					'description' => esc_attr__( 'If using an icon image, specify the image width in pixels but do not add px, ex: 35.', 'fusion-builder' ),
 					'param_name'  => 'image_width',
@@ -2600,6 +2619,14 @@ function fusion_element_content_box() {
 					'description' => esc_attr__( 'To upload your own icon image, deselect the icon above and then upload your icon image.', 'fusion-builder' ),
 					'param_name'  => 'image',
 					'value'       => '',
+				),
+				array(
+					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'Icon Image ID', 'fusion-builder' ),
+					'description' => esc_attr__( 'Icon Image ID from Media Library.', 'fusion-builder' ),
+					'param_name'  => 'image_id',
+					'value'       => '',
+					'hidden'      => true,
 				),
 				array(
 					'type'        => 'textfield',

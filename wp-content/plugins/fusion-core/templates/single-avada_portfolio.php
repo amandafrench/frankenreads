@@ -17,9 +17,9 @@ if ( ! class_exists( 'Avada' ) ) {
 <?php get_header(); ?>
 <div id="content" <?php Avada()->layout->add_class( 'content_class' ); ?> <?php Avada()->layout->add_style( 'content_style' ); ?>>
 	<?php
-	$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+	$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 	FusionCore_Plugin::fusion_core_cached_query( $query_string . '&paged=' . $paged );
-	$nav_categories  = ( isset( $_GET['portfolioCats'] ) ) ? wp_unslash( $_GET['portfolioCats'] ) : '';
+	$nav_categories  = ( isset( $_GET['portfolioCats'] ) ) ? wp_unslash( $_GET['portfolioCats'] ) : ''; // WPCS: sanitization ok.
 	?>
 
 	<?php $post_pagination = get_post_meta( $post->ID, 'pyre_post_pagination', true ); ?>

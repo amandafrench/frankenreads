@@ -123,14 +123,14 @@ if ( Avada()->settings->get( 'portfolio_equal_heights' ) && 'grid' === $portfoli
 // Get the correct ID of the archive.
 $archive_id = get_queried_object_id();
 
-$title = true;
+$title      = true; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 $categories = true;
 
 // Get title and category status.
 if ( 'no_text' !== $portfolio_text_layout ) {
 	$title_display = Avada()->settings->get( 'portfolio_archive_title_display' );
-	$title = ( 'all' === $title_display || 'title' === $title_display ) ? true : false;
-	$categories = ( 'all' === $title_display || 'cats' === $title_display ) ? true : false;
+	$title         = ( 'all' === $title_display || 'title' === $title_display ) ? true : false; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+	$categories    = ( 'all' === $title_display || 'cats' === $title_display ) ? true : false;
 }
 ?>
 
@@ -336,7 +336,7 @@ if ( 'no_text' !== $portfolio_text_layout ) {
 									 *
 									 * @hooked avada_get_portfolio_content - 10 (outputs the post content).
 									 */
-									do_action( 'avada_portfolio_post_content', $archive_id );
+									do_action( 'avada_portfolio_post_content', $post->ID );
 									?>
 
 									<?php
@@ -405,7 +405,7 @@ if ( 'no_text' !== $portfolio_text_layout ) {
 	 * Render the pagination.
 	 */
 	?>
-	<?php echo fusion_pagination( '', apply_filters( 'fusion_pagination_size', 1 ) ); // WPCS: XSS ok. ?>
+	<?php echo fusion_pagination( '', Avada()->settings->get( 'pagination_range' ) ); // WPCS: XSS ok. ?>
 	<?php
 	/**
 	 * If infinite scroll with "load more" button is used.

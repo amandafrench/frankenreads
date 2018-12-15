@@ -21,4 +21,6 @@
 		</div>
 		<a href="#" class="fusion-builder-section-add"><span class="fusiona-plus"></span> {{ fusionBuilderText.full_width_section }}</a>
 	</div>
+	<div class="fusion-builder-container-utility-toolbar">
+	</div>
 </script>

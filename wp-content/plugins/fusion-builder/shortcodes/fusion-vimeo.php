@@ -50,6 +50,7 @@ if ( fusion_is_element_enabled( 'fusion_vimeo' ) ) {
 					array(
 						'hide_on_mobile' => fusion_builder_default_visibility( 'string' ),
 						'class'          => '',
+						'css_id'         => '',
 						'api_params'     => '',
 						'autoplay'       => 'no',
 						'alignment'      => '',
@@ -57,7 +58,9 @@ if ( fusion_is_element_enabled( 'fusion_vimeo' ) ) {
 						'height'         => 360,
 						'id'             => '',
 						'width'          => 600,
-					), $args
+					),
+					$args,
+					'fusion_vimeo'
 				);
 
 				$defaults['height'] = FusionBuilder::validate_shortcode_attr_value( $defaults['height'], '' );
@@ -97,7 +100,8 @@ if ( fusion_is_element_enabled( 'fusion_vimeo' ) ) {
 			public function attr() {
 
 				$attr = fusion_builder_visibility_atts(
-					$this->args['hide_on_mobile'], array(
+					$this->args['hide_on_mobile'],
+					array(
 						'class' => 'fusion-video fusion-vimeo',
 					)
 				);
@@ -119,6 +123,10 @@ if ( fusion_is_element_enabled( 'fusion_vimeo' ) ) {
 
 				if ( $this->args['class'] ) {
 					$attr['class'] .= ' ' . $this->args['class'];
+				}
+
+				if ( $this->args['css_id'] ) {
+					$attr['id'] = $this->args['css_id'];
 				}
 
 				return $attr;
@@ -241,6 +249,13 @@ function fusion_element_vimeo() {
 					'param_name'  => 'class',
 					'value'       => '',
 					'description' => esc_attr__( 'Add a class to the wrapping HTML element.', 'fusion-builder' ),
+				),
+				array(
+					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'CSS ID', 'fusion-builder' ),
+					'description' => esc_attr__( 'Add an ID to the wrapping HTML element.', 'fusion-builder' ),
+					'param_name'  => 'css_id',
+					'value'       => '',
 				),
 			),
 		)

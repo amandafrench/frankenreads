@@ -61,7 +61,8 @@ if ( ! class_exists( 'Avada_Woocommerce' ) && ! class_exists( 'FusionBuilder_Woo
 				$defaults = array(
 					'quantity' => 1,
 					'class'    => implode(
-						' ', array_filter(
+						' ',
+						array_filter(
 							array(
 								'button',
 								'product_type_' . $product->get_type(),

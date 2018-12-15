@@ -67,7 +67,9 @@ if ( fusion_is_element_enabled( 'fusion_separator' ) ) {
 						'color'             => '', // Deprecated.
 						'style'             => '', // Deprecated.
 						'top'               => '', // Deprecated.
-					), $args
+					),
+					$args,
+					'fusion_separator'
 				);
 
 				$defaults['border_size']   = FusionBuilder::validate_shortcode_attr_value( $defaults['border_size'], 'px' );
@@ -132,7 +134,8 @@ if ( fusion_is_element_enabled( 'fusion_separator' ) ) {
 			public function attr() {
 
 				$attr = fusion_builder_visibility_atts(
-					$this->args['hide_on_mobile'], array(
+					$this->args['hide_on_mobile'],
+					array(
 						'class' => 'fusion-separator',
 						'style' => '',
 					)
@@ -226,6 +229,12 @@ if ( fusion_is_element_enabled( 'fusion_separator' ) ) {
 
 				if ( $this->args['icon_circle_color'] && 'no' !== $this->args['icon_circle'] ) {
 					$attr['style'] .= 'background-color:' . $this->args['icon_circle_color'] . ';';
+				}
+
+				$styles = explode( '|', $this->args['style_type'] );
+				if ( in_array( 'single', $styles ) ) {
+					$margin_top = (int) str_replace( 'px', '', $this->args['border_size'] );
+					$attr['style'] .= 'margin-top:-' . ( $margin_top / 2 ) . 'px';
 				}
 
 				return $attr;

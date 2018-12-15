@@ -74,7 +74,9 @@ if ( ! class_exists( 'FusionSC_ColumnInner' ) ) {
 						'hover_type'          => 'none',
 						'min_height'          => '',
 					 /* 'last'                => 'no', // Deprecated. use css last-child instead. */
-					), $atts
+					),
+					$atts,
+					'fusion_builder_column_inner'
 				)
 			);
 

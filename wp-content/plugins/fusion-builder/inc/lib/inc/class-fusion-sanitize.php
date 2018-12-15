@@ -343,13 +343,13 @@ class Fusion_Sanitize {
 			}
 
 			// Add unit to the array of units used.
-			$unit = trim( Fusion_Sanitize::get_unit( $value ) );
+			$unit = trim( self::get_unit( $value ) );
 			if ( ! empty( $unit ) && ! in_array( $unit, $units ) ) {
 				$units[] = $unit;
 			}
 
 			// Add numeric value to the array of numerics.
-			$numerics[] = Fusion_Sanitize::number( $value );
+			$numerics[] = self::number( $value );
 		}
 
 		// Make sure there's 1 instance of each unit in the array.

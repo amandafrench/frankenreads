@@ -86,7 +86,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 							'hide_on_mobile'        => fusion_builder_default_visibility( 'string' ),
 							'id'                    => '',
 						),
-						$args
+						$args,
+						'fusion_privacy'
 					)
 				);
 
@@ -159,7 +160,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 				global $fusion_settings;
 
 				$attr = fusion_builder_visibility_atts(
-					self::$args['hide_on_mobile'], array(
+					self::$args['hide_on_mobile'],
+					array(
 						'class' => 'fusion-privacy-element fusion-privacy-element-' . $this->privacy_counter,
 					)
 				);
@@ -237,22 +239,22 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 			 */
 			public function save_consents() {
 
-				if ( isset( $_POST ) && isset( $_POST['privacyformid'] ) ) {
+				if ( isset( $_POST ) && isset( $_POST['privacyformid'] ) ) {  // WPCS: CSRF ok.
 
 					$query_args = array(
 						'success' => 1,
-						'id'      => (int) $_POST['privacyformid'],
+						'id'      => (int) $_POST['privacyformid'], // WPCS: CSRF ok.
 					);
 
 					if ( isset( $_POST['consents'] ) ) {
-						Avada()->privacy_embeds->save_cookie( array_map( 'esc_attr', wp_unslash( $_POST['consents'] ) ) );
+						Avada()->privacy_embeds->save_cookie( array_map( 'esc_attr', wp_unslash( $_POST['consents'] ) ) ); // WPCS: CSRF ok, sanitization ok.
 					} else {
 						Avada()->privacy_embeds->clear_cookie();
 						$query_args['success'] = 2;
 					}
 
 					if ( isset( $_POST['_wp_http_referer'] ) ) {
-						$redirection_link = wp_unslash( $_POST['_wp_http_referer'] );
+						$redirection_link = wp_unslash( $_POST['_wp_http_referer'] ); // WPCS: CSRF ok, sanitization ok.
 						$redirection_link = add_query_arg( $query_args, $redirection_link );
 						wp_safe_redirect( $redirection_link );
 					}

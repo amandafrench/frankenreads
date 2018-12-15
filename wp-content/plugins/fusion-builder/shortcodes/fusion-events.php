@@ -73,7 +73,9 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 						'past_events'     => 'no',
 						'picture_size'    => 'cover',
 						'strip_html'      => ( '' !== $fusion_settings->get( 'events_strip_html_excerpt' ) ) ? $fusion_settings->get( 'events_strip_html_excerpt' ) : 'yes',
-					), $args
+					),
+					$args,
+					'fusion_events'
 				);
 
 				$theme_option_content_padding = $fusion_settings->get( 'events_content_padding' );
@@ -129,8 +131,6 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 						$this->fusion_events_counter++;
 						return fusion_builder_placeholder( 'tribe_events', 'events' );
 					}
-
-					$class = fusion_builder_visibility_atts( $hide_on_mobile, $class );
 
 					if ( $events->have_posts() ) {
 						$html .= '<div ' . FusionBuilder::attributes( 'events-shortcode' ) . '>';
@@ -260,7 +260,7 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 								$infinite_pagination = true;
 							}
 
-							$pagination_html .= fusion_pagination( $events->max_num_pages, apply_filters( 'fusion_pagination_size', 1 ), $events, $infinite_pagination, true );
+							$pagination_html .= fusion_pagination( $events->max_num_pages, $fusion_settings->get( 'pagination_range' ), $events, $infinite_pagination, true );
 						}
 
 						$html .= $pagination_html;
@@ -304,6 +304,8 @@ if ( fusion_is_element_enabled( 'fusion_events' ) ) {
 					$attr['style']  = 'margin-left: -' . ( $this->args['column_spacing'] / 2 ) . 'px;';
 					$attr['style'] .= 'margin-right: -' . ( $this->args['column_spacing'] / 2 ) . 'px;';
 				}
+
+				$attr = fusion_builder_visibility_atts( $this->args['hide_on_mobile'], $attr );
 
 				return $attr;
 			}

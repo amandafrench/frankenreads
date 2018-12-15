@@ -131,7 +131,8 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 						'inactivecolor'   => $fusion_settings->get( 'tabs_inactive_color' ),
 						'justified'       => 'yes',
 						'layout'          => 'horizontal',
-					), $args
+					),
+					$args
 				);
 
 				extract( $defaults );
@@ -220,7 +221,8 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 			public function attr() {
 
 				$attr = fusion_builder_visibility_atts(
-					$this->parent_args['hide_on_mobile'], array(
+					$this->parent_args['hide_on_mobile'],
+					array(
 						'class' => 'fusion-tabs fusion-tabs-' . $this->tabs_counter . ' ' . $this->parent_args['design'],
 					)
 				);
@@ -302,7 +304,8 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 						'icon'       => 'none',
 						'id'         => '',
 						'fusion_tab' => 'no',
-					), $args
+					),
+					$args
 				);
 
 				extract( $defaults );
@@ -373,7 +376,9 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 						'justified'       => 'yes',
 						'layout'          => 'horizontal',
 						'hide_on_mobile'  => fusion_builder_default_visibility( 'string' ),
-					), $atts
+					),
+					$atts,
+					'fusion_tabs'
 				);
 
 				extract( $defaults );
@@ -409,7 +414,9 @@ if ( fusion_is_element_enabled( 'fusion_tabs' ) ) {
 						'id'    => '',
 						'icon'  => $this->fusion_tabs_args['icon'],
 						'title' => '',
-					), $atts
+					),
+					$atts,
+					'fusion_tab'
 				);
 
 				extract( $defaults );

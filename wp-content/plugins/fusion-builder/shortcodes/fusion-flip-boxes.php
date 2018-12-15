@@ -88,9 +88,12 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 						'icon_rotate'         => '',
 						'icon_spin'           => '',
 						'image'               => '',
+						'image_id'            => '',
 						'image_width'         => '35',
 						'image_height'        => '35',
-					), $args
+					),
+					$args,
+					'fusion_flip_boxes'
 				);
 
 				extract( $defaults );
@@ -115,7 +118,8 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 			public function parent_attr() {
 
 				$attr = fusion_builder_visibility_atts(
-					$this->parent_args['hide_on_mobile'], array(
+					$this->parent_args['hide_on_mobile'],
+					array(
 						'class' => 'fusion-flip-boxes flip-boxes row fusion-columns-' . $this->parent_args['columns'],
 					)
 				);
@@ -162,6 +166,7 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 						'icon_rotate'            => $this->parent_args['icon_rotate'],
 						'icon_spin'              => $this->parent_args['icon_spin'],
 						'image'                  => $this->parent_args['image'],
+						'image_id'               => $this->parent_args['image_id'],
 						'image_width'            => $this->parent_args['image_width'],
 						'image_height'           => $this->parent_args['image_height'],
 						'text_back_color'        => $fusion_settings->get( 'flip_boxes_back_text' ),
@@ -175,7 +180,9 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 						'animation_direction'    => 'left',
 						'animation_speed'        => '0.1',
 						'animation_offset'       => $fusion_settings->get( 'animation_offset' ),
-					), $args
+					),
+					$args,
+					'fusion_flip_box'
 				);
 
 				// Case when image is set on parent element and icon on child element.
@@ -196,17 +203,17 @@ if ( fusion_is_element_enabled( 'fusion_flip_boxes' ) ) {
 
 				$this->child_args = $defaults;
 
-				$style = $icon_output = $title_output = $title_front_output = $title_back_output = $alt = '';
+				$style = $icon_output = $title_output = $title_front_output = $title_back_output = '';
 
 				if ( $image && $image_width && $image_height ) {
 
-					$image_id = $fusion_library->images->get_attachment_id_from_url( $image );
+					$image_data = $fusion_library->images->get_attachment_data_by_helper( $this->child_args['image_id'], $image );
 
-					if ( $image_id ) {
-						$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+					if ( $image_data['url'] ) {
+						$image = $image_data['url'];
 					}
 
-					$icon_output = '<img src="' . $image . '" width="' . $image_width . '" height="' . $image_height . '" alt="' . $alt . '" />';
+					$icon_output = '<img src="' . $image . '" width="' . $image_width . '" height="' . $image_height . '" alt="' . $image_data['alt'] . '" />';
 
 				} elseif ( $icon ) {
 
@@ -743,6 +750,14 @@ function fusion_element_flip_boxes() {
 				),
 				array(
 					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'Icon Image ID', 'fusion-builder' ),
+					'description' => esc_attr__( 'Icon Image ID from Media Library.', 'fusion-builder' ),
+					'param_name'  => 'image_id',
+					'value'       => '',
+					'hidden'      => true,
+				),
+				array(
+					'type'        => 'textfield',
 					'heading'     => esc_attr__( 'Icon Image Width', 'fusion-builder' ),
 					'description' => esc_attr__( 'If using an icon image, specify the image width in pixels but do not add px, ex: 35.', 'fusion-builder' ),
 					'param_name'  => 'image_width',
@@ -1072,6 +1087,14 @@ function fusion_element_flip_box() {
 					'description' => esc_attr__( 'To upload your own icon image, deselect the icon above and then upload your icon image.', 'fusion-builder' ),
 					'param_name'  => 'image',
 					'value'       => '',
+				),
+				array(
+					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'Image ID', 'fusion-builder' ),
+					'description' => esc_attr__( 'Image ID from Media Library.', 'fusion-builder' ),
+					'param_name'  => 'image_id',
+					'value'       => '',
+					'hidden'      => true,
 				),
 				array(
 					'type'        => 'textfield',

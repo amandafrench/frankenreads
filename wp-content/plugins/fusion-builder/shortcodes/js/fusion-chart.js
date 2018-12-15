@@ -65,7 +65,7 @@
 
 			// Chart paddings.
 			attributes.params.padding_top    = table.find( '#padding_top' ).val();
-			attributes.params.padding_right  = table.find( '#padding_top' ).val();
+			attributes.params.padding_right  = table.find( '#padding_right' ).val();
 			attributes.params.padding_bottom = table.find( '#padding_bottom' ).val();
 			attributes.params.padding_left   = table.find( '#padding_left' ).val();
 

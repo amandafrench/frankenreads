@@ -54,7 +54,9 @@ if ( fusion_is_element_enabled( 'fusion_convert_plus' ) ) {
 			 * @return bool   Returns true if id matches.
 			 */
 			public function force_load_module( $display, $style_id ) {
-				$display = ( null !== $this->style_id ) ? $this->style_id == $style_id : $display;
+				if ( false === $display ) {
+					$display = ( null !== $this->style_id ) ? $this->style_id == $style_id : $display;
+				}
 				return $display;
 			}
 

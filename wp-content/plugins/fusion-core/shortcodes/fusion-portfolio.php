@@ -163,7 +163,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 							'portfolio_masonry_width_double' => $fusion_settings->get( 'masonry_width_double' ),
 							'boxed_text'                     => '', // Deprecated.
 						),
-						$args
+						$args,
+						'fusion_portfolio'
 					)
 				);
 
@@ -391,8 +392,6 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 						);
 					}
 				}
-
-				wp_reset_postdata();
 
 				$portfolio_query = FusionCore_Plugin::fusion_core_cached_query( apply_filters( 'fusion_portfolio_query_args', $args ) );
 
@@ -732,7 +731,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 						$first_filter = true;
 						if ( 'yes-without-all' !== $filters ) {
 							$filter = '<li role="menuitem" ' . FusionBuilder::attributes( 'fusion-filter fusion-filter-all fusion-active' ) . '><a ' . FusionBuilder::attributes(
-								'portfolio-shortcode-filter-link', array(
+								'portfolio-shortcode-filter-link',
+								array(
 									'data-filter' => '*',
 								)
 							) . '>' . esc_attr__( 'All', 'fusion-core' ) . '</a></li>';
@@ -757,7 +757,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 											}
 
 											$filter .= '<li role="menuitem" ' . FusionBuilder::attributes( 'fusion-filter fusion-hidden' . $active_class ) . '><a ' . FusionBuilder::attributes(
-												'portfolio-shortcode-filter-link', array(
+												'portfolio-shortcode-filter-link',
+												array(
 													'data-filter' => '.' . urldecode( $portfolio_tag->slug ),
 												)
 											) . '>' . $portfolio_tag->name . '</a></li>';
@@ -772,7 +773,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 										}
 
 										$filter .= '<li role="menuitem" ' . FusionBuilder::attributes( 'fusion-filter fusion-hidden' . $active_class ) . '><a ' . FusionBuilder::attributes(
-											'portfolio-shortcode-filter-link', array(
+											'portfolio-shortcode-filter-link',
+											array(
 												'data-filter' => '.' . urldecode( $portfolio_tag->slug ),
 											)
 										) . '>' . $portfolio_tag->name . '</a></li>';
@@ -797,7 +799,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 											}
 
 											$filter .= '<li role="menuitem" ' . FusionBuilder::attributes( 'fusion-filter fusion-hidden' . $active_class ) . '><a ' . FusionBuilder::attributes(
-												'portfolio-shortcode-filter-link', array(
+												'portfolio-shortcode-filter-link',
+												array(
 													'data-filter' => '.' . urldecode( $portfolio_category->slug ),
 												)
 											) . '>' . $portfolio_category->name . '</a></li>';
@@ -812,7 +815,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 										}
 
 										$filter .= '<li role="menuitem" ' . FusionBuilder::attributes( 'fusion-filter fusion-hidden' . $active_class ) . '><a ' . FusionBuilder::attributes(
-											'portfolio-shortcode-filter-link', array(
+											'portfolio-shortcode-filter-link',
+											array(
 												'data-filter' => '.' . urldecode( $portfolio_category->slug ),
 											)
 										) . '>' . $portfolio_category->name . '</a></li>';
@@ -849,7 +853,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 							$infinite_pagination = true;
 						}
 
-						$pagination .= fusion_pagination( $portfolio_query->max_num_pages, apply_filters( 'fusion_pagination_size', 1 ), $portfolio_query, $infinite_pagination );
+						$pagination .= fusion_pagination( $portfolio_query->max_num_pages, $fusion_settings->get( 'pagination_range' ), $portfolio_query, $infinite_pagination );
 					}
 
 					if ( 'masonry' === $layout ) {
@@ -879,7 +883,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 				global $fusion_settings;
 
 				$attr = fusion_builder_visibility_atts(
-					self::$args['hide_on_mobile'], array(
+					self::$args['hide_on_mobile'],
+					array(
 						'class' => 'fusion-recent-works fusion-portfolio-element fusion-portfolio fusion-portfolio-' . $this->portfolio_counter . ' fusion-portfolio-' . self::$args['layout'] . ' fusion-portfolio-paging-' . self::$args['pagination_type'],
 					)
 				);

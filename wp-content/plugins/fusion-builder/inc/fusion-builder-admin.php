@@ -43,8 +43,11 @@ class Fusion_Builder_Admin {
 				return;
 			}
 			?>
-			<div class="fusion-builder-update-buttons">
+			<div class="fusion-builder-update-buttons <?php echo ( 'publish' !== $post->post_status && 'future' !== $post->post_status && 'pending' !== $post->post_status && 'private' !== $post->post_status ) ? 'fusion-draft-button' : ''; ?>">
 				<a href="#" class="button button-secondary fusion-preview" target="wp-preview-<?php echo esc_attr( $post->ID ); ?>"><?php esc_attr_e( 'Preview', 'fusion-builder' ); ?></a>
+				<?php if ( 'publish' != $post->post_status && 'future' != $post->post_status && 'pending' != $post->post_status ) { ?>
+				<a href="#"<?php echo ( 'private' === $post->post_status ) ? ' style="display:none"' : ''; ?> class="button button-secondary fusion-save-draft"><?php esc_attr_e( 'Save Draft', 'fusion-builder' ); ?></a>
+			<?php } ?>
 				<a href="#" class="button button-primary fusion-update"><?php echo esc_attr( $publish_button_text ); ?></a>
 			</div>
 			<?php
@@ -176,7 +179,7 @@ class Fusion_Builder_Admin {
 	protected static function admin_tab( $title, $page ) {
 
 		if ( isset( $_GET['page'] ) ) {
-			$active_page = $_GET['page'];
+			$active_page = sanitize_text_field( wp_unslash( $_GET['page'] ) );
 		}
 
 		if ( $active_page == $page ) {

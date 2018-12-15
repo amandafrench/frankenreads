@@ -82,7 +82,9 @@ if ( fusion_is_element_enabled( 'fusion_countdown' ) ) {
 						'subheading_text'       => '',
 						'subheading_text_color' => $fusion_settings->get( 'countdown_subheading_text_color' ),
 						'timezone'              => $fusion_settings->get( 'countdown_timezone' ),
-					), $args
+					),
+					$args,
+					'fusion_countdown'
 				);
 
 				$defaults['border_radius'] = FusionBuilder::validate_shortcode_attr_value( $defaults['border_radius'], 'px' );
@@ -720,7 +722,8 @@ function fusion_element_countdown() {
 					'heading'     => esc_attr__( 'Link Target', 'fusion-builder' ),
 					'description' => esc_attr__(
 						'_self = open in same window
-    				                                      _blank = open in new window', 'fusion-builder'
+    				                                      _blank = open in new window',
+						'fusion-builder'
 					),
 					'param_name'  => 'link_target',
 					'value'       => array(

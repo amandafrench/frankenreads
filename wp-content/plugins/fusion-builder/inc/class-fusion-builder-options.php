@@ -57,7 +57,8 @@ class Fusion_Builder_Options {
 		 * These are used in the filenames AND the function-names.
 		 */
 		$this->section_names = apply_filters(
-			'fusion_builder_option_section', array(
+			'fusion_builder_option_section',
+			array(
 				'globals'    => FUSION_BUILDER_PLUGIN_DIR . 'inc/options/globals.php',
 				'elements'   => FUSION_BUILDER_PLUGIN_DIR . 'inc/options/elements.php',
 				'responsive' => FUSION_BUILDER_PLUGIN_DIR . 'inc/options/responsive.php',

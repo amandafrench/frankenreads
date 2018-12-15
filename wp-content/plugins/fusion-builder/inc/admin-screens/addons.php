@@ -16,7 +16,8 @@
 			$addons_json = ( isset( $_GET['reset_transient'] ) ) ? false : get_site_transient( 'fusion_builder_addons_json' );
 			if ( ! $addons_json ) {
 				$response = wp_remote_get(
-					'https://updates.theme-fusion.com/fusion_builder_addon/', array(
+					'https://updates.theme-fusion.com/fusion_builder_addon/',
+					array(
 						'timeout'    => 30,
 						'user-agent' => 'fusion-builder',
 					)

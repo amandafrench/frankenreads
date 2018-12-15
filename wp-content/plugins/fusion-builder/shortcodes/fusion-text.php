@@ -57,18 +57,21 @@ if ( fusion_is_element_enabled( 'fusion_text' ) ) {
 						'columns'          => $fusion_settings->get( 'text_columns' ),
 						'column_min_width' => $fusion_settings->get( 'text_column_min_width' ),
 						'column_spacing'   => $fusion_settings->get( 'text_column_spacing' ),
+						'hide_on_mobile'      => fusion_builder_default_visibility( 'string' ),
 						'id'               => '',
 						'rule_color'       => $fusion_settings->get( 'text_rule_color' ),
 						'rule_size'        => $fusion_settings->get( 'text_rule_size' ),
 						'rule_style'       => $fusion_settings->get( 'text_rule_style' ),
-					), $args
+					),
+					$args,
+					'fusion_text'
 				);
 
-				if ( 'default' === $this->args['rule_style'] ) {
-					$this->args['rule_style'] = $fusion_settings->get( 'title_style_type' );
-				}
-
 				$this->args = $defaults;
+
+				if ( 'default' === $this->args['rule_style'] ) {
+					$this->args['rule_style'] = $fusion_settings->get( 'text_rule_style' );
+				}
 
 				$html = '<div ' . FusionBuilder::attributes( 'text-element-wrapper' ) . '>' . wpautop( $content, false ) . '</div>';
 
@@ -113,6 +116,8 @@ if ( fusion_is_element_enabled( 'fusion_text' ) ) {
 						}
 					}
 				}
+
+				$attr = fusion_builder_visibility_atts( $this->args['hide_on_mobile'], $attr );
 
 				if ( $this->args['class'] ) {
 					$attr['class'] .= ' ' . $this->args['class'];
@@ -388,6 +393,14 @@ function fusion_element_text() {
 					'param_name'  => 'element_content',
 					'value'       => esc_attr__( 'Click edit button to change this text.', 'fusion-builder' ),
 					'placeholder' => true,
+				),
+				array(
+					'type'        => 'checkbox_button_set',
+					'heading'     => esc_attr__( 'Element Visibility', 'fusion-builder' ),
+					'param_name'  => 'hide_on_mobile',
+					'value'       => fusion_builder_visibility_options( 'full' ),
+					'default'     => fusion_builder_default_visibility( 'array' ),
+					'description' => esc_attr__( 'Choose to show or hide the element on small, medium or large screens. You can choose more than one at a time.', 'fusion-builder' ),
 				),
 				array(
 					'type'        => 'textfield',

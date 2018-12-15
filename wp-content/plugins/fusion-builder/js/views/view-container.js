@@ -39,7 +39,29 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					FusionPageBuilderApp.addClassToElement( this.$el, 'fusion-global-container', this.model.attributes.params.fusion_global, this.model.get( 'cid' ) );
 				}
 
+				// Show status icons UI
+				this.updateStatusIcons();
+
 				return this;
+			},
+
+			updateStatusIcons: function() {
+				var toolbar = this.$el.find( '.fusion-builder-container-utility-toolbar' ),
+					statusIcon = '';
+
+				toolbar.find( '.fusion-builder-publish-tooltip' ).remove();
+
+				// Append status icons
+				if ( 'draft' === this.model.attributes.params.status ) {
+					statusIcon = '<div class="fusion-builder-publish-tooltip fusion-container-draft" data-cid="' + this.model.get( 'cid' ) + '"><span>' + fusionBuilderText.container_draft + '<br>' + fusionBuilderText.container_publish + '</span></div>';
+
+					toolbar.prepend( statusIcon );
+
+				} else if ( 'published_until' === this.model.attributes.params.status || 'publish_after' === this.model.attributes.params.status ) {
+					statusIcon = '<div class="fusion-builder-publish-tooltip fusion-container-scheduled" data-cid="' + this.model.get( 'cid' ) + '"><span>' + fusionBuilderText.container_scheduled + '<br>' + fusionBuilderText.container_publish + '</span></div>';
+
+					toolbar.prepend( statusIcon );
+				}
 			},
 
 			saveElement: function( event ) {
@@ -115,7 +137,12 @@ var FusionPageBuilder = FusionPageBuilder || {};
 								thisModel.attributes.params.fusion_global = $( data.responseText ).attr( 'data-layout_id' );
 								$( 'div[data-cid="' + thisModel.get( 'cid' ) + '"]' ).closest( '.fusion_builder_container' ).addClass( 'fusion-global-container' );
 								$( 'div[data-cid="' + thisModel.get( 'cid' ) + '"]' ).attr( 'fusion-global-layout', $( data.responseText ).attr( 'data-layout_id' ) );
-								$( 'div[data-cid="' + thisModel.get( 'cid' ) + '"]' ).append( '<div class="fusion-builder-global-tooltip" data-cid="' + thisModel.get( 'cid' ) + '"><span>' + fusionBuilderText.global_container + '</span></div>' );
+
+								if ( $( 'div[data-cid="' + thisModel.get( 'cid' ) + '"]' ).closest( '.fusion_builder_container' ).find( '.fusion-builder-container-utility-toolbar' ).length ) {
+									$( 'div[data-cid="' + thisModel.get( 'cid' ) + '"]' ).closest( '.fusion_builder_container' ).find( '.fusion-builder-container-utility-toolbar' ).append( '<div class="fusion-builder-global-tooltip" data-cid="' + thisModel.get( 'cid' ) + '"><span>' + fusionBuilderText.global_container + '</span></div>' );
+								} else {
+									$( 'div[data-cid="' + thisModel.get( 'cid' ) + '"]' ).append( '<div class="fusion-builder-global-tooltip" data-cid="' + thisModel.get( 'cid' ) + '"><span>' + fusionBuilderText.global_container + '</span></div>' );
+								}
 								FusionPageBuilderEvents.trigger( 'fusion-element-added' );
 								FusionPageBuilderApp.saveGlobal = true;
 							}

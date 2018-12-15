@@ -105,7 +105,9 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 						'animation_speed'     => '',
 						'animation_type'      => '',
 						'animation_offset'    => $fusion_settings->get( 'animation_offset' ),
-					), $args
+					),
+					$args,
+					'fusion_recent_posts'
 				);
 
 				if ( '0' === $defaults['offset'] ) {
@@ -390,7 +392,7 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 						$infinite_pagination = true;
 					}
 
-					$pagination = fusion_pagination( $recent_posts->max_num_pages, apply_filters( 'fusion_pagination_size', 1 ), $recent_posts, $infinite_pagination, true );
+					$pagination = fusion_pagination( $recent_posts->max_num_pages, $fusion_settings->get( 'pagination_range' ), $recent_posts, $infinite_pagination, true );
 
 					// If infinite scroll with "load more" button is used.
 					if ( 'load_more_button' === $this->args['scrolling'] && 1 < $recent_posts->max_num_pages ) {
@@ -418,7 +420,8 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 			public function attr() {
 
 				$attr = fusion_builder_visibility_atts(
-					$this->args['hide_on_mobile'], array(
+					$this->args['hide_on_mobile'],
+					array(
 						'class' => 'fusion-recent-posts fusion-recent-posts-' . $this->recent_posts_counter . ' avada-container layout-' . $this->args['layout'] . ' layout-columns-' . $this->args['columns'],
 					)
 				);

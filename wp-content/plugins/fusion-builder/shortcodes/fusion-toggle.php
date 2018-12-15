@@ -107,7 +107,9 @@ if ( fusion_is_element_enabled( 'fusion_accordion' ) ) {
 						'title_font_size'           => $fusion_settings->get( 'accordion_title_font_size' ),
 						'toggle_hover_accent_color' => $fusion_settings->get( 'accordian_active_color' ),
 						'type'                      => ( '' !== $fusion_settings->get( 'accordion_type' ) ) ? $fusion_settings->get( 'accordion_type' ) : 'accordions',
-					), $args
+					),
+					$args,
+					'fusion_accordion'
 				);
 
 				$defaults['border_size'] = FusionBuilder::validate_shortcode_attr_value( $defaults['border_size'], 'px' );
@@ -165,11 +167,14 @@ if ( fusion_is_element_enabled( 'fusion_accordion' ) ) {
 
 				if ( ! empty( $this->parent_args['toggle_hover_accent_color'] ) ) {
 					$toggle_hover_accent_color = $fusion_library->sanitize->color( $this->parent_args['toggle_hover_accent_color'] );
-					$styles .= '.fusion-accordian  #accordion-' . get_the_ID() . '-' . $this->accordian_counter . ' .panel-title a:hover { color: ' . $toggle_hover_accent_color . ';}';
+					$styles .= '.fusion-accordian  #accordion-' . get_the_ID() . '-' . $this->accordian_counter . ' .panel-title a:hover, #accordion-' . get_the_ID() . '-' . $this->accordian_counter . ' .fusion-toggle-boxed-mode:hover .panel-title a { color: ' . $toggle_hover_accent_color . ';}';
 
 					if ( '1' === $this->parent_args['icon_boxed_mode'] || 'yes' === $this->parent_args['icon_boxed_mode'] ) {
 						$styles .= '.fusion-accordian  #accordion-' . get_the_ID() . '-' . $this->accordian_counter . ' .panel-title .active .fa-fusion-box,';
 						$styles .= '.fusion-accordian  #accordion-' . get_the_ID() . '-' . $this->accordian_counter . ' .panel-title a:hover .fa-fusion-box { background-color: ' . $toggle_hover_accent_color . '!important;border-color: ' . $toggle_hover_accent_color . '!important;}';
+					} else {
+						$styles .= '.fusion-accordian  #accordion-' . get_the_ID() . '-' . $this->accordian_counter . ' .fusion-toggle-boxed-mode:hover .panel-title a .fa-fusion-box{ color: ' . $toggle_hover_accent_color . ';}';
+						$styles .= '.fusion-accordian  #accordion-' . get_the_ID() . '-' . $this->accordian_counter . '.fusion-toggle-icon-unboxed .fusion-panel .panel-title a:hover .fa-fusion-box{ color: ' . $toggle_hover_accent_color . ' !important;}';
 					}
 				}
 
@@ -203,7 +208,8 @@ if ( fusion_is_element_enabled( 'fusion_accordion' ) ) {
 			public function attr() {
 
 				$attr = fusion_builder_visibility_atts(
-					$this->parent_args['hide_on_mobile'], array(
+					$this->parent_args['hide_on_mobile'],
+					array(
 						'class' => 'accordian fusion-accordian',
 					)
 				);
@@ -259,7 +265,9 @@ if ( fusion_is_element_enabled( 'fusion_accordion' ) ) {
 					array(
 						'open'  => 'no',
 						'title' => '',
-					), $args
+					),
+					$args,
+					'fusion_toggle'
 				);
 
 				extract( $defaults );

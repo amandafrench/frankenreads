@@ -65,7 +65,9 @@ if ( fusion_is_element_enabled( 'fusion_section_separator' ) ) {
 						'divider_candy'    => 'top',
 						'icon'             => '',
 						'icon_color'       => $fusion_settings->get( 'icon_color' ),
-					), $args
+					),
+					$args,
+					'fusion_section_separator'
 				);
 
 				$defaults['bordersize'] = FusionBuilder::validate_shortcode_attr_value( $defaults['bordersize'], 'px' );
@@ -203,7 +205,8 @@ if ( fusion_is_element_enabled( 'fusion_section_separator' ) ) {
 				global $fusion_settings;
 
 				$attr = fusion_builder_visibility_atts(
-					$this->args['hide_on_mobile'], array(
+					$this->args['hide_on_mobile'],
+					array(
 						'class' => 'fusion-section-separator section-separator',
 					)
 				);

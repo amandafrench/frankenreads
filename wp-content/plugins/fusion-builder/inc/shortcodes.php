@@ -12,7 +12,7 @@ global $fusion_builder_elements, $fusion_builder_multi_elements, $fusion_builder
 $parallax_id = 1;
 
 // Get builder options.
-$fusion_builder_settings = get_option( 'fusion_builder_settings' );
+$fusion_builder_settings         = get_option( 'fusion_builder_settings' );
 $fusion_builder_enabled_elements = ( isset( $fusion_builder_settings['fusion_elements'] ) ) ? $fusion_builder_settings['fusion_elements'] : '';
 $fusion_builder_enabled_elements = apply_filters( 'fusion_builder_enabled_elements', $fusion_builder_enabled_elements );
 
@@ -29,7 +29,7 @@ $fusion_builder_multi_elements = array();
  */
 function fusion_builder_map( $module ) {
 
-	global $fusion_builder_elements, $fusion_builder_enabled_elements, $fusion_builder_multi_elements, $all_fusion_builder_elements, $fusion_settings;
+	global $fusion_builder_elements, $fusion_builder_enabled_elements, $fusion_builder_multi_elements, $all_fusion_builder_elements, $fusion_settings, $pagenow;
 	if ( ! $fusion_settings ) {
 		$fusion_settings = Fusion_Settings::get_instance();
 	}
@@ -37,80 +37,83 @@ function fusion_builder_map( $module ) {
 	$shortcode    = $module['shortcode'];
 	$ignored_atts = array();
 
-	// Should only ever be run on backend, for performance reasons.
-	if ( is_admin() && isset( $module['params'] ) ) {
+	if ( is_admin() && isset( $pagenow ) && ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && 'fusion-builder-settings' === $_GET['page'] ) || ( 'post.php' === $pagenow ) || ( 'post-new.php' === $pagenow ) ) { // WPCS: CSRF ok.
 
-		// Create an array of descriptions.
-		foreach ( $module['params'] as $key => $param ) {
+		// Should only ever be run on backend, for performance reasons.
+		if ( isset( $module['params'] ) ) {
 
-			// Allow filtering of description.
-			if ( isset( $param['description'] ) ) {
-				$builder_map = fusion_builder_map_descriptions( $shortcode, $param['param_name'] );
-				$dynamic_description = '';
-				if ( is_array( $builder_map ) ) {
-					$setting = ( isset( $builder_map['theme-option'] ) && '' !== $builder_map['theme-option'] ) ? $builder_map['theme-option'] : '';
-					$subset = ( isset( $builder_map['subset'] ) && '' !== $builder_map['subset'] ) ? $builder_map['subset'] : '';
-					$type = ( isset( $builder_map['type'] ) && '' !== $builder_map['type'] ) ? $builder_map['type'] : '';
-					$reset = ( ( isset( $builder_map['reset'] ) || 'range' === $type ) && '' !== $param['default'] ) ? $param['param_name'] : '';
-					$dynamic_description = $fusion_settings->get_default_description( $setting, $subset, $type, $reset, $param );
-					$dynamic_description = apply_filters( 'fusion_builder_option_dynamic_description', $dynamic_description, $shortcode, $param['param_name'] );
+			// Create an array of descriptions.
+			foreach ( $module['params'] as $key => $param ) {
+
+				// Allow filtering of description.
+				if ( isset( $param['description'] ) ) {
+					$builder_map         = fusion_builder_map_descriptions( $shortcode, $param['param_name'] );
+					$dynamic_description = '';
+					if ( is_array( $builder_map ) ) {
+						$setting             = ( isset( $builder_map['theme-option'] ) && '' !== $builder_map['theme-option'] ) ? $builder_map['theme-option'] : '';
+						$subset              = ( isset( $builder_map['subset'] ) && '' !== $builder_map['subset'] ) ? $builder_map['subset'] : '';
+						$type                = ( isset( $builder_map['type'] ) && '' !== $builder_map['type'] ) ? $builder_map['type'] : '';
+						$reset               = ( ( isset( $builder_map['reset'] ) || 'range' === $type ) && '' !== $param['default'] ) ? $param['param_name'] : '';
+						$dynamic_description = $fusion_settings->get_default_description( $setting, $subset, $type, $reset, $param );
+						$dynamic_description = apply_filters( 'fusion_builder_option_dynamic_description', $dynamic_description, $shortcode, $param['param_name'] );
+					}
+
+					$options_label = apply_filters( 'fusion_options_label', esc_html( 'Element Options', 'Fusion-Builder' ) );
+
+					if ( 'hide_on_mobile' === $param['param_name'] ) {
+						$link                 = '<a href="' . $fusion_settings->get_setting_link( 'visibility_small' ) . '" target="_blank" rel="noopener noreferrer">' . $options_label . '</a>';
+						$param['description'] = $param['description'] . sprintf( __( '  Each of the 3 sizes has a custom width setting on the Fusion Builder Elements tab in the %s.', 'fusion-builder' ), $link );
+					}
+
+					if ( 'element_content' === $param['param_name'] && ( 'fusion_syntax_highlighter' === $shortcode || 'fusion_code' === $shortcode ) ) {
+						$code_block_option    = ( $fusion_settings->get( 'disable_code_block_encoding' ) ) ? 'On' : 'Off';
+						$link                 = '<a href="' . $fusion_settings->get_setting_link( 'disable_code_block_encoding' ) . '" target="_blank" rel="noopener noreferrer">' . $code_block_option . '</a>';
+						$param['description'] = $param['description'] . '<br/>' . sprintf( __( 'IMPORTANT: Please make sure that the "Code Block Encoding" setting in %1$s is enabled in order for the code to appear correctly on the frontend. Currently set to %2$s.', 'fusion-builder' ), $options_label, $link );
+					}
+
+					$param['description'] = apply_filters( 'fusion_builder_option_description', $param['description'] . $dynamic_description, $shortcode, $param['param_name'] );
 				}
 
-				$options_label = apply_filters( 'fusion_options_label', esc_html( 'Element Options', 'Fusion-Builder' ) );
-
-				if ( 'hide_on_mobile' === $param['param_name'] ) {
-					$link                 = '<a href="' . $fusion_settings->get_setting_link( 'visibility_small' ) . '" target="_blank" rel="noopener noreferrer">' . $options_label . '</a>';
-					$param['description'] = $param['description'] . sprintf( __( '  Each of the 3 sizes has a custom width setting on the Fusion Builder Elements tab in the %s.', 'fusion-builder' ), $link );
+				// Allow filtering of default.
+				$current_default = ( isset( $param['default'] ) ) ? $param['default'] : '';
+				$new_default     = apply_filters( 'fusion_builder_option_default', $current_default, $shortcode, $param['param_name'] );
+				if ( '' !== $new_default ) {
+					$param['default'] = $new_default;
 				}
 
-				if ( 'element_content' === $param['param_name'] && ( 'fusion_syntax_highlighter' === $shortcode || 'fusion_code' === $shortcode ) ) {
-					$code_block_option    = ( $fusion_settings->get( 'disable_code_block_encoding' ) ) ? 'On' : 'Off';
-					$link                 = '<a href="' . $fusion_settings->get_setting_link( 'disable_code_block_encoding' ) . '" target="_blank" rel="noopener noreferrer">' . $code_block_option . '</a>';
-					$param['description'] = $param['description'] . '<br/>' . sprintf( __( 'IMPORTANT: Please make sure that the "Code Block Encoding" setting in %1$s is enabled in order for the code to appear correctly on the frontend. Currently set to %2$s.', 'fusion-builder' ), $options_label, $link );
+				// Allow filtering of value.
+				$current_value = ( isset( $param['value'] ) ) ? $param['value'] : '';
+				$new_value     = apply_filters( 'fusion_builder_option_value', $current_value, $shortcode, $param['param_name'] );
+				if ( '' !== $new_value ) {
+					$param['value'] = $new_value;
 				}
 
-				$param['description'] = apply_filters( 'fusion_builder_option_description', $param['description'] . $dynamic_description, $shortcode, $param['param_name'] );
-			}
+				// Allow filtering of dependency.
+				$current_dependency = ( isset( $param['dependency'] ) ) ? $param['dependency'] : '';
+				$current_dependency = fusion_builder_element_dependencies( $current_dependency, $shortcode, $param['param_name'] );
+				$new_dependency     = apply_filters( 'fusion_builder_option_dependency', $current_dependency, $shortcode, $param['param_name'] );
+				if ( '' !== $new_dependency ) {
+					$param['dependency'] = $new_dependency;
+				}
 
-			// Allow filtering of default.
-			$current_default = ( isset( $param['default'] ) ) ? $param['default'] : '';
-			$new_default = apply_filters( 'fusion_builder_option_default', $current_default, $shortcode, $param['param_name'] );
-			if ( '' !== $new_default ) {
-				$param['default'] = $new_default;
-			}
+				// Ignore attributes in the shortcode if 'remove_from_atts' is true.
+				if ( isset( $param['remove_from_atts'] ) && true == $param['remove_from_atts'] ) {
+					$ignored_atts[] = $param['param_name'];
+				}
 
-			// Allow filtering of value.
-			$current_value = ( isset( $param['value'] ) ) ? $param['value'] : '';
-			$new_value = apply_filters( 'fusion_builder_option_value', $current_value, $shortcode, $param['param_name'] );
-			if ( '' !== $new_value ) {
-				$param['value'] = $new_value;
+				// Set param key as param_name.
+				$params[ $param['param_name'] ] = $param;
 			}
-
-			// Allow filtering of dependency.
-			$current_dependency = ( isset( $param['dependency'] ) ) ? $param['dependency'] : '';
-			$current_dependency = fusion_builder_element_dependencies( $current_dependency, $shortcode, $param['param_name'] );
-			$new_dependency = apply_filters( 'fusion_builder_option_dependency', $current_dependency, $shortcode, $param['param_name'] );
-			if ( '' !== $new_dependency ) {
-				$param['dependency'] = $new_dependency;
+			if ( '0' === $fusion_settings->get( 'dependencies_status' ) ) {
+				foreach ( $params as $key => $value ) {
+					if ( isset( $params[ $key ]['dependency'] ) && ! empty( $params[ $key ]['dependency'] ) ) {
+						unset( $params[ $key ]['dependency'] );
+					}
+				}
 			}
-
-			// Ignore attributes in the shortcode if 'remove_from_atts' is true.
-			if ( isset( $param['remove_from_atts'] ) && true == $param['remove_from_atts'] ) {
-				$ignored_atts[] = $param['param_name'];
-			}
-
-			// Set param key as param_name.
-			$params[ $param['param_name'] ] = $param;
+			$module['params']           = $params;
+			$module['remove_from_atts'] = $ignored_atts;
 		}
-		if ( '0' === $fusion_settings->get( 'dependencies_status' ) ) {
-			foreach ( $params as $key => $value ) {
-				if ( isset( $params[ $key ]['dependency'] ) && ! empty( $params[ $key ]['dependency'] ) ) {
-					unset( $params[ $key ]['dependency'] );
-				}
-			}
-		}
-		$module['params'] = $params;
-		$module['remove_from_atts'] = $ignored_atts;
 	}
 
 	// Create array of unfiltered elements.
@@ -188,7 +191,7 @@ function fusion_load_element_frontend_assets() {
 	global $all_fusion_builder_elements;
 
 	$dynamic_css_obj = Fusion_Dynamic_CSS::get_instance();
-	$mode = ( method_exists( $dynamic_css_obj, 'get_mode' ) ) ? $dynamic_css_obj->get_mode() : $dynamic_css_obj->mode;
+	$mode            = ( method_exists( $dynamic_css_obj, 'get_mode' ) ) ? $dynamic_css_obj->get_mode() : $dynamic_css_obj->mode;
 
 	if ( ! is_array( $all_fusion_builder_elements ) ) {
 		return;
@@ -224,8 +227,8 @@ add_action( 'wp_enqueue_scripts', 'fusion_load_element_frontend_assets' );
 function fusion_load_element_frontend_assets_dynamic_css( $original_styles ) {
 	global $all_fusion_builder_elements;
 	$dynamic_css_obj = Fusion_Dynamic_CSS::get_instance();
-	$mode = ( method_exists( $dynamic_css_obj, 'get_mode' ) ) ? $dynamic_css_obj->get_mode() : $dynamic_css_obj->mode;
-	$styles = '';
+	$mode            = ( method_exists( $dynamic_css_obj, 'get_mode' ) ) ? $dynamic_css_obj->get_mode() : $dynamic_css_obj->mode;
+	$styles          = '';
 
 	if ( 'file' === $mode ) {
 		$wp_filesystem = Fusion_Helper::init_filesystem();

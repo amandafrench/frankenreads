@@ -13,7 +13,9 @@ function fusion_builder_row( $atts, $content = '' ) {
 			array(
 				'id'    => '',
 				'class' => '',
-			), $atts
+			),
+			$atts,
+			'fusion_builder_row'
 		)
 	);
 

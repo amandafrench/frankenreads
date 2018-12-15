@@ -48,7 +48,9 @@ if ( fusion_is_element_enabled( 'fusion_menu_anchor' ) ) {
 					array(
 						'class' => '',
 						'name'  => '',
-					), $args
+					),
+					$args,
+					'fusion_menu_anchor'
 				);
 
 				extract( $defaults );

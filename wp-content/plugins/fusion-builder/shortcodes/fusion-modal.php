@@ -72,7 +72,9 @@ if ( fusion_is_element_enabled( 'fusion_modal' ) ) {
 						'size'         => 'small',
 						'title'        => '',
 						'show_footer'  => 'yes',
-					), $args
+					),
+					$args,
+					'fusion_modal'
 				);
 
 				extract( $defaults );
@@ -351,7 +353,8 @@ if ( fusion_is_element_enabled( 'fusion_modal_text_link' ) ) {
 						'class' => '',
 						'id'    => '',
 						'name'  => '',
-					), $args
+					),
+					$args
 				);
 
 				extract( $defaults );
@@ -509,7 +512,7 @@ add_action( 'fusion_builder_before_init', 'fusion_element_modal' );
 function fusion_element_modal_link() {
 	fusion_builder_map(
 		array(
-			'name'              => esc_attr__( 'Modal Text Link', 'fusion-builder' ),
+			'name'              => esc_attr__( 'Modal Text / HTML Link', 'fusion-builder' ),
 			'shortcode'         => 'fusion_modal_text_link',
 			'icon'              => 'fusiona-external-link',
 			'params'            => array(

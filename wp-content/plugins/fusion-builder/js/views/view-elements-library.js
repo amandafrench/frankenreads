@@ -13,7 +13,7 @@ var FusionPageBuilder = FusionPageBuilder || {};
 			template: FusionPageBuilder.template( $( '#fusion-builder-modules-template' ).html() ),
 
 			events: {
-				'click .fusion-builder-all-modules .fusion-builder-element': 'addModule',
+				'click .fusion-builder-all-modules .fusion-builder-element:not(.fusion-builder-element-generator)': 'addModule',
 				'click .fusion_builder_custom_elements_load': 'addCustomModule',
 				'click .fusion-builder-column-layouts li': 'addNestedColumns'
 			},

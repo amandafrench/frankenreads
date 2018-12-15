@@ -13,26 +13,18 @@ var FusionPageBuilder = FusionPageBuilder || {};
 		_.each( fusionAllElements, function( element ) {
 			var newElement;
 
-			if ( 'undefined' === typeof element.hide_from_builder && 'undefined' === typeof element.generator_only ) {
-
-				newElement = {
-					'title': element.name,
-					'label': element.shortcode
-				};
-
-				fusionElements.push( newElement );
-			}
-		} );
-
-		_.each( fusionAllElements, function( element ) {
-			var newElement;
-
 			if ( 'undefined' === typeof element.hide_from_builder ) {
 
 				newElement = {
 					'title': element.name,
 					'label': element.shortcode
 				};
+
+				if ( 'undefined' === typeof element.generator_only ) {
+					fusionElements.push( newElement );
+				} else {
+					newElement.generator_only = true;
+				}
 
 				fusionGeneratorElements.push( newElement );
 			}

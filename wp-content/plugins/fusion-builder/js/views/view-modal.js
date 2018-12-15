@@ -568,6 +568,9 @@ var FusionPageBuilder = FusionPageBuilder || {};
 					}
 
 					view.find( '.fusion-builder-empty-section' ).html( emptySectionText );
+
+					// Update status icons UI
+					FusionPageBuilderViewManager.getView( this.model.get( 'cid' ) ).updateStatusIcons();
 				}
 
 				if ( 'undefined' !== typeof fusionAllElements[ elementType ].preview ) {

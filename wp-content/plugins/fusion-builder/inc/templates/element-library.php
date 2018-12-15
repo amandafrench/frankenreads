@@ -24,14 +24,19 @@
 			<div class="fusion-tabs">
 				<div id="default-elements" class="fusion-tab-content">
 					<ul class="fusion-builder-all-modules">
-						<# _.each( modules, function(module) { #>
-							<li class="{{ module.label }} fusion-builder-element">
+						<# _.each( generator_elements, function( module ) { #>
+							<# var additionalClass = ( 'undefined' !== typeof module.generator_only ) ? ' fusion-builder-element-generator' : ''; #>
+							<li class="{{ module.label }} fusion-builder-element{{ additionalClass }}">
 								<h4 class="fusion_module_title">
 									<# if ( typeof( fusionAllElements[module.label].icon ) !== 'undefined' ) { #>
 										<div class="fusion-module-icon {{ fusionAllElements[module.label].icon }}"></div>
 									<# } #>
 									{{ module.title }}
 								</h4>
+								<# if ( 'undefined' !== typeof module.generator_only ) { #>
+									<span class="fusion-tooltip">{{ fusionBuilderText.generator_elements_tooltip }}</span>
+								<# } #>
+
 								<span class="fusion_module_label">{{ module.label }}</span>
 							</li>
 						<# } ); #>

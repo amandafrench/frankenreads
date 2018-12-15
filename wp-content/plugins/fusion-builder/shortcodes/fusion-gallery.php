@@ -102,9 +102,12 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 						'bordersize'                   => $fusion_settings->get( 'gallery_border_size' ),
 						'bordercolor'                  => $fusion_settings->get( 'gallery_border_color' ),
 						'border_radius'                => (int) $fusion_settings->get( 'gallery_border_radius' ) . 'px',
-					), $args
+					),
+					$args,
+					'fusion_gallery'
 				);
-				$defaults                 = apply_filters( 'fusion_builder_default_args', $defaults, 'fusion_gallery' );
+				$defaults = apply_filters( 'fusion_builder_default_args', $defaults, 'fusion_gallery', $args );
+
 				$defaults['bordersize']    = FusionBuilder::validate_shortcode_attr_value( $defaults['bordersize'], 'px' );
 				$defaults['border_radius'] = FusionBuilder::validate_shortcode_attr_value( $defaults['border_radius'], 'px' );
 
@@ -140,16 +143,14 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 
 				if ( is_array( $image_ids ) ) {
 					foreach ( $image_ids as $image_id ) {
-						$image_url = wp_get_attachment_image_src( $image_id, $image_size );
-						$image_url = $image_url[0];
+						$this->image_data = $fusion_library->images->get_attachment_data( $image_id, $image_size );
 
-						$this->args['pic_link'] = wp_get_attachment_url( $image_id );
-						$this->image_data = $fusion_library->images->get_attachment_data_from_url( $image_url );
+						$image_url = $this->args['pic_link'] = '';
+						if ( $this->image_data['url'] ) {
+							$image_url = $this->args['pic_link'] = $this->image_data['url'];
+						}
 
-						$image_alt = isset( $this->image_data['alt'] ) ? $this->image_data['alt'] : '';
-						$image_title = isset( $this->image_data['title'] ) ? $this->image_data['title'] : '';
-
-						$image_html = '<img src="' . $image_url . '" alt="' . $image_alt . '" title="' . $image_title . '" aria-label="' . $image_title . '" class="img-responsive wp-image-' . $image_id . '" />';
+						$image_html = '<img src="' . $image_url . '" alt="' . $this->image_data['alt'] . '" title="' . $this->image_data['title'] . '" aria-label="' . $this->image_data['title'] . '" class="img-responsive wp-image-' . $image_id . '" />';
 
 						// For masonry layout, set the correct column size and classes.
 						$element_orientation_class = '';
@@ -361,17 +362,31 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 
 				$attr = array();
 
-				$attr['href']  = $this->args['pic_link'];
+				if ( 'fixed' === $this->args['picture_size'] && $this->image_data['id'] ) {
+					$image_data = fusion_library()->images->get_attachment_data( $this->image_data['id'], 'full' );
+
+					if ( $image_data['url'] ) {
+						$attr['href'] = $image_data['url'];
+					}
+				}
+
+				if ( ! isset( $attr['href'] ) ) {
+					$attr['href']  = $this->args['pic_link'];
+				}
+
 				$attr['class'] = 'fusion-lightbox';
 
 				$attr['data-rel'] = 'iLightbox[' . substr( md5( $this->args['image_ids'] ), 13 ) . ']';
 
-				if ( $this->image_data && ( 'none' !== $this->args['lightbox_content'] ) ) {
-					$attr['data-title']   = $this->image_data['title'];
-					$attr['title']        = $this->image_data['title'];
-				}
-				if ( $this->image_data && ( 'title_and_caption' === $this->args['lightbox_content'] ) ) {
-					$attr['data-caption'] = $this->image_data['caption'];
+				if ( $this->image_data ) {
+					if ( false !== strpos( $this->args['lightbox_content'], 'title' ) ) {
+						$attr['data-title']   = $this->image_data['title'];
+						$attr['title']        = $this->image_data['title'];
+					}
+
+					if ( false !== strpos( $this->args['lightbox_content'], 'caption' ) ) {
+						$attr['data-caption'] = $this->image_data['caption'];
+					}
 				}
 
 				return $attr;
@@ -475,8 +490,9 @@ if ( fusion_is_element_enabled( 'fusion_gallery' ) ) {
 								'id'      => 'gallery_lightbox_content',
 								'default' => 'none',
 								'choices' => array(
-									'none'        => esc_attr__( 'None', 'fusion-builder' ),
+									'none'              => esc_attr__( 'None', 'fusion-builder' ),
 									'titles'            => esc_attr__( 'Titles', 'fusion-builder' ),
+									'captions'          => esc_attr__( 'Captions', 'fusion-builder' ),
 									'title_and_caption' => esc_attr__( 'Titles & Captions', 'fusion-builder' ),
 								),
 								'description' => esc_attr__( 'Choose if titles and captions will display in the lightbox.', 'fusion-builder' ),
@@ -694,9 +710,10 @@ function fusion_element_gallery() {
 					'default'     => '',
 					'value'       => array(
 						''                  => esc_attr__( 'Default', 'fusion-builder' ),
-						'titles'            => esc_attr__( 'Titles', 'fusion-builder' ),
-						'title_and_caption' => esc_attr__( 'Titles and Captions', 'fusion-builder' ),
 						'none'              => esc_attr__( 'None', 'fusion-builder' ),
+						'titles'            => esc_attr__( 'Titles', 'fusion-builder' ),
+						'captions'          => esc_attr__( 'Captions', 'fusion-builder' ),
+						'title_and_caption' => esc_attr__( 'Titles and Captions', 'fusion-builder' ),
 					),
 					'description' => esc_attr__( 'Choose if titles and captions will display in the lightbox.', 'fusion-builder' ),
 					'dependency'  => array(

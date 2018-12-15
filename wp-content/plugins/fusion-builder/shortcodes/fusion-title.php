@@ -55,14 +55,21 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 						'class'          => '',
 						'id'             => '',
 						'content_align'  => 'left',
+						'font_size'      => '',
+						'letter_spacing' => '',
+						'line_height'    => '',
 						'margin_top'     => $fusion_settings->get( 'title_margin', 'top' ),
 						'margin_bottom'  => $fusion_settings->get( 'title_margin', 'bottom' ),
 						'sep_color'      => $fusion_settings->get( 'title_border_color' ),
 						'size'           => 1,
 						'style_tag'      => '',
 						'style_type'     => $fusion_settings->get( 'title_style_type' ),
-					), $args
+						'text_color'     => '',
+					),
+					$args,
+					'fusion_title'
 				);
+				$defaults = apply_filters( 'fusion_builder_default_args', $defaults, 'fusion_title', $args );
 
 				$defaults['margin_top']    = FusionBuilder::validate_shortcode_attr_value( $defaults['margin_top'], 'px' );
 				$defaults['margin_bottom'] = FusionBuilder::validate_shortcode_attr_value( $defaults['margin_bottom'], 'px' );
@@ -85,8 +92,12 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 				if ( false !== strpos( $style_type, 'underline' ) || false !== strpos( $style_type, 'none' ) ) {
 
 					$html = sprintf(
-						'<div %s><h%s %s>%s</h%s></div>', FusionBuilder::attributes( 'title-shortcode' ), $size,
-						FusionBuilder::attributes( 'title-shortcode-heading' ), do_shortcode( $content ), $size
+						'<div %s><h%s %s>%s</h%s></div>',
+						FusionBuilder::attributes( 'title-shortcode' ),
+						$size,
+						FusionBuilder::attributes( 'title-shortcode-heading' ),
+						do_shortcode( $content ),
+						$size
 					);
 
 				} else {
@@ -109,7 +120,8 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 							'<div %s><div %s><div %s></div></div><h%s %s>%s</h%s><div %s><div %s></div></div></div>',
 							FusionBuilder::attributes( 'title-shortcode' ),
 							FusionBuilder::attributes( 'title-sep-container title-sep-container-left' ),
-							FusionBuilder::attributes( 'title-shortcode-sep' ), $size,
+							FusionBuilder::attributes( 'title-shortcode-sep' ),
+							$size,
 							FusionBuilder::attributes( 'title-shortcode-heading' ),
 							do_shortcode( $content ),
 							$size,
@@ -144,9 +156,11 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 			 * @return array
 			 */
 			public function attr() {
+				global $fusion_library;
 
 				$attr = fusion_builder_visibility_atts(
-					$this->args['hide_on_mobile'], array(
+					$this->args['hide_on_mobile'],
+					array(
 						'class' => 'fusion-title title',
 						'style' => '',
 					)
@@ -173,19 +187,23 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 				$title_size = 'two';
 				if ( '1' == $this->args['size'] ) {
 					$title_size = 'one';
-				} else if ( '2' == $this->args['size'] ) {
+				} elseif ( '2' == $this->args['size'] ) {
 					$title_size = 'two';
-				} else if ( '3' == $this->args['size'] ) {
+				} elseif ( '3' == $this->args['size'] ) {
 					$title_size = 'three';
-				} else if ( '4' == $this->args['size'] ) {
+				} elseif ( '4' == $this->args['size'] ) {
 					$title_size = 'four';
-				} else if ( '5' == $this->args['size'] ) {
+				} elseif ( '5' == $this->args['size'] ) {
 					$title_size = 'five';
-				} else if ( '6' == $this->args['size'] ) {
+				} elseif ( '6' == $this->args['size'] ) {
 					$title_size = 'six';
 				}
 
 				$attr['class'] .= ' fusion-title-size-' . $title_size;
+
+				if ( $this->args['font_size'] ) {
+					$attr['style'] .= 'font-size:' . $fusion_library->sanitize->get_value_with_unit( $this->args['font_size'] ) . ';';
+				}
 
 				if ( $this->args['margin_top'] ) {
 					$attr['style'] .= sprintf( 'margin-top:%s;', $this->args['margin_top'] );
@@ -219,17 +237,35 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 			 * @return array
 			 */
 			public function heading_attr() {
+				global $fusion_library;
 
 				$attr = array(
 					'class' => 'title-heading-' . $this->args['content_align'],
+					'style' => '',
 				);
 
 				if ( '' === $this->args['margin_top'] && '' === $this->args['margin_bottom'] ) {
 					$attr['class'] .= ' fusion-default-margin';
 				}
 
+				if ( $this->args['font_size'] ) {
+					$attr['style'] .= 'font-size:1em;';
+				}
+
+				if ( $this->args['line_height'] ) {
+					$attr['style'] .= 'line-height:' . $fusion_library->sanitize->get_value_with_unit( $this->args['line_height'] ) . ';';
+				}
+
+				if ( $this->args['letter_spacing'] ) {
+					$attr['style'] .= 'letter-spacing:' . $fusion_library->sanitize->get_value_with_unit( $this->args['letter_spacing'] ) . ';';
+				}
+
+				if ( $this->args['text_color'] ) {
+					$attr['style'] .= 'color:' . $fusion_library->sanitize->color( $this->args['text_color'] ) . ';';
+				}
+
 				if ( $this->args['style_tag'] ) {
-					$attr['style'] = $this->args['style_tag'];
+					$attr['style'] .= $this->args['style_tag'];
 				}
 
 				return $attr;
@@ -276,8 +312,8 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 
 				$main_elements = apply_filters( 'fusion_builder_element_classes', array( '.fusion-title' ), '.fusion-title' );
 
-				$css[ $content_media_query ][ $dynamic_css_helpers->implode( $main_elements ) ]['margin-top']    = '0px !important';
-				$css[ $content_media_query ][ $dynamic_css_helpers->implode( $main_elements ) ]['margin-bottom'] = '20px !important';
+				$css[ $content_media_query ][ $dynamic_css_helpers->implode( $main_elements ) ]['margin-top']          = '0px !important';
+				$css[ $content_media_query ][ $dynamic_css_helpers->implode( $main_elements ) ]['margin-bottom']       = '20px !important';
 				$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $main_elements ) ]['margin-top']    = '0px !important';
 				$css[ $ipad_portrait_media_query ][ $dynamic_css_helpers->implode( $main_elements ) ]['margin-bottom'] = '20px !important';
 
@@ -307,11 +343,11 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 						'id'          => 'title_shortcode_section',
 						'type'        => 'accordion',
 						'fields'      => array(
-							'title_style_type' => array(
+							'title_style_type'   => array(
 								'label'       => esc_html__( 'Title Separator', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the type of title separator that will display.', 'fusion-builder' ),
 								'id'          => 'title_style_type',
-								'default'     => 'double',
+								'default'     => 'double solid',
 								'type'        => 'select',
 								'choices'     => array(
 									'single solid'     => esc_html__( 'Single Solid', 'fusion-builder' ),
@@ -333,18 +369,18 @@ if ( fusion_is_element_enabled( 'fusion_title' ) ) {
 								'default'     => '#e0dede',
 								'type'        => 'color-alpha',
 							),
-							'title_margin' => array(
+							'title_margin'       => array(
 								'label'       => esc_html__( 'Title Top/Bottom Margins', 'fusion-builder' ),
 								'description' => esc_html__( 'Controls the top/bottom margin of the titles. Leave empty to use corresponding heading margins.', 'fusion-builder' ),
 								'id'          => 'title_margin',
 								'default'     => array(
-									'top'     => '0px',
-									'bottom'  => '31px',
+									'top'    => '0px',
+									'bottom' => '31px',
 								),
 								'type'        => 'spacing',
 								'choices'     => array(
-									'top'     => true,
-									'bottom'  => true,
+									'top'    => true,
+									'bottom' => true,
 								),
 							),
 						),
@@ -405,8 +441,21 @@ function fusion_element_title() {
 				),
 				array(
 					'type'        => 'radio_button_set',
-					'heading'     => esc_attr__( 'Size', 'fusion-builder' ),
-					'description' => esc_attr__( 'Choose the title size, H1-H6.', 'fusion-builder' ),
+					'heading'     => esc_attr__( 'Title Alignment', 'fusion-builder' ),
+					'description' => esc_attr__( 'Choose to align the heading left or right.', 'fusion-builder' ),
+					'param_name'  => 'content_align',
+					'value'       => array(
+						'left'   => esc_attr__( 'Left', 'fusion-builder' ),
+						'center' => esc_attr__( 'Center', 'fusion-builder' ),
+						'right'  => esc_attr__( 'Right', 'fusion-builder' ),
+					),
+					'default'     => 'left',
+					'group'       => esc_attr__( 'Design Options', 'fusion-builder' ),
+				),
+				array(
+					'type'        => 'radio_button_set',
+					'heading'     => esc_attr__( 'HTML Heading Size', 'fusion-builder' ),
+					'description' => esc_attr__( 'Choose the size of the HTML heading that should be used, h1-h6.', 'fusion-builder' ),
 					'param_name'  => 'size',
 					'value'       => array(
 						'1' => 'H1',
@@ -416,21 +465,54 @@ function fusion_element_title() {
 						'5' => 'H5',
 						'6' => 'H6',
 					),
-					'default' => '1',
-					'group'   => esc_attr__( 'Design Options', 'fusion-builder' ),
+					'default'     => '1',
+					'group'       => esc_attr__( 'Design Options', 'fusion-builder' ),
 				),
 				array(
-					'type'        => 'radio_button_set',
-					'heading'     => esc_attr__( 'Title Alignment', 'fusion-builder' ),
-					'description' => esc_attr__( 'Choose to align the heading left or right.', 'fusion-builder' ),
-					'param_name'  => 'content_align',
-					'value'       => array(
-						'left'   => esc_attr__( 'Left', 'fusion-builder' ),
-						'center' => esc_attr__( 'Center', 'fusion-builder' ),
-						'right'  => esc_attr__( 'Right', 'fusion-builder' ),
+					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'Font Size', 'fusion-builder' ),
+					/* translators: URL for the link. */
+					'description' => sprintf( __( 'Controls the font size of the title. Enter value including any valid CSS unit, ex: 20px. Leave empty if the global font size for the corresponding heading size (h1-h6) should be used: <a href="%s" target="_blank" rel="noopener noreferrer">Theme Option Heading Settings</a>.', 'fusion-builder' ), $fusion_settings->get_setting_link( 'headers_typography_important_note_info' ) ),
+					'param_name'  => 'font_size',
+					'value'       => '',
+					'group'       => esc_attr__( 'Design Options', 'fusion-builder' ),
+				),
+				array(
+					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'Line Height', 'fusion-builder' ),
+					'description' => sprintf( __( 'Controls the line height of the title. Enter value including any valid CSS unit, ex: 28px. Leave empty if the global line height for the corresponding heading size (h1-h6) should be used: <a href="%s" target="_blank" rel="noopener noreferrer">Theme Option Heading Settings</a>.', 'fusion-builder' ), $fusion_settings->get_setting_link( 'headers_typography_important_note_info' ) ),
+					'param_name'  => 'line_height',
+					'value'       => '',
+					'group'       => esc_attr__( 'Design Options', 'fusion-builder' ),
+				),
+				array(
+					'type'        => 'textfield',
+					'heading'     => esc_attr__( 'Letter Spacing', 'fusion-builder' ),
+					'description' => sprintf( __( 'Controls the letter spacing of the title. Enter value including any valid CSS unit, ex: 2px. Leave empty if the global letter spacing for the corresponding heading size (h1-h6) should be used: <a href="%s" target="_blank" rel="noopener noreferrer">Theme Option Heading Settings</a>.', 'fusion-builder' ), $fusion_settings->get_setting_link( 'headers_typography_important_note_info' ) ),
+					'param_name'  => 'letter_spacing',
+					'value'       => '',
+					'group'       => esc_attr__( 'Design Options', 'fusion-builder' ),
+				),
+				array(
+					'type'             => 'dimension',
+					'heading'          => esc_attr__( 'Margin', 'fusion-builder' ),
+					'description'      => esc_attr__( 'Spacing above and below the title. In px, em or %, e.g. 10px.', 'fusion-builder' ),
+					'param_name'       => 'dimensions',
+					'value'            => array(
+						'margin_top'    => '',
+						'margin_bottom' => '',
 					),
-					'default' => 'left',
-					'group'   => esc_attr__( 'Design Options', 'fusion-builder' ),
+					'group'            => esc_attr__( 'Design Options', 'fusion-builder' ),
+					'remove_from_atts' => true,
+				),
+				array(
+					'type'        => 'colorpickeralpha',
+					'heading'     => esc_attr__( 'Font Color', 'fusion-builder' ),
+					'description' => sprintf( __( 'Controls the color of the title,  ex: #000. Leave empty if the global color for the corresponding heading size (h1-h6) should be used: <a href="%s" target="_blank" rel="noopener noreferrer">Theme Option Heading Settings</a>.', 'fusion-builder' ), $fusion_settings->get_setting_link( 'headers_typography_important_note_info' ) ),
+					'param_name'  => 'text_color',
+					'value'       => '',
+					'default'     => '',
+					'group'       => esc_attr__( 'Design Options', 'fusion-builder' ),
 				),
 				array(
 					'type'        => 'select',
@@ -450,8 +532,8 @@ function fusion_element_title() {
 						'underline dotted' => esc_attr__( 'Underline Dotted', 'fusion-builder' ),
 						'none'             => esc_attr__( 'None', 'fusion-builder' ),
 					),
-					'default' => 'default',
-					'group'   => esc_attr__( 'Design Options', 'fusion-builder' ),
+					'default'     => 'default',
+					'group'       => esc_attr__( 'Design Options', 'fusion-builder' ),
 				),
 				array(
 					'type'        => 'colorpickeralpha',
@@ -468,18 +550,6 @@ function fusion_element_title() {
 						),
 					),
 					'default'     => $fusion_settings->get( 'title_border_color' ),
-				),
-				array(
-					'type'             => 'dimension',
-					'remove_from_atts' => true,
-					'heading'          => esc_attr__( 'Margin', 'fusion-builder' ),
-					'param_name'       => 'dimensions',
-					'value'            => array(
-						'margin_top'    => '',
-						'margin_bottom' => '',
-
-					),
-					'description'      => esc_attr__( 'Spacing above and below the title. In px, em or %, e.g. 10px.', 'fusion-builder' ),
 				),
 				array(
 					'type'        => 'checkbox_button_set',

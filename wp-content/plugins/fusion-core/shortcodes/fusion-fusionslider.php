@@ -69,7 +69,9 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 						'class'          => '',
 						'id'             => '',
 						'name'           => '',
-					), $args
+					),
+					$args,
+					'fusion_fusionslider'
 				);
 
 				extract( $defaults );
@@ -90,7 +92,7 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 					}
 				}
 
-				$slider_settings = get_option( 'taxonomy_' . $term_details->term_id, array() );
+				$slider_settings = '' !== get_term_meta( $term_details->term_id, 'fusion_slider_options', true ) ? get_term_meta( $term_details->term_id, 'fusion_slider_options', true ) : array();
 
 				if ( ! isset( $slider_settings['nav_box_width'] ) ) {
 					$slider_settings['nav_box_width'] = '63px';
@@ -432,7 +434,8 @@ if ( function_exists( 'fusion_is_element_enabled' ) && fusion_is_element_enabled
 			public function wrapper_attr() {
 
 				$attr = fusion_builder_visibility_atts(
-					self::$parent_args['hide_on_mobile'], array(
+					self::$parent_args['hide_on_mobile'],
+					array(
 						'class' => 'fusion-slider-container',
 					)
 				);

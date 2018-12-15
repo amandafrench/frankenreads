@@ -17,7 +17,6 @@
   margin: 0;
   padding: 0;
   border: 0;
-  outline: 0;
   font-size: 100%;
   line-height: 100%;
   vertical-align: baseline;
@@ -28,6 +27,21 @@
   -o-user-select: none;
   -ms-user-select: none;
       user-select: none;
+}
+.fusion-disable-outline .ilightbox-overlay,
+.fusion-disable-outline .ilightbox-loader,
+.fusion-disable-outline .ilightbox-loader *,
+.fusion-disable-outline .ilightbox-holder,
+.fusion-disable-outline .ilightbox-holder .ilightbox-container,
+.fusion-disable-outline .ilightbox-holder .ilightbox-container img.ilightbox-image,
+.fusion-disable-outline .ilightbox-holder .ilightbox-container .ilightbox-caption,
+.fusion-disable-outline .ilightbox-toolbar,
+.fusion-disable-outline .ilightbox-toolbar *,
+.fusion-disable-outline .ilightbox-thumbnails,
+.fusion-disable-outline .ilightbox-thumbnails *,
+.fusion-disable-outline .ilightbox-holder .ilightbox-container .ilightbox-social,
+.fusion-disable-outline .ilightbox-holder .ilightbox-container .ilightbox-social * {
+  outline: 0;
 }
 .ilightbox-overlay,
 .ilightbox-loader,
@@ -65,11 +79,13 @@
   opacity: 0.9;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
   filter: alpha(opacity=90);
+  -webkit-border-radius: 0 100px 100px 0;
   border-radius: 0 100px 100px 0;
 }
 .ilightbox-loader div {
   width: 72px;
   height: 72px;
+  -webkit-border-radius: 0 100px 100px 0;
   border-radius: 0 100px 100px 0;
 }
 .ilightbox-loader.horizontal {
@@ -77,9 +93,11 @@
   top: -192px;
   padding: 0;
   padding-top: 30px;
+  -webkit-border-radius: 0 0 100px 100px;
   border-radius: 0 0 100px 100px;
 }
 .ilightbox-loader.horizontal div {
+  -webkit-border-radius: 0 0 100px 100px;
   border-radius: 0 0 100px 100px;
 }
 .ilightbox-toolbar {
@@ -141,6 +159,7 @@
 .ilightbox-thumbnails .ilightbox-thumbnails-grid .ilightbox-thumbnail img {
   width: 100%;
   height: 100%;
+  -webkit-border-radius: 2px;
   border-radius: 2px;
   -ms-interpolation-mode: bicubic;
 }
@@ -192,7 +211,9 @@
   line-height: 150%;
   word-wrap: break-word;
   z-index: 20003;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-border-radius: 3px 3px 0 0;
   border-radius: 3px 3px 0 0;
 }
 .ilightbox-holder .ilightbox-container .ilightbox-social {
@@ -293,6 +314,7 @@
   background: #000;
 }
 .ilightbox-loader.dark {
+  -webkit-box-shadow: black 0px 0px 85px, black 0px 0px 85px;
   box-shadow: black 0px 0px 85px, black 0px 0px 85px;
 }
 .ilightbox-loader.dark div {
@@ -301,7 +323,8 @@
 .ilightbox-holder.dark {
   padding: 5px;
   background: #000;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0 0 15px hsla(0, 0%, 0%, 0.8);
+  box-shadow: 0 0 15px hsla(0, 0%, 0%, 0.8);
 }
 .ilightbox-holder.dark .ilightbox-container .ilightbox-caption {
   background: url(../../assets/images/iLightbox/dark-skin/caption-bg.png);
@@ -310,6 +333,7 @@
 }
 .ilightbox-holder.dark .ilightbox-container .ilightbox-social {
   background: url(../../assets/images/iLightbox/dark-skin/caption-bg.png);
+  -webkit-border-radius: 2px;
   border-radius: 2px;
 }
 .ilightbox-holder.dark .ilightbox-alert {
@@ -374,6 +398,7 @@
   width: 100%;
   height: 40px;
   text-align: center;
+  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
 }
 .isMobile .ilightbox-toolbar.dark a {
@@ -381,7 +406,8 @@
   float: none;
   width: 50px;
   height: 40px;
-  background-size: 50%;
+  -webkit-background-size: 50% 50%;
+          background-size: 50%;
   background-position: 50% !important;
 }
 .isMobile .ilightbox-toolbar.dark a:hover {
@@ -419,6 +445,7 @@
   right: 5px;
 }
 .ilightbox-holder.dark .ilightbox-inner-toolbar .ilightbox-toolbar a {
+  -webkit-border-radius: 0;
   border-radius: 0;
   float: right;
 }
@@ -436,7 +463,8 @@
 }
 /* Style thumbnails */
 .ilightbox-thumbnails.dark .ilightbox-thumbnails-grid .ilightbox-thumbnail img {
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+          box-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
 }
 .ilightbox-thumbnails.dark .ilightbox-thumbnails-grid .ilightbox-thumbnail .ilightbox-thumbnail-video {
   background: url(../../assets/images/iLightbox/dark-skin/thumb-overlay-play.png) no-repeat center;
@@ -461,6 +489,7 @@
   margin: auto;
   background: url(../../assets/images/iLightbox/dark-skin/arrow-next-vertical-icon-64.png) no-repeat 50% 65%;
   background-color: #000;
+  -webkit-border-radius: 0;
   border-radius: 0;
   -webkit-border-top-left-radius: 5px;
   -webkit-border-top-right-radius: 5px;
@@ -475,6 +504,7 @@
   bottom: auto;
   background-image: url(../../assets/images/iLightbox/dark-skin/arrow-prev-vertical-icon-64.png);
   background-position: 50% 35%;
+  -webkit-border-radius: 0;
   border-radius: 0;
   -webkit-border-bottom-left-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
@@ -490,6 +520,7 @@
   height: 95px;
   background-image: url(../../assets/images/iLightbox/dark-skin/arrow-next-icon-64.png);
   background-position: 65% 50%;
+  -webkit-border-radius: 0;
   border-radius: 0;
   -webkit-border-bottom-left-radius: 5px;
   -webkit-border-top-left-radius: 5px;
@@ -501,6 +532,7 @@
   left: 0;
   background-image: url(../../assets/images/iLightbox/dark-skin/arrow-prev-icon-64.png);
   background-position: 35% 50%;
+  -webkit-border-radius: 0;
   border-radius: 0;
   -webkit-border-bottom-right-radius: 5px;
   -webkit-border-top-right-radius: 5px;
@@ -512,7 +544,8 @@
   background: #FFF;
 }
 .ilightbox-loader.light {
-  box-shadow: #dacffc 0px 0px 85px, #dacffc 0px 0px 85px;
+  -webkit-box-shadow: hsl(255, 90%, 90%) 0px 0px 85px, hsl(255, 90%, 90%) 0px 0px 85px;
+  box-shadow: hsl(255, 90%, 90%) 0px 0px 85px, hsl(255, 90%, 90%) 0px 0px 85px;
 }
 .ilightbox-loader.light div {
   background: #FFF url(../../assets/images/iLightbox/light-skin/preloader.gif) no-repeat center;
@@ -520,7 +553,8 @@
 .ilightbox-holder.light {
   padding: 10px;
   background: #FFF;
-  box-shadow: 0 0 15px #dacffc;
+  -webkit-box-shadow: 0 0 15px hsl(255, 90%, 90%);
+  box-shadow: 0 0 15px hsl(255, 90%, 90%);
 }
 .ilightbox-holder.light .ilightbox-container .ilightbox-caption {
   background: url(../../assets/images/iLightbox/light-skin/caption-bg.png);
@@ -529,6 +563,7 @@
 }
 .ilightbox-holder.light .ilightbox-container .ilightbox-social {
   background: url(../../assets/images/iLightbox/light-skin/caption-bg.png);
+  -webkit-border-radius: 2px;
   border-radius: 2px;
 }
 .ilightbox-holder.light .ilightbox-alert {
@@ -540,7 +575,9 @@
   top: 8px;
   left: 8px;
   height: 23px;
-  box-shadow: 0 0 7px #dacffc;
+  -webkit-box-shadow: 0 0 7px hsl(255, 90%, 90%);
+  box-shadow: 0 0 7px hsl(255, 90%, 90%);
+  -webkit-border-radius: 3px;
   border-radius: 3px;
 }
 .ilightbox-toolbar.light a {
@@ -595,14 +632,16 @@
   width: 100%;
   height: 40px;
   text-align: center;
-  box-shadow: 0 0 25px #dacffc;
+  -webkit-box-shadow: 0 0 25px hsl(255, 90%, 90%);
+  box-shadow: 0 0 25px hsl(255, 90%, 90%);
 }
 .isMobile .ilightbox-toolbar.light a {
   display: inline-block;
   float: none;
   width: 50px;
   height: 40px;
-  background-size: 50%;
+  -webkit-background-size: 50% 50%;
+          background-size: 50%;
   background-position: 50% !important;
 }
 .isMobile .ilightbox-toolbar.light a:hover {
@@ -630,7 +669,8 @@
 }
 /* Style thumbnails */
 .ilightbox-thumbnails.light .ilightbox-thumbnails-grid .ilightbox-thumbnail img {
-  box-shadow: 0 0 6px #dacffc;
+  -webkit-box-shadow: 0 0 6px hsl(255, 90%, 90%);
+          box-shadow: 0 0 6px hsl(255, 90%, 90%);
 }
 .ilightbox-thumbnails.light .ilightbox-thumbnails-grid .ilightbox-thumbnail .ilightbox-thumbnail-video {
   background: url(../../assets/images/iLightbox/light-skin/thumb-overlay-play.png) no-repeat center;
@@ -688,7 +728,8 @@
   margin: auto;
   background: url(../../assets/images/iLightbox/light-skin/arrow-next-vertical-icon-64.png) no-repeat 50% 65%;
   background-color: #FFF;
-  box-shadow: 0 0 15px #dacffc;
+  -webkit-box-shadow: 0 0 15px hsl(255, 90%, 90%);
+  box-shadow: 0 0 15px hsl(255, 90%, 90%);
 }
 .ilightbox-button.ilightbox-button.light:hover {
   background-color: #f6f3ff;
@@ -709,6 +750,7 @@
   height: 95px;
   background-image: url(../../assets/images/iLightbox/light-skin/arrow-next-icon-64.png);
   background-position: 65% 50%;
+  -webkit-border-radius: 0;
   border-radius: 0;
   -webkit-border-bottom-left-radius: 5px;
   -webkit-border-top-left-radius: 5px;
@@ -720,6 +762,7 @@
   left: 0;
   background-image: url(../../assets/images/iLightbox/light-skin/arrow-prev-icon-64.png);
   background-position: 35% 50%;
+  -webkit-border-radius: 0;
   border-radius: 0;
   -webkit-border-bottom-right-radius: 5px;
   -webkit-border-top-right-radius: 5px;
@@ -730,6 +773,7 @@
   background: #2B2B2B;
 }
 .ilightbox-loader.mac {
+  -webkit-box-shadow: black 0px 0px 85px, black 0px 0px 85px;
   box-shadow: black 0px 0px 85px, black 0px 0px 85px;
 }
 .ilightbox-loader.mac div {
@@ -738,6 +782,7 @@
 .ilightbox-holder.mac {
   padding: 2px;
   background: rgba(35, 35, 35, 0.9);
+  -webkit-box-shadow: 0 38px 30px -18px rgba(0, 0, 0, 0.6);
   box-shadow: 0 38px 30px -18px rgba(0, 0, 0, 0.6);
 }
 .ilightbox-holder.mac .ilightbox-container .ilightbox-caption {
@@ -747,7 +792,9 @@
   left: 15px;
   right: 15px;
   border: rgba(255, 255, 255, 0.8) 1px solid;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
   border-radius: 3px;
 }
 .ilightbox-holder.mac .ilightbox-container .ilightbox-social {
@@ -764,8 +811,11 @@
   background: #414141;
   /* Old browsers */
   /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #414141), color-stop(40%, #414141), color-stop(60%, #323232), color-stop(100%, #323232));
   /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #414141 0%, #414141 40%, #323232 60%, #323232 100%);
   /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #414141 0%, #414141 40%, #323232 60%, #323232 100%);
   /* Opera 11.10+ */
   /* IE10+ */
   background: -webkit-gradient(linear, left top, left bottom, from(#414141), color-stop(40%, #414141), color-stop(60%, #323232), to(#323232));
@@ -775,6 +825,7 @@
   /* IE7-9 */
   border: rgba(30, 30, 30, 0.6) 1px solid;
   overflow: hidden;
+  -webkit-border-radius: 3px;
   border-radius: 3px;
 }
 .ilightbox-toolbar.mac a {
@@ -816,8 +867,11 @@
   background: #414141;
   /* Old browsers */
   /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #414141), color-stop(40%, #414141), color-stop(60%, #323232), color-stop(100%, #323232));
   /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #414141 0%, #414141 40%, #323232 60%, #323232 100%);
   /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #414141 0%, #414141 40%, #323232 60%, #323232 100%);
   /* Opera 11.10+ */
   /* IE10+ */
   background: -webkit-gradient(linear, left top, left bottom, from(#414141), color-stop(40%, #414141), color-stop(60%, #323232), to(#323232));
@@ -829,6 +883,7 @@
   border-top: rgba(30, 30, 30, 0.6) 1px solid;
   overflow: hidden;
   text-align: center;
+  -webkit-border-radius: 3px;
   border-radius: 3px;
 }
 .isMobile .ilightbox-toolbar.mac a {
@@ -836,7 +891,8 @@
   float: none;
   width: 50px;
   height: 40px;
-  background-size: 50%;
+  -webkit-background-size: 50% 50%;
+          background-size: 50%;
   background-position: 50% !important;
 }
 .isMobile .ilightbox-toolbar.mac a.ilightbox-fullscreen {
@@ -855,12 +911,14 @@
 }
 .isMobile .ilightbox-toolbar.mac a.ilightbox-play {
   background-image: url(../../assets/images/iLightbox/mac-skin/play-50.png);
-  background-size: 80%;
+  -webkit-background-size: 80% 80%;
+          background-size: 80%;
   background-position: 70% 50% !important;
 }
 .isMobile .ilightbox-toolbar.mac a.ilightbox-pause {
   background-image: url(../../assets/images/iLightbox/mac-skin/pause-50.png);
-  background-size: 80%;
+  -webkit-background-size: 80% 80%;
+          background-size: 80%;
 }
 .ilightbox-holder.mac .ilightbox-inner-toolbar .ilightbox-title {
   font-size: 18px;
@@ -874,11 +932,14 @@
 }
 .ilightbox-holder.mac .ilightbox-inner-toolbar .ilightbox-toolbar a {
   float: left;
+  -webkit-border-radius: 0;
   border-radius: 0;
 }
 /* Style thumbnails */
 .ilightbox-thumbnails.mac .ilightbox-thumbnails-grid .ilightbox-thumbnail img {
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+          box-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+  -webkit-border-radius: 0;
   border-radius: 0;
 }
 .ilightbox-thumbnails.mac .ilightbox-thumbnails-grid .ilightbox-thumbnail .ilightbox-thumbnail-video {
@@ -909,8 +970,11 @@
   background: #414141;
   /* Old browsers */
   /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #414141), color-stop(40%, #414141), color-stop(60%, #323232), color-stop(100%, #323232));
   /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #414141 0%, #414141 40%, #323232 60%, #323232 100%);
   /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #414141 0%, #414141 40%, #323232 60%, #323232 100%);
   /* Opera 11.10+ */
   /* IE10+ */
   background: -webkit-gradient(linear, left top, left bottom, from(#414141), color-stop(40%, #414141), color-stop(60%, #323232), to(#323232));
@@ -919,6 +983,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#414141', endColorstr='#323232', GradientType=0);
   /* IE7-9 */
   border: rgba(30, 30, 30, 0.6) 1px solid;
+  -webkit-border-radius: 0;
   border-radius: 0;
   -webkit-border-top-left-radius: 5px;
   -webkit-border-top-right-radius: 5px;
@@ -929,8 +994,11 @@
   background: #4b4b4b;
   /* Old browsers */
   /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4b4b4b), color-stop(40%, #4b4b4b), color-stop(60%, #3c3c3c), color-stop(100%, #3c3c3c));
   /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #4b4b4b 0%, #4b4b4b 40%, #3c3c3c 60%, #3c3c3c 100%);
   /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #4b4b4b 0%, #4b4b4b 40%, #3c3c3c 60%, #3c3c3c 100%);
   /* Opera 11.10+ */
   /* IE10+ */
   background: -webkit-gradient(linear, left top, left bottom, from(#4b4b4b), color-stop(40%, #4b4b4b), color-stop(60%, #3c3c3c), to(#3c3c3c));
@@ -942,6 +1010,7 @@
 .ilightbox-button.ilightbox-prev-button.mac {
   top: 0;
   bottom: auto;
+  -webkit-border-radius: 0;
   border-radius: 0;
   -webkit-border-bottom-left-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
@@ -962,6 +1031,7 @@
   bottom: 0;
   width: 55px;
   height: 95px;
+  -webkit-border-radius: 0;
   border-radius: 0;
   -webkit-border-bottom-left-radius: 5px;
   -webkit-border-top-left-radius: 5px;
@@ -971,6 +1041,7 @@
 .ilightbox-button.ilightbox-prev-button.mac.horizontal {
   right: auto;
   left: 0;
+  -webkit-border-radius: 0;
   border-radius: 0;
   -webkit-border-bottom-right-radius: 5px;
   -webkit-border-top-right-radius: 5px;
@@ -987,6 +1058,7 @@
   background: #000;
 }
 .ilightbox-loader.metro-black {
+  -webkit-box-shadow: #000000 0px 0px 55px, rgba(0, 0, 0, 0.3) 0px 0px 55px;
   box-shadow: #000000 0px 0px 55px, rgba(0, 0, 0, 0.3) 0px 0px 55px;
 }
 .ilightbox-loader.metro-black div {
@@ -995,11 +1067,13 @@
 .ilightbox-holder.metro-black {
   padding: 3px;
   background: #000;
+  -webkit-box-shadow: 0 0 45px rgba(0, 0, 0, 0.8);
   box-shadow: 0 0 45px rgba(0, 0, 0, 0.8);
 }
 .ilightbox-holder.metro-black .ilightbox-container .ilightbox-caption {
   background: url(../../assets/images/iLightbox/metro-black-skin/caption-bg.png) repeat-x bottom;
-  background-size: 100% 100%;
+  -webkit-background-size: 100% 100%;
+          background-size: 100% 100%;
   left: 0;
   right: 0;
   color: #FFF;
@@ -1008,6 +1082,7 @@
 }
 .ilightbox-holder.metro-black .ilightbox-container .ilightbox-social {
   background: url(../../assets/images/iLightbox/metro-black-skin/social-bg.png);
+  -webkit-border-radius: 2px;
   border-radius: 2px;
 }
 .ilightbox-holder.metro-black .ilightbox-alert {
@@ -1036,6 +1111,7 @@
   filter: alpha(opacity=20);
   cursor: default;
   background-color: #000;
+  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
 }
 .ilightbox-toolbar.metro-black a.ilightbox-fullscreen {
@@ -1061,7 +1137,8 @@
   float: none;
   width: 50px;
   height: 40px;
-  background-size: 50%;
+  -webkit-background-size: 50% 50%;
+          background-size: 50%;
   background-position: 50%;
 }
 .isMobile .ilightbox-toolbar.metro-black a.ilightbox-fullscreen {
@@ -1113,7 +1190,9 @@
 }
 .ilightbox-thumbnails.metro-black .ilightbox-thumbnails-grid .ilightbox-thumbnail img {
   border: 2px solid #000;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  -webkit-border-radius: 0;
   border-radius: 0;
 }
 .ilightbox-thumbnails.metro-black .ilightbox-thumbnails-grid .ilightbox-thumbnail .ilightbox-thumbnail-video {
@@ -1167,6 +1246,7 @@
   background: #FFF;
 }
 .ilightbox-loader.metro-white {
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 55px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 55px;
 }
 .ilightbox-loader.metro-white div {
@@ -1175,11 +1255,13 @@
 .ilightbox-holder.metro-white {
   padding: 3px;
   background: #FFF;
+  -webkit-box-shadow: 0 0 45px rgba(0, 0, 0, 0.2);
   box-shadow: 0 0 45px rgba(0, 0, 0, 0.2);
 }
 .ilightbox-holder.metro-white .ilightbox-container .ilightbox-caption {
   background: url(../../assets/images/iLightbox/metro-white-skin/caption-bg.png) repeat-x bottom;
-  background-size: 100% 100%;
+  -webkit-background-size: 100% 100%;
+          background-size: 100% 100%;
   left: 0;
   right: 0;
   color: #000;
@@ -1188,6 +1270,7 @@
 }
 .ilightbox-holder.metro-white .ilightbox-container .ilightbox-social {
   background: url(../../assets/images/iLightbox/metro-white-skin/social-bg.png);
+  -webkit-border-radius: 2px;
   border-radius: 2px;
 }
 .ilightbox-holder.metro-white .ilightbox-alert {
@@ -1244,6 +1327,7 @@
   width: 100%;
   height: 40px;
   text-align: center;
+  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
 }
 .isMobile .ilightbox-toolbar.metro-white a,
@@ -1252,7 +1336,8 @@
   float: none;
   width: 50px;
   height: 40px;
-  background-size: 50%;
+  -webkit-background-size: 50% 50%;
+          background-size: 50%;
   background-position: 50%;
 }
 .isMobile .ilightbox-toolbar.metro-white a.ilightbox-fullscreen {
@@ -1316,7 +1401,9 @@
 }
 .ilightbox-thumbnails.metro-white .ilightbox-thumbnails-grid .ilightbox-thumbnail img {
   border: 2px solid #FFF;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 0;
   border-radius: 0;
 }
 .ilightbox-thumbnails.metro-white .ilightbox-thumbnails-grid .ilightbox-thumbnail .ilightbox-thumbnail-video {
@@ -1384,7 +1471,8 @@
   background: #333 url(../../assets/images/iLightbox/parade-skin/pattern.png);
 }
 .ilightbox-loader.parade {
-  box-shadow: 0 0 35px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 35px hsla(0, 0%, 0%, 0.3);
+  box-shadow: 0 0 35px hsla(0, 0%, 0%, 0.3);
 }
 .ilightbox-loader.parade div {
   background: white url(../../assets/images/iLightbox/parade-skin/preloader.gif) no-repeat center;
@@ -1393,6 +1481,7 @@
   padding: 10px;
   background: #333;
   background: rgba(0, 0, 0, 0.25);
+  -webkit-border-radius: 4px;
   border-radius: 4px;
 }
 .ilightbox-holder.parade .ilightbox-container {
@@ -1405,6 +1494,7 @@
 }
 .ilightbox-holder.parade .ilightbox-container .ilightbox-social {
   background: url(../../assets/images/iLightbox/parade-skin/caption-bg.png);
+  -webkit-border-radius: 2px;
   border-radius: 2px;
 }
 .ilightbox-holder.parade .ilightbox-alert {
@@ -1437,7 +1527,8 @@
   background-position: -29px -33px;
 }
 .ilightbox-thumbnails.parade .ilightbox-thumbnails-grid .ilightbox-thumbnail img {
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+          box-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
 }
 .ilightbox-thumbnails.parade .ilightbox-thumbnails-grid .ilightbox-thumbnail .ilightbox-thumbnail-video {
   background: url(../../assets/images/iLightbox/parade-skin/thumb-overlay-play.png) no-repeat center;
@@ -1460,12 +1551,14 @@
   background: #0F0F0F;
 }
 .ilightbox-loader.smooth {
+  -webkit-box-shadow: #000000 0px 0px 55px, rgba(0, 0, 0, 0.3) 0px 0px 55px;
   box-shadow: #000000 0px 0px 55px, rgba(0, 0, 0, 0.3) 0px 0px 55px;
 }
 .ilightbox-loader.smooth div {
   background: #000 url(../../assets/images/iLightbox/smooth-skin/preloader.gif) no-repeat center;
 }
 .ilightbox-holder.smooth {
+  -webkit-box-shadow: 0 0 45px rgba(0, 0, 0, 0.9);
   box-shadow: 0 0 45px rgba(0, 0, 0, 0.9);
 }
 .ilightbox-holder.smooth .ilightbox-container > * {
@@ -1479,6 +1572,7 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+  -webkit-box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.11);
   box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.11);
 }
 .ilightbox-holder.smooth .ilightbox-container .ilightbox-caption {
@@ -1489,6 +1583,7 @@
   bottom: 1px;
   color: #FFF;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.75);
+  -webkit-border-radius: 0;
   border-radius: 0;
 }
 .ilightbox-holder.smooth .ilightbox-container .ilightbox-social {
@@ -1496,6 +1591,7 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
   left: 1px;
   top: 1px;
+  -webkit-border-radius: 0;
   border-radius: 0;
 }
 .ilightbox-holder.smooth .ilightbox-alert {
@@ -1524,6 +1620,7 @@
   filter: alpha(opacity=20);
   cursor: default;
   background-color: #000;
+  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
 }
 .ilightbox-toolbar.smooth a.ilightbox-fullscreen {
@@ -1549,7 +1646,8 @@
   float: none;
   width: 50px;
   height: 40px;
-  background-size: 50%;
+  -webkit-background-size: 50% 50%;
+          background-size: 50%;
   background-position: 50%;
 }
 .isMobile .ilightbox-toolbar.smooth a.ilightbox-fullscreen {
@@ -1603,7 +1701,9 @@
   padding: 10px;
 }
 .ilightbox-thumbnails.smooth .ilightbox-thumbnails-grid .ilightbox-thumbnail img {
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  -webkit-border-radius: 0;
   border-radius: 0;
 }
 .ilightbox-thumbnails.smooth .ilightbox-thumbnails-grid .ilightbox-thumbnail:after {
@@ -1616,7 +1716,9 @@
   bottom: 10px;
   margin: auto;
   pointer-events: none;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.11);
   box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.11);
 }
 .ilightbox-thumbnails.smooth.ilightbox-vertical .ilightbox-thumbnails-grid .ilightbox-thumbnail {

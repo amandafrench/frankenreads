@@ -79,7 +79,9 @@ if ( fusion_is_element_enabled( 'fusion_syntax_highlighter' ) ) {
 						'margin_bottom'                => $fusion_settings->get( 'syntax_highlighter_margin', 'bottom' ),
 						'margin_right'                 => $fusion_settings->get( 'syntax_highlighter_margin', 'right' ),
 						'theme'                        => $fusion_settings->get( 'syntax_highlighter_theme' ),
-					), $args
+					),
+					$args,
+					'fusion_syntax_highlighter'
 				);
 
 				// Validate margin values.
@@ -94,7 +96,7 @@ if ( fusion_is_element_enabled( 'fusion_syntax_highlighter' ) ) {
 				// Validate font size value.
 				$defaults['font_size'] = FusionBuilder::validate_shortcode_attr_value( $defaults['font_size'], 'px' );
 
-				$defaults = apply_filters( 'fusion_builder_default_args', $defaults, 'fusion_syntax_highlighter' );
+				$defaults = apply_filters( 'fusion_builder_default_args', $defaults, 'fusion_syntax_highlighter', $args );
 
 				$this->args = $defaults;
 
@@ -299,7 +301,8 @@ if ( fusion_is_element_enabled( 'fusion_syntax_highlighter' ) ) {
 				global $fusion_settings;
 
 				$code_mirror_themes = apply_filters(
-					'fusion_syntax_highlighter_themes', array(
+					'fusion_syntax_highlighter_themes',
+					array(
 						'default'      => esc_attr__( 'Light 1', 'fusion-builder' ),
 						'elegant'      => esc_attr__( 'Light 2', 'fusion-builder' ),
 						'hopscotch'    => esc_attr__( 'Dark 1', 'fusion-builder' ),
@@ -504,7 +507,8 @@ function fusion_element_syntax_highlighter() {
 	global $fusion_settings;
 
 	$code_mirror_themes = apply_filters(
-		'fusion_syntax_highlighter_themes', array(
+		'fusion_syntax_highlighter_themes',
+		array(
 			''             => esc_attr__( 'Default', 'fusion-builder' ),
 			'default'      => esc_attr__( 'Light 1', 'fusion-builder' ),
 			'elegant'      => esc_attr__( 'Light 2', 'fusion-builder' ),

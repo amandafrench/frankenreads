@@ -4,7 +4,7 @@
 Plugin Name: Fusion Builder
 Plugin URI: http://www.theme-fusion.com
 Description: ThemeFusion Page Builder Plugin
-Version: 1.6
+Version: 1.7.2
 Author: ThemeFusion
 Author URI: http://www.theme-fusion.com
 */
@@ -21,7 +21,7 @@ if ( ! defined( 'FUSION_BUILDER_DEV_MODE' ) ) {
 
 // Plugin version.
 if ( ! defined( 'FUSION_BUILDER_VERSION' ) ) {
-	define( 'FUSION_BUILDER_VERSION', '1.6' );
+	define( 'FUSION_BUILDER_VERSION', '1.7.2' );
 }
 // Plugin Folder Path.
 if ( ! defined( 'FUSION_BUILDER_PLUGIN_DIR' ) ) {
@@ -152,15 +152,16 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 			global $wp_rich_edit, $is_gecko, $is_opera, $is_safari, $is_chrome, $is_IE, $is_edge;
 
 			if ( ! isset( $wp_rich_edit ) ) {
+				// @codingStandardsIgnoreLine WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 				$wp_rich_edit = false;
 
 				// @codingStandardsIgnoreLine
 				if ( 'true' == @get_user_option( 'rich_editing' ) || ! @is_user_logged_in() ) { // default to 'true' for logged out users.
 					if ( $is_safari ) {
-						// @codingStandardsIgnoreLine
-						$wp_rich_edit = ! wp_is_mobile() || ( preg_match( '!AppleWebKit/(\d+)!', $_SERVER['HTTP_USER_AGENT'], $match ) && intval( $match[1] ) >= 534 );
-					// @codingStandardsIgnoreLine
+						// @codingStandardsIgnoreLine WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+						$wp_rich_edit = ! wp_is_mobile() || ( preg_match( '!AppleWebKit/(\d+)!', $_SERVER['HTTP_USER_AGENT'], $match ) && intval( $match[1] ) >= 534 ); // WPCS: CSRF ok, sanitization ok.
 					} elseif ( $is_gecko || $is_chrome || $is_IE || $is_edge || ( $is_opera && ! wp_is_mobile() ) ) {
+						// @codingStandardsIgnoreLine WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 						$wp_rich_edit = true;
 					}
 				}
@@ -292,6 +293,9 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 
 			// Add admin body classes.
 			add_action( 'admin_body_class', array( $this, 'admin_body_class' ) );
+
+			// Activate ConvertPlug element on plugin activation after Fusion Builder.
+			add_action( 'after_cp_activate', array( $this, 'activate_convertplug_element' ) );
 		}
 
 		/**
@@ -404,6 +408,19 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 
 			$fusion_cache = new Fusion_Cache();
 			$fusion_cache->reset_all_caches();
+		}
+
+		/**
+		 * Activate Convertplug element on plugin activation.
+		 *
+		 * @static
+		 * @access public
+		 * @since 1.7
+		 */
+		public function activate_convertplug_element() {
+			if ( function_exists( 'fusion_builder_auto_activate_element' ) ) {
+				fusion_builder_auto_activate_element( 'fusion_convert_plus' );
+			}
 		}
 
 		/**
@@ -662,7 +679,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 				return $post_id;
 			}
 
-			if ( ! isset( $_POST['fusion_settings_nonce'] ) || ! wp_verify_nonce( $_POST['fusion_settings_nonce'], basename( __FILE__ ) ) ) {
+			if ( ! isset( $_POST['fusion_settings_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['fusion_settings_nonce'] ) ), basename( __FILE__ ) ) ) {
 				return $post_id;
 			}
 
@@ -672,7 +689,7 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 			}
 
 			if ( isset( $_POST['fusion_use_builder'] ) ) {
-				update_post_meta( $post_id, 'fusion_builder_status', sanitize_text_field( $_POST['fusion_use_builder'] ) );
+				update_post_meta( $post_id, 'fusion_builder_status', sanitize_text_field( wp_unslash( $_POST['fusion_use_builder'] ) ) );
 			} else {
 				delete_post_meta( $post_id, 'fusion_builder_status' );
 			}
@@ -1148,7 +1165,9 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 
 				// Localize Scripts.
 				wp_localize_script(
-					'fusion_builder_importer_js', 'fusionBuilderConfig', array(
+					'fusion_builder_importer_js',
+					'fusionBuilderConfig',
+					array(
 						'ajaxurl' => admin_url( 'admin-ajax.php' ),
 						'fusion_import_nonce' => wp_create_nonce( 'fusion_import_nonce' ),
 					)
@@ -1201,6 +1220,9 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 				// FontAwesome.
 				wp_enqueue_style( 'fontawesome', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/fontawesome/font-awesome.css', array(), FUSION_BUILDER_VERSION );
 				wp_enqueue_script( 'fontawesome-shim-script', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/fontawesome/js/fa-v4-shims.js', array(), FUSION_BUILDER_VERSION );
+
+				wp_enqueue_script( 'fuse-script', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/min/js/library/fuse.js', array(), FUSION_BUILDER_VERSION );
+				wp_enqueue_script( 'fontawesome-search-script', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/fontawesome/js/icons-search.js', array(), FUSION_BUILDER_VERSION );
 
 				// Icomoon font.
 				wp_enqueue_style( 'fusion-font-icomoon', FUSION_BUILDER_PLUGIN_URL . 'inc/lib/assets/fonts/icomoon-admin/icomoon.css', false, FUSION_BUILDER_VERSION, 'all' );
@@ -1276,7 +1298,9 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 
 					// Localize Scripts.
 					wp_localize_script(
-						'fusion_builder_app_js', 'fusionBuilderConfig', array(
+						'fusion_builder_app_js',
+						'fusionBuilderConfig',
+						array(
 							'ajaxurl'                   => admin_url( 'admin-ajax.php' ),
 							'fusion_load_nonce'         => wp_create_nonce( 'fusion_load_nonce' ),
 							'fontawesomeicons'          => fusion_get_icons_array(),
@@ -1298,7 +1322,9 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 
 					// Localize Script.
 					wp_localize_script(
-						'fusion_builder', 'fusionBuilderConfig', array(
+						'fusion_builder',
+						'fusionBuilderConfig',
+						array(
 							'ajaxurl'                   => admin_url( 'admin-ajax.php' ),
 							'fusion_load_nonce'         => wp_create_nonce( 'fusion_load_nonce' ),
 							'fontawesomeicons'          => fusion_get_icons_array(),
@@ -1383,10 +1409,14 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 			require_once FUSION_BUILDER_PLUGIN_DIR . 'inc/helpers.php';
 			require_once FUSION_BUILDER_PLUGIN_DIR . 'inc/class-fusion-builder-options.php';
 			require_once FUSION_BUILDER_PLUGIN_DIR . 'inc/class-fusion-builder-dynamic-css.php';
+			require_once FUSION_BUILDER_PLUGIN_DIR . 'inc/class-fusion-builder-gutenberg.php';
 
 			require_once FUSION_BUILDER_PLUGIN_DIR . 'inc/class-fusion-builder-element.php';
+
 			Fusion_Builder_Options::get_instance();
 			$this->fusion_builder_dynamic_css = new Fusion_Builder_Dynamic_CSS();
+
+			$this->fusion_builder_gutenberg = new Fusion_Builder_Gutenberg();
 
 			// Load globals media vars.
 			$this->init_global_vars();
@@ -1444,11 +1474,11 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 					$builder_enabled_data = ' data-enabled="1"';
 				}
 
-				$editor_label   = ( $builder_active ) ? esc_attr__( 'Use Default Editor', 'fusion-builder' ) : esc_attr__( 'Use Fusion Builder', 'fusion-builder' );
+				$editor_label   = ( $builder_active ) ? esc_attr__( 'Edit With Default Editor', 'fusion-builder' ) : esc_attr__( 'Edit With Fusion Builder', 'fusion-builder' );
 				$builder_hidden = ( $builder_active ) ? ' class="fusion_builder_hidden"' : '';
 				$builder_active = ( $builder_active ) ? ' fusion_builder_is_active' : '';
 
-				echo '<a href="#" id="fusion_toggle_builder" data-builder="' . esc_attr__( 'Use Fusion Builder', 'fusion-builder' ) . '" data-editor="' . esc_attr__( 'Use Default Editor', 'fusion-builder' ) . '"' . $builder_enabled_data . ' class="button button-primary button-large' . $builder_active . '">' . $editor_label . '</a><div id="fusion_main_editor_wrap"' . $builder_hidden . '>'; // WPCS: XSS ok.
+				echo '<a href="#" id="fusion_toggle_builder" data-builder="' . esc_attr__( 'Edit With Fusion Builder', 'fusion-builder' ) . '" data-editor="' . esc_attr__( 'Edit With Default Editor', 'fusion-builder' ) . '"' . $builder_enabled_data . ' class="fusiona-FB_logo_black button button-primary button-large' . $builder_active . '">' . $editor_label . '</a><div id="fusion_main_editor_wrap"' . $builder_hidden . '>'; // WPCS: XSS ok.
 			}
 		}
 
@@ -1596,20 +1626,21 @@ if ( ! class_exists( 'FusionBuilder' ) ) :
 		 * @static
 		 * @access public
 		 * @since 1.0
-		 * @param  array $defaults Array of defaults.
-		 * @param  array $args     Array with user set param values.
+		 * @param  array  $defaults  Array of defaults.
+		 * @param  array  $args      Array with user set param values.
+		 * @param  string $shortcode Shortcode name.
 		 * @return array
 		 */
-		public static function set_shortcode_defaults( $defaults, $args ) {
+		public static function set_shortcode_defaults( $defaults, $args, $shortcode = false ) {
 
 			if ( ! $args ) {
 				$args = array();
 			}
 
-			$args = shortcode_atts( $defaults, $args );
+			$args = shortcode_atts( $defaults, $args, $shortcode );
 
 			foreach ( $args as $key => $value ) {
-				if ( '' === $value || '|' === $value ) {
+				if ( ( '' === $value || '|' === $value ) && isset( $defaults[ $key ] ) ) {
 					$args[ $key ] = $defaults[ $key ];
 				}
 			}

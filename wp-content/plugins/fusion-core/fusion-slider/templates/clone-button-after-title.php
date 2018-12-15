@@ -10,8 +10,9 @@
 ?>
 <div id="fusion-slide-clone">
 	<?php
-	$post_id = 0;
+	$post_id = 0; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 	if ( isset( $_GET['post'] ) ) {
+		// @codingStandardsIgnoreLine WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 		$post_id = wp_unslash( $_GET['post'] ); // WPCS: sanitization ok.
 	}
 	?>

@@ -117,7 +117,7 @@ class Fusion_Settings {
 	 * @access public
 	 * @var bool
 	 */
-	public static $is_updating  = false;
+	public static $is_updating = false;
 
 	/**
 	 * Access the single instance of this class.
@@ -149,7 +149,7 @@ class Fusion_Settings {
 		add_action( 'fusion_options_added', array( $this, 'get_available_options' ) );
 
 		add_action( 'wp_loaded', array( $this, 'get_available_options' ) );
-		if ( ! self::$is_updating && $_GET && isset( $_GET['avada_update'] ) && '1' === $_GET['avada_update'] ) {
+		if ( ! self::$is_updating && $_GET && isset( $_GET['avada_update'] ) && '1' === $_GET['avada_update'] ) { // WPCS: CSRF ok.
 			self::$is_updating = true;
 		}
 	}
@@ -292,7 +292,7 @@ class Fusion_Settings {
 
 				// We don't want a subset so just return the value.
 				return $value;
-			} // End if().
+			}
 		} else {
 
 			// If we've reached this point then the setting has not been set in the db.
@@ -307,7 +307,7 @@ class Fusion_Settings {
 				return $default;
 			}
 			return apply_filters( "avada_setting_get_{$setting}", $this->get_default( $setting ) );
-		} // End if().
+		}
 	}
 
 	/**
@@ -318,7 +318,7 @@ class Fusion_Settings {
 	 */
 	public function set( $setting, $value ) {
 
-		$settings = self::$saved_options;
+		$settings             = self::$saved_options;
 		$settings[ $setting ] = $value;
 		update_option( self::get_option_name(), $settings );
 
@@ -387,16 +387,16 @@ class Fusion_Settings {
 			$link_status = $this->get( 'link_image_rollover' );
 			$zoom_status = $this->get( 'zoom_image_rollover' );
 			if ( $link_status && $zoom_status ) {
-				$setting_value = __( 'Link & Zoom', 'Avada' );
+				$setting_value = __( 'Link & Zoom', 'fusion-builder' );
 			}
 			if ( $link_status && ! $zoom_status ) {
-				$setting_value = esc_attr__( 'Link', 'Avada' );
+				$setting_value = esc_attr__( 'Link', 'fusion-builder' );
 			}
 			if ( ! $link_status && $zoom_status ) {
-				$setting_value = esc_attr__( 'Zoom', 'Avada' );
+				$setting_value = esc_attr__( 'Zoom', 'fusion-builder' );
 			}
 			if ( ! $link_status && ! $zoom_status ) {
-				$setting_value = esc_attr__( 'No Icons', 'Avada' );
+				$setting_value = esc_attr__( 'No Icons', 'fusion-builder' );
 			}
 		}
 		if ( 'menu' !== $type ) {
@@ -406,12 +406,16 @@ class Fusion_Settings {
 			}
 			if ( 'header_bg_opacity' === $setting ) {
 				$setting_value = Fusion_Color::new_color( $this->get( 'header_bg_color' ) )->alpha;
-				$setting = 'header_bg_color';
+				$setting       = 'header_bg_color';
 			}
-			if ( is_array( $setting_value ) && isset( $setting_value['all'] ) ) {
-				$setting_value = $setting_value['all'];
+			if ( is_array( $setting_value ) ) {
+				if ( isset( $setting_value['all'] ) ) {
+					$setting_value = $setting_value['all'];
+				} else {
+					$setting_value = implode( '|', $setting_value );
+				}
 			}
-			$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
+			$setting_link = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
 		}
 
 		switch ( $type ) {
@@ -428,29 +432,29 @@ class Fusion_Settings {
 				}
 				$setting_link = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
 				/* translators: The value. */
-				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
+				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'fusion-builder' ), $setting_link );
 				break;
 
 			case 'showhide':
-				$setting_value = ( 1 == $setting_value ) ? esc_attr__( 'Show', 'Avada' ) : esc_attr__( 'Hide', 'Avada' );
+				$setting_value = ( 1 == $setting_value ) ? esc_attr__( 'Show', 'fusion-builder' ) : esc_attr__( 'Hide', 'fusion-builder' ); // WPCS: loose comparison ok.
 				$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
 				/* translators: The value. */
-				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
+				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'fusion-builder' ), $setting_link );
 				break;
 
 			case 'yesno':
-				$setting_value = ( 1 == $setting_value ) ? esc_attr__( 'Yes', 'Avada' ) : esc_attr__( 'No', 'Avada' );
+				$setting_value = ( 1 == $setting_value ) ? esc_attr__( 'Yes', 'fusion-builder' ) : esc_attr__( 'No', 'fusion-builder' ); // WPCS: loose comparison ok.
 				$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
 				/* translators: The value. */
-				$setting_description = 'status_lightbox' === $setting ? sprintf( esc_attr__( '  Current value set to %s.', 'Avada' ), $setting_link ) : sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
+				$setting_description = 'status_lightbox' === $setting ? sprintf( esc_attr__( '  Current value set to %s.', 'fusion-builder' ), $setting_link ) : sprintf( esc_attr__( '  Default currently set to %s.', 'fusion-builder' ), $setting_link );
 
 				break;
 
 			case 'reverseyesno':
-				$setting_value = ( 1 === $setting_value || '1' === $setting_value || true === $setting_value ) ? esc_attr__( 'No', 'Avada' ) : esc_attr__( 'Yes', 'Avada' );
+				$setting_value = ( 1 === $setting_value || '1' === $setting_value || true === $setting_value ) ? esc_attr__( 'No', 'fusion-builder' ) : esc_attr__( 'Yes', 'fusion-builder' );
 				$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
 				/* translators: The value. */
-				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
+				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'fusion-builder' ), $setting_link );
 				break;
 
 			case 'menu':
@@ -459,42 +463,62 @@ class Fusion_Settings {
 				$menu_id   = ( isset( $locations[ $menu_name ] ) ) ? $locations[ $menu_name ] : false;
 				$menu      = ( false !== $menu_id ) ? wp_get_nav_menu_object( $menu_id ) : false;
 
-				$setting_value = ( false !== $menu ) ? $menu->name : esc_attr__( 'none', 'Avada' );
+				$setting_value = ( false !== $menu ) ? $menu->name : esc_attr__( 'none', 'fusion-builder' );
 				$setting_link  = '<a href="' . admin_url( 'nav-menus.php?action=locations' ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
 
 				/* translators: The value. */
-				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
+				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'fusion-builder' ), $setting_link );
 				break;
 
 			case 'sidebar':
 				$setting_value = ucwords( str_replace( '_', '', $setting_value ) );
 				$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
 				/* translators: The value. */
-				$setting_description = sprintf( esc_attr__( '  Global sidebar is currently active and will override selection with %s.', 'Avada' ), $setting_link );
+				$setting_description = sprintf( esc_attr__( '  Global sidebar is currently active and will override selection with %s.', 'fusion-builder' ), $setting_link );
 				break;
 
 			case 'range':
 				/* translators: The default value. */
-				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'Avada' ), $setting_link );
+				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'fusion-builder' ), $setting_link );
+				break;
+
+			case 'sortable':
+				$setting_value = ucwords( str_replace( array( 'sidebar', 'sidebar-2', '1-2', ',' ), array( 'sidebar 1', 'sidebar 2', '2', ', ' ), $setting_value ) );
+				$setting_link  = '<a href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer">' . $setting_value . '</a>';
+
+				/* translators: The default value. */
+				$setting_description = sprintf( esc_attr__( '  Default currently set to %s.', 'fusion-builder' ), $setting_link );
 				break;
 
 			case 'child':
 				/* translators: The element and its value. */
-				$setting_description = sprintf( esc_attr__( '  Leave empty for value set in parent options. If that is also empty, the %1$s value of %2$s will be used.', 'Avada' ), apply_filters( 'fusion_options_label', esc_attr__( 'Element Options', 'Avada' ) ), $setting_link );
+				$setting_description = sprintf( esc_attr__( '  Leave empty for value set in parent options. If that is also empty, the %1$s value of %2$s will be used.', 'fusion-builder' ), apply_filters( 'fusion_options_label', esc_attr__( 'Element Options', 'fusion-builder' ) ), $setting_link );
 				break;
 
 			default:
 				if ( '' !== $setting_value ) {
 					/* translators: The default value. */
-					$setting_description = sprintf( esc_attr__( '  Leave empty for default value of %s.', 'Avada' ), $setting_link );
+					$setting_description = sprintf( esc_attr__( '  Leave empty for default value of %s.', 'fusion-builder' ), $setting_link );
 				} else {
 					/* translators: %1$s is the link. %2$s is the link text. */
-					$setting_description = sprintf( __( '  Currently no default selected. Can be set globally from the <a %1$s>%2$s</a>.', 'Avada' ), 'href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer"', apply_filters( 'fusion_options_label', esc_attr__( 'Element Options', 'Avada' ) ) );
+					$setting_description = sprintf( __( '  Currently no default selected. Can be set globally from the <a %1$s>%2$s</a>.', 'fusion-builder' ), 'href="' . $this->get_setting_link( $setting, $subset ) . '" target="_blank" rel="noopener noreferrer"', apply_filters( 'fusion_options_label', esc_attr__( 'Element Options', 'fusion-builder' ) ) );
 				}
 				break;
-		}// End switch().
+		}
+		$default_value = '';
+		if ( is_array( $subset ) ) {
+			$default_value = array();
+			foreach ( $subset as $sub_subset ) {
+				$default_value[] = $this->get( $setting, $sub_subset );
+			}
+		} else {
+			$default_value = $this->get( $setting, $subset );
+		}
+		if ( is_array( $default_value ) ) {
+			$default_value = wp_json_encode( $default_value );
+		}
 
-		return '' === $reset ? $setting_description : $setting_description . '  <span class="fusion-builder-default-reset"><a href="#" id="default-' . $reset . '" class="fusion-range-default fusion-hide-from-atts" type="radio" name="' . $reset . '" value="" data-default="' . $this->get( $setting, $subset ) . '">' . esc_attr__( 'Reset to default.', 'Avada' ) . '</a><span>' . esc_attr__( 'Using default value.', 'Avada' ) . '</span></span>';
+		return '' === $reset ? $setting_description : $setting_description . '  <span class="fusion-builder-default-reset"><a href="#" id="default-' . $reset . '" class="fusion-range-default fusion-reset-to-default fusion-hide-from-atts" type="radio" name="' . $reset . '" value="" data-default="' . $default_value . '">' . esc_attr__( 'Reset to default.', 'fusion-builder' ) . '</a><span>' . esc_attr__( 'Using default value.', 'fusion-builder' ) . '</span></span>';
 	}
 
 	/**
@@ -507,9 +531,9 @@ class Fusion_Settings {
 	 */
 	public function get_setting_link( $setting = null, $subset = false ) {
 
-		$options_page = apply_filters( 'fusion_builder_options_url', admin_url( 'admin.php?page=fusion-element-options' ) );
+		$options_page  = apply_filters( 'fusion_builder_options_url', admin_url( 'admin.php?page=fusion-element-options' ) );
 		$option_anchor = '#' . $setting;
-		$language = '&lang=' . Fusion_Multilingual::get_active_language();
+		$language      = '&lang=' . Fusion_Multilingual::get_active_language();
 		return $options_page . $language . $option_anchor;
 	}
 
@@ -582,7 +606,7 @@ class Fusion_Settings {
 				update_option( self::$original_option_name . self::$lang, get_option( self::$original_option_name ) );
 			}
 			// Modify the option_name to include the language.
-			self::$option_name  = self::$original_option_name . self::$lang;
+			self::$option_name = self::$original_option_name . self::$lang;
 
 			// Set $lang_applied to true. Makes sure we don't do the above more than once.
 			self::$lang_applied = true;

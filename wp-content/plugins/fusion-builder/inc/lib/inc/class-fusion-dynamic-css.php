@@ -116,9 +116,6 @@ class Fusion_Dynamic_CSS {
 		add_filter( 'fusion_dynamic_css', array( $this, 'icomoon_css' ) );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_extra_files' ), 11 );
-
-		add_action( 'wp', array( $this, 'maintenance' ) );
-
 	}
 
 	/**
@@ -520,36 +517,6 @@ class Fusion_Dynamic_CSS {
 		}
 		return $files_css . $css;
 
-	}
-
-	/**
-	 * Clean up the CSS caches once every few days.
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 */
-	public function maintenance() {
-
-		$days = apply_filters( 'fusion_css_compiler_reset_days', 10 );
-
-		// If expired equals false.
-		if ( false === get_transient( 'fusion_css_cache_cleanup' ) ) {
-			$this->reset_all_caches();
-
-			// Get the root path for compiled files.
-			$upload_dir               = wp_upload_dir();
-			$root_compiled_files_path = apply_filters( 'fusion_compiler_filesystem_root_path', $upload_dir['basedir'] );
-			// Get the foldername.
-			$styles_foldername  = apply_filters( 'fusion_compiler_filesystem_folder_name', 'fusion-styles' );
-			// Delete the files/folders.
-			$folder_path   = $root_compiled_files_path . '/' . $styles_foldername;
-			$wp_filesystem = Fusion_Helper::init_filesystem();
-			$wp_filesystem->delete( $folder_path, true, 'd' );
-
-			// See you again in a few days!
-			set_transient( 'fusion_css_cache_cleanup', true, $days * DAY_IN_SECONDS );
-
-		}
 	}
 
 	/**

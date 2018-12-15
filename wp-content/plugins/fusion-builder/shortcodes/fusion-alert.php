@@ -88,7 +88,9 @@ if ( fusion_is_element_enabled( 'fusion_alert' ) ) {
 						'text_align'          => $fusion_settings->get( 'alert_box_text_align' ),
 						'text_transform'      => $fusion_settings->get( 'alert_box_text_transform' ),
 						'type'                => 'general',
-					), $args
+					),
+					$args,
+					'fusion_alert'
 				);
 				$defaults['border_size'] = FusionBuilder::validate_shortcode_attr_value( $defaults['border_size'], 'px' );
 
