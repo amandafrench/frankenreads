@@ -7,17 +7,17 @@ class WDIControllerUninstall_wdi{
 	function __construct(){
 
     global  $wdi_wd_plugin_options;
-    if(!class_exists("DoradoWebConfig")){
+    if(!class_exists("TenWebConfig")){
       include_once (WDI_DIR . "/wd/config.php");
     }
 
-    if(!class_exists("DoradoWebDeactivate")) {
+    if(!class_exists("TenWebDeactivate")) {
       include_once(WDI_DIR . "/wd/includes/deactivate.php");
     }
-    $config = new DoradoWebConfig();
+    $config = new TenWebConfig();
 
     $config->set_options( $wdi_wd_plugin_options );
-    $deactivate_reasons = new DoradoWebDeactivate($config);
+    $deactivate_reasons = new TenWebDeactivate($config);
     //$deactivate_reasons->add_deactivation_feedback_dialog_box();
     $deactivate_reasons->submit_and_deactivate();
 

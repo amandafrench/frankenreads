@@ -10,7 +10,7 @@ defined( 'WPINC' ) or die;
  * [your-theme]/tribe-events/community/modules/image.php
  *
  * @since  3.1
- * @version 4.5.12
+ * @version 4.5.15
  *
  */
 
@@ -39,6 +39,8 @@ $image_label  = sprintf( __( '%s Image', 'tribe-events-community' ), tribe_get_e
 		}
 		?>
 		<div class="tribe-image-upload-area <?php echo esc_attr( $class ); ?>">
+			<input type="hidden" name="detach_thumbnail" id="tribe-events-community-detach-thumbnail" value="false">
+
 			<div class="note">
 				<p><?php echo esc_html( sprintf( __( 'Choose a .jpg, .png, or .gif file under %1$s in size.', 'tribe-events-community' ), $size_format ) ); ?></p>
 			</div>

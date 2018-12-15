@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @version 1.0
  * @author Eyal Fitoussi
  */
-class GMW_Current_location {
+class GMW_Current_Location {
 
 	/**
 	 * @since 1.0
@@ -25,13 +25,14 @@ class GMW_Current_location {
 		'clear_location_trigger'    => 'Clear location',
 		'address_field_placeholder' => 'Enter address',
 		'address_fields'            => 'city,country',
-		'address_label'             => 'Your location',
+		'address_label'             => '',
 		'address_autocomplete'      => 1,
 		'user_greeting'             => 'Hello',
 		'guest_greeting'            => 'Hello, guest!',
 		'map_height'                => '200px',
 		'map_width'                 => '200px',
-		'map_marker'                => 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+		'map_icon_url'              => '',
+		'map_icon_size'             => '',
 		'map_type'                  => 'ROADMAP',
 		'zoom_level'                => 8,
 		'scrollwheel_zoom'          => 1,
@@ -86,6 +87,13 @@ class GMW_Current_location {
 	 */
 	public function __construct( $atts = array() ) {
 
+		if ( isset( $atts['map_marker'] ) ) {
+
+			$atts['map_icon_url'] = $atts['map_marker'];
+
+			unset( $atts['map_marker'] );
+		}
+
 		// extend the default args
 		$this->args = array_merge( $this->args, $this->ext_args );
 
@@ -103,6 +111,22 @@ class GMW_Current_location {
 			return;
 		}
 
+		// If icon size provided, make it an array.
+		if ( ! empty( $this->args['map_icon_size'] ) ) {
+			$this->args['map_icon_size'] = explode( ',', $this->args['map_icon_size'] );
+		}
+
+		// Default icon URL and size.
+		if ( '' == $this->args['map_icon_url'] ) {
+
+			$this->args['map_icon_url']  = GMW()->default_icons['user_location_icon_url'];
+
+			// use default icon size if no size provided
+			if ( '' == $this->args['map_icon_size'] ) {
+				$this->args['map_icon_size'] = GMW()->default_icons['user_location_icon_size'];
+			}
+		}
+
 		$this->current_location = gmw_get_user_current_location();
 
 		// check for the user's current position in cookies
@@ -117,7 +141,7 @@ class GMW_Current_location {
 			if ( ! empty( $this->args['address_fields'] ) ) {
 
 				// if showing full address
-				if ( $this->args['address_fields'] == 'address' ) {
+				if ( 'address' == $this->args['address_fields'] ) {
 
 					$this->user_position['address'] = ! empty( $this->current_location->formatted_address ) ? $this->current_location->formatted_address : '';
 
@@ -252,10 +276,11 @@ class GMW_Current_location {
 
 		// user position
 		$user_position = array(
-			'lat'      => $this->user_position['lat'],
-			'lng'      => $this->user_position['lng'],
-			'address'  => $this->user_position['address'],
-			'map_icon' => $this->args['map_marker'],
+			'lat'       => $this->user_position['lat'],
+			'lng'       => $this->user_position['lng'],
+			'address'   => $this->user_position['address'],
+			'map_icon'  => $this->args['map_icon_url'],
+			'icon_size' => $this->args['map_icon_size'],
 		);
 
 		return gmw_get_map( $map_args, $map_options, array(), $user_position );
@@ -332,8 +357,8 @@ class GMW_Current_location {
 			echo self::current_location_fields();
 
 			// enqueue scripts
-			wp_enqueue_script( 'gmw-current-location' );
-			wp_localize_script( 'gmw-current-location', 'gmw_cl_nonce', wp_create_nonce( 'gmw_current_location_nonce' ) );
+			//wp_enqueue_script( 'gmw-current-location' );
+			wp_localize_script( 'gmw', 'gmw_cl_nonce', wp_create_nonce( 'gmw_current_location_nonce' ) );
 		}
 	}
 
@@ -384,6 +409,11 @@ class GMW_Current_location {
 		}
 
 		$output = implode( '', $elements );
+
+		// enqueue main script if not loaded already.
+		if ( ! wp_script_is( 'gmw', 'enqueued' ) ) {
+			wp_enqueue_script( 'gmw' );
+		}
 
 		// display the element
 		return apply_filters( 'gmw_cl_display_output', $output, $elements, $this->args, $this->user_position, get_current_user_id() );
@@ -498,7 +528,7 @@ class GMW_Current_location {
 	 */
 	public static function page_load_update_location() {
 
-		//varify nonce
+		// Abort if location not found or nonce not verified
 		if ( empty( $_POST['gmw_cl_location'] ) || empty( $_POST['gmw_cl_nonce'] ) || ! wp_verify_nonce( $_POST['gmw_cl_nonce'], 'gmw_cl_nonce' ) ) {
 			//reload page to prevent form resubmission
 			wp_redirect( $_SERVER['REQUEST_URI'] );
@@ -511,10 +541,11 @@ class GMW_Current_location {
 	}
 
 	/**
-	 * Update Current Location Data
+	 * Update Current Location Data.
+	 * 
 	 * @return [type] [description]
 	 */
-	static function ajax_update_location() {
+	public static function ajax_update_location() {
 
 		//verify AJAX nonce
 		if ( ! check_ajax_referer( 'gmw_current_location_nonce', 'security', false ) ) {

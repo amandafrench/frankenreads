@@ -6,8 +6,11 @@
  * Override this template in your own theme by creating a file at
  * [your-theme]/tribe-events/community/edit-organizer.php
  *
- * @since  3.1
- * @version 4.5
+ * @since 3.1
+ *
+ * @version 4.5.15
+ *
+ * @var int $organizer_id The ID of the Organizer being edited.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -46,9 +49,9 @@ $organizer_label_singular = tribe_get_organizer_label_singular();
 		$content = tribe_community_events_get_organizer_description();
 		if ( tribe( 'community.main' )->useVisualEditor && function_exists( 'wp_editor' ) ) {
 			$settings = array(
-				'wpautop' => true,
+				'wpautop'       => true,
 				'media_buttons' => false,
-				'editor_class' => 'frontend',
+				'editor_class'  => 'frontend',
 				'textarea_rows' => 5,
 			);
 			echo wp_editor( $content, 'tcepostcontent', $settings );
@@ -64,7 +67,7 @@ $organizer_label_singular = tribe_get_organizer_label_singular();
 	<div class="tribe-events-community-footer">
 
 		<input type="submit" class="button submit events-community-submit" value="<?php
-			echo esc_attr( $tribe_organizer_id ? sprintf( __( 'Update %s', 'tribe-events-community' ), $organizer_label_singular ) : sprintf( __( 'Submit %s', 'tribe-events-community' ), $organizer_label_singular ) );
+			echo esc_attr( $organizer_id ? sprintf( __( 'Update %s', 'tribe-events-community' ), $organizer_label_singular ) : sprintf( __( 'Submit %s', 'tribe-events-community' ), $organizer_label_singular ) );
 		?>" name="community-event" />
 
 	</div><!-- .tribe-events-community-footer -->

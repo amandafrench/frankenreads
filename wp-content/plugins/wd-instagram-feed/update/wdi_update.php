@@ -96,6 +96,10 @@ function wdi_update_diff($new_v, $old_v = 0.0){
   }
 
 
+  if(version_compare($old_v, "3.6", '<')){
+    $wpdb->query("ALTER TABLE " . $wpdb->prefix . WDI_FEED_TABLE . " MODIFY COLUMN 	feed_thumb varchar(800) NOT NULL");
+  }
+
 
 
 }

@@ -36,7 +36,7 @@ jQuery(document).ready(function() {
 	jQuery('#wdi_add_user_ajax').after(jQuery("<br><label class='wdi_pro_only' for='wdi_add_user_ajax_input'>" + wdi_messages.username_hashtag_multiple + "</label>"));
 
 
-	if(jQuery('body').hasClass('instagram-feed-wd_page_wdi_settings')){
+	if(jQuery('body').hasClass('instagram-feed_page_wdi_settings')){
         wdi_multiple_accounts_option_controller();
 		wdi_advanced_option_controller();
 	}

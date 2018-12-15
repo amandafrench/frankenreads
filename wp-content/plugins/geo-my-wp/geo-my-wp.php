@@ -3,7 +3,7 @@
  * Plugin Name: GEO my WP
  * Plugin URI: http://www.geomywp.com
  * Description: GEO my WP is an adavanced geolocation, mapping, and proximity search plugin. Geotag post types and BuddyPress members, and create advanced, proximity search forms to search and find locations based on address, radius, categories and more.
- * Version: 3.0.5
+ * Version: 3.1
  * Author: Eyal Fitoussi
  * Author URI: http://www.geomywp.com
  * Requires at least: 4.5
@@ -30,7 +30,7 @@ class GEO_MY_WP {
 	 *
 	 * @var string
 	 */
-	public $version = '3.0.5';
+	public $version = '3.1';
 
 	/**
 	 * GEO my WP & Extensions options.
@@ -64,6 +64,20 @@ class GEO_MY_WP {
 	public $ajax_url = false;
 
 	/**
+	 * Default Maps provider.
+	 *
+	 * @var string
+	 */
+	public $maps_provider = 'google_maps';
+
+	/**
+	 * Default Geocoding Provider.
+	 *
+	 * @var string
+	 */
+	public $geocoding_provider = 'google_maps';
+
+	/**
 	 * Enable disable internal caching system.
 	 *
 	 * @var boolean
@@ -83,21 +97,22 @@ class GEO_MY_WP {
 	 * @var array
 	 */
 	public $required_versions = array(
-		'bp_groups_locator'                => '1.6',
-		'groups_locator'                   => '1.6', // old slug.
-		'bp_members_directory_geolocation' => '1.5',
-		'geo_members_directory'            => '1.5', // old slug.
-		'bp_xprofile_geolocation'          => '1.5',
-		'xprofile_fields'                  => '1.5', // old slug.
-		'exclude_locations'                => '1.3',
-		'exclude_members'                  => '1.3', // old slug.
-		'gmw_kleo_geolocation'             => '1.4',
-		'nearby_locations'                 => '1.3',
-		'nearby_posts'                     => '1.3', // old slug.
-		'premium_settings'                 => '2.0',
-		'global_maps'                      => '2.2',
-		'users_locator'                    => '1.3',
-		'wp_users_geo-location'            => '1.3', // old slug.
+		'ajax_forms'                       => '1.0',
+		'bp_groups_locator'                => '1.6.1',
+		'groups_locator'                   => '1.6.1', // old slug.
+		'bp_members_directory_geolocation' => '1.5.1',
+		'geo_members_directory'            => '1.5.1', // old slug.
+		'bp_xprofile_geolocation'          => '1.5.1',
+		'xprofile_fields'                  => '1.5.1', // old slug.
+		'exclude_locations'                => '1.3.1',
+		'exclude_members'                  => '1.3.1', // old slug.
+		'gmw_kleo_geolocation'             => '1.4.1',
+		'nearby_locations'                 => '1.3.1',
+		'nearby_posts'                     => '1.3.1', // old slug.
+		'premium_settings'                 => '2.1',
+		'global_maps'                      => '2.3',
+		'users_locator'                    => '1.3.2',
+		'wp_users_geo-location'            => '1.3.2', // old slug.
 	);
 
 	/**
@@ -159,6 +174,23 @@ class GEO_MY_WP {
 	 * @var array
 	 */
 	public $current_form = array();
+
+	/**
+	 * Default icons URL and size.
+	 *
+	 * @var array
+	 */
+	public function set_default_icons() {
+		$this->default_icons = array(
+			'shadow_icon_url'         => 'https://unpkg.com/leaflet@1.3.1/dist/images/marker-shadow.png',
+			//'location_icon_url'     => 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+			'location_icon_url'       => GMW_IMAGES . '/marker-icon-red-2x.png',
+			'location_icon_size'      => array( 25, 41 ),
+			//'user_location_icon_url'=> 'https://unpkg.com/leaflet@1.3.1/dist/images/marker-icon-2x.png',
+			'user_location_icon_url'  => GMW_IMAGES . '/marker-icon-blue-2x.png',
+			'user_location_icon_size' => array( 25, 41 ),
+		);
+	}
 
 	/**
 	 * GEO my WP instance.
@@ -253,7 +285,6 @@ class GEO_MY_WP {
 		define( 'GMW_IMAGES', GMW_URL . '/assets/images' );
 		define( 'GMW_FILE', __FILE__ );
 		define( 'GMW_BASENAME', plugin_basename( GMW_FILE ) );
-		//define( 'GMW_DOING_AJAX', defined( 'DOING_AJAX' ) );
 	}
 
 	/**
@@ -346,6 +377,17 @@ class GEO_MY_WP {
 		$this->addons_status = $addons_status;
 		$this->ajax_url      = admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' );
 		$this->is_mobile     = ( function_exists( 'wp_is_mobile' ) && wp_is_mobile() ) ? true : false;
+		$this->maps_provider = ! empty( $this->options['api_providers']['maps_provider'] ) ? $this->options['api_providers']['maps_provider'] : 'google_maps';
+
+		// set default icons.
+		$this->set_default_icons();
+
+		// verify geocoding provider.	
+		if ( ! empty( $this->options['api_providers']['geocoding_provider'] ) ) {
+			$this->geocoding_provider = $this->options['api_providers']['geocoding_provider'];
+		} elseif ( 'google_maps' != $this->maps_provider ) {
+			$this->geocoding_provider = 'nominatim';
+		}
 	}
 
 	/**
@@ -377,6 +419,8 @@ class GEO_MY_WP {
 		include( 'includes/template-functions/gmw-search-results-template-functions.php' );
 		include( 'includes/class-gmw-form.php' );
 		include( 'includes/gmw-shortcodes.php' );
+		include_once( 'includes/class-gmw-geocoder.php' );
+		include_once( 'includes/gmw-geocoding-providers.php' );
 
 		// load core add-ons.
 		self::$instance->load_core_addons();

@@ -31,6 +31,20 @@ var tribe_community_events = tribe_community_events || {};
 	obj.$timepickers = $();
 
 	/**
+	 * Some oft-cited elements in the submission and edit-event form.
+	 *
+	 * @since 4.5.15
+	 *
+	 * @type {object}
+	 */
+	obj.els = {
+		uploadArea      : document.querySelector( '.tribe-image-upload-area' ),
+		uploadFile      : document.getElementById( 'uploadFile' ),
+		eventImage      : document.getElementById( 'EventImage' ),
+		detachThumbnail : document.getElementById( 'tribe-events-community-detach-thumbnail' )
+	};
+
+	/**
 	 * Formats a Date object into string yyyy-MM-dd
 	 *
 	 * @since  4.5
@@ -191,23 +205,61 @@ var tribe_community_events = tribe_community_events || {};
 	 * @return {void}
 	 */
 	obj.init_image_input = function () {
-		var $upload_area = $( '.tribe-image-upload-area ' );
-		var $file_name   = $( '#uploadFile' );
 
-		$( "#EventImage" ).change( function () {
-			var fileName = $( this ).val();
+		var $uploadArea = $( obj.els.uploadArea );
+
+		$( obj.els.eventImage ).on( 'change', function() {
+
+			var fileName = this.value;
 			var clean    = fileName.split( '\\' ).pop();
 
-			$( $upload_area ).addClass( 'uploaded' );
-			$( $file_name ).val( clean );
-			$( $file_name ).attr('size', clean.length);
+			obj.els.uploadArea.classList.add( 'uploaded' );
+
+			obj.els.detachThumbnail.setAttribute( 'value', false );
+
+			obj.els.uploadFile.setAttribute( 'value', clean );
+			obj.els.uploadFile.setAttribute( 'size', clean.length );
 		} );
 
-		$( ".tribe-remove-upload a, .tribe-community-events-preview-image .submitdelete" ).click( function ( e ) {
+		// Remove image on submission form.
+		$uploadArea.on( 'click', '.tribe-remove-upload a', function ( e ) {
 			e.preventDefault();
-			$( $upload_area ).removeClass( 'uploaded has-image' );
-			$( "#uploadFile" ).val( '' );
+			obj.removeEventImage();
 		} );
+
+		// Remove image on edit form for already-submitted events, *and* unhook attached thumbnail.
+		$uploadArea.on( 'click', '.submitdelete', function( e ) {
+			e.preventDefault();
+			obj.removeEventImage();
+			obj.detachThumbnail();
+		} );
+	};
+
+	/**
+	 * Clears the event image from the submission form.
+	 *
+	 * @since 4.5.15
+	 *
+	 * @return {void}
+	 */
+	obj.removeEventImage = function() {
+		obj.els.uploadArea.classList.remove( 'uploaded' );
+		obj.els.uploadArea.classList.remove( 'has-image' );
+
+		obj.els.uploadFile.setAttribute( 'value', '' );
+		obj.els.eventImage.setAttribute( 'value', '' );
+	};
+
+	/**
+	 * Goes a step beyond clearing the event image from the submission form and sets up the form for
+	 * unattaching the image as the event's post thumbnail.
+	 *
+	 * @since 4.5.15
+	 *
+	 * @return {void}
+	 */
+	obj.detachThumbnail = function() {
+		obj.els.detachThumbnail.setAttribute( 'value', true );
 	};
 
 	/**
@@ -254,7 +306,7 @@ var tribe_community_events = tribe_community_events || {};
 	/**
 	 * Sets up the select2 dropdown for use in the Community editor
 	 *
-	 * @since  TND
+	 * @since 4.5.14
 	 *
 	 * @return {void}
 	 */
@@ -266,12 +318,117 @@ var tribe_community_events = tribe_community_events || {};
 	 * Reuses the same logic used by TEC in the admin environment to prevent
 	 * situations such as an event end time earlier than the event start time
 	 * being set.
+	 *
 	 */
 	obj.datetime_selectors = function() {
 		if ( 'object' === typeof tribe_dynamic_helper_text ) {
 			tribe_dynamic_helper_text.event_date_change();
 		}
 	};
+
+	/**
+	 * Checks if any new linked posts are being created on the submission form.
+	 *
+	 * @since 4.5.14
+	 *
+	 * @return {boolean} True if any creation fields for a new linked post are open on the page, false otherwise.
+	 */
+	obj.is_creating_linked_posts = function() {
+		return 0 < $( '#tribe-community-events form' ).find( '.tribe-is-creating-linked-post' ).length;
+	}
+
+	/**
+	 * Checks if the specified submission form field is empty.
+	 *
+	 * @since 4.5.14
+	 *
+	 * @param {string} The Community Events submission form field name to check if empty.
+	 * @param {array} The $.fn.serializeArray() array of the submission form.
+	 * @return {boolean} True if the field by the given name exists and is an empty string.
+	 */
+	obj.is_form_field_empty = function( field_name, form_state ) {
+
+		for ( var i = 0; i < form_state.length; i++ ) {
+
+			if ( field_name == form_state[ i ].name ) {
+				return '' === form_state[ i ].value;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Allow for addition of notices via JS, e.g. when form submission is prevented.
+	 *
+	 * @since 4.5.14
+	 *
+	 * @param {array} fields The name of fields
+	 * @return {void}
+	 */
+	obj.add_js_form_errors = function( fields ) {
+
+		var $form_wrapper = $( '#tribe-community-events' );
+
+		// Prevent stacking/duplication of errors.
+		$form_wrapper.find( '.tribe-community-js-notice' ).remove();
+
+		var $notice = $( '<div />', {
+			'class' : 'tribe-community-notice tribe-community-js-notice tribe-community-notice-error'
+		} );
+
+		$notice.insertBefore( $form_wrapper.find( 'form' ) );
+
+		for ( var i = 0; i < fields.length; i++ ) {
+
+			// Event Title
+			if ( 'post_title' === fields[i] ) {
+				$( '<p />', { text: tribe_submit_form_i18n.errors.post_title } ).appendTo( $notice );
+			}
+
+			// Event Description
+			if ( 'tcepostcontent' === fields[i] ) {
+				$( '<p />', { text: tribe_submit_form_i18n.errors.tcepostcontent } ).appendTo( $notice );
+			}
+		}
+	}
+
+	/**
+	 * If a linked post is being created, but Event Title or Event Description are empty, prevent submission.
+	 *
+	 * @since 4.5.14
+	 *
+	 * @return {boolean} False if title or description are empty while a new linked post is being created.
+	 */
+	obj.disallow_submission_while_creating_linked_posts = function() {
+
+		$( '#tribe-community-events form' ).on( 'submit', function(e) {
+
+			var form_state     = $( this ).serializeArray();
+			var title_is_empty = obj.is_form_field_empty( 'post_title', form_state );
+			var desc_is_empty  = obj.is_form_field_empty( 'tcepostcontent', form_state );
+			var error_fields   = [];
+
+			if ( title_is_empty ) {
+				error_fields.push( 'post_title' );
+			}
+
+			if ( desc_is_empty ) {
+				error_fields.push( 'tcepostcontent' );
+			}
+
+			if ( obj.is_creating_linked_posts() && 0 < error_fields.length ) {
+
+				if ( title_is_empty || desc_is_empty ) {
+					obj.add_js_form_errors( error_fields );
+				}
+
+				return false;
+			}
+
+			return true;
+		});
+	}
 
 	// Configure all function to run when Doc Ready
 	$( document )
@@ -283,6 +440,7 @@ var tribe_community_events = tribe_community_events || {};
 		.ready( obj.remove_no_js_class )
 		.ready( obj.remove_no_js_class )
 		.ready( obj.setup_dropdowns )
-		.ready( obj.datetime_selectors );
+		.ready( obj.datetime_selectors )
+		.ready( obj.disallow_submission_while_creating_linked_posts );
 
 })( window, jQuery, tribe_community_events );

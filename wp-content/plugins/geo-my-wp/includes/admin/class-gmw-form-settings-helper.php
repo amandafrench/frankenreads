@@ -53,7 +53,7 @@ class GMW_Form_Settings_Helper {
      * @param unknown_type $tax_slug
      * @param unknown_type $options
      */
-    public static function get_taxonomy_terms( $taxonomy = 'category', $values = array(), $sort_groups = false ) {
+    public static function get_taxonomy_terms( $taxonomy = 'category', $values = array(), $sort_groups = false, $field = 'term_id' ) {
         
         if ( ! is_array( $values ) ) {
             $values = explode( ',', $values );
@@ -67,11 +67,15 @@ class GMW_Form_Settings_Helper {
 
         if ( ! $sort_groups ) {
 
+        	if ( 'term_taxonomy_id' != $field ) {
+        		$field = 'term_id';
+        	}
+        	
             $current_tax = $terms[0]->taxonomy;
                     
             foreach ( $terms as $term ) {   
-                $selected = ( ! empty( $values ) && in_array( $term->term_id, $values ) ) ? 'selected="selected"' : '';
-                echo '<option value="'.$term->term_id.'" '.$selected.' >'.$term->name.'</option>';
+                $selected = ( ! empty( $values ) && in_array( $term->$field, $values ) ) ? 'selected="selected"' : '';
+                echo '<option value="'.$term->$field.'" '.$selected.' >'.$term->name.'</option>';
             }
 
         } else {
@@ -194,16 +198,27 @@ class GMW_Form_Settings_Helper {
 					<?php _e( 'Locator Button', 'geo-my-wp' ); ?>
 				</label>	
 			</div>
+			
+			<?php 
+			$disabled = '';
+			$warning  = '';
 
+			if ( 'google_maps' != GMW()->maps_provider ) {
+				$disabled = 'disabled="disabled"';
+				$warning  = ' <em style="color:red;font-size:11px;">Availabe with Google Maps provider only</em>.';
+			}
+			?>
 			<div class="single-option autocomplete">	
 					<label>
 					<input 
 						type="checkbox" 
 						value="1" 
 						name="<?php echo $name_attr.'[address_autocomplete]'; ?>" 
+						<?php echo $disabled; ?>
 						<?php echo ! empty( $value['address_autocomplete'] ) ? 'checked="checked"' : ''; ?>
 					/>
 					<?php _e( 'Address Autocomplete', 'geo-my-wp' ); ?>
+					<?php echo $warning; ?>
 				</label>
 			</div>
 
@@ -400,6 +415,7 @@ class GMW_Form_Settings_Helper {
     	if ( empty( $value ) ) {
     		$value = array(
     			'enabled' => '',
+    			'usage'   => 'post_content',
     			'count'   => '10',
     			'link'    => 'read more...'
     		);
@@ -479,6 +495,7 @@ class GMW_Form_Settings_Helper {
     public static function validate_excerpt( $output ) {
 
         $output['enabled'] = ! empty( $output['enabled'] ) ? 1 : '';
+        $output['usage']   = ( $output['usage'] == 'post_content' || $output['usage'] == 'post_excerpt' ) ? $output['usage'] : 'post_content';
         $output['count']   = isset( $output['count'] ) ? preg_replace( '/[^0-9]/', '', $output['count'] ) : '';
         $output['link']    = isset( $output['link'] ) ? sanitize_text_field( $output['link'] ) : '';
 

@@ -27,11 +27,11 @@ class GMW_Sweetdate_Geolcation_Addon extends GMW_Addon {
 	 */
 	public $name = 'Sweet Date Geolocation';
 
-	 /**
-	  * Description
-	  *
-	  * @var string
-	  */
+	/**
+	 * Description
+	 *
+	 * @var string
+	 */
 	public $description = 'Enhance the Sweet Date theme with geolocation features.';
 
 	/**
@@ -84,7 +84,7 @@ class GMW_Sweetdate_Geolcation_Addon extends GMW_Addon {
 		return array(
 			'theme'  => array(
 				'template' => 'sweetdate',
-				'notice'   => sprintf( __( 'Sweet Date Geolocation extension requires the Sweet Date theme version 2.9 order higher. The theme can be purchased separately from <a href="%s" target="_blank">here</a>.' ), 'https://themeforest.net/item/sweet-date-more-than-a-wordpress-dating-theme/4994573?ref=GEOmyWP', 'geo-my-wp' ),
+				'notice'   => sprintf( __( 'Sweet Date Geolocation extension requires the Sweet Date theme version 2.9 order higher. The theme can be purchased separately from <a href="%s" target="_blank">here</a>.', 'geo-my-wp' ), 'https://themeforest.net/item/sweet-date-more-than-a-wordpress-dating-theme/4994573?ref=GEOmyWP' ),
 				'version'  => '2.9',
 			),
 			'addons' => array(
@@ -128,13 +128,13 @@ class GMW_Sweetdate_Geolcation_Addon extends GMW_Addon {
 
 		// admin settings
 		if ( is_admin() ) {
-			include( 'includes/admin/class-gmw-sweet-date-admin-settings.php' );
+			include_once( 'includes/admin/class-gmw-sweet-date-admin-settings.php' );
 			new GMW_Sweet_Date_Admin_Settings;
 		}
 
 		// include members query only on members page
-		if ( bp_current_component() == 'members' && gmw_get_option( 'sweet_date', 'enabled', '' ) != '' ) {
-			include( 'includes/class-gmw-sweet-date-geolocation.php' );
+		if ( 'members' == bp_current_component() && '' != gmw_get_option( 'sweet_date', 'enabled', '' ) ) {
+			include_once( 'includes/class-gmw-sweet-date-geolocation.php' );
 			new GMW_Sweet_Date_Geolocation;
 		}
 	}

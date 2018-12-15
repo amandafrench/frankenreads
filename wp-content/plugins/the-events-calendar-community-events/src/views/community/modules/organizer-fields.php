@@ -11,23 +11,23 @@ defined( 'WPINC' ) or die;
  * [your-theme]/tribe-events/community/modules/organizer-fields.php
  *
  * @since  2.1
- * @version 4.5
  *
+ * @version 4.5.15
  */
 
 $organizer_label_singular = tribe_get_organizer_label_singular();
 
 // If posting back, then use $POST values
 if ( ! $_POST ) {
-	$organizer_name = esc_attr( tribe_get_organizer() );
-	$organizer_phone = esc_attr( tribe_get_organizer_phone() );
+	$organizer_name    = esc_attr( tribe_get_organizer() );
+	$organizer_phone   = esc_attr( tribe_get_organizer_phone() );
 	$organizer_website = esc_url( tribe_get_organizer_website_url() );
-	$organizer_email = esc_attr( tribe_get_organizer_email() );
+	$organizer_email   = esc_attr( tribe_get_organizer_email() );
 } else {
-	$organizer_name = isset( $_POST['organizer']['Organizer'] ) ? esc_attr( $_POST['organizer']['Organizer'] ) : '';
-	$organizer_phone = isset( $_POST['organizer']['Phone'] ) ? esc_attr( $_POST['organizer']['Phone'] ) : '';
+	$organizer_name    = isset( $_POST['organizer']['Organizer'] ) ? esc_attr( $_POST['organizer']['Organizer'] ) : '';
+	$organizer_phone   = isset( $_POST['organizer']['Phone'] ) ? esc_attr( $_POST['organizer']['Phone'] ) : '';
 	$organizer_website = isset( $_POST['organizer']['Website'] ) ? esc_attr( $_POST['organizer']['Website'] ) : '';
-	$organizer_email = isset( $_POST['organizer']['Email'] ) ? esc_attr( $_POST['organizer']['Email'] ) : '';
+	$organizer_email   = isset( $_POST['organizer']['Email'] ) ? esc_attr( $_POST['organizer']['Email'] ) : '';
 }
 if ( ! isset( $event ) ) {
 	$event = null;

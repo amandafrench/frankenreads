@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Community Events package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2018-05-29 04:51:17+0000\n"
+"PO-Revision-Date: 2018-07-16 20:05:42+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,11 +18,11 @@ msgstr "Pesquisando…"
 
 #: src/views/community/modules/header-links.php:27
 msgid "Edit Venue"
-msgstr ""
+msgstr "Editar local"
 
 #: src/views/community/modules/header-links.php:25
 msgid "Edit Organizer"
-msgstr ""
+msgstr "Editar organizador"
 
 #: src/Tribe/Submission_Handler.php:403
 msgctxt "field label for post tags"
@@ -32,11 +32,11 @@ msgstr "Tag"
 #: src/Tribe/Submission_Handler.php:400
 msgctxt "field label for event categories"
 msgid "%s Category"
-msgstr ""
+msgstr "Categoria de %s"
 
 #: src/views/community/modules/taxonomy.php:95
 msgid "Search from existing %s"
-msgstr ""
+msgstr "Pesquisar em %s existentes"
 
 #: src/views/community/modules/taxonomy.php:59
 msgid "terms"
@@ -44,43 +44,43 @@ msgstr "termos"
 
 #: src/admin-views/community-options-template.php:234
 msgid "Users can delete their events"
-msgstr ""
+msgstr "Os usuários podem apagar seus eventos"
 
 #: src/admin-views/community-options-template.php:225
 msgid "Users can edit their events, venues, and organizers"
-msgstr ""
+msgstr "Os usuários podem editar seus eventos, locais e organizadores"
 
 #: src/views/community/modules/website.php:48
 msgid "Enter URL for event information"
-msgstr ""
+msgstr "Informe o URL para informações do evento"
 
 #: src/views/community/modules/website.php:45
 msgid "External Link:"
-msgstr ""
+msgstr "Link externo:"
 
 #: src/views/community/modules/image.php:73
 msgid "Choose Image"
-msgstr ""
+msgstr "Escolher imagem"
 
 #: src/views/community/modules/image.php:64
 msgid "Selected:"
-msgstr ""
+msgstr "Selecionada:"
 
 #: src/views/community/modules/image.php:52
 msgid "Uploaded:"
-msgstr ""
+msgstr "Enviada:"
 
 #: src/views/community/modules/image.php:43
 msgid "Choose a .jpg, .png, or .gif file under %1$s in size."
-msgstr ""
+msgstr "Escolha um arquivo .jpg, .png ou .gif com tamanho menor que %1$s."
 
 #: src/views/community/modules/header-links.php:39
 msgid "View Your Submitted Events"
-msgstr ""
+msgstr "Ver seus eventos enviados"
 
 #: src/views/community/modules/header-links.php:29
 msgid "Add New Event"
-msgstr ""
+msgstr "Adicionar evento"
 
 #: src/views/community/modules/header-links.php:23
 msgid "Edit Event"
@@ -88,44 +88,44 @@ msgstr "Editar evento"
 
 #: src/views/community/event-list.php:159
 msgid "You have no upcoming %s"
-msgstr ""
+msgstr "Você não tem %s no futuro"
 
 #: src/views/community/event-list.php:157
 msgid "You have no past %s"
-msgstr ""
+msgstr "Você não tem %s no passado"
 
 #: src/views/community/event-list.php:66
 msgid "Display Option"
-msgstr ""
+msgstr "Opção de exibição"
 
 #: src/views/community/event-list.php:50
 msgid "Search Event Titles"
-msgstr ""
+msgstr "Pesquisar títulos de evento"
 
 #: src/functions/template-tags.php:638
 msgid "Past events"
-msgstr ""
+msgstr "Eventos anteriores"
 
 #: src/functions/template-tags.php:632
 msgid "Upcoming events"
-msgstr ""
+msgstr "Próximos eventos"
 
 #: src/Tribe/Main.php:1097 src/views/community/modules/image.php:83
 msgid "Remove image"
-msgstr ""
+msgstr "Remover imagem"
 
 #: src/Tribe/Event_Form.php:30
 msgctxt "Tribe Community Events fallback post title"
 msgid "Auto Draft"
-msgstr ""
+msgstr "Rascunho automático"
 
 #: src/views/community/modules/image.php:76
 msgid "Upload File"
-msgstr ""
+msgstr "Enviar arquivo"
 
 #: src/views/community/modules/image.php:70
 msgid "Event Image"
-msgstr ""
+msgstr "Imagem do evento"
 
 #: src/views/community/modules/datepickers.php:171
 msgid "All Day Event"
@@ -133,7 +133,7 @@ msgstr "Evento durará todo dia"
 
 #: src/views/community/modules/datepickers.php:147
 msgid "Timezone"
-msgstr ""
+msgstr "Fuso horário"
 
 #: src/views/community/modules/datepickers.php:130
 msgid "Event End Date"
@@ -146,12 +146,12 @@ msgstr "Hora de término do evento"
 #: src/views/community/modules/datepickers.php:108
 msgctxt "Start Date Time \"to\" End Date Time"
 msgid "to"
-msgstr ""
+msgstr "às"
 
 #: src/views/community/modules/datepickers.php:107
 #: src/views/community/modules/datepickers.php:126
 msgid "HH:MM"
-msgstr ""
+msgstr "HH:MM"
 
 #: src/views/community/modules/datepickers.php:93
 msgid "Event Start Time"
@@ -163,49 +163,49 @@ msgstr "Data de início do Evento"
 
 #: src/views/community/modules/datepickers.php:74
 msgid "Start/End:"
-msgstr ""
+msgstr "Início/Fim:"
 
 #: src/views/community/modules/cost.php:80
 msgid "Events Currency Position"
-msgstr ""
+msgstr "Posição de moeda nos eventos"
 
 #: src/admin-views/community-options-template.php:147
 msgctxt "Click path in The Events Calendar settings to get to the API settings section separated by right arrows (HTML \"&rarr;\")"
 msgid "Events &rarr; Settings &rarr; APIs"
-msgstr ""
+msgstr "Eventos &rarr; Configurações &rarr; APIs"
 
 #: src/admin-views/community-options-template.php:142
 msgid "To enable spam prevention for anonymous submissions, enter your reCAPTCHA API keys under <a href=\"%1$s\">%2$s</a>"
-msgstr ""
+msgstr "Para ativar a prevenção de spam para envios anônimos, digite suas chaves de API do reCAPTCHA em <a href=\"%1$s\">%2$s</a>"
 
 #: src/admin-views/community-options-template.php:140
 msgid "Spam Prevention"
-msgstr ""
+msgstr "Prevenção de spam"
 
 #: src/admin-views/community-options-template.php:132
 msgid "Users will be limited to choosing from existing organizers."
-msgstr ""
+msgstr "Os usuários serão limitados a escolher dos organizadores existentes."
 
 #: src/admin-views/community-options-template.php:131
 msgid "Users cannot create new Organizers"
-msgstr ""
+msgstr "Os usuários não podem criar novos organizadores"
 
 #: src/admin-views/community-options-template.php:123
 msgid "Users will be limited to choosing from existing venues."
-msgstr ""
+msgstr "Os usuários serão limitados a escolher dos locais existentes."
 
 #: src/admin-views/community-options-template.php:122
 msgid "Users cannot create new Venues"
-msgstr ""
+msgstr "Os usuários não podem criar novos locais"
 
 #: src/Tribe/Captcha/Recaptcha_V2.php:139
 msgctxt "failed recaptcha response validation"
 msgid "reCAPTCHA verification failed"
-msgstr ""
+msgstr "A verificação do reCAPTCHA falhou"
 
 #: src/admin-views/community-options-template.php:290
 msgid "Redirect for users who attempt to access the admin without permissions<br>Enter a full url to a post or page on your site<br>Leave blank for homepage"
-msgstr ""
+msgstr "Redirecionar para os usuários que tentarem acessar o admin sem permissões<br>Digite um URL completo para uma página ou post em seu site<br>Deixe em branco para a página inicial"
 
 #: src/Tribe/Submission_Handler.php:453
 msgid "URL"
@@ -213,90 +213,90 @@ msgstr "URL"
 
 #: src/Tribe/Submission_Handler.php:449
 msgid "Zip"
-msgstr ""
+msgstr "CEP"
 
 #: src/Tribe/Submission_Handler.php:445
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #: src/Tribe/Submission_Handler.php:441
 msgid "Province"
-msgstr ""
+msgstr "Município"
 
 #: src/Tribe/Submission_Handler.php:429 src/Tribe/Submission_Handler.php:461
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: src/Tribe/Submission_Handler.php:376
 msgid "%s %s is required"
-msgstr ""
+msgstr "%s %s é obrigatório"
 
 #: src/Tribe/Captcha/Recaptcha.php:247 src/Tribe/Captcha/Recaptcha_V2.php:125
 msgctxt "failed recaptcha response"
 msgid "reCAPTCHA failed unexpectedly"
-msgstr ""
+msgstr "O reCAPTCHA falhou inesperadamente"
 
 #: src/admin-views/community-options-template.php:97
 msgid "<p>Community Events enables users to submit events through a form on your site. Whether soliciting contributions from anonymous users or registered members, you have complete editorial control over what makes it onto the calendar.</p><p>Check out our <a href=\"%s\">Community Events New User Primer</a> for information on configuring and using the plugin."
-msgstr ""
+msgstr "<p>O plugin Community Events permite que os usuários possam enviar eventos através de um formulário em seu site. Seja solicitando contribuições de usuários anônimos ou de membros registrados, você tem total controle editorial sobre o que será publicado em seu calendário.</p><p>Confira nossa <a href=\"%s\">Cartilha para novos usuários do Community Events</a>, para obter informações sobre como configurar e usar o plugin."
 
 #: src/admin-views/community-options-template.php:329
 msgid "Removes the country, state/province and timezone selectors from the submission form"
-msgstr ""
+msgstr "Remove os seletores de país, estado/UF e fuso horário do formulário de cadastro"
 
 #: src/admin-views/community-options-template.php:328
 msgid "Single geography mode"
-msgstr ""
+msgstr "Modo geográfico único"
 
 #: src/Tribe/Submission_Handler.php:536
 msgid "Invalid URL provided for %s"
-msgstr ""
+msgstr "URL inválido fornecido para %s"
 
 #: src/Tribe/Submission_Handler.php:197
 msgid "The file is not a valid image"
-msgstr ""
+msgstr "O arquivo não é uma imagem válida"
 
 #: src/Tribe/Submission_Handler.php:194
 msgid "The image size is invalid"
-msgstr ""
+msgstr "O tamanho da imagem é inválido"
 
 #: src/Tribe/Submission_Handler.php:177 src/Tribe/Submission_Handler.php:191
 msgid "The file is not an Image"
-msgstr ""
+msgstr "O arquivo não é uma imagem"
 
 #. Author URI of the plugin/theme
 msgid "http://m.tri.be/21"
-msgstr ""
+msgstr "http://m.tri.be/21"
 
 #. Author of the plugin/theme
 msgid "Modern Tribe, Inc."
-msgstr ""
+msgstr "Modern Tribe, Inc."
 
 #. Description of the plugin/theme
 msgid "Community Events is an add-on providing additional functionality to the open source plugin The Events Calendar. Empower users to submit and manage their events on your website. <a href=\"http://tri.be/shop/wordpress-community-events/?utm_campaign=in-app&utm_source=docblock&utm_medium=plugin-community\">Check out the full feature list</a>. Need more features? Peruse our selection of <a href=\"http://tri.be/products/?utm_campaign=in-app&utm_source=docblock&utm_medium=plugin-community\" target=\"_blank\">plugins</a>."
-msgstr ""
+msgstr "O Community Events é um complemento que fornece recursos adicionais ao plug-in de código-fonte aberto The Events Calendar. Capacite seus usuários a enviar e gerenciar seus próprios eventos em seu site. <a href=\"http://tri.be/shop/wordpress-community-events/?utm_campaign=in-app&utm_source=docblock&utm_medium=plugin-community\">Confira a lista completa de recursos</a> . Precisa de mais recursos? Examine a nossa seleção de <a href=\"http://tri.be/products/?utm_campaign=in-app&utm_source=docblock&utm_medium=plugin-community\" target=\"_blank\">plugins</a> ."
 
 #. Plugin Name of the plugin/theme
 msgid "The Events Calendar: Community Events"
-msgstr ""
+msgstr "The Events Calendar: Community Events"
 
 #: src/views/community/modules/datepickers.php:150
 msgid "Timezone:"
-msgstr ""
+msgstr "Fuso horário:"
 
 #: src/views/community/modules/cost.php:83
 msgctxt "Currency symbol position"
 msgid "After cost"
-msgstr ""
+msgstr "Depois do preço"
 
 #: src/views/community/modules/cost.php:82
 msgctxt "Currency symbol position"
 msgid "Before cost"
-msgstr ""
+msgstr "Antes do preço"
 
 #: src/Tribe/Main.php:1611
 msgid "The file you attempted to upload exceeded the maximum file size of %1$s."
-msgstr ""
+msgstr "O arquivo que você tentou enviar é maior que o tamanho máximo de arquivos de %1$s."
 
 #: vendor/wp-router/WP_Router_Utility.class.php:49
 msgid "%1$s requires WordPress %2$s or higher and PHP %3$s or higher."
@@ -348,33 +348,33 @@ msgstr "Mostrar Google Map"
 
 #: src/views/community/modules/venue-fields.php:173
 msgid "Show Google Maps Link"
-msgstr "Mostrar link do Google Maps:"
+msgstr "Mostrar link do Google Maps"
 
 #: src/views/community/modules/venue-fields.php:113
 msgid "Postal Code"
-msgstr "CEP:"
+msgstr "CEP"
 
 #: src/views/community/modules/venue-fields.php:98
 msgid "Select a State"
-msgstr "Selecione um Estado:"
+msgstr "Selecione um Estado"
 
 #: src/views/community/modules/venue-fields.php:84
 msgid "State or Province"
-msgstr "Estado:"
+msgstr "Estado/UF"
 
 #: src/views/community/modules/venue-fields.php:66
 msgid "Country"
-msgstr "País:"
+msgstr "País"
 
 #: src/Tribe/Submission_Handler.php:437
 #: src/views/community/modules/venue-fields.php:52
 msgid "City"
-msgstr "Cidade:"
+msgstr "Cidade"
 
 #: src/Tribe/Submission_Handler.php:433
 #: src/views/community/modules/venue-fields.php:37
 msgid "Address"
-msgstr "Endereço:"
+msgstr "Endereço"
 
 #: src/views/community/modules/custom.php:113
 msgid "None"
@@ -649,7 +649,7 @@ msgstr "Usar o editor visual para a descrição dos eventos"
 
 #: src/admin-views/community-options-template.php:114
 msgid "Check this box to allow users to submit events without having a WordPress account"
-msgstr "Marque essa opção para permitir que usuários não cadastrados no Wordpress enviem eventos. "
+msgstr "Marque essa opção para permitir que usuários não cadastrados no Wordpress enviem eventos"
 
 #: src/admin-views/community-options-template.php:113
 msgid "Allow anonymous submissions"
@@ -717,7 +717,7 @@ msgstr "Houve um problema registrando seu(s) %s, por favor tente novamente."
 
 #: src/Tribe/Submission_Handler.php:101
 msgid "%s submitted."
-msgstr ""
+msgstr "%s foi enviado."
 
 #: src/Tribe/Submission_Handler.php:86
 msgid "There was a problem saving your %s, please try again."
@@ -729,7 +729,7 @@ msgstr "Envie outro %s"
 
 #: src/Tribe/Submission_Handler.php:82
 msgid "%s updated. "
-msgstr ""
+msgstr "%s foi atualizado. "
 
 #: src/Tribe/Main.php:2855
 msgid "Settings"
@@ -817,7 +817,7 @@ msgstr "Local não encontrado."
 
 #: src/Tribe/Main.php:1770 src/views/community/columns/title.php:41
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: src/Tribe/Main.php:1764 src/views/community/columns/title.php:35
 msgid "View"
@@ -825,7 +825,7 @@ msgstr "Ver"
 
 #: src/Tribe/Main.php:1605
 msgid "You do not have permission to edit this %s."
-msgstr ""
+msgstr "Você não tem permissão para editar este %s."
 
 #: src/Tribe/Main.php:1599
 msgid "Please log in first."
@@ -988,7 +988,7 @@ msgstr "Nota: reCAPTCHA aparece somente para usuários que não estão logados."
 
 #: src/Tribe/Captcha/Recaptcha.php:24
 msgid "Provide reCAPTCHA API keys for both fields to enable reCAPTCHA on your Community Events form."
-msgstr ""
+msgstr "Forneça as chaves do API do reCAPTCHA em ambos os campos para ativar o reCAPTCHA no seu formulário de eventos da comunidade."
 
 #: src/Tribe/Captcha/Recaptcha.php:20
 msgid "reCAPTCHA API Keys"

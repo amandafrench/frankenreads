@@ -501,7 +501,7 @@ public function __construct() {
             </div>
             <div class="wdi_howto_content">
               <h2>Widget</h2>
-              <h4>Add Instagram Feed WD Widget to your site:</h4>
+              <h4>Add Instagram Feed Widget to your site:</h4>
               <img src="<?php echo WDI_URL.'/images/how_to_publish_widget.png'; ?>">
             </div>
             <script>function wdi_select_focus_element(obj) {obj.focus();obj.select();}</script>

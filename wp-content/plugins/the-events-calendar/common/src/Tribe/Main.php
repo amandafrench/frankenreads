@@ -17,7 +17,7 @@ class Tribe__Main {
 	const OPTIONNAME          = 'tribe_events_calendar_options';
 	const OPTIONNAMENETWORK   = 'tribe_events_calendar_network_options';
 
-	const VERSION             = '4.7.17';
+	const VERSION             = '4.8.2';
 
 	const FEED_URL            = 'https://theeventscalendar.com/feed/';
 
@@ -266,11 +266,14 @@ class Tribe__Main {
 				'dayNamesShort'   => Tribe__Date_Utils::get_localized_weekdays_short(),
 				'dayNamesMin'     => Tribe__Date_Utils::get_localized_weekdays_initial(),
 				'monthNames'      => $datepicker_months,
-				'monthNamesShort' => $datepicker_months, // We deliberately use full month names here
-				'nextText'        => esc_html__( 'Next', 'the-events-calendar' ),
+				'monthNamesShort' => $datepicker_months, // We deliberately use full month names here,
+				'monthNamesMin'   => array_values( Tribe__Date_Utils::get_localized_months_short() ),
+ 				'nextText'        => esc_html__( 'Next', 'the-events-calendar' ),
 				'prevText'        => esc_html__( 'Prev', 'the-events-calendar' ),
 				'currentText'     => esc_html__( 'Today', 'the-events-calendar' ),
 				'closeText'       => esc_html__( 'Done', 'the-events-calendar' ),
+				'today'           => esc_html__( 'Today', 'the-events-calendar' ),
+				'clear'           => esc_html__( 'Clear', 'the-events-calendar' ),
 			),
 		) );
 
@@ -363,20 +366,20 @@ class Tribe__Main {
 		}
 
 		$locale = get_locale();
-		$mofile = WP_LANG_DIR . '/plugins/' . $domain . '-' . $locale . '.mo';
+		$plugin_rel_path = WP_LANG_DIR . '/plugins/';
 
 		/**
-		 * Allows users to filter which file will be loaded for a given text domain
+		 * Allows users to filter the file location for a given text domain
 		 * Be careful when using this filter, it will apply across the whole plugin suite.
 		 *
-		 * @param string      $mofile The path for the .mo File
+		 * @param string      $plugin_rel_path The relative path for the language files
 		 * @param string      $domain Which plugin domain we are trying to load
 		 * @param string      $locale Which Language we will load
 		 * @param string|bool $dir    If there was a custom directory passed on the method call
 		 */
-		$mofile = apply_filters( 'tribe_load_text_domain', $mofile, $domain, $locale, $dir );
+		$plugin_rel_path = apply_filters( 'tribe_load_text_domain', $plugin_rel_path, $domain, $locale, $dir );
 
-		$loaded = load_plugin_textdomain( $domain, false, $mofile );
+		$loaded = load_plugin_textdomain( $domain, false, $plugin_rel_path );
 
 		if ( $dir !== false && ! $loaded ) {
 			return load_plugin_textdomain( $domain, false, $dir );
@@ -493,8 +496,14 @@ class Tribe__Main {
 	 * Runs tribe_plugins_loaded action, should be hooked to the end of plugins_loaded
 	 */
 	public function tribe_plugins_loaded() {
+		tribe_singleton( 'feature-detection', 'Tribe__Feature_Detection' );
 		tribe_register_provider( 'Tribe__Service_Providers__Processes' );
 		tribe( 'admin.notice.php.version' );
+
+		if ( ! defined( 'TRIBE_HIDE_MARKETING_NOTICES' ) ) {
+			tribe( 'admin.notice.marketing' );
+		}
+
 		/**
 		 * Runs after all plugins including Tribe ones have loaded
 		 *
@@ -531,6 +540,9 @@ class Tribe__Main {
 		tribe_singleton( 'pue.notices', 'Tribe__PUE__Notices' );
 
 		tribe_singleton( 'admin.notice.php.version', 'Tribe__Admin__Notice__Php_Version', array( 'hook' ) );
+		tribe_singleton( 'admin.notice.marketing', 'Tribe__Admin__Notice__Marketing', array( 'hook' ) );
+
+		tribe_register_provider( 'Tribe__Editor__Provider' );
 	}
 
 	/************************

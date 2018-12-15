@@ -18,12 +18,12 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		/**
 		 * The current version of Community Events
 		 */
-		const VERSION = '4.5.12';
+		const VERSION = '4.5.15';
 
 		/**
 		 * required The Events Calendar Version
 		 */
-		const REQUIRED_TEC_VERSION = '4.6.17';
+		const REQUIRED_TEC_VERSION = '4.6.21';
 
 		/**
 		 * Singleton instance variable
@@ -472,24 +472,14 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 				return;
 			}
 
-			$tec = Tribe__Events__Main::instance();
+			// Remove front-end scripts in case they're enqueued
+			tribe( 'assets' )->remove( 'tribe-events-pro' );
+			tribe( 'assets' )->remove( 'tribe-events-pro-geoloc' );
 
-			Tribe__Events__Template_Factory::asset_package( 'admin-ui' );
-			Tribe__Events__Template_Factory::asset_package( 'datepicker' );
-			Tribe__Events__Template_Factory::asset_package( 'dialogue' );
-			Tribe__Events__Template_Factory::asset_package( 'ecp-plugins' );
-			Tribe__Events__Template_Factory::asset_package( 'admin' );
+			tribe_asset_enqueue_group( 'events-admin' );
 
-			//php date formatter
-			Tribe__Events__Template_Factory::asset_package( 'php-date-formatter' );
-
-			//dynamic helper text
-			Tribe__Events__Template_Factory::asset_package( 'dynamic' );
-
-			// calling our own localization because wp_localize_scripts doesn't support arrays or objects for values, which we need.
-			add_action( 'admin_footer', array( $tec, 'printLocalizedAdmin' ) );
-
-			add_action( 'wp_footer', array( $tec, 'printLocalizedAdmin' ) );
+			tribe_asset_enqueue( 'tribe-events-dynamic' );
+			tribe_asset_enqueue( 'tribe-jquery-timepicker-css' );
 
 			// disable comments on this page
 			add_filter( 'comments_template', array( $this, 'disable_comments_on_page' ) );
@@ -554,8 +544,19 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		 * @return void
 		 */
 		public function enqueue_assets() {
+
 			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '-community-styles' );
 			wp_enqueue_script( Tribe__Events__Main::POSTTYPE . '-community' );
+
+			// @Todo: This should eventually be able to support all fields on the form dynamically.
+			$error_messages = array(
+				'post_title'     => esc_html__( 'Event Title is required', 'tribe-events-community' ),
+				'tcepostcontent' => esc_html__( 'Event Description is required', 'tribe-events-community' ),
+			);
+
+			wp_localize_script( Tribe__Events__Main::POSTTYPE . '-community', 'tribe_submit_form_i18n', array(
+				'errors' => $error_messages,
+			) );
 
 			/**
 			 * Fires on Community Events Pages, allowing third-parties to enqueue scripts.
@@ -604,7 +605,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 
 			// edit venue
 			$router->add_route( 'ce-edit-venue-route', array(
-				'path' => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['edit'] . '/' . $this->rewriteSlugs['venue'].'/(\d+)$',
+				'path'       => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['edit'] . '/' . $this->rewriteSlugs['venue'].'/(\d+)$',
 				'query_vars' => array(
 					'tribe_event_id' => 1,
 				),
@@ -616,15 +617,15 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 					'tribe_event_id'
 				),
 				'access_callback' => true,
-				'title' => __( 'Edit a Venue', 'tribe-events-community' ),
-				'template' => $template_name,
+				'title'           => __( 'Edit a Venue', 'tribe-events-community' ),
+				'template'        => $template_name,
 			) );
 
 
 			// edit organizer
 			$router->add_route( 'ce-edit-organizer-route', array(
-				'path' => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['edit'] . '/' . $this->rewriteSlugs['organizer'] . '/(\d+)$',
-				'query_vars' => array(
+				'path'               => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['edit'] . '/' . $this->rewriteSlugs['organizer'] . '/(\d+)$',
+				'query_vars'         => array(
 					'tribe_event_id' => 1,
 				),
 				'page_callback' => array(
@@ -635,13 +636,13 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 					'tribe_event_id'
 				),
 				'access_callback' => true,
-				'title' => __( 'Edit an Organizer', 'tribe-events-community' ),
-				'template' => $template_name,
+				'title'           => __( 'Edit an Organizer', 'tribe-events-community' ),
+				'template'        => $template_name,
 			) );
 
 			// edit event
 			$router->add_route( 'ce-edit-route', array(
-				'path' => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['edit'] . '/' . $this->rewriteSlugs['event'] . '/(\d+/?)$',
+				'path'       => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['edit'] . '/' . $this->rewriteSlugs['event'] . '/(\d+/?)$',
 				'query_vars' => array(
 					'tribe_community_event_id' => 1,
 				),
@@ -653,14 +654,14 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 					'tribe_community_event_id'
 				),
 				'access_callback' => true,
-				'title' => apply_filters( 'tribe_ce_edit_event_page_title', __( 'Edit an Event', 'tribe-events-community' ) ),
-				'template' => $template_name,
+				'title'           => apply_filters( 'tribe_ce_edit_event_page_title', __( 'Edit an Event', 'tribe-events-community' ) ),
+				'template'        => $template_name,
 			) );
 
 			// edit redirect
 			$router->add_route( 'ce-edit-redirect-route', array(
-				'path' => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['edit'] . '/(\d+)$',
-				'query_vars' => array(
+				'path'         => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['edit'] . '/(\d+)$',
+				'query_vars'   => array(
 					'tribe_id' => 1,
 				),
 				'page_callback' => array(
@@ -671,37 +672,37 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 					'tribe_id'
 				),
 				'access_callback' => true,
-				'title' => __( 'Redirect', 'tribe-events-community' ),
-				'template' => $template_name,
+				'title'           => __( 'Redirect', 'tribe-events-community' ),
+				'template'        => $template_name,
 			) );
 
 
 			// add event
 			$router->add_route( 'ce-add-route', array(
-				'path' => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['add'] . '$',
-				'query_vars' => array(),
+				'path'          => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['add'] . '$',
+				'query_vars'    => array(),
 				'page_callback' => array(
 					get_class(),
 					'addCallback',
 				),
-				'page_arguments' => array(),
+				'page_arguments'  => array(),
 				'access_callback' => true,
-				'title' => apply_filters( 'tribe_ce_submit_event_page_title', __( 'Submit an Event', 'tribe-events-community' ) ),
-				'template' => $template_name,
+				'title'           => apply_filters( 'tribe_ce_submit_event_page_title', __( 'Submit an Event', 'tribe-events-community' ) ),
+				'template'        => $template_name,
 			) );
 
 			$router->add_route( 'ce-redirect-to-add-route', array(
-				'path' => $this->getCommunityRewriteSlug() . '/?$',
-				'page_callback' => 'wp_redirect',
-				'page_arguments' => array( home_url( $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['add'] ), 301 ),
-				'template' => false,
+				'path'            => $this->getCommunityRewriteSlug() . '/?$',
+				'page_callback'   => 'wp_redirect',
+				'page_arguments'  => array( home_url( $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['add'] ), 301 ),
+				'template'        => false,
 				'access_callback' => true,
 			) );
 
 			// delete event
 			$router->add_route( 'ce-delete-route', array(
-				'path' => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['delete'] . '/(\d+)$',
-				'query_vars' => array(
+				'path'               => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['delete'] . '/(\d+)$',
+				'query_vars'         => array(
 					'tribe_event_id' => 1,
 				),
 				'page_callback' => array(
@@ -712,24 +713,24 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 					'tribe_event_id'
 				),
 				'access_callback' => true,
-				'title' => apply_filters( 'tribe_ce_remove_event_page_title', __( 'Remove an Event', 'tribe-events-community' ) ),
-				'template' => $template_name,
+				'title'           => apply_filters( 'tribe_ce_remove_event_page_title', __( 'Remove an Event', 'tribe-events-community' ) ),
+				'template'        => $template_name,
 			) );
 
 			// list events
 			$router->add_route( 'ce-list-route', array(
 				'path' => '^' . $this->getCommunityRewriteSlug() . '/' . $this->rewriteSlugs['list'] . '(/page/(\d+))?/?$',
 				'query_vars' => array(
-					'page' => 2,
+					'page'   => 2,
 				),
 				'page_callback' => array(
 					get_class(),
 					'listCallback',
 				),
-				'page_arguments' => array( 'page' ),
+				'page_arguments'  => array( 'page' ),
 				'access_callback' => true,
-				'title' => apply_filters( 'tribe_ce_event_list_page_title', __( 'My Events', 'tribe-events-community' ) ),
-				'template' => $template_name,
+				'title'           => apply_filters( 'tribe_ce_event_list_page_title', __( 'My Events', 'tribe-events-community' ) ),
+				'template'        => $template_name,
 			) );
 
 		}
@@ -747,13 +748,13 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		 */
 		protected function default_template_compatibility( $print_before_after_override = false ) {
 			add_filter( 'tribe_events_current_view_template', array( $this, 'default_template_placeholder' ) );
-			Tribe__Events__Template_Factory::asset_package( 'events-css' );
+			tribe_asset_enqueue_group( 'events-styles' );
 
 			if ( false === $print_before_after_override && '' === tribe_get_option( 'tribeEventsTemplate', '' ) ) {
 				$this->should_print_before_after_html = false;
 			} else {
 				$this->should_print_before_after_html = true;
-		}
+			}
 		}
 
 		/**
@@ -1916,7 +1917,13 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 			ob_start();
 			echo '<p>' . $caption . '</p>';
 			wp_login_form();
-			wp_register( '<div class="register">', '</div>', true );
+
+			if ( get_option( 'users_can_register' ) ) {
+				wp_register( '<div class="tribe-ce-register">', '</div>', true );
+				echo ' | ';
+			}
+
+			$this->lostpassword_link();
 
 			/**
 			 * Fires immediately after the login form is rendered (where Community
@@ -1925,6 +1932,19 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 			do_action( 'tribe_community_after_login_form' );
 
 			return ob_get_clean();
+		}
+
+		/**
+		 * A uniform way of generating a "Lost your password?" link on CE login forms.
+		 *
+		 * @since 4.5.14
+		 */
+		public function lostpassword_link() {
+			echo sprintf(
+				'<a class="tribe-ce-lostpassword" href="%1$s">%2$s</a>',
+				wp_lostpassword_url(),
+				esc_html__( 'Lost your password?', 'tribe-events-community' )
+			);
 		}
 
 		/**
@@ -2011,72 +2031,97 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		}
 
 		/**
-		 * Organizer form for events.
+		 * The front-end "edit organizer" form.
 		 *
 		 * @since 1.0
 		 *
-		 * @param int $tribe_organizer_id The organizer's ID.
+		 * @param int $organizer_id The organizer's ID.
 		 * @return string The form.
 		 */
-		public function doOrganizerForm( $tribe_organizer_id ) {
-			$tribe_organizer_id = intval( $tribe_organizer_id );
+		public function doOrganizerForm( $organizer_id ) {
+
+			$valid        = false;
+			$organizer_id = intval( $organizer_id );
 
 			add_filter( 'tribe-post-origin', array( $this, 'filterPostOrigin' ) );
 
-			$output = '';
+			// Some preliminary checks to ensure editing the organizer is allowed.
+			if ( ! $organizer_id ) {
+				return '<p>' . esc_html__( 'Organizer not found.', 'tribe-events-community' ) . '</p>';
+			}
 
-			if ( empty( $tribe_organizer_id ) ) {
-				return '<p>' . __( 'Organizer not found.', 'tribe-events-community' ) . '</p>';
+			if ( Tribe__Events__Main::ORGANIZER_POST_TYPE !== get_post_type( $organizer_id ) ) {
+				return '<p>' . esc_html__( 'Only an Organizer can be edited on this page.', 'tribe-events-community' ) . '</p>';
 			}
 
 			if ( ! is_user_logged_in() ) {
-				return $this->login_form( __( 'Please log in to edit this organizer', 'tribe-events-community' ) );
+				return $this->login_form( esc_html__( 'Please log in to edit this organizer', 'tribe-events-community' ) );
 			}
 
-			if (  ! current_user_can( 'edit_post', $tribe_organizer_id ) ) {
-				$output .= '<p>' . __( 'You do not have permission to edit this organizer.', 'tribe-events-community' ) . '</p>';
-				return $output;
+			if ( ! current_user_can( 'edit_post', $organizer_id ) ) {
+				return '<p>' . esc_html__( 'You do not have permission to edit this organizer.', 'tribe-events-community' ) . '</p>';
 			}
 
-			$this->loadScripts = true;
-			$output .= '<div id="tribe-community-events" class="form organizer">';
+			/**
+			 * Filter Community Events Required Organizer Fields
+			 *
+			 * @param array of fields to validate - Organizer, Phone, Website, Email
+			 */
+			$required_organizer_fields = apply_filters( 'tribe_events_community_required_organizer_fields', array() );
 
-			if ( ( isset( $_POST[ 'community-event' ] ) && $_POST[ 'community-event' ] ) && check_admin_referer( 'ecp_organizer_submission' ) ) {
-				if ( isset( $_POST[ 'post_title' ] ) && $_POST[ 'post_title' ] ) {
-					$_POST['ID'] = $tribe_organizer_id;
-					$scrubber = new Tribe__Events__Community__Organizer_Submission_Scrubber( $_POST );
-					$_POST = $scrubber->scrub();
+			// Begin the actual edit-organizer form now that user is confirmed to be allowed to be here.
+			$this->loadScripts  = true;
+			$output             = '<div id="tribe-community-events" class="form organizer">';
 
-					remove_action( 'save_post_'.Tribe__Events__Main::ORGANIZER_POST_TYPE, array( Tribe__Events__Main::instance(), 'save_organizer_data' ), 16, 2 );
+			if ( Tribe__Utils__Array::get( $_POST, 'community-event', false ) ) {
+
+				if ( ! check_admin_referer( 'ecp_organizer_submission' ) ) {
+					$this->enqueueOutputMessage( esc_html__( 'There was a problem updating this organizer, please try again.', 'tribe-events-community' ), 'error' );
+				}
+
+				if ( ! isset( $_POST[ 'post_title' ] ) ) {
+					$this->enqueueOutputMessage( esc_html__( 'Organizer name cannot be blank.', 'tribe-events-community' ), 'error' );
+				}
+
+				$_POST['ID']             = $organizer_id;
+				$scrubber                = new Tribe__Events__Community__Organizer_Submission_Scrubber( $_POST );
+				$_POST                   = $scrubber->scrub();
+				$invalid_fields          = array();
+				$has_all_required_fields = true;
+
+				foreach ( $required_organizer_fields as $field ) {
+
+					// This array of required fields is shared with the submission form, on which the existence of an Organizer is not a given.
+					// Here on the edit-organizer form, though, it *is* a given, so we can skip checking the parent 'Organizer' field to prevent unnecessary messages about it.
+					if ( 'Organizer' === $field ) {
+						continue;
+					}
+
+					$required_field = Tribe__Utils__Array::get( $_POST, array( 'organizer', $field ), '' );
+
+					if ( empty( $required_field ) ) {
+						$this->enqueueOutputMessage( sprintf( esc_html__( '%1$s required', '"{Field name} required" text for error message above edit-organizer form in Community Events.', 'tribe-events-community' ), $field ), 'error' );
+						$has_all_required_fields = false;
+					}
+				}
+
+				remove_action( 'save_post_'.Tribe__Events__Main::ORGANIZER_POST_TYPE, array( Tribe__Events__Main::instance(), 'save_organizer_data' ), 16, 2 );
+
+				if ( $has_all_required_fields ) {
 
 					wp_update_post( array(
-						'post_title' => $_POST[ 'post_title' ],
-						'ID' => $tribe_organizer_id,
+						'post_title'   => $_POST[ 'post_title' ],
+						'ID'           => $organizer_id,
 						'post_content' => $_POST[ 'post_content' ],
 					) );
 
-					Tribe__Events__API::updateOrganizer( $tribe_organizer_id, $_POST['organizer'] );
-					$this->enqueueOutputMessage( __( 'Organizer updated.', 'tribe-events-community' ) );
-
-						/*
-						// how it should work, but updateOrganizer does not return a boolean
-						if ( Tribe__Events__API::updateOrganizer($tribe_organizer_id, $_POST) ) {
-							$this->enqueueOutputMessage( __("Organizer updated.",'tribe-events-community') );
-						}else{
-							$this->enqueueOutputMessage( __("There was a problem saving your organizer, please try again.",'tribe-events-community'), 'error' );
-						}
-						*/
-				} else {
-					$this->enqueueOutputMessage( __( 'Organizer name cannot be blank.', 'tribe-events-community' ), 'error' );
-				}
-			} else {
-				if ( isset( $_POST[ 'community-event' ] ) ) {
-					$this->enqueueOutputMessage( __( 'There was a problem updating this organizer, please try again.', 'tribe-events-community' ), 'error' );
+					Tribe__Events__API::updateOrganizer( $organizer_id, $_POST['organizer'] );
+					$this->enqueueOutputMessage( esc_html__( 'Organizer updated.', 'tribe-events-community' ) );
 				}
 			}
 
 			global $post;
-			$post = get_post( intval( $tribe_organizer_id ) );
+			$post = get_post( $organizer_id );
 
 			ob_start();
 			include Tribe__Events__Templates::getTemplateHierarchy( 'community/edit-organizer' );
@@ -2088,7 +2133,6 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 			remove_filter( 'tribe-post-origin', array( $this, 'filterPostOrigin' ) );
 
 			return $output;
-
 		}
 
 		/**
@@ -2504,38 +2548,57 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		 * @return string The message.
 		 */
 		public function outputMessage( $type = null, $echo = true ) {
+
 			if ( ! $type && ! $this->messageType ) {
 				$type = 'updated';
 			} elseif ( ! $type && $this->messageType ) {
 				$type = $this->messageType;
 			}
 
-			$errors = null;
+			$errors = array();
 
-			if ( isset( $this->messages ) && ! empty( $this->messages ) )
+			if ( isset( $this->messages ) && ! empty( $this->messages ) ) {
 				$errors = array(
 					 array(
-					 	'type' => $type,
+					 	'type'    => $type,
 						'message' => '<p>' . join( '</p><p>', $this->messages ) . '</p>',
 					),
 				);
+			}
 
 			$errors = apply_filters( 'tribe_community_events_form_errors', $errors );
 
-			$output = '';
-
-			if ( is_array( $errors ) ) {
-				foreach ( $errors as $error ) {
-					$output .= '<div class="tribe-community-notice tribe-community-notice-' . $error[ 'type' ] . '">' . $error[ 'message' ] . '</div>';
-				}
-
-				unset( $this->messages );
+			if ( ! is_array( $errors ) ) {
+				return '';
 			}
 
+			ob_start();
+
+			$existing_messages = isset( $this->messages ) ? $this->messages : array();
+
+			/**
+			 * Allows for adding content before the form's various messages.
+			 *
+			 * @since 4.5.15
+			 *
+			 * @param array $existing_messages The current array of messages to display on the form; empty array if none exist.
+			 */
+			do_action( 'tribe_community_events_before_form_messages', $existing_messages );
+
+			foreach ( $errors as $error ) {
+				printf(
+					'<div class="tribe-community-notice tribe-community-notice-%1$s">%2$s</div>',
+					esc_attr( $error[ 'type' ] ),
+					wp_kses_post( $error[ 'message' ] )
+				);
+			}
+
+			unset( $this->messages );
+
 			if ( $echo ) {
-				echo $output;
+				echo ob_get_clean();
 			} else {
-				return $output;
+				return ob_get_clean();
 			}
 		}
 

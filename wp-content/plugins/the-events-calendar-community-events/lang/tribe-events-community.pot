@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the The Events Calendar: Community Events package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar: Community Events 4.5.11\n"
+"Project-Id-Version: The Events Calendar: Community Events 4.5.12\n"
 "Report-Msgid-Bugs-To: http://m.tri.be/191x\n"
-"POT-Creation-Date: 2018-04-17 17:20:29+00:00\n"
+"POT-Creation-Date: 2018-07-27 19:07:20+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-04-17 17:20\n"
+"PO-Revision-Date: 2018-07-27 19:07\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
@@ -61,252 +61,252 @@ msgctxt "Tribe Community Events fallback post title"
 msgid "Auto Draft"
 msgstr ""
 
-#: src/Tribe/Main.php:619 src/Tribe/Main.php:1148
+#: src/Tribe/Main.php:605 src/Tribe/Main.php:1134
 msgid "Edit a Venue"
 msgstr ""
 
-#: src/Tribe/Main.php:638 src/Tribe/Main.php:1149
+#: src/Tribe/Main.php:624 src/Tribe/Main.php:1135
 msgid "Edit an Organizer"
 msgstr ""
 
-#: src/Tribe/Main.php:656 src/Tribe/Main.php:1147
+#: src/Tribe/Main.php:642 src/Tribe/Main.php:1133
 msgid "Edit an Event"
 msgstr ""
 
-#: src/Tribe/Main.php:674
+#: src/Tribe/Main.php:660
 msgid "Redirect"
 msgstr ""
 
-#: src/Tribe/Main.php:689 src/Tribe/Main.php:973 src/Tribe/Main.php:1258
+#: src/Tribe/Main.php:675 src/Tribe/Main.php:959 src/Tribe/Main.php:1244
 #: src/Tribe/Templates.php:88
 msgid "Submit an Event"
 msgstr ""
 
-#: src/Tribe/Main.php:715 src/Tribe/Main.php:1140
+#: src/Tribe/Main.php:701 src/Tribe/Main.php:1126
 msgid "Remove an Event"
 msgstr ""
 
-#: src/Tribe/Main.php:731 src/Tribe/Main.php:1236
+#: src/Tribe/Main.php:717 src/Tribe/Main.php:1222
 #: src/admin-views/community-options-template.php:251
 #: src/views/community/event-list.php:30
 msgid "My Events"
 msgstr ""
 
-#: src/Tribe/Main.php:815
+#: src/Tribe/Main.php:801
 msgid "Not found."
 msgstr ""
 
-#: src/Tribe/Main.php:979
+#: src/Tribe/Main.php:965
 msgid ""
 "Community Events requires non-default (pretty) permalinks to be enabled or "
 "the [tribe_community_events] shortcode to exist on a page."
 msgstr ""
 
-#: src/Tribe/Main.php:1063
+#: src/Tribe/Main.php:1049
 msgid "Delete"
 msgstr ""
 
-#: src/Tribe/Main.php:1064
+#: src/Tribe/Main.php:1050
 msgid "Are you sure?"
 msgstr ""
 
-#: src/Tribe/Main.php:1067
+#: src/Tribe/Main.php:1053
 msgid "Delete All"
 msgstr ""
 
-#: src/Tribe/Main.php:1068
+#: src/Tribe/Main.php:1054
 msgid ""
 "Are you sure you want to permanently delete all instances of this recurring "
 "event?"
 msgstr ""
 
-#: src/Tribe/Main.php:1070
+#: src/Tribe/Main.php:1056
 msgid ""
 "Are you sure you want to permanently delete this instance of a recurring "
 "event?"
 msgstr ""
 
-#: src/Tribe/Main.php:1126 src/views/community/modules/image.php:83
+#: src/Tribe/Main.php:1112 src/views/community/modules/image.php:83
 msgid "Remove image"
 msgstr ""
 
-#: src/Tribe/Main.php:1141
+#: src/Tribe/Main.php:1127
 msgid "Remove a Venue"
 msgstr ""
 
-#: src/Tribe/Main.php:1142
+#: src/Tribe/Main.php:1128
 msgid "Remove an Organizer"
 msgstr ""
 
-#: src/Tribe/Main.php:1143 src/Tribe/Main.php:1150
+#: src/Tribe/Main.php:1129 src/Tribe/Main.php:1136
 msgid "Unknown Post Type"
 msgstr ""
 
-#: src/Tribe/Main.php:1296
+#: src/Tribe/Main.php:1282
 msgid "This shortcode can only be used in pages."
 msgstr ""
 
-#: src/Tribe/Main.php:1454
+#: src/Tribe/Main.php:1440
 msgid "Community Events Submission"
 msgstr ""
 
-#: src/Tribe/Main.php:1557
+#: src/Tribe/Main.php:1543
 msgid "Trashed Event #"
 msgstr ""
 
-#: src/Tribe/Main.php:1560
+#: src/Tribe/Main.php:1546
 msgid "Deleted Event #"
 msgstr ""
 
-#: src/Tribe/Main.php:1563
+#: src/Tribe/Main.php:1549
 msgid "This event (#%s) does not appear to exist."
 msgstr ""
 
-#: src/Tribe/Main.php:1566
+#: src/Tribe/Main.php:1552
 msgid "You do not have permission to delete this event."
 msgstr ""
 
-#: src/Tribe/Main.php:1582
+#: src/Tribe/Main.php:1568
 msgctxt "As in \"go back to previous page\""
 msgid "Back"
 msgstr ""
 
-#: src/Tribe/Main.php:1627
+#: src/Tribe/Main.php:1613
 msgid ""
 "%sWarning:%s You are editing a recurring %s. All changes will be applied to "
 "the entire series."
 msgstr ""
 
-#: src/Tribe/Main.php:1636
+#: src/Tribe/Main.php:1622
 msgid "%s not found."
 msgstr ""
 
-#: src/Tribe/Main.php:1644
+#: src/Tribe/Main.php:1630
 msgid "Please log in first."
 msgstr ""
 
-#: src/Tribe/Main.php:1650
+#: src/Tribe/Main.php:1636
 msgid "You do not have permission to edit this %s."
 msgstr ""
 
-#: src/Tribe/Main.php:1656
+#: src/Tribe/Main.php:1642
 msgid ""
 "The file you attempted to upload exceeded the maximum file size of %1$s."
 msgstr ""
 
-#: src/Tribe/Main.php:1809 src/views/community/columns/title.php:35
+#: src/Tribe/Main.php:1795 src/views/community/columns/title.php:35
 msgid "View"
 msgstr ""
 
-#: src/Tribe/Main.php:1815 src/views/community/columns/title.php:41
+#: src/Tribe/Main.php:1801 src/views/community/columns/title.php:41
 msgid "Edit"
 msgstr ""
 
-#: src/Tribe/Main.php:1946
+#: src/Tribe/Main.php:1932
 msgid "Venue not found."
 msgstr ""
 
-#: src/Tribe/Main.php:1951
+#: src/Tribe/Main.php:1937
 msgid "Please log in to edit this venue"
 msgstr ""
 
-#: src/Tribe/Main.php:1955
+#: src/Tribe/Main.php:1941
 msgid "You do not have permission to edit this venue."
 msgstr ""
 
-#: src/Tribe/Main.php:1978
+#: src/Tribe/Main.php:1964
 msgid "Venue updated."
 msgstr ""
 
-#: src/Tribe/Main.php:1988
+#: src/Tribe/Main.php:1974
 msgid "Venue name cannot be blank."
 msgstr ""
 
-#: src/Tribe/Main.php:1992
+#: src/Tribe/Main.php:1978
 msgid "There was a problem updating your venue, please try again."
 msgstr ""
 
-#: src/Tribe/Main.php:2029
+#: src/Tribe/Main.php:2015
 msgid "Organizer not found."
 msgstr ""
 
-#: src/Tribe/Main.php:2033
+#: src/Tribe/Main.php:2019
 msgid "Please log in to edit this organizer"
 msgstr ""
 
-#: src/Tribe/Main.php:2037
+#: src/Tribe/Main.php:2023
 msgid "You do not have permission to edit this organizer."
 msgstr ""
 
-#: src/Tribe/Main.php:2059
+#: src/Tribe/Main.php:2045
 msgid "Organizer updated."
 msgstr ""
 
-#: src/Tribe/Main.php:2070
+#: src/Tribe/Main.php:2056
 msgid "Organizer name cannot be blank."
 msgstr ""
 
-#: src/Tribe/Main.php:2074
+#: src/Tribe/Main.php:2060
 msgid "There was a problem updating this organizer, please try again."
 msgstr ""
 
-#: src/Tribe/Main.php:2157
+#: src/Tribe/Main.php:2143
 msgid "Please log in to view your events"
 msgstr ""
 
-#: src/Tribe/Main.php:2380
+#: src/Tribe/Main.php:2387
 msgid "The requested page number was not found."
 msgstr ""
 
-#: src/Tribe/Main.php:2619
+#: src/Tribe/Main.php:2626
 msgid "Community"
 msgstr ""
 
-#: src/Tribe/Main.php:2636
+#: src/Tribe/Main.php:2643
 msgid "This template is also used for Community Events."
 msgstr ""
 
-#: src/Tribe/Main.php:2876
+#: src/Tribe/Main.php:2883
 msgid "Community: Submit %s"
 msgstr ""
 
-#: src/Tribe/Main.php:2884
+#: src/Tribe/Main.php:2891
 msgid "Community: My %s"
 msgstr ""
 
-#: src/Tribe/Main.php:2893 src/Tribe/Templates.php:47
+#: src/Tribe/Main.php:2900 src/Tribe/Templates.php:47
 msgid "Community Events"
 msgstr ""
 
-#: src/Tribe/Main.php:2909
+#: src/Tribe/Main.php:2916
 msgid "Settings"
 msgstr ""
 
-#: src/Tribe/Main.php:2946
+#: src/Tribe/Main.php:2953
 msgid "edit"
 msgstr ""
 
-#: src/Tribe/Main.php:2947 src/admin-views/community-options-template.php:357
+#: src/Tribe/Main.php:2954 src/admin-views/community-options-template.php:357
 msgid "add"
 msgstr ""
 
-#: src/Tribe/Main.php:2948
+#: src/Tribe/Main.php:2955
 msgid "delete"
 msgstr ""
 
-#: src/Tribe/Main.php:2949 src/admin-views/community-options-template.php:359
+#: src/Tribe/Main.php:2956 src/admin-views/community-options-template.php:359
 msgid "list"
 msgstr ""
 
-#: src/Tribe/Main.php:2951
+#: src/Tribe/Main.php:2958
 msgid "venue"
 msgstr ""
 
-#: src/Tribe/Main.php:2952
+#: src/Tribe/Main.php:2959
 msgid "organizer"
 msgstr ""
 
-#: src/Tribe/Main.php:2953
+#: src/Tribe/Main.php:2960
 msgid "event"
 msgstr ""
 
@@ -330,112 +330,112 @@ msgstr ""
 msgid "There was a problem submitting your %s, please try again."
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:177 src/Tribe/Submission_Handler.php:191
+#: src/Tribe/Submission_Handler.php:180 src/Tribe/Submission_Handler.php:194
 msgid "The file is not an Image"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:194
+#: src/Tribe/Submission_Handler.php:197
 msgid "The image size is invalid"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:197
+#: src/Tribe/Submission_Handler.php:200
 msgid "The file is not a valid image"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:222
+#: src/Tribe/Submission_Handler.php:225
 msgid "%s is required"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:376
+#: src/Tribe/Submission_Handler.php:379
 msgid "%s %s is required"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:388
+#: src/Tribe/Submission_Handler.php:391
 msgid "%s Title"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:391
+#: src/Tribe/Submission_Handler.php:394
 msgid "%s Description"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:400
+#: src/Tribe/Submission_Handler.php:403
 msgctxt "field label for event categories"
 msgid "%s Category"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:403
+#: src/Tribe/Submission_Handler.php:406
 msgctxt "field label for post tags"
 msgid "Tag"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:429 src/Tribe/Submission_Handler.php:461
+#: src/Tribe/Submission_Handler.php:432 src/Tribe/Submission_Handler.php:464
 msgid "Name"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:433
+#: src/Tribe/Submission_Handler.php:436
 #: src/views/community/modules/venue-fields.php:37
 msgid "Address"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:437
+#: src/Tribe/Submission_Handler.php:440
 #: src/views/community/modules/venue-fields.php:52
 msgid "City"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:441
+#: src/Tribe/Submission_Handler.php:444
 msgid "Province"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:445
+#: src/Tribe/Submission_Handler.php:448
 msgid "State"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:449
+#: src/Tribe/Submission_Handler.php:452
 msgid "Zip"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:453
+#: src/Tribe/Submission_Handler.php:456
 msgid "URL"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:457
+#: src/Tribe/Submission_Handler.php:460
 #: src/views/community/modules/organizer-fields.php:64
 #: src/views/community/modules/venue-fields.php:128
 msgid "Phone"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:465
+#: src/Tribe/Submission_Handler.php:468
 #: src/views/community/modules/organizer-fields.php:70
 #: src/views/community/modules/venue-fields.php:143
 msgid "Website"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:469
+#: src/Tribe/Submission_Handler.php:472
 #: src/views/community/modules/organizer-fields.php:75
 msgid "Email"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:505
+#: src/Tribe/Submission_Handler.php:508
 msgid "Invalid value for %s"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:516
+#: src/Tribe/Submission_Handler.php:519
 msgid "Images must be png, jpg, or gif"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:536
+#: src/Tribe/Submission_Handler.php:539
 msgid "Invalid URL provided for %s"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:558
+#: src/Tribe/Submission_Handler.php:561
 msgid "Image exceeded the allowed file size"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:563
+#: src/Tribe/Submission_Handler.php:566
 msgid "The image failed to upload successfully"
 msgstr ""
 
-#: src/Tribe/Submission_Handler.php:567
+#: src/Tribe/Submission_Handler.php:570
 msgid "The uploaded image could not be processed"
 msgstr ""
 

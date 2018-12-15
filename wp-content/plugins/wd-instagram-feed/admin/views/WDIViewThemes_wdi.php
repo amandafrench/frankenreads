@@ -28,7 +28,7 @@ class WDIViewThemes_wdi {
       <span class="wdi_help_bar_text">
         <?php _e('This section allows you to create, edit and delete Themes.', "wd-instagram-feed"); ?>
         <a style="color: #5CAEBD; text-decoration: none;border-bottom: 1px dotted;" class="wdi_hb_t_link" target="_blank"
-           href="https://web-dorado.com/wordpress-instagram-feed-wd/editing-themes.html"><?php _e('Read More in User Guide', "wd-instagram-feed"); ?></a>
+           href="https://help.10web.io/hc/en-us/articles/360016277832"><?php _e('Read More in User Guide', "wd-instagram-feed"); ?></a>
       </span>
       <div class="wdi_hb_buy_pro">
         <a class="wdi_support_link" href="https://wordpress.org/support/plugin/wd-instagram-feed" target="_blank">

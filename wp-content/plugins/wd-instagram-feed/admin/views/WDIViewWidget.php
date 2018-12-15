@@ -29,7 +29,7 @@ class WDIViewWidget {
     extract($args);
     $title = (isset($instance['title']) ? $instance['title'] : "");
     $feed_id = (isset($instance['feed_id']) ? $instance['feed_id'] : 0);
-    $img_number = (isset($instance['img_number']) ? $instance['img_number'] : 2);
+    $img_number = (isset($instance['img_number']) ? $instance['img_number'] : 4);
     $show_likes_comments = (isset($instance['show_likes_comments']) ? $instance['show_likes_comments'] : 0);
     $number_of_columns = (isset($instance['number_of_columns']) ? $instance['number_of_columns'] : 1);
     $enable_loading_buttons = (isset($instance['enable_loading_buttons']) ? $instance['enable_loading_buttons'] : 0);

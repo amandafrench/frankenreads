@@ -944,3 +944,22 @@ div[id^="wdi_container"] p {
 .wdi_image_container .carousel_media:not(.active){
 	display:none;
 }
+.wdi_website{
+  width: 100%;
+  display: block;
+  float: left;
+}
+.wdi_website a{
+  box-shadow:none !important;
+  color: #003569;
+  text-decoration: none;
+}
+
+.elementor-editor-active .wdi_front_overlay{
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.2);
+}

@@ -2598,6 +2598,7 @@ wdi_front.show = function (name, currentFeed)
 
         //user inforamtion
         var hashtagClass = (info[k]['name'][0] == '#') ? 'wdi_header_hashtag' : '';
+        var website_host_name = wdi_extractHostname(info[k]['website']);
 
         var templateData = {
           'user_index': k,
@@ -2606,6 +2607,8 @@ wdi_front.show = function (name, currentFeed)
           'feed_counter': currentFeed.feed_row.wdi_feed_counter,
           'user_name': info[k]['name'],
           'bio': wdi_front.escape_tags(info[k]['bio']),
+          'website': website_host_name,
+          'website_url': info[k]['website'],
           'usersCount': currentFeed.feed_row.feed_users.length,
           'hashtagClass': hashtagClass
 
@@ -2689,7 +2692,7 @@ wdi_front.getUserTemplate = function (currentFeed, username)
 
   if (usersCount == 1 && username[0] !== '#' && currentFeed.feed_row.display_user_info == '1') {
     source += '<div class="wdi_bio"><%= bio%></div>';
-
+    source += '<div class="wdi_website"><a target="_blank" href="<%= website_url%>" ><%= website%></a></div>';
   }
 
 
@@ -3797,3 +3800,12 @@ jQuery(document).ready(function () {
   }, 2000);
 
 });
+function wdi_extractHostname(url) {
+  if(typeof url === "undefined" || url===""){
+    return "";
+  }
+  var result = url.replace(/(^\w+:|^)\/\//, '');
+
+
+  return result;
+}

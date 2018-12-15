@@ -91,8 +91,10 @@ class GMW_Members_Locator_Form extends GMW_Form {
 	 */
 	public function include_xprofile_users_id( $sql ) {
 
+		$column = in_array( $this->form['query_args']['type'], array( 'active', 'newest', 'popular', 'online' ) ) ? 'user_id' : 'ID';
+
 		$users_id       = esc_sql( implode( ',', $this->xp_users_id ) );
-		$sql['where'][] = " u.ID IN ( {$users_id} ) ";
+		$sql['where'][] = " u.{$column} IN ( {$users_id} ) ";
 
 		return $sql;
 	}
@@ -109,8 +111,10 @@ class GMW_Members_Locator_Form extends GMW_Form {
 	 */
 	public function include_locations_users_id( $sql ) {
 
+		$column = in_array( $this->form['query_args']['type'], array( 'active', 'newest', 'popular', 'online' ) ) ? 'user_id' : 'ID';
+
 		$users_id       = esc_sql( implode( ',', $this->objects_id ) );
-		$sql['where'][] = " u.ID IN ( {$users_id} ) ";
+		$sql['where'][] = " u.{$column} IN ( {$users_id} ) ";
 
 		return $sql;
 	}
@@ -233,7 +237,7 @@ class GMW_Members_Locator_Form extends GMW_Form {
 		global $members_template;
 
 		if ( ! $internal_cache || false === ( $members_template = get_transient( $query_args_hash ) ) ) {
-			// if ( 1 == 1 ){
+			//if ( 1 == 1 ){
 			// print_r( 'Members query done' );
 			// if address entered and showing only located members
 			if ( ( $address_ok && $objects_ok ) || ( ! $address_ok && ! $show_non_located_members ) ) {
@@ -242,7 +246,7 @@ class GMW_Members_Locator_Form extends GMW_Form {
 				add_filter( 'bp_user_query_uid_clauses', array( $this, 'include_locations_users_id' ), 20 );
 
 				// order results by distance
-				add_filter( 'bp_user_query_uid_clauses', array( $this, 'order_results_by_distance' ), 30, 2 );
+				add_filter( 'bp_user_query_uid_clauses', array( $this, 'order_results_by_distance' ), 21, 2 );
 
 				// otherwise, if showing also non located members
 				// we need to pass the users Id from xprofile fields
@@ -258,9 +262,8 @@ class GMW_Members_Locator_Form extends GMW_Form {
 
 			// include users ID
 			remove_filter( 'bp_user_query_uid_clauses', array( $this, 'include_locations_users_id' ), 20 );
-
-			// order results by distance
-			remove_filter( 'bp_user_query_uid_clauses', array( $this, 'order_results_by_distance' ), 30, 2 );
+			remove_filter( 'bp_user_query_uid_clauses', array( $this, 'order_results_by_distance' ), 21, 2 );
+			remove_filter( 'bp_user_query_uid_clauses', array( $this, 'include_xprofile_users_id' ), 20 );
 
 			// set new query in transient
 			if ( $internal_cache ) {

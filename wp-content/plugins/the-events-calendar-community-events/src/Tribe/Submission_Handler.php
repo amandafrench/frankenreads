@@ -4,13 +4,13 @@ class Tribe__Events__Community__Submission_Handler {
 	/**
 	 * @var Tribe__Events__Community__Main
 	 */
-	protected $community = null;
-	protected $submission = array();
+	protected $community           = null;
+	protected $submission          = array();
 	protected $original_submission = array();
-	protected $event_id = 0;
-	protected $valid = null;
-	protected $messages = array();
-	protected $invalid_fields = array();
+	protected $event_id            = 0;
+	protected $valid               = null;
+	protected $messages            = array();
+	protected $invalid_fields      = array();
 
 	/**
 	 * Submission scrubber.
@@ -22,13 +22,16 @@ class Tribe__Events__Community__Submission_Handler {
 	protected $scrubber;
 
 	public function __construct( $submission, $event_id ) {
-		$this->community = tribe( 'community.main' );
+
+		$this->community           = tribe( 'community.main' );
 		$this->original_submission = $submission;
-		$submission[ 'ID' ] = $event_id;
-		$this->submission = $submission;
-		$this->scrubber = new Tribe__Events__Community__Submission_Scrubber( $this->submission );
-		$this->submission = $this->scrubber->scrub();
+		$submission[ 'ID' ]        = $event_id;
+		$this->submission          = $submission;
+		$this->scrubber            = new Tribe__Events__Community__Submission_Scrubber( $this->submission );
+		$this->submission          = $this->scrubber->scrub();
+
 		$this->apply_map_defaults();
+
 		$this->event_id = $event_id;
 	}
 
@@ -53,6 +56,7 @@ class Tribe__Events__Community__Submission_Handler {
 		}
 
 		$this->valid = apply_filters( 'tribe_community_events_validate_submission', $this->valid, $this->submission, $this );
+
 		return $this->valid;
 	}
 
@@ -66,8 +70,10 @@ class Tribe__Events__Community__Submission_Handler {
 	}
 
 	public function save() {
-		$events_label_singular = tribe_get_event_label_singular();
+
+		$events_label_singular           = tribe_get_event_label_singular();
 		$events_label_singular_lowercase = tribe_get_event_label_singular_lowercase();
+
 		$event = get_post( $this->event_id );
 
 		// this entry is expected to be lowercase for the Tribe__Events__API
@@ -98,7 +104,7 @@ class Tribe__Events__Community__Submission_Handler {
 
 			if ( $saved ) {
 				$this->event_id = $saved;
-				$this->add_message( sprintf( __( '%s submitted.', 'tribe-events-community' ), $events_label_singular ) . $this->community->get_view_edit_links( $this->event_id ) );
+				$this->add_message( sprintf( __( '%s submitted.', 'tribe-events-community' ), $events_label_singular ) . ' ' . $this->community->get_view_edit_links( $this->event_id ) );
 				$this->add_message( '<a href="' . esc_url( $this->community->getUrl( 'add' ) ) . '">' . sprintf( __( 'Submit another %s', 'tribe-events-community' ), $events_label_singular_lowercase ) . '</a>' );
 				do_action( 'tribe_community_event_created', $this->event_id );
 			} else {
@@ -117,6 +123,13 @@ class Tribe__Events__Community__Submission_Handler {
 				$this->event_id = false;
 				return false;
 			}
+		}
+
+		if (
+			isset( $this->submission['detach_thumbnail'] )
+			&& 'true' === (string) $this->submission['detach_thumbnail']
+		) {
+			delete_post_meta( $this->event_id, '_thumbnail_id' );
 		}
 
 		// Logged out or underprivileged users will not have terms automatically added during wp_insert_post
@@ -183,9 +196,9 @@ class Tribe__Events__Community__Submission_Handler {
 
 		if ( false !== $attach_id ) {
 			$image_path = get_attached_file( $attach_id );
-			$editor = wp_get_image_editor( $image_path );
-			$image = @getimagesize( $image_path );
-			$status = true;
+			$editor     = wp_get_image_editor( $image_path );
+			$image      = @getimagesize( $image_path );
+			$status     = true;
 
 			if ( is_wp_error( $editor ) ) {
 				$this->add_message( $editor->get_error_message(), 'error' );
@@ -645,6 +658,7 @@ class Tribe__Events__Community__Submission_Handler {
 		 * @param bool $apply_map_defaults
 		 */
 		if ( ! apply_filters( 'tribe_events_community_apply_map_defaults', true ) ) {
+			add_filter( 'tribe_events_venue_created_map_default', array( $this, 'set_map_default_value' ) );
 			return;
 		}
 
@@ -666,5 +680,16 @@ class Tribe__Events__Community__Submission_Handler {
 		if ( ! in_array( 'VenueShowMapLink', $allowed_venue_fields ) ) {
 			$this->submission['VenueShowMapLink'] = true;
 		}
+	}
+
+	/**
+	 * Function called by the filter tribe_events_community_apply_map_defaults to change the value to `false`.
+	 * When the filter `tribe_events_community_apply_map_defaults` is set to false we also need to set the value of the
+	 * checkboxes to false.
+	 *
+	 * @since 4.5.14
+	 */
+	public function set_map_default_value() {
+		return 'false';
 	}
 }

@@ -48,7 +48,7 @@ private $model;
       <span class="wdi_help_bar_text">
         <?php _e('This section allows you to set API parameters.', "wd-instagram-feed"); ?>
         <a style="color: #5CAEBD; text-decoration: none;border-bottom: 1px dotted;" class="wdi_hb_t_link" target="_blank"
-           href="https://web-dorado.com/wordpress-instagram-feed-wd/installation-and-configuration/getting-access-token.html"><?php _e('Read More in User Guide', "wd-instagram-feed"); ?></a>
+           href="https://help.10web.io/hc/en-us/articles/360016277532-Configuring-Instagram-Access-Token"><?php _e('Read More in User Guide', "wd-instagram-feed"); ?></a>
       </span>
       <div class="wdi_hb_buy_pro">
         <a class="wdi_support_link" href="https://wordpress.org/support/plugin/wd-instagram-feed" target="_blank">
@@ -62,7 +62,7 @@ private $model;
     </div>
 
 
-		<h1 id="settings_wdi_title"><?php _e('Instagram WD Settings', "wd-instagram-feed"); ?></h1>
+		<h1 id="settings_wdi_title"><?php _e('Instagram Settings', "wd-instagram-feed"); ?></h1>
 		<form method="post" action="options.php" class="wdi_settings_form">
 			<input type="hidden"id="wdi_user_id" name="<?php echo WDI_OPT.'[wdi_user_id]' ?>">
             <?php settings_fields('wdi_all_settings'); ?>
@@ -75,7 +75,7 @@ private $model;
 		</form>
         <style>
             <?php if(!isset($wdi_options['wdi_access_token']) || empty($wdi_options['wdi_access_token'])){ ?>
-            body.instagram-feed-wd_page_wdi_settings table:nth-of-type(2) {
+            body.instagram-feed_page_wdi_settings table:nth-of-type(2) {
                 display: none;
             }
 
@@ -83,7 +83,7 @@ private $model;
                 display: none;
             }
 
-            body.instagram-feed-wd_page_wdi_settings table:nth-of-type(3) {
+            body.instagram-feed_page_wdi_settings table:nth-of-type(3) {
                 display: none;
             }
 

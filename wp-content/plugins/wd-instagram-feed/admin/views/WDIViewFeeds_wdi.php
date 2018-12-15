@@ -58,7 +58,7 @@ class WDIViewFeeds_wdi
         <span class="wdi_help_bar_text">
           <?php _e('This section allows you to create, edit and delete Feeds.', "wd-instagram-feed"); ?>
           <a style="color: #5CAEBD; text-decoration: none;border-bottom: 1px dotted;" class="wdi_hb_t_link" target="_blank"
-             href="https://web-dorado.com/wordpress-instagram-feed-wd/creating-feeds.html"><?php _e('Read More in User Guide', "wd-instagram-feed"); ?></a>
+             href="https://help.10web.io/hc/en-us/articles/360016497251-Creating-Instagram-Feed"><?php _e('Read More in User Guide', "wd-instagram-feed"); ?></a>
         </span>
         <div class="wdi_hb_buy_pro">
           <a class="wdi_support_link" href="https://wordpress.org/support/plugin/wd-instagram-feed" target="_blank">
@@ -155,7 +155,7 @@ class WDIViewFeeds_wdi
                        <span class="media-icon image-icon">
                         <img title="<?php echo $row_data->feed_name; ?>"
                              style="border: 1px solid #CCCCCC; max-width: 70px; max-height: 50px;"
-                             src="<?php echo $prev_img_url . '?date=' . date('Y-m-y H:i:s'); ?>">
+                             src="<?php echo $prev_img_url; ?>">
                       </span>
                       <?php echo $row_data->feed_name; ?>
                     </a>
@@ -316,7 +316,7 @@ class WDIViewFeeds_wdi
               'show_usernames' => array('name' => 'show_usernames', 'title' => __('Show User Data', "wd-instagram-feed"), 'type' => 'checkbox', 'tooltip' => '','hide_ids' => array('display_user_info','display_user_post_follow_number','follow_on_instagram_btn'), 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
               'follow_on_instagram_btn' => array('name' => 'follow_on_instagram_btn', 'title' => __('Show "Follow On Instagram" button', "wd-instagram-feed"), 'type' => 'checkbox', 'tooltip' => '', 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
               'display_user_post_follow_number' => array('name' => 'display_user_post_follow_number', 'title' => __('Show User Posts and Followers count', "wd-instagram-feed"), 'type' => 'checkbox', 'tooltip' => '', 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
-              'display_user_info' => array('name' => 'display_user_info', 'title' => __('Show User Bio', "wd-instagram-feed"), 'type' => 'checkbox', 'tooltip' => __('User bio will be displayed if feed has only one user', "wd-instagram-feed"), 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
+              'display_user_info' => array('name' => 'display_user_info', 'title' => __('Show User Bio and Website', "wd-instagram-feed"), 'type' => 'checkbox', 'tooltip' => __('User bio will be displayed if feed has only one user', "wd-instagram-feed"), 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
               'show_description' => array('switched' => 'off', 'name' => 'show_description', 'title' => __('Show Media Caption', "wd-instagram-feed"), 'type' => 'checkbox', 'label' => array('place' => 'after', 'class' => 'wdi_pro_only', 'text' => __("This feature is available only in premium version", "wd-instagram-feed"), 'br' => 'true'), 'tooltip' => '', 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
               'show_likes' => array('switched' => 'off', 'name' => 'show_likes', 'title' => __('Show Number of Likes', "wd-instagram-feed"), 'type' => 'checkbox', 'label' => array('place' => 'after', 'class' => 'wdi_pro_only', 'text' => __("This feature is available only in premium version", "wd-instagram-feed"), 'br' => 'true'), 'tooltip' => '', 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
               'show_comments' => array('switched' => 'off', 'name' => 'show_comments', 'title' => __('Show Number of Comments', "wd-instagram-feed"), 'type' => 'checkbox', 'label' => array('place' => 'after', 'class' => 'wdi_pro_only', 'text' => __("This feature is available only in premium version", "wd-instagram-feed"), 'br' => 'true'), 'tooltip' => '', 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
@@ -525,7 +525,7 @@ public function genarateFeedViews()
       <span class="wdi_help_bar_text">
         <?php _e('Here You Can Change Feed Parameters.', "wd-instagram-feed"); ?>
         <a style="color: #5CAEBD; text-decoration: none;border-bottom: 1px dotted;" class="wdi_hb_t_link" target="_blank"
-           href="https://web-dorado.com/wordpress-instagram-feed-wd/creating-feeds.html"><?php _e('Read More in User Guide', "wd-instagram-feed"); ?></a>
+           href="https://help.10web.io/hc/en-us/articles/360016497251-Creating-Instagram-Feed"><?php _e('Read More in User Guide', "wd-instagram-feed"); ?></a>
       </span>
       <div class="wdi_hb_buy_pro">
         <a class="wdi_support_link" href="https://wordpress.org/support/plugin/wd-instagram-feed" target="_blank">

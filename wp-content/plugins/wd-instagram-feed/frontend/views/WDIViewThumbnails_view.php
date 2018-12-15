@@ -113,6 +113,7 @@ class WDIViewThumbnails_view
         }
         ?>
       </div>
+        <div class="wdi_front_overlay"></div>
     </div>
     <?php
 
@@ -137,10 +138,21 @@ class WDIViewThumbnails_view
     wp_localize_script("wdi_frontend", 'wdi_feed_' . $wdi_feed_counter, array('feed_row' => $feed_row, 'data' => array(), 'usersData' => array(), 'dataCount' => 0));
     wp_localize_script("wdi_frontend", 'wdi_theme_' . $this->model->theme_row['id'], $this->model->theme_row);
     wp_localize_script("wdi_frontend", 'wdi_front', array('feed_counter' => $wdi_feed_counter));
+
+    if(WDILibrary::is_ajax() || WDILibrary::elementor_is_active()) {
+      wdi_load_frontend_scripts_ajax();
+    }
   }
 
   private function add_theme_styles(){
-    wp_enqueue_style("wdi_default_theme",WDI_URL . '/css/default_theme.css',array(),WDI_VERSION);
+
+    if(WDILibrary::is_ajax() || WDILibrary::elementor_is_active()) {
+      $style_tag = "<link rel='stylesheet' id='%s'  href='%s' type='text/css' media='all' />";
+      echo sprintf($style_tag, 'wdi_default_theme', WDI_URL . '/css/default_theme.css' . '?ver=' . WDI_VERSION);
+    } else {
+      wp_enqueue_style("wdi_default_theme",WDI_URL . '/css/default_theme.css',array(),WDI_VERSION);
+    }
+
     /*THIS METHOD FOR PAID VERSION*/
   }
 

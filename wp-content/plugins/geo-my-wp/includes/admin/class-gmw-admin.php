@@ -45,18 +45,18 @@ class GMW_Admin {
 		do_action( 'gmw_pre_admin_include_pages' );
 
 		// admin functions
-		include( 'gmw-admin-functions.php' );
-		include( 'class-gmw-tracking.php' );
-		include( 'updater/class-gmw-license.php' ); 
-		include( 'class-gmw-form-settings-helper.php' );
+		include_once( 'gmw-admin-functions.php' );
+		include_once( 'class-gmw-tracking.php' );
+		include_once( 'updater/class-gmw-license.php' ); 
+		include_once( 'class-gmw-form-settings-helper.php' );
 
 		// admin pages
-		include( 'pages/class-gmw-extensions.php' );
-		include( 'pages/class-gmw-settings.php' );
-		include( 'pages/class-gmw-forms-page.php' );
-		include( 'pages/class-gmw-form-editor.php' );
-		include( 'pages/tools/class-gmw-tools.php' );
-		include( 'pages/import-export/class-gmw-import-export-page.php' );
+		include_once( 'pages/class-gmw-extensions.php' );
+		include_once( 'pages/class-gmw-settings.php' );
+		include_once( 'pages/class-gmw-forms-page.php' );
+		include_once( 'pages/class-gmw-form-editor.php' );
+		include_once( 'pages/tools/class-gmw-tools.php' );
+		include_once( 'pages/import-export/class-gmw-import-export-page.php' );
 				
 		//set pages
 		$this->addons_page   = new GMW_Extensions();
@@ -395,15 +395,25 @@ class GMW_Admin {
             	var form_id = jQuery( '#gmw_form_id' ).val();
 
                 if ( form_id == "" ){
-                    
+
                     alert( '<?php _e( 'Please select a form', 'geo-my-wp' ) ?>' );
                     
                     return;
                 }
                 
-            	var form_name = jQuery("#gmw_form_id option[value='" + form_id + "']").text().replace(/[\[\]]/g, '');
-            	
-            	window.send_to_editor("[gmw "+ jQuery( '.gmw_form_type:checked' ).val() + "=\"" + form_id + "\" name=\"" + form_name + "\"]");
+            	var form_name = jQuery( "#gmw_form_id option[value='" + form_id + "']" ).text().replace(/[\[\]]/g, '');
+            	var addon     = jQuery( "#gmw_form_id option[value='" + form_id + "']" ).data( 'type' );
+            	var prefix    = 'gmw';
+            	var attribute = jQuery( ".gmw_form_type:checked" ).val();
+
+            	if ( addon == 'ajax_forms' ) {
+            		prefix = 'gmw_ajax_form';
+            	} else if ( addon == 'global_maps' ) {
+            		prefix    = 'gmw_global_map';
+            		attribute = 'form';
+            	}
+
+            	window.send_to_editor( '[' + prefix + ' ' + attribute + '="' + form_id + '" name="' + form_name + '"]' );
             }
         </script>
 
@@ -455,13 +465,15 @@ class GMW_Admin {
                             <?php
                                 $forms = gmw_get_forms();
                                 
+                                if ( empty( $forms ) || ! is_array( $forms ) ) {
+                                	$forms = array();
+                                }
+                                
                                 foreach( $forms as $form ) {
                                 	
                                 	$form['title'] = ! empty( $form['title'] ) ? $form['title'] : 'form_id_'.$form['ID'];
                                     ?>
-                                    <option value="<?php echo absint( $form['ID'] ); ?>">
-                                    	<?php echo esc_html( $form['title'] ); ?>	
-                                    </option>
+                                    <option value="<?php echo absint( $form['ID'] ); ?>" data-type="<?php echo $form['addon']; ?>"><?php echo esc_html( $form['title'] ); ?></option>
                                     <?php
                                 }
                             ?>

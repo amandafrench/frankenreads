@@ -127,8 +127,8 @@ class WDIViewLicensing_wdi {
     <div style="float: left; clear: both;">
       <p><?php _e("After purchasing the commercial version follow these steps:", 'wd-instagram-feed'); ?></p>
       <ol>
-        <li><?php _e("Deactivate Instagram Feed WD plugin.", 'wd-instagram-feed'); ?></li>
-        <li><?php _e("Delete Instagram Feed WD plugin.", 'wd-instagram-feed'); ?></li>
+        <li><?php _e("Deactivate Instagram Feed plugin.", 'wd-instagram-feed'); ?></li>
+        <li><?php _e("Delete Instagram Feed plugin.", 'wd-instagram-feed'); ?></li>
         <li><?php _e("Install the downloaded commercial version of the plugin.", 'wd-instagram-feed'); ?></li>
       </ol>
     </div>

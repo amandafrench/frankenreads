@@ -30,15 +30,17 @@ jQuery( document ).ready( function( $ ) {
 	// When click on the locator button
     jQuery( '.gmw-locator-button' ).click( function() {
 
-    	GMW.locator_button_success = function( address_fields, results ) {
+    	GMW.locator_button_success = function( result ) {
     			
     		// add coords value to hidden fields
-        	$( '#gmw-lat-sdate-geo' ).val( results[0].geometry.location.lat().toFixed(6) );
-        	$( '#gmw-lng-sdate-geo' ).val( results[0].geometry.location.lng().toFixed(6) );
-    		$( '#gmw-address-field-sdate-geo' ).val( address_fields.formatted_address );
+        	$( '#gmw-lat-sdate-geo' ).val( result.latitude );
+        	$( '#gmw-lng-sdate-geo' ).val( result.longitude );
+    		$( '#gmw-address-field-sdate-geo' ).val( result.formatted_address );
     		$( '.gmw-locator-button' ).removeClass( 'animate-spin' );
-    		$( this ).closest( 'form' ).submit();
-    		//$( '#members_search_submit, #groups_search_submit' ).click();
+    		
+    		setTimeout( function() {
+    			$( '#gmw-address-field-sdate-geo' ).closest( 'form' ).submit();
+    		}, 500 );
     	}
 
     	GMW.locator_button_failed = function( status ) {
@@ -89,10 +91,10 @@ jQuery( document ).ready( function( $ ) {
 	 * @param  {[type]} results [description]
 	 * @return {[type]}         [description]
 	 */
-	function gmw_sdate_geo_geocoder_sucess( results ) {
+	function gmw_sdate_geo_geocoder_success( result, response ) {
 
-		var lat = results[0].geometry.location.lat().toFixed(6);
-		var lng = results[0].geometry.location.lng().toFixed(6);
+		var lat = result.latitude;
+		var lng = result.longitude;
 
 		GMW.set_cookie( 'gmw_sdate_geo_lat', lat, 1 );	
 		GMW.set_cookie( 'gmw_sdate_geo_lng', lng, 1 );
@@ -180,7 +182,7 @@ jQuery( document ).ready( function( $ ) {
 
 			// if address changed, geocode it
 			if ( $.trim( address ).length && ( address != lastAddress || ! $.trim( lat ).length || ! $.trim( lng ).length ) ) {
-				GMW.geocoder( address, gmw_sdate_geo_geocoder_sucess, gmw_sdate_geo_geocoder_failed );
+				GMW.geocoder( address, gmw_sdate_geo_geocoder_success, gmw_sdate_geo_geocoder_failed );
 			} else {
 				//$( '#members_search_submit, #groups_search_submit' ).prop( 'disabled', false );
 			}
@@ -218,7 +220,7 @@ jQuery( document ).ready( function( $ ) {
 
 			// if address changes, geocode it
 			if ( $.trim( address ).length && ( address != lastAddress || ! $.trim( lat ).length || ! $.trim( lng ).length ) ) {
-				GMW.geocoder( address, gmw_sdate_geo_geocoder_sucess, gmw_sdate_geo_geocoder_failed );
+				GMW.geocoder( address, gmw_sdate_geo_geocoder_success, gmw_sdate_geo_geocoder_failed );
 				//return false;
 			} else {
 				
@@ -245,3 +247,58 @@ jQuery( document ).ready( function( $ ) {
 		GMW.set_cookie( 'gmw_sdate_geo_lng', '', 1 );
 	});
 });
+
+// Add Google Marker Cluster
+if ( gmwVars.mapsProvider === 'google_maps' ) { 
+
+	GMW.add_filter( 'gmw_map_init', function( map ) {
+
+		map.markerGroupingTypes.markers_clusterer = {
+
+			'init' : function( mapObject ) {
+
+				// initialize markers clusterer if needed and if exists
+			    if ( typeof MarkerClusterer === 'function' ) {
+			    	
+			    	// init new clusters object
+					mapObject.clusters = new MarkerClusterer( 
+						mapObject.map, 
+						mapObject.markers,
+						{
+							imagePath    : mapObject.clustersPath,
+							clusterClass : mapObject.prefix + '-cluster cluster',
+							maxZoom 	 : 15 
+						}
+					);
+				} 
+			},
+
+			'clear' : function( mapObject ) {
+
+				// initialize markers clusterer if needed and if exists
+			    if ( typeof MarkerClusterer === 'function' ) {
+
+			    	// remove existing clusters
+			    	if ( mapObject.clusters != false ) {		
+			    		mapObject.clusters.clearMarkers();
+			    	}
+				} 
+			},
+
+			'addMarker' : function( marker, mapObject ) {
+
+				mapObject.clusters.addMarker( marker );	
+			},
+
+			'markerClick' : function( marker, mapObject ) {
+
+				google.maps.event.addListener( marker, 'click', function() {
+
+					mapObject.markerClick( this );
+				});	
+			}
+		};
+
+		return map;
+	} );
+}

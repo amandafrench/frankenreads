@@ -234,22 +234,22 @@ border: 1px solid rgb(185, 185, 185);
 	max-width: 720px;
 }
 
-.instagram-feed-wd_page_wdi_settings form{
+.instagram-feed_page_wdi_settings form{
 	width: 65%;
 }
 
-.instagram-feed-wd_page_wdi_settings table td{
+.instagram-feed_page_wdi_settings table td{
 	padding-left: 0;
 	padding-right: 0;
 }
 
-.instagram-feed-wd_page_wdi_settings table th{
+.instagram-feed_page_wdi_settings table th{
 	padding-left: 4px;
 }
 
-.instagram-feed-wd_page_wdi_settings table input
-	/*.instagram-feed-wd_page_wdi_settings table textarea,*/
-	/*.instagram-feed-wd_page_wdi_settings table select*/
+.instagram-feed_page_wdi_settings table input
+	/*.instagram-feed_page_wdi_settings table textarea,*/
+	/*.instagram-feed_page_wdi_settings table select*/
 {
 	float: right;
 }
@@ -391,12 +391,16 @@ border: 1px solid rgb(185, 185, 185);
 	border-bottom-right-radius: 10px;
 }
 
-.instagram-feed-wd_page_wdi_settings table.wdi_advanced_option th {
+.instagram-feed_page_wdi_settings table.wdi_advanced_option th {
 	padding-left: 12px;
 }
 
-.instagram-feed-wd_page_wdi_settings table.wdi_advanced_option td .wdwt_param{
+.instagram-feed_page_wdi_settings table.wdi_advanced_option td .wdwt_param{
 	margin-left: 15px;
+}
+
+.instagram-feed_page_wdi_settings #wdwt_wrap_wdi_disable_fa .optioninput{
+	display: inline-block;
 }
 
 .wdi_advanced_option .wdi_advanced_option_icon {
@@ -422,7 +426,7 @@ border: 1px solid rgb(185, 185, 185);
 	display: none;
 }
 
-.instagram-feed-wd_page_wdi_settings form h2 {
+.instagram-feed_page_wdi_settings form h2 {
 	display: none;
 }
 
@@ -1763,10 +1767,10 @@ body.toplevel_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(5){
 	display: none;
 }
 
-body.instagram-feed-wd_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(3){
+body.instagram-feed_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(3){
 	display: table-row !important;
 }
-body.instagram-feed-wd_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(4){
+body.instagram-feed_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(4){
 	display: table-row !important;
 }
 

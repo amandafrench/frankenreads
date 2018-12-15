@@ -4,8 +4,9 @@ Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tr
 Tags: widget, events, simple, tooltips, grid, month, list, calendar, event, venue, community, registration, api, dates, date, plugin, posts, sidebar, template, theme, time, google maps, google, maps, conference, workshop, concert, meeting, seminar, summit, forum, shortcode, The Events Calendar, The Events Calendar PRO
 Donate link: http://m.tri.be/29
 Requires at least: 4.5
-Tested up to: 4.9.6
-Stable tag: 4.5.12
+Tested up to: 5.0
+Stable tag: 4.5.15
+Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -151,6 +152,30 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.5.15] 2018-12-05 =
+
+* Feature - Added a new action, `tribe_community_events_before_form_messages`, to allow easier addition of content before various form messages are displayed [118438]
+* Fix - Ensure images can be removed from events after uploading them--on both the submission form *and* the edit form for already-submitted events [104450]
+* Fix - Ensure that fields required for Organizers work on both the submission form *and* the edit-Organizer form [110203]
+* Fix - Prevent event-status tooltips from being cut off in the "My Events" list on the front end []
+
+= [4.5.14] 2018-11-13 =
+
+* Feature - The email alert now displays a list with all organizers. The venue and the Organizers are now linked to their respective edit pages. New action hooks added before and after the email template. The email now indicates if an event is recurring [110657]
+* Fix - Ensure that the form won't submit if new Venues or Organizers are being created on the form but the form's missing the required Event Title and Event Description fields [116196]
+* Fix - The 'Show Google Map' and 'Show Google Maps Link' fields are now disabled when the `tribe_events_community_apply_map_defaults` filter is being used [97842]
+* Tweak - Allow the HTML `<img>` tag in the Community Events submission form [111539]
+* Tweak - Add a "Lost password?" URL to Community Events login forms so that users can reset their passwords, just like they can via other WordPress Core login forms (thanks to Karen White for suggesting this!) [105952]
+
+= [4.5.13.1] 2018-08-27 =
+
+* Fix - Don't dequeue `tribe-events-calendar-script` as it has too many dependents ( props @focusphoto, @tatel, @lindsayhanna17, and many others who reported this) [113083]
+
+= [4.5.13] 2018-08-01 =
+
+* Tweak - Manage plugin assets via `tribe_assets()` [40267]
+* Tweak - Added new `tribe_events_community_form_before_linked_posts` and `tribe_events_community_form_after_linked_posts` action hooks within the Edit Event form to enhance customizability [109448]
 
 = [4.5.12] 2018-05-29 =
 

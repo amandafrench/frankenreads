@@ -123,11 +123,13 @@ class GMW_Form {
 		'street',
 		'city',
 		'region_name',
+		'region_code',
 		'postcode',
+		'country_name',
 		'country_code',
 		'address',
 		'formatted_address',
-		'map_icon',
+		//'map_icon',
 	);
 
 	/**
@@ -332,7 +334,7 @@ class GMW_Form {
 		$this->form['paged']            = get_query_var( $page_name ) ? get_query_var( $page_name ) : 1;
 		$this->form['per_page']         = -1;
 		// $this->form['labels']          = gmw_get_labels( $this->form );
-		$this->form['user_marker']   = 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+		//$this->form['user_marker']   = 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png';
 		$this->form['has_locations'] = false;
 		$this->form['results']       = array();
 		$this->form['results_count'] = 0;
@@ -345,7 +347,7 @@ class GMW_Form {
 
 			$this->form['submitted']    = true;
 			$this->form['form_values']  = $this->get_form_values();
-			$this->form['map_enabled']  = $this->form['form_submission']['display_map'] === '' ? false : true;
+			$this->form['map_enabled']  = '' === $this->form['form_submission']['display_map'] ? false : true;
 			$this->form['map_usage']    = $this->form['form_submission']['display_map'];
 			$this->form['display_list'] = $this->form['form_submission']['display_results'];
 
@@ -355,7 +357,7 @@ class GMW_Form {
 			$this->form['page_load_action'] = true;
 			$this->form['form_values']      = $this->get_form_values();
 			// $this->form['display_map']        = $gmw['form_submission']['display_map'] = $this->form['page_load_results']['display_map'];
-			$this->form['map_enabled']  = $this->form['page_load_results']['display_map'] === '' ? false : true;
+			$this->form['map_enabled']  = '' === $this->form['page_load_results']['display_map'] ? false : true;
 			$this->form['map_usage']    = $this->form['page_load_results']['display_map'];
 			$this->form['display_list'] = $this->form['page_load_results']['display_results'];
 		}
@@ -407,7 +409,6 @@ class GMW_Form {
 
 		// if no page ID set and its in widget, get the results page from settings page
 		if ( $this->form['in_widget'] ) {
-
 			return $this->form['form_submission']['results_page'] = get_permalink( GMW()->options['general_settings']['results_page'] );
 		}
 
@@ -428,7 +429,7 @@ class GMW_Form {
 		}
 
 		// verify search form tempalte
-		if ( empty( $this->form['search_form']['form_template'] ) || $this->form['search_form']['form_template'] == '-1' || $this->form['search_form']['form_template'] == 'no_form' ) {
+		if ( empty( $this->form['search_form']['form_template'] ) || '-1' == $this->form['search_form']['form_template'] || 'no_form' == $this->form['search_form']['form_template'] ) {
 			return;
 		}
 
@@ -515,14 +516,15 @@ class GMW_Form {
 
 		$map_options = array(
 			'zoom'      => $this->form['results_map']['zoom_level'],
-			'mapTypeId' => $this->form['results_map']['map_type'],
+			'mapTypeId' => isset( $this->form['results_map']['map_type'] ) ? $this->form['results_map']['map_type'] : 'ROADMAP',
 		);
 
 		$user_position = array(
 			'lat'        => $this->form['lat'],
 			'lng'        => $this->form['lng'],
 			'address'    => $this->form['org_address'],
-			'map_icon'   => $this->form['user_marker'],
+			'map_icon'   => GMW()->default_icons['user_location_icon_url'],
+			'icon_size'  => null,
 			'iw_content' => __( 'Your location', 'geo-my-wp' ),
 			'iw_open'    => ! empty( $this->form['results_map']['yl_icon'] ) ? true : false,
 		);
@@ -749,12 +751,12 @@ class GMW_Form {
 		if ( apply_filters( 'gmw_search_within_boundaries', true, $this->form ) && $this->form['submitted'] ) {
 
 			// if searching state boundaries
-			if ( isset( $this->form['form_values']['state'] ) && $this->form['form_values']['state'] != '' ) {
+			if ( isset( $this->form['form_values']['state'] ) && '' != $this->form['form_values']['state'] ) {
 				$address_filters['region_name'] = $this->form['form_values']['state'];
 			}
 
 			// When searchin boundaries of a country
-			if ( isset( $this->form['form_values']['country'] ) && $this->form['form_values']['country'] != '' ) {
+			if ( isset( $this->form['form_values']['country'] ) && '' != $this->form['form_values']['country'] ) {
 				$address_filters['country_code'] = $this->form['form_values']['country'];
 			}
 		}
@@ -793,6 +795,7 @@ class GMW_Form {
 		if ( ! empty( $locations ) ) {
 			$this->locations_data = $locations['locations_data'];
 			$this->objects_id     = $locations['objects_id'];
+			$this->featured_ids   = $locations['featured_ids'];
 		}
 
 		return $this->objects_id;
@@ -841,7 +844,18 @@ class GMW_Form {
 			$info_window = gmw_get_info_window_content( $object, $this->get_info_window_args( $object ), $this->form );
 		}
 
-		$map_icon = isset( $object->location_count ) ? 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' . $object->location_count . '|FF776B|000000' : '';
+		// enable number icons. It is now disabled by default.
+		if ( apply_filters( 'gmw_form_enable_numbered_map_icons', false, $this->form, $this ) ) {
+
+			$map_icon  = isset( $object->location_count ) ? 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=' . $object->location_count . '|FF776B|000000' : '';
+			$icon_size = array( 21, 34 );
+
+		} else {
+
+			$map_icon  = isset( $object->map_icon ) ? $object->map_icon : GMW()->default_icons['location_icon_url'];
+			//$map_icon  = GMW()->default_icons['location_icon_url'];
+			$icon_size = null;
+		}
 
 		$args = apply_filters(
 			'gmw_form_map_location_args', array(
@@ -854,6 +868,7 @@ class GMW_Form {
 				'distance'            => isset( $object->distance ) ? $object->distance : null,
 				'units'               => isset( $object->units ) ? $object->units : null,
 				'map_icon'            => apply_filters( 'gmw_' . $this->form['prefix'] . '_map_icon', $map_icon, $object, $this->form, $this ),
+				'icon_size'           => $icon_size,
 				'info_window_content' => $info_window,
 			), $object, $this->form, $this
 		);
@@ -882,7 +897,7 @@ class GMW_Form {
 
 			// temporary fix for page load results when setting
 			// per page to -1
-			if ( $this->form['get_per_page'] == -1 ) {
+			if ( -1 == $this->form['get_per_page'] ) {
 				$this->form['get_per_page'] = 1;
 			}
 
@@ -890,7 +905,7 @@ class GMW_Form {
 			$this->form['loop_count'] = 1;
 
 			// start counting the locations
-			(int) $this->form['location_count'] = ( $this->form['paged'] == 1 ) ? 1 : ( $this->form['get_per_page'] * ( $this->form['paged'] - 1 ) ) + 1;
+			(int) $this->form['location_count'] = ( 1 == $this->form['paged'] ) ? 1 : ( $this->form['get_per_page'] * ( $this->form['paged'] - 1 ) ) + 1;
 
 			$object = apply_filters( 'gmw_form_the_location_first', $object, $this->form, $this );
 
@@ -920,7 +935,7 @@ class GMW_Form {
 		if ( isset( $object->location_id ) ) {
 
 			if ( $object->featured_location ) {
-				$object->location_class .= ' featured-location';
+				$object->location_class .= ' gmw-featured-location';
 			}
 
 			// append address to each permalink in the loop
@@ -1077,7 +1092,7 @@ class GMW_Form {
 		do_action( "gmw_{$this->form['prefix']}_shortcode_start", $this->form );
 
 		// if using the "elements" shortcode attribute to display the form
-		if ( $this->form['current_element'] == 'form' && ! empty( $this->form['elements'] ) ) {
+		if ( 'form' == $this->form['current_element'] && ! empty( $this->form['elements'] ) ) {
 
 			if ( in_array( 'map', $this->form['elements'] ) ) {
 				$this->form['map_usage'] = 'shortcode';
@@ -1098,7 +1113,7 @@ class GMW_Form {
 
 				if ( method_exists( $this, $element ) ) {
 
-					if ( $element == 'search_results' || ( $element == 'map' && ! $this->form['display_list'] ) ) {
+					if ( 'search_results' == $element || ( 'map' == $element && ! $this->form['display_list'] ) ) {
 						$this->pre_search_query();
 					}
 
@@ -1110,12 +1125,12 @@ class GMW_Form {
 		} else {
 
 			// display search form
-			if ( $this->form['current_element'] == 'search_form' || $this->form['current_element'] == 'form' ) {
+			if ( 'search_form' == $this->form['current_element'] || 'form' == $this->form['current_element'] ) {
 				$this->search_form();
 			}
 
 			// display map using shortcode
-			if ( $this->form['current_element'] == 'map' && $this->form['map_usage'] == 'shortcode' ) {
+			if ( 'map' == $this->form['current_element'] && 'shortcode' == $this->form['map_usage'] ) {
 
 				$this->map();
 

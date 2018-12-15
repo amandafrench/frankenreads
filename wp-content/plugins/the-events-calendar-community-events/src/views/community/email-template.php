@@ -7,8 +7,9 @@
  * [your-theme]/tribe-events/community/email-template.php
  *
  * @package Tribe__Events__Community__Main
- * @since  3.6
- * @author Modern Tribe Inc.
+ * @since   3.6
+ * @version 4.5.14
+ * @author  Modern Tribe Inc.
  *
  */
 
@@ -16,37 +17,70 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-$events_label_singular = tribe_get_event_label_singular();
+/**
+ * Action hook before loading the email template.
+ *
+ * Useful if you want to insert your own additional custom linked post types.
+ *
+ * @since 4.5.14
+ *
+ * @param int|string $tribe_event_id The Event ID.
+ */
+do_action( 'tribe_events_community_before_email_template', $tribe_event_id );
 
+$events_label_singular = tribe_get_event_label_singular();
+$venue_id              = tribe_get_venue_id( $tribe_event_id );
+$organizer_ids         = tribe_get_organizer_ids( $tribe_event_id );
+$organizer_count       = count( $organizer_ids );
+
+if ( 0 == $organizer_count ) {
+	$organizer_label = '';
+} else {
+	$organizer_label = '%s ' . _n( 'Organizer', 'Organizers', $organizer_count );
+}
 ?>
 <html>
 	<body>
-		<h2><?php echo $post->post_title; ?></h2>
-		<h4><?php echo tribe_get_start_date( $tribe_event_id ); ?> - <?php echo tribe_get_end_date( $tribe_event_id ); ?></h4>
+		<h2><?php echo wp_kses_post( $post->post_title ); ?></h2>
+
+		<h4><?php echo esc_html( tribe_get_start_date( $tribe_event_id ) ); ?> - <?php echo esc_html( tribe_get_end_date( $tribe_event_id ) );
+			if ( function_exists( 'tribe_is_recurring_event' ) && tribe_is_recurring_event( $tribe_event_id ) ) {
+				echo ' | ' . sprintf( esc_html__( 'Recurring %s', 'tribe-events-community' ), esc_html( $events_label_singular ) );
+			}
+			?></h4>
 
 		<hr />
 
-		<h3><?php printf( __( '%s Organizer', 'tribe-events-community' ), $events_label_singular ); ?></h3>
-		<p><?php echo tribe_get_organizer( tribe_get_event_meta( $post->ID, '_EventOrganizerID', true ) ); ?></p>
+		<h3><?php printf( esc_html__( '%s Venue', 'tribe-events-community' ), esc_html__( $events_label_singular ) ); ?></h3>
+		<?php echo '<p><a href="' . esc_url( get_edit_post_link( $venue_id ) ) . '">' . esc_html( tribe_get_venue( $tribe_event_id ) ) . '</a></p>'; ?>
 
-		<h3><?php printf( __( '%s Venue', 'tribe-events-community' ), $events_label_singular ); ?></h3>
-		<p><?php echo tribe_get_venue( tribe_get_event_meta( $post->ID, '_EventVenueID', true ) ); ?></p>
+		<h3><?php printf( esc_html__( $organizer_label, 'tribe-events-community' ), esc_html__( $events_label_singular ) ); ?></h3>
+		<?php
+		foreach ( $organizer_ids as $organizer_id ) {
+			echo '<p><a href="' . esc_url( get_edit_post_link( $organizer_id ) ) . '">' . esc_html( tribe_get_organizer( $organizer_id ) ) . '</a></p>';
+		}
+		?>
 
 		<h3><?php esc_html_e( 'Description', 'tribe-events-community' ); ?></h3>
-		<?php echo $post->post_content; ?>
+		<?php echo wp_kses_post( $post->post_content ); ?>
 
 		<hr />
 
-		<h4><?php
-		$query = array(
-			'action' => 'edit',
-			'post' => $post->ID,
-		);
-		$edit_url = add_query_arg( $query, get_admin_url( null, 'post.php' ) );
-		echo '<a href="' . esc_url( $edit_url ) .'">' . sprintf( esc_html__( 'Review %s', 'tribe-events-community' ), $events_label_singular ) . '</a>';
-		if ( 'publish' == $post->post_status ) {
-			?> | <a href="<?php echo esc_url( get_permalink( $tribe_event_id ) ); ?>"><?php printf( __( 'View %s', 'tribe-events-community' ), $events_label_singular ); ?></a><?php
-		}
-		?></h4>
+		<h4><?php echo '<a href="' . esc_url( get_edit_post_link( $tribe_event_id ) ) . '">' . sprintf( esc_html__( 'Review %s', 'tribe-events-community' ), esc_html( $events_label_singular ) ) . '</a>';
+			if ( 'publish' == get_post_status( $tribe_event_id ) ) {
+				echo ' | <a href="' . esc_url( get_permalink( $tribe_event_id ) ) . '">' . sprintf( esc_html__( 'View %s', 'tribe-events-community' ), esc_html( $events_label_singular ) ) . '</a>';
+			} ?>
+		</h4>
 	</body>
 </html>
+<?php
+/**
+ * Action hook after loading the email template.
+ *
+ * Useful if you want to insert your own additional custom linked post types.
+ *
+ * @since 4.5.14
+ *
+ * @param int|string $tribe_event_id The Event ID.
+ */
+do_action( 'tribe_events_community_after_email_template', $tribe_event_id );

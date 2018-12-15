@@ -109,7 +109,7 @@ function wdi_install()
   $sql = "CREATE TABLE $table_name (
     id mediumint(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     feed_name tinytext NOT NULL,
-    feed_thumb varchar(255) NOT NULL,
+    feed_thumb varchar(800) NOT NULL,
     thumb_user varchar(30) NOT NULL,
     published varchar(1) NOT NULL,
     theme_id varchar(10) NOT NULL,
@@ -674,6 +674,7 @@ function wdi_get_settings()
     'wdi_custom_css' => array('name' => 'wdi_custom_css', 'sanitize_type' => 'css', 'type' => 'textarea', 'section' => 'wdi_customize_section', 'field_or_not' => 'field', 'default' => '', 'title' => __('Custom CSS', "wd-instagram-feed")),
     'wdi_custom_js' => array('name' => 'wdi_custom_js', 'sanitize_type' => 'css', 'type' => 'textarea', 'section' => 'wdi_customize_section', 'field_or_not' => 'field', 'default' => '', 'title' => __('Custom JavaScript', "wd-instagram-feed")),
     //'wdi_preserve_settings_when_remove'=>array('name'=>'wdi_preserve_settings_when_remove','field_or_not'=>'field','type'=>'checkbox','default'=>'1', 'section'=>'wdi_configure_section','title'=>__('Preserve Settings When Remove',"wd-instagram-feed")),
+    'wdi_disable_fa' => array('name' => 'wdi_disable_fa', 'title' => __('Disable loading of font awesome', "wd-instagram-feed"), 'type' => 'checkbox', 'tooltip' => __('Disable loading of font awesome', "wd-instagram-feed"), 'sanitize_type' => 'number', 'field_or_not' => '', 'section' => 'wdi_customize_section'),
     'wdi_plugin_uninstalled' => array('name' => 'wdi_plugin_uninstalled', 'sanitize_type' => 'bool', 'field_or_not' => 'field', 'type' => 'input', 'input_type' => 'hidden', 'section' => 'wdi_customize_section', 'title' => '', 'default' => 'false', 'value' => 'false'),
     'wdi_uninstall' => array('name'=>'wdi_uninstall','sanitize_type'=>'','field_or_not'=>'','type'=>'link_button', 'section'=>'wdi_customize_section', 'href'=>admin_url( 'admin.php?page=wdi_uninstall' ), 'title'=>__('Uninstall',"wd-instagram-feed"),'default'=>''),
     //'wdi_version' => array('name'=>'wdi_version','field_or_not'=>'no_field','default'=>WDI_VERSION),
@@ -693,7 +694,7 @@ function wdi_set_options_defaults()
   $settings = wdi_get_settings();
   foreach ($settings as $setting) {
     $settingDefault = isset($setting['default']) ? $setting['default'] : '';
-    $db_options[$setting['name']] = $setting['default'];
+    $db_options[$setting['name']] = $settingDefault;
   }
 
 
@@ -706,6 +707,7 @@ function wdi_set_options_defaults()
   if(empty($options['wdi_authenticated_users_list'])){
     $options['wdi_authenticated_users_list'] = '[]';
   }
+
 
   add_option(WDI_OPT, $options, '', 'yes');
   update_option(WDI_OPT, $options, 'yes');

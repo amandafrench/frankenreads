@@ -23,10 +23,10 @@ class WDIViewUninstall_wdi
 
     <span class="uninstall-icon"></span>
     <h2 class="wdi_page_title">
-      <?php _e('Uninstalling Instagram Feed WD', "wd-instagram-feed"); ?>
+      <?php _e('Uninstalling Instagram Feed', "wd-instagram-feed"); ?>
     </h2>
     <p
-      style="color:red;font-size:15px"> <?php _e('Deactivating Instagram Feed WD plugin does not remove any data that may have been created. To completely remove this plugin, you can uninstall it here.', 'wd-instagram-feed') ?>
+      style="color:red;font-size:15px"> <?php _e('Deactivating Instagram Feed plugin does not remove any data that may have been created. To completely remove this plugin, you can uninstall it here.', 'wd-instagram-feed') ?>
       <br>
       <?php _e('WARNING: Once uninstalled, this can\'t be undone. You should use a Database Backup plugin of WordPress to back up all the data first.', 'wd-instagram-feed') ?>
     </p>
@@ -85,7 +85,7 @@ class WDIViewUninstall_wdi
     ?>
     <span class="uninstall-icon"></span>
     <h2>
-      <?php _e('Uninstalling Instagram Feed WD', "wd-instagram-feed"); ?>
+      <?php _e('Uninstalling Instagram Feed', "wd-instagram-feed"); ?>
     </h2>
     <!--<p style="color:green;font-size:15px"> <?php /*_e('Instagram Feed WD is uninstalled','wd-instagram-feed') */
     ?><a style="text-decoration:none;padding:3px;" href="<?php /*echo $deactivate_url */
@@ -93,7 +93,7 @@ class WDIViewUninstall_wdi
     ?> </a><?php /*_e('to deactivate it','wd-instagram-feed') */
     ?></p>-->
     <p><strong><a href="#" class="wdi_deactivate_link"
-                  data-uninstall="1"><?php _e("Click Here", "wd-instagram-feed"); ?></a><?php _e(" To Finish the Uninstallation and Instagram Feed WD  will be Deactivated Automatically.", "wd-instagram-feed"); ?>
+                  data-uninstall="1"><?php _e("Click Here", "wd-instagram-feed"); ?></a><?php _e(" To Finish the Uninstallation and Instagram Feed  will be Deactivated Automatically.", "wd-instagram-feed"); ?>
       </strong></p>
 
     <?php
@@ -106,7 +106,7 @@ class WDIViewUninstall_wdi
     ?>
     <span class="uninstall-icon"></span>
     <h2>
-      <?php _e('Uninstalling Instagram Feed WD', "wd-instagram-feed"); ?>
+      <?php _e('Uninstalling Instagram Feed', "wd-instagram-feed"); ?>
     </h2>
     <p
       style="color:green;margin-top:10px;font-size:13px;"> <?php _e('The following Database Tables has been successfully deleted:', 'wd-instagram-feed') ?> </p>
@@ -131,7 +131,7 @@ class WDIViewUninstall_wdi
     ?> </a><?php /*_e('to deactivate it','wd-instagram-feed') */
     ?></p>-->
     <p><strong><a href="#" class="wdi_deactivate_link"
-                  data-uninstall="1"><?php _e("Click Here", "wd-instagram-feed"); ?></a><?php _e(" To Finish the Uninstallation and Instagram Feed WD  will be Deactivated Automatically.", "wd-instagram-feed"); ?>
+                  data-uninstall="1"><?php _e("Click Here", "wd-instagram-feed"); ?></a><?php _e(" To Finish the Uninstallation and Instagram Feed  will be Deactivated Automatically.", "wd-instagram-feed"); ?>
       </strong></p>
 
     <?php

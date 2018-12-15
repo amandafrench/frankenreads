@@ -27,6 +27,7 @@ class Tribe__Events__Community__Submission_Scrubber {
 		'is_recurring',
 		'recurrence',
 		'render_timestamp',
+		'detach_thumbnail',
 	);
 
 	protected $allowed_venue_fields = array( // filter these with 'tribe_events_community_allowed_venue_fields'
@@ -64,6 +65,7 @@ class Tribe__Events__Community__Submission_Scrubber {
 	 * @return array The cleaned submission
 	 */
 	public function scrub() {
+
 		add_filter( 'wp_kses_allowed_html', array( $this, 'filter_allowed_html_tags' ), 10, 2 );
 
 		$this->fix_post_content_key();
@@ -96,8 +98,14 @@ class Tribe__Events__Community__Submission_Scrubber {
 	public function filter_allowed_html_tags( $tags, $context ) {
 		unset( $tags['form'] );
 		unset( $tags['button'] );
-		unset( $tags['img'] );
+
+		/**
+		 * Allows filtering the allowed tags for the wp_kses() sanitaztion of events submitted via Community Events submission form.
+		 *
+		 * @param array $tags The array of HTML tags allowed through the wp_kses() filter.
+		 */
 		$tags = apply_filters( 'tribe_events_community_allowed_tags', $tags );
+
 		return $tags;
 	}
 

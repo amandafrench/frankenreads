@@ -305,7 +305,11 @@ class WDIViewGalleryBox {
         if ($image_row->id == $current_image_id) {
           $current_image_alt = $image_row->alt;
           $current_image_user_name = $image_row->username;
-          $current_image_user_pic = $image_row->profile_picture;
+          if(isset($image_row->profile_picture)){
+            $current_image_user_pic = $image_row->profile_picture;
+          }else{
+            $current_image_user_pic = '';
+          }
           $current_image_hit_count = $image_row->hit_count;
           $current_image_description = str_replace('#',' #',str_replace(array("\r\n", "\n", "\r"), esc_html('<br />'), $image_row->description));
           $current_image_url = $image_row->image_url;
@@ -497,7 +501,9 @@ continue;
                 <div class="wdi_image_title">
                     <div class="wdi_title" onclick="window.open('//instagram.com/<?php echo $current_image_user_name; ?>','_blank')">
                       <div class="wdi_header_text"><?php echo $current_image_user_name;?></div>
-                      <div class="wdi_users_img_wrap"><img src="<?php echo  $current_image_user_pic;?>" alt=""></div>
+                      <?php if(!empty($current_image_user_pic)): ?>
+                        <div class="wdi_users_img_wrap"><img src="<?php echo  $current_image_user_pic;?>" alt=""></div>
+                      <?php endif;?>
                     </div>
                 </div>
                 <div class="wdi_image_description"><?php echo esc_html($current_image_description); ?></div>
@@ -609,7 +615,7 @@ continue;
                 <i class="wdi_comments_close_btn fa fa-arrow-<?php echo $theme_row->lightbox_comment_pos; ?>"></i>
               </div>
 
-              <form id="wdi_comment_form" style="display:none !important;"> method="post" action="<?php echo $popup_url; ?>"><!--Deprecated-->
+              <form id="wdi_comment_form" style="display:none !important;" method="post" action="<?php echo $popup_url; ?>"><!--Deprecated-->
                 <p><label for="wdi_name"><?php echo __('Name', "wd-instagram-feed"); ?> * </label></p>
                 <p><input type="text" name="wdi_name" id="wdi_name" <?php echo ((get_current_user_id() != 0) ? 'readonly="readonly"' : ''); ?>
                           value="<?php echo ((get_current_user_id() != 0) ? get_userdata(get_current_user_id())->display_name : $wdi_name); ?>" /></p>

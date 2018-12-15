@@ -310,7 +310,7 @@ class GMW_Location {
 			$location_id = isset( $saved_location->ID ) ? (int) $saved_location->ID : 0;
 
 			// verify location ID
-			if ( ! is_int( $location_id ) || 0 === $location_id ) {
+			if ( ! is_int( $location_id ) || 0 == $location_id ) {
 				return false;
 			}
 
@@ -792,7 +792,7 @@ class GMW_Location {
 		$db_fields = apply_filters( "gmw_get_{$args['object_type']}_locations_db_fields", $db_fields, $gmw );
 
 		// for cache key
-		$args['db_fields'] = $db_fields;
+		//$args['db_fields'] = $db_fields;
 
 		$count  = 0;
 		$output = '';
@@ -827,10 +827,16 @@ class GMW_Location {
 			}
 		}
 
-		$db_fields = $output;
-
+		$args['db_fields']       = $output;
 		$args['db_table']        = $db_table;
 		$args['address_filters'] = $address_filters;
+
+		$args = apply_filters( 'gmw_get_locations_query_args', $args, $gmw );
+		$args = apply_filters( "gmw_get_{$args['object_type']}_locations_query_args", $args, $gmw );
+
+		if ( ! empty( $gmw['prefix'] ) ) {
+			$args = apply_filters( "gmw_{$gmw['prefix']}_get_locations_query_args", $args, $gmw );
+		}
 
 		$internal_cache = GMW()->internal_cache;
 
@@ -847,13 +853,13 @@ class GMW_Location {
 			global $wpdb;
 
 			$clauses['select']          = 'SELECT';
-			$clauses['fields']          = $db_fields;
+			$clauses['fields']          = $args['db_fields'];
 			$clauses['distance']        = '';
 			$clauses['from']            = "FROM {$wpdb->base_prefix}{$db_table} gmw_locations";
 			$clauses['where']           = $wpdb->prepare( " WHERE gmw_locations.object_type = '%s' AND gmw_locations.parent = '0'", $args['object_type'] );
 			$clauses['address_filters'] = '';
 			$clauses['having']          = '';
-			$clauses['orderby']         = '';
+			$clauses['orderby']         = 'ORDER BY gmw_locations.ID';
 			$clauses['limit']           = '';
 
 			if ( ! empty( $args['object__in'] ) ) {
@@ -950,8 +956,8 @@ class GMW_Location {
 				$clauses['orderby'] = 'ORDER BY distance ASC';
 			}
 
-			if ( '' != $args['orderby'] ) {
-				$clauses['orderby'] = $args['orderby'];
+			if ( '' !== $args['orderby'] && 'distance' !== $args['orderby'] ) {
+				$clauses['orderby'] = 'ORDER BY gmw_locations.' . $args['orderby'];
 			}
 
 			//wp_send_json( $clauses );
@@ -974,6 +980,7 @@ class GMW_Location {
 
 				$locations_data = array(
 					'objects_id'     => array(),
+					'featured_ids'   => array(),
 					'locations_data' => array(),
 				);
 
@@ -985,6 +992,11 @@ class GMW_Location {
 
 						// collect objects id into an array
 						$locations_data['objects_id'][] = $value->object_id;
+
+						if ( isset( $value->featured_location ) && $value->featured_location == 1 ) {
+							$locations_data['featured_ids'][] = $value->object_id;
+						}
+
 						// replace array keys with object id to be able to do some queries later
 						$locations_data['locations_data'][ $value->object_id ] = $value;
 					}

@@ -1,13 +1,12 @@
 <?php
 /*
-Plugin Name: WD Instagram Feed
-Plugin URI: https://web-dorado.com/products/wordpress-instagram-feed-wd.html
-Description: WD Instagram Feed is a user-friendly tool for displaying user or hashtag-based feeds on your website. You can create feeds with one of the available layouts. It allows displaying image metadata, open up images in lightbox, download them and even share in social networking websites.
-Version: 1.3.3
-Author: WebDorado
-Author URI: https://web-dorado.com/wordpress-plugins-bundle.html
+Plugin Name: Instagram Feed by 10Web
+Plugin URI: https://10web.io/plugins/wordpress-instagram-feed/
+Description: Instagram Feed by 10Web is a user-friendly tool for displaying user or hashtag-based feeds on your website. You can create feeds with one of the available layouts. It allows displaying image metadata, open up images in lightbox, download them and even share in social networking websites.
+Version: 1.3.9
+Author: 10Web
+Author URI: https://10Web.io
 License: GPLv2 or later
-Text Domain: wd-instagram-feed
 */
 
 //define constants
@@ -21,7 +20,7 @@ define("WDI_META", "_".WDI_VAR."_meta");
 //define("wdi",'wdi');
 define('WDI_FEED_TABLE','wdi_feeds');
 define('WDI_THEME_TABLE','wdi_themes');
-define('WDI_VERSION','1.3.3');
+define('WDI_VERSION','1.3.9');
 define('WDI_IS_PRO','false');
 $wdi_minify = ((isset($_GET['wdi_no_minify']) && $_GET['wdi_no_minify'] == "true") ? false : true);
 define('WDI_MINIFY', $wdi_minify);
@@ -388,13 +387,13 @@ function WDI_instagram_menu() {
   if((!isset($wdi_options['wdi_access_token']) || empty($wdi_options['wdi_access_token'])) && $wdi_uninstall) {
     if( get_option( "wdi_subscribe_done" ) == 1 ) {
       $parent_slug = "wdi_feeds";
-      $settings_page = add_menu_page(__('Instagram Feed WD', "wd-instagram-feed"), 'Instagram Feed WD', $min_feeds_capability, 'wdi_settings', 'WDI_instagram_settings_page', $menu_icon);
+      $settings_page = add_menu_page(__('Instagram Feed', "wd-instagram-feed"), 'Instagram Feed', $min_feeds_capability, 'wdi_settings', 'WDI_instagram_settings_page', $menu_icon);
       add_submenu_page("wdi_settings", __('Settings', "wd-instagram-feed"), __('Settings', "wd-instagram-feed"), 'manage_options', 'wdi_settings', 'WDI_instagram_settings_page');
     }
   }else{
     if( get_option( "wdi_subscribe_done" ) == 1 ){
       $parent_slug = "wdi_feeds";
-      $settings_page = add_menu_page(__('Instagram Feed WD', "wd-instagram-feed"), 'Instagram Feed WD', $min_feeds_capability, 'wdi_feeds', 'WDI_instagram_feeds_page', $menu_icon);
+      $settings_page = add_menu_page(__('Instagram Feed', "wd-instagram-feed"), 'Instagram Feed', $min_feeds_capability, 'wdi_feeds', 'WDI_instagram_feeds_page', $menu_icon);
     }
 
 
@@ -404,7 +403,7 @@ function WDI_instagram_menu() {
     //add_submenu_page('overview_wdi',__('Featured Themes',"wd-instagram-feed"),__('Featured Themes',"wd-instagram-feed"),$min_feeds_capability,'wdi_featured_themes','wdi_featured_themes');
     //add_submenu_page('overview_wdi',__('Featured Plugins',"wd-instagram-feed"),__('Featured Plugins',"wd-instagram-feed"),$min_feeds_capability,'wdi_featured_plugins','wdi_featured_plugins');
 
-    add_submenu_page($parent_slug,__('Pro Version',"wd-instagram-feed"),__('Pro Version',"wd-instagram-feed"),$min_feeds_capability,'wdi_licensing','WDI_instagram_licensing_page');
+    add_submenu_page($parent_slug,__('Premium Version',"wd-instagram-feed"),__('Premium Version',"wd-instagram-feed"),$min_feeds_capability,'wdi_licensing','WDI_instagram_licensing_page');
     add_submenu_page("",__('Uninstall',"wd-instagram-feed"),__('Uninstall',"wd-instagram-feed"),'manage_options','wdi_uninstall','WDI_instagram_uninstall_page');
   }
 
@@ -621,6 +620,11 @@ function wdi_register_widget(){
 add_filter('media_buttons_context', 'wdi_add_editor_button');
 
 function wdi_add_editor_button($context) {
+  $display = apply_filters('wdi_display_shortcode_button', true);
+  if($display === false){
+    return $context;
+  }
+
   global $pagenow;
   if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
     $context .= '
@@ -755,18 +759,18 @@ function wdi_wd_lib_init(){
 
   if(!isset($_REQUEST['ajax']) && is_admin()){
 
-    if( !class_exists("DoradoWeb") ){
+    if( !class_exists("TenWebLib") ){
       require_once(WDI_DIR . '/wd/start.php');
     }
     global $wdi_wd_plugin_options;
     $wdi_wd_plugin_options = array (
       "prefix" => "wdi",
-      "wd_plugin_id" => 121,
-      "plugin_title" => "Instagram WD",
+      "plugin_id" => 43,//tenweb
+      "plugin_title" => "Instagram Feed",
       "plugin_wordpress_slug" => "wd-instagram-feed",
       "plugin_dir" => WDI_DIR,
       "plugin_main_file" => __FILE__,
-      "description" => __("The most advanced and user-friendly Instagram plugin. Instagram Feed WD plugin allows you to display image feeds from single or multiple Instagram accounts on a WordPress site.", 'wd-instagram-feed'),
+      "description" => __("The most advanced and user-friendly Instagram plugin. Instagram Feed plugin allows you to display image feeds from single or multiple Instagram accounts on a WordPress site.", 'wd-instagram-feed'),
       // from web-dorado.com
       "plugin_features" => array(
         0 => array(
@@ -775,7 +779,7 @@ function wdi_wd_lib_init(){
         ),
         1 => array(
           "title" => __("SEO Friendly", "wd-instagram-feed"),
-          "description" => __("Instagram Feed WD uses clean coding and latest SEO techniques necessary to keep your pages and posts SEO-optimized.", "wd-instagram-feed"),
+          "description" => __("Instagram Feed uses clean coding and latest SEO techniques necessary to keep your pages and posts SEO-optimized.", "wd-instagram-feed"),
         ),
         2 => array(
           "title" => __("4 Fully Customizable Layouts", "wd-instagram-feed"),
@@ -798,81 +802,78 @@ function wdi_wd_lib_init(){
           "titles" => array(
             array(
               "title" => __("Getting Instagram Access Token", "wd-instagram-feed"),
-              "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/installation-and-configuration/getting-access-token.html"
+              "url" => "https://help.10web.io/hc/en-us/articles/360016277532-Configuring-Instagram-Access-Token"
             )
           )
         ),
         1 => array(
           "main_title" => __("Creating an Instagram Feed", "wd-instagram-feed"),
-          "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/creating-feeds.html",
+          "url" => "https://help.10web.io/hc/en-us/articles/360016497251-Creating-Instagram-Feed",
           "titles" => array(
             array(
               "title" => __("Thumbnails and Masonry Layouts", "wd-instagram-feed"),
-              "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/creating-feeds/thumbnails-and-masonry-layouts.html",
+              "url" => "https://help.10web.io/hc/en-us/articles/360016277632",
             ),
             array(
               "title" => __("Blog Style Layout", "wd-instagram-feed"),
-              "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/creating-feeds/blog-style-layout.html",
+              "url" => "https://help.10web.io/hc/en-us/articles/360016277632",
             ),
             array(
               "title" => __("Image Browser", "wd-instagram-feed"),
-              "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/creating-feeds/image-browser.html",
+              "url" => "https://help.10web.io/hc/en-us/articles/360016277632",
             ),
             array(
               "title" => __("Lightbox Settings", "wd-instagram-feed"),
-              "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/creating-feeds/lightbox-settings.html",
+              "url" => "https://help.10web.io/hc/en-us/articles/360016277752",
             ),
             array(
               "title" => __("Conditional Filters", "wd-instagram-feed"),
-              "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/creating-feeds/conditional-filters.html",
+              "url" => "https://help.10web.io/hc/en-us/articles/360016497371",
             ),
           )
         ),
         2 => array(
           "main_title" => __("Publishing Instagram Feed", "wd-instagram-feed"),
-          "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/publishing-feed.html",
+          "url" => "https://help.10web.io/hc/en-us/articles/360016497391",
           "titles" => array(
             array(
               "title" => __("Publishing in a Page/Post", "wd-instagram-feed"),
-              "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/publishing-feed/page-post.html",
+              "url" => "https://help.10web.io/hc/en-us/articles/360016497391",
             ),
             array(
               "title" => __("Publishing as a Widget", "wd-instagram-feed"),
-              "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/publishing-feed/widget.html",
+              "url" => "https://help.10web.io/hc/en-us/articles/360016497391",
             ),
             array(
               "title" => __("Publishing by PHP function", "wd-instagram-feed"),
-              "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/publishing-feed/php-function.html",
+              "url" => "https://help.10web.io/hc/en-us/articles/360016497391",
             ),
           )
         ),
         3 => array(
           "main_title" => __("Styling with Themes", "wd-instagram-feed"),
-          "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/editing-themes.html",
+          "url" => "https://help.10web.io/hc/en-us/articles/360016277832",
           "titles" => array()
-        ),
-        4 => array(
-          "main_title" => __("Advanced customizing options", "wd-instagram-feed"),
-          "url" => "https://web-dorado.com/wordpress-instagram-feed-wd/advanced-customizing-options.html",
-          "titles" => array()
-        ),
+        )
       ),
       "overview_welcome_image" => null,
       "video_youtube_id" => "ijdrpkVAfEw",  // e.g. https://www.youtube.com/watch?v=ijdrpkVAfEw youtube id is the ijdrpkVAfEw
       "plugin_wd_url" => "https://web-dorado.com/products/wordpress-instagram-feed-wd.html",
       "plugin_wd_demo_link" => "http://wpdemo.web-dorado.com/instagram-wd/?_ga=1.208438225.212018776.1470817467",
       "plugin_wd_addons_link" => "",
-      "after_subscribe" => "admin.php?page=overview_wdi", // this can be plagin overview page or set up page
+      "after_subscribe" => "admin.php?page=wdi_settings", // this can be plagin overview page or set up page
       "plugin_wizard_link" => "",
-      "plugin_menu_title" => "Instagram Feed WD",
+      "plugin_menu_title" => "Instagram Feed",
       "plugin_menu_icon" => WDI_URL . '/images/menu_icon.png',
       "deactivate" => true,
       "subscribe" => true,
-      "custom_post" => $parent_slug,  // if true => edit.php?post_type=contact
-      "menu_capability" => wdi_get_create_feeds_cap()
+      "custom_post" => '',  // if true => edit.php?post_type=contact
+      "menu_capability" => wdi_get_create_feeds_cap(),
+      "menu_position" => null,
+      "display_overview" => false,
     );
 
-    dorado_web_init($wdi_wd_plugin_options);
+    ten_web_lib_init($wdi_wd_plugin_options);
 
   }
 
@@ -906,8 +907,9 @@ if (!function_exists('wdi_wd_bp_install_notice')) {
     $wd_bp_plugin_url = WDI_URL;
 	
 	$screen = get_current_screen();
-	if($screen->id != "instagram-feed-wd_page_wdi_licensing" && $screen->id != "toplevel_page_wdi_feeds" && $screen->id != "instagram-feed-wd_page_wdi_themes" && $screen->id != "instagram-feed-wd_page_wdi_settings" && $screen->id != "instagram-feed-wd_page_wdi_uninstall" && $screen->id != "instagram-feed-wd_page_overview_wdi" && $screen->id != "instagram-feed-wd_page_wdi_updates" ){
-		return;
+	if($screen->id != "toplevel_page_wdi_feeds" && $screen->id != "instagram-feed_page_wdi_themes" && $screen->id != "instagram-feed_page_wdi_settings" && $screen->id != "instagram-feed-wd_page_wdi_licensing"){
+
+      return;
 	}
 	
     $prefix = 'wdi';
@@ -918,7 +920,7 @@ if (!function_exists('wdi_wd_bp_install_notice')) {
       <div class="notice notice-info" id="wd_bp_notice_cont">
         <p>
           <img id="wd_bp_logo_notice" src="<?php echo $wd_bp_plugin_url . '/images/seo_logo.png'; ?>">
-          <?php _e("Instagram Feed WD advises: Optimize your web pages for search engines with the", $prefix) ?>
+          <?php _e("Instagram Feed advises: Optimize your web pages for search engines with the", $prefix) ?>
           <a href="https://wordpress.org/plugins/seo-by-10web/" title="<?php _e("More details", $prefix) ?>"
              target="_blank"><?php _e("FREE SEO", $prefix) ?></a>
           <?php _e("plugin.", $prefix) ?>
@@ -962,9 +964,10 @@ if($wdi_token_error_flag === "1"){
 
 function wdi_token_error_flag_notice(){
   $screen_base = get_current_screen()->base;
-  if($screen_base === "dashboard" || $screen_base === "toplevel_page_wdi_feeds" || $screen_base === "instagram-feed-wd_page_wdi_themes" || $screen_base === "instagram-feed-wd_page_wdi_settings" || $screen_base === "instagram-feed-wd_page_wdi_uninstall" || $screen_base === "instagram-feed-wd_page_overview_wdi" || $screen_base === "instagram-feed-wd_page_wdi_updates" ){
+
+  if($screen_base === "dashboard" || $screen_base === "toplevel_page_wdi_feeds" || $screen_base === "instagram-feed_page_wdi_themes" || $screen_base === "instagram-feed_page_wdi_settings" || $screen_base === "instagram-feed_page_overview_wdi" ){
     $link_to_reset = "<a href='".site_url()."/wp-admin/admin.php?page=wdi_settings' >reset token</a>";
-    if($screen_base === "instagram-feed-wd_page_wdi_settings"){
+    if($screen_base === "instagram-feed_page_wdi_settings"){
       $link_to_reset = "reset token";
     }
     echo "<div class='notice notice-error '>
@@ -1012,16 +1015,26 @@ function wdi_filter_var_notice(){
 
 add_filter('wp_get_default_privacy_policy_content', 'wdi_privacy_policy');
 function wdi_privacy_policy($content){
-  $title = __('Instagram Feed WD', "wd-instagram-feed");
+  $title = __('Instagram Feed', "wd-instagram-feed");
 
   $pp_link = '<a target="_blank" href="https://instagram.com/legal/privacy">' . __('Privacy Policy', "wd-instagram-feed") . '</a>';
   $text = __('Use this suggested text to inform visitors about privacy:', "wd-instagram-feed");
   $text .= "<br/>";
-  $text .= sprintf(__('"Instagram Feed WD plugin uses Instagram API on website front end.  All the data received from Instagram via API is cached in WordPress database for some short period to provide front end optimization. You may request us to delete your Instagram data if it is accidentally cached in our website database with hashtag feed data. Instagram saves some cookies in browsers of website visitors via API data. These cookies are mostly used for security purposes. They are regulated under terms of Instagram’s %s."', "wd-instagram-feed"), $pp_link);
+  $text .= sprintf(__('"Instagram Feed plugin uses Instagram API on website front end.  All the data received from Instagram via API is cached in WordPress database for some short period to provide front end optimization. You may request us to delete your Instagram data if it is accidentally cached in our website database with hashtag feed data. Instagram saves some cookies in browsers of website visitors via API data. These cookies are mostly used for security purposes. They are regulated under terms of Instagram’s %s."', "wd-instagram-feed"), $pp_link);
   $text .= "<br/>";
   $text .= __('Web-Dorado Disclaimer: The above text is for informational purposes only and is not a legal advice. You must not rely on it as an alternative to legal advice. You should contact your legal counsel to obtain advice with respect to your particular case.', "wd-instagram-feed");
   $pp_text = '<h3>' . $title . '</h3>' . '<p class="wp-policy-help">' . $text . '</p>';
 
   $content .= $pp_text;
   return $content;
+}
+
+
+/*ELEMENTOR*/
+add_action('plugins_loaded', 'wdi_elementor');
+function wdi_elementor(){
+  if(defined('ELEMENTOR_VERSION')) {
+    include_once 'elementor/elementor.php';
+    WDIElementor::get_instance();
+  }
 }

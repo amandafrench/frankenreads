@@ -7,7 +7,7 @@
  * [your-theme]/tribe-events/community/edit-event.php
  *
  * @since    3.1
- * @version  4.5
+ * @version  4.5.13
  *
  * @var int|string $tribe_event_id
  */
@@ -42,9 +42,35 @@ if ( ! isset( $tribe_event_id ) ) {
 
 	<?php tribe_get_template_part( 'community/modules/taxonomy', null, array( 'taxonomy' => 'post_tag' ) ); ?>
 
+	<?php
+	/**
+	 * Action hook before loading linked post types template parts.
+	 *
+	 * Useful if you want to insert your own additional custom linked post types.
+	 *
+	 * @since 4.5.13
+	 *
+	 * @param int|string $tribe_event_id The Event ID.
+	 */
+	do_action( 'tribe_events_community_form_before_linked_posts', $tribe_event_id );
+	?>
+
 	<?php tribe_get_template_part( 'community/modules/venue' ); ?>
 
 	<?php tribe_get_template_part( 'community/modules/organizer' ); ?>
+
+	<?php
+	/**
+	 * Action hook after loading linked post types template parts.
+	 *
+	 * Useful if you want to insert your own additional custom linked post types.
+	 *
+	 * @since 4.5.13
+	 *
+	 * @param int|string $tribe_event_id The Event ID.
+	 */
+	do_action( 'tribe_events_community_form_after_linked_posts', $tribe_event_id );
+	?>
 
 	<?php tribe_get_template_part( 'community/modules/website' ); ?>
 

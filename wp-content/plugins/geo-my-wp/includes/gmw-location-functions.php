@@ -242,12 +242,9 @@ function gmw_update_location( $object_type = '', $object_id = 0, $location = arr
         }
     }
 
-    // include geocoder file
-    include_once( GMW_PATH . '/includes/gmw-geocoder.php' );
-
     if ( ! function_exists( 'gmw_geocoder' ) ) {
 
-    	trigger_error( 'Geocoder class not exists.', E_USER_NOTICE );
+    	trigger_error( 'Geocoder function not exists.', E_USER_NOTICE );
 
     	return false;
     }
@@ -467,43 +464,7 @@ function gmw_get_location_meta_values( $object_type = false, $object_id = 0, $me
 }
 
 /**
- * gmw_location_fields shortcode
- *
- * Disply either location fields or location meta.
- *
- * @since 3.0.2
- * 
- * @param  [type] $atts [description]
- * @return [type]       [description]
- */
-function gmw_get_location_fields_shortcode( $atts ) {
-
-    //default shortcode attributes
-    extract(
-        shortcode_atts( array(
-            'object_type'   => 'post',
-            'object_id'     => 0,
-            'location_meta' => 0,
-            'fields'        => '',
-            'separator'     => ' ',
-        ), $atts )
-    );
-
-    if ( ! empty( $location_meta ) ) {
-
-        return gmw_get_location_meta_values( $object_type, $object_id, $fields, $separator );
-
-    } else {
-
-        return gmw_get_address_fields( $object_type, $object_id, $fields, $separator );
-    } 
-}
-add_shortcode( 'gmw_location_fields', 'gmw_get_location_fields_shortcode' );
-
-/**
- * Wrapper function for gmw-get_address_fields. 
- *
- * That's becasue it is also possible to retrive the coordinates using this function.
+ * Get location fields - address fields or location meta.
  *
  * @since 3.0.2
  *        
@@ -515,10 +476,60 @@ add_shortcode( 'gmw_location_fields', 'gmw_get_location_fields_shortcode' );
  * @return string
  * 
  */
-function gmw_get_location_fields( $object_type = false, $object_id = 0, $fields = array( 'formatted_address' ), $separator = ', ' ) {
-    return gmw_get_address_fields( $object_type, $object_id, $fields, $separator );
+function gmw_get_location_fields( $object_type = false, $object_id = 0, $fields = array( 'formatted_address' ), $separator = ', ', $location_meta = 0 ) {
+
+	// When we know for sure that we need location meta fields.
+	if ( ! empty( $location_meta ) ) {
+
+		return gmw_get_location_meta_values( $object_type, $object_id, $fields, $separator );
+
+	} else {
+
+		// try to get location field.
+		$output = gmw_get_address_fields( $object_type, $object_id, $fields, $separator );
+
+		// if location field was not found, try location meta.
+		if ( empty( $output ) ) {
+			$output = gmw_get_location_meta_values( $object_type, $object_id, $fields, $separator );
+		}
+
+		return $output;
+	}
 }
 
+/**
+ * gmw_location_fields shortcode
+ *
+ * Disply location fields or location meta.
+ *
+ * @since 3.0.2
+ * 
+ * @param  [type] $atts [description]
+ * @return [type]       [description]
+ */
+function gmw_get_location_fields_shortcode( $atts ) {
+
+    //default shortcode attributes
+    $args = shortcode_atts( array(
+        'object_type'   => 'post',
+        'object_id'     => 0,
+        'location_meta' => 0,
+        'fields'        => '',
+        'separator'     => ' ',
+    ), $atts );
+
+    return gmw_get_location_fields( $args['object_type'], $args['object_id'], $args['fields'], $args['separator'], $args['location_meta'] );
+}
+add_shortcode( 'gmw_location_fields', 'gmw_get_location_fields_shortcode' );
+
+/**
+ * Get specific address fields as an array.
+ * 
+ * @param  string  $object_type [description]
+ * @param  integer $object_id   [description]
+ * @param  array   $fields      [description]
+ * @return [type]               [description]
+ */
 function gmw_get_location_address_fields( $object_type = 'post', $object_id = 0, $fields = array() ) {
 
     $location = gmw_get_location( $object_type, $object_id );
@@ -646,16 +657,135 @@ function gmw_get_linked_location_address( $location, $fields = array( 'formatted
 
 	$address = gmw_get_location_address( $location, $fields, $gmw );
 
-    if ( empty( $address ) ) {
-        return;
-    }
+	if ( empty( $address ) ) {
+		return;
+	}
 
 	return '<a href="https://maps.google.com/?q='.$address.'" target="_blank">'.$address.'</a>';
 }
 
 /**
+ * Check if is featured object.
+ *
+ * @param  [type] $object_type [description]
+ * @param  [type] $object_id   [description]
+ * @return [type]              [description]
+ */
+function gmw_is_featured_object( $object_type = 'post', $object_id = 0 ) {
+
+	$featured = false;
+
+	if ( 'post' === $object_type ) {
+
+		$featured = get_post_meta( $object_id, 'gmw_featured_object', true );
+
+	} elseif ( 'user' === $object_type ) {
+
+		$featured = get_user_meta( $object_id, 'gmw_featured_object', true );
+
+	} elseif ( 'bp_group' === $object_type ) {
+
+		$featured = groups_get_groupmeta( $object_id, 'gmw_featured_object', true );
+
+	} else {
+
+		$featured = apply_filters( 'gmw_is_featured_object', $featured, $object_type, $object_id );
+	}
+
+	return ! empty( $featured ) ? true : false;
+}
+
+/**
+ * Update featured object value.
+ *
+ * @param  string  $object_type [description]
+ * @param  integer $object_id   [description]
+ * @param  integer $value       [description]
+ * @return [type]               [description]
+ */
+function gmw_update_featured_object( $object_type = 'post', $object_id = 0, $value = 0 ) {
+
+	if ( 'post' === $object_type ) {
+
+		update_post_meta( $object_id, 'gmw_featured_object', $value );
+
+	} elseif ( 'user' === $object_type ) {
+
+		update_user_meta( $object_id, 'gmw_featured_object', $value );
+
+	} elseif ( 'bp_group' === $object_type ) {
+
+		groups_update_groupmeta( $object_id, 'gmw_featured_object', $value );
+
+	} else {
+		do_action( 'gmw_update_featured_object', $object_type, $object_id, $value );
+	}
+
+	// lets update featured location as well.
+	gmw_update_featured_location( $object_type, $object_id, $value );
+
+	return;
+}
+
+/**
+ * Check if featured location.
+ *
+ * @param  [type] $object_type [description]
+ * @param  [type] $object_id   [description]
+ * @return [type]              [description]
+ */
+function gmw_is_featured_location( $object_type, $object_id ) {
+
+	global $wpdb;
+
+	$featured = $wpdb->get_var(
+		$wpdb->prepare(
+			"SELECT `featured` 
+			FROM {$wpdb->prefix}gmw_locations 
+			WHERE object_type = %s
+			AND object_id = %d",
+			$object_type, $object_id
+		)
+	);
+
+	return ! empty( $featured ) ? true : false;
+}
+
+/**
+ * Update featured location value.
+ *
+ * @param  string  $object_type [description]
+ * @param  integer $object_id   [description]
+ * @param  integer $value       [description]
+ * @return [type]               [description]
+ */
+function gmw_update_featured_location( $object_type = 'post', $object_id = 0, $value = 0 ) {
+
+	global $wpdb;
+
+	// update location, if exists, with featured value.
+	$wpdb->update(
+		$wpdb->base_prefix . 'gmw_locations',
+		array(
+			'featured' => $value,
+		),
+		array(
+			'object_id'   => $object_id,
+			'object_type' => $object_type,
+		),
+		array(
+			'%d',
+			'%d',
+			'%s',
+		)
+	);
+
+	return;
+}
+
+/**
  * Output list of location meta fields
- * 
+ *
  * @param  boolean $location [description]
  * @param  array   $fields   [description]
  * @param  array   $labels   [description]
@@ -665,8 +795,8 @@ function gmw_get_location_meta_list( $location = false, $fields = array(), $labe
 
 	// check if $location is an object and contains location meta. This will usually be used in the loop
 	if ( is_object( $location ) ) {
-	   
-        // look for location meta in the object.
+
+		// look for location meta in the object.
         // It might generated during the loop.
 		if ( ! empty( $location->location_meta ) ) {
 

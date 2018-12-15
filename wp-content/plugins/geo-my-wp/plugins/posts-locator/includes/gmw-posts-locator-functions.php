@@ -12,15 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function gmw_post_location_form( $args = array() ) {
 
-	if ( isset( $args['post_id'] ) ) {
+	if ( ! empty( $args['post_id'] ) ) {
 		$args['object_id'] = $args['post_id'];
-	} else {
-		$args['object_id'] = 0;
 	}
 
 	// default args
 	$defaults = array(
-		'object_id'      => $args['object_id'],
+		'object_id'      => 0,
 		'form_template'  => 'location-form-tabs-left',
 		'submit_enabled' => 1,
 		'stand_alone'    => 1,
@@ -33,12 +31,19 @@ function gmw_post_location_form( $args = array() ) {
 
 	if ( ! absint( $args['object_id'] ) ) {
 
-		global $post;
+		if ( IS_ADMIN && isset( $_GET['post'] ) && absint( $_GET['post'] ) ) {
 
-		if ( isset( $post->ID ) ) {
-			$args['object_id'] = $post->ID;
+			$args['object_id'] = $_GET['post'];
+
 		} else {
-			return;
+
+			global $post;
+
+			if ( isset( $post->ID ) ) {
+				$args['object_id'] = $post->ID;
+			} else {
+				return;
+			}
 		}
 	}
 
@@ -55,12 +60,12 @@ function gmw_post_location_form( $args = array() ) {
 	$location_form->display_form();
 }
 
-	/**
-	 * Generate the post location form using shortcode
-	 *
-	 * @param  array  $atts [description]
-	 * @return [type]       [description]
-	 */
+/**
+ * Generate the post location form using shortcode
+ *
+ * @param  array  $atts [description]
+ * @return [type]       [description]
+ */
 function gmw_post_location_form_shortcode( $atts = array() ) {
 
 	if ( empty( $atts ) ) {
@@ -75,7 +80,7 @@ function gmw_post_location_form_shortcode( $atts = array() ) {
 
 	return $content;
 }
-	add_shortcode( 'gmw_post_location_form', 'gmw_post_location_form_shortcode' );
+add_shortcode( 'gmw_post_location_form', 'gmw_post_location_form_shortcode' );
 
 /**
  * Get terms function using GEO my WP internal cache
@@ -261,10 +266,12 @@ function gmw_get_post_address( $args = array() ) {
 		$args['post_id'] = $post->ID;
 	}
 
-	$fields = explode( ',', $args['fields'] );
+	if ( is_string( $args['fields'] ) ) {
+		$args['fields'] = explode( ',', $args['fields'] );
+	}
 
 	// get post address fields
-	return gmw_get_address_fields( 'post', $args['post_id'], $fields, $args['separator'] );
+	return gmw_get_address_fields( 'post', $args['post_id'], $args['fields'], $args['separator'] );
 }
 add_shortcode( 'gmw_post_address', 'gmw_get_post_address' );
 
@@ -309,9 +316,7 @@ function gmw_post_address( $args = array() ) {
 add_shortcode( 'gmw_post_location_meta', 'gmw_get_post_location_meta_values' ); */
 
 /**
- * gmw_location_fields shortcode
- *
- * Disply either location or location fields of a specific post.
+ * Get post address or location meta fields.
  *
  * @since 3.0.2
  *
@@ -342,14 +347,11 @@ function gmw_get_post_location_fields( $atts ) {
 		$args['post_id'] = $post->ID;
 	}
 
-	if ( ! empty( $args['location_meta'] ) ) {
-
-		return gmw_get_location_meta_values( 'post', $args['post_id'], $args['fields'], $args['separator'] );
-
-	} else {
-
-		return gmw_get_address_fields( 'post', $args['post_id'], $args['fields'], $args['separator'] );
+	if ( is_string( $args['fields'] ) ) {
+		$args['fields'] = explode( ',', $args['fields'] );
 	}
+
+	return gmw_get_location_fields( 'post', $args['post_id'], $args['fields'], $args['separator'], $args['location_meta'] );
 }
 add_shortcode( 'gmw_post_location_fields', 'gmw_get_post_location_fields' );
 

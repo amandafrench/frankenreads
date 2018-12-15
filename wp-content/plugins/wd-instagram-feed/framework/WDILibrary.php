@@ -1153,6 +1153,40 @@ class WDILibrary {
 
     return $wdi_options['wdi_access_token'];
   }
+
+
+  public static function localize_script($object_name, $l10n){
+    foreach ( (array) $l10n as $key => $value ) {
+      if ( !is_scalar($value) )
+        continue;
+
+      $l10n[$key] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8');
+    }
+
+    $script = "var $object_name = " . wp_json_encode( $l10n ) . ';';
+    $script = "<script>" . $script . "</script>";
+    echo $script;
+  }
+
+  public static function elementor_is_active(){
+
+    if((isset($_REQUEST['action']) && in_array($_REQUEST['action'], array('elementor', 'elementor_ajax'))) || (isset($_REQUEST['elementor-preview']))) {
+      return true;
+    }
+
+    return false;
+  }
+
+  public static function is_ajax(){
+
+    //todo add themes
+    if(defined('DOING_AJAX') && DOING_AJAX) {
+      return true;
+    }
+
+    return false;
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////
   // Private Methods                                                                    //
   ////////////////////////////////////////////////////////////////////////////////////////
