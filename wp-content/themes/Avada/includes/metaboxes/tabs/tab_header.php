@@ -14,6 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit( 'Direct script access denied.' );
 }
 
+$this->remove_deprecated();
+
 $this->radio_buttonset(
 	'display_header',
 	esc_attr__( 'Display Header', 'Avada' ),
@@ -44,18 +46,12 @@ $this->radio_buttonset(
 	)
 );
 
-$header_bg_color = Fusion_Color::new_color(
-	array(
-		'color' => Avada()->settings->get( 'header_bg_color' ),
-		'fallback' => '#ffffff',
-	)
-);
 $this->color(
-	'header_bg_color',
+	'combined_header_bg_color',
 	esc_html__( 'Background Color', 'Avada' ),
 	/* translators: Additional description (defaults). */
 	sprintf( esc_html__( 'Controls the background color for the header. Hex code or rgba value, ex: #000. %s', 'Avada' ), Avada()->settings->get_default_description( 'header_bg_color' ) ),
-	false,
+	true,
 	array(
 		array(
 			'field'      => 'display_header',
@@ -63,26 +59,23 @@ $this->color(
 			'comparison' => '==',
 		),
 	),
-	$header_bg_color->color
+	Avada()->settings->get( 'header_bg_color' )
 );
 
-$this->range(
-	'header_bg_opacity',
-	esc_attr__( 'Background Opacity', 'Avada' ),
+$this->color(
+	'mobile_header_bg_color',
+	esc_html__( 'Mobile Header Background Color', 'Avada' ),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Controls the opacity of the header background color. Ranges between 0 (transparent) and 1 (opaque). For top headers opacity set below 1 will remove the header height completely. For side headers opacity set below 1 will display a color overlay. %s', 'Avada' ), Avada()->settings->get_default_description( 'header_bg_opacity' ) ),
-	'0',
-	'1',
-	'0.01',
-	$header_bg_color->alpha,
-	'',
+	sprintf( esc_html__( 'Controls the background color for the header on mobile devices. Hex code or rgba value, ex: #000. %s', 'Avada' ), Avada()->settings->get_default_description( 'mobile_header_bg_color' ) ),
+	true,
 	array(
 		array(
 			'field'      => 'display_header',
 			'value'      => 'yes',
 			'comparison' => '==',
 		),
-	)
+	),
+	Avada()->settings->get( 'mobile_header_bg_color' )
 );
 
 $this->upload(
@@ -147,13 +140,14 @@ $this->select(
 );
 
 $menus = get_terms(
-	'nav_menu', array(
+	'nav_menu',
+	array(
 		'hide_empty' => false,
 	)
 );
 $menu_select['default'] = 'Default Menu';
 
-foreach ( $menus as $menu ) {
+foreach ( $menus as $menu ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 	$menu_select[ $menu->term_id ] = $menu->name;
 }
 

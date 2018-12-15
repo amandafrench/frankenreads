@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit( 'Direct script access denied.' );
 }
 
-$post_type = get_post_type();
+$post_type = get_post_type(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 $sidebar_post_types = array(
 	'page' => array(
 		'global'    => 'pages_global_sidebar',
@@ -96,6 +96,22 @@ if ( ! isset( $post_type_options['global'] ) || ( isset( $post_type_options['glo
 				'comparison' => '!=',
 			),
 		)
+	);
+
+	$sidebar_order = explode( ',', Avada()->settings->get( 'responsive_sidebar_order' ) );
+
+	$this->sortable(
+		'responsive_sidebar_order',
+		esc_attr__( 'Responsive Sidebar Order', 'Avada' ),
+		array(
+			'content'   => esc_html__( 'Content', 'Avada' ),
+			'sidebar'   => esc_html__( 'Sidebar 1', 'Avada' ),
+			'sidebar-2' => esc_html__( 'Sidebar 2', 'Avada' ),
+		),
+		/* translators: Additional description (defaults). */
+		sprintf( esc_html__( 'Choose the order of sidebars and main content area on mobile layouts through drag & drop sorting. %s', 'Avada' ), Avada()->settings->get_default_description( 'responsive_sidebar_order', '', 'sortable', 'responsive_sidebar_order' ) ),
+		array(),
+		$sidebar_order
 	);
 
 	$this->select(

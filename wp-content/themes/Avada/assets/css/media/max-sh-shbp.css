@@ -14,9 +14,6 @@
 .fusion-mobile-menu-design-modern.fusion-header-v7 .fusion-main-menu > ul .fusion-middle-logo-menu-logo {
   display: block;
 }
-.fusion-mobile-menu-design-modern.fusion-header-v7 .fusion-main-menu.fusion-ubermenu {
-  display: block;
-}
 .fusion-mobile-menu-design-modern.fusion-header-v7 .fusion-sticky-menu {
   display: none;
 }
@@ -293,9 +290,6 @@ body.fusion-body .fusion-secondary-header .fusion-alignright .fusion-social-link
 .fusion-mobile-menu-design-classic.fusion-header-v5 .search-table {
   width: 100%;
 }
-.fusion-mobile-menu-design-classic .fusion-main-menu.fusion-ubermenu {
-  display: block;
-}
 .fusion-mobile-menu-design-classic.fusion-header-v4 .fusion-logo a {
   float: none;
 }
@@ -334,12 +328,14 @@ body.fusion-body .fusion-secondary-header .fusion-alignright .fusion-social-link
 .fusion-is-sticky .fusion-mobile-menu-design-classic.fusion-header-v7 .fusion-main-menu > ul .fusion-middle-logo-menu-logo {
   display: none;
 }
+.fusion-is-sticky .fusion-mobile-menu-design-classic.fusion-header-v7 .fusion-main-menu-sticky > ul .fusion-middle-logo-menu-logo,
 .fusion-is-sticky .fusion-mobile-menu-design-classic.fusion-header-v7 .fusion-sticky-menu > ul .fusion-middle-logo-menu-logo {
   display: block;
 }
 .fusion-is-sticky .fusion-mobile-menu-design-modern.fusion-header-v7 .fusion-main-menu {
   display: none;
 }
+.fusion-is-sticky .fusion-mobile-menu-design-modern.fusion-header-v7 .fusion-main-menu-sticky,
 .fusion-is-sticky .fusion-mobile-menu-design-modern.fusion-header-v7 .fusion-sticky-menu {
   display: block;
 }
@@ -475,6 +471,11 @@ body.fusion-body .fusion-secondary-header .fusion-alignright .fusion-social-link
 }
 .fusion-header-v4.fusion-header-has-flyout-menu .fusion-header > .fusion-row {
   position: relative;
+}
+/* uberMenu Styles
+================================================================================================= */
+.fusion-body .fusion-header-wrapper .fusion-header .fusion-main-menu.fusion-ubermenu {
+  display: block;
 }
 .fusion-mobile-nav-holder li.fusion-mobile-nav-item .wpml-ls-item a::before {
   display: none;

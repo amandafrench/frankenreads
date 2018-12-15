@@ -359,7 +359,7 @@ function avada_options_section_portfolio( $sections ) {
 					),
 					'portfolio_link_icon_target' => array(
 						'label'       => esc_html__( 'Open Portfolio Links In New Window', 'Avada' ),
-						'description' => esc_html__( 'Turn on to open the single post page, project url and copyright url links in a new window..', 'Avada' ),
+						'description' => esc_html__( 'Turn on to open the single post page, project url and copyright url links in a new window.', 'Avada' ),
 						'id'          => 'portfolio_link_icon_target',
 						'default'     => '0',
 						'type'        => 'switch',

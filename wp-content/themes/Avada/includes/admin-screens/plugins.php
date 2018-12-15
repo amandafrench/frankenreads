@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'get_plugins' ) ) {
 	require_once wp_normalize_path( ABSPATH . 'wp-admin/includes/plugin.php' );
 }
-$plugins           = Avada_TGM_Plugin_Activation::$instance->plugins;
+$plugins           = Avada_TGM_Plugin_Activation::$instance->plugins; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 $installed_plugins = get_plugins();
 $wp_api_plugins    = get_site_transient( 'fusion_wordpress_org_plugins' );
 $required_and_recommened_plugins = avada_get_required_and_recommened_plugins();
@@ -34,9 +34,10 @@ if ( ! $wp_api_plugins ) {
 		'contact-form-7'      => 'contact-form-7/wp-contact-form-7',
 	);
 	$wp_api_plugins = array();
-	foreach ( $wp_org_plugins as $slug => $path ) {
+	foreach ( $wp_org_plugins as $slug => $path ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 		$wp_api_plugins[ $slug ] = (array) plugins_api(
-			'plugin_information', array(
+			'plugin_information',
+			array(
 				'slug' => $slug,
 			)
 		);
@@ -165,7 +166,7 @@ if ( ! $wp_api_plugins ) {
 								</div>
 							</h3>
 							<div class="theme-actions">
-								<?php foreach ( $plugin_action as $action ) : ?>
+								<?php foreach ( $plugin_action as $action ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited?>
 									<?php
 									// Sanitization is already taken care of in Avada_Admin class.
 									// No need to re-sanitize it...

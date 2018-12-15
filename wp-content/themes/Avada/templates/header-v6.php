@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="fusion-header-v6-content fusion-header-has-flyout-menu-content">
 			<?php
 			avada_logo();
-			$menu = avada_main_menu( true );
+			$menu = avada_main_menu( true ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 			?>
 
 			<div class="fusion-flyout-menu-icons">

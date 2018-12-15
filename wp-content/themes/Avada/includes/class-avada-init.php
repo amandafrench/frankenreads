@@ -52,8 +52,6 @@ class Avada_Init {
 
 		add_action( 'widgets_init', array( $this, 'widget_init' ) );
 
-		add_action( 'wp', array( $this, 'set_theme_version' ) );
-
 		// Allow shortcodes in widget text.
 		add_filter( 'widget_text', 'do_shortcode' );
 
@@ -164,27 +162,6 @@ class Avada_Init {
 	}
 
 	/**
-	 * Stores the theme version in the options table in the WordPress database.
-	 *
-	 * @access  public
-	 */
-	public function set_theme_version() {
-		if ( function_exists( 'wp_get_theme' ) ) {
-			$theme_obj = wp_get_theme();
-			$theme_version = $theme_obj->get( 'Version' );
-
-			if ( $theme_obj->parent_theme ) {
-				$template_dir  = basename( Avada::$template_dir_path );
-				$theme_obj     = wp_get_theme( $template_dir );
-				$theme_version = $theme_obj->get( 'Version' );
-			}
-
-			update_option( 'avada_theme_version', $theme_version );
-		}
-
-	}
-
-	/**
 	 * Add theme_supports.
 	 *
 	 * @access  public
@@ -284,21 +261,24 @@ class Avada_Init {
 	public function theme_activation() {
 
 		update_option(
-			'shop_catalog_image_size', array(
+			'shop_catalog_image_size',
+			array(
 				'width' => 500,
 				'height' => '',
 				0,
 			)
 		);
 		update_option(
-			'shop_single_image_size', array(
+			'shop_single_image_size',
+			array(
 				'width' => 700,
 				'height' => '',
 				0,
 			)
 		);
 		update_option(
-			'shop_thumbnail_image_size', array(
+			'shop_thumbnail_image_size',
+			array(
 				'width' => 120,
 				'height' => '',
 				0,

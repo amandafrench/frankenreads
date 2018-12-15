@@ -221,9 +221,16 @@ function avada_options_section_advanced( $sections ) {
 						'default'     => '1',
 						'type'        => 'switch',
 					),
+					'status_outline' => array(
+						'label'       => esc_html__( 'CSS Outlines', 'Avada' ),
+						'description' => esc_html__( 'Turn on to enable browser specific CSS element outlines used to improve accessibility.', 'Avada' ),
+						'id'          => 'status_outline',
+						'default'     => '0',
+						'type'        => 'switch',
+					),
 					'status_opengraph' => array(
 						'label'       => esc_html__( 'Open Graph Meta Tags', 'Avada' ),
-						'description' => esc_html__( 'Turn on to enable open graph meta tags which is mainly used when sharing pages on social networking sites like Facebook.', 'Avada' ),
+						'description' => __( 'Turn on to enable open graph meta tags which are mainly used when sharing pages on social networking sites like Facebook. <strong>IMPORTANT:</strong> Some optimization plugins, like e.g. Yoast SEO, add their own implementation of this, and if you want to use that, this option should be disabled.', 'Avada' ),
 						'id'          => 'status_opengraph',
 						'default'     => '1',
 						'type'        => 'switch',
@@ -264,8 +271,8 @@ function avada_options_section_advanced( $sections ) {
 						),
 					),
 					'disable_rich_snippet_date' => array(
-						'label'       => esc_html__( 'Rich Snippets Publish Date', 'Avada' ),
-						'description' => esc_html__( 'Turn on to enable date rich snippet data site wide.', 'Avada' ),
+						'label'       => esc_html__( 'Rich Snippets Last Update Date', 'Avada' ),
+						'description' => esc_html__( 'Turn on to enable udate date rich snippet data site wide.', 'Avada' ),
 						'id'          => 'disable_rich_snippet_date',
 						'default'     => '1',
 						'type'        => 'switch',

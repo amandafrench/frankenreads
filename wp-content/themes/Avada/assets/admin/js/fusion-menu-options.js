@@ -61,6 +61,10 @@ function fusionIconPicker( value, id, container, search ) {
 		var thisEl = jQuery( this );
 
 		FusionDelay( function() {
+			var options,
+				fuse,
+				result;
+
 			if ( thisEl.val() ) {
 				value = thisEl.val().toLowerCase();
 
@@ -68,21 +72,30 @@ function fusionIconPicker( value, id, container, search ) {
 					return;
 				}
 
-				_.each( jQuery( container ).find( 'i' ), function( icon ) {
-					name    = jQuery( icon ).data( 'name' ).toLowerCase(); // jshint ignore:line
-					altName = 'undefined' !== typeof jQuery( icon ).data( 'alt-name' ) ? jQuery( icon ).data( 'alt-name' ).toLowerCase() : ''; // jshint ignore:line
+				jQuery( container ).find( '.icon_preview' ).css( 'display', 'none' );
+				options = {
+					threshold: 0.2,
+					location: 0,
+					distance: 100,
+					maxPatternLength: 32,
+					minMatchCharLength: 3,
+					keys: [
+						'name',
+						'keywords',
+						'categories'
+					]
+				};
+				fuse = new Fuse( fusionIconSearch, options );
+				result = fuse.search( value );
 
-					if ( -1 !== name.search( value ) || -1 !== altName.search( value ) ) {
-						jQuery( icon ).parent().css( 'display', 'inline-block' );
-					} else {
-						jQuery( icon ).parent().css( 'display', 'none' );
-					}
+				_.each( result, function( resultIcon ) {
+					jQuery( container ).find( '.icon-fa-' + resultIcon.name ).css( 'display', 'inline-block' );
 				} );
 
 			} else {
 				jQuery( container ).find( '.icon_preview' ).css( 'display', 'inline-block' );
 			}
-		}, 500 );
+		}, 100 );
 	} );
 
 	// Iconpicker select/deselect handler.
@@ -386,7 +399,7 @@ jQuery( document ).ready( function() {
 				output  = '<div class="fusion-icons-rendered" style="height:0px; overflow:hidden;">';
 
 			_.each( icons, function( icon, key ) {
-				output += '<span class="icon_preview icon-' + icon[0] + '"><i class="' + icon[0] + ' ' + icon[1] + '" data-name="' + icon[0].substr( 3 ) + '" data-alt-name="' + icon[2] + '"></i></span>';
+				output += '<span class="icon_preview icon-' + icon[0] + '"><i class="' + icon[0] + ' ' + icon[1] + '" data-name="' + icon[0].substr( 3 ) + '"></i></span>';
 			} );
 			output += '</div>';
 			jQuery( 'body' ).append( output );

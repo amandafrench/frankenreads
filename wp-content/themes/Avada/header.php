@@ -87,50 +87,8 @@ if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 		<?php else : ?>
 			<?php avada_current_page_title_bar( $c_page_id ); ?>
 		<?php endif; ?>
+		<?php do_action( 'avada_after_page_title_bar' ); ?>
 
-		<?php if ( is_page_template( 'contact.php' ) && Avada()->settings->get( 'recaptcha_public' ) && Avada()->settings->get( 'recaptcha_private' ) ) : ?>
-			<script type="text/javascript">var RecaptchaOptions = { theme : '<?php echo esc_attr( Avada()->settings->get( 'recaptcha_color_scheme' ) ); ?>' };</script>
-		<?php endif; ?>
-
-		<?php if ( is_page_template( 'contact.php' ) && Avada()->settings->get( 'gmap_address' ) && Avada()->settings->get( 'status_gmap' ) ) : ?>
-			<?php
-			$map_popup             = ( ! Avada()->settings->get( 'map_popup' ) ) ? 'yes' : 'no';
-			$map_scrollwheel       = ( Avada()->settings->get( 'map_scrollwheel' ) ) ? 'yes' : 'no';
-			$map_scale             = ( Avada()->settings->get( 'map_scale' ) ) ? 'yes' : 'no';
-			$map_zoomcontrol       = ( Avada()->settings->get( 'map_zoomcontrol' ) ) ? 'yes' : 'no';
-			$address_pin           = ( Avada()->settings->get( 'map_pin' ) ) ? 'yes' : 'no';
-			$address_pin_animation = ( Avada()->settings->get( 'gmap_pin_animation' ) ) ? 'yes' : 'no';
-			?>
-			<div id="fusion-gmap-container">
-				<?php
-				echo Avada()->google_map->render_map( // WPCS: XSS ok.
-					array(
-						'api_type'                 => esc_html( Avada()->settings->get( 'gmap_api_type' ) ),
-						'embed_address'            => esc_html( Avada()->settings->get( 'gmap_embed_address' ) ),
-						'embed_map_type'           => esc_html( Avada()->settings->get( 'gmap_embed_map_type' ) ),
-						'address'                  => esc_html( Avada()->settings->get( 'gmap_address' ) ),
-						'type'                     => esc_attr( Avada()->settings->get( 'gmap_type' ) ),
-						'address_pin'              => esc_attr( $address_pin ),
-						'animation'                => esc_attr( $address_pin_animation ),
-						'map_style'                => esc_attr( Avada()->settings->get( 'map_styling' ) ),
-						'overlay_color'            => esc_attr( Avada()->settings->get( 'map_overlay_color' ) ),
-						'infobox'                  => esc_attr( Avada()->settings->get( 'map_infobox_styling' ) ),
-						'infobox_background_color' => esc_attr( Avada()->settings->get( 'map_infobox_bg_color' ) ),
-						'infobox_text_color'       => esc_attr( Avada()->settings->get( 'map_infobox_text_color' ) ),
-						'infobox_content'          => htmlentities( Avada()->settings->get( 'map_infobox_content' ) ),
-						'icon'                     => esc_attr( Avada()->settings->get( 'map_custom_marker_icon' ) ),
-						'width'                    => esc_attr( Avada()->settings->get( 'gmap_dimensions', 'width' ) ),
-						'height'                   => esc_attr( Avada()->settings->get( 'gmap_dimensions', 'height' ) ),
-						'zoom'                     => esc_attr( Avada()->settings->get( 'map_zoom_level' ) ),
-						'scrollwheel'              => esc_attr( $map_scrollwheel ),
-						'scale'                    => esc_attr( $map_scale ),
-						'zoom_pancontrol'          => esc_attr( $map_zoomcontrol ),
-						'popup'                    => esc_attr( $map_popup ),
-					)
-				);
-				?>
-			</div>
-		<?php endif; ?>
 		<?php
 		$main_css   = '';
 		$row_css    = '';

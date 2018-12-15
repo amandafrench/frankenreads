@@ -1825,6 +1825,20 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
 .avada-tax-meta-field .wp-picker-container .iris-picker.iris-border {
   padding-bottom: 40px !important;
 }
+.fusion-sortable-option {
+  margin-bottom: 10px;
+  padding: 0 7px;
+  background-color: #f4f2f2;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  height: 34px;
+  line-height: 34px;
+  box-sizing: border-box;
+  text-align: center;
+  cursor: move;
+}
+.fusion-sortable-option:last-child {
+  margin-bottom: 0;
+}
 .rtl #pyre_page_options .wp-picker-container {
   -webkit-justify-content: baseline;
       -ms-flex-pack: baseline;

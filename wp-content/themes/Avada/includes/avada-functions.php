@@ -156,13 +156,13 @@ if ( ! function_exists( 'avada_render_post_title' ) ) {
 		}
 
 		// If we have a custom title, use it otherwise get post title.
-		$title = ( $custom_title ) ? $custom_title : get_the_title( $post_id );
+		$title     = ( $custom_title ) ? $custom_title : get_the_title( $post_id );
 		$permalink = ( $custom_link ) ? $custom_link : get_permalink( $post_id );
 
 		// If the post title should be linked at the markup.
 		if ( $linked ) {
 			$link_target = '';
-			if ( 'yes' == fusion_get_page_option( 'link_icon_target', $post_id ) || 'yes' == fusion_get_page_option( 'post_links_target', $post_id ) ) {
+			if ( 'yes' === fusion_get_page_option( 'link_icon_target', $post_id ) || 'yes' === fusion_get_page_option( 'post_links_target', $post_id ) ) {
 				$link_target = ' target="_blank" rel="noopener noreferrer"';
 			}
 			$title = '<a href="' . $permalink . '"' . $link_target . '>' . $title . '</a>';
@@ -222,7 +222,7 @@ if ( ! function_exists( 'avada_get_image_size_dimensions' ) ) {
 		if ( 'full' === $image_size ) {
 			$image_dimension = array(
 				'height' => 'auto',
-				'width' => '100%',
+				'width'  => '100%',
 			);
 		} else {
 			if ( 'portfolio-six' === $image_size ) {
@@ -232,7 +232,7 @@ if ( ! function_exists( 'avada_get_image_size_dimensions' ) ) {
 			}
 			$image_dimension = array(
 				'height' => $_wp_additional_image_sizes[ $image_size ]['height'] . 'px',
-				'width' => $_wp_additional_image_sizes[ $image_size ]['width'] . 'px',
+				'width'  => $_wp_additional_image_sizes[ $image_size ]['width'] . 'px',
 			);
 		}
 		return $image_dimension;
@@ -360,7 +360,7 @@ if ( ! function_exists( 'avada_page_title_bar' ) ) {
 		$content_type = 'none';
 		if ( false !== strpos( $secondary_content, 'searchform' ) ) {
 			$content_type = 'search';
-		} elseif ( '' != $secondary_content ) {
+		} elseif ( empty( $secondary_content ) ) {
 			$content_type = 'breadcrumbs';
 		}
 
@@ -394,7 +394,7 @@ if ( ! function_exists( 'avada_add_login_box_to_nav' ) ) {
 		}
 
 		if ( in_array( $args->theme_location, array( 'main_navigation', 'top_navigation', 'sticky_navigation' ) ) ) {
-			$is_enabled = ( 'top_navigation' === $args->theme_location ) ? Avada()->settings->get( 'woocommerce_acc_link_top_nav' ) : Avada()->settings->get( 'woocommerce_acc_link_main_nav' );
+			$is_enabled    = ( 'top_navigation' === $args->theme_location ) ? Avada()->settings->get( 'woocommerce_acc_link_top_nav' ) : Avada()->settings->get( 'woocommerce_acc_link_main_nav' );
 			$header_layout = Avada()->settings->get( 'header_layout' );
 
 			if ( class_exists( 'WooCommerce' ) && $is_enabled ) {
@@ -407,12 +407,12 @@ if ( ! function_exists( 'avada_add_login_box_to_nav' ) ) {
 
 					// If chosen in Theme Options, display the caret icon, as the my account item alyways has a dropdown.
 					$caret_icon = '';
-					if ( 'none' !== Avada()->settings->get( 'menu_display_dropdown_indicator' ) && 'v6' != $header_layout ) {
+					if ( 'none' !== Avada()->settings->get( 'menu_display_dropdown_indicator' ) && 'v6' !== $header_layout ) {
 						$caret_icon = '<span class="fusion-caret"><i class="fusion-dropdown-indicator"></i></span>';
 					}
 
-					$my_account_link_contents = ( 'Right' == Avada()->settings->get( 'header_position' ) ) ? $caret_icon . esc_html__( 'My Account', 'Avada' ) : esc_html__( 'My Account', 'Avada' );
-					$menu_highlight_style = Avada()->settings->get( 'menu_highlight_style' );
+					$my_account_link_contents = ( 'Right' === Avada()->settings->get( 'header_position' ) ) ? $caret_icon . esc_html__( 'My Account', 'Avada' ) : esc_html__( 'My Account', 'Avada' );
+					$menu_highlight_style     = Avada()->settings->get( 'menu_highlight_style' );
 
 					$items .= '<a href="' . $woo_account_page_link . '" aria-haspopup="true" class="fusion-' . $menu_highlight_style . '-highlight"><span class="menu-text">' . $my_account_link_contents . '</span>' . $caret_icon;
 
@@ -424,8 +424,11 @@ if ( ! function_exists( 'avada_add_login_box_to_nav' ) ) {
 
 					if ( 'v6' !== $header_layout ) {
 						if ( ! is_user_logged_in() ) {
+							$referer = fusion_get_referer();
+							$referer = ( $referer ) ? $referer : '';
+
 							$items .= '<div class="fusion-custom-menu-item-contents">';
-							if ( isset( $_GET['login'] ) && 'failed' == $_GET['login'] ) {
+							if ( isset( $_GET['login'] ) && 'failed' === $_GET['login'] ) {
 								$items .= '<p class="fusion-menu-login-box-error">' . esc_html__( 'Login failed, please try again.', 'Avada' ) . '</p>';
 							}
 							$items .= '<form action="' . esc_attr( site_url( 'wp-login.php', 'login_post' ) ) . '" name="loginform" method="post">';
@@ -435,7 +438,7 @@ if ( ! function_exists( 'avada_add_login_box_to_nav' ) ) {
 							$items .= '<input type="hidden" name="fusion_woo_login_box" value="true" />';
 							$items .= '<p class="fusion-login-box-submit">';
 							$items .= '<input type="submit" name="wp-submit" id="wp-submit" class="button button-small default comment-submit" value="' . esc_html__( 'Log In', 'Avada' ) . '">';
-							$items .= '<input type="hidden" name="redirect" value="' . esc_url( ( isset( $_SERVER['HTTP_REFERER'] ) ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' ) . '">';
+							$items .= '<input type="hidden" name="redirect" value="' . esc_url( $referer ) . '">';
 							$items .= '</p>';
 							$items .= '</form>';
 							$items .= '<a class="fusion-menu-login-box-register" href="' . get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) . '" title="' . esc_attr__( 'Register', 'Avada' ) . '">' . esc_attr__( 'Register', 'Avada' ) . '</a>';
@@ -462,7 +465,7 @@ if ( ! function_exists( 'avada_add_login_box_to_nav' ) ) {
 		return $items;
 	}
 }
-add_filter( 'wp_nav_menu_items', 'avada_add_login_box_to_nav', 10, 3 );
+add_filter( 'wp_nav_menu_items', 'avada_add_login_box_to_nav', 10, 2 );
 
 if ( ! function_exists( 'avada_nav_woo_cart' ) ) {
 	/**
@@ -497,15 +500,15 @@ if ( ! function_exists( 'avada_nav_woo_cart' ) ) {
 				if ( $cart_contents_count ) {
 					$cart_link_active_text = '<span class="fusion-widget-cart-number">' . $cart_contents_count . '</span>';
 				}
-				$main_cart_class      .= ' fusion-widget-cart-counter';
+				$main_cart_class .= ' fusion-widget-cart-counter';
 			} elseif ( $cart_contents_count ) {
 				// If we're here, then ( Avada()->settings->get( 'woocommerce_cart_counter' ) ) is not true.
 				$main_cart_class .= ' fusion-active-cart-icons';
 			}
 		} elseif ( 'secondary' === $position ) {
-			$is_enabled               = Avada()->settings->get( 'woocommerce_cart_link_top_nav' );
-			$main_cart_class          = ' fusion-secondary-menu-cart';
-			$cart_link_active_class   = 'fusion-secondary-menu-icon';
+			$is_enabled             = Avada()->settings->get( 'woocommerce_cart_link_top_nav' );
+			$main_cart_class        = ' fusion-secondary-menu-cart';
+			$cart_link_active_class = 'fusion-secondary-menu-icon';
 			/* translators: Number of items. */
 			$cart_link_active_text    = sprintf( esc_html__( '%s Item(s)', 'Avada' ), $cart_contents_count ) . ' <span class="fusion-woo-cart-separator">-</span> ' . WC()->cart->get_cart_subtotal();
 			$cart_link_inactive_class = $cart_link_active_class;
@@ -538,10 +541,13 @@ if ( ! function_exists( 'avada_nav_woo_cart' ) ) {
 						$items .= '<div class="fusion-menu-cart-item">';
 						$items .= '<a href="' . $product_link . '">';
 						$items .= get_the_post_thumbnail( $thumbnail_id, 'recent-works-thumbnail' );
+
 						// Check needed for pre Woo 2.7 versions only.
 						$item_name = method_exists( $_product, 'get_name' ) ? $_product->get_name() : $cart_item['data']->post->post_title;
+
 						$items .= '<div class="fusion-menu-cart-item-details">';
 						$items .= '<span class="fusion-menu-cart-item-title">' . $item_name . '</span>';
+
 						$product_price = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
 						if ( '' !== $product_price ) {
 							$product_price = ' x ' . $product_price;
@@ -573,7 +579,7 @@ if ( ! function_exists( 'fusion_add_woo_cart_to_widget_html' ) ) {
 	 * @return string The final HTML.
 	 */
 	function fusion_add_woo_cart_to_widget_html() {
-		$items               = '';
+		$items = '';
 
 		if ( class_exists( 'WooCommerce' ) && ! is_admin() ) {
 			$counter             = '';
@@ -613,9 +619,9 @@ if ( ! function_exists( 'avada_add_woo_cart_to_nav' ) ) {
 		$ubermenu = ( function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) && ubermenu_get_menu_instance_by_theme_location( $args->theme_location ) );
 
 		if ( 'v6' !== Avada()->settings->get( 'header_layout' ) ) {
-			if ( false == $ubermenu && 'main_navigation' == $args->theme_location || 'sticky_navigation' == $args->theme_location ) {
+			if ( false === $ubermenu && 'main_navigation' === $args->theme_location || 'sticky_navigation' === $args->theme_location ) {
 				$items .= avada_nav_woo_cart( 'main' );
-			} elseif ( false == $ubermenu && 'top_navigation' === $args->theme_location ) {
+			} elseif ( false === $ubermenu && 'top_navigation' === $args->theme_location ) {
 				$items .= avada_nav_woo_cart( 'secondary' );
 			}
 		}
@@ -623,7 +629,7 @@ if ( ! function_exists( 'avada_add_woo_cart_to_nav' ) ) {
 		return $items;
 	}
 }
-add_filter( 'wp_nav_menu_items', 'avada_add_woo_cart_to_nav', 10, 3 );
+add_filter( 'wp_nav_menu_items', 'avada_add_woo_cart_to_nav', 10, 2 );
 
 if ( ! function_exists( 'avada_add_sliding_bar_icon_to_main_nav' ) ) {
 	/**
@@ -639,7 +645,7 @@ if ( ! function_exists( 'avada_add_sliding_bar_icon_to_main_nav' ) ) {
 			// Disable sliding bar on ubermenu navigations.
 			$ubermenu = ( function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) && ubermenu_get_menu_instance_by_theme_location( $args->theme_location ) );
 
-			if ( 'v6' != Avada()->settings->get( 'header_layout' ) && false === $ubermenu ) {
+			if ( 'v6' !== Avada()->settings->get( 'header_layout' ) && false === $ubermenu ) {
 				if ( 'main_navigation' === $args->theme_location || 'sticky_navigation' === $args->theme_location ) {
 					$sliding_bar_label = esc_attr__( 'Toggle Sliding Bar', 'Avada' );
 
@@ -658,7 +664,7 @@ if ( ! function_exists( 'avada_add_sliding_bar_icon_to_main_nav' ) ) {
 		return $items;
 	}
 }
-add_filter( 'wp_nav_menu_items', 'avada_add_sliding_bar_icon_to_main_nav', 20, 4 );
+add_filter( 'wp_nav_menu_items', 'avada_add_sliding_bar_icon_to_main_nav', 20, 2 );
 
 if ( ! function_exists( 'avada_add_search_to_main_nav' ) ) {
 	/**
@@ -673,12 +679,12 @@ if ( ! function_exists( 'avada_add_search_to_main_nav' ) ) {
 		// Disable woo cart on ubermenu navigations.
 		$ubermenu = ( function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) && ubermenu_get_menu_instance_by_theme_location( $args->theme_location ) );
 
-		if ( 'v6' != Avada()->settings->get( 'header_layout' ) && false == $ubermenu ) {
-			if ( 'main_navigation' == $args->theme_location || 'sticky_navigation' == $args->theme_location ) {
+		if ( 'v6' !== Avada()->settings->get( 'header_layout' ) && false === $ubermenu ) {
+			if ( 'main_navigation' === $args->theme_location || 'sticky_navigation' === $args->theme_location ) {
 				if ( Avada()->settings->get( 'main_nav_search_icon' ) ) {
 					$search_label = esc_attr__( 'Search', 'Avada' );
 
-					$items .= '<li class="fusion-custom-menu-item fusion-main-menu-search">';
+					$items          .= '<li class="fusion-custom-menu-item fusion-main-menu-search">';
 					$highlight_class = '';
 					if ( 'bar' === Avada()->settings->get( 'menu_highlight_style' ) ) {
 						$highlight_class = ' fusion-bar-highlight';
@@ -694,7 +700,7 @@ if ( ! function_exists( 'avada_add_search_to_main_nav' ) ) {
 		return $items;
 	}
 }
-add_filter( 'wp_nav_menu_items', 'avada_add_search_to_main_nav', 20, 4 );
+add_filter( 'wp_nav_menu_items', 'avada_add_search_to_main_nav', 20, 2 );
 
 if ( ! function_exists( 'avada_update_featured_content_for_split_terms' ) ) {
 	/**
@@ -706,7 +712,7 @@ if ( ! function_exists( 'avada_update_featured_content_for_split_terms' ) ) {
 	 * @param  string $taxonomy         The taxonomy.
 	 */
 	function avada_update_featured_content_for_split_terms( $old_term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
-		if ( 'portfolio_category' == $taxonomy ) {
+		if ( 'portfolio_category' === $taxonomy ) {
 			$pages = get_pages();
 
 			if ( $pages ) {
@@ -767,7 +773,8 @@ function avada_wp_get_http( $url = false, $file_path = false, $args = array() ) 
 	}
 
 	$args = wp_parse_args(
-		$args, array(
+		$args,
+		array(
 			'timeout'    => 30,
 			'user-agent' => 'avada-user-agent',
 		)
@@ -785,7 +792,7 @@ function avada_wp_get_http( $url = false, $file_path = false, $args = array() ) 
 		}
 	}
 
-	// Initialize the Wordpress filesystem.
+	// Initialize the WordPress filesystem.
 	$wp_filesystem = Avada_Helper::init_filesystem();
 
 	if ( ! defined( 'FS_CHMOD_DIR' ) ) {
@@ -853,7 +860,7 @@ function avada_ajax_avada_slider_preview() {
 	} elseif ( 'flex' === $slider_type ) {
 		$slider             = ( isset( $_POST['data'] ) ) ? sanitize_text_field( wp_unslash( $_POST['data']['wooslider'] ) ) : get_post_meta( $post->ID, 'pyre_wooslider', true ); // WPCS: CSRF ok.
 		$slider_type_string = 'Fusion Slider';
-		$slider_object = get_term_by( 'slug', $slider, 'slide-page' );
+		$slider_object      = get_term_by( 'slug', $slider, 'slide-page' );
 		if ( is_object( $slider_object ) ) {
 			$edit_link        = admin_url( 'term.php?taxonomy=slide-page&tag_ID=' . $slider_object->term_id . '&post_type=slide' );
 			$edit_slides_link = admin_url( 'edit.php?slide-page=' . $slider . '&post_type=slide' );
@@ -863,7 +870,7 @@ function avada_ajax_avada_slider_preview() {
 		$slider_type_string = 'Elastic Slider';
 		$slider_object      = get_term_by( 'slug', $slider, 'themefusion_es_groups' );
 		if ( is_object( $slider_object ) ) {
-			$edit_link = admin_url( 'term.php?taxonomy=themefusion_es_groups&tag_ID=' . $slider_object->term_id . '&post_type=themefusion_elastic' );
+			$edit_link        = admin_url( 'term.php?taxonomy=themefusion_es_groups&tag_ID=' . $slider_object->term_id . '&post_type=themefusion_elastic' );
 			$edit_slides_link = admin_url( 'edit.php?themefusion_es_groups=' . $slider . '&post_type=themefusion_elastic' );
 		}
 	}
@@ -962,7 +969,8 @@ function avada_revslider_styles() {
 
 		foreach ( $old_styles as $handle ) {
 			$wpdb->delete(
-				$table_name, array(
+				$table_name,
+				array(
 					'handle' => '.tp-caption' . $handle,
 				)
 			);
@@ -1025,7 +1033,7 @@ if ( ! function_exists( 'avada_sliders_container' ) ) {
 		<div id="sliders-container">
 			<?php
 			$slider_page_id = '';
-			$is_archive = false;
+			$is_archive     = false;
 
 			if ( ! is_search() ) {
 				$slider_page_id = '';
@@ -1052,18 +1060,14 @@ if ( ! function_exists( 'avada_sliders_container' ) ) {
 		</div>
 		<?php
 		$slider_fallback          = get_post_meta( $slider_page_id, 'pyre_fallback', true );
+		$slider_fallback_id       = get_post_meta( $slider_page_id, 'pyre_fallback_id', true );
 		$slider_fallback_alt_attr = '';
 		$slider_type              = Avada_Helper::get_slider_type( $slider_page_id, $is_archive );
 		?>
 		<?php if ( $slider_fallback && $slider_type && 'no' !== $slider_type ) : ?>
-			<?php
-			$slider_fallback_image_data = Avada()->images->get_attachment_data_from_url( $slider_fallback );
-			if ( $slider_fallback_image_data ) {
-				$slider_fallback_alt_attr = $slider_fallback_image_data['alt'];
-			}
-			?>
+			<?php $slider_fallback_image_data = Avada()->images->get_attachment_data_by_helper( $slider_fallback_id, $slider_fallback ); ?>
 			<div id="fallback-slide">
-				<img src="<?php echo esc_url( $slider_fallback ); ?>" alt="<?php echo esc_attr( $slider_fallback_alt_attr ); ?>" />
+				<img src="<?php echo esc_url( $slider_fallback ); ?>" alt="<?php echo esc_attr( $slider_fallback_image_data['alt'] ); ?>" />
 			</div>
 			<?php
 		endif;
@@ -1081,14 +1085,14 @@ if ( ! function_exists( 'avada_header_template' ) ) {
 	 */
 	function avada_header_template( $slider_position = 'Below', $is_archive = false ) {
 		$page_id          = Avada()->fusion_library->get_page_id();
-		$reverse_position = ( 'Below' == $slider_position ) ? 'Above' : 'Below';
+		$reverse_position = ( 'Below' === $slider_position ) ? 'Above' : 'Below';
 		$menu_text_align  = '';
 
 		$theme_option_slider_position = Avada()->settings->get( 'slider_position' );
 		$fusion_taxonomy_options      = get_term_meta( $page_id, 'fusion_taxonomy_options', true );
 		$page_option_slider_position  = ( true === $is_archive ? Avada_Helper::get_fusion_tax_meta( $fusion_taxonomy_options, 'slider_position' ) : fusion_get_page_option( 'slider_position', $page_id ) );
 
-		if ( ( ! $theme_option_slider_position || ( $slider_position == $theme_option_slider_position && strtolower( $reverse_position ) != $page_option_slider_position ) || ( $theme_option_slider_position != $slider_position && strtolower( $slider_position ) == $page_option_slider_position ) ) && ! is_page_template( 'blank.php' ) && 'no' != fusion_get_page_option( 'display_header', $page_id ) && 'Top' == Avada()->settings->get( 'header_position' ) ) {
+		if ( ( ! $theme_option_slider_position || ( $slider_position == $theme_option_slider_position && strtolower( $reverse_position ) != $page_option_slider_position ) || ( $theme_option_slider_position != $slider_position && strtolower( $slider_position ) == $page_option_slider_position ) ) && ! is_page_template( 'blank.php' ) && 'no' !== fusion_get_page_option( 'display_header', $page_id ) && 'Top' === Avada()->settings->get( 'header_position' ) ) { // WPCS: loose comparison ok.
 			$header_wrapper_class  = 'fusion-header-wrapper';
 			$header_wrapper_class .= ( Avada()->settings->get( 'header_shadow' ) ) ? ' fusion-header-shadow' : '';
 
@@ -1105,7 +1109,7 @@ if ( ! function_exists( 'avada_header_template' ) ) {
 			$sticky_header_type2_layout = '';
 
 			if ( in_array( Avada()->settings->get( 'header_layout' ), array( 'v4', 'v5' ) ) ) {
-				$sticky_header_type2_layout = ( 'menu_and_logo' == Avada()->settings->get( 'header_sticky_type2_layout' ) ) ? ' fusion-sticky-menu-and-logo' : ' fusion-sticky-menu-only';
+				$sticky_header_type2_layout = ( 'menu_and_logo' === Avada()->settings->get( 'header_sticky_type2_layout' ) ) ? ' fusion-sticky-menu-and-logo' : ' fusion-sticky-menu-only';
 				$menu_text_align            = 'fusion-header-menu-align-' . Avada()->settings->get( 'menu_text_align' );
 			}
 
@@ -1153,7 +1157,7 @@ if ( ! function_exists( 'avada_side_header' ) ) {
 	function avada_side_header() {
 		$queried_object_id = get_queried_object_id();
 
-		if ( ! is_page_template( 'blank.php' ) && 'no' != get_post_meta( $queried_object_id, 'pyre_display_header', true ) ) {
+		if ( ! is_page_template( 'blank.php' ) && 'no' !== get_post_meta( $queried_object_id, 'pyre_display_header', true ) ) {
 			get_template_part( 'templates/side-header' );
 		}
 	}
@@ -1262,15 +1266,15 @@ if ( ! function_exists( 'avada_main_menu' ) ) {
 		}
 
 		$main_menu_args = array(
-			'theme_location'  => 'main_navigation',
-			'depth'           => 5,
-			'menu_class'      => $menu_class,
-			'items_wrap'      => '<ul role="menubar" id="%1$s" class="%2$s">%3$s</ul>',
-			'fallback_cb'     => 'Avada_Nav_Walker::fallback',
-			'walker'          => new Avada_Nav_Walker(),
-			'container'       => false,
-			'item_spacing'    => 'discard',
-			'echo'            => false,
+			'theme_location' => 'main_navigation',
+			'depth'          => 5,
+			'menu_class'     => $menu_class,
+			'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+			'fallback_cb'    => 'Avada_Nav_Walker::fallback',
+			'walker'         => new Avada_Nav_Walker(),
+			'container'      => false,
+			'item_spacing'   => 'discard',
+			'echo'           => false,
 		);
 
 		if ( $flyout_menu ) {
@@ -1287,7 +1291,7 @@ if ( ! function_exists( 'avada_main_menu' ) ) {
 				$sticky_menu_args = array(
 					'theme_location' => 'sticky_navigation',
 					'menu_id'        => 'menu-main-menu-1',
-					'items_wrap'     => '<ul role="menubar" id="%1$s" class="%2$s">%3$s</ul>',
+					'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
 					'walker'         => new Avada_Nav_Walker(),
 					'item_spacing'   => 'discard',
 				);
@@ -1298,12 +1302,16 @@ if ( ! function_exists( 'avada_main_menu' ) ) {
 			return $main_menu;
 
 		} else {
-			$uber_menu_class = '';
-			if ( function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) ) {
-				$uber_menu_class = ' fusion-ubermenu';
+			$additional_menu_class = '';
+			if ( function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) && ubermenu_get_menu_instance_by_theme_location( 'main_navigation' ) ) {
+				$additional_menu_class = ' fusion-ubermenu';
 			}
 
-			echo '<nav class="fusion-main-menu' . esc_attr( $uber_menu_class ) . '" aria-label="Main Menu">';
+			if ( 'v7' === Avada()->settings->get( 'header_layout' ) && ! has_nav_menu( 'sticky_navigation' ) ) {
+				$additional_menu_class .= ' fusion-main-menu-sticky';
+			}
+
+			echo '<nav class="fusion-main-menu' . esc_attr( $additional_menu_class ) . '" aria-label="' . esc_attr__( 'Main Menu', 'Avada' ) . '">';
 			echo wp_nav_menu( $main_menu_args );
 			echo '</nav>';
 
@@ -1318,7 +1326,7 @@ if ( ! function_exists( 'avada_main_menu' ) ) {
 
 				$sticky_menu_args = wp_parse_args( $sticky_menu_args, $main_menu_args );
 
-				echo '<nav class="fusion-main-menu fusion-sticky-menu" aria-label="Main Menu Sticky">';
+				echo '<nav class="fusion-main-menu fusion-sticky-menu" aria-label="' . esc_attr__( 'Main Menu Sticky', 'Avada' ) . '">';
 				echo wp_nav_menu( $sticky_menu_args );
 				echo '</nav>';
 			}
@@ -1380,7 +1388,7 @@ if ( ! function_exists( 'avada_contact_info' ) ) {
 			$html .= '<div class="fusion-contact-info">';
 			$html .= $phone_number;
 			if ( $phone_number && $email ) {
-				if ( 'Top' == $header_position ) {
+				if ( 'Top' === $header_position ) {
 					$html .= '<span class="fusion-header-separator">' . apply_filters( 'avada_header_separator', '|' ) . '</span>';
 				} else {
 					$html .= '<br />';
@@ -1405,7 +1413,7 @@ if ( ! function_exists( 'avada_secondary_nav' ) ) {
 				array(
 					'theme_location' => 'top_navigation',
 					'depth'          => 5,
-					'items_wrap'     => '<ul role="menubar" id="%1$s" class="%2$s">%3$s</ul>',
+					'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
 					'container'      => false,
 					'fallback_cb'    => 'Avada_Nav_Walker::fallback',
 					'walker'         => new Avada_Nav_Walker(),
@@ -1449,7 +1457,7 @@ if ( ! function_exists( 'avada_secondary_header_content' ) ) {
 	 * @return string               Html for the content.
 	 */
 	function avada_secondary_header_content( $content_area ) {
-		$secondary_content = '';
+		$secondary_content  = '';
 		$content_to_display = Avada()->settings->get( $content_area );
 		if ( 'Contact Info' === $content_to_display ) {
 			$secondary_content = avada_contact_info();
@@ -1460,10 +1468,10 @@ if ( ! function_exists( 'avada_secondary_header_content' ) ) {
 			if ( has_nav_menu( 'top_navigation' ) ) {
 
 				$mobile_menu_text_align = ' fusion-mobile-menu-text-align-' . Avada()->settings->get( 'mobile_menu_text_align' );
-				$mobile_menu_wrapper    = '<nav class="fusion-mobile-nav-holder' . esc_attr( $mobile_menu_text_align ) . '"></nav>';
+				$mobile_menu_wrapper    = '<nav class="fusion-mobile-nav-holder' . esc_attr( $mobile_menu_text_align ) . '" aria-label="' . esc_attr__( 'Secondary Mobile Menu', 'Avada' ) . '"></nav>';
 			}
 
-			$secondary_menu    = '<nav class="fusion-secondary-menu" role="navigation" aria-label="Secondary Menu">';
+			$secondary_menu    = '<nav class="fusion-secondary-menu" role="navigation" aria-label="' . esc_attr__( 'Secondary Menu', 'Avada' ) . '">';
 			$secondary_menu   .= avada_secondary_nav();
 			$secondary_menu   .= '</nav>';
 			$secondary_content = $secondary_menu . $mobile_menu_wrapper;
@@ -1557,7 +1565,7 @@ if ( ! function_exists( 'avada_get_available_sliders_array' ) ) {
 			$table_name = $wpdb->prefix . 'layerslider';
 
 			// Get sliders.
-			$sliders = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `$table_name` WHERE flag_hidden = %d AND flag_deleted = %d ORDER BY date_c ASC", '0', '0' ) ); // No cache ok; WPCS: unprepared SQL OK.
+			$sliders = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `$table_name` WHERE flag_hidden = %d AND flag_deleted = %d ORDER BY date_c ASC", '0', '0' ) ); // WPCS: db call ok, unprepared SQL ok, cache ok.
 
 			if ( ! empty( $sliders ) ) {
 				foreach ( $sliders as $key => $item ) {

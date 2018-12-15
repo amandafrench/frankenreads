@@ -26,14 +26,15 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 	 */
 	public function __construct() {
 
-		$widget_ops = array(
-			'classname' => 'fusion-ad-125-125 ad_125_125',
-			'description' => 'Add 125x125 ads.',
+		$widget_ops  = array(
+			'classname'   => 'fusion-ad-125-125 ad_125_125',
+			'description' => __( 'Add 125x125 ads.', 'Avada' ),
 		);
 		$control_ops = array(
 			'id_base' => 'ad_125_125-widget',
 		);
-		parent::__construct( 'ad_125_125-widget', 'Avada: 125x125 Ads', $widget_ops, $control_ops );
+
+		parent::__construct( 'ad_125_125-widget', __( 'Avada: 125x125 Ads', 'Avada' ), $widget_ops, $control_ops );
 
 	}
 
@@ -96,19 +97,19 @@ class Fusion_Widget_Ad_125_125 extends WP_Widget {
 
 		$instance = $old_instance;
 
-		$instance['ad_125_img_1']         = isset( $new_instance['ad_125_img_1'] ) ? $new_instance['ad_125_img_1'] : '';
-		$instance['ad_125_link_1']        = isset( $new_instance['ad_125_link_1'] ) ? $new_instance['ad_125_link_1'] : '';
-		$instance['ad_125_hover_type_1']  = isset( $new_instance['ad_125_hover_type_1'] ) ? $new_instance['ad_125_hover_type_1'] : '';
-		$instance['ad_125_img_2']         = isset( $new_instance['ad_125_img_2'] ) ? $new_instance['ad_125_img_2'] : '';
-		$instance['ad_125_link_2']        = isset( $new_instance['ad_125_link_2'] ) ? $new_instance['ad_125_link_2'] : '';
-		$instance['ad_125_hover_type_2']  = isset( $new_instance['ad_125_hover_type_2'] ) ? $new_instance['ad_125_hover_type_2'] : '';
-		$instance['ad_125_img_3']         = isset( $new_instance['ad_125_img_3'] ) ? $new_instance['ad_125_img_3'] : '';
-		$instance['ad_125_link_3']        = isset( $new_instance['ad_125_link_3'] ) ? $new_instance['ad_125_link_3'] : '';
-		$instance['ad_125_hover_type_3']  = isset( $new_instance['ad_125_hover_type_3'] ) ? $new_instance['ad_125_hover_type_3'] : '';
-		$instance['ad_125_img_4']         = isset( $new_instance['ad_125_img_4'] ) ? $new_instance['ad_125_img_4'] : '';
-		$instance['ad_125_link_4']        = isset( $new_instance['ad_125_link_4'] ) ? $new_instance['ad_125_link_4'] : '';
-		$instance['ad_125_hover_type_4']  = isset( $new_instance['ad_125_hover_type_4'] ) ? $new_instance['ad_125_hover_type_4'] : '';
-		$instance['ad_125_link_target']   = isset( $new_instance['ad_125_link_target'] ) ? $new_instance['ad_125_link_target'] : '_self';
+		$instance['ad_125_img_1']        = isset( $new_instance['ad_125_img_1'] ) ? $new_instance['ad_125_img_1'] : '';
+		$instance['ad_125_link_1']       = isset( $new_instance['ad_125_link_1'] ) ? $new_instance['ad_125_link_1'] : '';
+		$instance['ad_125_hover_type_1'] = isset( $new_instance['ad_125_hover_type_1'] ) ? $new_instance['ad_125_hover_type_1'] : '';
+		$instance['ad_125_img_2']        = isset( $new_instance['ad_125_img_2'] ) ? $new_instance['ad_125_img_2'] : '';
+		$instance['ad_125_link_2']       = isset( $new_instance['ad_125_link_2'] ) ? $new_instance['ad_125_link_2'] : '';
+		$instance['ad_125_hover_type_2'] = isset( $new_instance['ad_125_hover_type_2'] ) ? $new_instance['ad_125_hover_type_2'] : '';
+		$instance['ad_125_img_3']        = isset( $new_instance['ad_125_img_3'] ) ? $new_instance['ad_125_img_3'] : '';
+		$instance['ad_125_link_3']       = isset( $new_instance['ad_125_link_3'] ) ? $new_instance['ad_125_link_3'] : '';
+		$instance['ad_125_hover_type_3'] = isset( $new_instance['ad_125_hover_type_3'] ) ? $new_instance['ad_125_hover_type_3'] : '';
+		$instance['ad_125_img_4']        = isset( $new_instance['ad_125_img_4'] ) ? $new_instance['ad_125_img_4'] : '';
+		$instance['ad_125_link_4']       = isset( $new_instance['ad_125_link_4'] ) ? $new_instance['ad_125_link_4'] : '';
+		$instance['ad_125_hover_type_4'] = isset( $new_instance['ad_125_hover_type_4'] ) ? $new_instance['ad_125_hover_type_4'] : '';
+		$instance['ad_125_link_target']  = isset( $new_instance['ad_125_link_target'] ) ? $new_instance['ad_125_link_target'] : '_self';
 
 		return $instance;
 

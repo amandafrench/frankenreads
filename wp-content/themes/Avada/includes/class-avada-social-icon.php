@@ -118,7 +118,7 @@ class Avada_Social_Icon {
 		if ( self::$args['linktarget'] ) {
 			$icon_options['target'] = '_blank';
 
-			if ( 'facebook' !== $icon_options['social_network'] ) {
+			if ( 'facebook' !== $icon_options['social_network'] || isset( $args['icon'] ) ) {
 				$icon_options['rel'] = 'noopener noreferrer';
 			}
 		}

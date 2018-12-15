@@ -18,9 +18,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $wp_query;
 
 // Set the correct post container layout classes.
-$blog_layout = avada_get_blog_layout();
+$blog_layout     = avada_get_blog_layout();
 $pagination_type = Avada()->settings->get( 'blog_pagination_type' );
-$post_class  = 'fusion-post-' . $blog_layout;
+$post_class      = 'fusion-post-' . $blog_layout;
+
+// Used for grid and timeline layouts.
+$is_there_meta_above = Avada()->settings->get( 'post_meta' ) && ( Avada()->settings->get( 'post_meta_author' ) || Avada()->settings->get( 'post_meta_date' ) || Avada()->settings->get( 'post_meta_cats' ) || Avada()->settings->get( 'post_meta_tags' ) );
+$is_there_meta_below = Avada()->settings->get( 'post_meta' ) && ( Avada()->settings->get( 'post_meta_comments' ) || Avada()->settings->get( 'post_meta_read' ) );
+$is_there_content    = 'Full Content' === Avada()->settings->get( 'content_length' ) || ( 'Excerpt' === Avada()->settings->get( 'content_length' ) && 0 < Avada()->settings->get( 'excerpt_length_blog' ) );
+
+// Used to add '.fusion-no-meta' CSS class.
+$is_there_meta = $is_there_meta_above || $is_there_meta_below;
 
 // Masonry needs additional grid class.
 if ( 'masonry' === $blog_layout ) {
@@ -40,7 +48,7 @@ if ( 'grid' === $blog_layout || 'masonry' === $blog_layout ) {
 	$container_class .= 'fusion-blog-layout-' . $blog_layout . ' ';
 }
 
-if ( ! Avada()->settings->get( 'post_meta' ) || ( ! Avada()->settings->get( 'post_meta_author' ) && ! Avada()->settings->get( 'post_meta_date' ) && ! Avada()->settings->get( 'post_meta_cats' ) && ! Avada()->settings->get( 'post_meta_tags' ) && ! Avada()->settings->get( 'post_meta_comments' ) && ! Avada()->settings->get( 'post_meta_read' ) ) ) {
+if ( ! $is_there_meta ) {
 	$container_class .= 'fusion-no-meta-info ';
 }
 
@@ -64,12 +72,12 @@ if ( ! Avada()->settings->get( 'featured_images' ) ) {
 
 // Add class if rollover is enabled.
 if ( Avada()->settings->get( 'image_rollover' ) && Avada()->settings->get( 'featured_images' ) ) {
-	$container_class .= ' fusion-blog-rollover';
+	$container_class .= 'fusion-blog-rollover ';
 }
 
 $content_align = Avada()->settings->get( 'blog_layout_alignment' );
 if ( $content_align && ( 'grid' === $blog_layout || 'masonry' === $blog_layout || 'timeline' === $blog_layout ) ) {
-	$container_class .= ' fusion-blog-layout-' . $content_align;
+	$container_class .= 'fusion-blog-layout-' . $content_align . '';
 }
 
 $number_of_pages = $wp_query->max_num_pages;
@@ -283,7 +291,8 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 					<?php if ( 'grid' === $blog_layout || 'masonry' === $blog_layout || 'timeline' === $blog_layout ) : ?>
 						<?php echo avada_render_post_metadata( 'grid_timeline' ); // WPCS: XSS ok. ?>
 
-						<?php if ( 'masonry' !== $blog_layout && ( Avada()->settings->get( 'post_meta' ) && ( Avada()->settings->get( 'post_meta_author' ) || Avada()->settings->get( 'post_meta_date' ) || Avada()->settings->get( 'post_meta_cats' ) || Avada()->settings->get( 'post_meta_tags' ) || Avada()->settings->get( 'post_meta_comments' ) || Avada()->settings->get( 'post_meta_read' ) ) ) && 0 < Avada()->settings->get( 'excerpt_length_blog' ) ) : ?>
+						<?php // See 7199. ?>
+						<?php if ( 'masonry' !== $blog_layout && ( $is_there_meta_above && ( $is_there_content || $is_there_meta_below ) || ( ! $is_there_meta_above && $is_there_meta_below ) ) ) : ?>
 							<?php
 							$separator_styles_array = explode( '|', Avada()->settings->get( 'grid_separator_style_type' ) );
 							$separator_styles = '';
@@ -407,10 +416,8 @@ if ( is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 	</div>
 	<?php endif; ?>
 <?php // Get the pagination. ?>
-<?php echo fusion_pagination( '', apply_filters( 'fusion_pagination_size', 1 ) ); // WPCS: XSS ok. ?>
+<?php echo fusion_pagination( '', Avada()->settings->get( 'pagination_range' ) ); // WPCS: XSS ok. ?>
 </div>
 <?php
-
-wp_reset_postdata();
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

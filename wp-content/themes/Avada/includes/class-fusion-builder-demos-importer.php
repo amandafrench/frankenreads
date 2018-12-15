@@ -28,7 +28,7 @@ class Fusion_Builder_Demos_Importer {
 	 * @since 5.0.0
 	 * @var string
 	 */
-	private static $remote_api_url = 'http://updates.theme-fusion.com/avada_demo/?fusion_builder_demos=1&compressed=1';
+	private static $remote_api_url = 'https://updates.theme-fusion.com/avada_demo/?fusion_builder_demos=1&compressed=1';
 
 	/**
 	 * The Remote URL of the file containing the demo pages.
@@ -68,6 +68,16 @@ class Fusion_Builder_Demos_Importer {
 	private $zip_file_name = 'data.zip';
 
 	/**
+	 * The array of demo files that should be imported.
+	 *
+	 * @static
+	 * @access private
+	 * @since 5.6.2
+	 * @var array
+	 */
+	private static $demo_files = array();
+
+	/**
 	 * Boolean to check if the demo zip is present.
 	 *
 	 * @access private
@@ -83,7 +93,7 @@ class Fusion_Builder_Demos_Importer {
 	 * @since 5.0.3
 	 * @var bool
 	 */
-	private $is_demo_data_zip_extractable = false;
+	private $is_demo_data_zip_extracted = false;
 
 	/**
 	 * The class constructor.
@@ -98,11 +108,14 @@ class Fusion_Builder_Demos_Importer {
 		$this->is_demo_data_zip_downloaded = $this->import_demo_data_zip();
 
 		if ( $this->is_demo_data_zip_downloaded ) {
-			$this->is_demo_data_zip_extractable = $this->extract_demo_data_zip();
+			self::$demo_files = $this->get_demo_files();
 
-			if ( $this->is_demo_data_zip_extractable ) {
-				$this->include_demo_files();
+			// If there are no single demos files, we have to extract the zip.
+			if ( empty( self::$demo_files ) ) {
+				$this->extract_demo_data_zip();
 			}
+
+			$this->include_demo_files();
 		}
 	}
 
@@ -157,11 +170,7 @@ class Fusion_Builder_Demos_Importer {
 				if ( 'ftpext' === $method ) {
 					$wp_filesystem = Fusion_Helper::init_filesystem();
 					$new_folder    = $wp_filesystem->mkdir( $demo_folder_path['ftpext'] );
-					if ( false === $new_folder ) {
-						return false;
-					} else {
-						return true;
-					}
+					return ( false !== $new_folder );
 				}
 				return false;
 			}
@@ -173,6 +182,24 @@ class Fusion_Builder_Demos_Importer {
 	}
 
 	/**
+	 * Get the demo files array from which content is imported.
+	 *
+	 * @static
+	 * @access public
+	 * @since 5.6.2
+	 * @return array
+	 */
+	public static function get_demo_files() {
+		$demo_folder_path = self::get_demo_folder_path();
+
+		if ( file_exists( $demo_folder_path['direct'] ) && empty( self::$demo_files ) ) {
+			return glob( $demo_folder_path['direct'] . '*.php' );
+		}
+
+		return self::$demo_files;
+	}
+
+	/**
 	 * Checks the amount of files in demo data folder.
 	 *
 	 * @static
@@ -181,20 +208,7 @@ class Fusion_Builder_Demos_Importer {
 	 * @return int
 	 */
 	public static function get_number_of_demo_files() {
-
-		$demo_folder_path = self::get_demo_folder_path();
-		$number_of_files  = 0;
-
-		// FilesystemIterator only runs on PHP 5.3+.
-		if ( version_compare( PHP_VERSION, '5.3.0' ) >= 0 ) {
-			if ( file_exists( $demo_folder_path['direct'] ) ) {
-				$filesystem_iterator = new FilesystemIterator( $demo_folder_path['direct'], FilesystemIterator::SKIP_DOTS );
-				$number_of_files     = iterator_count( $filesystem_iterator );
-			}
-		}
-
-		return $number_of_files;
-
+		return count( self::get_demo_files() );
 	}
 
 	/**
@@ -212,13 +226,9 @@ class Fusion_Builder_Demos_Importer {
 			return false;
 		}
 
-		$method = defined( 'FS_METHOD' ) ? FS_METHOD : false;
-
-		if ( 'ftpext' === $method ) {
-			$zip_file = wp_normalize_path( $this->demo_folder_path['ftpext'] . $this->zip_file_name );
-		} else {
-			$zip_file = wp_normalize_path( $this->demo_folder_path['direct'] . $this->zip_file_name );
-		}
+		$method   = defined( 'FS_METHOD' ) ? FS_METHOD : false;
+		$method   = ( 'ftpext' === $method ) ? 'ftpext' : 'direct';
+		$zip_file = $this->demo_folder_path[ $method ] . $this->zip_file_name;
 
 		if ( $this->should_import( $zip_file ) ) {
 			$response = avada_wp_get_http( self::$remote_api_url, $zip_file );
@@ -259,7 +269,7 @@ class Fusion_Builder_Demos_Importer {
 		$filemtime = filemtime( $file );
 		if ( $filemtime < $lastweek ) {
 
-			// Demos more than a month old.
+			// Demos more than a week old.
 			// Delete them so that they may be re-imported.
 			self::delete_demos();
 
@@ -278,27 +288,21 @@ class Fusion_Builder_Demos_Importer {
 	 *
 	 * @access private
 	 * @since 5.0.3
-	 * @return bool
+	 * @return void
 	 */
 	private function extract_demo_data_zip() {
 
-		$zip_file  = wp_normalize_path( $this->demo_folder_path['direct'] . $this->zip_file_name );
+		$zip_file  = $this->demo_folder_path['direct'] . $this->zip_file_name;
 		$unzipfile = '';
 
 		Avada_Helper::init_filesystem();
-		$method = defined( 'FS_METHOD' ) ? FS_METHOD : false;
+		$method    = defined( 'FS_METHOD' ) ? FS_METHOD : false;
+		$method    = ( 'ftpext' === $method ) ? 'ftpext' : 'direct';
+		$unzipfile = unzip_file( $zip_file, $this->demo_folder_path[ $method ] );
 
-		if ( 'ftpext' === $method ) {
-			$unzipfile = unzip_file( $zip_file, $this->demo_folder_path['ftpext'] );
-		} else {
-			$unzipfile = unzip_file( $zip_file, $this->demo_folder_path['direct'] );
+		if ( $unzipfile ) {
+			self::$demo_files = $this->get_demo_files();
 		}
-
-		if ( ! $unzipfile ) {
-			return false;
-		}
-		return true;
-
 	}
 
 	/**
@@ -311,7 +315,7 @@ class Fusion_Builder_Demos_Importer {
 	private function include_demo_files() {
 
 		// Load Fusion Builder demos.
-		foreach ( glob( $this->demo_folder_path['direct'] . '*.php', GLOB_NOSORT ) as $demo_file ) {
+		foreach ( self::$demo_files as $demo_file ) {
 			include $demo_file;
 		}
 	}

@@ -32,3 +32,16 @@
 .woo-tabs-horizontal .woocommerce-checkout-nav .is-active:hover a {
   cursor: default;
 }
+.woocommerce .cart-empty ~ .woocommerce-notices-wrapper {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-42%);
+      -ms-transform: translateX(-42%);
+          transform: translateX(-42%);
+}
+.woocommerce .cart-empty ~ .woocommerce-notices-wrapper .woocommerce-message {
+  padding: 0 10px;
+  white-space: nowrap;
+  height: 55px;
+  line-height: 55px;
+}

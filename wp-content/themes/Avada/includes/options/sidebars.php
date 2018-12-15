@@ -64,6 +64,26 @@ function avada_options_section_sidebars( $sections ) {
 				'icon'        => true,
 				'type'        => 'sub-section',
 				'fields'      => array(
+					'responsive_sidebar_order' => array(
+						'id'          => 'responsive_sidebar_order',
+						'label'       => esc_html__( 'Sidebar Responsive Order', 'Avada' ),
+						'description' => esc_html__( 'Choose the order of sidebars and main content area on mobile layouts through drag & drop sorting.', 'Avada' ),
+						'type'        => 'sortable',
+						'mode'        => 'checkbox',
+						'choices'     => array(
+							'content'   => esc_html__( 'Content', 'Avada' ),
+							'sidebar' => esc_html__( 'Sidebar 1', 'Avada' ),
+							'sidebar-2' => esc_html__( 'Sidebar 2', 'Avada' ),
+						),
+						'default'     => 'content,sidebar,sidebar-2',
+						'required'    => array(
+							array(
+								'setting'  => 'responsive',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
 					'sidebar_sticky' => array(
 						'label'       => esc_html__( 'Sticky Sidebars', 'Avada' ),
 						'description' => esc_html__( 'Select the sidebar(s) that should remain sticky when scrolling the page. If the sidebar content is taller than the screen, it acts like a normal sidebar until the bottom of the sidebar is within the viewport, which will then remain fixed in place as you scroll down.', 'Avada' ),

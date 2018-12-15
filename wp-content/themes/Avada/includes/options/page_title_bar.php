@@ -236,6 +236,25 @@ function avada_options_section_page_title_bar( $sections ) {
 							),
 						),
 					),
+					'page_title_subheader_color' => array(
+						'label'       => esc_html__( 'Page Title Subheader Font Color', 'Avada' ),
+						'description' => esc_html__( 'Controls the text color of the page title subheader.', 'Avada' ),
+						'id'          => 'page_title_subheader_color',
+						'default'     => '#333333',
+						'type'        => 'color-alpha',
+						'required'    => array(
+							array(
+								'setting'  => 'page_title_bar',
+								'operator' => '!=',
+								'value'    => 'hide',
+							),
+							array(
+								'setting'  => 'page_title_bar_text',
+								'operator' => '!=',
+								'value'    => '0',
+							),
+						),
+					),
 					'page_title_alignment' => array(
 						'label'       => esc_html__( 'Page Title Bar Text Alignment', 'Avada' ),
 						'description' => esc_html__( 'Choose the title and subhead text alignment. Breadcrumbs / search field will be on opposite side for left / right alignment and below the title for center alignment.', 'Avada' ),

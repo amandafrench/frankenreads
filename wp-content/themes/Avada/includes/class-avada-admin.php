@@ -94,6 +94,7 @@ class Avada_Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'after_switch_theme', array( $this, 'activation_redirect' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widget' ) );
+		add_action( 'try_gutenberg_panel', array( $this, 'try_gutenberg_panel_addition' ), 5 );
 
 		// User agent for news feed widget.
 		add_action( 'wp_feed_options', array( $this, 'feed_user_agent' ), 10, 2 );
@@ -193,6 +194,71 @@ class Avada_Admin {
 	}
 
 	/**
+	 * Adds info to the try Gutenberg panel in dashboard.
+	 *
+	 * @since 5.6.2
+	 * @access public
+	 * @return void
+	 */
+	public function try_gutenberg_panel_addition() {
+		?>
+		<div class="fusion-gutenberg-info try-gutenberg-panel-content" style="margin-bottom: 13px;">
+			<h2>Avada, Fusion Builder, and Gutenberg</h2>
+			<p class="about-description">Important information regarding publishing content and editing posts.</p>
+			<hr>
+			<div class="fusion-gutenberg-info-column-container try-gutenberg-panel-column-container">
+				<div class="try-gutenberg-panel-column try-gutenberg-panel-image-column">
+					<img src="https://theme-fusion.com/wp-content/uploads/2018/07/avada_gutenberg-800x500.jpg" style="border:none;">
+				</div>
+				<div class="try-gutenberg-panel-column" style="grid-template-rows: auto;">
+					<div>
+						<h3>Important test information</h3>
+
+						<p>New to WordPress (4.9.8) is the callout to try the new Gutenberg editor as a plugin. This plugin is under development and intended for testing and feedback purposes. Gutenberg will be merged into the WordPress Core for version 5.0, which currently has no ETA. The whole Gutenberg project is still in a pre-beta stage, which needs to be remembered when testing.</p>
+						<p>If you want to try out Gutenberg, feel free to install the plugin and once you are done with testing, you can simply deactivate it and carry on working as per usual. View the install option below.</p>
+					</div>
+				</div>
+				<div class="try-gutenberg-panel-column" style="grid-template-rows: auto;">
+					<div>
+						<h3>Compatibility information</h3>
+
+						<p>Avada and Gutenberg is a work in progress and in time compatibility will be ensured by our team, as the development of the new editor progresses. Until then, if you do decide to try the new Gutenberg editor, understand that you should not edit any existing Fusion Builder generated page/post content with Gutenberg and vice versa, as they are not interchangeable.</p>
+					</div>
+				</div>
+			</div>
+			<?php if ( ! is_plugin_active( 'gutenberg/gutenberg.php' ) ) : ?>
+				<a href="#" class="fusion-toggle-gutenberg-info" style="margin-top:-20px;">View info from WP</a>
+			<?php endif; ?>
+			<script type="text/javascript">
+				jQuery( document ).ready( function() {
+					jQuery( '.try-gutenberg-panel-content' ).not( '.fusion-gutenberg-info' ).hide();
+
+					jQuery( '.fusion-toggle-gutenberg-info' ).click( function( e ) {
+						e.preventDefault();
+
+						jQuery( '.try-gutenberg-panel-content' ).not( '.fusion-gutenberg-info' ).toggleClass( 'fusion-wp-gutenberg-open' );
+						jQuery( '.try-gutenberg-panel-content' ).not( '.fusion-gutenberg-info' ).slideToggle();
+
+						if ( jQuery( '.try-gutenberg-panel-content' ).not( '.fusion-gutenberg-info' ).hasClass( 'fusion-wp-gutenberg-open' ) ) {
+							jQuery( this ).html( 'Close info from WP' );
+							jQuery( '.fusion-gutenberg-info' ).css( 'margin-bottom', '50px' );
+							jQuery( '.fusion-gutenberg-info' ).stop( true, true ).animate( {
+								'margin-bottom': '50px'
+							}, { queue: false, duration: '200' } );
+						} else {
+							jQuery( this ).html( 'View info from WP' );
+							jQuery( '.fusion-gutenberg-info' ).stop( true, true ).animate( {
+								'margin-bottom': '13px'
+							}, { queue: false, duration: '200' } );
+						}
+					});
+				});
+			</script>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Renders the news dashboard widget.
 	 *
 	 * @since 3.9.0
@@ -273,9 +339,13 @@ class Avada_Admin {
 
 			if ( ! is_admin() ) {
 				$this->add_wp_toolbar_menu_item(
-					$avada_parent_menu_title, false, admin_url( 'admin.php?page=avada' ), array(
+					$avada_parent_menu_title,
+					false,
+					admin_url( 'admin.php?page=avada' ),
+					array(
 						'class' => 'avada-menu',
-					), 'avada'
+					),
+					'avada'
 				);
 			}
 
@@ -836,10 +906,15 @@ class Avada_Admin {
 
 				wp_enqueue_script( 'fontawesome-shim-script', FUSION_LIBRARY_URL . '/assets/fonts/fontawesome/js/fa-v4-shims.js', array(), $version );
 
+				wp_enqueue_script( 'fuse-script', FUSION_LIBRARY_URL . '/assets/min/js/library/fuse.js', array(), $version );
+				wp_enqueue_script( 'fontawesome-search-script', FUSION_LIBRARY_URL . '/assets/fonts/fontawesome/js/icons-search.js', array(), $version );
+
 				wp_enqueue_script( 'fusion-menu-options', trailingslashit( Avada::$template_dir_url ) . 'assets/admin/js/fusion-menu-options.js', array( 'selectwoo-js' ), $version, true );
 
 				wp_localize_script(
-					'fusion-menu-options', 'fusionMenuConfig', array(
+					'fusion-menu-options',
+					'fusionMenuConfig',
+					array(
 						'fontawesomeicons' => fusion_get_icons_array(),
 					)
 				);
@@ -1544,6 +1619,16 @@ class Avada_Admin {
 				'default' => Avada()->settings->get( 'archive_header_bg_color' ),
 				/* translators: The "Fusion Theme Options" link. */
 				'desc'    => sprintf( esc_attr__( 'Controls the background color for the header. Hex code or rgba value, ex: #000. %s', 'Avada' ), Avada()->settings->get_default_description( 'archive_header_bg_color' ) ),
+			)
+		);
+
+		$avada_meta->colorpicker(
+			'mobile_header_bg_color',
+			array(
+				'name'    => __( 'Mobile Header Background Color', 'Avada' ),
+				'default' => Avada()->settings->get( 'mobile_archive_header_bg_color' ),
+				/* translators: The "Fusion Theme Options" link. */
+				'desc'    => sprintf( esc_attr__( 'Controls the background color for the header on mobile devices. Hex code or rgba value, ex: #000. %s', 'Avada' ), Avada()->settings->get_default_description( 'mobile_archive_header_bg_color' ) ),
 			)
 		);
 

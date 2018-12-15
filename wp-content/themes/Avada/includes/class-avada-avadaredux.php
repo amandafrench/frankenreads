@@ -449,6 +449,8 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			'testimonials_speed',
 			'masonry_grid_ratio',
 			'privacy_expiry',
+			'pagination_range',
+			'pagination_start_end_range',
 		);
 		return array_unique( array_merge( $fields, $extra_fields ) );
 	}
@@ -463,7 +465,8 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 	 */
 	public function fusion_options_page_soft_dependencies( $dependencies ) {
 		return array_merge(
-			$dependencies, array(
+			$dependencies,
+			array(
 				'page_title_bar_text'               => array( 'page_title_bar' ),
 				'page_title_100_width'              => array( 'page_title_bar' ),
 				'page_title_height'                 => array( 'page_title_bar' ),
@@ -473,6 +476,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 				'page_title_font_size'              => array( 'page_title_bar', 'page_title_bar_text' ),
 				'page_title_line_height'            => array( 'page_title_bar', 'page_title_bar_text' ),
 				'page_title_color'                  => array( 'page_title_bar', 'page_title_bar_text' ),
+				'page_title_subheader_color'        => array( 'page_title_bar', 'page_title_bar_text' ),
 				'page_title_subheader_font_size'    => array( 'page_title_bar', 'page_title_bar_text' ),
 				'page_title_alignment'              => array( 'page_title_bar' ),
 				'page_title_bg'                     => array( 'page_title_bar' ),

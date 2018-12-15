@@ -27,13 +27,13 @@ class Fusion_Widget_Menu extends WP_Widget {
 	public function __construct() {
 
 		$widget_ops  = array(
-			'classname' => 'menu',
-			'description' => '',
+			'classname'   => 'menu',
+			'description' => __( 'Adds a horizontal navigation', 'Avada' ),
 		);
 		$control_ops = array(
 			'id_base' => 'menu-widget',
 		);
-		parent::__construct( 'menu-widget', 'Avada: Horizontal Menu', $widget_ops, $control_ops );
+		parent::__construct( 'menu-widget', __( 'Avada: Horizontal Menu' ), $widget_ops, $control_ops );
 
 	}
 
@@ -129,13 +129,13 @@ class Fusion_Widget_Menu extends WP_Widget {
 
 		$instance = $old_instance;
 
-		$instance['nav_menu']               = isset( $new_instance['nav_menu'] ) ? $new_instance['nav_menu'] : '';
-		$instance['alignment']              = isset( $new_instance['alignment'] ) ? $new_instance['alignment'] : '';
-		$instance['menu_padding']           = isset( $new_instance['menu_padding'] ) ? $new_instance['menu_padding'] : '';
-		$instance['menu_link_color']        = isset( $new_instance['menu_link_color'] ) ? $new_instance['menu_link_color'] : '';
-		$instance['menu_link_hover_color']  = isset( $new_instance['menu_link_hover_color'] ) ? $new_instance['menu_link_hover_color'] : '';
-		$instance['sep_text']               = isset( $new_instance['sep_text'] ) ? $new_instance['sep_text'] : '';
-		$instance['font_size']              = isset( $new_instance['font_size'] ) ? $new_instance['font_size'] : '';
+		$instance['nav_menu']              = isset( $new_instance['nav_menu'] ) ? $new_instance['nav_menu'] : '';
+		$instance['alignment']             = isset( $new_instance['alignment'] ) ? $new_instance['alignment'] : '';
+		$instance['menu_padding']          = isset( $new_instance['menu_padding'] ) ? $new_instance['menu_padding'] : '';
+		$instance['menu_link_color']       = isset( $new_instance['menu_link_color'] ) ? $new_instance['menu_link_color'] : '';
+		$instance['menu_link_hover_color'] = isset( $new_instance['menu_link_hover_color'] ) ? $new_instance['menu_link_hover_color'] : '';
+		$instance['sep_text']              = isset( $new_instance['sep_text'] ) ? $new_instance['sep_text'] : '';
+		$instance['font_size']             = isset( $new_instance['font_size'] ) ? $new_instance['font_size'] : '';
 
 		return $instance;
 
@@ -161,7 +161,7 @@ class Fusion_Widget_Menu extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, $defaults );
 
 		// Get menus.
-		$menus = wp_get_nav_menus();
+		$menus    = wp_get_nav_menus();
 		$nav_menu = isset( $instance['nav_menu'] ) ? $instance['nav_menu'] : '';
 		?>
 
@@ -179,9 +179,9 @@ class Fusion_Widget_Menu extends WP_Widget {
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'alignment' ) ); ?>"><?php esc_attr_e( 'Alignment:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'alignment' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'alignment' ) ); ?>" class="widefat" style="width:100%;">
-				<option value="Left" <?php echo ( 'Left' == $instance['alignment'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Left', 'Avada' ); ?></option>
-				<option value="Center" <?php echo ( 'Center' == $instance['alignment'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Center', 'Avada' ); ?></option>
-				<option value="Right" <?php echo ( 'Right' == $instance['alignment'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Right', 'Avada' ); ?></option>
+				<option value="Left" <?php echo ( 'Left' === $instance['alignment'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Left', 'Avada' ); ?></option>
+				<option value="Center" <?php echo ( 'Center' === $instance['alignment'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Center', 'Avada' ); ?></option>
+				<option value="Right" <?php echo ( 'Right' === $instance['alignment'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Right', 'Avada' ); ?></option>
 			</select>
 		</p>
 		<p>

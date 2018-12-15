@@ -26,7 +26,7 @@ class Fusion_Widget_Flickr extends WP_Widget {
 	 */
 	public function __construct() {
 
-		$widget_ops = array(
+		$widget_ops  = array(
 			'classname'   => 'flickr',
 			'description' => __( 'The most recent photos from flickr.', 'Avada' ),
 		);
@@ -34,7 +34,7 @@ class Fusion_Widget_Flickr extends WP_Widget {
 			'id_base' => 'flickr-widget',
 		);
 
-		parent::__construct( 'flickr-widget', 'Avada: Flickr', $widget_ops, $control_ops );
+		parent::__construct( 'flickr-widget', __( 'Avada: Flickr', 'Avada' ), $widget_ops, $control_ops );
 
 	}
 
@@ -163,6 +163,7 @@ class Fusion_Widget_Flickr extends WP_Widget {
 			'number'      => 6,
 			'api'         => 'c9d2c2fda03a2ff487cb4769dc0781ea',
 		);
+
 		$instance         = wp_parse_args( (array) $instance, $defaults );
 		$flickr_getid_url = 'http://idgettr.com/';
 		$flickr_apply_url = 'http://www.flickr.com/services/apps/create/apply';

@@ -287,3 +287,12 @@
 .fusiona-privacy:before {
   content: "\e900";
 }
+.fusiona-FB_logo_black:before {
+  content: "\e901";
+}
+.fusiona-calendar-check-regular:before {
+  content: "\e902";
+}
+.fusiona-calendar-alt-regular:before {
+  content: "\e903";
+}

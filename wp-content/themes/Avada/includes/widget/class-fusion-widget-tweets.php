@@ -26,15 +26,15 @@ class Fusion_Widget_Tweets extends WP_Widget {
 	 */
 	public function __construct() {
 
-		$widget_ops = array(
-			'classname' => 'tweets',
-			'description' => '',
+		$widget_ops  = array(
+			'classname'   => 'tweets',
+			'description' => __( 'Adds your twitter timeline', 'Avada' ),
 		);
 		$control_ops = array(
 			'id_base' => 'tweets-widget',
 		);
 
-		parent::__construct( 'tweets-widget', 'Avada: Twitter', $widget_ops, $control_ops );
+		parent::__construct( 'tweets-widget', __( 'Avada: Twitter', 'Avada' ), $widget_ops, $control_ops );
 
 	}
 
@@ -53,13 +53,11 @@ class Fusion_Widget_Tweets extends WP_Widget {
 		$title               = apply_filters( 'widget_title', isset( $instance['title'] ) ? $instance['title'] : '' );
 		$twitter_id          = isset( $instance['twitter_id'] ) ? $instance['twitter_id'] : '';
 		$count               = (int) isset( $instance['count'] ) ? $instance['count'] : 3;
-
 		$icon_color          = isset( $instance['icon_color'] ) ? $instance['icon_color'] : '';
 		$consumer_key        = isset( $instance['consumer_key'] ) ? $instance['consumer_key'] : '';
 		$consumer_secret     = isset( $instance['consumer_secret'] ) ? $instance['consumer_secret'] : '';
 		$access_token        = isset( $instance['access_token'] ) ? $instance['access_token'] : '';
 		$access_token_secret = isset( $instance['access_token_secret'] ) ? $instance['access_token_secret'] : '';
-
 		$widget_id           = isset( $instance['widget_id'] ) ? $instance['widget_id'] : '';
 		$widget_type         = isset( $instance['widget_type'] ) ? $instance['widget_type'] : 'avada_style';
 		$width               = isset( $instance['width'] ) ? $instance['width'] : '400';
@@ -79,7 +77,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 			echo $before_title . $title . $after_title; // WPCS: XSS ok.
 		}
 
-		if ( 'twitter_style' == $widget_type || ( 'twitter_preconfig_style' == $widget_type && $widget_id ) ) {
+		if ( 'twitter_style' === $widget_type || ( 'twitter_preconfig_style' === $widget_type && $widget_id ) ) {
 			$widget_params = array(
 				'title'          => $title,
 				'twitter_id'     => $twitter_id,
@@ -100,7 +98,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 			$this->render_new_widget( $widget_params );
 		} else {
 			if ( $twitter_id && $consumer_key && $consumer_secret && $access_token && $access_token_secret && $count ) {
-				$widget_id = $args['widget_id'];
+				$widget_id     = $args['widget_id'];
 				$widget_params = array(
 					'title'               => $title,
 					'twitter_id'          => $twitter_id,
@@ -114,7 +112,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 				);
 				$this->render_old_widget( $widget_params );
 			}
-		} // End if().
+		}
 
 		echo $after_widget; // WPCS: XSS ok.
 
@@ -140,13 +138,11 @@ class Fusion_Widget_Tweets extends WP_Widget {
 		$instance['title']               = strip_tags( $new_instance['title'] );
 		$instance['twitter_id']          = $new_instance['twitter_id'];
 		$instance['count']               = $new_instance['count'];
-
 		$instance['icon_color']          = $new_instance['icon_color'];
 		$instance['consumer_key']        = $new_instance['consumer_key'];
 		$instance['consumer_secret']     = $new_instance['consumer_secret'];
 		$instance['access_token']        = $new_instance['access_token'];
 		$instance['access_token_secret'] = $new_instance['access_token_secret'];
-
 		$instance['widget_id']           = $new_instance['widget_id'];
 		$instance['widget_type']         = $new_instance['widget_type'];
 		$instance['width']               = $new_instance['width'];
@@ -312,8 +308,8 @@ class Fusion_Widget_Tweets extends WP_Widget {
 		<p class="twitter_style">
 			<label for="<?php echo esc_attr( $this->get_field_id( 'theme' ) ); ?>"><?php esc_attr_e( 'Color Scheme:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'theme' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'theme' ) ); ?>" class="widefat" style="width:100%;">
-				<option value="light" <?php echo ( 'light' == $instance['theme'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Light', 'Avada' ); ?></option>
-				<option value="dark" <?php echo ( 'dark' == $instance['theme'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Dark', 'Avada' ); ?></option>
+				<option value="light" <?php echo ( 'light' === $instance['theme'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Light', 'Avada' ); ?></option>
+				<option value="dark" <?php echo ( 'dark' === $instance['theme'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Dark', 'Avada' ); ?></option>
 			</select>
 		</p>
 
@@ -361,8 +357,9 @@ class Fusion_Widget_Tweets extends WP_Widget {
 		<?php $consent_needed = class_exists( 'Avada_Privacy_Embeds' ) && Avada()->settings->get( 'privacy_embeds' ) && ! Avada()->privacy_embeds->get_consent( 'twitter' ); ?>
 
 		<div style="overflow:hidden">
-			<?php if ( 'twitter_style' == $widget_type ) : ?>
-				<a class="twitter-timeline" data-dnt="true" href="<?php echo esc_url_raw( 'https://twitter.com/' . $twitter_id ); ?>" data-tweet-limit="<?php echo esc_attr( $count ); ?>" data-width="<?php echo esc_attr( $width ); ?>" data-height="<?php echo esc_attr( $height ); ?>" width="<?php echo esc_attr( $width ); ?>" height="<?php echo esc_attr( $height ); ?>" data-theme="<?php echo esc_attr( $theme ); ?>" data-link-color="<?php echo esc_attr( $link_color ); ?>" data-border-color="<?php echo esc_attr( $border_color ); ?>" data-chrome="<?php echo esc_attr( $chrome ); ?>">Tweets by <?php echo esc_attr( $twitter_id ); ?></a>
+			<?php if ( 'twitter_style' === $widget_type ) : ?>
+				<?php /* translators: The user's twitter handle. */ ?>
+				<a class="twitter-timeline" data-dnt="true" href="<?php echo esc_url_raw( 'https://twitter.com/' . $twitter_id ); ?>" data-tweet-limit="<?php echo esc_attr( $count ); ?>" data-width="<?php echo esc_attr( $width ); ?>" data-height="<?php echo esc_attr( $height ); ?>" width="<?php echo esc_attr( $width ); ?>" height="<?php echo esc_attr( $height ); ?>" data-theme="<?php echo esc_attr( $theme ); ?>" data-link-color="<?php echo esc_attr( $link_color ); ?>" data-border-color="<?php echo esc_attr( $border_color ); ?>" data-chrome="<?php echo esc_attr( $chrome ); ?>"><?php printf( esc_html__( 'Tweets by %s', 'Avada' ), esc_attr( $twitter_id ) ); ?></a>
 			<?php else : ?>
 				<?php /* translators: The twitter-ID. */ ?>
 				<a class="twitter-timeline" data-dnt="true" href="<?php echo esc_url_raw( 'https://twitter.com/' . $twitter_id ); ?>" data-widget-id="<?php echo esc_attr( $widget_id ); ?>"><?php printf( esc_attr__( 'Tweets by %s', 'Avada' ), esc_attr( $twitter_id ) ); ?></a>
@@ -398,19 +395,19 @@ class Fusion_Widget_Tweets extends WP_Widget {
 		$instance['show_borders']   = isset( $instance['show_borders'] ) ? $instance['show_borders'] : 1;
 		$instance['transparent_bg'] = isset( $instance['transparent_bg'] ) ? $instance['transparent_bg'] : 0;
 
-		if ( 'on' != $instance['show_header'] ) {
+		if ( 'on' !== $instance['show_header'] ) {
 			$chrome .= 'noheader ';
 		}
 
-		if ( 'on' != $instance['show_footer'] ) {
+		if ( 'on' !== $instance['show_footer'] ) {
 			$chrome .= 'nofooter ';
 		}
 
-		if ( 'on' != $instance['show_borders'] ) {
+		if ( 'on' !== $instance['show_borders'] ) {
 			$chrome .= 'noborders ';
 		}
 
-		if ( $instance['transparent_bg'] && 'on' == $instance['transparent_bg'] ) {
+		if ( $instance['transparent_bg'] && 'on' === $instance['transparent_bg'] ) {
 			$chrome .= 'transparent ';
 		}
 
@@ -450,7 +447,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 						'Authorization' => 'Basic ' . $to_send,
 						'Content-Type'  => 'application/x-www-form-urlencoded;charset=UTF-8',
 					),
-					'body' => array(
+					'body'        => array(
 						'grant_type' => 'client_credentials',
 					),
 				);
@@ -478,13 +475,13 @@ class Fusion_Widget_Tweets extends WP_Widget {
 			);
 
 			add_filter( 'https_ssl_verify', '__return_false' );
-			$api_url  = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' . $twitter_id . '&count=' . $count;
-			$response = wp_remote_get( $api_url, $args );
+			$api_url     = 'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' . $twitter_id . '&count=' . $count;
+			$response    = wp_remote_get( $api_url, $args );
 			$tweets_body = wp_remote_retrieve_body( $response );
 
 			set_site_transient( $consumer_key, $tweets_body, 960 );
 
-		} // End if().
+		}
 
 		$tweets = false;
 		if ( ! empty( $tweets_body ) ) {
@@ -521,7 +518,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 											<?php echo $latest_tweet; // WPCS: XSS ok. ?>
 										</p>
 										<?php $twitter_time = strtotime( $tweet['created_at'] ); ?>
-										<?php $time_ago     = $this->ago( $twitter_time ); ?>
+										<?php $time_ago = $this->ago( $twitter_time ); ?>
 										<a href="<?php echo esc_url_raw( 'http://twitter.com/' . $tweet['user']['screen_name'] . '/statuses/' . $tweet['id_str'] ); ?>" class="jtwt_date"><?php echo esc_attr( $time_ago ); ?></a>
 									</li>
 								<?php endforeach; ?>
@@ -532,7 +529,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 				<span class="arrow"></span>
 			</div>
 			<?php
-		} // End if().
+		}
 	}
 
 	/**
@@ -559,7 +556,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 		$return = $tweet['text'];
 
 		$entities = array();
-		$temp = array();
+		$temp     = array();
 
 		if ( $links && is_array( $tweet['entities']['urls'] ) ) {
 
@@ -622,10 +619,10 @@ class Fusion_Widget_Tweets extends WP_Widget {
 	public function mb_substr_replace( $string, $replacement, $start, $length = null ) {
 		if ( is_array( $string ) ) {
 			$num = count( $string );
-			// $replacement.
+			// Calculate $replacement.
 			$replacement = is_array( $replacement ) ? array_slice( $replacement, 0, $num ) : array_pad( array( $replacement ), $num, $replacement );
 
-			// $start.
+			// Calculate $start.
 			if ( is_array( $start ) ) {
 				$start = array_slice( $start, 0, $num );
 				foreach ( $start as $key => $value ) {
@@ -635,7 +632,7 @@ class Fusion_Widget_Tweets extends WP_Widget {
 				$start = array_pad( array( $start ), $num, $start );
 			}
 
-			// $length.
+			// Calculate $length.
 			if ( ! isset( $length ) ) {
 				$length = array_fill( 0, $num, 0 );
 			} elseif ( is_array( $length ) ) {

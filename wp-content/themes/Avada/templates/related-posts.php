@@ -67,7 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
 				<?php while ( $related_posts->have_posts() ) : ?>
 					<?php $related_posts->the_post(); ?>
-					<?php $post_id = get_the_ID(); ?>
+					<?php $post_id = get_the_ID(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited ?>
 					<li class="fusion-carousel-item"<?php echo $carousel_item_css; // WPCS: XSS ok. ?>>
 						<div class="fusion-carousel-item-wrapper">
 							<?php

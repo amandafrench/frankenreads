@@ -20,7 +20,7 @@ if ( $woocommerce->cart && $woocommerce->cart->get_cart() && is_array( $woocomme
 	}
 }
 
-$id      = get_the_ID();
+$id      = get_the_ID(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 $in_cart = in_array( $id, $items_in_cart );
 $size    = 'shop_catalog';
 
@@ -32,7 +32,10 @@ if ( Avada()->settings->get( 'woocommerce_disable_crossfade_effect' ) ) {
 		$gallery          = explode( ',', $gallery );
 		$first_image_id   = $gallery[0];
 		$attachment_image = wp_get_attachment_image(
-			$first_image_id, $size, false, array(
+			$first_image_id,
+			$size,
+			false,
+			array(
 				'class' => 'hover-image',
 			)
 		);

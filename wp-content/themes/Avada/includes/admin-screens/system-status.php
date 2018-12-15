@@ -198,7 +198,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 													<?php
 													// The post types we'll need to check.
 													$post_types = apply_filters(
-														'fusion_builder_shortcode_migration_post_types', array(
+														'fusion_builder_shortcode_migration_post_types',
+														array(
 															'page',
 															'post',
 															'avada_faq',
@@ -207,7 +208,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 															'tribe_events',
 														)
 													);
-													foreach ( $post_types as $key => $post_type ) {
+													foreach ( $post_types as $key => $post_type ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 														if ( ! post_type_exists( $post_type ) ) {
 															unset( $post_types[ $key ] );
 														}
@@ -223,7 +224,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 													);
 
 													// The query to get posts that meet our criteria.
-													$posts = fusion_cached_get_posts( $args );
+													$posts = fusion_cached_get_posts( $args ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 
 													$current_step = get_option( 'avada_migration_cleanup_id', false );
 													$total_steps  = $posts[0]->ID;
@@ -413,7 +414,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							'0' => '0',
 						);
 						foreach ( $registered_navs as $handle => $registered_nav ) {
-							$menu = wp_get_nav_menu_object( $registered_nav );
+							$menu = wp_get_nav_menu_object( $registered_nav ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 							if ( $menu ) {
 								$menu_items_count[] = $menu->count;
 							}
@@ -457,7 +458,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								'0' => '0',
 							);
 							foreach ( $registered_navs as $handle => $registered_nav ) {
-								$menu = wp_get_nav_menu_object( $registered_nav );
+								$menu = wp_get_nav_menu_object( $registered_nav ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 								if ( $menu ) {
 									$menu_items_count[] = $menu->count;
 								}
@@ -493,7 +494,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								'0' => '0',
 							);
 							foreach ( $registered_navs as $handle => $registered_nav ) {
-								$menu = wp_get_nav_menu_object( $registered_nav );
+								$menu = wp_get_nav_menu_object( $registered_nav ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 								if ( $menu ) {
 									$menu_items_count[] = $menu->count;
 								}
@@ -567,7 +568,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<td class="help"><?php echo '<a href="#" class="help_tip" data-tip="' . esc_attr__( 'Avada uses this method to communicate with different APIs, e.g. Google, Twitter, Facebook.', 'Avada' ) . '">[?]</a>'; ?></td>
 					<?php
 					$response = wp_safe_remote_get(
-						'https://build.envato.com/api/', array(
+						'https://build.envato.com/api/',
+						array(
 							'decompress' => false,
 							'user-agent' => 'avada-remote-get-test',
 						)
@@ -580,7 +582,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<td class="help"><?php echo '<a href="#" class="help_tip" data-tip="' . esc_attr__( 'Avada uses this method to communicate with different APIs, e.g. Google, Twitter, Facebook.', 'Avada' ) . '">[?]</a>'; ?></td>
 					<?php
 					$response = wp_safe_remote_post(
-						'https://www.google.com/recaptcha/api/siteverify', array(
+						'https://www.google.com/recaptcha/api/siteverify',
+						array(
 							'decompress' => false,
 							'user-agent' => 'avada-remote-get-test',
 						)
@@ -739,7 +742,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				}
 			});
 		}
-		});
 	</script>
 <?php endif; ?>
 

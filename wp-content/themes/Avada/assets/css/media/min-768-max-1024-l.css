@@ -5,7 +5,7 @@
   background-attachment: scroll !important;
 }
 .avada-footer-fx-bg-parallax .fusion-footer-widget-area {
-  background-attachment: static;
+  background-attachment: initial;
   margin: 0;
 }
 .avada-footer-fx-bg-parallax #main {

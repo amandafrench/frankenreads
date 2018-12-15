@@ -64,8 +64,10 @@ function woocommerce_shipping_calculator() {
  */
 function woocommerce_breadcrumb( $args = array() ) {
 	$args = wp_parse_args(
-		$args, apply_filters(
-			'woocommerce_breadcrumb_defaults', array(
+		$args,
+		apply_filters(
+			'woocommerce_breadcrumb_defaults',
+			array(
 				'delimiter'   => '&nbsp;&#47;&nbsp;',
 				'wrap_before' => '<nav class="woocommerce-breadcrumb">',
 				'wrap_after'  => '</nav>',

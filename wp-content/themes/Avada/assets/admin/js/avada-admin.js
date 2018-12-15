@@ -485,10 +485,13 @@ jQuery( document ).ready( function() {
 			} else {
 
 				// Checkbox is unchecked.
-
 				jQuery( '.button-install-demo[data-demo-id="' + demoType + '"]' ).css( 'display', 'none' );
 
-				jQuery( '#demo-modal-' + demoType + ' input[type="checkbox"][value="uninstall"]' ).prop( 'disabled', false );
+				if ( form.find( 'input[type="checkbox"]:checked' ).is( ':disabled' ) ) {
+
+					// There is something to uninstall
+					jQuery( '#demo-modal-' + demoType + ' input[type="checkbox"][value="uninstall"]' ).prop( 'disabled', false );
+				}
 			}
 
 			// Uncheck 'all' if checkbox was unchecked.

@@ -70,9 +70,10 @@ function avada_options_section_social_media( $sections ) {
 							),
 							'custom_source' => array(
 								'type'        => 'media',
-								'label'       => esc_html__( 'Link (URL) of the image you want to use as the icon', 'Avada' ),
+								'label'       => esc_html__( 'Choose the image you want to use as icon', 'Avada' ),
 								'description' => esc_html__( 'Upload your custom icon', 'Avada' ),
 								'default'     => '',
+								'mode'        => false,
 							),
 						),
 					),
@@ -160,7 +161,7 @@ function avada_options_section_social_media( $sections ) {
 					),
 					'header_social_links_boxed_radius' => array(
 						'label'       => esc_html__( 'Header Social Icon Boxed Radius', 'Avada' ),
-						'description' => esc_html__( 'Controls the box radius', 'Avada' ),
+						'description' => esc_html__( 'Controls the box radius.', 'Avada' ),
 						'id'          => 'header_social_links_boxed_radius',
 						'default'     => '4px',
 						'type'        => 'dimension',

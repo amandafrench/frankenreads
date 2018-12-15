@@ -242,7 +242,7 @@ function avada_options_section_typography( $sections ) {
 					'post_title_typography' => array(
 						'id'          => 'post_title_typography',
 						'label'       => esc_html__( 'Post Title Typography', 'Avada' ),
-						'description' => esc_html__( 'These settings control the typography of all post titles including archive and single posts.', 'Avada' ),
+						'description' => __( 'These settings control the typography of all post titles including archive and single posts.<br /><strong>IMPORTANT:</strong> On archive pages and in blog elements the linked post titles will use link color.', 'Avada' ),
 						'type'        => 'typography',
 						'choices'     => array(
 							'font-family'    => true,
@@ -292,7 +292,7 @@ function avada_options_section_typography( $sections ) {
 				'fields'      => array(
 					'custom_fonts_info' => array(
 						'label'       => '',
-						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> Please upload your custom fields below. Once you upload a custom font, <strong>you will have to save your options and reload this page on your browser</strong>. After you reload the page you will be able to select your new fonts - they will be available at the top of the fonts-list in the typography controls.', 'Avada' ) . '</div>',
+						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> Please upload your custom fonts below. Once you upload a custom font, <strong>you will have to save your options and reload this page on your browser</strong>. After you reload the page you will be able to select your new fonts - they will be available at the top of the fonts-list in the typography controls.', 'Avada' ) . '</div>',
 						'id'          => 'custom_fonts_info',
 						'type'        => 'custom',
 					),

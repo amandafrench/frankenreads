@@ -31,7 +31,7 @@ class Fusion_Patcher_Client {
 	 * @static
 	 * @var string
 	 */
-	public static $remote_patches_uri = 'http://updates.theme-fusion.com/avada_patch/';
+	public static $remote_patches_uri = 'https://updates.theme-fusion.com/avada_patch/';
 
 	/**
 	 * Gets an array of all our patches.
@@ -94,7 +94,8 @@ class Fusion_Patcher_Client {
 
 		// Get the server response.
 		$response = wp_remote_get(
-			$url, array(
+			$url,
+			array(
 				'user-agent' => 'fusion-patcher-client',
 			)
 		);

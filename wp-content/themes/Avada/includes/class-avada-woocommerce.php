@@ -37,6 +37,8 @@ class Avada_Woocommerce {
 		remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 		add_action( 'woocommerce_sidebar', array( $this, 'add_sidebar' ), 10 );
 
+		add_filter( 'fusion_responsive_sidebar_order', array( $this, 'responsive_sidebar_order' ), 10 );
+
 		// Products Loop.
 		remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
 		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_product_link_close', 5 );
@@ -133,7 +135,7 @@ class Avada_Woocommerce {
 		add_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'thumbnail' ), 10 );
 		remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
 
-		add_filter( 'wp_nav_menu_items', array( $this, 'add_woo_cart_to_widget' ), 20, 4 );
+		add_filter( 'wp_nav_menu_items', array( $this, 'add_woo_cart_to_widget' ), 20, 2 );
 		add_filter( 'woocommerce_add_to_cart_fragments', array( $this, 'header_add_to_cart_fragment' ) );
 
 		add_action( 'woocommerce_single_product_summary', array( $this, 'single_product_summary_open' ), 1 );
@@ -251,6 +253,21 @@ class Avada_Woocommerce {
 	 */
 	public function add_sidebar() {
 		do_action( 'avada_after_content' );
+	}
+
+	/**
+	 * Adds necessary selector to sidebar order array.
+	 *
+	 * @access public
+	 * @param array $sidebar_order Array of selectors.
+	 */
+	public function responsive_sidebar_order( $sidebar_order ) {
+		$key = array_search( 'content', $sidebar_order );
+		if ( false !== $key ) {
+			$sidebar_order[ $key ] .= ', .woocommerce-container';
+		}
+
+		return $sidebar_order;
 	}
 
 	/**
@@ -827,7 +844,7 @@ class Avada_Woocommerce {
 	public function product_ordering( $query ) {
 
 		// We only want to affect the main query and no ordering on search page.
-		if ( ! $query->is_main_query() || $query->is_search() ) {
+		if ( ! $query->is_main_query() ) {
 			return;
 		}
 
@@ -869,6 +886,11 @@ class Avada_Woocommerce {
 	public function get_catalog_ordering_args( $args ) {
 		global $woocommerce;
 		$woo_default_catalog_orderby = get_option( 'woocommerce_default_catalog_orderby' );
+
+		// On search pages use "Relevance" as default.
+		if ( is_search() ) {
+			$woo_default_catalog_orderby = 'relevance';
+		}
 
 		// Get the query args.
 		if ( isset( $_SERVER['QUERY_STRING'] ) ) {
@@ -914,6 +936,10 @@ class Avada_Woocommerce {
 			case 'price-desc':
 				$meta_key = '_price';
 				$orderby  = "meta_value_num ID";
+				break;
+			case 'relevance':
+				$orderby = 'relevance';
+				$order   = 'DESC';
 				break;
 			case 'popularity':
 				$meta_key = 'total_sales';
@@ -1163,7 +1189,7 @@ class Avada_Woocommerce {
 		?>
 		<div class="woocommerce-content-box full-width clearfix">
 				<?php /* translators: Number. */ ?>
-				<h2><?php printf( esc_attr( _n( 'You Have %d Item In Your Cart', 'You Have %d Items In Your Cart', $woocommerce->cart->get_cart_contents_count(), 'Avada' ) ), number_format_i18n( $woocommerce->cart->get_cart_contents_count() ) ); // WPCS: XSS ok. ?></h2>
+				<h2><?php printf( esc_attr( _n( 'You Have %d Item In Your Cart', 'You Have %s Items In Your Cart', $woocommerce->cart->get_cart_contents_count(), 'Avada' ) ), number_format_i18n( $woocommerce->cart->get_cart_contents_count() ) ); // WPCS: XSS ok. ?></h2>
 			<?php
 	}
 

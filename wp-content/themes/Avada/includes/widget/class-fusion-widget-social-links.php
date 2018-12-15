@@ -39,14 +39,14 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 		$this->set_custom_icons();
 
 		$widget_ops  = array(
-			'classname' => 'social_links',
-			'description' => '',
+			'classname'   => 'social_links',
+			'description' => __( 'Adds social media icons with custom links.', 'Avada' ),
 		);
 		$control_ops = array(
 			'id_base' => 'social_links-widget',
 		);
 
-		parent::__construct( 'social_links-widget', 'Avada: Social Links', $widget_ops, $control_ops );
+		parent::__construct( 'social_links-widget', __( 'Avada: Social Links', 'Avada' ), $widget_ops, $control_ops );
 	}
 
 	/**
@@ -59,7 +59,7 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 	 */
 	public function set_custom_icons() {
 		$theme_options_array = Avada()->settings->get( 'social_media_icons' );
-		$custom_icons = array();
+		$custom_icons        = array();
 
 		if ( is_array( $theme_options_array ) && array_key_exists( 'icon', $theme_options_array ) && is_array( $theme_options_array['icon'] ) ) {
 			$custom_icon_indices = array_keys( $theme_options_array['icon'], 'custom' );
@@ -95,10 +95,10 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 			$instance = array();
 		}
 
-		$title     = apply_filters( 'widget_title', isset( $instance['title'] ) ? $instance['title'] : '' );
-		$add_class = '';
-		$style     = '';
-		$nofollow  = ( Avada()->settings->get( 'nofollow_social_links' ) ) ? 'nofollow' : '';
+		$title              = apply_filters( 'widget_title', isset( $instance['title'] ) ? $instance['title'] : '' );
+		$add_class          = '';
+		$style              = '';
+		$nofollow           = ( Avada()->settings->get( 'nofollow_social_links' ) ) ? 'nofollow noopener noreferrer' : 'noopener noreferrer';
 		$to_social_networks = Avada()->settings->get( 'social_media_icons' );
 
 		if ( ! isset( $instance['tooltip_pos'] ) || '' === $instance['tooltip_pos'] ) {
@@ -131,7 +131,7 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 
 		if ( isset( $instance['boxed_icon'] ) && isset( $instance['boxed_icon_radius'] ) && 'Yes' === $instance['boxed_icon'] && ( $instance['boxed_icon_radius'] || '0' === $instance['boxed_icon_radius'] ) ) {
 			$instance['boxed_icon_radius'] = ( 'round' === $instance['boxed_icon_radius'] ) ? '50%' : $instance['boxed_icon_radius'];
-			$style .= 'border-radius:' . $instance['boxed_icon_radius'] . ';';
+			$style                        .= 'border-radius:' . $instance['boxed_icon_radius'] . ';';
 		}
 
 		if ( isset( $instance['boxed_icon'] ) && 'Yes' === $instance['boxed_icon'] && isset( $instance['boxed_icon_padding'] ) && isset( $instance['boxed_icon_padding'] ) ) {
@@ -179,7 +179,7 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 				}
 				if ( ! in_array( $new_value, $social_networks ) && 'custom' !== $value ) {
 					$social_networks[ $new_value . '_link' ] = $value;
-					$instance[ $new_value . '_link' ] = $to_social_networks['url'][ $key ];
+					$instance[ $new_value . '_link' ]        = $to_social_networks['url'][ $key ];
 				}
 			}
 		}
@@ -190,9 +190,9 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 			// Append those icons that are not set in Theme Options at the end.
 			foreach ( $social_networks as $name => $value ) {
 
-				if ( 'fb' == $value ) {
+				if ( 'fb' === $value ) {
 					$compare_value = 'facebook';
-				} elseif ( 'google' == $value ) {
+				} elseif ( 'google' === $value ) {
 					$compare_value = 'gplus';
 				} else {
 					$compare_value = $value;
@@ -214,8 +214,8 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 				foreach ( $custom_icon_indices as $name => $index ) {
 
 					$network_icon_height = $to_social_networks['custom_source'][ $index ]['height'];
-					$network_icon_width = $to_social_networks['custom_source'][ $index ]['width'];
-					$network_link = $to_social_networks['url'][ $index ];
+					$network_icon_width  = $to_social_networks['custom_source'][ $index ]['width'];
+					$network_link        = $to_social_networks['url'][ $index ];
 
 					// Check if different URL is set for this custom icon in the widget.  If so, use that instead.
 					$instance_key = 'custom_' . $index . '_link';
@@ -224,15 +224,15 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 					}
 
 					$social_networks_ordered[ $index ] = array(
-						'network_name'          => $to_social_networks['custom_title'][ $index ],
-						'network_icon'          => $to_social_networks['custom_source'][ $index ]['url'],
-						'network_icon_height'   => $network_icon_height,
-						'network_icon_width'    => $network_icon_width,
-						'network_link'          => $network_link,
+						'network_name'        => $to_social_networks['custom_title'][ $index ],
+						'network_icon'        => $to_social_networks['custom_source'][ $index ]['url'],
+						'network_icon_height' => $network_icon_height,
+						'network_icon_width'  => $network_icon_width,
+						'network_link'        => $network_link,
 					);
 				}
 			}
-		} // End if().
+		}
 
 		ksort( $social_networks_ordered );
 		$social_networks_ordered = array_merge( $social_networks_ordered, $social_networks );
@@ -293,21 +293,21 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 						// If not custom social icon.
 						if ( is_string( $value ) && 0 !== strpos( $value, 'custom_' ) ) {
 							// Get a list of all the available social networks.
-							$social_icon_boxed_colors  = Fusion_Data::fusion_social_icons( false, true );
+							$social_icon_boxed_colors               = Fusion_Data::fusion_social_icons( false, true );
 							$social_icon_boxed_colors['googleplus'] = array(
 								'label' => 'Google+',
 								'color' => '#dc4e41',
 							);
-							$social_icon_boxed_colors['mail'] = array(
+							$social_icon_boxed_colors['mail']       = array(
 								'label' => esc_html__( 'Email Address', 'Avada' ),
 								'color' => '#000000',
 							);
 
-							$color = ( 'Yes' === $instance['boxed_icon'] ) ? '#ffffff' : $social_icon_boxed_colors[ $value ]['color'];
+							$color    = ( 'Yes' === $instance['boxed_icon'] ) ? '#ffffff' : $social_icon_boxed_colors[ $value ]['color'];
 							$bg_color = ( 'Yes' === $instance['boxed_icon'] ) ? $social_icon_boxed_colors[ $value ]['color'] : '';
 
 							$icon_style = 'color:' . $color . ';';
-							$box_style = 'background-color:' . $bg_color . ';border-color:' . $bg_color . ';';
+							$box_style  = 'background-color:' . $bg_color . ';border-color:' . $bg_color . ';';
 						}
 					} else {
 						if ( isset( $icon_colors[ $icon_color_count ] ) && $icon_colors[ $icon_color_count ] ) {
@@ -511,8 +511,8 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'color_type' ) ); ?>"><?php esc_attr_e( 'Icons Color Type:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'color_type' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'color_type' ) ); ?>" class="widefat fusion-social-color-type" style="width:100%;">
-				<option value="custom" <?php echo ( 'custom' == $instance['color_type'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Custom Color', 'Avada' ); ?></option>
-				<option value="brand" <?php echo ( 'brand' == $instance['color_type'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Brand Colors', 'Avada' ); ?></option>
+				<option value="custom" <?php echo ( 'custom' === $instance['color_type'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Custom Color', 'Avada' ); ?></option>
+				<option value="brand" <?php echo ( 'brand' === $instance['color_type'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Brand Colors', 'Avada' ); ?></option>
 			</select>
 		</p>
 
@@ -524,8 +524,8 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'boxed_icon' ) ); ?>"><?php esc_attr_e( 'Icons Boxed:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'boxed_icon' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'boxed_icon' ) ); ?>" class="widefat fusion-social-icons-boxed" style="width:100%;">
-				<option value="No" <?php echo ( 'No' == $instance['boxed_icon'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'No', 'Avada' ); ?></option>
-				<option value="Yes" <?php echo ( 'Yes' == $instance['boxed_icon'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Yes', 'Avada' ); ?></option>
+				<option value="No" <?php echo ( 'No' === $instance['boxed_icon'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'No', 'Avada' ); ?></option>
+				<option value="Yes" <?php echo ( 'Yes' === $instance['boxed_icon'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Yes', 'Avada' ); ?></option>
 			</select>
 		</p>
 
@@ -547,27 +547,27 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'tooltip_pos' ) ); ?>"><?php esc_attr_e( 'Tooltip Position:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'tooltip_pos' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'tooltip_pos' ) ); ?>" class="widefat" style="width:100%;">
-				<option value="Top" <?php echo ( 'Top' == $instance['tooltip_pos'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Top', 'Avada' ); ?></option>
-				<option value="Right" <?php echo ( 'Right' == $instance['tooltip_pos'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Right', 'Avada' ); ?></option>
-				<option value="Bottom" <?php echo ( 'Bottom' == $instance['tooltip_pos'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Bottom', 'Avada' ); ?></option>
-				<option value="Left" <?php echo ( 'Left' == $instance['tooltip_pos'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Left', 'Avada' ); ?></option>
-				<option value="None" <?php echo ( 'None' == $instance['tooltip_pos'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'None', 'Avada' ); ?></option>
+				<option value="Top" <?php echo ( 'Top' === $instance['tooltip_pos'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Top', 'Avada' ); ?></option>
+				<option value="Right" <?php echo ( 'Right' === $instance['tooltip_pos'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Right', 'Avada' ); ?></option>
+				<option value="Bottom" <?php echo ( 'Bottom' === $instance['tooltip_pos'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Bottom', 'Avada' ); ?></option>
+				<option value="Left" <?php echo ( 'Left' === $instance['tooltip_pos'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Left', 'Avada' ); ?></option>
+				<option value="None" <?php echo ( 'None' === $instance['tooltip_pos'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'None', 'Avada' ); ?></option>
 			</select>
 		</p>
 
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'show_custom' ) ); ?>"><?php esc_attr_e( 'Show Custom Icons:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'show_custom' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_custom' ) ); ?>" class="widefat" style="width:100%;">
-				<option value="No" <?php echo ( 'No' == $instance['show_custom'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'No', 'Avada' ); ?></option>
-				<option value="Yes" <?php echo ( 'Yes' == $instance['show_custom'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Yes', 'Avada' ); ?></option>
+				<option value="No" <?php echo ( 'No' === $instance['show_custom'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'No', 'Avada' ); ?></option>
+				<option value="Yes" <?php echo ( 'Yes' === $instance['show_custom'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Yes', 'Avada' ); ?></option>
 			</select>
 		</p>
 
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'use_to' ) ); ?>"><?php esc_attr_e( 'Use Theme Option Links:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'use_to' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'use_to' ) ); ?>" class="widefat" style="width:100%;">
-				<option value="No" <?php echo ( 'No' == $instance['use_to'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'No', 'Avada' ); ?></option>
-				<option value="Yes" <?php echo ( 'Yes' == $instance['use_to'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Yes', 'Avada' ); ?></option>
+				<option value="No" <?php echo ( 'No' === $instance['use_to'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'No', 'Avada' ); ?></option>
+				<option value="Yes" <?php echo ( 'Yes' === $instance['use_to'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Yes', 'Avada' ); ?></option>
 			</select>
 		</p>
 
@@ -579,9 +579,9 @@ class Fusion_Widget_Social_Links extends WP_Widget {
 		}
 		foreach ( $social_networks_full_array as $key => $value ) {
 
-			if ( 'facebook' == $key ) {
+			if ( 'facebook' === $key ) {
 				$key = 'fb';
-			} elseif ( 'gplus' == $key ) {
+			} elseif ( 'gplus' === $key ) {
 				$key = 'google';
 			}
 

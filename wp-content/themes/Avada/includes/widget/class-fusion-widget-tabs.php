@@ -27,14 +27,14 @@ class Fusion_Widget_Tabs extends WP_Widget {
 	public function __construct() {
 
 		$widget_ops  = array(
-			'classname' => 'fusion-tabs-widget',
-			'description' => 'Popular posts, recent post and comments.',
+			'classname'   => 'fusion-tabs-widget',
+			'description' => __( 'Popular posts, recent post and comments.', 'Avada' ),
 		);
 		$control_ops = array(
 			'id_base' => 'pyre_tabs-widget',
 		);
 
-		parent::__construct( 'pyre_tabs-widget', 'Avada: Tabs', $widget_ops, $control_ops );
+		parent::__construct( 'pyre_tabs-widget', __( 'Avada: Tabs', 'Avada' ), $widget_ops, $control_ops );
 
 	}
 

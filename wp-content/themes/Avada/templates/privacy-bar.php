@@ -18,7 +18,7 @@ $text            = Avada()->settings->get( 'privacy_bar_text' );
 $content         = Avada()->privacy_embeds->get_privacy_content();
 $content_count   = is_array( $content ) ? count( $content ) : 0;
 $column_size     = 0 !== $content_count ? 12 / $content_count : 0;
-$more            = '0' !== Avada()->settings->get( 'privacy_bar_more' ) && 0 !== $content_count;
+$more            = '0' !== Avada()->settings->get( 'privacy_bar_more' ) && 0 !== $content_count; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 $button_text     = Avada()->settings->get( 'privacy_bar_button_text' );
 $button_alt_text = Avada()->settings->get( 'privacy_bar_update_text' );
 $settings_text   = Avada()->settings->get( 'privacy_bar_more_text' );
@@ -38,7 +38,7 @@ $settings_text   = Avada()->settings->get( 'privacy_bar_more_text' );
 	<div class="fusion-privacy-bar-full">
 		<div class="fusion-row">
 			<div class="fusion-columns row fusion-columns-<?php echo esc_attr( $content_count ); ?> columns columns-<?php echo esc_attr( $content_count ); ?>">
-				<?php foreach ( $content as $id => $column ) : ?>
+				<?php foreach ( $content as $id => $column ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited ?>
 				<div class="fusion-column col-lg-<?php echo esc_attr( $column_size ); ?> col-md-<?php echo esc_attr( $column_size ); ?> col-sm-<?php echo esc_attr( $column_size ); ?>">
 					<?php if ( '' !== $column['title'] ) : ?>
 						<h4 class="column-title"><?php echo esc_html( $column['title'] ); ?></h4>
@@ -54,7 +54,7 @@ $settings_text   = Avada()->settings->get( 'privacy_bar_more_text' );
 						<ul class="fusion-privacy-choices">
 
 						<?php if ( is_array( $embeds ) ) : ?>
-							<?php foreach ( $embeds as $id => $embed ) : ?>
+							<?php foreach ( $embeds as $id => $embed ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited ?>
 								<?php $selected = Avada()->privacy_embeds->is_selected( $id ) ? 'checked' : ''; ?>
 
 								<?php if ( 'tracking' !== $id ) : ?>

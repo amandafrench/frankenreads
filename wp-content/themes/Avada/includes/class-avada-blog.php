@@ -96,9 +96,9 @@ class Avada_Blog {
 		if ( is_search() && $query->is_search ) {
 
 			// Show only posts in search results.
-			if ( 'Only Posts' == Avada()->settings->get( 'search_content' ) ) {
+			if ( 'Only Posts' === Avada()->settings->get( 'search_content' ) ) {
 				$query->set( 'post_type', 'post' );
-			} elseif ( 'Only Pages' == Avada()->settings->get( 'search_content' ) ) {
+			} elseif ( 'Only Pages' === Avada()->settings->get( 'search_content' ) ) {
 				// Show only pages in search results.
 				$query->set( 'post_type', 'page' );
 			}

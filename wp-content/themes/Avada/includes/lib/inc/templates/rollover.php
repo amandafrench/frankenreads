@@ -163,7 +163,7 @@ $link_target = ( 'yes' === $link_icon_target || 'yes' === $post_links_target || 
 				<?php endforeach; ?>
 			<?php endif; ?>
 
-			<?php $id      = get_the_ID(); ?>
+			<?php $id = get_the_ID(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited ?>
 			<?php $in_cart = in_array( $id, $items_in_cart ); ?>
 		<?php endif; ?>
 

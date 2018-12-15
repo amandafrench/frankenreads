@@ -422,7 +422,8 @@ class Avada {
 
 				// Get remote HTML file.
 				$response = wp_remote_get(
-					$url, array(
+					$url,
+					array(
 						'user-agent' => 'avada-user-agent',
 					)
 				);

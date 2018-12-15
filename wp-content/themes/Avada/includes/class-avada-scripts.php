@@ -115,6 +115,8 @@ class Avada_Scripts {
 		$js_folder_url = Avada::$template_dir_url . $js_folder_suffix;
 		$js_folder_path = Avada::$template_dir_path . $js_folder_suffix;
 
+		$privacy_options = Avada()->privacy_embeds->get_options();
+
 		$scripts = array(
 			array(
 				'bootstrap-scrollspy',
@@ -202,6 +204,16 @@ class Avada_Scripts {
 				true,
 			);
 		}
+		if ( $privacy_options['privacy_embeds'] || $privacy_options['privacy_bar'] || Avada()->settings->get( 'slidingbar_widgets' ) ) {
+			$scripts[] = array(
+				'avada-container-scroll',
+				$js_folder_url . '/general/avada-container-scroll.js',
+				$js_folder_path . '/general/avada-container-scroll.js',
+				array( 'jquery' ),
+				self::$version,
+				true,
+			);
+		}
 		if ( is_page_template( 'side-navigation.php' ) ) {
 			$scripts[] = array(
 				'avada-side-nav',
@@ -253,7 +265,7 @@ class Avada_Scripts {
 				'avada-sliding-bar',
 				$js_folder_url . '/general/avada-sliding-bar.js',
 				$js_folder_path . '/general/avada-sliding-bar.js',
-				array( 'modernizr', 'jquery', 'jquery-easing' ),
+				array( 'modernizr', 'jquery', 'jquery-easing', 'avada-container-scroll' ),
 				self::$version,
 				true,
 			);
@@ -412,12 +424,12 @@ class Avada_Scripts {
 			);
 		}
 
-		if ( Avada()->settings->get( 'privacy_embeds' ) || Avada()->settings->get( 'privacy_bar' ) ) {
+		if ( $privacy_options['privacy_embeds'] || $privacy_options['privacy_bar'] ) {
 			$scripts[] = array(
 				'avada-privacy',
 				$js_folder_url . '/general/avada-privacy.js',
 				$js_folder_path . '/general/avada-privacy.js',
-				array( 'jquery' ),
+				array( 'jquery', 'avada-container-scroll' ),
 				self::$version,
 				true,
 			);
@@ -491,15 +503,16 @@ class Avada_Scripts {
 		$avada_rev_styles = get_post_meta( Avada()->fusion_library->get_page_id(), 'pyre_avada_rev_styles', true );
 		$layout           = ( 'boxed' === $page_bg_layout || 'wide' === $page_bg_layout ) ? $page_bg_layout : Avada()->settings->get( 'layout' );
 		$avada_rev_styles = ( 'no' === $avada_rev_styles || ( Avada()->settings->get( 'avada_rev_styles' ) && 'yes' !== $avada_rev_styles ) ) ? 1 : 0;
+		$privacy_options = Avada()->privacy_embeds->get_options();
 
 		$side_header_breakpoint = Avada()->settings->get( 'side_header_break_point' );
 		if ( ! $side_header_breakpoint ) {
 			$side_header_breakpoint = 800;
 		}
 
-		$cookie_args      = class_exists( 'Avada_Privacy_Embeds' ) && Avada()->settings->get( 'privacy_embeds' ) ? Avada()->privacy_embeds->get_cookie_args() : false;
-		$consents         = class_exists( 'Avada_Privacy_Embeds' ) && Avada()->settings->get( 'privacy_embeds' ) ? array_keys( Avada()->privacy_embeds->get_embed_types() ) : array();
-		$default_consents = class_exists( 'Avada_Privacy_Embeds' ) && Avada()->settings->get( 'privacy_embeds' ) ? Avada()->privacy_embeds->get_default_consents() : array();
+		$cookie_args      = class_exists( 'Avada_Privacy_Embeds' ) && $privacy_options['privacy_embeds'] ? Avada()->privacy_embeds->get_cookie_args() : false;
+		$consents         = class_exists( 'Avada_Privacy_Embeds' ) && $privacy_options['privacy_embeds'] ? array_keys( Avada()->privacy_embeds->get_embed_types() ) : array();
+		$default_consents = class_exists( 'Avada_Privacy_Embeds' ) && $privacy_options['privacy_embeds'] ? Avada()->privacy_embeds->get_default_consents() : array();
 
 		$scripts = array(
 			array(
@@ -537,6 +550,8 @@ class Avada_Scripts {
 					'mobile_menu_design'      => Avada()->settings->get( 'mobile_menu_design' ),
 					'dropdown_goto'           => __( 'Go to...', 'Avada' ),
 					'mobile_nav_cart'         => __( 'Shopping Cart', 'Avada' ),
+					'mobile_submenu_open'     => esc_attr__( 'Open Sub Menu', 'Avada' ),
+					'mobile_submenu_close'    => esc_attr__( 'Close Sub Menu', 'Avada' ),
 					'submenu_slideout'        => Avada()->settings->get( 'mobile_nav_submenu_slideout' ),
 				),
 			),
@@ -681,7 +696,7 @@ class Avada_Scripts {
 					'path'     => $cookie_args ? $cookie_args['path'] : '/',
 					'types'    => $consents ? $consents : array(),
 					'defaults' => $default_consents ? $default_consents : array(),
-					'button'   => Avada()->settings->get( 'privacy_bar_button_save' ),
+					'button'   => $privacy_options['privacy_bar_button_save'],
 				),
 			),
 		);
@@ -920,7 +935,10 @@ class Avada_Scripts {
 		// Output as CSS file.
 		header( 'Content-type: text/css', true );
 
-		$styles = explode( ',', $_GET['mq'] ); // WPCS: CSRF ok sanitization ok.
+		$styles = array();
+		if ( isset( $_GET['mq'] ) ) {
+			$styles = explode( ',', $_GET['mq'] ); // WPCS: CSRF ok sanitization ok.
+		}
 		foreach ( $styles as $style ) {
 			$style = trim( $style );
 			if ( file_exists( Avada::$template_dir_path . "/assets/css/media/{$style}.min.css" ) ) {

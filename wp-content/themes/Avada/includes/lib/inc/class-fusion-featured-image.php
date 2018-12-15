@@ -134,7 +134,10 @@ class Fusion_Featured_Image {
 
 		if ( $image_id ) {
 			$preview_image = wp_get_attachment_image(
-				$image_id, array( 266, 266 ), false, array(
+				$image_id,
+				array( 266, 266 ),
+				false,
+				array(
 					'class' => 'fusion-preview-image',
 				)
 			);

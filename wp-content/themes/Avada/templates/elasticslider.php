@@ -36,7 +36,8 @@ $count = 1;
 				<li style="<?php echo ( $count > 0 ) ? 'opacity: 0;' : ''; ?>">
 					<?php
 					the_post_thumbnail(
-						'full', array(
+						'full',
+						array(
 							'title' => '',
 							'alt'   => get_post_meta( get_post_thumbnail_id(), '_wp_attachment_image_alt', true ),
 						)
@@ -66,7 +67,8 @@ $count = 1;
 					<a href="#"><?php the_title(); ?></a>
 					<?php
 					the_post_thumbnail(
-						'full', array(
+						'full',
+						array(
 							'title' => '',
 							'alt'   => get_post_meta( get_post_thumbnail_id(), '_wp_attachment_image_alt', true ),
 						)

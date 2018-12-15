@@ -140,7 +140,7 @@ function avada_options_section_layout( $sections ) {
 			),
 			'hundredp_padding' => array(
 				'label'       => esc_html__( '100% Width Padding', 'Avada' ),
-				'description' => esc_html__( 'Controls the left and right padding for page content when using 100% site width, 100% width page template or 100% width post option. This does not affect Fusion Builder containers. Enter value including any valid CSS unit, ex: 30px.', 'Avada' ),
+				'description' => esc_html__( 'Controls the left and right padding for page content when using 100% site width, 100% width page template or 100% width post option. This does not affect Fusion Builder containers.', 'Avada' ),
 				'id'          => 'hundredp_padding',
 				'default'     => '30px',
 				'type'        => 'dimension',

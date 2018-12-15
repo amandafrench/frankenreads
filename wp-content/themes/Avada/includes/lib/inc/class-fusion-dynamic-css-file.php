@@ -108,7 +108,6 @@ class Fusion_Dynamic_CSS_File {
 			}
 		}
 
-		$fusion_library = Fusion::get_instance();
 		$id             = $this->dynamic_css->get_helpers()->get_dynamic_css_id();
 		$file_name      = "{$id}.min.css";
 		if ( $blog_id ) {

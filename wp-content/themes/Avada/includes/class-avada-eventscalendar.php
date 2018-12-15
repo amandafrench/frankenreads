@@ -339,7 +339,7 @@ class Avada_EventsCalendar {
 				$this->title_bar_html = str_replace( array( '<h1', '</h1>' ), array( '<h2', '</h2>' ), $html );
 
 				$action = 'tribe_events_bar_after_template';
-				if ( class_exists( 'Tribe__Events__Filterbar__View' ) ) {
+				if ( class_exists( 'Tribe__Events__Filterbar__View' ) && 'horizontal' === tribe_get_option( 'events_filters_layout' ) ) {
 					$action = 'tribe_events_filter_view_after_template';
 				}
 

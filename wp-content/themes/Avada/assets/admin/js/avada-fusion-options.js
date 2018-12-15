@@ -55,6 +55,46 @@ jQuery( document ).ready( function() {
 		}
 	} );
 
+	jQuery( '.fusion-sortable-options' ).each( function() {
+		if ( '' === jQuery( this ).siblings( '.sort-order' ).val() ) {
+			jQuery( this ).parents( '.pyre_metabox_field' ).find( '.fusion-builder-default-reset' ).addClass( 'checked' );
+		}
+
+		jQuery( this ).sortable();
+		jQuery( this ).on( 'sortupdate', function( event, ui ) {
+			var sortContainer = jQuery( event.target ),
+				sortOrder = '';
+
+			sortContainer.children( '.fusion-sortable-option' ).each( function() {
+				sortOrder += jQuery( this ).data( 'value' ) + ',';
+			} );
+
+			sortOrder = sortOrder.slice( 0, -1 );
+
+			sortContainer.siblings( '.sort-order' ).val( sortOrder );
+
+			sortContainer.parents( '.pyre_metabox_field' ).find( '.fusion-builder-default-reset' ).removeClass( 'checked' );
+		} );
+
+		jQuery( this ).parents( '.pyre_metabox_field' ).find( '.fusion-reset-to-default' ).on( 'click', function( e ) {
+			var order    = jQuery( this ).data( 'default' ).split( ',' ),
+				sortable = jQuery( this ).parents( '.pyre_metabox_field' ).find( '.fusion-sortable-options' ),
+				first    = sortable.find( '[data-value="' + order[0] + '"]' ),
+				second   = sortable.find( '[data-value="' + order[1] + '"]' ),
+				third    = sortable.find( '[data-value="' + order[2] + '"]' );
+
+			sortable.prepend( first );
+			sortable.append( second );
+			sortable.append( third );
+			sortable.sortable( 'refresh' );
+			sortable.parent().find( 'input' ).val( '' );
+
+			jQuery( this ).parent().addClass( 'checked' );
+
+			e.preventDefault();
+		} );
+	} );
+
 	function avadaCheckDependency( $currentValue, $desiredValue, $comparison ) {
 		if ( '==' === $comparison || '=' === $comparison ) {
 			if ( $currentValue == $desiredValue ) { // jshint ignore:line
@@ -493,6 +533,15 @@ jQuery( document ).ready( function() {
 		function() {
 			jQuery( '.avada-po-warning' ).slideDown();
 			jQuery( '#pyre_tab_avada_page_options' ).addClass( 'fusion-options-changed' );
+		}
+	);
+
+	jQuery( '.pyre_metabox_tab:not(#pyre_tab_avada_page_options)' ).on( 'change fusion-changed',
+		'input.upload_field',
+		function() {
+			if ( '' === jQuery( this ).val() ) {
+				jQuery( this ).next().val( '' );
+			}
 		}
 	);
 } );

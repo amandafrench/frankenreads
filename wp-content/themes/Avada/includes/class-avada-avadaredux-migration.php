@@ -679,7 +679,8 @@ class Avada_AvadaRedux_Migration extends Avada_Migrate {
 				}
 				// Hack for fields that used to inherit their value from the primary color.
 				if ( in_array(
-					$field['id'], array(
+					$field['id'],
+					array(
 						'content_box_hover_animation_accent_color',
 						'map_overlay_color',
 					)

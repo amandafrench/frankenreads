@@ -26,15 +26,15 @@ class Fusion_Widget_Author extends WP_Widget {
 	 */
 	public function __construct() {
 
-		$widget_ops = array(
+		$widget_ops  = array(
 			'classname'   => 'fusion-author-widget',
-			'description' => 'Display author details.',
+			'description' => __( 'Display author details.', 'Avada' ),
 		);
 		$control_ops = array(
 			'id_base' => 'fusion_author-widget',
 		);
 
-		parent::__construct( 'fusion_author-widget', 'Avada: Author', $widget_ops, $control_ops );
+		parent::__construct( 'fusion_author-widget', __( 'Avada: Author', 'Avada' ), $widget_ops, $control_ops );
 
 	}
 
@@ -88,7 +88,7 @@ class Fusion_Widget_Author extends WP_Widget {
 		$author_link_open  = '';
 		$author_link_close = '';
 		if ( $link_author_page ) {
-			$author_link_open = '<a class"fusion-author-widget-link" href="' . esc_url( get_author_posts_url( $author_id ) ) . '" title="' . esc_attr( $author_name ) . '" rel="author">';
+			$author_link_open  = '<a class"fusion-author-widget-link" href="' . esc_url( get_author_posts_url( $author_id ) ) . '" title="' . esc_attr( $author_name ) . '" rel="author">';
 			$author_link_close = '</a>';
 		}
 
@@ -141,7 +141,7 @@ class Fusion_Widget_Author extends WP_Widget {
 
 				// If no description was added by user, add some default text and stats.
 				if ( empty( $author_biography ) ) {
-					$author_biography  = esc_html__( 'This author has not yet filled in any details.', 'Avada' );
+					$author_biography = esc_html__( 'This author has not yet filled in any details.', 'Avada' );
 					/* translators: %s: Number. */
 					$author_biography .= '<br />' . sprintf( esc_html__( 'So far the author has created %s blog entries.', 'Avada' ), count_user_posts( $author_id ) );
 				}

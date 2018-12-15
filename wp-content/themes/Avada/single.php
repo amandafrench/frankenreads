@@ -131,7 +131,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php ob_start(); ?>
 						<?php the_author_posts_link(); ?>
 						<?php /* translators: The link. */ ?>
-						<?php $title = sprintf( __( 'About the Author: %s', 'Avada' ), ob_get_clean() ); ?>
+						<?php $title = sprintf( __( 'About the Author: %s', 'Avada' ), ob_get_clean() ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited ?>
 						<?php $title_size = ( false === avada_is_page_title_bar_enabled( $post->ID ) ? '2' : '3' ); ?>
 						<?php Avada()->template->title_template( $title, $title_size ); ?>
 						<div class="about-author-container">

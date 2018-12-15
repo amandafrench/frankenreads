@@ -17,7 +17,6 @@
   margin: 0;
   padding: 0;
   border: 0;
-  outline: 0;
   font-size: 100%;
   line-height: 100%;
   vertical-align: baseline;
@@ -28,6 +27,21 @@
   -o-user-select: none;
   -ms-user-select: none;
       user-select: none;
+}
+.fusion-disable-outline .ilightbox-overlay,
+.fusion-disable-outline .ilightbox-loader,
+.fusion-disable-outline .ilightbox-loader *,
+.fusion-disable-outline .ilightbox-holder,
+.fusion-disable-outline .ilightbox-holder .ilightbox-container,
+.fusion-disable-outline .ilightbox-holder .ilightbox-container img.ilightbox-image,
+.fusion-disable-outline .ilightbox-holder .ilightbox-container .ilightbox-caption,
+.fusion-disable-outline .ilightbox-toolbar,
+.fusion-disable-outline .ilightbox-toolbar *,
+.fusion-disable-outline .ilightbox-thumbnails,
+.fusion-disable-outline .ilightbox-thumbnails *,
+.fusion-disable-outline .ilightbox-holder .ilightbox-container .ilightbox-social,
+.fusion-disable-outline .ilightbox-holder .ilightbox-container .ilightbox-social * {
+  outline: 0;
 }
 .ilightbox-overlay,
 .ilightbox-loader,

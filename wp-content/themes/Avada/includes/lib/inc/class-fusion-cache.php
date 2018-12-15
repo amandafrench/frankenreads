@@ -125,7 +125,6 @@ class Fusion_Cache {
 
 			// Cleanup other transients.
 			$transients = array(
-				'avada_googlefonts_contents',
 				'fusion_css_cache_cleanup',
 				'_fusion_ajax_works',
 				'fusion_builder_demos_import_skip_check',

@@ -317,7 +317,8 @@ final class Avada_Google_Fonts {
 			array(
 				'family' => str_replace( '%2B', '+', rawurlencode( implode( '|', $link_fonts ) ) ),
 				'subset' => rawurlencode( implode( ',', $this->subsets ) ),
-			), 'https://fonts.googleapis.com/css'
+			),
+			'https://fonts.googleapis.com/css'
 		);
 	}
 
@@ -349,7 +350,8 @@ final class Avada_Google_Fonts {
 			array(
 				'action' => 'get-gfonts',
 				'family' => str_replace( '%2B', '+', rawurlencode( implode( '|', $link_fonts ) ) ),
-			), site_url()
+			),
+			site_url()
 		);
 	}
 
@@ -452,7 +454,12 @@ final class Avada_Google_Fonts {
 	 */
 	protected function get_fonts_inline_styles() {
 
-		$contents = get_transient( 'avada_googlefonts_contents' );
+		$transient_name = 'avada_googlefonts_contents';
+		if ( '' !== Fusion_Multilingual::get_active_language() || 'all' !== Fusion_Multilingual::get_active_language() ) {
+			$transient_name .= '_' . Fusion_Multilingual::get_active_language();
+		}
+
+		$contents = get_transient( $transient_name );
 		if ( false === $contents ) {
 
 			// If we're using local, early exit after getting the styles.
@@ -467,7 +474,7 @@ final class Avada_Google_Fonts {
 
 			// If link is empty, early exit.
 			if ( '' === $this->remote_link || ! $this->remote_link ) {
-				set_transient( 'avada_googlefonts_contents', 'failed', DAY_IN_SECONDS );
+				set_transient( $transient_name, 'failed', DAY_IN_SECONDS );
 				return false;
 			}
 
@@ -476,7 +483,7 @@ final class Avada_Google_Fonts {
 
 			// Check for errors.
 			if ( is_wp_error( $response ) ) {
-				set_transient( 'avada_googlefonts_contents', 'failed', DAY_IN_SECONDS );
+				set_transient( $transient_name, 'failed', DAY_IN_SECONDS );
 				return false;
 			}
 
@@ -484,12 +491,12 @@ final class Avada_Google_Fonts {
 			$contents = wp_remote_retrieve_body( $response );
 			// Check for error.
 			if ( is_wp_error( $contents ) || ! $contents ) {
-				set_transient( 'avada_googlefonts_contents', 'failed', DAY_IN_SECONDS );
+				set_transient( $transient_name, 'failed', DAY_IN_SECONDS );
 				return false;
 			}
 
 			// Store remote HTML file in transient, expire after 24 hours.
-			set_transient( 'avada_googlefonts_contents', $contents, DAY_IN_SECONDS );
+			set_transient( $transient_name, $contents, DAY_IN_SECONDS );
 		}
 
 		// Return false if we were unable to get the contents of the googlefonts from remote.

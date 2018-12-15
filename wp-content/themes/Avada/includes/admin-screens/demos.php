@@ -273,13 +273,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 																		<?php
 																		$label  = __( 'Install', 'Avada' );
-																		$status = 'install';
+																		$status = 'install'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 																		if ( isset( $plugin_dependencies[ $slug ] ) && $plugin_dependencies[ $slug ]['active'] ) {
 																			$label  = __( 'Active', 'Avada' );
-																			$status = 'active';
+																			$status = 'active'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 																		} elseif ( isset( $plugin_dependencies[ $slug ] ) && $plugin_dependencies[ $slug ]['installed'] ) {
 																			$label  = __( 'Activate', 'Avada' );
-																			$status = 'activate';
+																			$status = 'activate'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 																		}
 																		?>
 																		<span class="required-plugin-status <?php echo esc_attr( $status ); ?> ">

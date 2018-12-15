@@ -177,7 +177,8 @@ class Fusion_Patcher_Filesystem {
 				array(
 					'action' => 'serve_patch',
 					'id'     => self::$patch_id,
-				), Fusion_Patcher_Client::$remote_patches_uri
+				),
+				Fusion_Patcher_Client::$remote_patches_uri
 			);
 
 			// Add a message to users for debugging purposes.

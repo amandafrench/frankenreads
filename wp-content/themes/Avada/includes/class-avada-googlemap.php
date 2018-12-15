@@ -45,6 +45,7 @@ class Avada_GoogleMap {
 		add_filter( 'fusion_attr_avada-google-map', array( $this, 'attr' ) );
 		add_action( 'wp_ajax_fusion_cache_map', array( $this, 'fusion_cache_map' ) );
 		add_action( 'wp_ajax_nopriv_fusion_cache_map', array( $this, 'fusion_cache_map' ) );
+		add_action( 'avada_after_page_title_bar', array( $this, 'before_main_container' ) );
 	}
 
 	/**
@@ -365,7 +366,8 @@ class Avada_GoogleMap {
 				'width'                    => '100%',
 				'zoom'                     => '14',
 				'zoom_pancontrol'          => 'yes',
-			), $args
+			),
+			$args
 		);
 
 		self::$args = $defaults;
@@ -442,5 +444,48 @@ class Avada_GoogleMap {
 
 		wp_die();
 
+	}
+
+	/**
+	 * Adds a map before the content.
+	 *
+	 * @access public
+	 * @since 1.0
+	 * @return void
+	 */
+	public function before_main_container() {
+
+		if ( is_page_template( 'contact.php' ) && Avada()->settings->get( 'recaptcha_public' ) && Avada()->settings->get( 'recaptcha_private' ) ) {
+			echo '<script type="text/javascript">var RecaptchaOptions = { theme : \'' . esc_attr( Avada()->settings->get( 'recaptcha_color_scheme' ) ) . '\' };</script>';
+		}
+
+		if ( is_page_template( 'contact.php' ) && Avada()->settings->get( 'gmap_address' ) && Avada()->settings->get( 'status_gmap' ) ) {
+
+			$map_args = array(
+				'api_type'                 => esc_html( Avada()->settings->get( 'gmap_api_type' ) ),
+				'embed_address'            => esc_html( Avada()->settings->get( 'gmap_embed_address' ) ),
+				'embed_map_type'           => esc_html( Avada()->settings->get( 'gmap_embed_map_type' ) ),
+				'address'                  => esc_html( Avada()->settings->get( 'gmap_address' ) ),
+				'type'                     => esc_attr( Avada()->settings->get( 'gmap_type' ) ),
+				'address_pin'              => ( Avada()->settings->get( 'map_pin' ) ) ? 'yes' : 'no',
+				'animation'                => ( Avada()->settings->get( 'gmap_pin_animation' ) ) ? 'yes' : 'no',
+				'map_style'                => esc_attr( Avada()->settings->get( 'map_styling' ) ),
+				'overlay_color'            => esc_attr( Avada()->settings->get( 'map_overlay_color' ) ),
+				'infobox'                  => esc_attr( Avada()->settings->get( 'map_infobox_styling' ) ),
+				'infobox_background_color' => esc_attr( Avada()->settings->get( 'map_infobox_bg_color' ) ),
+				'infobox_text_color'       => esc_attr( Avada()->settings->get( 'map_infobox_text_color' ) ),
+				'infobox_content'          => htmlentities( Avada()->settings->get( 'map_infobox_content' ) ),
+				'icon'                     => esc_attr( Avada()->settings->get( 'map_custom_marker_icon' ) ),
+				'width'                    => esc_attr( Avada()->settings->get( 'gmap_dimensions', 'width' ) ),
+				'height'                   => esc_attr( Avada()->settings->get( 'gmap_dimensions', 'height' ) ),
+				'zoom'                     => esc_attr( Avada()->settings->get( 'map_zoom_level' ) ),
+				'scrollwheel'              => ( Avada()->settings->get( 'map_scrollwheel' ) ) ? 'yes' : 'no',
+				'scale'                    => ( Avada()->settings->get( 'map_scale' ) ) ? 'yes' : 'no',
+				'zoom_pancontrol'          => ( Avada()->settings->get( 'map_zoomcontrol' ) ) ? 'yes' : 'no',
+				'popup'                    => ( ! Avada()->settings->get( 'map_popup' ) ) ? 'yes' : 'no',
+			);
+
+			echo '<div id="fusion-gmap-container">' . $this->render_map( $map_args ) . '</div>'; // WPCS: XSS ok.
+		}
 	}
 }

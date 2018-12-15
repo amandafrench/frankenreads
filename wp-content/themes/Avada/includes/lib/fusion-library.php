@@ -3,7 +3,7 @@
  * Loads common Fusion libraries.
  *
  * @package Fusion-Library
- * @version 1.6
+ * @version 1.7.2
  */
 
 // Do not allow directly accessing this file.
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Don't use a constant, we need this as a simple var.
-$fusion_library_version = '1.6';
+$fusion_library_version = '1.7.2';
 
 $current_dir = dirname( __FILE__ );
 
@@ -52,7 +52,7 @@ if ( ! defined( 'FUSION_LIBRARY_URL' ) ) {
 		}
 		$wp_content_url = content_url();
 
-		$link   = str_replace( $wp_content_dir, $wp_content_url, $dir );
+		$link   = str_replace( $wp_content_dir, $wp_content_url, $dir ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 		$scheme = ( ( isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ) || is_ssl() ) ? 'https' : 'http';
 
 		$fusion_library_url = set_url_scheme( $link, $scheme );

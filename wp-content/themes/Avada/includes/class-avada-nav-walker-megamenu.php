@@ -144,7 +144,9 @@ if ( ! class_exists( 'Avada_Nav_Walker_Megamenu' ) ) {
 									$url3 = admin_url( 'nav-menus.php' );
 								} else {
 									$url3 = add_query_arg(
-										'edit-menu-item', $item_id, remove_query_arg(
+										'edit-menu-item',
+										$item_id,
+										remove_query_arg(
 											$removed_args,
 											admin_url( 'nav-menus.php#menu-item-settings-' . $item_id )
 										)

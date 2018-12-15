@@ -21,18 +21,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Reset according to sidebar or fullwidth pages.
-if ( is_shop() ) {
-	wc_set_loop_prop( 'columns', Avada()->settings->get( 'woocommerce_shop_page_columns' ) );
+// Reset the column amount correctly for shop and archive pages.
+if ( ! wc_get_loop_prop( 'is_shortcode' ) ) {
+	if ( is_shop() ) {
+		wc_set_loop_prop( 'columns', Avada()->settings->get( 'woocommerce_shop_page_columns' ) );
+	}
+	if ( is_product_category() ||
+		is_product_tag() ||
+		is_tax()
+	) {
+		$columns = Avada()->settings->get( 'woocommerce_archive_page_columns' );
+		wc_set_loop_prop( 'columns', $columns );
+	}
 }
-if ( is_product_category() ||
-	is_product_tag() ||
-	is_tax()
-) {
-	$columns = Avada()->settings->get( 'woocommerce_archive_page_columns' );
-	wc_set_loop_prop( 'columns', $columns );
-}
-
 
 $column_class = ' products-' . wc_get_loop_prop( 'columns' );
 ?>

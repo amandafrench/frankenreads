@@ -188,7 +188,8 @@ class Avada_Upgrade_510 extends Avada_Upgrade_Abstract {
 		delete_option( 'avada_registration' );
 		if ( is_array( $avada_registration ) && isset( $avada_registration['token'] ) && ! empty( $avada_registration['token'] ) ) {
 			update_option(
-				'fusion_registration', array(
+				'fusion_registration',
+				array(
 					'avada' => $avada_registration,
 				)
 			);
@@ -197,7 +198,8 @@ class Avada_Upgrade_510 extends Avada_Upgrade_Abstract {
 		delete_option( 'avada_registered' );
 		if ( $avada_registered ) {
 			update_option(
-				'fusion_registered', array(
+				'fusion_registered',
+				array(
 					'avada' => true,
 				)
 			);

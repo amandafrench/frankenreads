@@ -811,9 +811,6 @@ class Avada_Demo_Import {
 
 		$theme_options_json                         = file_get_contents( $this->theme_options_file );
 		$theme_options                              = json_decode( $theme_options_json, true );
-		$theme_options['logo_retina']               = '';
-		$theme_options['sticky_header_logo_retina'] = '';
-		$theme_options['mobile_logo_retina']        = '';
 		$theme_options_db_name                      = Avada::get_original_option_name();
 		update_option( $theme_options_db_name, $theme_options );
 	}
@@ -1013,7 +1010,6 @@ class Avada_Demo_Import {
 
 		$this->content_tracker->set( 'general_data', 'imported' );
 
-		update_option( 'avada_imported_demo', 'true' );
 	}
 }
 

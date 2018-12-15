@@ -70,11 +70,11 @@ class Sidebar_Generator {
 		}
 
 		// Go through each sidebar and register it.
-		$sidebars = Sidebar_Generator::get_sidebars();
+		$sidebars = self::get_sidebars();
 
 		if ( is_array( $sidebars ) ) {
 			foreach ( $sidebars as $sidebar ) {
-				$sidebar_class = Sidebar_Generator::name_to_class( $sidebar );
+				$sidebar_class = self::name_to_class( $sidebar );
 				register_sidebar(
 					array(
 						'name'          => $sidebar,
@@ -156,19 +156,19 @@ class Sidebar_Generator {
 
 		check_ajax_referer( 'add-sidebar', 'security' );
 
-		$sidebars = Sidebar_Generator::get_sidebars();
+		$sidebars = self::get_sidebars();
 		$name     = isset( $_POST['sidebar_name'] ) ? str_replace( array( "\n", "\r", "\t" ), '', sanitize_text_field( wp_unslash( $_POST['sidebar_name'] ) ) ) : '';
 		$counter  = ( is_array( $sidebars ) && ! empty( $sidebars ) ) ? count( $sidebars ) + 1 : 1;
-		$id       = Sidebar_Generator::name_to_class( $name );
+		$id       = self::name_to_class( $name );
 
 		if ( isset( $sidebars[ $id ] ) ) {
 			die( "alert('" . esc_html__( 'Widget Section already exists, please use a different name.', 'Avada' ) . "')" );
 		}
 
 		$sidebars[ $id ] = $name;
-		Sidebar_Generator::update_sidebars( $sidebars );
+		self::update_sidebars( $sidebars );
 
-		$id = 'fusion-' . strtolower( Sidebar_Generator::name_to_class( $name ) );
+		$id = 'fusion-' . strtolower( self::name_to_class( $name ) );
 		$js = "
 		var tbl = document.getElementById('sbg_table');
 		var lastRow = tbl.rows.length;
@@ -219,7 +219,7 @@ class Sidebar_Generator {
 
 		check_ajax_referer( 'remove-sidebar', 'security' );
 
-		$sidebars = Sidebar_Generator::get_sidebars();
+		$sidebars = self::get_sidebars();
 		$id       = isset( $_POST['sidebar_name'] ) ? strtolower( str_replace( array( "\n", "\r", "\t" ), '', sanitize_text_field( wp_unslash( $_POST['sidebar_name'] ) ) ) ) : false;
 		$counter  = '1';
 
@@ -238,7 +238,7 @@ class Sidebar_Generator {
 		}
 		$row_number = ( isset( $_POST['row_number'] ) ) ? sanitize_text_field( wp_unslash( $_POST['row_number'] ) ) : '0';
 		unset( $sidebars[ $id ] );
-		Sidebar_Generator::update_sidebars( $sidebars );
+		self::update_sidebars( $sidebars );
 		$js = "
 			var tbl = document.getElementById('sbg_table');
 
@@ -296,15 +296,15 @@ class Sidebar_Generator {
 						<th><?php esc_attr_e( 'CSS Class', 'Avada' ); ?></th>
 						<th><?php esc_attr_e( 'Remove', 'Avada' ); ?></th>
 					</tr>
-					<?php $sidebars = Sidebar_Generator::get_sidebars(); ?>
+					<?php $sidebars = self::get_sidebars(); ?>
 					<?php if ( is_array( $sidebars ) && ! empty( $sidebars ) ) : ?>
 						<?php $cnt = 0; ?>
 						<?php foreach ( $sidebars as $sidebar ) : ?>
 							<?php $alt = ( 0 == $cnt % 2 ) ? 'alternate' : ''; ?>
 							<tr class="<?php echo esc_attr( $alt ); ?>">
 								<td><?php echo esc_html( $sidebar ); ?></td>
-								<td><?php echo 'fusion-' . strtolower( Sidebar_Generator::name_to_class( $sidebar ) ); // WPCS: XSS ok. ?></td>
-								<td><a href="javascript:void(0);" onclick="return remove_sidebar_link('<?php echo Sidebar_Generator::name_to_class( $sidebar ); // WPCS: XSS ok. ?>',<?php echo $cnt + 1; // WPCS: XSS ok. ?>);" title="<?php esc_attr_e( 'Remove this Widget Section', 'Avada' ); ?>"><?php esc_html_e( 'remove', 'Avada' ); ?></a></td>
+								<td><?php echo 'fusion-' . strtolower( self::name_to_class( $sidebar ) ); // WPCS: XSS ok. ?></td>
+								<td><a href="javascript:void(0);" onclick="return remove_sidebar_link('<?php echo self::name_to_class( $sidebar ); // WPCS: XSS ok. ?>',<?php echo $cnt + 1; // WPCS: XSS ok. ?>);" title="<?php esc_attr_e( 'Remove this Widget Section', 'Avada' ); ?>"><?php esc_html_e( 'remove', 'Avada' ); ?></a></td>
 							</tr>
 							<?php $cnt++; ?>
 						<?php endforeach; ?>

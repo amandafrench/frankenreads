@@ -11,7 +11,7 @@
  */
 
 // The $order_id is inherited from the Avada_Woocommerce::view_order() method.
-if ( ! $order = wc_get_order( $order_id ) ) {
+if ( ! $order = wc_get_order( $order_id ) ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 	return;
 }
 
@@ -110,17 +110,17 @@ $show_downloads        = $order->has_downloadable_item() && $order->is_download_
 		<dl class="customer_details">
 			<?php $billing_email = $order->get_billing_email(); ?>
 			<?php if ( $billing_email ) : ?>
-				<dt><?php esc_attr_e( 'Email:', 'woocommerce' ); ?></dt> <dd><?php echo esc_attr( $billing_email ); ?> </dd><br />
+				<dt><?php esc_attr_e( 'Email:', 'Avada' ); ?></dt> <dd><?php echo esc_attr( $billing_email ); ?> </dd><br />
 			<?php endif; ?>
 
 			<?php $billing_phone = $order->get_billing_phone(); ?>
 			<?php if ( $billing_phone ) : ?>
-				<dt><?php esc_attr_e( 'Phone:', 'woocommerce' ); ?></dt> <dd><?php echo esc_html( $billing_phone ); ?></dd>
+				<dt><?php esc_attr_e( 'Phone:', 'Avada' ); ?></dt> <dd><?php echo esc_html( $billing_phone ); ?></dd>
 			<?php endif; ?>
 
 			<?php $customer_note = $order->get_customer_note(); ?>
 			<?php if ( $customer_note ) : ?>
-				<dt><?php esc_html_e( 'Note:', 'woocommerce' ); ?></dt> <dd><?php echo wptexturize( $customer_note ); // WPCS: XSS ok. ?></dd>
+				<dt><?php esc_html_e( 'Note:', 'Avada' ); ?></dt> <dd><?php echo wptexturize( $customer_note ); // WPCS: XSS ok. ?></dd>
 			<?php endif; ?>
 
 			<?php

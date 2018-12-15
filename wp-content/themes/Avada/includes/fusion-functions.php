@@ -32,7 +32,8 @@ if ( ! function_exists( 'fusion_get_related_posts' ) ) {
 		}
 
 		$args = wp_parse_args(
-			$args, array(
+			$args,
+			array(
 				'category__in'        => wp_get_post_categories( $post_id ),
 				'ignore_sticky_posts' => 0,
 				'posts_per_page'      => $number_posts,
@@ -83,7 +84,8 @@ if ( ! function_exists( 'fusion_get_custom_posttype_related_posts' ) ) {
 
 		if ( ! empty( $item_array ) ) {
 			$args = wp_parse_args(
-				$args, array(
+				$args,
+				array(
 					'ignore_sticky_posts' => 0,
 					'posts_per_page'      => $number_posts,
 					'post__not_in'        => array( $post_id ),
@@ -246,7 +248,7 @@ if ( ! function_exists( 'fusion_add_url_parameter' ) ) {
 
 		$params[ $param_name ] = $param_value;
 
-		if ( 'product_count' == $param_name ) {
+		if ( 'product_count' == $param_name && is_paged() ) {
 			$params['paged'] = '1';
 		}
 

@@ -20,7 +20,7 @@ if ( ( Avada()->settings->get( $setting_name ) && 'no' !== $share_box ) || ( ! A
 
 	$full_image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'full' );
 
-	$title = the_title_attribute(
+	$title = the_title_attribute( // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 		array(
 			'echo' => false,
 			'post' => get_the_ID(),

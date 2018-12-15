@@ -24,14 +24,7 @@ function avada_get_required_and_recommened_plugins() {
 		include_once Avada::$template_dir_path . '/includes/importer/class-avada-importer-data.php';
 	}
 
-	$is_plugins_page = false;
-	if (
-		( isset( $_GET['page'] ) && 'avada-plugins' === $_GET['page'] ) || // WPCS: CSRF ok.
-		( isset( $_GET['page'] ) && 'install-required-plugins' === $_GET['page'] ) || // WPCS: CSRF ok.
-		( isset( $_SERVER['HTTP_REFERER'] ) && false !== strpos( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ), 'HTTP_REFERER' ) )
-	) {
-		$is_plugins_page = true;
-	}
+	$is_plugins_page = ( isset( $_GET['page'] ) && ( 'avada-plugins' === $_GET['page'] || 'install-required-plugins' === $_GET['page'] ) ); // WPCS: CSRF ok.
 
 	$plugins_info = Avada::get_bundled_plugins();
 

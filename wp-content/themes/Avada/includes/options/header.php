@@ -477,7 +477,7 @@ function avada_options_section_header( $sections ) {
 				'fields'      => array(
 					'side_header_width' => array(
 						'label'       => esc_html__( 'Header Width For Left/Right Position', 'Avada' ),
-						'description' => esc_html__( 'Controls the width of the left or right side header. In pixels.', 'Avada' ),
+						'description' => esc_html__( 'Controls the width of the left or right side header.', 'Avada' ),
 						'id'          => 'side_header_width',
 						'default'     => '280',
 						'type'        => 'slider',

@@ -64,7 +64,7 @@
 .columns .col {
   float: none;
   width: 100% !important;
-  margin: 0 0 20p;
+  margin: 0;
   box-sizing: border-box;
 }
 .fullwidth-box {
@@ -81,6 +81,9 @@
   display: block;
   text-align: center;
   padding: 0 0 15px;
+}
+.fusion-sharing-box .fusion-social-networks {
+  padding-bottom: 0;
 }
 .fusion-social-networks:after {
   content: "";
@@ -455,7 +458,7 @@ body #small-nav {
   clear: both;
 }
 .avada-footer-fx-bg-parallax .fusion-footer-widget-area {
-  background-attachment: static;
+  background-attachment: initial;
   margin: 0;
 }
 .avada-footer-fx-bg-parallax #main {

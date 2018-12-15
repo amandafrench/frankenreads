@@ -495,7 +495,8 @@ class Fusion_Builder_Migrate {
 	 */
 	private function post_types() {
 		$post_types = apply_filters(
-			'fusion_builder_shortcode_migration_post_types', array(
+			'fusion_builder_shortcode_migration_post_types',
+			array(
 				'page',
 				'post',
 				'avada_faq',
@@ -2954,7 +2955,8 @@ class Fusion_Builder_Migrate {
 
 			// The post types we'll need to check.
 			$post_types = apply_filters(
-				'fusion_builder_shortcode_migration_post_types', array(
+				'fusion_builder_shortcode_migration_post_types',
+				array(
 					'page',
 					'post',
 					'avada_faq',

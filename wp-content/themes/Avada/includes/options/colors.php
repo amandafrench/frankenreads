@@ -60,6 +60,7 @@ function avada_options_section_colors( $sections ) {
 				'id'          => 'color_scheme',
 				'default'     => 'Green',
 				'type'        => 'preset',
+				'class'       => 'color-scheme',
 				'choices'     => array(
 					'Red'        => array(
 						'label'    => esc_html__( 'Red', 'Avada' ),

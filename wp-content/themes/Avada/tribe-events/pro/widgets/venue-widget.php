@@ -32,7 +32,7 @@ $events_label_plural = tribe_get_event_label_plural();
 			</div>
 		<?php } ?>
 		<div class="tribe-venue-widget-address">
-			<?php echo tribe_get_meta_group( $venue_ID, 'tribe_event_venue' ) ?>
+			<?php echo tribe_get_full_address( $venue_ID, true ) ?>
 		</div>
 	</div>
 

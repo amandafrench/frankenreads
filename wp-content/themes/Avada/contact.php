@@ -104,8 +104,8 @@ $avada_contact = new Avada_Contact();
 					}
 
 					$button_shape = $fusion_settings->get( 'button_shape' );
-					$button_size = $fusion_settings->get( 'button_size' );
-					$button_type = $fusion_settings->get( 'button_type' );
+					$button_size  = $fusion_settings->get( 'button_size' );
+					$button_type  = $fusion_settings->get( 'button_type' );
 					?>
 					<input name="submit" type="submit" id="submit" value="<?php esc_html_e( 'Submit Form', 'Avada' ); ?>" class="comment-submit fusion-button fusion-button-default fusion-button-default-size fusion-button-<?php echo esc_attr( strtolower( $button_size ) ); ?> fusion-button-<?php echo esc_attr( strtolower( $button_shape ) ); ?> fusion-button-<?php echo esc_attr( strtolower( $button_type ) ); ?>">
 				</div>

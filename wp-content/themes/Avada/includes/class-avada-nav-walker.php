@@ -152,6 +152,15 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 		private $menu_megamenu_background_image = '';
 
 		/**
+		 * Number of top level menu items.
+		 *
+		 * @since 5.7
+		 * @access private
+		 * @var init
+		 */
+		private $top_level_menu_items_count = 0;
+
+		/**
 		 * Middle logo menu breaking point
 		 *
 		 * @access  private
@@ -166,6 +175,15 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 		 * @var init
 		 */
 		private $no_of_top_level_items_displayed = 0;
+
+		/**
+		 * Holds the markup of the flyout menu background images.
+		 *
+		 * @since 5.7
+		 * @access private
+		 * @var string
+		 */
+		private $flyout_menu_bg_markup = '';
 
 		/**
 		 * Sets the overall width of the megamenu wrappers
@@ -200,6 +218,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 		 * @param  array  $args Not used.
 		 */
 		public function start_lvl( &$output, $depth = 0, $args = array() ) {
+
 			if ( 0 === $depth && 'enabled' === $this->menu_megamenu_status ) {
 				// Set overall width of megamenu.
 				if ( ! $this->menu_megamenu_maxwidth ) {
@@ -227,7 +246,8 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 		 */
 		public function end_lvl( &$output, $depth = 0, $args = array() ) {
 
-			$row_width = '';
+			$header_layout = Avada()->settings->get( 'header_layout' );
+			$row_width     = '';
 
 			if ( 0 === $depth && 'enabled' === $this->menu_megamenu_status ) {
 
@@ -255,11 +275,11 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				$output = str_replace( '{megamenu_final_width}', 'style="width:' . $wrapper_width . 'px;' . $background_image . '" data-width="' . $wrapper_width . '"', $output );
 
 				$replacement = ( $this->total_num_of_columns > $this->max_num_of_columns ) ? 'fusion-megamenu-border' : '';
-				$output = str_replace( '{megamenu_border}', $replacement, $output );
+				$output      = str_replace( '{megamenu_border}', $replacement, $output );
 
 				foreach ( $this->submenu_matrix as $row => $columns ) {
 					$layout_columns = 12 / $columns;
-					$layout_columns = ( '5' == $columns ) ? 2 : $layout_columns;
+					$layout_columns = ( 5 == $columns ) ? 2 : $layout_columns; // WPCS: loose comparison ok.
 
 					if ( $columns < $this->max_num_of_columns ) {
 						$row_width = 'style="width:' . $columns / $this->max_num_of_columns * 100 . '% !important;"';
@@ -269,15 +289,14 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 
 					$replacement  = 'fusion-megamenu-row-columns-' . $columns;
 					$replacement .= ( ( $row - 1 ) * $this->max_num_of_columns + $columns < $this->total_num_of_columns ) ? ' fusion-megamenu-border' : '';
+
 					$output = str_replace( '{row_number_' . $row . '}', $replacement, $output );
-
 					$output = str_replace( '{current_row_' . $row . '}', 'fusion-megamenu-columns-' . $columns . ' col-lg-' . $layout_columns . ' col-md-' . $layout_columns . ' col-sm-' . $layout_columns, $output );
-
 					$output = str_replace( '{fusion_columns}', 'fusion-columns-' . $columns . ' columns-per-row-' . $columns, $output );
 				}
 			} else {
 				$output .= '</ul>';
-			} // End if().
+			}
 		}
 
 		/**
@@ -309,41 +328,38 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				$item->menu_item_parent = '0';
 			}
 
-			if ( 'v7' === $header_layout ) {
-				if ( ! isset( $this->middle_logo_menu_break_point ) ) {
-
+			if ( ! $this->top_level_menu_items_count ) {
+				if ( 'v6' === $header_layout || 'v7' === $header_layout ) {
+					$menu_elements          = wp_get_nav_menu_items( $args->menu );
 					$is_search_icon_enabled = Avada()->settings->get( 'main_nav_search_icon' );
 					$is_cart_icon_enabled   = Avada()->settings->get( 'woocommerce_cart_link_main_nav' );
 
-					$middle_logo_menu_elements           = wp_get_nav_menu_items( $args->menu );
-					$middle_logo_menu_top_level_elements = 0;
-
-					foreach ( $middle_logo_menu_elements as $menu_element ) {
+					foreach ( $menu_elements as $menu_element ) {
 						if ( null === $menu_element->menu_item_parent ) {
 							$menu_element->menu_item_parent = '0';
 						}
 
 						if ( '0' === $menu_element->menu_item_parent ) {
-							$middle_logo_menu_top_level_elements++;
+							$this->top_level_menu_items_count++;
 						}
 					}
 
-					if ( $is_search_icon_enabled ) {
-						$middle_logo_menu_top_level_elements++;
-					}
+					if ( 'v7' === $header_layout ) {
+						if ( $is_search_icon_enabled ) {
+							$this->top_level_menu_items_count++;
+						}
 
-					if ( $is_cart_icon_enabled ) {
-						$middle_logo_menu_top_level_elements++;
-					}
+						if ( $is_cart_icon_enabled ) {
+							$this->top_level_menu_items_count++;
+						}
 
-					$top_level_menu_items_count = $middle_logo_menu_top_level_elements;
-
-					if ( 0 === $top_level_menu_items_count ) {
-						$this->middle_logo_menu_break_point = $middle_logo_menu_top_level_elements / 2;
-					} else {
-						$this->middle_logo_menu_break_point = ceil( $middle_logo_menu_top_level_elements / 2 );
-						if ( $is_search_icon_enabled || $is_cart_icon_enabled ) {
-							$this->middle_logo_menu_break_point = floor( $middle_logo_menu_top_level_elements / 2 );
+						if ( 0 === $this->top_level_menu_items_count ) {
+							$this->middle_logo_menu_break_point = $this->top_level_menu_items_count / 2;
+						} else {
+							$this->middle_logo_menu_break_point = ceil( $this->top_level_menu_items_count / 2 );
+							if ( $is_search_icon_enabled || $is_cart_icon_enabled ) {
+								$this->middle_logo_menu_break_point = floor( $this->top_level_menu_items_count / 2 );
+							}
 						}
 					}
 				}
@@ -353,19 +369,24 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 			$meta_data  = get_post_meta( $item->ID );
 			$avada_meta = ! empty( $meta_data['_menu_item_fusion_megamenu'][0] ) ? maybe_unserialize( $meta_data['_menu_item_fusion_megamenu'][0] ) : array();
 
-			$this->menu_style               = isset( $avada_meta['style'] ) ? $avada_meta['style'] : '';
-			$this->menu_megamenu_icon       = isset( $avada_meta['icon'] ) ? $avada_meta['icon'] : '';
-			$this->menu_megamenu_modal      = isset( $avada_meta['modal'] ) ? $avada_meta['modal'] : '';
-			$this->menu_title_only          = isset( $avada_meta['icononly'] ) ? $avada_meta['icononly'] : '';
+			$this->menu_style          = isset( $avada_meta['style'] ) ? $avada_meta['style'] : '';
+			$this->menu_megamenu_icon  = isset( $avada_meta['icon'] ) ? $avada_meta['icon'] : '';
+			$this->menu_megamenu_modal = isset( $avada_meta['modal'] ) ? $avada_meta['modal'] : '';
+			$this->menu_title_only     = isset( $avada_meta['icononly'] ) ? $avada_meta['icononly'] : '';
 
-			$this->fusion_highlight_label               = isset( $avada_meta['highlight_label'] ) ? $avada_meta['highlight_label'] : '';
-			$this->fusion_highlight_label_background    = isset( $avada_meta['highlight_label_background'] ) ? $avada_meta['highlight_label_background'] : '';
-			$this->fusion_highlight_label_color         = isset( $avada_meta['highlight_label_color'] ) ? $avada_meta['highlight_label_color'] : '';
-			$this->fusion_highlight_label_border_color  = isset( $avada_meta['highlight_label_border_color'] ) ? $avada_meta['highlight_label_border_color'] : '';
+			$this->fusion_highlight_label              = isset( $avada_meta['highlight_label'] ) ? $avada_meta['highlight_label'] : '';
+			$this->fusion_highlight_label_background   = isset( $avada_meta['highlight_label_background'] ) ? $avada_meta['highlight_label_background'] : '';
+			$this->fusion_highlight_label_color        = isset( $avada_meta['highlight_label_color'] ) ? $avada_meta['highlight_label_color'] : '';
+			$this->fusion_highlight_label_border_color = isset( $avada_meta['highlight_label_border_color'] ) ? $avada_meta['highlight_label_border_color'] : '';
+
+			// Add the bg image markup for flyout menu items.
+			if ( 0 === $depth && 'v6' === $header_layout && isset( $avada_meta['background_image'] ) && '' !== $avada_meta['background_image'] ) {
+				$this->flyout_menu_bg_markup .= '<div id="item-bg-' . $item->ID . '" class="fusion-flyout-menu-item-bg" style="background-image:url(' . $avada_meta['background_image'] . ');"></div>';
+			}
 
 			if ( ! empty( $item->fusion_highlight_label ) ) {
 
-				$highlight_style  = '';
+				$highlight_style = '';
 
 				if ( ! empty( $item->fusion_highlight_label_background ) ) {
 					$highlight_style .= 'background-color:' . $item->fusion_highlight_label_background . ';';
@@ -391,27 +412,30 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 					if ( 'auto' !== $allowed_columns ) {
 						$this->max_num_of_columns = $allowed_columns;
 					}
-					$this->num_of_columns                                      = 0;
-					$this->total_num_of_columns                                = 0;
-					$this->num_of_rows                                         = 1;
-					$this->menu_megamenu_rowwidth_matrix                       = array();
+					$this->num_of_columns                = 0;
+					$this->total_num_of_columns          = 0;
+					$this->num_of_rows                   = 1;
+					$this->menu_megamenu_rowwidth_matrix = array();
+
 					$this->menu_megamenu_rowwidth_matrix[ $this->num_of_rows ] = 0;
 
-					$this->menu_megamenu_background_image  = isset( $avada_meta['background_image'] ) ? $avada_meta['background_image'] : '';
+					$this->menu_megamenu_background_image = isset( $avada_meta['background_image'] ) ? $avada_meta['background_image'] : '';
 				} elseif ( 1 === $depth ) {
-					$megamenu_column_background_image  = isset( $avada_meta['background_image'] ) ? $avada_meta['background_image'] : '';
+					$megamenu_column_background_image = isset( $avada_meta['background_image'] ) ? $avada_meta['background_image'] : '';
 				}
 
 				$this->menu_megamenu_title      = isset( $avada_meta['title'] ) ? $avada_meta['title'] : '';
 				$this->menu_megamenu_widgetarea = isset( $avada_meta['widgetarea'] ) ? $avada_meta['widgetarea'] : '';
 
 				if ( ! empty( $avada_meta['thumbnail'] ) ) {
-					$thumbnail_data = Avada()->images->get_attachment_data_from_url( $avada_meta['thumbnail'] );
+					$thumbnail_id = isset( $avada_meta['thumbnail_id'] ) ? $avada_meta['thumbnail_id'] : 0;
+
+					$thumbnail_data = Avada()->images->get_attachment_data_by_helper( $thumbnail_id, $avada_meta['thumbnail'] );
 
 					if ( $thumbnail_data ) {
-						$this->menu_megamenu_thumbnail  = '<img src="' . $thumbnail_data['url'] . '" alt="' . $thumbnail_data['alt'] . '" title="' . $thumbnail_data['title'] . '">';
+						$this->menu_megamenu_thumbnail = '<img src="' . $thumbnail_data['url'] . '" alt="' . $thumbnail_data['alt'] . '" title="' . $thumbnail_data['title'] . '">';
 					} else {
-						$this->menu_megamenu_thumbnail  = '<img src="' . $avada_meta['thumbnail'] . '">';
+						$this->menu_megamenu_thumbnail = '<img src="' . $avada_meta['thumbnail'] . '">';
 					}
 				} else {
 					$this->menu_megamenu_thumbnail = '';
@@ -431,7 +455,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 					$this->menu_megamenu_columnwidth = '16.6666%';
 					if ( 'fullwidth' === $this->menu_megamenu_width && $this->max_num_of_columns ) {
 						$this->menu_megamenu_columnwidth = 100 / $this->max_num_of_columns . '%';
-					} elseif ( '1' == $this->max_num_of_columns ) {
+					} elseif ( '1' == $this->max_num_of_columns ) { // WPCS: loose comparison ok.
 						$this->menu_megamenu_columnwidth = '100%';
 					}
 				}
@@ -490,7 +514,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 						$title_enhance = '<span class="fusion-megamenu-bullet"></span>';
 					}
 
-					$heading = $link . $title_enhance . $title . $menu_highlight_label . $link_closing;
+					$heading         = $link . $title_enhance . $title . $menu_highlight_label . $link_closing;
 					$menu_icon_right = ( ( ! $is_rtl && 'right' === $menu_icon_position ) || ( $is_rtl && 'left' === $menu_icon_position ) );
 					// If we have an icon or thumbnail and the position is not left, then change order.
 					if ( 0 === $depth && ( ! empty( $this->menu_megamenu_icon ) || ! empty( $this->menu_megamenu_thumbnail ) ) && $menu_icon_right ) {
@@ -501,7 +525,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 					} else {
 						$item_output .= $heading;
 					}
-				} // End if().
+				}
 
 				if ( $this->menu_megamenu_widgetarea && is_active_sidebar( $this->menu_megamenu_widgetarea ) ) {
 					ob_start();
@@ -520,12 +544,13 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				}
 			} else {
 
-				$atts = array();
-				$atts['title']  = ! empty( $item->attr_title ) ? esc_attr( $item->attr_title ) : '';
-				$atts['target'] = ! empty( $item->target ) ? esc_attr( $item->target ) : '';
-				$atts['rel']    = ! empty( $item->xfn ) ? esc_attr( $item->xfn ) : '';
-				$atts['href']   = ! empty( $item->url ) ? esc_attr( $item->url ) : '';
-				$atts['class']  = array();
+				$atts = array(
+					'title'  => ! empty( $item->attr_title ) ? esc_attr( $item->attr_title ) : '',
+					'target' => ! empty( $item->target ) ? esc_attr( $item->target ) : '',
+					'rel'    => ! empty( $item->xfn ) ? esc_attr( $item->xfn ) : '',
+					'href'   => ! empty( $item->url ) ? esc_attr( $item->url ) : '',
+					'class'  => array(),
+				);
 
 				if ( 'v7' === $header_layout && '0' === $item->menu_item_parent ) {
 					$atts['class'][] = 'fusion-top-level-link';
@@ -558,12 +583,14 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				}
 
 				$atts['class'] = implode( ' ', $atts['class'] );
+				$atts['role']  = 'menuitem';
+
 				$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
 
 				$attributes = '';
 				foreach ( $atts as $attr => $value ) {
 					if ( ! empty( $value ) ) {
-						$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+						$value       = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
 						$attributes .= ' ' . $attr . '="' . $value . '"';
 					}
 				}
@@ -630,7 +657,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 					$title = '<span class="fusion-button-text-left">' . $title . '</span>';
 				} elseif ( false !== strpos( $icon, 'button-icon-divider-right' ) ) {
 					$title = '<span class="fusion-button-text-right">' . $title . '</span>';
-				} else if ( 'icononly' === $this->menu_title_only && 0 === $depth ) {
+				} elseif ( 'icononly' === $this->menu_title_only && 0 === $depth ) {
 					$title = '<span class="menu-title">' . $title . '</span>';
 				}
 
@@ -644,9 +671,8 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				$opening_span = ( $classes ) ? '<span class="' . $classes . '">' : '<span>';
 
 				// If we have an icon or thumbnail and the position is not left, then change order.
-				if ( ( ! empty( $this->menu_megamenu_icon ) || ! empty( $this->menu_megamenu_thumbnail ) ) &&
-					 ( $menu_icon_right || 'bottom' === $menu_icon_position )
-					 && ! $this->menu_style && 0 === $depth ) {
+				if (
+					( ! empty( $this->menu_megamenu_icon ) || ! empty( $this->menu_megamenu_thumbnail ) ) && ( $menu_icon_right || 'bottom' === $menu_icon_position ) && ! $this->menu_style && 0 === $depth ) {
 					$item_output = $item_output . $opening_span . $title . '</span>' . $icon;
 				} elseif ( $this->menu_style || 0 !== $depth ) {
 					$item_output = $item_output . $opening_span . $icon . $title . '</span>';
@@ -661,21 +687,21 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 
 				$item_output .= '</a>' . $args->after;
 
-			} // End if().
+			}
 
 			// Check if we need to apply a divider.
-			if ( 'enabled' !== $this->menu_megamenu_status && ( ( 0 == strcasecmp( $item->attr_title, 'divider' ) ) || ( 0 == strcasecmp( $item->title, 'divider' ) ) ) ) {
+			if ( 'enabled' !== $this->menu_megamenu_status && ( ( 0 === strcasecmp( $item->attr_title, 'divider' ) ) || ( 0 === strcasecmp( $item->title, 'divider' ) ) ) ) {
 
 				$output .= '<li role="presentation" class="divider">';
 
 			} else {
 
-				$class_names  = '';
-				$column_width = '';
-				$style        = '';
+				$class_names       = '';
+				$column_width      = '';
+				$style             = '';
 				$custom_class_data = '';
-				$classes      = empty( $item->classes ) ? array() : (array) $item->classes;
-				$classes[]    = 'menu-item-' . $item->ID;
+				$classes           = empty( $item->classes ) ? array() : (array) $item->classes;
+				$classes[]         = 'menu-item-' . $item->ID;
 
 				$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
 
@@ -721,9 +747,11 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				$id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args );
 				$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
 
-				$output .= '<li role="menuitem" ' . $id . ' ' . $class_names . ' ' . $column_width . $custom_class_data . $style . ' >';
+				$data_id = ( 0 === $depth ) ? ' data-item-id="' . $item->ID . '"' : '';
+
+				$output .= '<li ' . $id . ' ' . $class_names . ' ' . $column_width . $custom_class_data . $style . $data_id . '>';
 				$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
-			} // End if().
+			}
 		}
 
 		/**
@@ -747,7 +775,12 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				$this->no_of_top_level_items_displayed++;
 			}
 
-			if ( 'v7' === Avada()->settings->get( 'header_layout' ) && ( '' !== Avada()->settings->get( 'logo', 'url' ) || '' !== Avada()->settings->get( 'logo_retina', 'url' ) ) && 'Top' === Avada()->settings->get( 'header_position' ) && $this->middle_logo_menu_break_point == $this->no_of_top_level_items_displayed && '0' === $item->menu_item_parent ) {
+			// Add the bg image markup for flyout menu items.
+			if ( 0 === $depth && 'v6' === Avada()->settings->get( 'header_layout' ) && $this->top_level_menu_items_count === $this->no_of_top_level_items_displayed ) {
+				$output .= '<li class="fusion-flyout-menu-backgrounds">' . $this->flyout_menu_bg_markup . '</li>';
+			}
+
+			if ( 'v7' === Avada()->settings->get( 'header_layout' ) && ( '' !== Avada()->settings->get( 'logo', 'url' ) || '' !== Avada()->settings->get( 'logo_retina', 'url' ) ) && 'Top' === Avada()->settings->get( 'header_position' ) && $this->middle_logo_menu_break_point == $this->no_of_top_level_items_displayed && '0' === $item->menu_item_parent ) { // WPCS: loose comparison ok.
 				ob_start();
 				get_template_part( 'templates/logo' );
 				$output .= ob_get_clean();
@@ -805,6 +838,6 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 			}
 		}
 	}
-} // End if().
+}
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

@@ -53,7 +53,8 @@ class Avada_Gravity_Forms_Tags_Merger {
 		}
 
 		$this->_args = wp_parse_args(
-			$args, array(
+			$args,
+			array(
 				'auto_append_eid' => true, // Boolean or array of form IDs.
 				'encrypt_eid'     => true,
 			)
@@ -219,7 +220,8 @@ class Avada_Gravity_Forms_Tags_Merger {
 			$redirect_url             = add_query_arg(
 				array(
 					'eid' => $eid,
-				), $url
+				),
+				$url
 			);
 			$confirmation             = str_replace( $url, $redirect_url, $confirmation );
 
@@ -227,7 +229,8 @@ class Avada_Gravity_Forms_Tags_Merger {
 			$redirect_url             = add_query_arg(
 				array(
 					'eid' => $eid,
-				), $confirmation['redirect']
+				),
+				$confirmation['redirect']
 			);
 			$confirmation['redirect'] = $redirect_url;
 		}

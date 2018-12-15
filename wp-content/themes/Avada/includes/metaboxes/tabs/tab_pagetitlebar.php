@@ -172,6 +172,16 @@ $this->color(
 	Avada()->settings->get( 'page_title_color' )
 );
 
+$this->color(
+	'page_title_subheader_font_color',
+	esc_attr__( 'Page Title Subheader Font Color', 'Avada' ),
+	/* translators: Additional description (defaults). */
+	sprintf( esc_html__( 'Controls the text color of the page title subheader. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_subheader_color' ) ),
+	true,
+	$page_title_text_dependency,
+	Avada()->settings->get( 'page_title_subheader_color' )
+);
+
 $this->radio_buttonset(
 	'page_title_100_width',
 	esc_html__( '100% Page Title Width', 'Avada' ),

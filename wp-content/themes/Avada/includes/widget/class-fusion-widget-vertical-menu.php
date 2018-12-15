@@ -28,12 +28,12 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 
 		$widget_ops  = array(
 			'classname'   => 'avada_vertical_menu',
-			'description' => 'This widget replaces the Side Navigation Template.',
+			'description' => __( 'This widget replaces the Side Navigation Template.', 'Avada' ),
 		);
 		$control_ops = array(
 			'id_base' => 'avada-vertical-menu-widget',
 		);
-		parent::__construct( 'avada-vertical-menu-widget', 'Avada: Vertical Menu', $widget_ops, $control_ops );
+		parent::__construct( 'avada-vertical-menu-widget', __( 'Avada: Vertical Menu', 'Avada' ), $widget_ops, $control_ops );
 
 		$this->enqueue_script();
 
@@ -60,25 +60,25 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 		}
 
 		// Dynamic Styles.
-		$style   = '<style>';
-		$style   .= '#' . esc_attr( $this->id ) . ' ul.menu li a {';
-		$style   .= 'font-size:' . esc_attr( Fusion_Sanitize::size( $instance['font_size'] ) ) . ';';
-		$style   .= '}';
+		$style  = '<style>';
+		$style .= '#' . esc_attr( $this->id ) . ' ul.menu li a {';
+		$style .= 'font-size:' . esc_attr( Fusion_Sanitize::size( $instance['font_size'] ) ) . ';';
+		$style .= '}';
 
 		if ( '' !== $instance['border_color'] ) {
-			$style   .= '#' . esc_attr( $this->id ) . ' .menu {';
-			$style   .= 'border-right-color:' . esc_attr( Fusion_Sanitize::color( $instance['border_color'] ) ) . ' !important;';
-			$style   .= 'border-top-color:' . esc_attr( Fusion_Sanitize::color( $instance['border_color'] ) ) . ' !important;';
-			$style   .= '}';
-			$style   .= '#' . esc_attr( $this->id ) . ' .menu li a  {';
-			$style   .= 'border-bottom-color:' . esc_attr( Fusion_Sanitize::color( $instance['border_color'] ) ) . ' !important;';
-			$style   .= '}';
-			$style   .= '#' . esc_attr( $this->id ) . ' .right .menu  {';
-			$style   .= 'border-left-color:' . esc_attr( Fusion_Sanitize::color( $instance['border_color'] ) ) . ' !important;';
-			$style   .= '}';
+			$style .= '#' . esc_attr( $this->id ) . ' .menu {';
+			$style .= 'border-right-color:' . esc_attr( Fusion_Sanitize::color( $instance['border_color'] ) ) . ' !important;';
+			$style .= 'border-top-color:' . esc_attr( Fusion_Sanitize::color( $instance['border_color'] ) ) . ' !important;';
+			$style .= '}';
+			$style .= '#' . esc_attr( $this->id ) . ' .menu li a  {';
+			$style .= 'border-bottom-color:' . esc_attr( Fusion_Sanitize::color( $instance['border_color'] ) ) . ' !important;';
+			$style .= '}';
+			$style .= '#' . esc_attr( $this->id ) . ' .right .menu  {';
+			$style .= 'border-left-color:' . esc_attr( Fusion_Sanitize::color( $instance['border_color'] ) ) . ' !important;';
+			$style .= '}';
 		}
 
-		$style   .= '</style>';
+		$style .= '</style>';
 
 		echo $style; // WPCS: XSS ok.
 
@@ -96,11 +96,11 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 			}
 
 			$link_before = '<span class="arrow"></span><span class="link-text">';
-			$link_after = '</span>';
+			$link_after  = '</span>';
 
 			if ( ( 'left' === $instance['layout'] && ! is_rtl() ) || ( 'right' === $instance['layout'] && is_rtl() ) ) {
 				$link_before = '<span class="link-text">';
-				$link_after = '</span><span class="arrow"></span>';
+				$link_after  = '</span><span class="arrow"></span>';
 			}
 
 			$nav_menu_args = array(
@@ -114,11 +114,13 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 				'link_after'      => $link_after,
 			);
 
+			add_filter( 'nav_menu_item_title', array( $this, 'nav_menu_item_title' ), 10, 4 );
 			wp_nav_menu( $nav_menu_args );
+			remove_filter( 'nav_menu_item_title', array( $this, 'nav_menu_item_title' ) );
 
 		} elseif ( 'vertical_menu' === $nav_type ) {
 			// Get page.
-			$parent_page = ( ! empty( $instance['parent_page'] ) || '0' != $instance['parent_page'] ) ? $instance['parent_page'] : false;
+			$parent_page = ( ! empty( $instance['parent_page'] ) || '0' != $instance['parent_page'] ) ? $instance['parent_page'] : false; // WPCS: loose comparison ok.
 
 			if ( ! $parent_page ) {
 				echo $after_widget; // WPCS: XSS ok.
@@ -126,20 +128,20 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 				return;
 			}
 
-			$html     = '<nav class="fusion-vertical-menu-widget fusion-menu ' . $instance['behavior'] . ' ' . $instance['layout'] . ' ' . $widget_border_class . '" id="fusion-' . esc_attr( $this->id ) . '">';
-			$html    .= '<ul class="menu">';
-			$html    .= ( is_page( $parent_page ) ) ? '<li class="current_page_item">' : '<li>';
-			$html    .= '<a href="' . get_permalink( $parent_page ) . '" title="' . esc_html__( 'Back to Parent Page', 'Avada' ) . '">' . get_the_title( $parent_page ) . '</a></li>';
+			$html  = '<nav class="fusion-vertical-menu-widget fusion-menu ' . $instance['behavior'] . ' ' . $instance['layout'] . ' ' . $widget_border_class . '" id="fusion-' . esc_attr( $this->id ) . '">';
+			$html .= '<ul class="menu">';
+			$html .= ( is_page( $parent_page ) ) ? '<li class="current_page_item">' : '<li>';
+			$html .= '<a href="' . get_permalink( $parent_page ) . '" title="' . esc_html__( 'Back to Parent Page', 'Avada' ) . '">' . get_the_title( $parent_page ) . '</a></li>';
 
 			$link_before = '<span class="arrow"></span><span class="link-text">';
-			$link_after = '</span>';
+			$link_after  = '</span>';
 
 			if ( ( 'left' === $instance['layout'] && ! is_rtl() ) || ( 'right' === $instance['layout'] && is_rtl() ) ) {
 				$link_before = '<span class="link-text">';
-				$link_after = '</span><span class="arrow"></span>';
+				$link_after  = '</span><span class="arrow"></span>';
 			}
 
-			$html    .= wp_list_pages(
+			$html .= wp_list_pages(
 				array(
 					'title_li'    => '',
 					'child_of'    => $parent_page,
@@ -149,11 +151,11 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 				)
 			);
 
-			$html    .= '</ul></nav>';
+			$html .= '</ul></nav>';
 
 			echo $html; // WPCS: XSS ok.
 
-		} // End if().
+		}
 
 		echo $after_widget; // WPCS: XSS ok.
 
@@ -176,14 +178,14 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 
 		$instance = $old_instance;
 
-		$instance['title']         = isset( $new_instance['title'] ) ? $new_instance['title'] : '';
-		$instance['nav_type']      = isset( $new_instance['nav_type'] ) ? $new_instance['nav_type'] : '';
-		$instance['nav_menu']      = isset( $new_instance['nav_menu'] ) ? $new_instance['nav_menu'] : '';
-		$instance['parent_page']   = isset( $new_instance['parent_page'] ) ? $new_instance['parent_page'] : '';
-		$instance['behavior']      = isset( $new_instance['behavior'] ) ? $new_instance['behavior'] : '';
-		$instance['layout']        = isset( $new_instance['layout'] ) ? $new_instance['layout'] : '';
-		$instance['font_size']     = isset( $new_instance['font_size'] ) ? $new_instance['font_size'] : '';
-		$instance['border_color']  = isset( $new_instance['border_color'] ) ? $new_instance['border_color'] : '';
+		$instance['title']        = isset( $new_instance['title'] ) ? $new_instance['title'] : '';
+		$instance['nav_type']     = isset( $new_instance['nav_type'] ) ? $new_instance['nav_type'] : '';
+		$instance['nav_menu']     = isset( $new_instance['nav_menu'] ) ? $new_instance['nav_menu'] : '';
+		$instance['parent_page']  = isset( $new_instance['parent_page'] ) ? $new_instance['parent_page'] : '';
+		$instance['behavior']     = isset( $new_instance['behavior'] ) ? $new_instance['behavior'] : '';
+		$instance['layout']       = isset( $new_instance['layout'] ) ? $new_instance['layout'] : '';
+		$instance['font_size']    = isset( $new_instance['font_size'] ) ? $new_instance['font_size'] : '';
+		$instance['border_color'] = isset( $new_instance['border_color'] ) ? $new_instance['border_color'] : '';
 
 		return $instance;
 
@@ -223,7 +225,7 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 	 * @return bool whether got parent or not.
 	 */
 	public function exclude_parents( $element ) {
-		 return isset( $element->post_parent ) && 0 !== $element->post_parent;
+		return isset( $element->post_parent ) && 0 !== $element->post_parent;
 	}
 
 	/**
@@ -258,14 +260,14 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 	public function form( $instance ) {
 
 		$defaults = array(
-			'title'         => '',
-			'nav_type'      => 'custom',
-			'nav_menu'      => '',
-			'parent_page'   => '',
-			'behavior'      => 'hover',
-			'layout'        => 'left',
-			'font_size'     => '14px',
-			'border_color'  => '',
+			'title'        => '',
+			'nav_type'     => 'custom',
+			'nav_menu'     => '',
+			'parent_page'  => '',
+			'behavior'     => 'hover',
+			'layout'       => 'left',
+			'font_size'    => '14px',
+			'border_color' => '',
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 
@@ -286,8 +288,8 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 		<p class="fusion-vetical-menu-widget-selection">
 			<label for="<?php echo esc_attr( $this->get_field_id( 'nav_type' ) ); ?>"><?php esc_attr_e( 'Menu Type:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'nav_type' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'nav_type' ) ); ?>" class="widefat" style="width:100%;" onchange="setFusionVerticalMenuWidgetDependencies('<?php echo esc_attr( $this->get_field_id( 'nav_type' ) ); ?>')">
-				<option value="custom_menu" <?php echo ( 'custom_menu' == $instance['nav_type'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Custom Menu', 'Avada' ); ?></option>
-				<option value="vertical_menu" <?php echo ( 'vertical_menu' == $instance['nav_type'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Vertical Menu', 'Avada' ); ?></option>
+				<option value="custom_menu" <?php echo ( 'custom_menu' === $instance['nav_type'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Custom Menu', 'Avada' ); ?></option>
+				<option value="vertical_menu" <?php echo ( 'vertical_menu' === $instance['nav_type'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Vertical Menu', 'Avada' ); ?></option>
 			</select>
 			<small><?php echo esc_attr_e( 'Choose if a custom menu or the classic side navigation (vertical menu option) should be displayed.', 'Avada' ); ?></small>
 		</p>
@@ -320,16 +322,16 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 		<p class="fusion-vetical-menu-behavior-selection">
 			<label for="<?php echo esc_attr( $this->get_field_id( 'behavior' ) ); ?>"><?php esc_attr_e( 'Behavior:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'behavior' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'behavior' ) ); ?>" class="widefat" style="width:100%;">
-				<option value="hover" <?php echo ( 'hover' == $instance['behavior'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Hover', 'Avada' ); ?></option>
-				<option value="click" <?php echo ( 'click' == $instance['behavior'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Click', 'Avada' ); ?></option>
+				<option value="hover" <?php echo ( 'hover' === $instance['behavior'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Hover', 'Avada' ); ?></option>
+				<option value="click" <?php echo ( 'click' === $instance['behavior'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Click', 'Avada' ); ?></option>
 			</select>
 		</p>
 
 		<p class="fusion-vetical-menu-widget-layout">
 			<label for="<?php echo esc_attr( $this->get_field_id( 'layout' ) ); ?>"><?php esc_attr_e( 'Layout:', 'Avada' ); ?></label>
 			<select id="<?php echo esc_attr( $this->get_field_id( 'layout' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'layout' ) ); ?>" class="widefat" style="width:100%;">
-				<option value="left" <?php echo ( 'left' == $instance['layout'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Left', 'Avada' ); ?></option>
-				<option value="right" <?php echo ( 'right' == $instance['layout'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Right', 'Avada' ); ?></option>
+				<option value="left" <?php echo ( 'left' === $instance['layout'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Left', 'Avada' ); ?></option>
+				<option value="right" <?php echo ( 'right' === $instance['layout'] ) ? 'selected="selected"' : ''; ?>><?php esc_attr_e( 'Right', 'Avada' ); ?></option>
 			</select>
 		</p>
 
@@ -363,6 +365,34 @@ class Fusion_Widget_Vertical_Menu extends WP_Widget {
 		</script>
 		<?php
 
+	}
+
+	/**
+	 * Filters a menu item's title.
+	 *
+	 * @access public
+	 * @since 5.7
+	 * @param string   $title The menu item's title.
+	 * @param WP_Post  $item  The current menu item.
+	 * @param stdClass $args  An object of wp_nav_menu() arguments.
+	 * @param int      $depth Depth of menu item. Used for padding.
+	 */
+	public function nav_menu_item_title( $title, $item, $args, $depth ) {
+
+		// Make sure the filter only gets added to the vertical-menu widget and not all menus.
+		$args_array = (array) $args;
+		if ( isset( $args_array['container_class'] ) && false === strpos( $args_array['container_class'], 'fusion-vertical-menu-widget' ) ) {
+			return $title;
+		}
+
+		// Determine if item has an icon.
+		$has_icon = ( isset( $item->fusion_megamenu_icon ) && ! empty( $item->fusion_megamenu_icon ) );
+
+		// Build the icon's markup.
+		$icon = ( $has_icon ) ? '<span class="' . esc_attr( $item->fusion_megamenu_icon ) . '"></span>' : '';
+
+		// In RTL languages append the icon, otherwise append it.
+		return ( is_rtl() ) ? $title . ' ' . $icon : $icon . ' ' . $title;
 	}
 }
 

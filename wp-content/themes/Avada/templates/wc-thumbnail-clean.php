@@ -20,7 +20,7 @@ if ( $woocommerce->cart && $woocommerce->cart->get_cart() && is_array( $woocomme
 	}
 }
 
-$id             = get_the_ID();
+$id             = get_the_ID(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 $in_cart        = in_array( $id, $items_in_cart );
 $size           = 'shop_catalog';
 $post_permalink = get_permalink();

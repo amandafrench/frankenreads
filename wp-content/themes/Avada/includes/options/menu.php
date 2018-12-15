@@ -411,7 +411,7 @@ function avada_options_section_menu( $sections ) {
 					),
 					'main_nav_highlight_radius' => array(
 						'label'       => esc_html__( 'Menu Highlight Label Radius', 'Avada' ),
-						'description' => esc_html__( 'Controls the border radius of all your menu highlight labels. Enter value including any valid CSS unit, ex: 0px.', 'Avada' ),
+						'description' => esc_html__( 'Controls the border radius of all your menu highlight labels.', 'Avada' ),
 						'id'          => 'main_nav_highlight_radius',
 						'default'     => '0px',
 						'type'        => 'dimension',
@@ -524,8 +524,8 @@ function avada_options_section_menu( $sections ) {
 						),
 					),
 					'menu_hover_first_color' => array(
-						'label'       => esc_html__( 'Main Menu Font Hover Color', 'Avada' ),
-						'description' => esc_html__( 'Controls the color for main menu text hover, highlight bar and dropdown border.', 'Avada' ),
+						'label'       => esc_html__( 'Main Menu Font Hover/Active Color', 'Avada' ),
+						'description' => esc_html__( 'Controls the color for main menu text hover and active states, highlight bar and dropdown border.', 'Avada' ),
 						'id'          => 'menu_hover_first_color',
 						'default'     => '#a0ce4e',
 						'type'        => 'color-alpha',
@@ -1469,12 +1469,40 @@ function avada_options_section_menu( $sections ) {
 							),
 						),
 					),
+					'mobile_menu_submenu_indicator' => array(
+						'label'       => esc_html__( 'Mobile Menu Sub-Menu Indicator', 'Avada' ),
+						'description' => esc_html__( 'Turn on to display the mobile menu sub-menu indicator: "-".', 'Avada' ),
+						'id'          => 'mobile_menu_submenu_indicator',
+						'default'     => '1',
+						'type'        => 'switch',
+						'required'    => array(
+							array(
+								'setting'  => 'responsive',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
 					'mobile_header_bg_color' => array(
 						'label'       => esc_html__( 'Mobile Header Background Color', 'Avada' ),
 						'description' => esc_html__( 'Controls the background color of the header on mobile devices.', 'Avada' ),
 						'id'          => 'mobile_header_bg_color',
 						'default'     => '#ffffff',
 						'type'        => 'color-alpha',
+						'required'    => array(
+							array(
+								'setting'  => 'responsive',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
+					'mobile_archive_header_bg_color' => array(
+						'label'       => esc_html__( 'Mobile Archive Header Background Color', 'Avada' ),
+						'description' => esc_html__( 'Controls the background color of the archive page header on mobile devices.', 'Avada' ),
+						'id'          => 'mobile_archive_header_bg_color',
+						'type'        => 'color-alpha',
+						'default'     => '#ffffff',
 						'required'    => array(
 							array(
 								'setting'  => 'responsive',

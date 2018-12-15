@@ -238,38 +238,80 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 			?>
 			<div class="fusion-builder-option field-megamenu-status">
 				<div class="option-details">
-					<h3><?php esc_attr_e( 'Fusion Mega Menu', 'Avada' ); ?></h3>
-					<p class="description"><?php esc_attr_e( 'Turn on to enable the mega menu.  Note this will only work for the main menu.', 'Avada' ); ?></p>
+					<h3><?php esc_html_e( 'Fusion Mega Menu', 'Avada' ); ?></h3>
+					<p class="description"><?php esc_html_e( 'Turn on to enable the mega menu.  Note this will only work for the main menu.', 'Avada' ); ?></p>
 				</div>
 				<div class="option-field fusion-builder-option-container">
 					<div class="fusion-form-radio-button-set ui-buttonset edit-menu-item-megamenu-status">
 						<input type="hidden" id="edit-menu-item-megamenu-status-<?php echo esc_attr( $item_id ); ?>" name="menu-item-fusion-megamenu-status[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_megamenu_status ); ?>" class="button-set-value" />
-						<a href="#" class="ui-button buttonset-item<?php echo ( 'enabled' === $item->fusion_megamenu_status ) ? ' ui-state-active' : ''; ?>" data-value="enabled"><?php esc_attr_e( 'On', 'Avada' ); ?></a>
-						<a href="#" class="ui-button buttonset-item<?php echo ( 'enabled' !== $item->fusion_megamenu_status ) ? ' ui-state-active' : ''; ?>" data-value="off"><?php esc_attr_e( 'Off', 'Avada' ); ?></a>
+						<a href="#" class="ui-button buttonset-item<?php echo ( 'enabled' === $item->fusion_megamenu_status ) ? ' ui-state-active' : ''; ?>" data-value="enabled"><?php esc_html_e( 'On', 'Avada' ); ?></a>
+						<a href="#" class="ui-button buttonset-item<?php echo ( 'enabled' !== $item->fusion_megamenu_status ) ? ' ui-state-active' : ''; ?>" data-value="off"><?php esc_html_e( 'Off', 'Avada' ); ?></a>
+					</div>
+				</div>
+			</div>
+			<div class="fusion-builder-option field-megamenu-background-image">
+				<div class="option-details">
+					<h3><?php esc_html_e( 'Mega Menu / Flyout Menu Background Image', 'Avada' ); ?></h3>
+					<p class="description"><?php _e( 'Select an image for the mega menu or flyout menu background.<br /><strong>Mega Menu:</strong> In case of mega menu, if left empty, the Main Menu Dropdown Background Color will be used. Each mega menu column can have its own background image, or you can have one image that spreads across the entire mega menu width.<br /><strong>Flyout Menu:</strong> When used in the flyout menu, the image will be shown full screen when hovering the corresponding menu item.', 'Avada' ); // WPCS: XSS ok. ?></p>
+				</div>
+				<div class="option-field fusion-builder-option-container">
+					<div class="fusion-upload-image<?php echo ( isset( $item->fusion_megamenu_background_image ) && '' !== $item->fusion_megamenu_background_image ) ? ' fusion-image-set' : ''; ?>">
+						<input type="hidden" id="edit-menu-item-megamenu-background-image-<?php echo esc_attr( $item_id ); ?>" class="regular-text fusion-builder-upload-field" name="menu-item-fusion-megamenu-background-image[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_megamenu_background_image ); ?>" />
+						<div class="fusion-builder-upload-preview">
+							<img src="<?php echo esc_url( $item->fusion_megamenu_background_image ); ?>" id="fusion-media-img-background-image-<?php echo esc_attr( $item_id ); ?>" class="fusion-megamenu-background-image" style="<?php echo ( trim( $item->fusion_megamenu_background_image ) ) ? 'display:inline;' : ''; ?>" />
+						</div>
+						<input type='button' data-id="background-image-<?php echo esc_attr( $item_id ); ?>" class='button-upload fusion-builder-upload-button avada-edit-button' data-type="image" value="<?php esc_attr_e( 'Edit', 'Avada' ); ?>" />
+						<input type="button" data-id="background-image-<?php echo esc_attr( $item_id ); ?>" class="upload-image-remove avada-remove-button" value="<?php esc_attr_e( 'Remove', 'Avada' ); ?>"  />
+						<input type='button' data-id="background-image-<?php echo esc_attr( $item_id ); ?>" class='button-upload fusion-builder-upload-button avada-upload-button' data-type="image" value="<?php esc_attr_e( 'Upload Image', 'Avada' ); ?>" />
+					</div>
+				</div>
+			</div>
+			<div class="fusion-builder-option field-megamenu-thumbnail">
+				<div class="option-details">
+					<h3><?php esc_html_e( 'Mega Menu Thumbnail', 'Avada' ); ?></h3>
+					<p class="description"><?php esc_html_e( 'Select an image to use as a thumbnail for the menu item. The size of the thumbnail can be controlled in Theme Options > Menu > Main Menu Icons.', 'Avada' ); ?></p>
+				</div>
+				<div class="option-field fusion-builder-option-container">
+					<div class="fusion-upload-image<?php echo ( isset( $item->fusion_megamenu_thumbnail ) && '' !== $item->fusion_megamenu_thumbnail ) ? ' fusion-image-set' : ''; ?>">
+						<input type="hidden" id="edit-menu-item-megamenu-thumbnail-<?php echo esc_attr( $item_id ); ?>" class="regular-text fusion-builder-upload-field" name="menu-item-fusion-megamenu-thumbnail[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_megamenu_thumbnail ); ?>" />
+						<?php
+						$thumbnail_id = isset( $item->fusion_megamenu_thumbnail ) ? $item->fusion_megamenu_thumbnail_id : 0;
+
+						if ( ! $thumbnail_id && isset( $item->fusion_megamenu_thumbnail ) && '' !== $item->fusion_megamenu_thumbnail ) {
+							$thumbnail_id = Fusion_Images::get_attachment_id_from_url( $item->fusion_megamenu_thumbnail );
+						}
+						?>
+						<input type="hidden" id="edit-menu-item-megamenu-thumbnail-id-<?php echo esc_attr( $item_id ); ?>" class="regular-text fusion-builder-upload-field" name="menu-item-fusion-megamenu-thumbnail-id[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $thumbnail_id ); ?>" />
+						<div class="fusion-builder-upload-preview">
+							<img src="<?php echo esc_url( $item->fusion_megamenu_thumbnail ); ?>" id="fusion-media-img-thumbnail-<?php echo esc_attr( $item_id ); ?>" class="fusion-megamenu-thumbnail-image" style="<?php echo ( trim( $item->fusion_megamenu_thumbnail ) ) ? 'display:inline;' : ''; ?>" />
+						</div>
+						<input type='button' data-id="thumbnail-<?php echo esc_attr( $item_id ); ?>" class='button-upload fusion-builder-upload-button avada-edit-button' data-type="image" value="<?php esc_attr_e( 'Edit', 'Avada' ); ?>" />
+						<input type="button" data-id="thumbnail-<?php echo esc_attr( $item_id ); ?>" class="upload-image-remove avada-remove-button" value="<?php esc_attr_e( 'Remove', 'Avada' ); ?>"  />
+						<input type='button' data-id="thumbnail-<?php echo esc_attr( $item_id ); ?>" class='button-upload fusion-builder-upload-button avada-upload-button' data-type="image" value="<?php esc_attr_e( 'Upload Image', 'Avada' ); ?>" />
 					</div>
 				</div>
 			</div>
 			<div class="fusion-builder-option field-megamenu-width">
 				<div class="option-details">
-					<h3><?php esc_attr_e( 'Full Width Mega Menu', 'Avada' ); ?></h3>
-					<p class="description"><?php esc_attr_e( 'Turn on to have the mega menu full width, which is taken from the site width option in theme options. Note this overrides the column width option.', 'Avada' ); ?></p>
+					<h3><?php esc_html_e( 'Full Width Mega Menu', 'Avada' ); ?></h3>
+					<p class="description"><?php esc_html_e( 'Turn on to have the mega menu full width, which is taken from the site width option in theme options. Note this overrides the column width option.', 'Avada' ); ?></p>
 				</div>
 				<div class="option-field fusion-builder-option-container">
 					<div class="fusion-form-radio-button-set ui-buttonset edit-menu-item-megamenu-width">
 						<input type="hidden" id="edit-menu-item-megamenu-width-<?php echo esc_attr( $item_id ); ?>" name="menu-item-fusion-megamenu-width[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_megamenu_width ); ?>" class="button-set-value" />
-						<a href="#" class="ui-button buttonset-item<?php echo ( 'fullwidth' === $item->fusion_megamenu_width ) ? ' ui-state-active' : ''; ?>" data-value="fullwidth"><?php esc_attr_e( 'On', 'Avada' ); ?></a>
-						<a href="#" class="ui-button buttonset-item<?php echo ( 'fullwidth' !== $item->fusion_megamenu_width ) ? ' ui-state-active' : ''; ?>" data-value="off"><?php esc_attr_e( 'Off', 'Avada' ); ?></a>
+						<a href="#" class="ui-button buttonset-item<?php echo ( 'fullwidth' === $item->fusion_megamenu_width ) ? ' ui-state-active' : ''; ?>" data-value="fullwidth"><?php esc_html_e( 'On', 'Avada' ); ?></a>
+						<a href="#" class="ui-button buttonset-item<?php echo ( 'fullwidth' !== $item->fusion_megamenu_width ) ? ' ui-state-active' : ''; ?>" data-value="off"><?php esc_html_e( 'Off', 'Avada' ); ?></a>
 					</div>
 				</div>
 			</div>
 			<div class="fusion-builder-option field-megamenu-columns">
 				<div class="option-details">
-					<h3><?php esc_attr_e( 'Mega Menu Number of Columns', 'Avada' ); ?></h3>
-					<p class="description"><?php esc_attr_e( 'Select the number of columns you want to use.', 'Avada' ); ?></p>
+					<h3><?php esc_html_e( 'Mega Menu Number of Columns', 'Avada' ); ?></h3>
+					<p class="description"><?php esc_html_e( 'Select the number of columns you want to use.', 'Avada' ); ?></p>
 				</div>
 				<div class="option-field fusion-builder-option-container">
 					<select id="edit-menu-item-megamenu-columns-<?php echo esc_attr( $item_id ); ?>" class="widefat code edit-menu-item-megamenu-columns" name="menu-item-fusion-megamenu-columns[<?php echo esc_attr( $item_id ); ?>]">
-						<option value="auto" <?php selected( $item->fusion_megamenu_columns, 'auto' ); ?>><?php esc_attr_e( 'Auto', 'Avada' ); ?></option>
+						<option value="auto" <?php selected( $item->fusion_megamenu_columns, 'auto' ); ?>><?php esc_html_e( 'Auto', 'Avada' ); ?></option>
 						<option value="1" <?php selected( $item->fusion_megamenu_columns, '1' ); ?>>1</option>
 						<option value="2" <?php selected( $item->fusion_megamenu_columns, '2' ); ?>>2</option>
 						<option value="3" <?php selected( $item->fusion_megamenu_columns, '3' ); ?>>3</option>
@@ -281,8 +323,8 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 			</div>
 			<div class="fusion-builder-option field-megamenu-columnwidth">
 				<div class="option-details">
-					<h3><?php esc_attr_e( 'Mega Menu Column Width', 'Avada' ); ?></h3>
-					<p class="description"><?php esc_attr_e( 'Set the width of the column. In percentage, ex 60%.', 'Avada' ); ?></p>
+					<h3><?php esc_html_e( 'Mega Menu Column Width', 'Avada' ); ?></h3>
+					<p class="description"><?php esc_html_e( 'Set the width of the column. In percentage, ex 60%.', 'Avada' ); ?></p>
 				</div>
 				<div class="option-field fusion-builder-option-container">
 					<input type="text" id="edit-menu-item-megamenu-columnwidth-<?php echo esc_attr( $item_id ); ?>" class="edit-menu-item-megamenu-columnwidth" name="menu-item-fusion-megamenu-columnwidth[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_megamenu_columnwidth ); ?>" />
@@ -290,66 +332,32 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 			</div>
 			<div class="fusion-builder-option field-megamenu-title">
 				<div class="option-details">
-					<h3><?php esc_attr_e( 'Mega Menu Column Title', 'Avada' ); ?></h3>
-					<p class="description"><?php esc_attr_e( 'Turn on to display item as linked column title. Turn off to display item as normal mega menu entry.', 'Avada' ); ?></p>
+					<h3><?php esc_html_e( 'Mega Menu Column Title', 'Avada' ); ?></h3>
+					<p class="description"><?php esc_html_e( 'Turn on to display item as linked column title. Turn off to display item as normal mega menu entry.', 'Avada' ); ?></p>
 				</div>
 				<div class="option-field fusion-builder-option-container">
 					<div class="fusion-form-radio-button-set ui-buttonset edit-menu-item-megamenu-title">
 						<input type="hidden" id="edit-menu-item-megamenu-title-<?php echo esc_attr( $item_id ); ?>" name="menu-item-fusion-megamenu-title[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_megamenu_title ); ?>" class="button-set-value" />
-						<a href="#" class="ui-button buttonset-item<?php echo ( 'disabled' !== $item->fusion_megamenu_title ) ? ' ui-state-active' : ''; ?>" data-value="enabled"><?php esc_attr_e( 'On', 'Avada' ); ?></a>
-						<a href="#" class="ui-button buttonset-item<?php echo ( 'disabled' === $item->fusion_megamenu_title ) ? ' ui-state-active' : ''; ?>" data-value="disabled"><?php esc_attr_e( 'Off', 'Avada' ); ?></a>
+						<a href="#" class="ui-button buttonset-item<?php echo ( 'disabled' !== $item->fusion_megamenu_title ) ? ' ui-state-active' : ''; ?>" data-value="enabled"><?php esc_html_e( 'On', 'Avada' ); ?></a>
+						<a href="#" class="ui-button buttonset-item<?php echo ( 'disabled' === $item->fusion_megamenu_title ) ? ' ui-state-active' : ''; ?>" data-value="disabled"><?php esc_html_e( 'Off', 'Avada' ); ?></a>
 					</div>
 				</div>
 			</div>
 			<div class="fusion-builder-option field-megamenu-widgetarea">
 				<div class="option-details">
-					<h3><?php esc_attr_e( 'Mega Menu Widget Area', 'Avada' ); ?></h3>
-					<p class="description"><?php esc_attr_e( 'Select a widget area to be used as the content for the column.', 'Avada' ); ?></p>
+					<h3><?php esc_html_e( 'Mega Menu Widget Area', 'Avada' ); ?></h3>
+					<p class="description"><?php esc_html_e( 'Select a widget area to be used as the content for the column.', 'Avada' ); ?></p>
 				</div>
 				<div class="option-field fusion-builder-option-container">
 					<select id="edit-menu-item-megamenu-widgetarea-<?php echo esc_attr( $item_id ); ?>" class="widefat code edit-menu-item-megamenu-widgetarea" name="menu-item-fusion-megamenu-widgetarea[<?php echo esc_attr( $item_id ); ?>]">
-						<option value="0"><?php esc_attr_e( 'Select Widget Area', 'Avada' ); ?></option>
+						<option value="0"><?php esc_html_e( 'Select Widget Area', 'Avada' ); ?></option>
 						<?php global $wp_registered_sidebars; ?>
 						<?php if ( ! empty( $wp_registered_sidebars ) && is_array( $wp_registered_sidebars ) ) : ?>
 							<?php foreach ( $wp_registered_sidebars as $sidebar ) : ?>
-								<option value="<?php echo esc_attr( $sidebar['id'] ); ?>" <?php selected( $item->fusion_megamenu_widgetarea, $sidebar['id'] ); ?>><?php echo esc_attr( $sidebar['name'] ); ?></option>
+								<option value="<?php echo esc_attr( $sidebar['id'] ); ?>" <?php selected( $item->fusion_megamenu_widgetarea, $sidebar['id'] ); ?>><?php echo esc_html( $sidebar['name'] ); ?></option>
 							<?php endforeach; ?>
 						<?php endif; ?>
 					</select>
-				</div>
-			</div>
-			<div class="fusion-builder-option field-megamenu-thumbnail">
-				<div class="option-details">
-					<h3><?php esc_attr_e( 'Mega Menu Thumbnail', 'Avada' ); ?></h3>
-					<p class="description"><?php esc_attr_e( 'Select an image to use as a thumbnail for the menu item. The size of the thumbnail can be controlled in Theme Options > Menu > Main Menu Icons.', 'Avada' ); ?></p>
-				</div>
-				<div class="option-field fusion-builder-option-container">
-					<div class="fusion-upload-image<?php echo ( isset( $item->fusion_megamenu_thumbnail ) && '' !== $item->fusion_megamenu_thumbnail ) ? ' fusion-image-set' : ''; ?>">
-						<input type="hidden" id="edit-menu-item-megamenu-thumbnail-<?php echo esc_attr( $item_id ); ?>" class="regular-text fusion-builder-upload-field" name="menu-item-fusion-megamenu-thumbnail[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_megamenu_thumbnail ); ?>" />
-						<div class="fusion-builder-upload-preview">
-							<img src="<?php echo esc_attr( $item->fusion_megamenu_thumbnail ); ?>" id="fusion-media-img-thumbnail-<?php echo esc_attr( $item_id ); ?>" class="fusion-megamenu-thumbnail-image" style="<?php echo ( trim( $item->fusion_megamenu_thumbnail ) ) ? 'display:inline;' : ''; ?>" />
-						</div>
-						<input type='button' data-id="thumbnail-<?php echo esc_attr( $item_id ); ?>" class='button-upload fusion-builder-upload-button avada-edit-button' data-type="image" value="<?php esc_attr_e( 'Edit', 'Avada' ); ?>" />
-						<input type="button" data-id="thumbnail-<?php echo esc_attr( $item_id ); ?>" class="upload-image-remove avada-remove-button" value="<?php esc_attr_e( 'Remove', 'Avada' ); ?>"  />
-						<input type='button' data-id="thumbnail-<?php echo esc_attr( $item_id ); ?>" class='button-upload fusion-builder-upload-button avada-upload-button' data-type="image" value="<?php esc_attr_e( 'Upload Image', 'Avada' ); ?>" />
-					</div>
-				</div>
-			</div>
-			<div class="fusion-builder-option field-megamenu-background-image">
-				<div class="option-details">
-					<h3><?php esc_attr_e( 'Mega Menu Background Image', 'Avada' ); ?></h3>
-					<p class="description"><?php esc_attr_e( 'Select an image for the mega menu background. If left empty, the Main Menu Dropdown Background Color will be used. Each mega menu column can have its own background image, or you can have one image that spreads across the entire mega menu width.', 'Avada' ); ?></p>
-				</div>
-				<div class="option-field fusion-builder-option-container">
-					<div class="fusion-upload-image<?php echo ( isset( $item->fusion_megamenu_background_image ) && '' !== $item->fusion_megamenu_background_image ) ? ' fusion-image-set' : ''; ?>">
-						<input type="hidden" id="edit-menu-item-megamenu-background-image-<?php echo esc_attr( $item_id ); ?>" class="regular-text fusion-builder-upload-field" name="menu-item-fusion-megamenu-background-image[<?php echo esc_attr( $item_id ); ?>]" value="<?php echo esc_attr( $item->fusion_megamenu_background_image ); ?>" />
-						<div class="fusion-builder-upload-preview">
-							<img src="<?php echo esc_attr( $item->fusion_megamenu_background_image ); ?>" id="fusion-media-img-background-image-<?php echo esc_attr( $item_id ); ?>" class="fusion-megamenu-background-image" style="<?php echo ( trim( $item->fusion_megamenu_background_image ) ) ? 'display:inline;' : ''; ?>" />
-						</div>
-						<input type='button' data-id="background-image-<?php echo esc_attr( $item_id ); ?>" class='button-upload fusion-builder-upload-button avada-edit-button' data-type="image" value="<?php esc_attr_e( 'Edit', 'Avada' ); ?>" />
-						<input type="button" data-id="background-image-<?php echo esc_attr( $item_id ); ?>" class="upload-image-remove avada-remove-button" value="<?php esc_attr_e( 'Remove', 'Avada' ); ?>"  />
-						<input type='button' data-id="background-image-<?php echo esc_attr( $item_id ); ?>" class='button-upload fusion-builder-upload-button avada-upload-button' data-type="image" value="<?php esc_attr_e( 'Upload Image', 'Avada' ); ?>" />
-					</div>
 				</div>
 			</div>
 			<?php

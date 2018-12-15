@@ -26,15 +26,15 @@ class Fusion_Widget_Recent_Works extends WP_Widget {
 	 */
 	public function __construct() {
 
-		$widget_ops = array(
+		$widget_ops  = array(
 			'classname'   => 'recent_works',
-			'description' => 'Recent works from the portfolio.',
+			'description' => __( 'Recent works from the portfolio.', 'Avada' ),
 		);
 		$control_ops = array(
 			'id_base' => 'recent_works-widget',
 		);
 
-		parent::__construct( 'recent_works-widget', 'Avada: Recent Works', $widget_ops, $control_ops );
+		parent::__construct( 'recent_works-widget', __( 'Avada: Recent Works', 'Avada' ), $widget_ops, $control_ops );
 
 	}
 
@@ -68,6 +68,7 @@ class Fusion_Widget_Recent_Works extends WP_Widget {
 				'posts_per_page' => $number,
 				'has_password'   => false,
 			);
+
 			$portfolio = fusion_cached_query( $args );
 			?>
 

@@ -20,7 +20,7 @@ $displayed_menu = get_post_meta( $c_page_id, 'pyre_displayed_menu', true );
 	<div class="fusion-mobile-menu-icons">
 		<?php // Make sure mobile menu toggle is not loaded when ubermenu is used. ?>
 		<?php if ( ! function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) || ( function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) && ! ubermenu_get_menu_instance_by_theme_location( 'main_navigation' ) ) ) : ?>
-			<a href="#" class="fusion-icon fusion-icon-bars" aria-label="<?php esc_attr_e( 'Toggle mobile menu', 'Avada' ); ?>"></a>
+			<a href="#" class="fusion-icon fusion-icon-bars" aria-label="<?php esc_attr_e( 'Toggle mobile menu', 'Avada' ); ?>" aria-expanded="false"></a>
 		<?php endif; ?>
 
 		<?php if ( Avada()->settings->get( 'mobile_menu_search' ) ) : ?>

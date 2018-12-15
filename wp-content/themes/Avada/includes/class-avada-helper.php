@@ -434,6 +434,72 @@ class Avada_Helper {
 	public static function get_fusion_tax_meta( $fusion_taxonomy_options = array(), $option_name ) {
 		return isset( $fusion_taxonomy_options[ $option_name ] ) ? $fusion_taxonomy_options[ $option_name ] : '';
 	}
+
+	/**
+	 * Retrieves header color for post id.
+	 *
+	 * @static
+	 * @access public
+	 * @since 5.7
+	 * @param int   $post_id                 The post ID.
+	 * @param array $fusion_taxonomy_options An array of taxonomy options.
+	 * @param bool  $mobile                  Whether we want mobile color or not.
+	 * @return string
+	 */
+	public static function get_header_color( $post_id = false, $fusion_taxonomy_options = false, $mobile = false ) {
+		if ( ! $post_id ) {
+			$post_id = Avada()->fusion_library->get_page_id();
+		}
+		if ( ! $fusion_taxonomy_options ) {
+			$fusion_taxonomy_options = get_term_meta( intval( $post_id ), 'fusion_taxonomy_options', true );
+		}
+
+		$is_archive = false !== strpos( $post_id, 'archive' ) || false === $post_id;
+
+		if ( ! $mobile ) {
+			$header_to = $is_archive ? Avada()->settings->get( 'archive_header_bg_color' ) : Avada()->settings->get( 'header_bg_color' );
+			$header_po = $is_archive ? self::get_fusion_tax_meta( $fusion_taxonomy_options, 'header_bg_color' ) : self::get_meta_header_color( $post_id );
+			$header_bg = $header_po && '' !== $header_po ? $header_po : $header_to;
+			return Fusion_Sanitize::color( $header_bg );
+		}
+
+		$mobile_header_to = $is_archive ? Avada()->settings->get( 'mobile_archive_header_bg_color' ) : Avada()->settings->get( 'mobile_header_bg_color' );
+		$mobile_header_po = $is_archive ? self::get_fusion_tax_meta( $fusion_taxonomy_options, 'mobile_header_bg_color' ) : get_post_meta( $post_id, 'pyre_mobile_header_bg_color', true );
+		$mobile_header_bg = $mobile_header_po && '' !== $mobile_header_po ? $mobile_header_po : $mobile_header_to;
+		return Fusion_Sanitize::color( $mobile_header_bg );
+	}
+
+	/**
+	 * Retrieves post meta set header.
+	 *
+	 * @static
+	 * @access public
+	 * @since 5.7
+	 * @param int|null $post_id The post ID.
+	 * @return string
+	 */
+	public static function get_meta_header_color( $post_id = null ) {
+		if ( ! $post_id ) {
+			$post_id = Avada()->fusion_library->get_page_id();
+		}
+
+		// Have combined value, return it.
+		if ( get_post_meta( $post_id, 'pyre_combined_header_bg_color', true ) ) {
+			return get_post_meta( $post_id, 'pyre_combined_header_bg_color', true );
+		}
+
+		// Using individual options, combine and return.
+		$header_bg_po    = get_post_meta( $post_id, 'pyre_header_bg_color', true );
+		$header_alpha_po = get_post_meta( $post_id, 'pyre_header_bg_opacity', true );
+		if ( $header_bg_po || is_numeric( $header_alpha_po ) ) {
+			$header_bg_object = Fusion_Color::new_color( Avada()->settings->get( 'header_bg_color' ) );
+			$header_bg_color  = $header_bg_po && '' !== $header_bg_po ? $header_bg_po : Avada()->settings->get( 'header_bg_color' );
+			$header_alpha     = is_numeric( $header_alpha_po ) ? $header_alpha_po : $header_bg_object->alpha;
+
+			$combined_color_obj = Fusion_Color::new_color( $header_bg_color );
+			return $combined_color_obj->getNew( 'alpha', $header_alpha )->toCSS( 'rgba' );
+		}
+	}
 }
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

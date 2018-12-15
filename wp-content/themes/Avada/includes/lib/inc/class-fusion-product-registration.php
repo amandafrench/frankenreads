@@ -74,6 +74,15 @@ class Fusion_Product_Registration {
 	private $envato_api = null;
 
 	/**
+	 * Envato API response as WP_Error object.
+	 *
+	 * @access private
+	 * @since 1.7
+	 * @var null|object WP_Error.
+	 */
+	private $envato_api_error = null;
+
+	/**
 	 * The class constructor.
 	 *
 	 * @since 1.0.0
@@ -249,6 +258,8 @@ class Fusion_Product_Registration {
 			if ( 401 !== $products->get_error_code() && 403 !== $products->get_error_code() && '' !== $products->get_error_message() ) {
 				set_site_transient( 'fusion_envato_api_down', true, 600 );
 			}
+
+			$this->envato_api_error = $products;
 			return false;
 		}
 
@@ -386,10 +397,15 @@ class Fusion_Product_Registration {
 				<?php if ( $invalid_token ) : ?>
 					<p class="error-invalid-token">
 						<?php if ( 36 === strlen( $token ) && 4 === substr_count( $token, '-' ) ) : ?>
-							<?php esc_attr_e( 'Registration could not be completed because the value entered above is a purchase code. A token key is needed to register. Please read the directions below to find out how to create a token key to complete registration.', 'Avada' ); ?>
+							<?php esc_html_e( 'Registration could not be completed because the value entered above is a purchase code. A token key is needed to register. Please read the directions below to find out how to create a token key to complete registration.', 'Avada' ); ?>
+						<?php elseif ( $this->envato_api_error ) : ?>
+							<?php $error_code = $this->envato_api_error->get_error_code(); ?>
+							<?php $error_message = str_replace( array( 'Unauthorized', 'Forbidden' ), '', $this->envato_api_error->get_error_message() ); ?>
+							<?php /* translators: The server error code and the error message. */ ?>
+							<?php printf( esc_html__( 'Invalid token, the server responded with code %1$s.%2$s', 'Avada' ), esc_html( $error_code ), esc_html( $error_message ) ); ?>
 						<?php else : ?>
 							<?php /* translators: The product name for the license. */ ?>
-							<?php printf( esc_attr__( 'Invalid token, or corresponding Envato account does not have %s purchased.', 'Avada' ), esc_attr( $this->args['name'] ) ); ?>
+							<?php printf( esc_html__( 'Invalid token, or corresponding Envato account does not have %s purchased.', 'Avada' ), esc_html( $this->args['name'] ) ); ?>
 						<?php endif; ?>
 					</p>
 				<?php elseif ( $token && ! empty( $token ) ) : ?>

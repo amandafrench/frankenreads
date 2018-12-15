@@ -324,7 +324,8 @@ class Fusion_FusionRedux {
 		}
 
 		FusionRedux::setSection(
-			$this->key, array(
+			$this->key,
+			array(
 				'title'      => ( isset( $section['label'] ) ) ? $section['label'] : '',
 				'id'         => $section['id'],
 				'desc'       => ( isset( $section['description'] ) ) ? $section['description'] : '',
@@ -1040,7 +1041,8 @@ class Fusion_FusionRedux {
 	public function add_config() {
 
 		$args = apply_filters(
-			'fusion_fusionredux_args', array(
+			'fusion_fusionredux_args',
+			array(
 				'opt_name'             => $this->key,
 				'display_name'         => $this->args['display_name'],
 				'display_version'      => $this->ver,
@@ -1117,19 +1119,16 @@ class Fusion_FusionRedux {
 		$is_all = self::$is_language_all;
 		if ( ! $is_all ) {
 
+			$parsed_url = fusion_get_referer();
+
 			// Check the HTTP referrer to determine if the language is set to "all".
-			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
-				global $wp_version;
+			if ( $parsed_url ) {
 
-				if ( version_compare( $wp_version, '4.4', '>=' ) ) {
-					if ( ! function_exists( 'wp_parse_url' ) ) {
-						require_once wp_normalize_path( ABSPATH . '/wp-includes/http.php' );
-					}
-
-					$parsed_url = wp_parse_url( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) );
-				} else {
-					$parsed_url = parse_url( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) );
+				if ( ! function_exists( 'wp_parse_url' ) ) {
+					require_once wp_normalize_path( ABSPATH . '/wp-includes/http.php' );
 				}
+
+				$parsed_url = wp_parse_url( $parsed_url );
 
 				if ( isset( $parsed_url['query'] ) ) {
 					parse_str( $parsed_url['query'], $query_args );

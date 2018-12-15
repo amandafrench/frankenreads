@@ -102,10 +102,12 @@ final class Fusion_Dynamic_JS_File extends Fusion_Dynamic_JS_Compiler {
 
 				// Check for 403 / 500.
 				$response = wp_safe_remote_get(
-					$this->file->get_url(), array(
+					$this->file->get_url(),
+					array(
 						'timeout' => 5,
 					)
 				);
+
 				$response_code = wp_remote_retrieve_response_code( $response );
 
 				// Check if the response is ok.
@@ -128,7 +130,7 @@ final class Fusion_Dynamic_JS_File extends Fusion_Dynamic_JS_Compiler {
 	 * @return void
 	 */
 	public function disable_dynamic_js() {
-		$options = get_option( Fusion_Settings::get_option_name(), array() );
+		$options                = get_option( Fusion_Settings::get_option_name(), array() );
 		$options['js_compiler'] = '0';
 
 		update_option( Fusion_Settings::get_option_name(), $options );
@@ -171,7 +173,7 @@ final class Fusion_Dynamic_JS_File extends Fusion_Dynamic_JS_Compiler {
 			$host = sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) );
 			$self = sanitize_text_field( wp_unslash( $_SERVER['PHP_SELF'] ) );
 			$uri  = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
-			$id .= md5( $host . $self . $uri );
+			$id  .= md5( $host . $self . $uri );
 			if ( isset( $filenames[ $id ] ) ) {
 				return $filenames[ $id ] . '.min.js';
 			}

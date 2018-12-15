@@ -332,13 +332,10 @@ body .shortcode-tabs .tab-hold .tabs li {
 #toTop {
   bottom: 30px;
   border-radius: 4px;
-  height: 40px;
+  height: 48px;
 }
 #toTop:before {
-  line-height: 38px;
-}
-#toTop:hover {
-  background-color: #333333;
+  line-height: 46px;
 }
 .no-mobile-totop .to-top-container {
   display: none;
@@ -356,6 +353,7 @@ body .shortcode-tabs .tab-hold .tabs li {
 .ua-mobile #main,
 .ua-mobile .footer-area,
 .ua-mobile .fusion-page-title-bar,
+.ua-mobile .fusion-header,
 .ua-mobile body {
   background-attachment: scroll !important;
 }

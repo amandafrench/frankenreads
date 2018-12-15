@@ -866,14 +866,7 @@ span.avada-loader {
   position: relative;
 }
 
-#wpwrap .avada-demo-themes .theme-browser .theme-wrapper .demo-update-form-wrap input[type='checkbox'] {
-  position: absolute;
-  top: 4px;
-  left: 0;
-}
-
 #wpwrap .avada-demo-themes .theme-browser .theme-wrapper .demo-update-form-wrap label {
-  padding-left: 23px;
   display: inline-block;
 }
 

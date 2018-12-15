@@ -12,17 +12,18 @@
 
 $query_string = '';
 if ( isset( $_SERVER['QUERY_STRING'] ) ) {
-	parse_str( sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) ), $params );
-	$query_string = '?' . sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) );
+	$query_string = sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) );
+	parse_str( $query_string, $params );
+	$query_string = '?' . $query_string;
 }
 
 // Replace it with theme option.
-$per_page = 12;
-if ( Avada()->settings->get( 'woo_items' ) ) {
-	$per_page = Avada()->settings->get( 'woo_items' );
-}
+$per_page = ( Avada()->settings->get( 'woo_items' ) ) ? Avada()->settings->get( 'woo_items' ) : 12; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 
-$pob = ! empty( $params['product_orderby'] ) ? $params['product_orderby'] : get_option( 'woocommerce_default_catalog_orderby' );
+// Use "relevance" as default if we're on the search page.
+$default_orderby = ( is_search() ) ? 'relevance' : get_option( 'woocommerce_default_catalog_orderby' );
+
+$pob = ! empty( $params['product_orderby'] ) ? $params['product_orderby'] : $default_orderby;
 
 if ( ! empty( $params['product_order'] ) ) {
 	$po = $params['product_order'];
@@ -34,7 +35,6 @@ if ( ! empty( $params['product_order'] ) ) {
 		case 'name':
 			$po = 'asc';
 			break;
-		case 'price-desc':
 		default:
 			$po = 'desc';
 			break;
@@ -60,6 +60,9 @@ switch ( $pob ) {
 	case 'name':
 		$order_string = esc_attr__( 'Name', 'Avada' );
 		break;
+	case 'relevance':
+		$order_string = esc_attr__( 'Relevance', 'Avada' );
+		break;
 }
 
 $pc = ! empty( $params['product_count'] ) ? $params['product_count'] : $per_page;
@@ -77,11 +80,17 @@ $pc = ! empty( $params['product_count'] ) ? $params['product_count'] : $per_page
 						</span>
 					</span>
 					<ul>
+						<?php if ( is_search() ) : ?>
+							<li class="<?php echo ( 'relevance' === $pob ) ? 'current' : ''; ?>">
+								<?php /* translators: Relevance, Price, Date etc. */ ?>
+								<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_orderby', 'relevance' ) ); ?>"><?php printf( esc_html__( 'Sort by %s', 'Avada' ), '<strong>' . esc_attr__( 'Relevance', 'Avada' ) . '</strong>' ); ?></a>
+							</li>
+						<?php endif; ?>
 						<?php if ( 'menu_order' === get_option( 'woocommerce_default_catalog_orderby' ) ) : ?>
-						<li class="<?php echo ( 'menu_order' === $pob ) ? 'current' : ''; ?>">
-							<?php /* translators: Name, Price, Date etc. */ ?>
-							<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_orderby', 'default' ) ); ?>"><?php printf( esc_html__( 'Sort by %s', 'Avada' ), '<strong>' . esc_attr__( 'Default Order', 'Avada' ) . '</strong>' ); ?></a>
-						</li>
+							<li class="<?php echo ( 'menu_order' === $pob ) ? 'current' : ''; ?>">
+								<?php /* translators: Name, Price, Date etc. */ ?>
+								<a href="<?php echo esc_url_raw( fusion_add_url_parameter( $query_string, 'product_orderby', 'default' ) ); ?>"><?php printf( esc_html__( 'Sort by %s', 'Avada' ), '<strong>' . esc_attr__( 'Default Order', 'Avada' ) . '</strong>' ); ?></a>
+							</li>
 						<?php endif; ?>
 						<li class="<?php echo ( 'name' === $pob ) ? 'current' : ''; ?>">
 							<?php /* translators: Name, Price, Date etc. */ ?>

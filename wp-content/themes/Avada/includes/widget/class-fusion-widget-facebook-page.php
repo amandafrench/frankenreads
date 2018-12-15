@@ -26,7 +26,7 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 	 */
 	public function __construct() {
 
-		$widget_ops = array(
+		$widget_ops  = array(
 			'classname'   => 'facebook_like',
 			'description' => __( 'Adds support for Facebook Page Plugin.', 'Avada' ),
 		);
@@ -34,7 +34,7 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 			'id_base' => 'facebook-like-widget',
 		);
 
-		parent::__construct( 'facebook-like-widget', 'Avada: Facebook Page Plugin', $widget_ops, $control_ops );
+		parent::__construct( 'facebook-like-widget', __( 'Avada: Facebook Page Plugin', 'Avada' ), $widget_ops, $control_ops );
 
 	}
 
@@ -50,20 +50,20 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 
 		extract( $args );
 
-		$title          = apply_filters( 'widget_title', isset( $instance['title'] ) ? $instance['title'] : '' );
-		$language       = get_locale();
-		$page_url       = ! empty( $instance['page_url'] ) ? $instance['page_url'] : '';
-		$app_id         = ! empty( $instance['app_id'] ) ? $instance['app_id'] : '';
-		$widget_width   = ! empty( $instance['width'] ) ? $instance['width'] : 268;
-		$show_faces     = ! empty( $instance['show_faces'] ) ? 'true' : 'false';
-		$show_stream    = ! empty( $instance['show_stream'] ) ? 'timeline,' : '';
-		$show_events    = ! empty( $instance['show_events'] ) ? 'events,' : '';
-		$show_messages  = ! empty( $instance['show_messages'] ) ? 'messages' : '';
-		$show_header    = ! empty( $instance['show_header'] ) ? 'false' : 'true';
-		$small_header   = ! empty( $instance['small_header'] ) ? 'true' : 'false';
-		$show_tabs      = ( $show_stream || $show_events || $show_messages ) ? true : false;
-		$tabs           = rtrim( $show_stream . $show_events . $show_messages, ',' );
-		$height         = '65';
+		$title         = apply_filters( 'widget_title', isset( $instance['title'] ) ? $instance['title'] : '' );
+		$language      = get_locale();
+		$page_url      = ! empty( $instance['page_url'] ) ? $instance['page_url'] : '';
+		$app_id        = ! empty( $instance['app_id'] ) ? $instance['app_id'] : '';
+		$widget_width  = ! empty( $instance['width'] ) ? $instance['width'] : 268;
+		$show_faces    = ! empty( $instance['show_faces'] ) ? 'true' : 'false';
+		$show_stream   = ! empty( $instance['show_stream'] ) ? 'timeline,' : '';
+		$show_events   = ! empty( $instance['show_events'] ) ? 'events,' : '';
+		$show_messages = ! empty( $instance['show_messages'] ) ? 'messages' : '';
+		$show_header   = ! empty( $instance['show_header'] ) ? 'false' : 'true';
+		$small_header  = ! empty( $instance['small_header'] ) ? 'true' : 'false';
+		$show_tabs     = ( $show_stream || $show_events || $show_messages ) ? true : false;
+		$tabs          = rtrim( $show_stream . $show_events . $show_messages, ',' );
+		$height        = '65';
 
 		$height = ( 'true' === $show_faces ) ? '240' : $height;
 		$height = ( $show_tabs ) ? '515' : $height;
@@ -91,36 +91,40 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 				<script>
 			<?php endif; ?>
 
-			window.fbAsyncInit = function() {
-				fusion_resize_page_widget();
+					window.fbAsyncInit = function() {
+						fusion_resize_page_widget();
 
-				jQuery( window ).resize( function() {
-					fusion_resize_page_widget();
-				});
+						jQuery( window ).resize( function() {
+							fusion_resize_page_widget();
+						});
 
-				function fusion_resize_page_widget() {
-					var $container_width = jQuery( '.<?php echo esc_attr( $args['widget_id'] ); ?>' ).width();
+						function fusion_resize_page_widget() {
+							var $container_width = jQuery( '.<?php echo esc_attr( $args['widget_id'] ); ?>' ).width();
 
-					if ( 1 > $container_width ) {
-						$container_width = <?php echo esc_attr( $widget_width ); ?>;
-					}
+							if ( 1 > $container_width ) {
+								$container_width = <?php echo esc_attr( $widget_width ); ?>;
+							}
 
-					if ( $container_width != jQuery('.<?php echo esc_attr( $args['widget_id'] ); ?> .fb-page' ).data( 'width' ) && $container_width != jQuery('.<?php echo esc_attr( $args['widget_id'] ); ?> .fb-page' ).data( 'original-width' ) ) {
-						jQuery('.<?php echo esc_attr( $args['widget_id'] ); ?> .fb-page' ).attr( 'data-width', $container_width );
-						if ( 'undefined' !== typeof FB ) {
-							FB.XFBML.parse();
+							if ( $container_width != jQuery('.<?php echo esc_attr( $args['widget_id'] ); ?> .fb-page' ).data( 'width' ) && $container_width != jQuery('.<?php echo esc_attr( $args['widget_id'] ); ?> .fb-page' ).data( 'original-width' ) ) {
+								jQuery('.<?php echo esc_attr( $args['widget_id'] ); ?> .fb-page' ).attr( 'data-width', $container_width );
+								if ( 'undefined' !== typeof FB ) {
+									FB.XFBML.parse();
+								}
+							}
 						}
-					}
-				}
-		  };
+					};
 
-			(function(d, s, id) {
-			  var js, fjs = d.getElementsByTagName(s)[0];
-			  if (d.getElementById(id)) return;
-			  js = d.createElement(s); js.id = id;
-			  js.src = "https://connect.facebook.net/<?php echo esc_attr( $language ); ?>/sdk.js#xfbml=1&version=v2.11&appId=<?php echo esc_attr( $app_id ); ?>";
-			  fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
+					( function( d, s, id ) {
+						var js, 
+							fjs = d.getElementsByTagName( s )[0];
+						if ( d.getElementById( id ) ) {
+							return;
+						}
+						js     = d.createElement( s ); 
+						js.id  = id;
+						js.src = "https://connect.facebook.net/<?php echo esc_attr( $language ); ?>/sdk.js#xfbml=1&version=v2.11&appId=<?php echo esc_attr( $app_id ); ?>";
+						fjs.parentNode.insertBefore( js, fjs );
+					}( document, 'script', 'facebook-jssdk' ) );
 
 			<?php if ( $consent_needed ) : ?>
 				</span>
@@ -155,16 +159,16 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 
 		$instance = $old_instance;
 
-		$instance['title']          = isset( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
-		$instance['page_url']       = isset( $new_instance['page_url'] ) ? $new_instance['page_url'] : '';
-		$instance['app_id']         = isset( $new_instance['app_id'] ) ? $new_instance['app_id'] : '';
-		$instance['width']          = isset( $new_instance['width'] ) ? $new_instance['width'] : '';
-		$instance['show_faces']     = isset( $new_instance['show_faces'] ) ? $new_instance['show_faces'] : '';
-		$instance['show_stream']    = isset( $new_instance['show_stream'] ) ? $new_instance['show_stream'] : '';
-		$instance['show_events']    = isset( $new_instance['show_events'] ) ? $new_instance['show_events'] : '';
-		$instance['show_messages']  = isset( $new_instance['show_messages'] ) ? $new_instance['show_messages'] : '';
-		$instance['show_header']    = isset( $new_instance['show_header'] ) ? $new_instance['show_header'] : '';
-		$instance['small_header']   = isset( $new_instance['small_header'] ) ? $new_instance['small_header'] : '';
+		$instance['title']         = isset( $new_instance['title'] ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['page_url']      = isset( $new_instance['page_url'] ) ? $new_instance['page_url'] : '';
+		$instance['app_id']        = isset( $new_instance['app_id'] ) ? $new_instance['app_id'] : '';
+		$instance['width']         = isset( $new_instance['width'] ) ? $new_instance['width'] : '';
+		$instance['show_faces']    = isset( $new_instance['show_faces'] ) ? $new_instance['show_faces'] : '';
+		$instance['show_stream']   = isset( $new_instance['show_stream'] ) ? $new_instance['show_stream'] : '';
+		$instance['show_events']   = isset( $new_instance['show_events'] ) ? $new_instance['show_events'] : '';
+		$instance['show_messages'] = isset( $new_instance['show_messages'] ) ? $new_instance['show_messages'] : '';
+		$instance['show_header']   = isset( $new_instance['show_header'] ) ? $new_instance['show_header'] : '';
+		$instance['small_header']  = isset( $new_instance['small_header'] ) ? $new_instance['small_header'] : '';
 
 		return $instance;
 
@@ -179,16 +183,16 @@ class Fusion_Widget_Facebook_Page extends WP_Widget {
 	public function form( $instance ) {
 
 		$defaults = array(
-			'title'          => __( 'Find us on Facebook', 'Avada' ),
-			'page_url'       => '',
-			'app_id'         => '',
-			'width'          => '268',
-			'show_faces'     => 'on',
-			'show_stream'    => false,
-			'show_events'    => false,
-			'show_messages'  => false,
-			'show_header'    => false,
-			'small_header'   => false,
+			'title'         => __( 'Find us on Facebook', 'Avada' ),
+			'page_url'      => '',
+			'app_id'        => '',
+			'width'         => '268',
+			'show_faces'    => 'on',
+			'show_stream'   => false,
+			'show_events'   => false,
+			'show_messages' => false,
+			'show_header'   => false,
+			'small_header'  => false,
 		);
 
 		$instance = wp_parse_args( (array) $instance, $defaults );
