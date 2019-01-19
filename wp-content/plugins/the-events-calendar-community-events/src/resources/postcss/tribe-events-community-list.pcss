@@ -72,10 +72,13 @@
 
 	.tribe-event-list-search {
 		display: block;
-		float: right;
 		width: 300px;
 		max-width: 100%;
 		margin-top: 5px;
+
+		@media screen and (min-width: 800px) {
+			float: right;
+		}
 
 		input[type="search"] {
 			background: #fff url(../images/searchx2.png) no-repeat 15px center;
@@ -88,7 +91,6 @@
 			width: 100%;
 
 			@media screen and (max-width: 800px) {
-				margin-top: 20px;
 				width: 100%;
 			}
 
@@ -155,19 +157,11 @@
 		}
 
 		.tribe-upcoming {
-			border-top: 1px solid var(--button-secondary-light-color);
-			border-left: 1px solid var(--button-secondary-light-color);
-			border-bottom: 1px solid var(--button-secondary-light-color);
-			border-top-right-radius: 0;
-			border-bottom-right-radius: 0;
+			border: 1px solid var(--button-secondary-light-color);
 		}
 
 		.tribe-past {
-			border-top: 1px solid var(--light-gray);
-			border-right: 1px solid var(--light-gray);
-			border-bottom: 1px solid var(--light-gray);
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
+			border: 1px solid var(--light-gray);
 		}
 
 		&:after {
@@ -184,14 +178,21 @@
 			z-index: 1;
 			vertical-align: top;
 
-			@media screen and (max-width: 600px) {
-				padding-left: 0;
+			@media screen and (max-width: 800px) {
+				display: block;
+				padding-right: 0;
+				width: 300px;
 			}
 
 			a {
 				color: #fff;
 				padding: 10px 20px;
-				margin:0 5px 0 0;
+				margin: 0 10px 0 0;
+
+				@media screen and (max-width: 600px) {
+					margin: 0 0 15px 0;
+					width: 100%;
+				}
 			}
 
 			a.tribe-button-tertiary {
@@ -241,6 +242,7 @@ div.tribe-community-events-list {
 		border: 0;
 		margin: 0;
 		table-layout: unset;
+		white-space: nowrap;
 	}
 
 	th {
@@ -252,7 +254,7 @@ div.tribe-community-events-list {
 
 	td {
 		border-bottom: 1px solid #E4E4E4;
-		font-size: 90%;
+		font-size: .9em;
 		padding: 20px 10px;
 
 		@media screen and (max-width: 800px) {
@@ -343,6 +345,14 @@ div.tribe-community-events-list {
 					}
 				}
 			}
+		}
+	}
+
+	.tribe-list-column {
+		&-status,
+		&-end_date,
+		&-start_date {
+			white-space: nowrap;
 		}
 	}
 

@@ -1,11 +1,11 @@
 === The Events Calendar: Community Events ===
 
-Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tribe, faction23, geoffgraham, ggwicz, jazbek, jbrinley, joshlimecuda, leahkoerper, lucatume, mastromktg, mat-lipe, mdbitz, neillmcshea, nicosantos, peterchester, reid.peifer, roblagatta, ryancurban, shane.pearlman, thatdudebutch, trishasalas, zbtirrell, aguseo
+Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tribe, faction23, geoffgraham, ggwicz, jazbek, jbrinley, joshlimecuda, leahkoerper, lucatume, mastromktg, mat-lipe, mdbitz, neillmcshea, nicosantos, peterchester, reid.peifer, roblagatta, ryancurban, sc0ttkclark, shane.pearlman, thatdudebutch, trishasalas, zbtirrell, aguseo
 Tags: widget, events, simple, tooltips, grid, month, list, calendar, event, venue, community, registration, api, dates, date, plugin, posts, sidebar, template, theme, time, google maps, google, maps, conference, workshop, concert, meeting, seminar, summit, forum, shortcode, The Events Calendar, The Events Calendar PRO
 Donate link: http://m.tri.be/29
-Requires at least: 4.5
-Tested up to: 5.0
-Stable tag: 4.5.15
+Requires at least: 4.7
+Tested up to: 5.0.3
+Stable tag: 4.5.16
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,6 +98,7 @@ The plugin is produced by <a href="http://m.tri.be/2s">Modern Tribe Inc</a>.
 <a href="https://profiles.wordpress.org/roblagatta">Rob La Gatta</a>
 <a href="https://profiles.wordpress.org/reid.peifer">Reid Peifer</a>
 <a href="https://profiles.wordpress.org/shane.pearlman">Shane Pearlman</a>
+<a href="https://profiles.wordpress.org/camwynsp">Stephen Page</a>
 <a href="https://profiles.wordpress.org/thatdudebutch">Wayne Stratton</a>
 <a href="https://profiles.wordpress.org/trishasalas">Trisha Salas</a>
 <a href="https://profiles.wordpress.org/zbtirrell">Zachary Tirrell</a>
@@ -153,12 +154,21 @@ Our Premium Plugins:
 
 == Changelog ==
 
+= [4.5.16] 2019-01-15 =
+
+* Tweak - Improve the default styling for the list videw on smaller screens [119166]
+* Tweak - Updated view for e-mail template [119145]
+* Tweak - Changed views: `community/email-template`
+* Fix - Ensure featured image is not submitted if removed prior to submit [119247]
+* Fix - Correct blank url in review submission email for anonymously submitted events [119145]
+* Language - 7 new strings added, 106 updated, 0 fuzzied, and 1 obsoleted
+
 = [4.5.15] 2018-12-05 =
 
 * Feature - Added a new action, `tribe_community_events_before_form_messages`, to allow easier addition of content before various form messages are displayed [118438]
 * Fix - Ensure images can be removed from events after uploading them--on both the submission form *and* the edit form for already-submitted events [104450]
 * Fix - Ensure that fields required for Organizers work on both the submission form *and* the edit-Organizer form [110203]
-* Fix - Prevent event-status tooltips from being cut off in the "My Events" list on the front end []
+* Fix - Prevent event-status tooltips from being cut off in the "My Events" list on the front end [116621]
 
 = [4.5.14] 2018-11-13 =
 

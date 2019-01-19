@@ -176,7 +176,9 @@ class GMW_Extensions {
 			wp_die( __( 'Cheatin\' eh?!', 'geo-my-wp' ) );
 		}
 
+		// delete extensions and license key transient to retrive new data.
 		delete_transient( 'gmw_extensions_feed' );
+		//delete_transient( 'gmw_verify_license_keys' );
 
 		//reload the page to prevent resubmission
 		wp_safe_redirect(
@@ -317,7 +319,7 @@ class GMW_Extensions {
 
 					foreach ( $ext_data['required']['addons'] as $required_addon ) {
 
-						if ( $required_addon['slug'] == $extension['slug'] ) {
+						if ( isset( $extension['slug'] ) && $required_addon['slug'] == $extension['slug'] ) {
 
 							$dependends[ $ext_data['slug'] ] = '';
 
@@ -421,7 +423,7 @@ class GMW_Extensions {
 
 					foreach ( $ext_data['required']['addons'] as $required_addon ) {
 
-						if ( $required_addon['slug'] == $extension['slug'] ) {
+						if ( isset( $extension['slug'] ) && $required_addon['slug'] == $extension['slug'] ) {
 
 							$dependends[ $ext_data['slug'] ] = $required_addon['notice'];
 
@@ -489,7 +491,7 @@ class GMW_Extensions {
 			$form_data['basename'],
 			$form_data['item_name'],
 			$form_data['license_name'],
-			$form_data['license_id']
+			$form_data['item_id']
 		);
 
 		$form = $license_input->get_license_key_element();
@@ -802,7 +804,7 @@ class GMW_Extensions {
 
 											<?php } else { ?>
 
-												<a href="<?php echo esc_url( $extension['addon_page'] ); ?>" class="button-secondary button get-extension" target="_blank" title="<?php _e( 'Get Extension', 'geo-my-wp' ); ?>">
+												<a href="<?php echo esc_url( $extension['addon_page'] ); ?>" class="button-secondary button get-extension" target="_blank">
 													<?php _e( 'Get Extension', 'geo-my-wp' ); ?>    
 												</a>
 											<?php } ?>

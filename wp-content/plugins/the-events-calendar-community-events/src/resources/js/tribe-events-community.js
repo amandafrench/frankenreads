@@ -247,7 +247,9 @@ var tribe_community_events = tribe_community_events || {};
 		obj.els.uploadArea.classList.remove( 'has-image' );
 
 		obj.els.uploadFile.setAttribute( 'value', '' );
+		obj.els.uploadFile.value = '';
 		obj.els.eventImage.setAttribute( 'value', '' );
+		obj.els.eventImage.value = '';
 	};
 
 	/**

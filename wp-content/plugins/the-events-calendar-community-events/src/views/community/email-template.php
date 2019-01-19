@@ -8,7 +8,7 @@
  *
  * @package Tribe__Events__Community__Main
  * @since   3.6
- * @version 4.5.14
+ * @version 4.5.16
  * @author  Modern Tribe Inc.
  *
  */
@@ -65,11 +65,16 @@ if ( 0 == $organizer_count ) {
 		<?php echo wp_kses_post( $post->post_content ); ?>
 
 		<hr />
-
-		<h4><?php echo '<a href="' . esc_url( get_edit_post_link( $tribe_event_id ) ) . '">' . sprintf( esc_html__( 'Review %s', 'tribe-events-community' ), esc_html( $events_label_singular ) ) . '</a>';
-			if ( 'publish' == get_post_status( $tribe_event_id ) ) {
-				echo ' | <a href="' . esc_url( get_permalink( $tribe_event_id ) ) . '">' . sprintf( esc_html__( 'View %s', 'tribe-events-community' ), esc_html( $events_label_singular ) ) . '</a>';
-			} ?>
+		<?php
+		$query = array(
+			'action' => 'edit',
+			'post'   => $tribe_event_id,
+		);
+		?>
+		<h4><?php echo '<a href="' . esc_url( add_query_arg( $query, get_admin_url( null, 'post.php' ) ) ) . '">' . sprintf( esc_html__( 'Review %s', 'tribe-events-community' ), esc_html( $events_label_singular ) ) . '</a>';
+			if ( 'publish' == get_post_status( $tribe_event_id ) ) { ?>
+				| <a href="<?php echo esc_url( get_permalink( $tribe_event_id ) ); ?>"><?php printf( __( 'View %s', 'tribe-events-community' ), esc_html( $events_label_singular ) ); ?></a>
+			<?php } ?>
 		</h4>
 	</body>
 </html>

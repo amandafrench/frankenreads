@@ -1,6 +1,6 @@
 <?php
 /**
- * Downloads Foofle-Fonts locally and generates the @font-face CSS for them.
+ * Downloads Google-Fonts locally and generates the @font-face CSS for them.
  * The main reasons for this is the GDPR & performance.
  *
  * @package Avada
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Downloads Foofle-Fonts locally and generates the @font-face CSS for them.
+ * Downloads Google-Fonts locally and generates the @font-face CSS for them.
  *
  * @since 5.5.2
  */
@@ -308,8 +308,7 @@ class Fusion_GFonts_Downloader {
 	 * @return bool
 	 */
 	private function download_font_file( $url ) {
-		$contents = $this->get_remote_url_contents( $url );
-		$path     = $this->folder_path . '/' . $this->get_filename_from_url( $url );
+		$path = $this->folder_path . '/' . $this->get_filename_from_url( $url );
 
 		// If the folder doesn't exist, create it.
 		if ( ! file_exists( $this->folder_path ) ) {
@@ -321,7 +320,7 @@ class Fusion_GFonts_Downloader {
 		}
 
 		// Write file.
-		return $this->filesystem()->put_contents( $path, $contents, FS_CHMOD_FILE );
+		return $this->filesystem()->put_contents( $path, $this->get_remote_url_contents( $url ), FS_CHMOD_FILE );
 	}
 
 	/**
@@ -460,18 +459,13 @@ class Fusion_GFonts_Downloader {
 	 * @return string     The contents of the remote URL.
 	 */
 	public function get_remote_url_contents( $url ) {
-		$transient_name = 'fusion_gfonts' . md5( $url );
-		$html           = get_transient( $transient_name );
-		if ( false === $html ) {
-			$response = wp_remote_get( $url );
-			if ( is_wp_error( $response ) ) {
-				return array();
-			}
-			$html = wp_remote_retrieve_body( $response );
-			if ( is_wp_error( $html ) ) {
-				return;
-			}
-			set_transient( $transient_name, $html, 24 * HOUR_IN_SECONDS );
+		$response = wp_remote_get( $url );
+		if ( is_wp_error( $response ) ) {
+			return array();
+		}
+		$html = wp_remote_retrieve_body( $response );
+		if ( is_wp_error( $html ) ) {
+			return;
 		}
 		return $html;
 	}
