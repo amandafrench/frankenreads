@@ -6781,7 +6781,7 @@ msgstr ""
 
 #: bp-templates/bp-legacy/buddypress/members/register.php:45
 msgid "User registration is currently not allowed."
-msgstr "Registration for Frankenreads is no longer allowed, and we are not accepting any new events. We thank the National Endowment for the Humanities for allowing the Keats-Shelley Association of America to run the project throughout 2018. "
+msgstr "Registration for Frankenreads is no longer allowed, and we are not accepting any new events. We thank the National Endowment for the Humanities for enabling the Keats-Shelley Association of America to run the project throughout 2018. "
 
 #: bp-templates/bp-legacy/buddypress/members/register.php:67
 msgid "Registering for this site is easy. Just fill in the fields below, and we'll get a new account set up for you in no time."
