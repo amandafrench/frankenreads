@@ -128,8 +128,15 @@ class Items {
 
 		foreach ( $matches as $string ) {
 
-			if ( $current_user->ID == 0 || ! array_key_exists( $string, Codes::valid_codes() ) ) {
 
+			if ( ! array_key_exists( $string, Codes::valid_codes() ) ) {
+
+				// If its not a valid code it is likely a fallback.
+				$replace = $string;
+
+			} else if ( $current_user->ID == 0 && array_key_exists( $string, Codes::valid_codes() ) ) {
+
+				// If the code exists & user is not logged in, return nothing.
 				$replace = '';
 
 			} else {
@@ -137,7 +144,7 @@ class Items {
 				switch ( $string ) {
 
 					case 'avatar':
-						$replace = get_avatar( $current_user, self::$current_item->avatar_size );
+						$replace = get_avatar( $current_user->ID, self::$current_item->avatar_size );
 						break;
 
 					case 'first_name':
