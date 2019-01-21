@@ -350,7 +350,46 @@ function gmw_update_addon_data( $addon = array() ) {
  * @param  [type] $type    error type.
  */
 function gmw_trigger_error( $message = '', $type = E_USER_NOTICE ) {
-	trigger_error( esc_html( $message ), $type );
+
+	// get debugging data.
+	$debug   = debug_backtrace();
+	$message = esc_html( $message );
+
+	// verify that debuggin data exist to generate custom error message.
+	if ( ! empty( $debug[0] ) ) {
+
+		$debug = $debug[0];
+		$file  = ! empty( $debug['file'] ) ? esc_html( $debug['file'] ) : 'file name is missing';
+		$line  = ! empty( $debug['line'] ) ? esc_html( $debug['line'] ) : 'line nunmber is missing';
+
+		// generate full error message.
+		$full_message = "{$message} In <b>{$file}</b> on line <b>{$line}</b>";
+
+		// output message.
+		switch ( $type ) {
+
+			case E_USER_ERROR:
+				echo "<br><b>Fatal error:</b> {$full_message}<br />\n"; // WPCS: XSS ok.
+				exit( 1 );
+			break;
+
+			case E_USER_WARNING:
+				echo "<br><b>Warning:</b> {$full_message}<br />\n"; // WPCS: XSS ok.
+				break;
+
+			case E_USER_NOTICE:
+				echo "<br><b>Notice:</b> {$full_message}<br />\n"; // WPCS: XSS ok.
+				break;
+
+			default:
+				echo "<br><b>Unknown error type:</b> {$full_message}<br />\n"; // WPCS: XSS ok.
+				break;
+		}
+
+		// otherwise, use built in function.
+	} else {
+		trigger_error( $message, $type ); // WPCS: XSS ok.
+	}
 }
 
 /**
